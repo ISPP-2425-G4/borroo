@@ -1,7 +1,11 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import JsonResponse
+import datetime
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the borroo index.")
+    return JsonResponse({"message": "Hello from Django!"})
 
+
+def get_message(request):
+    now = datetime.datetime.now().strftime("%H:%M:%S")
+    return JsonResponse({"message": f"Hola desde Django! Hora actual: {now}"})
