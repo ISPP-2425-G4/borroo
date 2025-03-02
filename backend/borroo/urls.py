@@ -20,11 +20,18 @@ from django.urls import include, path
 
 
 
+
+
+
 def redirect_to_app(request):
     return redirect("app:index")
 
 urlpatterns = [
     path("", redirect_to_app),
     path("usuarios/", include("usuarios.urls")),
-    path('admin/', admin.site.urls),
+   path("productos/", include("productos.urls")),
+    path('admin/', admin.site.urls)
 ]
+
+    
+
