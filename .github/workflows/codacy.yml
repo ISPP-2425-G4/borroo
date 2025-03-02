@@ -11,7 +11,7 @@ on:
 jobs:
   codacy-analysis:
     name: Run Codacy Analysis
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -25,7 +25,6 @@ jobs:
       - name: Install Python dependencies (backend)
         run: |
           pip install -r backend/requirements.txt
-        shell: pwsh
 
       - name: Set up Node.js (para frontend)
         uses: actions/setup-node@v3
@@ -36,10 +35,8 @@ jobs:
         run: |
           cd frontend
           npm install
-        shell: pwsh
 
       - name: Run Codacy Analysis
         uses: codacy/codacy-analysis-cli-action@v2.0.0
         with:
           token: ${{ secrets.CODACY_API_TOKEN }}
-        shell: pwsh
