@@ -37,6 +37,6 @@ jobs:
           npm install
 
       - name: Run Codacy Analysis
-        uses: codacy/codacy-analysis-cli-action@v2.0.0
+        uses: codacy/codacy-analysis-cli-action@latest
         with:
           token: ${{ secrets.CODACY_API_TOKEN }}

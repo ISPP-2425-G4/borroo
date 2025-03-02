@@ -36,6 +36,8 @@ jobs:
           git commit -m "fix: aplicar correcciones automáticas con ESLint" || echo "No changes to commit"
           git pull origin ${{ github.ref_name }} --rebase  # Asegura que no haya conflictos
           git push origin HEAD:${{ github.ref_name }}  # Hace push a la rama actual
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Usar el token de acceso personal
 
   backend-lint:
     name: Run Flake8 & Black (Backend)
@@ -71,6 +73,8 @@ jobs:
           git commit -m "fix: aplicar correcciones automáticas con Black" || echo "No changes to commit"
           git pull origin ${{ github.ref_name }} --rebase
           git push origin HEAD:${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Usar el token de acceso personal
 
       - name: Run Flake8 (solo para reportar errores restantes)
         run: |
