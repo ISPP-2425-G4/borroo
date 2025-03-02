@@ -15,12 +15,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python (para backend)
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: 3.x
 
       - name: Install Python dependencies (backend)
         run: |
@@ -37,6 +37,6 @@ jobs:
           npm install
 
       - name: Run Codacy Analysis
-        uses: codacy/codacy-analysis-cli-action@latest
+        uses: codacy/codacy-analysis-cli-action@v4.4.5
         with:
           token: ${{ secrets.CODACY_API_TOKEN }}

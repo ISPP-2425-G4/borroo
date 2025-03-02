@@ -22,25 +22,13 @@ jobs:
           cd frontend
           npm install
 
-      - name: Run ESLint and auto-fix issues
+      - name: Run ESLint (solo reportar errores)
         run: |
           cd frontend
-          npx eslint "src/**/*.{js,jsx}" --fix
-
-      - name: Commit and push ESLint fixes
-        run: |
-          cd frontend
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "fix: aplicar correcciones automáticas con ESLint" || echo "No changes to commit"
-          git pull origin ${{ github.ref_name }} --rebase  # Asegura que no haya conflictos
-          git push origin HEAD:${{ github.ref_name }}  # Hace push a la rama actual
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Usar el token de acceso personal
+          npx eslint "src/**/*.{js,jsx}"  # Solo reporta errores, sin --fix
 
   backend-lint:
-    name: Run Flake8 & Black (Backend)
+    name: Run Flake8 (Backend)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -57,26 +45,9 @@ jobs:
         run: |
           cd backend
           python -m pip install --upgrade pip
-          pip install flake8 black
+          pip install flake8 
 
-      - name: Run Black (formato y auto-corrección)
+      - name: Run Flake8 (reportar errores de estilo)
         run: |
           cd backend
-          black .  # Corrige automáticamente los errores de formato
-
-      - name: Commit and push Black changes
-        run: |
-          cd backend
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "fix: aplicar correcciones automáticas con Black" || echo "No changes to commit"
-          git pull origin ${{ github.ref_name }} --rebase
-          git push origin HEAD:${{ github.ref_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Usar el token de acceso personal
-
-      - name: Run Flake8 (solo para reportar errores restantes)
-        run: |
-          cd backend
-          flake8 .  # Detecta errores de estilo después de que Black ha corregido
+          flake8 .  # Detecta errores de estilo
