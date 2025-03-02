@@ -1,0 +1,45 @@
+name: Codacy Code Quality
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  codacy-analysis:
+    name: Run Codacy Analysis
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python (para backend)
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
+      - name: Install Python dependencies (backend)
+        run: |
+          pip install -r backend/requirements.txt
+        shell: pwsh
+
+      - name: Set up Node.js (para frontend)
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Node.js dependencies (frontend)
+        run: |
+          cd frontend
+          npm install
+        shell: pwsh
+
+      - name: Run Codacy Analysis
+        uses: codacy/codacy-analysis-cli-action@v2.0.0
+        with:
+          token: ${{ secrets.CODACY_API_TOKEN }}
+        shell: pwsh

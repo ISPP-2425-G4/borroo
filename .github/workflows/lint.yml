@@ -1,0 +1,59 @@
+name: Lint Frontend & Backend
+
+on: [push, pull_request]
+
+jobs:
+  frontend-lint:
+    name: Run ESLint (Frontend)
+    runs-on: windows-latest 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm install
+        shell: bash
+
+      - name: Run ESLint and auto-fix issues
+        run: |
+          cd frontend
+          npx eslint "src/**/*.{js,jsx}" --fix
+        shell: bash
+
+  backend-lint:
+    name: Run Flake8 & Black (Backend)
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          python -m pip install --upgrade pip
+          pip install flake8 black
+        shell: bash
+
+      - name: Run Flake8 (estilo y errores)
+        run: |
+          cd backend
+          flake8 .
+        shell: bash
+
+      - name: Run Black (formato y auto-corrección)
+        run: |
+          cd backend
+          black .  # Esto aplicará los cambios automáticamente
+        shell: bash
