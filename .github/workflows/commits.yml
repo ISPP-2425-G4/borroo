@@ -1,0 +1,31 @@
+name: Commit Policy Check
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  check-commits:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get commit messages
+        run: |
+          commits=$(git log --format='%s' ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }})
+          echo "$commits" > commit_messages.txt
+
+      - name: Validate commit messages
+        run: |
+          regex='^(feat|fix|refactor|docs|test|conf): [A-Z][a-z]+.*$'
+          while IFS= read -r line; do
+            if [[ ! $line =~ $regex ]]; then
+              echo "❌ Commit message does not follow the convention: $line"
+              exit 1
+            else
+              echo "✅ Valid commit message: $line"
+            fi
+          done < commit_messages.txt
