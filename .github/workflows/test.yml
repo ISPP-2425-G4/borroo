@@ -1,0 +1,59 @@
+name: Run Tests
+
+on:
+    push:
+      branches:
+        - main
+        - develop
+    pull_request:
+      branches:
+        - main
+        - develop
+  
+
+jobs:
+  backend-tests:
+    name: Backend - Django Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout del código
+        uses: actions/checkout@v3
+
+      - name: 🐍 Configurar Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
+
+      - name: 📦 Instalar dependencias
+        run: |
+          if [ -d "backend" ]; then cd backend && python -m pip install --upgrade pip && pip install -r requirements.txt; else echo "❌ No se encontró la carpeta backend"; exit 1; fi
+
+      - name: 🚀 Ejecutar pruebas con pytest
+        run: |
+          cd backend
+          pytest --cov  
+
+  frontend-tests:
+    name: Frontend - React Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout del código
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: 📦 Instalar dependencias del frontend
+        run: |
+          if [ -d "frontend" ]; then cd frontend && npm ci; else echo "❌ No se encontró la carpeta frontend"; exit 1; fi
+
+      - name: 🚀 Ejecutar pruebas con Vitest
+        run: |
+          cd frontend
+          npm test -- --watch=false --coverage  
