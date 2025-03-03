@@ -15,7 +15,7 @@ jobs:
 
       - name: Get commit messages
         run: |
-          commits=$(git log --format='%s' ${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }})
+          commits=$(git log --format='%s' ${{ github.event.before }}..${{ github.event.after }})
           echo "$commits" > commit_messages.txt
 
       - name: Validate commit messages
