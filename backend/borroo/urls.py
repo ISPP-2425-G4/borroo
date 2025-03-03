@@ -19,9 +19,9 @@ from django.shortcuts import redirect
 from django.urls import include, path
 
 
-
 def redirect_to_app(request):
     return redirect("app:index")
+
 
 urlpatterns = [
     path("", redirect_to_app),
