@@ -1,0 +1,143 @@
+/* Estilos generales */
+.navbar {
+    background-color: #2563eb; /* Azul Tailwind */
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Logo */
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+}
+
+/* Barra de búsqueda */
+.search-container {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    gap: 8px;
+}
+
+.search {
+    border: none;
+    outline: none;
+    padding: 8px;
+    border-radius: 5px;
+    width: 250px;
+    color: black;
+}
+
+/* Iconos */
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-icon {
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.nav-icon:hover {
+    color: #fbbf24;
+}
+
+
+
+/* Menú de navegación */
+.nav-links {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #fbbf24;
+}
+
+/* Contenedor principal del login1 */
+.login1-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Estilos del menú */
+.login1-menu {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: white;
+    color: black;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none; /* Oculto por defecto */
+    flex-direction: column;
+    min-width: 150px;
+    padding: 10px 0;
+    z-index: 100;
+}
+
+/* Estilos de los enlaces dentro del menú */
+.login1-menu .nav-link {
+    display: block;
+    padding: 10px 15px;
+    text-align: left;
+    color: black;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.login1-menu .nav-link:hover {
+    background-color: #f1f1f1;
+}
+
+/* Mostrar menú cuando el ratón pasa por encima del contenedor */
+.login1-container:hover .login1-menu {
+    display: flex;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search {
+        width: 100%;
+    }
+
+    .nav-icons {
+        justify-content: center;
+    }
+}
