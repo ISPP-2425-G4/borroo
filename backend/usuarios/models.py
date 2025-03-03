@@ -1,10 +1,12 @@
 from django.db import models
-from django.core.validators import MinLengthValidator, RegexValidator
+from django.core.validators import RegexValidator
+
 
 class PricingPlan(models.TextChoices):
     FREE = 'free', 'Free'
     BASIC = 'basic', 'Basic'
     PREMIUM = 'premium', 'Premium'
+
 
 class User(models.Model):
     id = models.AutoField(primary_key=True)
@@ -19,7 +21,8 @@ class User(models.Model):
         validators=[
             RegexValidator(
                 regex='^[0-9]{5}(-[0-9]{4})?$',
-                message='Postal code must be in the format 12345 or 12345-6789.'
+                message='Postal code must be in the \
+                    format 12345 or 12345-6789.'
             )
         ]
     )
@@ -29,8 +32,10 @@ class User(models.Model):
         choices=PricingPlan.choices,
         default=PricingPlan.FREE
     )
-    owner_rating = models.FloatField(default=0.0)   #Atributo derivado que se necesita la entidad de reviews
-    renter_rating = models.FloatField(default=0.0)  #Atributo derivado que se necesita la entidad de reviews
+    # Atributo derivado que se necesita la entidad de reviews
+    owner_rating = models.FloatField(default=0.0)
+    # Atributo derivado que se necesita la entidad de reviews
+    renter_rating = models.FloatField(default=0.0)
 
     def __str__(self):
         return self.username
