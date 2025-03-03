@@ -84,10 +84,22 @@ WSGI_APPLICATION = 'borroo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'borroo',
+        'USER': 'borroo',
+        'PASSWORD': 'Borroo2025',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {
+            'sql_mode': 'STRICT_TRANS_TABLES',
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'client': r'C:\Program Files\MariaDB 11.7\bin\mysql.exe'
+        }
     }
 }
+
+
+
 
 
 # Password validation
