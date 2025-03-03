@@ -26,5 +26,6 @@ def redirect_to_app(request):
 urlpatterns = [
     path("", redirect_to_app),
     path("usuarios/", include("usuarios.urls")),
+    path('rentas/', include('rentas.urls')),
     path('admin/', admin.site.urls),
 ]
