@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { FiUser, FiLock } from "react-icons/fi";
 import "../public/styles/Login.css";
-import Navbar from "./Navbar";
 
 const Login = () => {
   return (
