@@ -13,6 +13,7 @@ def get_message(request):
     now = datetime.datetime.now().strftime("%H:%M:%S")
     return JsonResponse({"message": f"Hola desde Django! Hora actual: {now}"})
 
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
