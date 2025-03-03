@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import RegexValidator
 
 
+
 class PricingPlan(models.TextChoices):
     FREE = 'free', 'Free'
     BASIC = 'basic', 'Basic'
