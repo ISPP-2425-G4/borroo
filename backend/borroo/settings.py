@@ -90,11 +90,6 @@ DATABASES = {
         'PASSWORD': 'Borroo2025',
         'HOST': 'localhost',
         'PORT': '3306',
-        'OPTIONS': {
-            'sql_mode': 'STRICT_TRANS_TABLES',
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            'client': r'C:\Program Files\MariaDB 11.7\bin\mysql.exe'
-        }
     }
 }
 
