@@ -27,4 +27,5 @@ urlpatterns = [
     path("", redirect_to_app),
     path("usuarios/", include("usuarios.urls")),
     path('admin/', admin.site.urls),
+    path('item/', include('item.urls')),
 ]
