@@ -1,11 +1,11 @@
 from django.db import models
 
-from backend.item.models import Item
+from item.models import Item
 
-class PriceCategory(enumerate.Enum):
-    SHORT = 'Short'
-    MEDIUM = 'Medium'
-    LONG = 'Long'
+class PriceCategory(models.TextChoices):
+    SHORT = 'SHORT', 'Short'
+    MEDIUM = 'MEDIUM', 'Medium'
+    LONG = 'LONG', 'Long'
 
 class Price(models.Model):
     item = models.OneToOneField(Item, on_delete=models.CASCADE, related_name="price")
@@ -15,4 +15,4 @@ class Price(models.Model):
     price3 = models.FloatField()
 
     def __str__(self):
-        return self.item.title
+        return self.price1
