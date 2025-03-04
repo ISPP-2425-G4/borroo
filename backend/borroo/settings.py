@@ -84,10 +84,17 @@ WSGI_APPLICATION = 'borroo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'borroo',
+        'USER': 'borroo',
+        'PASSWORD': 'Borroo2025',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
+
+
+
 
 
 # Password validation
