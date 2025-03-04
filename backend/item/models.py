@@ -28,6 +28,7 @@ class Item(models.Model):
     description = models.TextField()
     item_category = models.CharField(max_length=10, choices=ItemCategory.choices)
     cancel_type = models.CharField(max_length=10, choices=CancelType.choices)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='items')
 
     def __str__(self):
         return self.title
