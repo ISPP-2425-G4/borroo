@@ -13,6 +13,8 @@ class User(models.Model):
     name = models.CharField(max_length=255)
     surname = models.CharField(max_length=255)
     username = models.CharField(max_length=255, unique=True)
+    email = models.CharField(max_length=255, unique=True)
+    phone_number = models.CharField(max_length=25)
     country = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     address = models.TextField()
