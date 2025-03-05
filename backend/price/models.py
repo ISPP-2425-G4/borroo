@@ -10,7 +10,7 @@ class PriceCategory(models.TextChoices):
 
 
 class Price(models.Model):
-    item = models.OneToOneField(Item, on_delete=models.CASCADE, 
+    item = models.OneToOneField(Item, on_delete=models.CASCADE,
                                 related_name="price")
     price_category = models.CharField(max_length=10,
                                       choices=PriceCategory.choices)
