@@ -32,4 +32,3 @@ class SearchItemsView(APIView):
         results = list(items.values('id', 'title', 'category', 'price'))
 
         return Response({'results': results}, status=status.HTTP_200_OK)
-    
