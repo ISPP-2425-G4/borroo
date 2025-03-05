@@ -1,4 +1,3 @@
-from django.http import JsonResponse
 from rest_framework import viewsets
 from .models import Item
 from .serializers import ItemSerializer
@@ -33,3 +32,4 @@ class SearchItemsView(APIView):
         results = list(items.values('id', 'title', 'category', 'price'))
 
         return Response({'results': results}, status=status.HTTP_200_OK)
+    
