@@ -13,6 +13,7 @@ class User(models.Model):
     name = models.CharField(max_length=255)
     surname = models.CharField(max_length=255)
     username = models.CharField(max_length=255, unique=True)
+    password = models.CharField(max_length=255)
     email = models.CharField(max_length=255, unique=True)
     phone_number = models.CharField(max_length=25)
     country = models.CharField(max_length=255)
