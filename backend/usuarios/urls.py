@@ -13,6 +13,6 @@ urlpatterns = [
     path("", views.index, name="index"),
     path('', include(router.urls)),
     path("api/message/", views.get_message, name="get_message"),
-    path("api/register/", registro, name="register"),
+    path("api/register/", views.registro, name="register"),
     path("api/login/", inicio_sesion, name="login"),
 ]

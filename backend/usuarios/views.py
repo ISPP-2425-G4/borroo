@@ -8,6 +8,7 @@ from django.contrib import messages
 from rest_framework import status
 from django.shortcuts import redirect, render
 from .forms import RegisterForm
+from django.views.decorators.csrf import csrf_exempt
 
 
 def index(request):
@@ -18,49 +19,63 @@ def get_message(request):
     now = datetime.datetime.now().strftime("%H:%M:%S")
     return JsonResponse({"message": f"Hola desde Django! Hora actual: {now}"})
 
-
+@csrf_exempt
 def inicio_sesion(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
+        
+        try:
+            # Attempt to find the user by username
+            user = User.objects.get(username=username)
+            
+            # Since we're using a custom User model without Django's auth system,
+            # we need to check the password directly
+            # If you're using make_password() from django.contrib.auth.hashers in your Registration form,
+            # then you should use check_password() here
+            from django.contrib.auth.hashers import check_password
+            
+            if check_password(password, user.password):
+                # Create a simple session to track the logged-in user
+                request.session['user_id'] = user.id
+                request.session['username'] = user.username
+                
+                return JsonResponse({
+                    "message": f"¡Bienvenido, {user.username}!",
+                    "user": {
+                        "id": user.id,
+                        "username": user.username,
+                        "name": user.name,
+                        "email": user.email
+                    }
+                })
+            else:
+                return JsonResponse({"error": "Contraseña incorrecta"},
+                                  status=status.HTTP_400_BAD_REQUEST)
+                
+        except User.DoesNotExist:
+            return JsonResponse({"error": "El usuario no existe"},
+                              status=status.HTTP_400_BAD_REQUEST)
+    
+    return JsonResponse({"error": "Método no permitido"},
+                      status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-        if user is None:
-            try:
-                usuario = User.objects.get(username=username)
-                if not usuario.is_active:
-                    messages.error(request,
-                                   "Tu cuenta está inactiva. \
-                                    No puedes iniciar sesión.")
-                else:
-                    messages.error(request, "Contraseña incorrecta.")
-            except User.DoesNotExist:
-                messages.error(request, "El usuario no existe.")
-        else:
-            login(request, user)
-            messages.success(request, f"¡Bienvenido, {user.username}!")
-            return redirect('index')
-
-    return JsonResponse({"error": "Invalid credentials"},
-                        status=status.HTTP_400_BAD_REQUEST)
-
-
+@csrf_exempt
 def registro(request):
     if request.method == 'POST':
-        form = RegisterForm(request.POST)
+        # Extract data from request.POST or request.body depending on content type
+        data = request.POST
+        
+        # Create the form with the data
+        form = RegisterForm(data)
+        
         if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])
-            user.save()
-            messages.success(request,
-                             "¡Registro exitoso! Ahora puedes iniciar sesión.")
+            user = form.save()
             return JsonResponse({"message": "User registered successfully!"},
-                                status=status.HTTP_201_CREATED)
+                            status=status.HTTP_201_CREATED)
         else:
-            messages.error(request,
-                           "Por favor corrige los errores en el formulario.")
             return JsonResponse(form.errors,
-                                status=status.HTTP_400_BAD_REQUEST)
+                            status=status.HTTP_400_BAD_REQUEST)
     else:
         form = RegisterForm()
 
