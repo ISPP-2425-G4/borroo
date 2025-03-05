@@ -16,12 +16,24 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Price',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('price_category', models.CharField(choices=[('SHORT', 'Short'), ('MEDIUM', 'Medium'), ('LONG', 'Long')], max_length=10)),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True,
+                                           serialize=False,
+                                           verbose_name='ID')),
+                ('price_category', models.CharField(
+                    choices=[
+                        ('SHORT', 'Short'),
+                        ('MEDIUM', 'Medium'),
+                        ('LONG', 'Long'),
+                    ],
+                    max_length=10
+                )),
                 ('price1', models.FloatField()),
                 ('price2', models.FloatField()),
                 ('price3', models.FloatField()),
-                ('item', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='price', to='item.item')),
+                ('item', models.OneToOneField(
+                    on_delete=django.db.models.deletion.CASCADE,
+                    related_name='price', to='item.item')),
             ],
         ),
     ]
