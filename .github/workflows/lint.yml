@@ -1,0 +1,53 @@
+name: Lint Frontend & Backend
+
+on: push
+
+jobs:
+  frontend-lint:
+    name: Run ESLint (Frontend)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref_name }}  # Asegura que esté en la rama correcta
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Run ESLint (solo reportar errores)
+        run: |
+          cd frontend
+          npx eslint "src/**/*.{js,jsx}"  # Solo reporta errores, sin --fix
+
+  backend-lint:
+    name: Run Flake8 (Backend)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          python -m pip install --upgrade pip
+          pip install flake8 
+
+      - name: Run Flake8 (reportar errores de estilo)
+        run: |
+          cd backend
+          flake8 .  # Detecta errores de estilo
