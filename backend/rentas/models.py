@@ -1,6 +1,6 @@
 from django.db import models
 from usuarios.models import User  # Importamos el modelo User
-from items.models import Item  # Importamos el modelo Item
+from objetos.models import Item  # Importamos el modelo Item
 
 
 class RentStatus(models.TextChoices):
@@ -86,4 +86,6 @@ class Rent(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.renter.username if self.renter else 'Usuario eliminado'} alquiló {self.item.title if self.item else 'Item eliminado'} de {self.start_date} a {self.end_date}"
+        renter_name = self.renter.username if self.renter else 'User eliminado'
+        item_title = self.item.title if self.item else 'Item eliminado'
+        return f"{renter_name} {item_title} {self.start_date} {self.end_date}"
