@@ -34,12 +34,10 @@ class EnumChoicesView(APIView):
         )
 
 
-
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
-    permission_classes = [permissions.AllowAny] 
-
+    permission_classes = [permissions.AllowAny]
 
 
 class SearchItemsView(APIView):
