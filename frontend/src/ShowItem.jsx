@@ -72,9 +72,9 @@ const ShowItemScreen = () => {
         <div className="item-details">
           <p><FiFileText /> <strong>Título:</strong> {item.title}</p>
           <p><FiEdit /> <strong>Descripción:</strong> {item.description}</p>
-          <p><FiLayers /> <strong>Categoría:</strong> {item.category}</p>
-          <p><FiXCircle /> <strong>Política de cancelación:</strong> {item.cancel_type}</p>
-          <p><FiLayers /> <strong>Categoría de precio:</strong> {item.price_category}</p>
+          <p><FiLayers /> <strong>Categoría:</strong> {item.category_display}</p>
+          <p><FiXCircle /> <strong>Política de cancelación:</strong> {item.cancel_type_display}</p>
+          <p><FiLayers /> <strong>Categoría de precio:</strong> {item.price_category_display}</p>
           <p><FiDollarSign /> <strong>Precio:</strong> {item.price} €</p>
         </div>
 
