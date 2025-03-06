@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { FiFileText, FiEdit, FiLayers, FiXCircle, FiDollarSign } from "react-icons/fi";
 import "../public/styles/CreateRental.css";
 import Navbar from "./Navbar";
+import { useNavigate } from "react-router-dom";
+
 
 const CreateItemScreen = () => {
   const [formData, setFormData] = useState({
@@ -10,30 +12,55 @@ const CreateItemScreen = () => {
     category: "",
     cancel_type: "",
     price_category: "",
-    price: ""
+    price: "",
   });
+  const navigate = useNavigate();
 
   const [options, setOptions] = useState({
     categories: [],
     cancel_types: [],
-    price_categories: []
+    price_categories: [],
   });
+
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Cargar datos de los enums desde el backend
   useEffect(() => {
     const fetchEnums = async () => {
       try {
-        const response = await fetch("/api/enum-choices/");
-        if (response.ok) {
-          const data = await response.json();
-          setOptions(data);
-        } else {
-          console.error("Error fetching enum choices");
+        const response = await fetch("http://localhost:8000/objetos/api/enum-choices/", {
+          method: "GET",
+          credentials: "include", 
+        });
+
+        if (!response.ok) {
+          throw new Error("Error cargando opciones del formulario.");
         }
+
+        const data = await response.json();
+
+
+        if (
+          !data.categories ||
+          !data.cancel_types ||
+          !data.price_categories
+        ) {
+          throw new Error("Respuesta de API inválida. Faltan datos.");
+        }
+
+        setOptions({
+          categories: Array.isArray(data.categories) ? data.categories : [],
+          cancel_types: Array.isArray(data.cancel_types) ? data.cancel_types : [],
+          price_categories: Array.isArray(data.price_categories) ? data.price_categories : [],
+        });
+
       } catch (error) {
         console.error("Error fetching enums:", error);
+        setErrorMessage("No se pudieron cargar las opciones. Inténtalo de nuevo.");
       }
     };
+
     fetchEnums();
   }, []);
 
@@ -43,31 +70,38 @@ const CreateItemScreen = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Item created:", formData);
+    setLoading(true);
+    setErrorMessage("");
+
     try {
-      const response = await fetch("/api/items", {
+      const response = await fetch("http://localhost:8000/objetos/api/items/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(formData),
       });
+
       if (response.ok) {
-        alert("Item creado exitosamente");
+        alert("¡Item creado exitosamente!");
         setFormData({
           title: "",
           description: "",
           category: "",
           cancel_type: "",
           price_category: "",
-          price: ""
+          price: "",
         });
+        navigate("/");
       } else {
-        alert("Error al crear el Item");
+        throw new Error("Error al crear el Item.");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("Ocurrió un error");
+      setErrorMessage("Ocurrió un error al enviar el formulario.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -76,6 +110,8 @@ const CreateItemScreen = () => {
       <Navbar />
       <div className="rental-box">
         <h2>Crear Publicación</h2>
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <FiFileText className="input-icon" />
@@ -88,6 +124,7 @@ const CreateItemScreen = () => {
               required
             />
           </div>
+
           <div className="input-group">
             <FiEdit className="input-icon" />
             <textarea
@@ -98,6 +135,7 @@ const CreateItemScreen = () => {
               required
             />
           </div>
+
           {/* Select dinámico para Categoría */}
           <div className="input-group">
             <FiLayers className="input-icon" />
@@ -108,13 +146,18 @@ const CreateItemScreen = () => {
               required
             >
               <option value="" disabled>Selecciona una categoría</option>
-              {options.categories.map((cat) => (
-                <option key={cat.value} value={cat.value}>
-                  {cat.label}
-                </option>
-              ))}
+              {options.categories.length > 0 ? (
+                options.categories.map((cat) => (
+                  <option key={cat.value} value={cat.value}>
+                    {cat.label}
+                  </option>
+                ))
+              ) : (
+                <option disabled>Cargando categorías...</option>
+              )}
             </select>
           </div>
+
           {/* Select dinámico para Política de Cancelación */}
           <div className="input-group">
             <FiXCircle className="input-icon" />
@@ -125,13 +168,18 @@ const CreateItemScreen = () => {
               required
             >
               <option value="" disabled>Selecciona una política de cancelación</option>
-              {options.cancel_types.map((cancel) => (
-                <option key={cancel.value} value={cancel.value}>
-                  {cancel.label}
-                </option>
-              ))}
+              {options.cancel_types.length > 0 ? (
+                options.cancel_types.map((cancel) => (
+                  <option key={cancel.value} value={cancel.value}>
+                    {cancel.label}
+                  </option>
+                ))
+              ) : (
+                <option disabled>Cargando políticas...</option>
+              )}
             </select>
           </div>
+
           {/* Select dinámico para Categoría de Precio */}
           <div className="input-group">
             <FiLayers className="input-icon" />
@@ -142,13 +190,18 @@ const CreateItemScreen = () => {
               required
             >
               <option value="" disabled>Selecciona una categoría de precio</option>
-              {options.price_categories.map((price) => (
-                <option key={price.value} value={price.value}>
-                  {price.label}
-                </option>
-              ))}
+              {options.price_categories.length > 0 ? (
+                options.price_categories.map((price) => (
+                  <option key={price.value} value={price.value}>
+                    {price.label}
+                  </option>
+                ))
+              ) : (
+                <option disabled>Cargando categorías de precio...</option>
+              )}
             </select>
           </div>
+
           <div className="input-group">
             <FiDollarSign className="input-icon" />
             <input
@@ -161,7 +214,10 @@ const CreateItemScreen = () => {
               required
             />
           </div>
-          <button type="submit" className="rental-btn">Publicar</button>
+
+          <button type="submit" className="rental-btn" disabled={loading}>
+            {loading ? "Publicando..." : "Publicar"}
+          </button>
         </form>
       </div>
     </div>
