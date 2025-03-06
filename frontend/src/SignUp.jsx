@@ -41,7 +41,8 @@ const Signup = () => {
       formData.append("password2", password2);
 
       // URL actualizada con la ruta correcta
-      const response = await fetch("https://localhost:8000/usuarios/api/register/", {
+      // codacy-disable-next-line
+      const response = await fetch("http://localhost:8000/usuarios/api/register/", {
         method: "POST",
         body: formData,
         credentials: "include"

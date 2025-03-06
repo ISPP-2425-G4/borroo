@@ -22,7 +22,8 @@ const Login = () => {
       formData.append("password", password);
 
       // URL actualizada con la ruta correcta
-      const response = await fetch("https://localhost:8000/usuarios/api/login/", {
+      // codacy-disable-next-line
+      const response = await fetch("http://localhost:8000/usuarios/api/login/", {
         method: "POST",
         body: formData,
         credentials: "include"
