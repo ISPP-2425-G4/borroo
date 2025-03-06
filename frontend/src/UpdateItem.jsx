@@ -23,7 +23,7 @@ const UpdateItemScreen = () => {
         const itemData = await itemResponse.json();
 
         // Obtener opciones de enums
-        const enumResponse = await fetch("http://localhost:8000/objetos/api/enum-choices/");
+        const enumResponse = await fetch("http://localhost:8000/objetos/enum-choices/");
         if (!enumResponse.ok) throw new Error("Error cargando opciones.");
         const enumData = await enumResponse.json();
 

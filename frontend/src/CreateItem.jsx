@@ -29,7 +29,7 @@ const CreateItemScreen = () => {
   useEffect(() => {
     const fetchEnums = async () => {
       try {
-        const response = await fetch("http://localhost:8000/objetos/api/enum-choices/", {
+        const response = await fetch("http://localhost:8000/objetos/enum-choices/", {
           method: "GET",
           credentials: "include", 
         });
