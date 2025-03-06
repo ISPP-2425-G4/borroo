@@ -12,7 +12,7 @@ html, body {
     align-items: center;
     min-height: calc(100vh - 80px); /* Ajusta según la altura del header */
     background-color: #f3f4f6;
-    padding-top: 80px; /* Ajusta según la altura del header */
+    padding-top: 140px; /* Ajusta según la altura del header */
     width: 100vw; /* Fuerza el ancho completo de la ventana */
 }
 

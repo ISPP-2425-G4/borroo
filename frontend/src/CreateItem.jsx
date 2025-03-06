@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FiFileText, FiEdit, FiLayers, FiXCircle, FiDollarSign } from "react-icons/fi";
-import "../public/styles/CreateRental.css";
+import "../public/styles/CreateItem.css";
 import Navbar from "./Navbar";
 import { useNavigate } from "react-router-dom";
 
