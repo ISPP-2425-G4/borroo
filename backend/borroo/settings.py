@@ -96,11 +96,11 @@ WSGI_APPLICATION = 'borroo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'borroo', 
-        'USER': 'kako',  
-        'PASSWORD': 'yIWkgNBhoASsEhNQPnfK499rW1oLwjNR',  
-        'HOST': 'dpg-cv4p208fnakc73br5ga0-a.frankfurt-postgres.render.com', 
-        'PORT': '5432',  
+        'NAME': 'borroo',
+        'USER': 'kako',
+        'PASSWORD': 'yIWkgNBhoASsEhNQPnfK499rW1oLwjNR',
+        'HOST': 'dpg-cv4p208fnakc73br5ga0-a.frankfurt-postgres.render.com',
+        'PORT': '5432',
     }
 }
 
