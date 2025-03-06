@@ -123,7 +123,12 @@ const UpdateItemScreen = () => {
             { name: "price_category", options: options.price_categories, icon: FiLayers }].map(({ name, options, icon: Icon }) => (
             <div className="input-group" key={name}>
               <Icon className="input-icon" />
-              <select name={name} value={formData[name]} onChange={handleChange} required>
+              <select 
+                  name={typeof name === "string" ? name : "default"} 
+                  value={formData[name] || ""} 
+                  onChange={handleChange} 
+                  required
+                >
                 <option value="" disabled>{`Selecciona ${name.replace("_", " ")}`}</option>
                 {options.map(({ value, label }) => (
                   <option key={value} value={value}>{label}</option>
