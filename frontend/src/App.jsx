@@ -1,21 +1,19 @@
-import { useState, useEffect } from "react";
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Layout from "./Layout";
+import Login from "./Login";
+import Signup from "./SignUp";
 
 function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/usuarios/api/message/") 
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message))
-      .catch((error) => console.error("Error:", error));
-  }, []);
-
   return (
-    <div>
-      <h1>Frontend en React</h1>
-      <h2>{message || "Cargando Mensaje"}</h2> 
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+        </Route>
+        {/* Ruta para la página de login */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
+    </Router>
   );
 }
 
