@@ -13,3 +13,4 @@ pytest-cov==4.1.0
 pytest-django==4.10.0
 sqlparse==0.5.3
 tzdata==2025.1
+psycopg[binary]==3.2.5
