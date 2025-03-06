@@ -1,7 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import ItemViewSet, SearchItemsView, EnumChoicesView
-from .serializers import ItemSerializer
 
 router = DefaultRouter()
 router.register(r'items', ItemViewSet)
