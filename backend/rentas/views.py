@@ -23,7 +23,7 @@ class RentViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'])
     def first_request(self, request, *args, **kwargs):
-        item_id = request.data.get('item')  
+        item_id = request.data.get('item')
         start_date = request.data.get('start_date')
         end_date = request.data.get('end_date')
 
@@ -45,7 +45,7 @@ class RentViewSet(viewsets.ModelViewSet):
         owner = rent.item.owner  # hay que definir la relacion de owner en item
         renter = rent.renter
 
-        response = request.data.get("response")  
+        response = request.data.get("response")
         # añadirla al body del json en el front como responseType
         # segun el boton que pulse
 
