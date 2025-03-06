@@ -1,14 +1,43 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from .models import Item
 from .serializers import ItemSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from .models import ItemCategory, CancelType, PriceCategory
+
+
+class EnumChoicesView(APIView):
+    def get(self, request, *args, **kwargs):
+        categories = [
+            {"value": choice.value, "label": choice.label}
+            for choice in ItemCategory
+        ]
+
+        cancel_types = [
+            {"value": choice.value, "label": choice.label}
+            for choice in CancelType
+        ]
+
+        price_categories = [
+            {"value": choice.value, "label": choice.label}
+            for choice in PriceCategory
+        ]
+
+        return Response(
+            {
+                "categories": categories,
+                "cancel_types": cancel_types,
+                "price_categories": price_categories,
+            },
+            status=status.HTTP_200_OK
+        )
 
 
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    permission_classes = [permissions.AllowAny]
 
 
 class SearchItemsView(APIView):

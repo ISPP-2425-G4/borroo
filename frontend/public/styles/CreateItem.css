@@ -1,0 +1,73 @@
+/* Asegúrate de que html y body ocupen toda la pantalla */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.rental-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px); /* Ajusta según la altura del header */
+    background-color: #f3f4f6;
+    padding-top: 140px; /* Ajusta según la altura del header */
+    width: 100vw; /* Fuerza el ancho completo de la ventana */
+}
+
+.rental-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 350px;
+}
+
+h2 {
+    color: #2563eb;
+    margin-bottom: 1.5rem;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    background: #e5e7eb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.input-icon {
+    color: #6b7280;
+    margin-right: 10px;
+}
+
+input, select, textarea {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+}
+
+textarea {
+    resize: none;
+    height: 60px;
+}
+
+.rental-btn {
+    background: #2563eb;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.rental-btn:hover {
+    background: #1e40af;
+}

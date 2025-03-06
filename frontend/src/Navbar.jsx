@@ -46,7 +46,7 @@ const Navbar = () => {
       {/* Navigation Links */}
       <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
         <Link to="/" className="nav-link">Inicio</Link>
-        <Link to="/rent" className="nav-link">Poner en alquiler</Link>
+        <Link to="/create-item" className="nav-link">Poner en alquiler</Link>
       </nav>
     </header>
   );
