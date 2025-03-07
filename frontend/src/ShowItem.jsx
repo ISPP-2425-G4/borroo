@@ -16,7 +16,7 @@ const ShowItemScreen = () => {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/objetos/api/items/${id}/`);
+        const response = await fetch(`http://localhost:8000/objetos/full/${id}/`);
         if (!response.ok) throw new Error("Error cargando el ítem.");
         const data = await response.json();
         setItem(data);
@@ -36,7 +36,7 @@ const ShowItemScreen = () => {
     if (!window.confirm("¿Estás seguro de que quieres eliminar este ítem?")) return;
 
     try {
-      const response = await fetch(`http://localhost:8000/objetos/api/items/${id}/`, {
+      const response = await fetch(`http://localhost:8000/objetos/full/${id}/`, {
         method: "DELETE",
       });
 

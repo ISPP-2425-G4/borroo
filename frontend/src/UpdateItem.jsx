@@ -18,7 +18,7 @@ const UpdateItemScreen = () => {
     const fetchData = async () => {
       try {
         // Obtener ítem
-        const itemResponse = await fetch(`http://localhost:8000/objetos/api/items/${id}/`);
+        const itemResponse = await fetch(`http://localhost:8000/objetos/full/${id}/`);
         if (!itemResponse.ok) throw new Error("Error cargando el ítem.");
         const itemData = await itemResponse.json();
 
@@ -48,7 +48,7 @@ const UpdateItemScreen = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:8000/objetos/api/items/${id}/`, {
+      const response = await fetch(`http://localhost:8000/objetos/full/${id}/`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
