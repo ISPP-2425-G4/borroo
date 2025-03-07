@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiSearch, FiUser, FiHeart, FiShoppingCart, FiMenu } from "react-icons/fi";
+import {  FiUser, FiHeart, FiShoppingCart, FiMenu } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import "../public/styles/Navbar.css"; 
 
@@ -13,40 +13,10 @@ const Navbar = () => {
         <Link to="/" className="logo">BORROO</Link>
         
         {/* Search Bar & Filters */}
-        <div className="search-filters">
-        <div className="search-container">
-          <input type="text" placeholder="Buscar..." className="search" />
-          <button className="search-btn">
-            <FiSearch size={20} />
-          </button>
-        </div>
-
-          {/* Filtros */}
-          <div className="filters">
-            {/* Precio (Rango numérico) */}
-            <div className="filter price-filter">
-              <label>Precio:</label>
-              <div className="price-inputs">
-                <input type="number" placeholder="Min" min="0" className="price-input" />
-                <span> - </span>
-                <input type="number" placeholder="Max" min="0" className="price-input" />
-              </div>
-            </div>
-
-            {/* Categoría */}
-            <div className="filter">
-              <label>Categoría:</label>
-              <select>
-                <option>💻 Tecnología</option>
-                <option>⚽ Deporte</option>
-                <option>🛠️ Bricolaje</option>
-                <option>👕 Ropa</option>
-                <option>📦 Mobiliario y Logística</option>
-                <option>🎮 Entretenimiento</option>
-              </select>
-            </div>
-          </div>
-        </div>
+        <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
+        <Link to="/" className="nav-link">Inicio</Link>
+        <Link to="/create-item" className="nav-link">Poner en alquiler</Link>
+      </nav>
 
         {/* Right Section */}
         <div className="nav-icons">
@@ -71,10 +41,7 @@ const Navbar = () => {
       </div>
       
       {/* Navigation Links */}
-      <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
-        <Link to="/" className="nav-link">Inicio</Link>
-        <Link to="/create-item" className="nav-link">Poner en alquiler</Link>
-      </nav>
+      
     </header>
   );
 };
