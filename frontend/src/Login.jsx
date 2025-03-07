@@ -31,7 +31,13 @@ const Login = () => {
 
       // Verificar si la respuesta fue exitosa
       if (response.ok) {
-        // Si hay redirección, navegamos a la página principal
+        // Parse the response data
+        const data = await response.json();
+        
+        // Store the user data in localStorage
+        localStorage.setItem('user', JSON.stringify(data.user));
+        
+        // Navigate to the home page
         navigate("/");
       } else {
         // Intentar obtener el mensaje de error como JSON

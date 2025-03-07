@@ -74,56 +74,131 @@
     margin-top: 10px;
 }
 
-.nav-link {
-    text-decoration: none;
-    color: white;
-    font-size: 1rem;
-    transition: color 0.3s;
-}
-
-.nav-link:hover {
-    color: #fbbf24;
-}
-
-/* Contenedor principal del login1 */
+/* Contenedor principal del login */
 .login1-container {
     position: relative;
     display: inline-block;
 }
 
-/* Estilos del menú */
+/* Username display */
+.username-display {
+    margin-left: 8px;
+    font-weight: 500;
+}
+
+/* Estilos del menú de login */
 .login1-menu {
     position: absolute;
-    top: 40px;
+    top: 100%;
     right: 0;
-    background: white;
-    color: black;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: none; /* Oculto por defecto */
-    flex-direction: column;
-    min-width: 150px;
-    padding: 10px 0;
+    width: 220px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 1rem;
     z-index: 100;
+    display: none;
 }
 
-/* Estilos de los enlaces dentro del menú */
-.login1-menu .nav-link {
+.login1-menu.visible {
     display: block;
-    padding: 10px 15px;
-    text-align: left;
-    color: black;
-    text-decoration: none;
-    transition: background 0.3s ease;
-}
-
-.login1-menu .nav-link:hover {
-    background-color: #f1f1f1;
 }
 
 /* Mostrar menú cuando el ratón pasa por encima del contenedor */
 .login1-container:hover .login1-menu {
     display: flex;
+    flex-direction: column;
+}
+
+/* User info section */
+.user-info {
+    padding-bottom: 0.8rem;
+    margin-bottom: 0.8rem;
+    border-bottom: 1px solid #eee;
+}
+
+.user-info strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+}
+
+.user-info p {
+    margin: 0.3rem 0;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Badges */
+.verified-badge {
+    display: inline-block;
+    background-color: #4caf50;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-top: 0.3rem;
+}
+
+.plan-badge {
+    display: inline-block;
+    background-color: #2196f3;
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    text-transform: capitalize;
+}
+
+/* Logout button */
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.7rem;
+    margin-top: 0.5rem;
+    background-color: #f8f8f8;
+    border: none;
+    border-radius: 5px;
+    color: #e53935;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.logout-btn:hover {
+    background-color: #ffebee;
+}
+
+/* Nav links styling */
+.nav-link {
+    display: block;
+    padding: 0.7rem;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.2s;
+    border-radius: 5px;
+}
+
+.nav-link:hover {
+    background-color: #f5f5f5;
+}
+
+/* Navbar nav-links (override for main navbar links) */
+.navbar .nav-links .nav-link {
+    color: white;
+    padding: 0.5rem;
+}
+
+.navbar .nav-links .nav-link:hover {
+    color: #fbbf24;
+    background-color: transparent;
+}
+
+/* Placeholder color fix */
+.price-input::placeholder {
+    color: #777; /* Changed from white for better visibility */
+    font-weight: bold;
 }
 
 /* Responsive */
@@ -139,5 +214,14 @@
 
     .nav-icons {
         justify-content: center;
+    }
+
+    .filters {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .login1-menu {
+        width: 180px;
     }
 }
