@@ -3,6 +3,7 @@ import { FiFileText, FiEdit, FiLayers, FiXCircle, FiDollarSign } from "react-ico
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "../public/styles/CreateItem.css";
+import PropTypes from 'prop-types';
 
 const CreateItemScreen = () => {
   const [formData, setFormData] = useState({
