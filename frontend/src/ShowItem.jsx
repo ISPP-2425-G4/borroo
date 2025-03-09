@@ -5,7 +5,7 @@ import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { addDays } from "date-fns";
-import "../public/styles/CreateItem.css";
+import "../public/styles/ItemDetails.css";
 import Navbar from "./Navbar";
 
 const ShowItemScreen = () => {
@@ -76,24 +76,23 @@ const ShowItemScreen = () => {
   return (
     <div className="item-details-container">
       <Navbar />
-      <div>
-
+      <div className="content-container">
         <div className="image-slider">
           <p>Imágenes del ítem (por implementar)</p>
         </div>
-        
-        <h2>Detalles de la Publicación</h2>
+
+        <h2 className="item-title">{item.title}</h2> {/* Título centrado */}
+
         {errorMessage && <div className="error-message">{errorMessage}</div>}
-        
+
         <div className="item-details">
-          <p><FiFileText /> <strong>Título:</strong> {item.title}</p>
-          <p><FiEdit /> <strong>Descripción:</strong> {item.description}</p>
+          <p><FiFileText /> <strong>Descripción:</strong> {item.description}</p>
           <p><FiLayers /> <strong>Categoría:</strong> {item.category_display}</p>
           <p><FiXCircle /> <strong>Política de cancelación:</strong> {item.cancel_type_display}</p>
           <p><FiDollarSign /> <strong>Precio:</strong> {item.price} € / {item.price_category_display}</p>
         </div>
 
-        {/* Calendario*/}
+        {/* Calendario */}
         <div className="calendar-container">
           <h3>Selecciona un rango de fechas para el alquiler</h3>
           <DateRange
