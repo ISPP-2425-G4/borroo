@@ -57,7 +57,13 @@ Asegúrate de tener instalados los siguientes componentes:
    pip install -r requirements.txt
    ```
 
-4. **Configurar la base de datos**
+5. **Copiar archivo .env**
+   ```sh
+   cd backend
+   copy .env.local.example .env
+   ```
+
+6. **Configurar la base de datos**
    ```sh
    mysql -u root -p
    
@@ -68,7 +74,7 @@ Asegúrate de tener instalados los siguientes componentes:
    EXIT;
    ```
 
-5. **Ejecutar migraciones en Django**
+7. **Ejecutar migraciones en Django**
    ```sh
    python manage.py makemigrations
    python manage.py migrate
