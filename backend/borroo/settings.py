@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,6 +30,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+dotenv_file = ".env"
+load_dotenv(dotenv_file)
 
 # Application definition
 
@@ -95,12 +98,12 @@ WSGI_APPLICATION = 'borroo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'borroo',
-        'USER': 'kako',
-        'PASSWORD': 'yIWkgNBhoASsEhNQPnfK499rW1oLwjNR',
-        'HOST': 'dpg-cv4p208fnakc73br5ga0-a.frankfurt-postgres.render.com',
-        'PORT': '5432',
+        'ENGINE': os.getenv('DB_ENGINE'),
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
 

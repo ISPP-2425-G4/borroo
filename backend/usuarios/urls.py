@@ -8,10 +8,9 @@ from . import views
 app_name = "app"
 
 router = DefaultRouter()
-router.register(r'', UserViewSet, basename='user')
+router.register(r'full', UserViewSet, basename='user')
 
 urlpatterns = [
-    path("", views.index, name="index"),
     path('', include(router.urls)),
     path("api/message/", views.get_message, name="get_message"),
     path("api/register/", registro, name="register"),
