@@ -18,7 +18,7 @@ class ItemSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'title', 'description', 'category', 'category_display',
             'cancel_type', 'cancel_type_display', 'price_category',
-            'price_category_display', 'price'
+            'price_category_display', 'price', 'image'
         ]
 
     def create(self, validated_data):
