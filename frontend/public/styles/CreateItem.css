@@ -1,119 +1,185 @@
-/* Asegúrate de que html y body ocupen toda la pantalla */
-html, body {
+/* ====== RESET GENERAL ====== */
+* {
     margin: 0;
     padding: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.rental-container {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f6f8;
+    color: #111;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 80px); /* Ajusta según la altura del header */
-    background-color: #f3f4f6;
-    padding-top: 140px; /* Ajusta según la altura del header */
-    width: 100vw; /* Fuerza el ancho completo de la ventana */
-}
-
-/* Caja principal */
-.rental-box {
+    min-height: 100vh;
+  }
+  
+  /* ====== CONTENEDOR PRINCIPAL ====== */
+  .create-item-container {
+    margin-top: 30%;
+    width: 100%;
+    max-width: 420px; /* Reducimos el ancho máximo */
+    padding: 1.5rem; /* Menos padding para que no se vea tan grande */
     background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 380px;
-}
-
-/* Título principal */
-h2 {
-    color: #2563eb;
-    margin-bottom: 1.5rem;
-    font-size: 1.6rem;
-}
-
-/* Estilo para los detalles del ítem */
-.item-details {
-    text-align: left;
-    font-size: 16px;
-    line-height: 1.8;
-}
-
-.item-details p {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 500;
-    color: #444;
-    background: #f9fafb;
-    padding: 8px 12px;
-    border-radius: 6px;
-    margin-bottom: 8px;
-}
-
-.item-details strong {
-    color: #222;
-}
-
-/* Grupo de botones */
-.button-group {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 20px;
-}
-
-/* Botones generales */
-.rental-btn {
+    align-items: center;
+  }
+  
+  /* ====== TITULO ====== */
+  h2 {
+    font-size: 1.5rem; /* Reducimos el tamaño del título */
+    font-weight: bold;
+    margin-bottom: 0.8rem;
+    color: #2563eb;
+  }
+  
+  /* ====== FORMULARIO ====== */
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem; /* Espacio más reducido entre inputs */
+  }
+  
+  /* ====== GRUPO DE INPUTS ====== */
+  .input-group {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background-color: #2563eb;
-    color: white;
+    gap: 0.6rem; /* Menos separación entre icono y input */
+    background: #f9fafb;
+    padding: 0.6rem 0.8rem; /* Reducimos el padding */
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: 0.3s ease-in-out;
+    position: relative;
+  }
+  
+  .input-group:hover {
+    border-color: #2563eb;
+    background: #eef2ff;
+  }
+  
+  /* Iconos dentro del input */
+  .input-icon {
+    font-size: 1rem; /* Icono más pequeño */
+    color: #2563eb;
+  }
+  
+  /* INPUTS Y TEXTAREA */
+  .input-group input,
+  .input-group textarea,
+  .input-group select {
+    flex: 1;
     border: none;
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: bold;
+    background: transparent;
+    font-size: 0.9rem; /* Reducimos el tamaño del texto */
+    outline: none;
+    color: #111;
+    font-weight: 500;
+  }
+  
+  /* Textarea sin flecha */
+  textarea {
+    min-height: 80px; /* Menos altura por defecto */
+    resize: vertical;
+  }
+  
+  /* ====== SELECT (MENÚS DESPLEGABLES) ====== */
+  .input-group select {
+    padding-left: 8px;
+    appearance: none;
+    padding-right: 1.8rem; /* Espacio para la flecha */
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
+    font-weight: normal;
+    color: #666;
+    border: none;
+  }
+  
+  /* Flecha solo en los SELECT */
+  .select-arrow {
+    font-size: 0.8rem;
+    color: #2563eb;
+    position: absolute;
+    right: 0.8rem;
+    pointer-events: none;
+  }
+  
+  /* ====== ESTILO PARA EL MENÚ DESPLEGABLE ====== */
+  select::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  select::-webkit-scrollbar-thumb {
+    background-color: #2563eb;
+    border-radius: 8px;
+  }
+  
+  select option {
+    padding: 8px;
+    font-size: 0.9rem;
+    background: white;
+    color: #111;
+    text-indent: 6px;
+  }
+  
+  /* Cuando el usuario pasa el cursor por una opción */
+  select option:hover {
+    background: #eef2ff;
+  }
+  
+  /* ====== BOTÓN PRINCIPAL ====== */
+  .primary-btn {
+    background: #2563eb;
+    color: white;
+    font-size: 0.9rem; /* Reducimos el tamaño del texto */
+    font-weight: bold;
+    padding: 0.6rem; /* Botón más compacto */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
     width: 100%;
-}
-
-.rental-btn:hover {
-    background-color: #1e40af;
+  }
+  
+  .primary-btn:hover {
+    background: #1e40af;
     transform: scale(1.02);
 }
 
-/* Botón de eliminar */
-.delete-btn {
-    background-color: #dc3545;
-}
 
-.delete-btn:hover {
-    background-color: #b02a37;
-}
-
-/* Botón de volver */
-.back-btn {
-    background-color: #6b7280;
-}
-
-.back-btn:hover {
-    background-color: #4b5563;
-}
-/* Botón de EDITAR en VERDE */
-.edit-btn {
-    background-color: #22c55e; /* Verde */
-}
-
-.edit-btn:hover {
-    background-color: #16a34a; /* Verde más oscuro */
-}
-
-
+  
+  /* ====== MENSAJES DE ERROR ====== */
+  .error-message {
+    color: red;
+    font-size: 0.8rem;
+    background: rgba(255, 0, 0, 0.1);
+    padding: 0.4rem;
+    border-radius: 5px;
+    margin-bottom: 1.5%;
+  }
+  
+  /* ====== RESPONSIVE ====== */
+  @media (max-width: 600px) {
+    .create-item-container {
+      width: 95%;
+      padding: 1rem;
+    }
+  
+    .input-group {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .input-icon {
+      margin-bottom: 0.4rem;
+    }
+  }
+  
 
 /* Estilo para el slider de imágenes */
 .image-slider {
