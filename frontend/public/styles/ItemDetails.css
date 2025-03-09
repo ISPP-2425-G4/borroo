@@ -65,7 +65,7 @@
     max-width: 600px;
 }
 
-.rental-btn {
+.btn {
     padding: 10px 20px;
     font-size: 1rem;
     border-radius: 5px;
@@ -83,6 +83,23 @@
     color: white;
 }
 
-.rental-btn:hover {
+.btn:hover {
     opacity: 0.8;
 }
+
+/* Botón de solicitud de alquiler */
+.rental-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .rental-btn:hover {
+    background-color: #0056b3;
+  }

@@ -73,6 +73,18 @@ const ShowItemScreen = () => {
   }
   if (!item) return <p>No se encontró el ítem.</p>;
 
+  const handleRequestRental = () => {
+    const rentalConfirmation = window.confirm(
+      `¿Estás seguro de que quieres solicitar este objeto para las fechas seleccionadas: ${dateRange[0].startDate.toLocaleDateString()} - ${dateRange[0].endDate.toLocaleDateString()}?`
+    );
+
+    if (rentalConfirmation) {
+      //TODO: Enviar solicitud de alquiler al backend
+
+      alert("Solicitud de alquiler enviada.");
+    }
+  };
+
   return (
     <div className="item-details-container">
       <Navbar />
@@ -101,18 +113,22 @@ const ShowItemScreen = () => {
             minDate={new Date()} // No se pueden seleccionar fechas pasadas
           />
         </div>
+        {/* Botón para solicitar el alquiler */}
+        <button className="rental-btn" onClick={handleRequestRental}>
+          Solicitar alquiler
+        </button>
 
         {/* Botones de acción - TODO si está autorizado*/}
         <div className="button-group">
-          <button className="rental-btn edit-btn" onClick={() => navigate(`/update-item/${id}`)}>
+          <button className="btn edit-btn" onClick={() => navigate(`/update-item/${id}`)}>
             <FiEdit /> Editar
           </button>
 
-          <button className="rental-btn delete-btn" onClick={handleDelete}>
+          <button className="btn delete-btn" onClick={handleDelete}>
             <FiTrash2 /> Eliminar
           </button>
 
-          <button className="rental-btn" onClick={() => navigate("/")}>
+          <button className="btn" onClick={() => navigate("/")}>
             <FiArrowLeft /> Volver al inicio
           </button>
         </div>
