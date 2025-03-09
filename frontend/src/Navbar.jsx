@@ -135,7 +135,7 @@ const Navbar = () => {
           
           {/* Mobile Menu Button */}
           <button className="menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <FiMenu size={24} /> : <FiMenu size={24} />}
+            <FiMenu size={24} />
           </button>
         </div>
       </div>
@@ -143,10 +143,11 @@ const Navbar = () => {
       {/* Navigation Links */}
       <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
         <Link to="/" className="nav-link">Inicio</Link>
-        <Link to="/rent" className="nav-link">Poner en alquiler</Link>
+        <Link to="/create-item" className="nav-link">Poner en alquiler</Link>
       </nav>
     </header>
   );
 };
+
 
 export default Navbar;

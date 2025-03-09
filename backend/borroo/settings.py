@@ -42,8 +42,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'objetos'
+    'objetos',
+    'rentas',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS':
+    'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10  # Se puede cambiar poniendo ?page_size=X en la URL
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -88,12 +95,12 @@ WSGI_APPLICATION = 'borroo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'borroo',
-        'USER': 'borroo',
-        'PASSWORD': 'Borroo2025',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'USER': 'kako',
+        'PASSWORD': 'yIWkgNBhoASsEhNQPnfK499rW1oLwjNR',
+        'HOST': 'dpg-cv4p208fnakc73br5ga0-a.frankfurt-postgres.render.com',
+        'PORT': '5432',
     }
 }
 
