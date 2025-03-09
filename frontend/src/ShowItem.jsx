@@ -7,6 +7,7 @@ import "react-date-range/dist/theme/default.css";
 import { addDays } from "date-fns";
 import "../public/styles/ItemDetails.css";
 import Navbar from "./Navbar";
+import Modal from "./Modal";
 
 const ShowItemScreen = () => {
   const { id } = useParams(); // Obtener el ID desde la URL
@@ -22,6 +23,7 @@ const ShowItemScreen = () => {
       key: "selection",
     },
   ]);
+  const [showRentalModal, setShowRentalModal] = useState(false);
 
   // Cargar datos del ítem desde el backend
   useEffect(() => {
@@ -74,15 +76,10 @@ const ShowItemScreen = () => {
   if (!item) return <p>No se encontró el ítem.</p>;
 
   const handleRequestRental = () => {
-    const rentalConfirmation = window.confirm(
-      `¿Estás seguro de que quieres solicitar este objeto para las fechas seleccionadas: ${dateRange[0].startDate.toLocaleDateString()} - ${dateRange[0].endDate.toLocaleDateString()}?`
-    );
-
-    if (rentalConfirmation) {
-      //TODO: Enviar solicitud de alquiler al backend
-
-      alert("Solicitud de alquiler enviada.");
-    }
+    setShowRentalModal(false);
+    //TODO: Enviar solicitud de alquiler al backend
+    alert("Solicitud de alquiler enviada.");
+    
   };
 
   return (
@@ -114,7 +111,7 @@ const ShowItemScreen = () => {
           />
         </div>
         {/* Botón para solicitar el alquiler */}
-        <button className="rental-btn" onClick={handleRequestRental}>
+        <button className="rental-btn" onClick={() => setShowRentalModal(true)}>
           Solicitar alquiler
         </button>
 
@@ -131,6 +128,16 @@ const ShowItemScreen = () => {
           <button className="btn" onClick={() => navigate("/")}>
             <FiArrowLeft /> Volver al inicio
           </button>
+
+          {/* Modal para confirmar alquiler */}
+          { showRentalModal && (
+            <Modal 
+              title="Confirmar Solicitud" 
+              message={`¿Quieres solicitar el objeto "${item.title}" del ${dateRange[0].startDate.toLocaleDateString()} al ${dateRange[0].endDate.toLocaleDateString()}?`} 
+              onCancel={() => setShowRentalModal(false)} 
+              onConfirm={handleRequestRental} 
+            />
+          )}
         </div>
       </div>
     </div>
