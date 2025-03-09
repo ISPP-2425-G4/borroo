@@ -18,7 +18,7 @@ class ItemSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'title', 'description', 'category', 'category_display',
             'cancel_type', 'cancel_type_display', 'price_category',
-            'price_category_display', 'price'
+            'price_category_display', 'price', 'user'
         ]
 
     def create(self, validated_data):
@@ -37,5 +37,6 @@ class ItemSerializer(serializers.ModelSerializer):
             'price_category', instance.price_category
         )
         instance.price = validated_data.get('price', instance.price)
+        instance.user = validated_data.get('user', instance.user)
         instance.save()
         return instance
