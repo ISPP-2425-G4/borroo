@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 import datetime
-from rest_framework import viewsets, PermissionDenied
+from rest_framework import viewsets
+from django.core.exceptions import PermissionDenied
 from .models import User
 from .serializers import UserSerializer
 from rest_framework import status
