@@ -74,7 +74,7 @@ const CreateItemScreen = () => {
     setErrorMessage("");
 
     try {
-      const response = await fetch("http://localhost:8000/objetos/api/items/", {
+      const response = await fetch("http://localhost:8000/objetos/full/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
