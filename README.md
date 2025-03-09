@@ -66,7 +66,9 @@ Asegúrate de tener instalados los siguientes componentes:
 6. **Configurar la base de datos**
    ```sh
    mysql -u root -p
-   
+
+   DROP DATABASE IF EXISTS borroo;
+   DROP USER IF EXISTS 'borroo'@'localhost';
    CREATE DATABASE borroo;
    CREATE USER 'borroo'@'localhost' IDENTIFIED BY 'Borroo2025';
    GRANT ALL PRIVILEGES ON borroo.* TO 'borroo'@'localhost';
