@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FiFileText, FiEdit, FiLayers, FiXCircle, FiDollarSign, FiArrowLeft, FiTrash2 } from "react-icons/fi";
+import { DateRange } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
+import { addDays } from "date-fns";
 import "../public/styles/CreateItem.css";
 import Navbar from "./Navbar";
 
@@ -11,6 +15,13 @@ const ShowItemScreen = () => {
   const [item, setItem] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [dateRange, setDateRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7), // Por defecto, 7 días de alquiler
+      key: "selection",
+    },
+  ]);
 
   // Cargar datos del ítem desde el backend
   useEffect(() => {
@@ -63,22 +74,36 @@ const ShowItemScreen = () => {
   if (!item) return <p>No se encontró el ítem.</p>;
 
   return (
-    <div className="rental-container">
+    <div className="item-details-container">
       <Navbar />
-      <div className="rental-box">
+      <div>
+
+        <div className="image-slider">
+          <p>Imágenes del ítem (por implementar)</p>
+        </div>
+        
         <h2>Detalles de la Publicación</h2>
         {errorMessage && <div className="error-message">{errorMessage}</div>}
-
+        
         <div className="item-details">
           <p><FiFileText /> <strong>Título:</strong> {item.title}</p>
           <p><FiEdit /> <strong>Descripción:</strong> {item.description}</p>
           <p><FiLayers /> <strong>Categoría:</strong> {item.category_display}</p>
           <p><FiXCircle /> <strong>Política de cancelación:</strong> {item.cancel_type_display}</p>
-          <p><FiLayers /> <strong>Categoría de precio:</strong> {item.price_category_display}</p>
-          <p><FiDollarSign /> <strong>Precio:</strong> {item.price} €</p>
+          <p><FiDollarSign /> <strong>Precio:</strong> {item.price} € / {item.price_category_display}</p>
         </div>
 
-        {/* Botones de acción */}
+        {/* Calendario*/}
+        <div className="calendar-container">
+          <h3>Selecciona un rango de fechas para el alquiler</h3>
+          <DateRange
+            ranges={dateRange}
+            onChange={(ranges) => setDateRange([ranges.selection])}
+            minDate={new Date()} // No se pueden seleccionar fechas pasadas
+          />
+        </div>
+
+        {/* Botones de acción - TODO si está autorizado*/}
         <div className="button-group">
           <button className="rental-btn edit-btn" onClick={() => navigate(`/update-item/${id}`)}>
             <FiEdit /> Editar
