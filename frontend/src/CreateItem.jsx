@@ -171,12 +171,20 @@ const InputField = ({ icon, ...props }) => (
   </div>
 );
 
+InputField.propTypes = {
+  icon: PropTypes.element.isRequired,
+  // other props can be added here as needed
+};
 const TextareaField = ({ icon, ...props }) => (
   <div className="input-group">
     <span className="input-icon">{icon}</span>
     <textarea {...props} required />
   </div>
 );
+TextareaField.propTypes = {
+  icon: PropTypes.element.isRequired,
+  // other props can be added here as needed
+};
 
 const SelectField = ({ icon, options, placeholder, ...props }) => (
   <div className="input-group">
@@ -192,6 +200,14 @@ const SelectField = ({ icon, options, placeholder, ...props }) => (
     <span className="select-arrow">▼</span> {/* Flecha añadida manualmente */}
   </div>
 );
-
+SelectField.propTypes = {
+  icon: PropTypes.element.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+  })).isRequired,
+  placeholder: PropTypes.string.isRequired,
+  // other props can be added here as needed
+};
 
 export default CreateItemScreen;
