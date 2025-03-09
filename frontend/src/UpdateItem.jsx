@@ -5,60 +5,40 @@ import "../public/styles/CreateItem.css";
 import Navbar from "./Navbar";
 
 const UpdateItemScreen = () => {
-  const { id } = useParams(); // Obtener el ID del ítem desde la URL
+  const { id } = useParams(); // Obtener el ID desde la URL
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    category: "",
-    cancel_type: "",
-    price_category: "",
-    price: "",
-  });
-
-  const [options, setOptions] = useState({
-    categories: [],
-    cancel_types: [],
-    price_categories: [],
-  });
-
-  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState(null); // 🔥 Ahora empieza en null
+  const [options, setOptions] = useState(null); // 🔥 También empieza en null
+  const [isLoaded, setIsLoaded] = useState(false); // 🔥 Indica si los datos están listos
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Cargar datos del ítem existente
+  // Cargar datos del ítem existente y opciones de enums
   useEffect(() => {
-    const fetchItem = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/objetos/api/items/${id}/`);
-        if (!response.ok) throw new Error("Error cargando el ítem.");
-        const data = await response.json();
-        setFormData(data);
+        // Obtener ítem
+        const itemResponse = await fetch(`http://localhost:8000/objetos/full/${id}/`);
+        if (!itemResponse.ok) throw new Error("Error cargando el ítem.");
+        const itemData = await itemResponse.json();
+
+        // Obtener opciones de enums
+        const enumResponse = await fetch("http://localhost:8000/objetos/enum-choices/");
+        if (!enumResponse.ok) throw new Error("Error cargando opciones.");
+        const enumData = await enumResponse.json();
+
+        // Guardar datos en el estado
+        setFormData(itemData);
+        setOptions(enumData);
+        setIsLoaded(true); // 🔥 Solo ahora se muestra el formulario
       } catch (error) {
-        console.error("Error fetching item:", error);
-        setErrorMessage("No se pudo cargar el ítem.");
+        console.error("Error fetching data:", error);
+        setErrorMessage("No se pudieron cargar los datos.");
       }
     };
 
-    if (id) fetchItem();
+    if (id) fetchData();
   }, [id]);
-
-  // Cargar datos de los enums desde el backend
-  useEffect(() => {
-    const fetchEnums = async () => {
-      try {
-        const response = await fetch("http://localhost:8000/objetos/api/enum-choices/");
-        if (!response.ok) throw new Error("Error cargando opciones.");
-        const data = await response.json();
-        setOptions(data);
-      } catch (error) {
-        console.error("Error fetching enums:", error);
-        setErrorMessage("No se pudieron cargar las opciones.");
-      }
-    };
-
-    fetchEnums();
-  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -66,26 +46,35 @@ const UpdateItemScreen = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
     try {
-      const response = await fetch(`http://localhost:8000/objetos/api/items/${id}/`, {
+      const response = await fetch(`http://localhost:8000/objetos/full/${id}/`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) throw new Error("Error al actualizar el Item");
+      if (!response.ok) throw new Error("Error al actualizar el ítem");
 
-      alert("¡Item actualizado exitosamente!");
+      alert("¡Ítem actualizado exitosamente!");
       navigate("/");
     } catch (error) {
       console.error("Error updating item:", error);
       setErrorMessage("Ocurrió un error al actualizar el ítem.");
-    } finally {
-      setLoading(false);
     }
   };
+
+  // 🔥 Mostrar "Cargando..." si los datos aún no están listos
+  if (!isLoaded) {
+    return (
+      <div className="rental-container">
+        <Navbar />
+        <div className="rental-box">
+          <h2>Cargando...</h2>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="rental-container">
@@ -150,8 +139,8 @@ const UpdateItemScreen = () => {
             />
           </div>
 
-          <button type="submit" className="rental-btn" disabled={loading}>
-            {loading ? "Actualizando..." : "Actualizar"}
+          <button type="submit" className="rental-btn">
+            Actualizar
           </button>
         </form>
       </div>

@@ -7,11 +7,10 @@ app_name = "app"
 
 # Configura el router
 router = DefaultRouter()
-router.register(r'users', UserViewSet, basename='user')
+router.register(r'full', UserViewSet, basename='user')
 
 urlpatterns = [
-    path("", views.index, name="index"),
-    path('api/', include(router.urls)),
+    path('', include(router.urls)),
     path("api/message/", views.get_message, name="get_message"),
     path("api/register/", registro, name="register"),
     path("api/login/", inicio_sesion, name="login"),

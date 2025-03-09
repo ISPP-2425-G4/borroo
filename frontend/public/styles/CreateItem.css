@@ -16,58 +16,99 @@ html, body {
     width: 100vw; /* Fuerza el ancho completo de la ventana */
 }
 
+/* Caja principal */
 .rental-box {
     background: white;
     padding: 2rem;
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 350px;
+    width: 380px;
 }
 
+/* Título principal */
 h2 {
     color: #2563eb;
     margin-bottom: 1.5rem;
+    font-size: 1.6rem;
 }
 
-.input-group {
+/* Estilo para los detalles del ítem */
+.item-details {
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.item-details p {
     display: flex;
     align-items: center;
-    background: #e5e7eb;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 1rem;
+    gap: 8px;
+    font-weight: 500;
+    color: #444;
+    background: #f9fafb;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 8px;
 }
 
-.input-icon {
-    color: #6b7280;
-    margin-right: 10px;
+.item-details strong {
+    color: #222;
 }
 
-input, select, textarea {
-    border: none;
-    background: transparent;
-    outline: none;
-    width: 100%;
-    font-size: 14px;
+/* Grupo de botones */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
 }
 
-textarea {
-    resize: none;
-    height: 60px;
-}
-
+/* Botones generales */
 .rental-btn {
-    background: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #2563eb;
     color: white;
-    padding: 10px;
-    width: 100%;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, transform 0.2s ease;
+    width: 100%;
 }
 
 .rental-btn:hover {
-    background: #1e40af;
+    background-color: #1e40af;
+    transform: scale(1.02);
+}
+
+/* Botón de eliminar */
+.delete-btn {
+    background-color: #dc3545;
+}
+
+.delete-btn:hover {
+    background-color: #b02a37;
+}
+
+/* Botón de volver */
+.back-btn {
+    background-color: #6b7280;
+}
+
+.back-btn:hover {
+    background-color: #4b5563;
+}
+/* Botón de EDITAR en VERDE */
+.edit-btn {
+    background-color: #22c55e; /* Verde */
+}
+
+.edit-btn:hover {
+    background-color: #16a34a; /* Verde más oscuro */
 }
