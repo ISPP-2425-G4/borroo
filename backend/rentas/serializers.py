@@ -8,6 +8,7 @@ class RentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rent
         fields = '__all__'
+        read_only_fields = ('total_price', 'commission', 'rent_status', 'payment_status')
 
     def validate(self, data):
         start_date = data.get("start_date")

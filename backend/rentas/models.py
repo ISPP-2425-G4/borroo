@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from usuarios.models import User  # Importamos el modelo User
 from objetos.models import Item  # Importamos el modelo Item
@@ -66,18 +67,19 @@ class Rent(models.Model):
     def calculate_base_price(self):
         """Calcula el precio base del alquiler."""
         rental_duration = self.calculate_rental_duration()
-        return rental_duration * self.item.price  # Precio base
+        rental_duration_decimal = Decimal(str(rental_duration))
+        return rental_duration_decimal * self.item.price  # Precio base
 
     def calculate_total_price(self):
         """Calcula total_price como precio base + 7.5% de incremento."""
         base_price = self.calculate_base_price()
-        additional_fee = base_price * 0.075  # 7.5% adicional
+        additional_fee = base_price * Decimal("0.075")  # 7.5% adicional
         return round(base_price + additional_fee, 2)
 
     def calculate_commission(self):
         """Calcula commission como el 15% de base_price."""
         base_price = self.calculate_base_price()
-        return round(base_price * 0.15, 2)
+        return round(base_price * Decimal("0.15"), 2)
 
     def save(self, *args, **kwargs):
         """Antes de guardar, calcula total_price y commission."""

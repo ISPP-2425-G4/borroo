@@ -35,14 +35,14 @@ class RentViewSet(viewsets.ModelViewSet):
 
         serializer = RentSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(renter=request.user)
+            serializer.save(renter=request.user, item=item_id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['put'])
     def respond_request(self, request, pk=None):
         rent = self.get_object()
-        owner = rent.item.owner  # hay que definir la relacion de owner en item
+        owner = rent.item.user
         renter = rent.renter
 
         response = request.data.get("response")
