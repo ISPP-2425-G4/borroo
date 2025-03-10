@@ -30,7 +30,7 @@
     align-items: center;
   }
   .rental-container{
-    margin-top: 25%;
+    margin-top: 45%;
     width: 100%;
     max-width: 100%; /* Reducimos el ancho máximo */
     padding: 1.5rem; /* Menos padding para que no se vea tan grande */
