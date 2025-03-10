@@ -1,5 +1,4 @@
 from django.db import models
-from usuarios.models import User
 
 
 class ItemCategory(models.TextChoices):
@@ -43,7 +42,13 @@ class Item(models.Model):
         choices=PriceCategory.choices
     )
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class ItemImage(models.Model):
+    item = models.ForeignKey(Item, related_name='images',
+                             on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='item_images/',
+                              default='../static/image.png')
 
     def __str__(self):
         return self.title
