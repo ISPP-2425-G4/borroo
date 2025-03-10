@@ -44,8 +44,6 @@ class SearchItemsView(APIView):
     def get(self, request, *args, **kwargs):
         title = request.GET.get('title', None)
         category = request.GET.get('category', None)
-        min_price = request.GET.get('min_price', None)
-        max_price = request.GET.get('max_price', None)
 
         items = Item.objects.all()
 
@@ -57,7 +55,8 @@ class SearchItemsView(APIView):
         results = list(items.values('id', 'title', 'category', 'price'))
 
         return Response({'results': results}, status=status.HTTP_200_OK)
- 
+
+
 class FilterByCategory(APIView):
     def get(self, request, *args, **kwargs):
 
@@ -71,8 +70,8 @@ class FilterByCategory(APIView):
         results = list(items.values('id', 'title', 'category', 'price'))
 
         return Response({'results': results}, status=status.HTTP_200_OK)
- 
- 
+
+
 class FilterByPrice(APIView):
     def get(self, request, *args, **kwargs):
         min_price = request.GET.get('min_price', None)
