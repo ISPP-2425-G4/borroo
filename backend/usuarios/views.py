@@ -1,5 +1,7 @@
 from django.http import JsonResponse
 import datetime
+from rest_framework import viewsets
+from django.core.exceptions import PermissionDenied
 from .models import User
 from .serializers import UserSerializer
 from rest_framework import viewsets, status
@@ -54,3 +56,20 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return Response({"error": "Credenciales incorrectas"},
                         status=status.HTTP_401_UNAUTHORIZED)
+    def destroy(self, request, *args, **kwargs):
+        user = self.get_object()
+
+        if user.username != request.user.username:
+            raise PermissionDenied(
+                "No tienes permiso para eliminar este usuario")
+
+        return super().destroy(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        user = self.get_object()
+
+        if user.username != request.user.username:
+            raise PermissionDenied(
+                "No tienes permiso para modificar este usuario")
+
+        return super().update(request, *args, **kwargs)
