@@ -42,71 +42,55 @@ class RentViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['put'])
     def respond_request(self, request, pk=None):
         rent = self.get_object()
-        owner = rent.item.user
-        renter = rent.renter
-
         response = request.data.get("response")
-        # añadirla al body del json en el front como responseType
-        # segun el boton que pulse
 
-        if request.user == owner:
-            if response == "accepted":
-                rent.rent_status = RentStatus.BOOKED
-                rent.save()
-                return Response(
-                    {
-                        'status': (
-                            'Solicitud aceptada. El objeto ha sido reservado.'
-                        )
-                    }
-                )
-            elif response == "rejected":
-                rent.rent_status = RentStatus.CANCELLED
-                rent.save()
-                return Response(
-                    {
-                        'status': (
-                            'Solicitud rechazada. El alquiler se ha cancelado.'
-                        )
-                    }
-                )
-
-            elif response == "picked_up":
-                if rent.rent_status == RentStatus.BOOKED:
-                    rent.rent_status = RentStatus.PICKED_UP
-                    rent.save()
-                    return Response(
-                        {
-                            'status':
-                            'El objeto ha sido entregado al arrendatario.'
-                        }
-                    )
-                return Response(
-                    {
-                        'error': (
-                            'Solo puedes cambiar a "PICKED_UP" '
-                            'si está en estado "BOOKED".'
-                        )
-                    }, status=400)
-            else:
-                return Response({'error': 'No puedes realizar esta acción.'},
-                                status=400)
-
-        elif request.user == renter:
-            if response == "returned" and (
-                rent.rent_status == RentStatus.PICKED_UP
-            ):
-                rent.rent_status = RentStatus.RETURNED
-                rent.save()
-                return Response(
-                    {'status': 'El objeto ha sido devuelto correctamente.'})
-            else:
-                return Response({'error': 'No puedes realizar esta acción.'},
-                                status=400)
+        if request.user == rent.item.user:
+            return self._handle_owner_action(rent, response)
+        elif request.user == rent.renter:
+            return self._handle_renter_action(rent, response)
 
         return Response(
             {'error': 'No tienes permiso para gestionar este alquiler.'},
-            status=status.HTTP_403_FORBIDDEN)
+            status=status.HTTP_403_FORBIDDEN
+        )
+
+    def _handle_owner_action(self, rent, response):
+        if response == "accepted":
+            rent.rent_status = RentStatus.BOOKED
+            rent.save()
+            return Response({'status': 'Solicitud aceptada. '
+                            'El objeto ha sido reservado.'})
+
+        elif response == "rejected":
+            rent.rent_status = RentStatus.CANCELLED
+            rent.save()
+            return Response({'status': 'Solicitud rechazada. '
+                            'El alquiler se ha cancelado.'})
+
+        elif response == "picked_up":
+            if rent.rent_status == RentStatus.BOOKED:
+                rent.rent_status = RentStatus.PICKED_UP
+                rent.save()
+                return Response(
+                    {'status': 'El objeto ha sido entregado al arrendatario.'})
+            return Response(
+                {'error': 'Solo puedes cambiar a "PICKED_UP" si está '
+                 'en estado "BOOKED".'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        return Response({'error': 'No puedes realizar esta acción.'},
+                        status=status.HTTP_400_BAD_REQUEST)
+
+    def _handle_renter_action(self, rent, response):
+        if response == "returned" and rent.rent_status == RentStatus.PICKED_UP:
+            rent.rent_status = RentStatus.RETURNED
+            rent.save()
+            return Response({'status':
+                            'El objeto ha sido devuelto correctamente.'})
+
+        return Response({'error': 'No puedes realizar esta acción.'},
+                        status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['put'])
     def cancel_rent(self, request, pk=None):
