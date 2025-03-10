@@ -1,56 +1,78 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiUser, FiLock, FiMail, FiInfo } from "react-icons/fi";
+import { FiUser, FiLock, FiMail, FiInfo, FiPhone, FiMapPin, FiHome, FiFlag, FiCheckCircle } from "react-icons/fi";
 import "../public/styles/Login.css";
 
 const Signup = () => {
-  const [username, setUsername] = useState("");
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [password1, setPassword1] = useState("");
-  const [password2, setPassword2] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    name: "",
+    surname: "",
+    email: "",
+    password: "",
+    password2: "",
+    phone_number: "",
+    country: "",
+    city: "",
+    address: "",
+    postal_code: "",
+    pricing_plan: "free" // Valor por defecto
+  });
+  
   const [error, setError] = useState("");
   const [formErrors, setFormErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
     setFormErrors({});
-
+  
     // Validar que las contraseñas coincidan en el frontend
-    if (password1 !== password2) {
+    if (formData.password !== formData.password2) {
       setError("Las contraseñas no coinciden");
       setLoading(false);
       return;
     }
-
+  
     try {
       // Crear un objeto FormData para el envío
-      const formData = new FormData();
-      formData.append("username", username);
-      formData.append("name", name);
-      formData.append("surname", surname);
-      formData.append("email", email);
-      formData.append("password", password);
-      formData.append("password1", password1);
-      formData.append("password2", password2);
-
-      // URL actualizada con la ruta correcta
-      // codacy-disable-next-line
-      const response = await fetch("http://localhost:8000/usuarios/api/register/", {
-        method: "POST",
-        body: formData,
-        credentials: "include"
+      const submitFormData = new FormData();
+      
+      // Añadir todos los campos del formulario
+      Object.keys(formData).forEach(key => {
+        if (key !== 'password2') { // No enviamos password2 al backend
+          submitFormData.append(key, formData[key]);
+        }
       });
-
+      
+      // Añadir campos adicionales requeridos por el backend
+      submitFormData.append("password1", formData.password); // Por compatibilidad
+  
+      const response = await fetch("http://localhost:8000/usuarios/full/", {
+        method: "POST",
+        body: submitFormData,
+        credentials: "include",
+      });
+  
       if (response.ok) {
-        // Registro exitoso
-        navigate("/login");
+        // Registro exitoso y obtenemos los tokens
+        const data = await response.json();
+        
+        // Guardar los tokens JWT en localStorage
+        localStorage.setItem('access_token', data.access);
+        localStorage.setItem('refresh_token', data.refresh);
+        navigate("/");
       } else {
         // Manejar errores de formulario desde el backend
         const data = await response.json();
@@ -78,7 +100,7 @@ const Signup = () => {
 
   return (
     <div className="login-container">
-      <div className="login-box">
+      <div className="login-box signup-box">
         <h2>Registrarse</h2>
         {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
@@ -86,10 +108,11 @@ const Signup = () => {
             <FiUser className="input-icon" />
             <input
               type="text"
+              name="username"
               placeholder="Nombre de usuario"
               required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={formData.username}
+              onChange={handleChange}
             />
           </div>
           {getFieldError('username')}
@@ -98,10 +121,11 @@ const Signup = () => {
             <FiInfo className="input-icon" />
             <input
               type="text"
+              name="name"
               placeholder="Nombre"
               required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={formData.name}
+              onChange={handleChange}
             />
           </div>
           {getFieldError('name')}
@@ -110,10 +134,11 @@ const Signup = () => {
             <FiInfo className="input-icon" />
             <input
               type="text"
+              name="surname"
               placeholder="Apellido"
               required
-              value={surname}
-              onChange={(e) => setSurname(e.target.value)}
+              value={formData.surname}
+              onChange={handleChange}
             />
           </div>
           {getFieldError('surname')}
@@ -122,25 +147,104 @@ const Signup = () => {
             <FiMail className="input-icon" />
             <input
               type="email"
+              name="email"
               placeholder="Correo electrónico"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={handleChange}
             />
           </div>
           {getFieldError('email')}
           
           <div className="input-group">
+            <FiPhone className="input-icon" />
+            <input
+              type="tel"
+              name="phone_number"
+              placeholder="Número de teléfono"
+              required
+              value={formData.phone_number}
+              onChange={handleChange}
+            />
+          </div>
+          {getFieldError('phone_number')}
+          
+          <div className="input-group">
+            <FiFlag className="input-icon" />
+            <input
+              type="text"
+              name="country"
+              placeholder="País"
+              required
+              value={formData.country}
+              onChange={handleChange}
+            />
+          </div>
+          {getFieldError('country')}
+          
+          <div className="input-group">
+            <FiMapPin className="input-icon" />
+            <input
+              type="text"
+              name="city"
+              placeholder="Ciudad"
+              required
+              value={formData.city}
+              onChange={handleChange}
+            />
+          </div>
+          {getFieldError('city')}
+          
+          <div className="input-group">
+            <FiHome className="input-icon" />
+            <input
+              type="text"
+              name="address"
+              placeholder="Dirección"
+              required
+              value={formData.address}
+              onChange={handleChange}
+            />
+          </div>
+          {getFieldError('address')}
+          
+          <div className="input-group">
+            <FiMapPin className="input-icon" />
+            <input
+              type="text"
+              name="postal_code"
+              placeholder="Código postal (ej. 12345 o 12345-6789)"
+              required
+              value={formData.postal_code}
+              onChange={handleChange}
+            />
+          </div>
+          {getFieldError('postal_code')}
+          
+          <div className="input-group">
+            <FiCheckCircle className="input-icon" />
+            <select
+              name="pricing_plan"
+              value={formData.pricing_plan}
+              onChange={handleChange}
+              required
+            >
+              <option value="free">Plan Free</option>
+              <option value="basic">Plan Basic</option>
+              <option value="premium">Plan Premium</option>
+            </select>
+          </div>
+          {getFieldError('pricing_plan')}
+          
+          <div className="input-group">
             <FiLock className="input-icon" />
             <input
               type="password"
+              name="password"
               placeholder="Contraseña"
               required
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setPassword1(e.target.value);
-              }}
+              value={formData.password}
+              onChange={handleChange}
             />
           </div>
           {getFieldError('password')}
@@ -149,13 +253,14 @@ const Signup = () => {
             <FiLock className="input-icon" />
             <input
               type="password"
+              name="password2"
               placeholder="Confirmar contraseña"
               required
-              value={password2}
-              onChange={(e) => setPassword2(e.target.value)}
+              value={formData.password2}
+              onChange={handleChange}
             />
           </div>
-          {getFieldError('password1') || getFieldError('password2')}
+          {getFieldError('password2')}
           
           <button 
             type="submit" 

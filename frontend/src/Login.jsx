@@ -16,25 +16,20 @@ const Login = () => {
     setError("");
 
     try {
-      // Crear un objeto FormData
-      const formData = new FormData();
-      formData.append("username", username);
-      formData.append("password", password);
-
-      // URL actualizada con la ruta correcta
-      // codacy-disable-next-line
-      const response = await fetch("http://localhost:8000/usuarios/api/login/", {
+      const response = await fetch("http://localhost:8000/usuarios/login/", {
         method: "POST",
-        body: formData,
-        credentials: "include"
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+        credentials: "include",
       });
 
-      // Verificar si la respuesta fue exitosa
       if (response.ok) {
-        // Si hay redirección, navegamos a la página principal
+        const data = await response.json();
+        localStorage.setItem("access_token", data.access);
+        localStorage.setItem("refresh_token", data.refresh);
+        localStorage.setItem("user", JSON.stringify(data.user));
         navigate("/");
       } else {
-        // Intentar obtener el mensaje de error como JSON
         const data = await response.json();
         throw new Error(data.error || "Error al iniciar sesión");
       }
@@ -71,11 +66,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button 
-            type="submit" 
-            className="login-btn" 
-            disabled={loading}
-          >
+          <button type="submit" className="login-btn" disabled={loading}>
             {loading ? "Procesando..." : "Ingresar"}
           </button>
         </form>
