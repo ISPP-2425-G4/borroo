@@ -17,9 +17,9 @@
   
   /* ====== CONTENEDOR PRINCIPAL ====== */
   .create-item-container {
-    margin-top: 30%;
+    margin-top: 25%;
     width: 100%;
-    max-width: 420px; /* Reducimos el ancho máximo */
+    max-width: 100%; /* Reducimos el ancho máximo */
     padding: 1.5rem; /* Menos padding para que no se vea tan grande */
     background: white;
     border-radius: 10px;
@@ -29,7 +29,19 @@
     flex-direction: column;
     align-items: center;
   }
-  
+  .rental-container{
+    margin-top: 25%;
+    width: 100%;
+    max-width: 100%; /* Reducimos el ancho máximo */
+    padding: 1.5rem; /* Menos padding para que no se vea tan grande */
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   /* ====== TITULO ====== */
   h2 {
     font-size: 1.5rem; /* Reducimos el tamaño del título */
@@ -150,6 +162,18 @@
     background: #1e40af;
     transform: scale(1.02);
   }
+  .image-preview-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .image-preview {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
   
   /* ====== MENSAJES DE ERROR ====== */
   .error-message {
@@ -160,6 +184,39 @@
     border-radius: 5px;
     margin-bottom: 1.5%;
   }
+  /* ====== CONTENEDOR DE IMÁGENES ====== */
+/* ====== CONTENEDOR DE IMÁGENES ====== */
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+  max-width: 100%;
+  max-height: 10%;
+  padding: 10px;
+  overflow: hidden; /* Evita que las imágenes se desborden */
+}
+
+/* ====== ESTILOS PARA CADA IMAGEN ====== */
+.item-image {
+  width: 100%;
+  max-width: 200px; /* Ajuste del tamaño máximo */
+  height: auto;
+  object-fit: contain; /* Evita que se recorten las imágenes */
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Efecto hover */
+.item-image:hover {
+  transform: scale(1.03);
+  border-color: #2563eb;
+}
+
+
   
   /* ====== RESPONSIVE ====== */
   @media (max-width: 600px) {
@@ -167,7 +224,9 @@
       width: 95%;
       padding: 1rem;
     }
-  
+    .item-image {
+      max-width: 90%; /* Ajusta mejor en pantallas pequeñas */
+    }
     .input-group {
       flex-direction: column;
       align-items: flex-start;
@@ -176,5 +235,47 @@
     .input-icon {
       margin-bottom: 0.4rem;
     }
-  }
-  
+    .input-group input[type="file"] {
+      border: none;
+      background: transparent;
+      font-size: 0.9rem;
+      color: #111;
+      padding: 0.5rem;
+    }
+    
+    .input-group input[type="file"]::-webkit-file-upload-button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+    
+    .input-group input[type="file"]::-webkit-file-upload-button:hover {
+      background: #1e40af;
+    }
+    
+    /* Contenedor de previsualización */
+    .image-preview-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    
+    .image-preview {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    
+    .preview-image {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+}

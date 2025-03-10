@@ -5,21 +5,44 @@ import "../public/styles/CreateItem.css";
 import Navbar from "./Navbar";
 
 const ShowItemScreen = () => {
-  const { id } = useParams(); // Obtener el ID desde la URL
+  const { id } = useParams();
   const navigate = useNavigate();
-
   const [item, setItem] = useState(null);
+  const [imageURLs, setImageURLs] = useState([]); // URLs de imágenes
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // Cargar datos del ítem desde el backend
   useEffect(() => {
     const fetchItem = async () => {
       try {
+        // 🔹 Obtener datos del ítem
         const response = await fetch(`http://localhost:8000/objetos/full/${id}/`);
         if (!response.ok) throw new Error("Error cargando el ítem.");
         const data = await response.json();
         setItem(data);
+
+        // 🔹 Obtener las URLs de las imágenes usando los IDs
+        if (data.images && data.images.length > 0) {
+          const urls = await Promise.all(
+            data.images.map(async (imgId) => {
+              try {
+                const imgResponse = await fetch(`http://localhost:8000/objetos/item-images/${imgId}/`);
+                if (!imgResponse.ok) throw new Error("Error cargando la imagen.");
+                const imgData = await imgResponse.json();
+                
+                console.log(`Imagen cargada: ${imgData.image}`);
+                return imgData.image; // Solo nos quedamos con la URL de la imagen
+              } catch (error) {
+                console.error(`Error al cargar la imagen ${imgId}:`, error);
+                return null; // Retornar null para evitar que la Promise falle
+              }
+            })
+          );
+          
+          // Filtrar imágenes válidas (sin errores)
+          setImageURLs(urls.filter((url) => url !== null));
+        }
+
       } catch (error) {
         console.error("Error fetching item:", error);
         setErrorMessage("No se pudo cargar el ítem.");
@@ -31,19 +54,20 @@ const ShowItemScreen = () => {
     if (id) fetchItem();
   }, [id]);
 
-  // Función para eliminar el ítem
-  const handleDelete = async () => {
-    if (!window.confirm("¿Estás seguro de que quieres eliminar este ítem?")) return;
+  // 🔹 Función para eliminar el ítem
+  const handleDelete = async (itemId) => {
+    const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar este ítem?");
+    if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:8000/objetos/full/${id}/`, {
+      const response = await fetch(`http://localhost:8000/objetos/full/${itemId}/`, {
         method: "DELETE",
       });
 
-      if (!response.ok) throw new Error("Error al eliminar el ítem.");
+      if (!response.ok) throw new Error("Error eliminando el ítem.");
 
       alert("Ítem eliminado correctamente.");
-      navigate("/"); // Redirige al inicio
+      navigate("/");
     } catch (error) {
       console.error("Error deleting item:", error);
       setErrorMessage("No se pudo eliminar el ítem.");
@@ -60,6 +84,7 @@ const ShowItemScreen = () => {
       </div>
     );
   }
+
   if (!item) return <p>No se encontró el ítem.</p>;
 
   return (
@@ -68,6 +93,15 @@ const ShowItemScreen = () => {
       <div className="rental-box">
         <h2>Detalles de la Publicación</h2>
         {errorMessage && <div className="error-message">{errorMessage}</div>}
+
+        {/* Contenedor de imágenes */}
+        {imageURLs.length > 0 && (
+          <div className="image-gallery">
+            {imageURLs.map((url, index) => (
+              <img key={index} src={url} alt="Imagen del ítem" className="item-image" />
+            ))}
+          </div>
+        )}
 
         <div className="item-details">
           <p><FiFileText /> <strong>Título:</strong> {item.title}</p>
@@ -84,7 +118,7 @@ const ShowItemScreen = () => {
             <FiEdit /> Editar
           </button>
 
-          <button className="rental-btn delete-btn" onClick={handleDelete}>
+          <button className="rental-btn delete-btn" onClick={() => handleDelete(id)}>
             <FiTrash2 /> Eliminar
           </button>
 

@@ -15,6 +15,8 @@ const CreateItemScreen = () => {
     price: "",
   });
 
+  const [images, setImages] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]); // Para mostrar vistas previas
   const [options, setOptions] = useState({
     categories: [],
     cancel_types: [],
@@ -37,10 +39,6 @@ const CreateItemScreen = () => {
 
         const data = await response.json();
 
-        if (!data.categories || !data.cancel_types || !data.price_categories) {
-          throw new Error("Datos de la API incompletos.");
-        }
-
         setOptions({
           categories: data.categories || [],
           cancel_types: data.cancel_types || [],
@@ -59,17 +57,40 @@ const CreateItemScreen = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+  
+    // Agregar nuevas imágenes sin eliminar las anteriores
+    setImages((prevImages) => [...prevImages, ...files]);
+  
+    // Generar y agregar vistas previas de las nuevas imágenes
+    const previews = files.map((file) => URL.createObjectURL(file));
+    setImagePreviews((prevPreviews) => [...prevPreviews, ...previews]);
+  };
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage("");
 
     try {
+      const formDataToSend = new FormData();
+
+      // Agregar campos de texto
+      Object.keys(formData).forEach((key) => {
+        formDataToSend.append(key, formData[key]);
+      });
+
+      // Agregar imágenes
+      images.forEach((image) => {
+        formDataToSend.append("image_files", image);
+      });
+
       const response = await fetch("http://localhost:8000/objetos/full/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify(formData),
+        body: formDataToSend,
       });
 
       if (response.ok) {
@@ -82,6 +103,8 @@ const CreateItemScreen = () => {
           price_category: "",
           price: "",
         });
+        setImages([]);
+        setImagePreviews([]); // Limpiar vistas previas
         navigate("/");
       } else {
         throw new Error("Error al crear el Item.");
@@ -156,6 +179,13 @@ const CreateItemScreen = () => {
             onChange={handleChange}
           />
 
+          {/* ✅ Input para subir múltiples imágenes */}
+          <p className="instruction-text">⚠️ Para seleccionar varios archivos, mantén presionada la tecla <strong>Ctrl</strong> (Windows) o <strong>Cmd</strong> (Mac) mientras eliges los archivos.</p>
+          <div className="input-group">
+            <label className="input-icon">📷</label>
+            <input type="file" multiple accept="image/*" onChange={handleImageChange} />
+            </div>
+
           <button type="submit" className="primary-btn" disabled={loading}>
             {loading ? "Publicando..." : "Publicar"}
           </button>
@@ -172,20 +202,12 @@ const InputField = ({ icon, ...props }) => (
   </div>
 );
 
-InputField.propTypes = {
-  icon: PropTypes.element.isRequired,
-  // other props can be added here as needed
-};
 const TextareaField = ({ icon, ...props }) => (
   <div className="input-group">
     <span className="input-icon">{icon}</span>
     <textarea {...props} required />
   </div>
 );
-TextareaField.propTypes = {
-  icon: PropTypes.element.isRequired,
-  // other props can be added here as needed
-};
 
 const SelectField = ({ icon, options, placeholder, ...props }) => (
   <div className="input-group">
@@ -198,17 +220,8 @@ const SelectField = ({ icon, options, placeholder, ...props }) => (
         <option disabled>Cargando...</option>
       )}
     </select>
-    <span className="select-arrow">▼</span> {/* Flecha añadida manualmente */}
+    <span className="select-arrow">▼</span>
   </div>
 );
-SelectField.propTypes = {
-  icon: PropTypes.element.isRequired,
-  options: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-  })).isRequired,
-  placeholder: PropTypes.string.isRequired,
-  // other props can be added here as needed
-};
 
 export default CreateItemScreen;
