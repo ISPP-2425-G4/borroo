@@ -1,9 +1,11 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import ItemViewSet, SearchItemsView, EnumChoicesView
+from .views import ItemImageViewSet
 
 router = DefaultRouter()
 router.register(r'full', ItemViewSet)
+router.register(r'item-images', ItemImageViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
