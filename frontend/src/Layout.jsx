@@ -1,5 +1,5 @@
 import Navbar from "./Navbar";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { Box, Container, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
@@ -7,6 +7,11 @@ import { FiSearch } from "react-icons/fi";
 const Layout = () => {
   const [productos, setProductos] = useState([]);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const handleInputChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -56,12 +61,23 @@ const Layout = () => {
               </Box>
               <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "column", flexWrap: "wrap", gap: 2 }}>
               <div className="search-filters">
+                
         <div className="search-container">
-          <input type="text" placeholder="Buscar..." className="search" />
-          <button className="search-btn">
+          <input 
+              type="text" 
+              placeholder="Buscar..." 
+              className="search" 
+              value={searchTerm}
+              onChange={handleInputChange} 
+            />
+          <Link 
+            to={`/objetos/search_item/?title=${searchTerm}`} 
+            className="search-btn"
+          >
             <FiSearch size={20} />
-          </button>
+          </Link>
         </div>
+
       </div>
       </Box> 
               <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "column", flexWrap: "wrap", gap: 2 }}>
