@@ -2,7 +2,6 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 from usuarios.models import User
-from rest_framework.test import APIClient
 from django.contrib.auth.hashers import make_password
 
 
@@ -17,11 +16,12 @@ class TestData:
             "surname": "Normal",
             "username": "testuser",
             "email": "testuser_1@example.com",
+            "phone_number": "+34678432345",
             "country": "Test Country",
             "city": "Test City",
             "address": "Test Address",
             "postal_code": "12345",
-            "is_verified": False,
+            "is_verified": True,
             "pricing_plan": "free",
             "password": make_password("password123")
         }
@@ -37,13 +37,14 @@ class TestData:
             "surname": "Admin",
             "username": "adminuser",
             "email": "adminuser_1@example.com",
+            "phone_number": "+34678432365",
             "country": "Admin Country",
             "city": "Admin City",
             "address": "Admin Address",
             "postal_code": "54321",
             "is_verified": True,
             "pricing_plan": "premium",
-            "password": make_password("adminpassword")
+            "password": make_password("adminpassword"),
         }
         return User.objects.create(**admin_data)
 
@@ -57,6 +58,7 @@ def test_creacion_usuario():
         "name": "John",
         "surname": "Doe",
         "username": "johndoe",
+        "phone_number": "+34678435345",
         "country": "USA",
         "city": "New York",
         "address": "123 Main St",
@@ -80,6 +82,7 @@ def test_lectura_usuario(client):
         "name": "Jane",
         "surname": "Smith",
         "username": "janesmith",
+        "phone_number": "+34678422345",
         "country": "Canada",
         "city": "Toronto",
         "address": "456 Elm St",
@@ -104,6 +107,7 @@ def test_lectura_detalle_usuario(client):
         "name": "Alice",
         "surname": "Johnson",
         "username": "alicej",
+        "phone_number": "+34678435345",
         "country": "UK",
         "city": "London",
         "address": "789 Oak St",
@@ -120,23 +124,21 @@ def test_lectura_detalle_usuario(client):
 
 
 @pytest.mark.django_db
-def test_actualizacion_usuario():
+def test_actualizacion_usuario(client):
     """
     Verifica que se pueda actualizar un usuario existente.
     """
     # Crear un usuario normal y un administrador
     user = TestData.create_user()
-    admin_user = TestData.create_admin_user()
-
-    # Crear un cliente de prueba y autenticar como administrador
-    client = APIClient()
-    client.force_authenticate(user=admin_user)  # Autenticar como administrador
+    print(user)
+    client.login(username='testuser', password='password123')
 
     # Datos actualizados
     updated_data = {
         "name": "Updated Name",
         "surname": "Updated Surname",
         "username": "updateduser",
+        "phone_number": "+34638432345",
         "country": "Updated Country",
         "city": "Updated City",
         "address": "Updated Address",
@@ -157,17 +159,14 @@ def test_actualizacion_usuario():
 
 
 @pytest.mark.django_db
-def test_eliminacion_usuario():
+def test_eliminacion_usuario(client):
     """
     Verifica que se pueda eliminar un usuario existente.
     """
     # Crear un usuario normal y un administrador
     user = TestData.create_user()
-    admin_user = TestData.create_admin_user()
 
-    # Crear un cliente de prueba y autenticar como administrador
-    client = APIClient()
-    client.force_authenticate(user=admin_user)  # Autenticar como administrador
+    client.login(username='testuser', password='password123')
 
     # Realizar la solicitud DELETE
     url = reverse('app:user-detail', args=[user.id])
