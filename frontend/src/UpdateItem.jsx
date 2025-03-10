@@ -73,46 +73,52 @@ const UpdateItemScreen = () => {
     setImagePreviews([]);
   };
 
-  // Eliminar una imagen existente
-  const handleRemoveExistingImage = (imageUrl) => {
-    setExistingImageURLs((prevImages) => prevImages.filter((img) => img !== imageUrl));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setErrorMessage("");
+  
     try {
       const formDataToSend = new FormData();
-
-      // Agregar campos de texto
+  
+      // 1️⃣ Agregar los campos de texto
       Object.keys(formData).forEach((key) => {
-        formDataToSend.append(key, formData[key]);
+        formDataToSend.append(key, formData[key]?.toString() || "");
       });
-
-      // Agregar imágenes nuevas
-      images.forEach((image) => {
-        formDataToSend.append("image_files", image);
-      });
-
-      // Agregar imágenes existentes (URLs)
-      existingImageURLs.forEach((imageUrl) => {
-        formDataToSend.append("existing_images", imageUrl);
-      });
-
+  
+      // 2️⃣ Agregar imágenes nuevas solo si hay
+      if (images.length > 0) {
+        images.forEach((image) => {
+          formDataToSend.append("image_files", image);
+        });
+      }
+  
+      // ❌ NO enviamos `image_files` si no hay imágenes nuevas
+      // 🔥 Esto evita el error de "archivo vacío"
+  
+      // 3️⃣ Enviar la solicitud PUT al backend
       const response = await fetch(`http://localhost:8000/objetos/full/${id}/`, {
         method: "PUT",
+        credentials: "include",
         body: formDataToSend,
       });
-
-      if (!response.ok) throw new Error("Error al actualizar el ítem");
-
+  
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        console.error("Respuesta del servidor:", errorResponse);
+        throw new Error("Error al actualizar el ítem.");
+      }
+  
       alert("¡Ítem actualizado exitosamente!");
       navigate("/");
     } catch (error) {
-      console.error("Error updating item:", error);
+      console.error("Error actualizando el ítem:", error);
       setErrorMessage("Ocurrió un error al actualizar el ítem.");
     }
   };
+  
+  
+  
+  
 
   if (!isLoaded) {
     return (
