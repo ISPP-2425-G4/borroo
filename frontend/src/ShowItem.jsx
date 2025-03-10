@@ -73,7 +73,10 @@ const ShowItemScreen = () => {
       </div>
     );
   }
-  if (!item) return <p>No se encontró el ítem.</p>;
+  if (!item) {
+    navigate("/");
+    return null;
+  }
 
   const handleRequestRental = () => {
     setShowRentalModal(false);
