@@ -149,7 +149,9 @@
   .primary-btn:hover {
     background: #1e40af;
     transform: scale(1.02);
-  }
+}
+
+
   
   /* ====== MENSAJES DE ERROR ====== */
   .error-message {
