@@ -3,6 +3,7 @@ import { FiFileText, FiEdit, FiLayers, FiXCircle, FiDollarSign } from "react-ico
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "../public/styles/CreateItem.css";
+import PropTypes from 'prop-types';
 
 const CreateItemScreen = () => {
   const [formData, setFormData] = useState({
@@ -218,5 +219,12 @@ const SelectField = ({ icon, options, placeholder, ...props }) => (
     <span className="select-arrow">▼</span>
   </div>
 );
-
+SelectField.propTypes = {
+  icon: PropTypes.element.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+  })).isRequired,
+  placeholder: PropTypes.string.isRequired,
+};
 export default CreateItemScreen;
