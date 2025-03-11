@@ -161,7 +161,7 @@
   .primary-btn:hover {
     background: #1e40af;
     transform: scale(1.02);
-  }
+
   .image-preview-container {
     display: flex;
     gap: 10px;
@@ -174,7 +174,8 @@
     object-fit: cover;
     border-radius: 5px;
   }
-  
+
+
   /* ====== MENSAJES DE ERROR ====== */
   .error-message {
     color: red;
@@ -278,4 +279,4 @@
       border: 1px solid #ddd;
     }
 
-}
+}}
