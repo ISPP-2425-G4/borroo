@@ -16,6 +16,8 @@ const UpdateItemScreen = () => {
   const [images, setImages] = useState([]); // Imágenes nuevas
   const [imagePreviews, setImagePreviews] = useState([]); // Previews de imágenes nuevas
   const [existingImageURLs, setExistingImageURLs] = useState([]); // URLs de imágenes actuales
+  const [imagesToDelete, setImagesToDelete] = useState([]); // Guardamos IDs de imágenes a eliminar
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -94,10 +96,14 @@ const UpdateItemScreen = () => {
         });
       }
   
-      // ❌ NO enviamos `image_files` si no hay imágenes nuevas
-      // 🔥 Esto evita el error de "archivo vacío"
+      // 3️⃣ Agregar imágenes a eliminar
+      if (imagesToDelete.length > 0) {
+        imagesToDelete.forEach((imageId) => {
+          formDataToSend.append("images_to_delete", imageId);
+        });
+      }
   
-      // 3️⃣ Enviar la solicitud PUT al backend
+      // 4️⃣ Enviar solicitud al backend
       const response = await fetch(`http://localhost:8000/objetos/full/${id}/`, {
         method: "PUT",
         credentials: "include",
@@ -118,6 +124,20 @@ const UpdateItemScreen = () => {
     }
   };
   
+  const handleRemoveExistingImage = (imageUrl) => {
+    // Buscar el ID de la imagen en `existingImageURLs`
+    const imageIndex = existingImageURLs.indexOf(imageUrl);
+    if (imageIndex === -1) return;
+  
+    // Obtener el ID real de la imagen (suponiendo que los IDs están en formData.images)
+    const imageId = formData.images[imageIndex];
+  
+    // Agregar el ID a la lista de imágenes a eliminar
+    setImagesToDelete((prev) => [...prev, imageId]);
+  
+    // Quitar la imagen de la vista (sin afectar el backend aún)
+    setExistingImageURLs((prev) => prev.filter((url) => url !== imageUrl));
+  };
   
   
   

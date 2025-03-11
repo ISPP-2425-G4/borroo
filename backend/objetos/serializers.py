@@ -53,10 +53,23 @@ class ItemSerializer(serializers.ModelSerializer):
         instance.price_category = validated_data.get('price_category', instance.price_category)
         instance.price = validated_data.get('price', instance.price)
 
-        image_files = validated_data.pop('image_files', None)
+        # 🔥 Recuperamos las imágenes a eliminar
+        images_to_delete = self.context['request'].data.getlist('images_to_delete', [])
 
-        if image_files is not None:
-            # 🔥 En lugar de borrar todas las imágenes, solo agregamos las nuevas
+        if images_to_delete:
+            for image_id in images_to_delete:
+                try:
+                    old_image = ItemImage.objects.get(id=image_id, item=instance)
+                    image_path = os.path.join(settings.MEDIA_ROOT, str(old_image.image))
+                    if os.path.exists(image_path):
+                        os.remove(image_path)  # Eliminar archivo del sistema
+                    old_image.delete()  # Eliminar de la base de datos
+                except ItemImage.DoesNotExist:
+                    pass  # Si la imagen no existe, ignoramos el error
+
+        # 🔥 Agregar imágenes nuevas sin eliminar las anteriores
+        image_files = validated_data.pop('image_files', None)
+        if image_files:
             for image in image_files:
                 ItemImage.objects.create(item=instance, image=image)
 
