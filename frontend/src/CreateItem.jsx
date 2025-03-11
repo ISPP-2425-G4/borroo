@@ -70,26 +70,33 @@ const CreateItemScreen = () => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage("");
-
+  
     try {
       const formDataToSend = new FormData();
-
-      // Agregar campos de texto
+  
+      // Definir solo los campos permitidos para evitar inyección de datos no deseados
+      const allowedKeys = ["title", "description", "category", "cancel_type", "price_category", "price"];
+  
+      // Filtrar y agregar solo los campos esperados
       Object.keys(formData).forEach((key) => {
-        formDataToSend.append(key, formData[key]);
+        if (allowedKeys.includes(key)) {
+          formDataToSend.append(key, formData[key]);
+        } else {
+          console.warn(`Clave no permitida: ${key}`);
+        }
       });
-
+  
       // Agregar imágenes
       images.forEach((image) => {
         formDataToSend.append("image_files", image);
       });
-
+  
       const response = await fetch("http://localhost:8000/objetos/full/", {
         method: "POST",
         credentials: "include",
         body: formDataToSend,
       });
-
+  
       if (response.ok) {
         alert("¡Item creado exitosamente!");
         setFormData({
@@ -112,6 +119,7 @@ const CreateItemScreen = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="create-item-container">
@@ -190,7 +198,24 @@ const CreateItemScreen = () => {
     </div>
   );
 };
+
 SelectField.propTypes = {
+  icon: PropTypes.element.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+  })).isRequired,
+  placeholder: PropTypes.string.isRequired,
+};
+InputField.propTypes = {
+  icon: PropTypes.element.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+  })).isRequired,
+  placeholder: PropTypes.string.isRequired,
+};
+TextareaField.propTypes = {
   icon: PropTypes.element.isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.string.isRequired,
@@ -200,6 +225,7 @@ SelectField.propTypes = {
 };
 
 const InputField = ({ icon, ...props }) => (
+  
   <div className="input-group">
     <span className="input-icon">{icon}</span>
     <input {...props} required />
