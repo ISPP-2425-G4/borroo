@@ -23,6 +23,7 @@ const UpdateItemScreen = () => {
   const [images, setImages] = useState([]); // Imágenes nuevas
   const [existingImages, setExistingImages] = useState([]); // Imágenes actuales (IDs y URLs)
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
