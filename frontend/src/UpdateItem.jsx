@@ -63,8 +63,10 @@ const UpdateItemScreen = () => {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setImages((prevImages) => [...prevImages, ...files]);
-    const previews = files.map((file) => URL.createObjectURL(file));
-    setImagePreviews((prevPreviews) => [...prevPreviews, ...previews]);
+    setImagePreviews((prevPreviews) => [
+      ...prevPreviews,
+      ...files.map((file) => URL.createObjectURL(file)),
+    ]);
   };
 
   // Limpiar imágenes nuevas seleccionadas
