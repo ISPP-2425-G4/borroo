@@ -47,29 +47,26 @@ class ItemSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
-        instance.description = validated_data.get('description', instance.description)
+        instance.description = validated_data.get('description',
+                                                  instance.description)
         instance.category = validated_data.get('category', instance.category)
-        instance.cancel_type = validated_data.get('cancel_type', instance.cancel_type)
-        instance.price_category = validated_data.get('price_category', instance.price_category)
+        instance.cancel_type = validated_data.get('cancel_type',
+                                                  instance.cancel_type)
+        instance.price_category = validated_data.get('price_category',
+                                                     instance.price_category)
         instance.price = validated_data.get('price', instance.price)
 
-        # 🔥 Recuperamos las imágenes a eliminar
-        images_to_delete = self.context['request'].data.getlist('images_to_delete', [])
-
-        if images_to_delete:
-            for image_id in images_to_delete:
-                try:
-                    old_image = ItemImage.objects.get(id=image_id, item=instance)
-                    image_path = os.path.join(settings.MEDIA_ROOT, str(old_image.image))
-                    if os.path.exists(image_path):
-                        os.remove(image_path)  # Eliminar archivo del sistema
-                    old_image.delete()  # Eliminar de la base de datos
-                except ItemImage.DoesNotExist:
-                    pass  # Si la imagen no existe, ignoramos el error
-
-        # 🔥 Agregar imágenes nuevas sin eliminar las anteriores
         image_files = validated_data.pop('image_files', None)
-        if image_files:
+
+        if image_files is not None:
+            for old_image in instance.images.all():
+                image_path = os.path.join(settings.MEDIA_ROOT,
+                                          str(old_image.image))
+                if os.path.exists(image_path):
+                    os.remove(image_path)  # Eliminar archivo del sistema
+                old_image.delete()  # Eliminar registro en la base de datos
+
+            # 2️⃣ Agregar las nuevas imágenes
             for image in image_files:
                 ItemImage.objects.create(item=instance, image=image)
 

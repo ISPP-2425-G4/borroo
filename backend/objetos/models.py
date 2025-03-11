@@ -49,6 +49,3 @@ class ItemImage(models.Model):
                              on_delete=models.CASCADE)
     image = models.ImageField(upload_to='item_images/',
                               default='../static/image.png')
-
-    def __str__(self):
-        return self.title
