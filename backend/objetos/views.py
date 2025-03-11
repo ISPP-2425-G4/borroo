@@ -1,6 +1,6 @@
 from rest_framework import viewsets, permissions
-from .models import Item
-from .serializers import ItemSerializer
+from .models import Item, ItemImage
+from .serializers import ItemSerializer, ItemImageSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -37,6 +37,26 @@ class EnumChoicesView(APIView):
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        print("Request data:", request.data)
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            print("Validation errors:", serializer.errors)
+        serializer.is_valid(raise_exception=True)
+        print("Validated data:", serializer.validated_data)
+        item = serializer.save()
+        print("Created item:", item)
+
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED,
+                        headers=headers)
+
+
+class ItemImageViewSet(viewsets.ModelViewSet):
+    queryset = ItemImage.objects.all()
+    serializer_class = ItemImageSerializer
     permission_classes = [permissions.AllowAny]
 
 

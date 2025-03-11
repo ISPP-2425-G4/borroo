@@ -43,5 +43,9 @@ class Item(models.Model):
     )
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
-    def __str__(self):
-        return self.title
+
+class ItemImage(models.Model):
+    item = models.ForeignKey(Item, related_name='images',
+                             on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='item_images/',
+                              default='../static/image.png')

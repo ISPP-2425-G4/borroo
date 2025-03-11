@@ -1,12 +1,15 @@
 from django.http import JsonResponse
 import datetime
-from rest_framework import viewsets, permissions
+from django.core.exceptions import PermissionDenied
+from django.contrib.auth.hashers import check_password
 from .models import User
 from .serializers import UserSerializer
-from rest_framework import status
-from django.shortcuts import render
-from .forms import RegisterForm
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.decorators import action
+from django.contrib.auth.hashers import make_password
 
 
 def index(request):
@@ -18,64 +21,71 @@ def get_message(request):
     return JsonResponse({"message": f"Hola desde Django! Hora actual: {now}"})
 
 
-@csrf_exempt
-def inicio_sesion(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        try:
-            # Attempt to find the user by username
-            user = User.objects.get(username=username)
-
-            from django.contrib.auth.hashers import check_password
-
-            if check_password(password, user.password):
-                # Create a simple session to track the logged-in user
-                request.session['user_id'] = user.id
-                request.session['username'] = user.username
-
-                return JsonResponse({
-                    "message": f"¡Bienvenido, {user.username}!",
-                    "user": {
-                        "id": user.id,
-                        "username": user.username,
-                        "name": user.name,
-                        "email": user.email
-                    }
-                })
-            else:
-                return JsonResponse({"error": "Contraseña incorrecta"},
-                                    status=status.HTTP_400_BAD_REQUEST)
-
-        except User.DoesNotExist:
-            return JsonResponse({"error": "El usuario no existe"},
-                                status=status.HTTP_400_BAD_REQUEST)
-
-    return JsonResponse({"error": "Método no permitido"},
-                        status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-
-@csrf_exempt
-def registro(request):
-    if request.method == 'POST':
-        data = request.POST
-
-        # Create the form with the data
-        form = RegisterForm(data)
-
-        if form.is_valid():
-            return JsonResponse({"message": "User registered successfully!"},
-                                status=status.HTTP_201_CREATED)
-        else:
-            return JsonResponse(form.errors,
-                                status=status.HTTP_400_BAD_REQUEST)
-    else:
-        form = RegisterForm()
-
-    return render(request, 'register.html', {'form': form})
-
-
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def create(self, request, *args, **kwargs):
+        """Registro de usuario y generación de token JWT"""
+        data = request.data.copy()
+        data["password"] = make_password(data["password"])
+
+        serializer = self.get_serializer(data=data)
+        if serializer.is_valid():
+            user = serializer.save()
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                "user": serializer.data,
+                "refresh": str(refresh),
+                "access": str(refresh.access_token),
+            }, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=False, methods=["post"], permission_classes=[AllowAny])
+    def login(self, request):
+        """Login de usuario y generación de token JWT"""
+        username = request.data.get("username")
+        password = request.data.get("password")
+
+        if not username or not password:
+            return Response({"error": "Se requiere usuario y contraseña"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        # Verificar si el usuario existe
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return Response({"error": "Usuario no encontrado"},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        # Comprobar si la contraseña es correcta
+        if not check_password(password, user.password):
+            return Response({"error": "Credencialesssss incorrectas"},
+                            status=status.HTTP_401_UNAUTHORIZED)
+
+        # Generar tokens JWT
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            "user": UserSerializer(user).data,
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
+        }, status=status.HTTP_200_OK)
+
+    def destroy(self, request, *args, **kwargs):
+        user = self.get_object()
+
+        if user.username != request.user.username:
+            raise PermissionDenied(
+                "No tienes permiso para eliminar este usuario")
+
+        return super().destroy(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        user = self.get_object()
+
+        if user.username != request.user.username:
+            raise PermissionDenied(
+                "No tienes permiso para modificar este usuario")
+
+        return super().update(request, *args, **kwargs)

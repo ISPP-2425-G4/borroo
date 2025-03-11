@@ -1,36 +1,56 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FiFileText, FiEdit, FiLayers, FiXCircle, FiDollarSign } from "react-icons/fi";
+import {
+  FiFileText,
+  FiEdit,
+  FiLayers,
+  FiXCircle,
+  FiDollarSign,
+
+} from "react-icons/fi";
 import "../public/styles/CreateItem.css";
 import Navbar from "./Navbar";
 
 const UpdateItemScreen = () => {
-  const { id } = useParams(); // Obtener el ID desde la URL
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState(null); // 🔥 Ahora empieza en null
-  const [options, setOptions] = useState(null); // 🔥 También empieza en null
-  const [isLoaded, setIsLoaded] = useState(false); // 🔥 Indica si los datos están listos
+  const [formData, setFormData] = useState(null);
+  const [options, setOptions] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Cargar datos del ítem existente y opciones de enums
+  const [images, setImages] = useState([]); // Imágenes nuevas
+  const [existingImages, setExistingImages] = useState([]); // Imágenes actuales (IDs y URLs)
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Obtener ítem
-        const itemResponse = await fetch(`http://localhost:8000/objetos/api/items/${id}/`);
+        const itemResponse = await fetch(`http://localhost:8000/objetos/full/${id}/`);
         if (!itemResponse.ok) throw new Error("Error cargando el ítem.");
         const itemData = await itemResponse.json();
 
-        // Obtener opciones de enums
         const enumResponse = await fetch("http://localhost:8000/objetos/enum-choices/");
         if (!enumResponse.ok) throw new Error("Error cargando opciones.");
         const enumData = await enumResponse.json();
 
-        // Guardar datos en el estado
         setFormData(itemData);
         setOptions(enumData);
-        setIsLoaded(true); // 🔥 Solo ahora se muestra el formulario
+
+        // Obtener las imágenes con ID y URL
+        if (itemData.images && itemData.images.length > 0) {
+          const imgs = await Promise.all(
+            itemData.images.map(async (imgId) => {
+              const imgResponse = await fetch(`http://localhost:8000/objetos/item-images/${imgId}/`);
+              const imgData = await imgResponse.json();
+              return { id: imgId, url: imgData.image };
+            })
+          );
+          setExistingImages(imgs);
+        }
+
+        setIsLoaded(true);
       } catch (error) {
         console.error("Error fetching data:", error);
         setErrorMessage("No se pudieron cargar los datos.");
@@ -44,27 +64,64 @@ const UpdateItemScreen = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Manejar imágenes nuevas seleccionadas
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    setImages(files); // Solo permitimos nuevas imágenes, no acumulamos
+    e.target.value = "";
+  };
+
+  // Limpiar imágenes nuevas seleccionadas
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
 
     try {
-      const response = await fetch(`http://localhost:8000/objetos/api/items/${id}/`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+      const formDataToSend = new FormData();
+
+      // 1️⃣ Agregar los campos de texto
+      Object.keys(formData).forEach((key) => {
+        if (key !== "images") {
+          formDataToSend.append(key, formData[key]?.toString() || "");
+        }
       });
 
-      if (!response.ok) throw new Error("Error al actualizar el ítem");
+      // 2️⃣ Manejo de imágenes en el FormData
+      if (images.length > 0) {
+        images.forEach((image) => {
+          formDataToSend.append("image_files", image);
+        });
+      } else if (existingImages.length === 0) {
+        // Si no hay imágenes nuevas y todas fueron eliminadas, enviamos `image_files` vacío
+        formDataToSend.append("image_files", "");
+      }
+
+
+
+      // 4️⃣ Enviar solicitud PUT al backend
+      const response = await fetch(`http://localhost:8000/objetos/full/${id}/`, {
+        method: "PUT",
+        credentials: "include",
+        body: formDataToSend,
+      });
+
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        console.error("Respuesta del servidor:", errorResponse);
+        throw new Error("Error al actualizar el ítem.");
+      }
 
       alert("¡Ítem actualizado exitosamente!");
       navigate("/");
     } catch (error) {
-      console.error("Error updating item:", error);
+      console.error("Error actualizando el ítem:", error);
       setErrorMessage("Ocurrió un error al actualizar el ítem.");
     }
   };
 
-  // 🔥 Mostrar "Cargando..." si los datos aún no están listos
   if (!isLoaded) {
     return (
       <div className="rental-container">
@@ -84,64 +141,62 @@ const UpdateItemScreen = () => {
         {errorMessage && <div className="error-message">{errorMessage}</div>}
 
         <form onSubmit={handleSubmit}>
+          {/* Título */}
           <div className="input-group">
             <FiFileText className="input-icon" />
-            <input
-              type="text"
-              name="title"
-              placeholder="Título"
-              value={formData.title}
-              onChange={handleChange}
-              required
-            />
+            <input type="text" name="title" value={formData.title} onChange={handleChange} required />
           </div>
 
+          {/* Descripción */}
           <div className="input-group">
             <FiEdit className="input-icon" />
-            <textarea
-              name="description"
-              placeholder="Descripción"
-              value={formData.description}
-              onChange={handleChange}
-              required
-            />
+            <textarea name="description" value={formData.description} onChange={handleChange} required />
           </div>
 
-          {[{ name: "category", options: options.categories, icon: FiLayers },
-            { name: "cancel_type", options: options.cancel_types, icon: FiXCircle },
-            { name: "price_category", options: options.price_categories, icon: FiLayers }].map(({ name, options, icon: Icon }) => (
-            <div className="input-group" key={name}>
-              <Icon className="input-icon" />
-              <select 
-                  name={typeof name === "string" ? name : "default"} 
-                  value={formData[name] || ""} 
-                  onChange={handleChange} 
-                  required
-                >
-                <option value="" disabled>{`Selecciona ${name.replace("_", " ")}`}</option>
-                {options.map(({ value, label }) => (
-                  <option key={value} value={value}>{label}</option>
-                ))}
-              </select>
-            </div>
-          ))}
+          {/* Categorías y opciones */}
+          {options && (
+            <>
+              {[
+                { name: "category", options: options.categories, icon: FiLayers },
+                { name: "cancel_type", options: options.cancel_types, icon: FiXCircle },
+                { name: "price_category", options: options.price_categories, icon: FiLayers },
+              ].map(({ name, options, icon: Icon }) => (
+                <div className="input-group" key={name}>
+                  <Icon className="input-icon" />
+                  <select name={name} value={formData[name] || ""} onChange={handleChange} required>
+                    <option value="" disabled>{`Selecciona ${name.replace("_", " ")}`}</option>
+                    {options.map(({ value, label }) => (
+                      <option key={value} value={value}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ))}
+            </>
+          )}
 
+          {/* Precio */}
           <div className="input-group">
             <FiDollarSign className="input-icon" />
-            <input
-              type="number"
-              step="0.01"
-              name="price"
-              placeholder="Precio"
-              value={formData.price}
-              onChange={handleChange}
-              required
-            />
+            <input type="number" step="0.01" name="price" value={formData.price} onChange={handleChange} required />
           </div>
 
-          <button type="submit" className="rental-btn">
-            Actualizar
-          </button>
+          {/* Imágenes actuales */}
+          {existingImages.length > 0 && (
+            <div className="image-gallery">
+              <p>Imágenes actuales:</p>
+              {existingImages.map((img) => (
+                <div key={img.id} className="image-item">
+                  <img src={img.url} alt="existing" className="item-image" />
+
+                </div>
+              ))}
+            </div>
+          )}
+
+          <input type="file" multiple accept="image/*" onChange={handleImageChange} />
+          <button type="submit" className="rental-btn">Actualizar</button>
         </form>
       </div>
     </div>
