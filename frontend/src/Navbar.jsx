@@ -9,16 +9,13 @@ const Navbar = () => {
   return (
     <header className="navbar">
       <div className="container">
-        {/* Logo */}
         <Link to="/" className="logo">BORROO</Link>
         
-        {/* Search Bar & Filters */}
         <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
         <Link to="/" className="nav-link">Inicio</Link>
         <Link to="/create-item" className="nav-link">Poner en alquiler</Link>
       </nav>
 
-        {/* Right Section */}
         <div className="nav-icons">
           <div className="relative login1-container">
             <button className="login1-btn">
@@ -33,15 +30,12 @@ const Navbar = () => {
           <FiHeart size={24} className="nav-icon" />
           <FiShoppingCart size={24} className="nav-icon" />
           
-          {/* Mobile Menu Button */}
           <button className="menu-btn" onClick={() => setMenuOpen(!menuOpen)}>
             <FiMenu size={24} />
           </button>
         </div>
       </div>
-      
-      {/* Navigation Links */}
-      
+            
     </header>
   );
 };

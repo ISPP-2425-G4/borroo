@@ -42,44 +42,46 @@ const Layout = () => {
   }, []);
 
   return (
-    <div>
-      <Navbar />
-      <Container maxWidth={false} sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", bgcolor: "black", color: "white", padding: 2, mt: "350px" }}>
-        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "column", flexWrap: "wrap", gap: 2 }}>
+    <Box sx={{width:"100%"}}>
+          <Navbar />
+      <Container 
+       maxWidth={false} sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", bgcolor: "red", color: "white", minHeight: "100vh", width: "100%", padding: 0, margin: 0 }}>
+        <Box  sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "red", flexDirection: "column", flexWrap: "wrap", width: "100%" }}>
           <Typography variant="h4">Filtros</Typography>
-          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "row", flexWrap: "wrap", gap: 2, mt: 2 }}>
-            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "column", flexWrap: "wrap", gap: 2 }}>
+          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "row", flexWrap: "wrap", gap: 2, width: "100%" }}>
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "column", flexWrap: "wrap", gap: 2, }}>
               <Typography variant="h6">Categoría</Typography>
-              <select>
-                <option>💻 Tecnología</option>
-                <option>⚽ Deporte</option>
-                <option>🛠️ Bricolaje</option>
-                <option>👕 Ropa</option>
-                <option>📦 Mobiliario y Logística</option>
-                <option>🎮 Entretenimiento</option>
-              </select>
-              </Box>
-              <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "column", flexWrap: "wrap", gap: 2 }}>
+                <select>
+                  <option>💻 Tecnología</option>
+                  <option>⚽ Deporte</option>
+                  <option>🛠️ Bricolaje</option>
+                  <option>👕 Ropa</option>
+                  <option>📦 Mobiliario y Logística</option>
+                  <option>🎮 Entretenimiento</option>
+                </select>
+            </Box>
+            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "column", flexWrap: "wrap", gap: 2, }}>
               <div className="search-filters">
                 
-        <div className="search-container">
-          <input 
-              type="text" 
-              placeholder="Buscar..." 
-              className="search" 
-              value={searchTerm}
-              onChange={handleInputChange} 
-            />
-          <Link 
-            to={`/objetos/search_item/?title=${searchTerm}`} 
-            className="search-btn"
-          >
-            <FiSearch size={20} />
-          </Link>
-        </div>
+                <div className="search-container">
+                  <input 
+                    type="text" 
+                    placeholder="Buscar..." 
+                    className="search" 
+                    value={searchTerm}
+                    onChange={handleInputChange} 
+                    />
+                  <Link 
+                    to={`/objetos/search_item/?title=${searchTerm}`} 
+                    className="search-btn"
+                   >
+                   <FiSearch size={20} />
+                  </Link>
+                </div>
 
-      </div>
-      </Box> 
+              </div>
+            </Box> 
+
               <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "column", flexWrap: "wrap", gap: 2 }}>
               <Typography variant="h6">Precio</Typography>
               <Box className="price-inputs">
@@ -91,12 +93,12 @@ const Layout = () => {
               </Box>
               
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "row", flexWrap: "wrap", gap: 2 }}>
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "row", flexWrap: "wrap", gap: 2, mt:0 }}>
           {error ? (
             <Typography color="error">{error}</Typography>
           ) : (
             productos?.map((producto, index) => (
-              <Box key={index} sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", bgcolor: "white", color: "black", width: "200px", height: "200px", padding: 2, margin: 1, borderRadius: 1 }}>
+              <Box key={index} sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", bgcolor: "white", color: "black", width: "200px", height: "200px", padding: 2, margin: 1, borderRadius: 1, mt:0 }}>
                 <Typography variant="h6">{producto.title}</Typography>
                 <Typography variant="body2">{producto.description}</Typography>
                 <Typography variant="body2">{producto.category_display}</Typography>
@@ -108,7 +110,7 @@ const Layout = () => {
       </Box>
         <Outlet />
       </Container>
-    </div>
+      </Box>
   );
 };
 
