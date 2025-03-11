@@ -1,17 +1,36 @@
 import Navbar from "./Navbar";
-import { Link, Outlet } from "react-router-dom";
-import { Box, Container, Typography } from "@mui/material";
+import {
+  Container,
+  Box,
+  Typography,
+  MenuItem,
+  Select,
+  TextField,
+  Card,
+  CardContent,
+  Slider
+} from "@mui/material";
 import { useEffect, useState } from "react";
-import { FiSearch } from "react-icons/fi";
 
 const Layout = () => {
   const [productos, setProductos] = useState([]);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [categoria, setCategoria] = useState("");
+  const [precio, setPrecio] = useState([0, 300]);
+  const [productosFiltrados, setProductosFiltrados] = useState([]);
+
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
+  const handleCategoriaChange = (e) => {
+    setCategoria(e.target.value);
+  };
+
+  const handlePrecioChange = (event, newValue) => {
+    setPrecio(newValue);
+  }
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -19,8 +38,8 @@ const Layout = () => {
         const response = await fetch("http://localhost:8000/objetos/full", {
           method: "GET",
           headers: {
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "application/json"
+          }
         });
 
         if (!response.ok) {
@@ -30,6 +49,7 @@ const Layout = () => {
         const data = await response.json();
         if (data.results) {
           setProductos(data.results);
+          console.log(data.results);
         } else {
           setError("No products found");
         }
@@ -39,78 +59,142 @@ const Layout = () => {
     };
 
     fetchProducts();
+    
   }, []);
 
+  useEffect(() => {
+    const filtered = productos.filter((producto) => {
+      return (
+        (categoria === "" || producto.category_display === categoria) &&
+        (producto.price >= precio[0] && producto.price <= precio[1]) 
+      )
+    }
+    );
+    setProductosFiltrados(filtered);
+  }
+  , [productos, categoria, precio]);
+
+
+
   return (
-    <Box sx={{width:"100%"}}>
-          <Navbar />
-      <Container 
-       maxWidth={false} sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", bgcolor: "red", color: "white", minHeight: "100vh", width: "100%", padding: 0, margin: 0 }}>
-        <Box  sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "red", flexDirection: "column", flexWrap: "wrap", width: "100%" }}>
-          <Typography variant="h4">Filtros</Typography>
-          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "row", flexWrap: "wrap", gap: 2, width: "100%" }}>
-            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "column", flexWrap: "wrap", gap: 2, }}>
-              <Typography variant="h6">Categoría</Typography>
-                <select>
-                  <option>💻 Tecnología</option>
-                  <option>⚽ Deporte</option>
-                  <option>🛠️ Bricolaje</option>
-                  <option>👕 Ropa</option>
-                  <option>📦 Mobiliario y Logística</option>
-                  <option>🎮 Entretenimiento</option>
-                </select>
-            </Box>
-            <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "column", flexWrap: "wrap", gap: 2, }}>
-              <div className="search-filters">
-                
-                <div className="search-container">
-                  <input 
-                    type="text" 
-                    placeholder="Buscar..." 
-                    className="search" 
-                    value={searchTerm}
-                    onChange={handleInputChange} 
-                    />
-                  <Link 
-                    to={`/objetos/search_item/?title=${searchTerm}`} 
-                    className="search-btn"
-                   >
-                   <FiSearch size={20} />
-                  </Link>
-                </div>
-
-              </div>
-            </Box> 
-
-              <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "column", flexWrap: "wrap", gap: 2 }}>
-              <Typography variant="h6">Precio</Typography>
-              <Box className="price-inputs">
-                <input type="number" placeholder="Min" min="0" className="price-input" />
-                <span> - </span>
-                <input type="number" placeholder="Max" min="0" className="price-input" />
-              </Box>
-             
-              </Box>
-              
+    <Box sx={{ overflowX: "hidden" }}>
+      <Navbar />
+      <Container maxWidth={false} sx={{ py: 4, bgcolor:"white", width: "100%", minHeight: "90vh", justifyContent:"center", alignItems:"center" }}>
+        <Box sx={{display:"flex", flexDirection:"column", alignItems:"center", gap:2}}>
+        <Typography variant="h6" align="center" gutterBottom sx={{color:"black"}}>
+          Filtros
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection:"row",
+            justifyContent: "center",
+            gap: 2,
+            mb: 4
+          }}
+        >
+          <TextField
+            placeholder="Buscar..."
+            value={searchTerm}
+            onChange={handleInputChange}
+            variant="outlined"
+           
+            sx={{ minWidth: "250px" }}
+          />
+          <Select
+            value={categoria}
+            onChange={handleCategoriaChange}
+            displayEmpty
+            variant="outlined"
+            sx={{ minWidth: "250px" }}
+          >
+            <MenuItem value="">
+              <em>Seleccione una categoría</em>
+            </MenuItem>
+            <MenuItem value="Tecnología">💻 Tecnología</MenuItem>
+            <MenuItem value="Deporte">⚽ Deporte</MenuItem>
+            <MenuItem value="Bricolaje">🛠️ Bricolaje</MenuItem>
+            <MenuItem value="Ropa">👕 Ropa</MenuItem>
+            <MenuItem value="Mobiliario y logística">
+              📦 Mobiliario y Logística
+            </MenuItem>
+            <MenuItem value="Entretenimiento">🎮 Entretenimiento</MenuItem>
+          </Select>
+          <Box sx={{ display: "flex", alignItems: "center", flexDirection:"column" }}>
+            <Typography variant="body1" sx={{ mr: 2, color:"black" }}> Precio: </Typography>
+          <Slider
+            value={precio}
+            onChange={handlePrecioChange}
+            valueLabelDisplay="auto"
+            valueLabelFormat={(value) => `${value}€`}
+            min={0}
+            max={300}
+            step={10}
+            sx={{ minWidth: "250px" }}
+          />
+          </Box>
+          
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", bgcolor: "black", flexDirection: "row", flexWrap: "wrap", gap: 2, mt:0 }}>
-          {error ? (
-            <Typography color="error">{error}</Typography>
-          ) : (
-            productos?.map((producto, index) => (
-              <Box key={index} sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", bgcolor: "white", color: "black", width: "200px", height: "200px", padding: 2, margin: 1, borderRadius: 1, mt:0 }}>
-                <Typography variant="h6">{producto.title}</Typography>
-                <Typography variant="body2">{producto.description}</Typography>
-                <Typography variant="body2">{producto.category_display}</Typography>
-                <Typography variant="body2">{producto.price}€/{producto.price_category_display}</Typography>
+        {error ? (
+          <Typography color="error" align="center">
+            {error}
+          </Typography>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: 2
+            }}
+          >
+            {productosFiltrados?.map((producto, index) => (
+              <Box
+                key={index}
+                sx={{
+                  flex: "1 1 200px",
+                  maxWidth: "250px",
+                  display: "flex",
+                  flexDirection: "column"
+                }}
+              >
+                <Card
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column"
+                  }}
+                >
+                  <CardContent
+                    sx={{
+                      flexGrow: 1,
+                      backgroundColor: "black",
+                      color: "white",
+                      p: 2,
+                      borderRadius: 1
+                    }}
+                  >
+                    <Typography variant="h6" gutterBottom>
+                      {producto.title}
+                    </Typography>
+                    <Typography variant="body2" gutterBottom>
+                      {producto.description}
+                    </Typography>
+                    <Typography variant="body2" gutterBottom>
+                      {producto.category_display}
+                    </Typography>
+                    <Typography variant="body2">
+                      {producto.price}€ / {producto.price_category_display}
+                    </Typography>
+                  </CardContent>
+                </Card>
               </Box>
-            ))
-          )}
+            ))}
+          </Box>
+        )}
         </Box>
-      </Box>
-        <Outlet />
       </Container>
-      </Box>
+    </Box>
   );
 };
 
