@@ -1,182 +1,268 @@
 /* ====== RESET GENERAL ====== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f4f6f8;
-    color: #111;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  
-  /* ====== CONTENEDOR PRINCIPAL ====== */
-  .create-item-container {
-    margin-top: 30%;
-    width: 100%;
-    max-width: 420px; /* Reducimos el ancho máximo */
-    padding: 1.5rem; /* Menos padding para que no se vea tan grande */
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  /* ====== TITULO ====== */
-  h2 {
-    font-size: 1.5rem; /* Reducimos el tamaño del título */
-    font-weight: bold;
-    margin-bottom: 0.8rem;
-    color: #2563eb;
-  }
-  
-  /* ====== FORMULARIO ====== */
-  form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem; /* Espacio más reducido entre inputs */
-  }
-  
-  /* ====== GRUPO DE INPUTS ====== */
-  .input-group {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem; /* Menos separación entre icono y input */
-    background: #f9fafb;
-    padding: 0.6rem 0.8rem; /* Reducimos el padding */
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    transition: 0.3s ease-in-out;
-    position: relative;
-  }
-  
-  .input-group:hover {
-    border-color: #2563eb;
-    background: #eef2ff;
-  }
-  
-  /* Iconos dentro del input */
-  .input-icon {
-    font-size: 1rem; /* Icono más pequeño */
-    color: #2563eb;
-  }
-  
-  /* INPUTS Y TEXTAREA */
-  .input-group input,
-  .input-group textarea,
-  .input-group select {
-    flex: 1;
-    border: none;
-    background: transparent;
-    font-size: 0.9rem; /* Reducimos el tamaño del texto */
-    outline: none;
-    color: #111;
-    font-weight: 500;
-  }
-  
-  /* Textarea sin flecha */
-  textarea {
-    min-height: 80px; /* Menos altura por defecto */
-    resize: vertical;
-  }
-  
-  /* ====== SELECT (MENÚS DESPLEGABLES) ====== */
-  .input-group select {
-    padding-left: 8px;
-    appearance: none;
-    padding-right: 1.8rem; /* Espacio para la flecha */
-    cursor: pointer;
-    font-weight: normal;
-    color: #666;
-    border: none;
-  }
-  
-  /* Flecha solo en los SELECT */
-  .select-arrow {
-    font-size: 0.8rem;
-    color: #2563eb;
-    position: absolute;
-    right: 0.8rem;
-    pointer-events: none;
-  }
-  
-  /* ====== ESTILO PARA EL MENÚ DESPLEGABLE ====== */
-  select::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  select::-webkit-scrollbar-thumb {
-    background-color: #2563eb;
-    border-radius: 8px;
-  }
-  
-  select option {
-    padding: 8px;
-    font-size: 0.9rem;
-    background: white;
-    color: #111;
-    text-indent: 6px;
-  }
-  
-  /* Cuando el usuario pasa el cursor por una opción */
-  select option:hover {
-    background: #eef2ff;
-  }
-  
-  /* ====== BOTÓN PRINCIPAL ====== */
-  .primary-btn {
-    background: #2563eb;
-    color: white;
-    font-size: 0.9rem; /* Reducimos el tamaño del texto */
-    font-weight: bold;
-    padding: 0.6rem; /* Botón más compacto */
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-    width: 100%;
-  }
-  
-  .primary-btn:hover {
-    background: #1e40af;
-    transform: scale(1.02);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f4f6f8;
+  color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
 
-  
-  /* ====== MENSAJES DE ERROR ====== */
-  .error-message {
-    color: red;
-    font-size: 0.8rem;
-    background: rgba(255, 0, 0, 0.1);
-    padding: 0.4rem;
-    border-radius: 5px;
-    margin-bottom: 1.5%;
-  }
-  
-  /* ====== RESPONSIVE ====== */
-  @media (max-width: 600px) {
-    .create-item-container {
+/* ====== CONTENEDOR PRINCIPAL ====== */
+.create-item-container,
+.rental-container {
+  margin-top: 25%;
+  width: 100%;
+  max-width: 100%;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ====== TITULO ====== */
+h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.8rem;
+  color: #2563eb;
+}
+
+/* ====== FORMULARIO ====== */
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+/* ====== INPUTS ====== */
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #f9fafb;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  transition: 0.3s ease-in-out;
+  position: relative;
+}
+
+.input-group:hover {
+  border-color: #2563eb;
+  background: #eef2ff;
+}
+
+.input-icon {
+  font-size: 1rem;
+  color: #2563eb;
+}
+
+.input-group input,
+.input-group textarea,
+.input-group select {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 0.9rem;
+  outline: none;
+  color: #111;
+  font-weight: 500;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* ====== SELECT (MENÚS DESPLEGABLES) ====== */
+.input-group select {
+  padding-left: 8px;
+  appearance: none;
+  padding-right: 1.8rem;
+  cursor: pointer;
+  font-weight: normal;
+  color: #666;
+  border: none;
+}
+
+.select-arrow {
+  font-size: 0.8rem;
+  color: #2563eb;
+  position: absolute;
+  right: 0.8rem;
+  pointer-events: none;
+}
+
+/* ====== BOTÓN PRINCIPAL ====== */
+.primary-btn {
+  background: #2563eb;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  width: 100%;
+}
+
+.primary-btn:hover {
+  background: #1e40af;
+  transform: scale(1.02);
+}
+
+/* ====== CARRUSEL DE IMÁGENES ====== */
+.image-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  background: rgba(255, 255, 255, 0.438);  /* Fondo blanco limpio */
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.slider-image {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+/* 🔹 Botones de navegación del carrusel */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.3);  /* Más transparente */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 50%;
+  transition: background 0.3s ease-in-out;
+}
+
+.slider-btn:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.left { left: 10px; }
+.right { right: 10px; }
+
+/* 🔹 Indicador de posición */
+.image-counter {
+  position: absolute;
+  bottom: -20px;
+  font-size: 14px;
+  color: #555;
+  font-weight: bold;
+}
+
+/* ====== CONTENEDOR DE IMÁGENES ====== */
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+  max-width: 100%;
+  padding: 10px;
+  overflow: hidden;
+}
+
+/* ====== IMAGEN INDIVIDUAL ====== */
+.item-image {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  transition: transform 0.3s ease-in-out;
+}
+
+.item-image:hover {
+  transform: scale(1.03);
+  border-color: #2563eb;
+}
+
+/* ====== MENSAJES DE ERROR ====== */
+.error-message {
+  color: red;
+  font-size: 0.8rem;
+  background: rgba(255, 0, 0, 0.1);
+  padding: 0.4rem;
+  border-radius: 5px;
+  margin-bottom: 1.5%;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 600px) {
+  .create-item-container {
       width: 95%;
       padding: 1rem;
-    }
-  
-    .input-group {
+  }
+
+  .image-slider {
+      max-width: 100%;
+  }
+
+  .item-image {
+      max-width: 90%;
+  }
+
+  .slider-btn {
+      padding: 6px 10px;
+      font-size: 14px;
+  }
+
+  .input-group {
       flex-direction: column;
       align-items: flex-start;
-    }
-  
-    .input-icon {
-      margin-bottom: 0.4rem;
-    }
   }
-  
+
+  .input-icon {
+      margin-bottom: 0.4rem;
+  }
+
+  /* Contenedor de previsualización */
+  .image-preview-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+  }
+
+  .image-preview {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+  }
+
+  .preview-image {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+  }
+}
