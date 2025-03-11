@@ -6,7 +6,7 @@ import {
   FiLayers,
   FiXCircle,
   FiDollarSign,
-  FiTrash2,
+
 } from "react-icons/fi";
 import "../public/styles/CreateItem.css";
 import Navbar from "./Navbar";
@@ -21,9 +21,7 @@ const UpdateItemScreen = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [images, setImages] = useState([]); // Imágenes nuevas
-  const [imagePreviews, setImagePreviews] = useState([]); // Previews de imágenes nuevas
   const [existingImages, setExistingImages] = useState([]); // Imágenes actuales (IDs y URLs)
-  const [imagesToDelete, setImagesToDelete] = useState([]); // IDs de imágenes a eliminar
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,15 +67,10 @@ const UpdateItemScreen = () => {
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setImages(files); // Solo permitimos nuevas imágenes, no acumulamos
-    setImagePreviews(files.map((file) => URL.createObjectURL(file)));
     e.target.value = "";
   };
 
   // Limpiar imágenes nuevas seleccionadas
-  const handleClearImages = () => {
-    setImages([]);
-    setImagePreviews([]);
-  };
 
 
 
@@ -105,10 +98,7 @@ const UpdateItemScreen = () => {
         formDataToSend.append("image_files", "");
       }
 
-      // 3️⃣ Agregar IDs de imágenes a eliminar
-      imagesToDelete.forEach((imageId) => {
-        formDataToSend.append("images_to_delete", imageId);
-      });
+
 
       // 4️⃣ Enviar solicitud PUT al backend
       const response = await fetch(`http://localhost:8000/objetos/full/${id}/`, {

@@ -3,7 +3,6 @@ import { FiFileText, FiEdit, FiLayers, FiXCircle, FiDollarSign } from "react-ico
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "../public/styles/CreateItem.css";
-import PropTypes from 'prop-types';
 
 const CreateItemScreen = () => {
   const [formData, setFormData] = useState({
@@ -16,7 +15,6 @@ const CreateItemScreen = () => {
   });
 
   const [images, setImages] = useState([]);
-  const [imagePreviews, setImagePreviews] = useState([]); // Para mostrar vistas previas
   const [options, setOptions] = useState({
     categories: [],
     cancel_types: [],
@@ -64,8 +62,6 @@ const CreateItemScreen = () => {
     setImages((prevImages) => [...prevImages, ...files]);
   
     // Generar y agregar vistas previas de las nuevas imágenes
-    const previews = files.map((file) => URL.createObjectURL(file));
-    setImagePreviews((prevPreviews) => [...prevPreviews, ...previews]);
   };
   
 
@@ -104,7 +100,6 @@ const CreateItemScreen = () => {
           price: "",
         });
         setImages([]);
-        setImagePreviews([]); // Limpiar vistas previas
         navigate("/");
       } else {
         throw new Error("Error al crear el Item.");
