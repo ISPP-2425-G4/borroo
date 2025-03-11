@@ -17,8 +17,9 @@ const Layout = () => {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoria, setCategoria] = useState("");
-  const [precio, setPrecio] = useState([0, 300]);
+  const [precio, setPrecio] = useState([0, 100]);
   const [productosFiltrados, setProductosFiltrados] = useState([]);
+
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
@@ -66,20 +67,21 @@ const Layout = () => {
     const filtered = productos.filter((producto) => {
       return (
         (categoria === "" || producto.category_display === categoria) &&
-        (producto.price >= precio[0] && producto.price <= precio[1]) 
+        (producto.price >= precio[0] && producto.price <= precio[1]) &&
+        (producto.title.toLowerCase().includes(searchTerm.toLowerCase()))
       )
     }
     );
     setProductosFiltrados(filtered);
   }
-  , [productos, categoria, precio]);
+  , [productos, categoria, precio, searchTerm]);
 
 
 
   return (
-    <Box sx={{ overflowX: "hidden" }}>
+    <Box sx={{ overflowX: "hidden"}}>
       <Navbar />
-      <Container maxWidth={false} sx={{ py: 4, bgcolor:"white", width: "100%", minHeight: "90vh", justifyContent:"center", alignItems:"center" }}>
+      <Container maxWidth={false} sx={{ py: 4, bgcolor:"white", width: "100vw", minHeight: "90vh", justifyContent:"center", alignItems:"center", mt:"48px"}}>
         <Box sx={{display:"flex", flexDirection:"column", alignItems:"center", gap:2}}>
         <Typography variant="h6" align="center" gutterBottom sx={{color:"black"}}>
           Filtros
@@ -128,8 +130,8 @@ const Layout = () => {
             valueLabelDisplay="auto"
             valueLabelFormat={(value) => `${value}€`}
             min={0}
-            max={300}
-            step={10}
+            max={100}
+            step={5}
             sx={{ minWidth: "250px" }}
           />
           </Box>
