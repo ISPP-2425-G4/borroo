@@ -190,6 +190,14 @@ const CreateItemScreen = () => {
     </div>
   );
 };
+SelectField.propTypes = {
+  icon: PropTypes.element.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+  })).isRequired,
+  placeholder: PropTypes.string.isRequired,
+};
 
 const InputField = ({ icon, ...props }) => (
   <div className="input-group">
@@ -219,12 +227,6 @@ const SelectField = ({ icon, options, placeholder, ...props }) => (
     <span className="select-arrow">▼</span>
   </div>
 );
-SelectField.propTypes = {
-  icon: PropTypes.element.isRequired,
-  options: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-  })).isRequired,
-  placeholder: PropTypes.string.isRequired,
-};
+
+
 export default CreateItemScreen;
