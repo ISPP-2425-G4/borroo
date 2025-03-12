@@ -29,15 +29,17 @@ class ItemSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'title', 'description', 'category', 'category_display',
             'cancel_type', 'cancel_type_display', 'price_category',
-            'price_category_display', 'price', 'images', 'image_files'
+            'price_category_display', 'price', 'images', 'image_files',
+            'user'
         ]
 
     def create(self, validated_data):
         image_files = validated_data.pop('image_files', [])
         validated_data.pop('images', None)
+        user = validated_data.pop('user')
 
         # Crear el item sin la relación many-to-many
-        item = Item.objects.create(**validated_data)
+        item = Item.objects.create(user=user, **validated_data)
 
         # Guardar las imágenes asociadas al item
         for image in image_files:

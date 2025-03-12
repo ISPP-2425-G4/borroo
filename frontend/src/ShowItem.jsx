@@ -16,6 +16,7 @@ const ShowItemScreen = () => {
   const [imageURLs, setImageURLs] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [userName, setUserName] = useState("");  // 🔹 Nuevo estado para el nombre del usuario
   const [dateRange, setDateRange] = useState([
     { startDate: new Date(), endDate: addDays(new Date(), 7), key: "selection" },
   ]);
@@ -29,6 +30,10 @@ const ShowItemScreen = () => {
         if (!response.ok) throw new Error("Error cargando el ítem.");
         const data = await response.json();
         setItem(data);
+
+        if (data.user) {
+          fetchUserName(data.user);
+        }
 
         if (data.images && data.images.length > 0) {
           const urls = await Promise.all(
@@ -58,6 +63,18 @@ const ShowItemScreen = () => {
     if (id) fetchItem();
   }, [id]);
 
+  const fetchUserName = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:8000/usuarios/full/${userId}/`);
+      if (!response.ok) throw new Error("Error obteniendo el usuario.");
+      const userData = await response.json();
+      console.log("Usuario recibido:", userData); // Verificar respuesta
+      setUserName(userData.name); // Ajusta si el nombre del usuario tiene otra key
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      setUserName("Usuario desconocido"); // En caso de error, mostrar un texto genérico
+    }
+  };
   const handleDelete = async (itemId) => {
     const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar este ítem?");
     if (!confirmDelete) return;
@@ -119,6 +136,7 @@ const ShowItemScreen = () => {
           <p><FiLayers /> <strong>Categoría:</strong> {item.category_display}</p>
           <p><FiXCircle /> <strong>Política de cancelación:</strong> {item.cancel_type_display}</p>
           <p><FiDollarSign /> <strong>Precio:</strong> {item.price} € / {item.price_category_display}</p>
+          <p><strong>Publicado por:</strong> {userName}</p>
         </div>
 
         {/* 🔹 Calendario */}
