@@ -15,18 +15,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.shortcuts import redirect
 from django.urls import include, path
+from django.http import JsonResponse
 from django.conf import settings
 from django.conf.urls.static import static
 
 
-def redirect_to_app(request):
-    return redirect("app:index")
+def api_home(request):
+    data = {
+        "message": "Bienvenido a la API de Borroo",
+        "endpoints": {
+            "usuarios": "/usuarios/",
+            "objetos": "/objetos/",
+            "rentas": "/rentas/",
+        }
+    }
+    return JsonResponse(data)
 
 
 urlpatterns = [
-    path("", redirect_to_app),
+    path("", api_home),
     path("usuarios/", include("usuarios.urls")),
     path('objetos/', include('objetos.urls')),
     path('rentas/', include('rentas.urls')),
