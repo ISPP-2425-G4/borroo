@@ -199,30 +199,6 @@ const CreateItemScreen = () => {
   );
 };
 
-SelectField.propTypes = {
-  icon: PropTypes.element.isRequired,
-  options: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-  })).isRequired,
-  placeholder: PropTypes.string.isRequired,
-};
-InputField.propTypes = {
-  icon: PropTypes.element.isRequired,
-  options: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-  })).isRequired,
-  placeholder: PropTypes.string.isRequired,
-};
-TextareaField.propTypes = {
-  icon: PropTypes.element.isRequired,
-  options: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-  })).isRequired,
-  placeholder: PropTypes.string.isRequired,
-};
 
 const InputField = ({ icon, ...props }) => (
   
@@ -255,4 +231,28 @@ const SelectField = ({ icon, options, placeholder, ...props }) => (
 );
 
 
+SelectField.propTypes = {
+  icon: PropTypes.element.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+  })).isRequired,
+  placeholder: PropTypes.string.isRequired,
+};
+InputField.propTypes = {
+  icon: PropTypes.element.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+  })).isRequired,
+  placeholder: PropTypes.string.isRequired,
+};
+TextareaField.propTypes = {
+  icon: PropTypes.element.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+  })).isRequired,
+  placeholder: PropTypes.string.isRequired,
+};
 export default CreateItemScreen;
