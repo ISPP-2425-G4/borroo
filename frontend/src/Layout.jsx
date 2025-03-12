@@ -8,9 +8,11 @@ import {
   TextField,
   Card,
   CardContent,
-  Slider
+  Slider,
+  Tooltip
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Layout = () => {
   const [productos, setProductos] = useState([]);
@@ -32,6 +34,13 @@ const Layout = () => {
   const handlePrecioChange = (event, newValue) => {
     setPrecio(newValue);
   }
+
+  const truncateDescription = (description, length = 100) => {
+    if (description.length > length) {
+      return description.substring(0, length) + "..."; 
+    }
+    return description;
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -160,6 +169,7 @@ const Layout = () => {
                   flexDirection: "column"
                 }}
               >
+                <Link to={`/show-item/${producto.id}`}>
                 <Card
                   sx={{
                     height: "100%",
@@ -180,16 +190,22 @@ const Layout = () => {
                       {producto.title}
                     </Typography>
                     <Typography variant="body2" gutterBottom>
-                      {producto.description}
-                    </Typography>
-                    <Typography variant="body2" gutterBottom>
                       {producto.category_display}
                     </Typography>
                     <Typography variant="body2">
                       {producto.price}€ / {producto.price_category_display}
                     </Typography>
+                    <Tooltip
+                      title={producto.description}
+                      arrow
+                    >
+                      <Typography variant="body2" gutterBottom>
+                        {truncateDescription(producto.description, 100)}
+                      </Typography>
+                    </Tooltip>
                   </CardContent>
                 </Card>
+                </Link>
               </Box>
             ))}
           </Box>
