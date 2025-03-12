@@ -73,18 +73,22 @@ const CreateItemScreen = () => {
   
     try {
       const formDataToSend = new FormData();
-  
-      // Definir solo los campos permitidos para evitar inyección de datos no deseados
       const allowedKeys = ["title", "description", "category", "cancel_type", "price_category", "price"];
-  
-      // Filtrar y agregar solo los campos esperados
+      
       Object.keys(formData).forEach((key) => {
         if (allowedKeys.includes(key)) {
           formDataToSend.append(key, formData[key]);
-        } else {
-          console.warn(`Clave no permitida: ${key}`);
         }
       });
+  
+      // Obtener usuario autenticado desde localStorage o contexto
+      const user = JSON.parse(localStorage.getItem("user")); 
+      console.log(user);
+      if (user && user.id) {
+        formDataToSend.append("user", user.id);
+      } else {
+        throw new Error("Usuario no autenticado");
+      }
   
       // Agregar imágenes
       images.forEach((image) => {
@@ -119,6 +123,7 @@ const CreateItemScreen = () => {
       setLoading(false);
     }
   };
+  
   
 
   return (
