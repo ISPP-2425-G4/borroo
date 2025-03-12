@@ -4,18 +4,26 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
+    overflow-x: hidden; /* Previene scroll horizontal */
 }
 
 .login-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 80px); /* Ajusta según la altura del header */
+    flex-direction: column;
+    align-items: flex-start; /* Alinea desde arriba para poder usar margin-top */
+    min-height: 100vh; /* Usa altura completa de la ventana */
     background-color: #f3f4f6;
-    padding-top: 80px; /* Ajusta según la altura del header */
-    width: 100vw; /* Fuerza el ancho completo de la ventana */
+    padding: 0 20px; /* Añade padding horizontal pero no vertical */
+    width: 100%; /* Usa 100% en lugar de 100vw para evitar scroll horizontal */
+    box-sizing: border-box; /* Asegura que el padding esté incluido en el width */
 }
 
+.login-spacer {
+    width: 100%;
+    margin-top: 100%; /* Espaciado del 30% de la altura de la ventana */
+    background-color: transparent;
+}
 .login-box {
     background: white;
     padding: 2rem;
@@ -23,6 +31,15 @@ html, body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     width: 350px;
+    max-width: 100%; /* Asegura responsividad */
+    margin-top: 30%; /* Posiciona a 30% de la altura de la ventana */
+    margin-bottom: 30px; /* Añade espacio al final */
+}
+
+/* Ajuste específico para la caja de signup que es más grande */
+.signup-box {
+    width: 400px; /* Un poco más ancho para el formulario de registro */
+    margin-top: 20vh; /* Un poco más arriba que el login para compensar su mayor altura */
 }
 
 h2 {
@@ -44,7 +61,7 @@ h2 {
     margin-right: 10px;
 }
 
-input {
+input, select {
     border: none;
     background: transparent;
     outline: none;
@@ -66,6 +83,11 @@ input {
     background: #1e40af;
 }
 
+.login-btn:disabled {
+    background: #93c5fd;
+    cursor: not-allowed;
+}
+
 .register-link {
     margin-top: 10px;
     font-size: 0.9rem;
@@ -78,4 +100,37 @@ input {
 
 .register-link a:hover {
     text-decoration: underline;
+}
+
+/* Estilo para mensajes de error */
+.error-message {
+    color: #ef4444;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.field-error {
+    color: #ef4444;
+    font-size: 0.8rem;
+    text-align: left;
+    margin-top: -0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Media query para pantallas pequeñas donde el formulario podría ser demasiado grande */
+@media (max-height: 800px) {
+    .login-box {
+        margin-top: 120px; /* Valor fijo para pantallas pequeñas */
+    }
+    
+    .signup-box {
+        margin-top: 100px; /* Valor fijo para pantallas pequeñas */
+    }
+}
+
+/* Para pantallas muy pequeñas, reduce más el tamaño del contenedor */
+@media (max-width: 400px) {
+    .login-box, .signup-box {
+        padding: 1.5rem;
+    }
 }
