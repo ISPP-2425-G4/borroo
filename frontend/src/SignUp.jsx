@@ -72,6 +72,7 @@ const Signup = () => {
         // Guardar los tokens JWT en localStorage
         localStorage.setItem('access_token', data.access);
         localStorage.setItem('refresh_token', data.refresh);
+        localStorage.setItem("user", JSON.stringify(data.user));
         navigate("/");
       } else {
         // Manejar errores de formulario desde el backend
@@ -100,6 +101,7 @@ const Signup = () => {
 
   return (
     <div className="login-container">
+    <div  className="login-spacer"> </div>
       <div className="login-box signup-box">
         <h2>Registrarse</h2>
         {error && <div className="error-message">{error}</div>}
