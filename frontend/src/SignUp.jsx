@@ -100,6 +100,7 @@ const Signup = () => {
 
   return (
     <div className="login-container">
+    <div  className="login-spacer"> </div>
       <div className="login-box signup-box">
         <h2>Registrarse</h2>
         {error && <div className="error-message">{error}</div>}
