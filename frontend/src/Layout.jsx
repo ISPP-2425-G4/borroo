@@ -34,6 +34,13 @@ const Layout = () => {
     setPrecio(newValue);
   }
 
+  const truncateDescription = (description, length = 100) => {
+    if (description.length > length) {
+      return description.substring(0, length) + "..."; 
+    }
+    return description;
+  };
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -182,13 +189,13 @@ const Layout = () => {
                       {producto.title}
                     </Typography>
                     <Typography variant="body2" gutterBottom>
-                      {producto.description}
-                    </Typography>
-                    <Typography variant="body2" gutterBottom>
                       {producto.category_display}
                     </Typography>
                     <Typography variant="body2">
                       {producto.price}€ / {producto.price_category_display}
+                    </Typography>
+                    <Typography variant="body2" gutterBottom>
+                      {truncateDescription(producto.description, 100)}
                     </Typography>
                   </CardContent>
                 </Card>
