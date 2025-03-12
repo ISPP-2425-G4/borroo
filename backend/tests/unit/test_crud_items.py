@@ -45,6 +45,17 @@ class TestItemEndpoints:
     def create_item(self, item_data):
         return Item.objects.create(**item_data)
 
+    @pytest.fixture
+    def itemImage_data(self, create_item):
+        return {
+            "item": create_item,
+            "image": "../../../fronted/public/logo.png",
+        }
+
+    @pytest.fixture
+    def create_itemImage(self, itemImage_data):
+        return Item.objects.create(**itemImage_data)
+
     # Casos positivos
     def test_creacion_item(self, item_data):
         item = Item.objects.create(**item_data)
@@ -78,14 +89,13 @@ class TestItemEndpoints:
     #         "cancel_type": CancelType.FLEXIBLE,
     #         "price_category": PriceCategory.DAY,
     #         "price": 2000.00,
-    #         "user": create_user.id,  # Incluir el ID del usuario
+    #         "user": create_user.id,
     #     }
 
     #     response = client.put(url, data=updated_data,
-    #       content_type='application/json')
+    #                           content_type='application/json')
     #     assert response.status_code == status.HTTP_200_OK
 
-    #     # Verifica que el ítem se actualizó correctamente
     #     create_item.refresh_from_db()
     #     assert create_item.title == "Laptop Gamer Pro"
     #     assert create_item.price == 2000.00
