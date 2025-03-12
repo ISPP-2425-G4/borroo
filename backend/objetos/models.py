@@ -42,6 +42,8 @@ class Item(models.Model):
         choices=PriceCategory.choices
     )
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    user = models.ForeignKey('usuarios.User', related_name='items',
+                             on_delete=models.CASCADE)
 
 
 class ItemImage(models.Model):
