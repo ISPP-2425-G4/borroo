@@ -36,7 +36,7 @@ const Navbar = () => {
         width: "100%",
         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
         zIndex: 1100,
-        height: "40px",
+        height: "60px",
       }}
     >
       {/* Logo */}
