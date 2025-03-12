@@ -8,7 +8,8 @@ import {
   TextField,
   Card,
   CardContent,
-  Slider
+  Slider,
+  Tooltip
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -194,9 +195,14 @@ const Layout = () => {
                     <Typography variant="body2">
                       {producto.price}€ / {producto.price_category_display}
                     </Typography>
-                    <Typography variant="body2" gutterBottom>
-                      {truncateDescription(producto.description, 100)}
-                    </Typography>
+                    <Tooltip
+                      title={producto.description}
+                      arrow
+                    >
+                      <Typography variant="body2" gutterBottom>
+                        {truncateDescription(producto.description, 100)}
+                      </Typography>
+                    </Tooltip>
                   </CardContent>
                 </Card>
                 </Link>
