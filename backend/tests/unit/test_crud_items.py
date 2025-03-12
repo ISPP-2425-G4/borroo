@@ -65,12 +65,12 @@ class TestItemEndpoints:
         response = client.get(url)
         assert response.status_code == status.HTTP_200_OK
         assert response.data['title'] == "Laptop Gamer"
-        assert response.data['description'] == "Una laptop potente para gaming."
+        assert response.data[
+            'description'] == "Una laptop potente para gaming."
 
     # def test_actualizacion_item(self, client, create_user, create_item):
     #     url = reverse('item-detail', args=[create_item.id])
 
-    #     # Datos actualizados, incluyendo el campo 'user' con el ID del usuario
     #     updated_data = {
     #         "title": "Laptop Gamer Pro",
     #         "description": "Una laptop aún más potente para gaming.",
