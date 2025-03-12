@@ -9,17 +9,17 @@ from .serializers import RentSerializer
 class RentViewSet(viewsets.ModelViewSet):
     queryset = Rent.objects.all()
     serializer_class = RentSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['payment_status']
     ordering_fields = ['total_price', 'start_date']
     ordering = ['-start_date']
 
     def get_queryset(self):
-        user = self.request.user
-        if user.is_staff:
-            return Rent.objects.all()
-        return Rent.objects.filter(renter=user)
+        # user = self.request.user
+        # if user.is_staff:
+        return Rent.objects.all()
+        # return Rent.objects.filter(renter=user)
 
     @action(detail=False, methods=['post'])
     def first_request(self, request, *args, **kwargs):
