@@ -4,22 +4,21 @@ from rest_framework.decorators import action
 from rest_framework import status, filters
 from .models import Rent, RentStatus
 from .serializers import RentSerializer
+from objetos.models import Item
+from usuarios.models import User
 
 
 class RentViewSet(viewsets.ModelViewSet):
     queryset = Rent.objects.all()
     serializer_class = RentSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['payment_status']
     ordering_fields = ['total_price', 'start_date']
     ordering = ['-start_date']
 
     def get_queryset(self):
-        user = self.request.user
-        if user.is_staff:
-            return Rent.objects.all()
-        return Rent.objects.filter(renter=user)
+        return Rent.objects.all()
 
     @action(detail=False, methods=['post'])
     def first_request(self, request, *args, **kwargs):
@@ -35,7 +34,13 @@ class RentViewSet(viewsets.ModelViewSet):
 
         serializer = RentSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(renter=request.user, item=item_id)
+            item = Item.objects.get(id=item_id)  # Buscar el objeto Item
+            try:
+                user = User.objects.get(id=request.user.id) 
+            except User.DoesNotExist:
+                return Response({"error": "El usuario no existe."}, 
+                                status=status.HTTP_400_BAD_REQUEST)
+            serializer.save(renter=user, item=item) 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
