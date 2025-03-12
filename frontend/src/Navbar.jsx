@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiUser, FiHeart, FiShoppingCart, FiMenu } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import {
   Box,
   IconButton,
@@ -11,8 +11,9 @@ import {
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const [loginAnchorEl, setLoginAnchorEl] = useState(null);
-
+  const navigate = useNavigate();
   const handleLoginClick = (event) => {
     setLoginAnchorEl(event.currentTarget);
   };
@@ -20,6 +21,44 @@ const Navbar = () => {
   const handleLoginClose = () => {
     setLoginAnchorEl(null);
   };
+
+  const handleLogout = async () => {
+    try {
+      // Opcional: llamar al backend para cerrar la sesión del lado del servidor
+      await fetch('/api/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        // Podrías enviar el ID del usuario si es necesario
+        body: JSON.stringify({ user_id: user?.id })
+      });
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    } finally {
+      // Eliminar la información del usuario del localStorage
+      localStorage.removeItem('user');
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      setUser(null);
+      console.log("Usuario ha cerrado sesión"); // Imprimir en consola al cerrar sesión
+      
+      // Redirigir a la página principal
+      navigate('/');
+    }
+  };
+  // Obtener información del usuario al cargar el componente
+  useEffect(() => {
+    // Verificar si hay información de usuario en localStorage
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+      console.log("Usuario autenticado:", parsedUser); // Imprimir en consola si hay usuario
+    } else {
+      console.log("No hay usuario autenticado"); // Imprimir en consola si no hay usuario
+    }
+  }, []);
 
   return (
     <Box
@@ -86,6 +125,13 @@ const Navbar = () => {
 
       {/* Iconos de acciones */}
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+      {user ? (
+          <div className="user-info">
+            <strong>Hola, {user.name}</strong>
+          </div>
+        ) : (
+          <strong></strong>
+        )}
         {/* Icono de usuario con menú */}
         <IconButton onClick={handleLoginClick} sx={{ color: "white" }}>
           <FiUser size={24} />
@@ -103,12 +149,20 @@ const Navbar = () => {
             horizontal: "right",
           }}
         >
-          <MenuItem onClick={handleLoginClose} component={Link} to="/login">
-            Iniciar sesión
-          </MenuItem>
-          <MenuItem onClick={handleLoginClose} component={Link} to="/signup">
-            Registrarse
-          </MenuItem>
+         {user ? (
+            <MenuItem onClick={handleLogout}>
+              Cerrar sesión
+            </MenuItem>
+          ) : (
+            <>
+              <MenuItem onClick={handleLoginClose} component={Link} to="/login">
+                Iniciar sesión
+              </MenuItem>
+              <MenuItem onClick={handleLoginClose} component={Link} to="/signup">
+                Registrarse
+              </MenuItem>
+            </>
+          )}
         </Menu>
 
         {/* Otros iconos */}

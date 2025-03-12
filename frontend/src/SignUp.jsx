@@ -72,6 +72,7 @@ const Signup = () => {
         // Guardar los tokens JWT en localStorage
         localStorage.setItem('access_token', data.access);
         localStorage.setItem('refresh_token', data.refresh);
+        localStorage.setItem("user", JSON.stringify(data.user));
         navigate("/");
       } else {
         // Manejar errores de formulario desde el backend
