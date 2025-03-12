@@ -11,6 +11,7 @@ import {
   Slider
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Layout = () => {
   const [productos, setProductos] = useState([]);
@@ -160,6 +161,7 @@ const Layout = () => {
                   flexDirection: "column"
                 }}
               >
+                <Link to={`/show-item/${producto.id}`}>
                 <Card
                   sx={{
                     height: "100%",
@@ -190,6 +192,7 @@ const Layout = () => {
                     </Typography>
                   </CardContent>
                 </Card>
+                </Link>
               </Box>
             ))}
           </Box>
