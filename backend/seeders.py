@@ -1,3 +1,9 @@
+import os
+import django
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'borroo.settings')
+django.setup()
+
 import random
 from usuarios.models import User
 from objetos.models import Item, ItemImage
@@ -36,8 +42,6 @@ def create_items():
             price_category=random.choice(['hour', 'day', 'week', 'month',
                                           'year']),
             price=Decimal(random.uniform(2, 30)),
-            stock=random.randint(1, 100),
-            is_active=bool(random.getrandbits(1)),
             user=random.choice(users)
         )
         ItemImage.objects.create(
