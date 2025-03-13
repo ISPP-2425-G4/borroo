@@ -149,7 +149,8 @@ const Layout = () => {
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
-              gap: 2
+              gap: 2,
+              width: "100%"
             }}
           >
             {productosFiltrados?.map((producto, index) => (
