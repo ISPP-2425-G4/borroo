@@ -4,10 +4,11 @@
 
 ![](../imagenes/borrooLogo.png)
 
-## Individual Performance Evaluation
+## Individual Pilot Performance Evaluation
 
 ### Sprint 1 – G4
-**Repositorio:** [https://github.com/ISPP-2425-G4/](https://github.com/ISPP-2425-G4/)
+**Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
+**Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
 **Fecha:** 13/03/2025
 
 

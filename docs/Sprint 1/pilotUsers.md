@@ -8,10 +8,9 @@
 
 ### Sprint 1 – G4
 **Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
-
 **Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
 
-Fecha: 06/03/2025  
+Fecha: 20/02/2025  
 
 </div>
 
@@ -39,7 +38,7 @@ Fecha: 06/03/2025
 
 | Fecha      | Versión | Realizada por   | Descripción de los cambios |
 | ---------- | ------- | --------------- | -------------------------- |
-| 06-03-2025 | v1.0    | Santiago Rosado Raya | Creación del documento |
+| 20-02-2025 | v1.0    | Santiago Rosado Raya | Creación del documento |
 | 13-03-2025 | v1.1    | Marco Padilla Gómez | Historico de modificaciones añadido |
 |  |  |  |  |
 ---
@@ -62,145 +61,165 @@ Fecha: 06/03/2025
 
 ---
 
-## Usuarios Piloto
-
-Para validar la propuesta de valor de la plataforma, es fundamental identificar a los primeros usuarios que podrían beneficiarse del servicio. Estos usuarios representan distintos perfiles con necesidades específicas que encajan con el modelo de alquiler en lugar de compra.
-
-### Tipos de usuarios
-
-Los usuarios a los que está destinado el servicio son personas particulares, que se pueden clasificar en diversas categorías, por ejemplo:
-
-- **Estudiantes universitarios:** Necesitan electrodomésticos, muebles o dispositivos tecnológicos por periodos limitados sin necesidad de comprarlos.
-- **Pequeñas empresas y locales:** Pueden estar interesados en poner en alquiler o alquilar algunos objetos.
-- **Familias con niños:** Requieren productos temporales como cunas o juguetes sin hacer grandes inversiones.
-- **Viajeros y turistas:** Necesitan artículos temporales como maletas, bicicletas o cámaras sin adquirirlos permanentemente.
-- **Personas en rehabilitación o con movilidad reducida:** Requieren equipamiento médico o de apoyo (sillas de ruedas, andadores) solo por un tiempo determinado.
-- **Deportistas:** Interesados en practicar algún deporte, donde el equipo debe ser adquirido.
-
-En resumen, cualquier persona puede ser un posible usuario, aunque se espera que la mayoría sean adolescentes y adultos jóvenes de hasta 35 años. El servicio está pensado tanto para quienes desean obtener un beneficio económico aprovechando lo que ya poseen como para aquellos que buscan acceder temporalmente a determinados materiales a un costo menor que el de compra.
-
-### Interacción con los usuarios pilotos
-
-La interacción variará en función de si el usuario es un compañero voluntario del sistema o si es contactado directamente por el equipo. Se definirá la frecuencia, el canal de contacto y la política de calificación para los usuarios voluntarios de la asignatura.
-
-### Frecuencia
-
-- Se establecerá un contacto al menos tres días antes de cada entrega de sprint, garantizando que el feedback se pueda analizar e integrar a tiempo.
-- Para los usuarios contactados directamente, se seleccionará un mínimo de cinco personas para evaluar cada entregable no técnico, asegurando así una retroalimentación suficiente y representativa.
-
-### Canal de contacto
-
-- **Usuarios propuestos por la asignatura:** Se priorizará el contacto presencial para una comunicación más cercana. Si existen dificultades, se utilizarán canales telemáticos (WhatsApp y/o Discord) en un espacio dedicado.
-- **Usuarios contactados por el equipo:** Se dará preferencia a un primer contacto presencial, aunque se podrá recurrir a reuniones telemáticas cuando sea necesario.
-
-### Temas a tratar
-
-Con los usuarios se abordarán aspectos relacionados con:
-- Las funcionalidades del sistema.
-- El diseño y la implementación.
-- Identificación de posibles bugs o errores.
-- Sugerencias de mejora.
-
-El enfoque variará según el perfil: los usuarios técnicos proporcionarán feedback sobre el desarrollo y optimización del servicio, mientras que otros se centrarán en la experiencia de usuario, usabilidad y diseño de interfaces.
-
-### Calificación de usuarios pilotos
-
-Para que su participación sea significativa y el feedback útil, se seguirá un método estructurado:
-- Se definirá el momento óptimo para recibir feedback antes de cada entrega de sprint.
-- Se elaborará un documento (en Word o Excel) que recoja todos los temas a tratar, con espacio para aspectos adicionales sugeridos por los usuarios.
-- Durante las sesiones de revisión, se abordarán los puntos establecidos, y la calificación se basará en el nivel de implicación, calidad de la información aportada y análisis.
-
-### Usuarios Piloto contactados por el equipo
-
-Para captar usuarios piloto externos, se tendrá en cuenta el perfil del usuario objetivo. Se dará prioridad a un primer contacto presencial, almacenando información clave y respuestas sobre el servicio, asegurando siempre la protección de los datos privados.
-
-#### Estructura de la información recopilada
-
-- **Identificador (Id):** Se utilizarán las iniciales del usuario o el nombre de la entidad en el caso de locales o empresas.
-- **Tipo de usuario:** Se clasificará (Ej.: Estudiante universitario, Padre/Madre de familia, Adolescente, Adulto, Autónomo, Empresa).
-- **Edad**
-- **Primer contacto (1ºContacto)**
-- **Canal de contacto (Canal)**
-- **Interés en el servicio (Interés)**
-- **Deja en alquiler:** Respuesta sobre la posibilidad de poner en alquiler algún objeto propio.
-- **Alquila:** Si estaría dispuesto a alquilar algún objeto en particular.
-- **Categoría de interés:** Especificación de la categoría de objetos.
-- **Colaboración con el proyecto (Colabora):** Disposición a seguir colaborando y proporcionando feedback.
+## Usuarios Piloto  
+Para validar la propuesta de valor de la plataforma, es fundamental identificar a los primeros usuarios que podrían beneficiarse del servicio. Estos usuarios representan distintos perfiles con necesidades específicas que encajan con el modelo de alquiler en lugar de compra.  
 
 ---
 
-### Tabla de Usuarios Piloto
+### Tipos de usuarios:  
+Los usuarios a los que está destinado nuestro servicio son personas particulares por lo que podemos clasificar a nuestros usuarios pilotos dentro de muchas posibles categorías, por ejemplo:  
 
-| #  | Id Usuario         | Tipo           | Edad | 1ºContacto  | Canal               | Interés | Deja en alquilar | Alquila | Categoría                   | Colabora |
-|----|--------------------|----------------|------|-------------|---------------------|---------|------------------|---------|-----------------------------|----------|
-| 1  | PGC                | Estudiante     | 22   | Presencial  | Presencial          | Si      | Si               | Si      | Deporte y tecnología        | No       |
-| 2  | PNS                | Estudiante     | 22   | Presencial  | Presencial/Discord  | Si      | Si               | Si      | Tecnología y deporte        | Si       |
-| 3  | AFG                | Estudiante     | 22   | Presencial  | Presencial/Discord  | Si      | Si               | Si      | Tecnología                  | Si       |
-| 4  | JOT                | Estudiante     | 23   | Presencial  | Presencial/Discord  | Si      | Si               | Si      | Ropa                        | No       |
-| 5  | PMB                | Estudiante     | 23   | Presencial  | Discord             | Si      | Si               | Si      | Videojuegos                 | Si       |
-| 6  | TMG                | Madre          | 60   | Presencial  | Presencial          | Si      | Si               | Si      | Maletas                     | No       |
-| 7  | RBM                | Padre          | 60   | Presencial  | Presencial          | Si      | No               | Si      | Cámaras                     | No       |
-| 8  | MBM                | Adulta         | 25   | Presencial  | Presencial          | Si      | Si               | Si      | Equipamiento deportivo      | Si       |
-| 9  | JMC                | Estudiante     | 22   | Presencial  | Presencial          | Si      | Si               | Si      | Mobiliario                  | Si       |
-| 10 | GAG                | Estudiante     | 23   | Presencial  | Presencial          | Si      | Si               | Si      | Equipamiento deportivo      | Si       |
-| 11 | APM                | Autónomo       | 23   | Presencial  | Presencial          | Si      | Si               | Si      | Equipamiento médico         | Si       |
-| 12 | NMR                | Autónoma       | 23   | Presencial  | Presencial          | Si      | No               | Si      | Silla de ruedas             | No       |
-| 13 | MRB                | Adulta         | 27   | Presencial  | Presencial          | Si      | Si               | Si      | Ropa                        | No       |
-| 14 | JBM                | Padre          | 36   | Presencial  | Presencial          | Si      | No               | Si      | Ropa de bebé                | No       |
-| 15 | CRB                | Madre          | 36   | Presencial  | Presencial          | Si      | No               | Si      | Mobiliario de bebé          | No       |
-| 16 | MON                | Adulta         | 25   | Presencial  | Presencial          | Si      | Si               | Si      | Electrodomésticos           | Si       |
-| 17 | CON                | Empresaria     | 33   | Presencial  | Presencial          | Si      | No               | Si      | Proyector                   | No       |
-| 18 | BFB                | Adulta         | 50   | Presencial  | Presencial          | Si      | Si               | Si      | Maleta                      | No       |
-| 19 | IDM                | Adulta         | 24   | Presencial  | Presencial          | Si      | Si               | Si      | Electrodomésticos           | Si       |
-| 20 | RGG                | Adulto         | 25   | Presencial  | Presencial          | Si      | Si               | Si      | Mobiliario                  | Si       |
-| 21 | ARD                | Estudiante     | 22   | Presencial  | Telemático          | Si      | Si               | Si      | Tecnología, deporte         | Si       |
-| 22 | DRA                | Estudiante     | 22   | Presencial  | Telemático          | Si      | Si               | Si      | Tecnología, deporte         | Si       |
-| 23 | VSP                | Estudiante     | 22   | Telemático  | Telemático          | Si      | Si               | Si      | Deporte                     | Si       |
-| 24 | MTG                | Estudiante     | 22   | Telemático  | Telemático          | Si      | Si               | Si      | Libros                      | No       |
-| 25 | ADS                | Estudiante     | 23   | Telemático  | Telemático          | Si      | No               | Si      | Artículos de pesca          | No       |
-| 26 | MTV                | Estudiante     | 22   | Telemático  | Telemático          | Si      | No               | Si      | Libros                      | No       |
-| 27 | El arca de Noe     | Local/Empresa  | NA   | Presencial  | Telemático          | Si      | Si               | No      | Herramientas                | Si       |
+- **Estudiantes universitarios**: Necesitan electrodomésticos, muebles o dispositivos tecnológicos por períodos limitados sin necesidad de comprarlos.  
+- **Pequeñas empresas y locales**: Pequeñas empresas que estén interesadas en poner en alquiler o alquilar algunos objetos.  
+- **Familias con niños**: Necesitan productos temporales como cunas o juguetes sin hacer grandes inversiones.  
+- **Viajeros y turistas**: Requieren artículos temporales como maletas, bicicletas o cámaras sin adquirirlos permanentemente.  
+- **Personas en rehabilitación o con movilidad reducida**: Personas que requieren equipamiento médico o de apoyo (sillas de ruedas, andadores) solo por un tiempo determinado.  
+- **Deportistas**: Personas que estén interesadas en comenzar a practicar eventualmente un deporte cuyo equipo para realizarlo deba ser adquirido.  
+
+En resumen, cualquier persona puede ser un posible usuario de nuestro servicio.  
+
+Aun así, creemos que la mayoría de nuestros usuarios serán adolescentes y adultos jóvenes de hasta 35 años. Nuestro servicio está dirigido a personas que, por razones de espacio, presupuesto u otros motivos, prefieren alquilar en lugar de comprar.  
+
+Está pensado tanto para quienes desean obtener un beneficio económico aprovechando lo que ya poseen como para aquellos que buscan acceder temporalmente a determinados materiales a un costo menor que el de compra.  
 
 ---
 
-## Encuestas realizadas
+## Interacción con los usuarios pilotos  
+Nuestra interacción con los usuarios pilotos dependerá de si el usuario es un compañero voluntario del sistema de usuarios pilotos o si es una persona con la que nosotros nos hayamos puesto en contacto. Dependiendo de estas dos cuestiones aquí definiremos con qué frecuencia trataremos con estos usuarios, qué canal usaremos dependiendo de las circunstancias y de qué se hablará cada vez que contactemos con el usuario.  
 
-Se han llevado a cabo encuestas de sondeo para evaluar el nivel de interés de un mayor número de usuarios, incluso aquellos que no participarán directamente en el futuro desarrollo de la aplicación. El objetivo es obtener más respuestas y comprender mejor el mercado.
-
-- **Encuesta a usuarios particulares:**  
-  [Formulario de encuesta](https://docs.google.com/forms/d/e/1FAIpQLSeonfdKmCMrva_PvfdzeFLKd3KHqU8MsKQhIqf00U1ltZhzzA/viewform)
-
-- **Encuesta a empresas:**  
-  [Formulario de encuesta para empresas](https://docs.google.com/forms/d/e/1FAIpQLSemsOaozbiOWUVs7D-Qeos6pVKIAG3nW9-PdKjwnHpgDNL-cA/viewform?usp=header)
+También se definirá la política de calificación de los usuarios voluntarios de la propia asignatura.  
 
 ---
 
-## Aspectos legales y de privacidad
+## Frecuencia  
+Independientemente de si el usuario es un voluntario de la asignatura o una persona contactada por el equipo, se establecerá un contacto al menos cuatro días antes de cada entrega de sprint. Esto garantizará que su feedback pueda ser analizado a tiempo e integrado en el mismo sprint.  
 
-La participación de los usuarios piloto en la prueba del servicio implica la recopilación y gestión de datos personales. Para garantizar el cumplimiento de las normativas vigentes, se establecen las siguientes directrices:
+En el caso de los usuarios contactados por el equipo, somos conscientes de que no todos estarán disponibles en el momento deseado. Por ello, se seleccionará un mínimo de cinco personas para evaluar cada entregable no técnico, asegurando así una retroalimentación suficiente y representativa.  
 
-### Recopilación y uso de datos
+---
 
-- Se recogerán datos personales únicamente con el consentimiento explícito de los usuarios piloto.
-- La información recopilada incluirá:
-  - Datos identificativos (nombre o iniciales, edad, tipo de usuario).
-  - Preferencias y feedback respecto al servicio.
-  - Información sobre la disposición a alquilar o utilizar productos.
-- Los datos se utilizarán exclusivamente para evaluar la viabilidad del servicio, mejorar la plataforma y optimizar la experiencia de usuario.
+## Canal de contacto  
+Para los usuarios propuestos por la asignatura, se priorizará el contacto presencial, ya que permite establecer una relación más cercana y facilita una mejor comunicación y comprensión mutua. Sin embargo, en caso de que existan dificultades de horario u otras limitaciones, el contacto se mantendrá de forma telemática a través de WhatsApp y/o Discord, creando un espacio dedicado exclusivamente a la interacción con estos usuarios.  
 
-### Protección y Almacenamiento de Datos
+En el caso de los usuarios contactados por nuestro equipo, también se dará preferencia a un primer contacto presencial, con la intención de establecer una mejor dinámica de comunicación. Idealmente, el resto de las interacciones también serían presenciales, aunque entendemos que esto puede no ser siempre viable. Por ello, en caso de ser necesario, el contacto se llevará a cabo mediante reuniones telemáticas, garantizando así la continuidad del proceso de evaluación y feedback.  
 
-- Los datos se almacenarán en servidores seguros con acceso restringido.
-- No se compartirán con terceros sin la autorización expresa del usuario.
+---
 
-### Eliminación de datos
+## Temas a tratar  
+Con los usuarios propuestos se abordarán aspectos relacionados con las funcionalidades del sistema, el diseño y sus implementaciones. Además, se les pedirá que identifiquen posibles bugs o errores y que sugieran mejoras. Dado que estos usuarios tienen un perfil más técnico, su feedback estará enfocado en el desarrollo y optimización del servicio, proporcionando información valiosa para refinar tanto el funcionamiento como la estructura del sistema.  
 
-- Una vez concluida la fase piloto, los datos personales serán eliminados o anonimizados, salvo que el usuario decida continuar como usuario en una versión posterior.
-- En cualquier momento, los usuarios podrán solicitar la eliminación de sus datos mediante un procedimiento sencillo y accesible.
+Por otro lado, con los usuarios contactados directamente por el equipo se adoptará un enfoque más orientado a la experiencia de usuario. En este caso, el objetivo principal será evaluar el diseño de interfaces, comprobar si las funcionalidades cumplen con las expectativas y analizar la usabilidad del sistema. Se tratará de entender cómo perciben el servicio, qué dificultades encuentran y qué aspectos podrían mejorarse para optimizar la experiencia del usuario final.  
 
-### Cumplimiento legal
+---
 
-El proceso cumplirá con las normativas aplicables, incluyendo:
+## Calificación de usuarios pilotos
 
-- Reglamento General de Protección de Datos (RGPD) para pruebas realizadas en la Unión Europea.
-- Ley de Protección de Datos Personales del país en el que se desarrolle el piloto.
+Como parte de esta asignatura, contamos con usuarios piloto asignados, es decir, compañeros de curso que deben ser calificados en cada entrega. Para asegurar que su participación sea significativa y que su feedback resulte útil en el proceso de desarrollo del software, aplicaremos un método de trabajo estructurado.
+
+En primer lugar, identificaremos el momento óptimo para la recepción de feedback antes de cada entrega de sprint. Para ello, elaboraremos un documento en **Word o Excel** que recogerá todos los temas a tratar, con la opción de añadir aspectos adicionales que los propios usuarios consideren relevantes.
+
+Durante cada sesión de revisión con estos usuarios, se abordarán los puntos establecidos en el documento. Su calificación dependerá de su nivel de implicación, la información aportada y la calidad de su análisis. De este modo, garantizaremos que su participación no solo contribuya al desarrollo del software, sino que también les haga sentir parte activa y útil en el proceso.
+
+---
+
+## Usuarios Piloto contactados por el equipo
+
+Para la captación de usuarios piloto externos, tomaremos como referencia el perfil de usuario objetivo de nuestro servicio y recopilaremos la información relevante de cada participante.
+
+Como se ha mencionado previamente, se dará prioridad a un primer contacto **presencial**, aunque también podrá realizarse de manera **telemática** en caso de ser necesario.
+
+Para cada usuario, almacenaremos información clave y sus respuestas sobre el servicio, asegurando que cualquier dato privado permanezca protegido. La estructura de la información recopilada será la siguiente:
+
+- **Identificador (Id):** Para preservar la privacidad, se utilizarán las iniciales de la persona como identificador. En el caso de locales o empresas, se guardará el nombre de la entidad.
+- **Tipo de usuario (Usuario):** Se clasificará según una característica principal dentro de las siguientes categorías:
+  - Estudiante universitario
+  - Padre/Madre de familia
+  - Adolescente
+  - Adulto
+  - Autónomo
+  - Empresa
+- **Edad:** Se registrará la edad del usuario.
+- **Primer contacto (1ºContacto):** Se documentará la forma en que se estableció el primer contacto con el usuario.
+- **Canal de contacto (Canal):** Se registrará el canal preferido por el usuario para futuras interacciones.
+- **Interés en el servicio (Interés):** Se almacenará la respuesta del usuario a la pregunta sobre si considera el servicio interesante y si estaría dispuesto a utilizarlo.
+- **Disposición a alquilar sus pertenencias (Deja en alquiler):** Se recogerá su respuesta ante la posibilidad de poner en alquiler algún objeto propio.
+- **Interés en alquilar objetos (Alquila):** Se preguntará si estaría dispuesto a alquilar algún objeto en particular.
+- **Categoría de interés (Categoría):** Si el usuario muestra interés en alquilar o poner en alquiler objetos, se le pedirá que especifique en qué categoría estaría más interesado.
+- **Colaboración con el proyecto (Colabora):** Se registrará si el usuario está dispuesto a seguir colaborando y proporcionando feedback adicional para el desarrollo del servicio.
+
+| #  | Id   | Usuario     | Edad | 1ºContacto | Canal       | Interés | Deja en alquiler | Alquila | Categoría                          | Colabora |
+|----|------|------------|------|------------|-------------|---------|------------------|---------|------------------------------------|----------|
+| 1  | PG C | Estudiante | 22   | Presencial | Presencial  | Sí      | Sí               | Sí      | Deporte y tecnología              | No       |
+| 2  | PNS  | Estudiante | 22   | Presencial | Presencial/Discord | Sí | Sí | Sí | Tecnología y deporte | Sí |
+| 3  | AFG  | Estudiante | 22   | Presencial | Presencial/Discord | Sí | Sí | Sí | Tecnología | Sí |
+| 4  | JOT  | Estudiante | 23   | Presencial | Presencial/Discord | Sí | Sí | Sí | Ropa | No |
+| 5  | PMB  | Estudiante | 23   | Presencial | Discord | Sí | Sí | Sí | Videojuegos | Sí |
+| 6  | TMG  | Madre | 60 | Presencial | Presencial | Sí | Sí | Sí | Maletas | No |
+| 7  | RBM  | Padre | 60 | Presencial | Presencial | Sí | No | Sí | Cámaras | No |
+| 8  | MBM  | Adulta | 25 | Presencial | Presencial | Sí | Sí | Sí | Equipamiento deportivo | Sí |
+| 9  | JMC  | Estudiante | 22 | Presencial | Presencial | Sí | Sí | Sí | Mobiliario | Sí |
+| 10 | GAG  | Estudiante | 23 | Presencial | Presencial | Sí | Sí | Sí | Equipamiento deportivo | Sí |
+| 11 | APM  | Autónomo | 23 | Presencial | Presencial | Sí | Sí | Sí | Equipamiento médico | Sí |
+| 12 | NMR  | Autónoma | 23 | Presencial | Presencial | Sí | No | Sí | Silla de ruedas | No |
+| 13 | MRB  | Adulta | 27 | Presencial | Presencial | Sí | Sí | Sí | Ropa | No |
+| 14 | JBM  | Padre | 36 | Presencial | Presencial | Sí | No | Sí | Ropa de bebé | No |
+| 15 | CRB  | Madre | 36 | Presencial | Presencial | Sí | No | Sí | Mobiliario de bebé | No |
+| 16 | MON  | Adulta | 25 | Presencial | Presencial | Sí | Sí | Sí | Electrodomésticos | Sí |
+| 17 | CON  | Empresaria | 33 | Presencial | Presencial | Sí | No | Sí | Proyector | No |
+| 18 | BFB  | Adulta | 50 | Presencial | Presencial | Sí | Sí | Sí | Maleta | No |
+| 19 | IDM  | Adulta | 24 | Presencial | Presencial | Sí | Sí | Sí | Electrodomésticos | Sí |
+| 20 | RGG  | Adulto | 25 | Presencial | Presencial | Sí | Sí | Sí | Mobiliario | Sí |
+| 21 | ARD  | Estudiante | 22 | Presencial | Telemático | Sí | Sí | Sí | Tecnología, deporte | Sí |
+| 22 | DRA  | Estudiante | 22 | Presencial | Telemático | Sí | Sí | Sí | Tecnología, deporte | Sí |
+| 23 | VSP  | Estudiante | 22 | Telemática | Telemática | Sí | Sí | Sí | Deporte | Sí |
+| 24 | MTG  | Estudiante | 22 | Telemática | Telemática | Sí | Sí | Sí | Libros | No |
+| 25 | ADS  | Estudiante | 23 | Telemática | Telemática | Sí | No | Sí | Artículos de pesca | No |
+| 26 | MTV  | Estudiante | 22 | Telemática | Telemática | Sí | Sí | No | Libros | No |
+| 27 | El Arca de Noé | Local/Empresa | NA | Presencial | Telemática | Sí | Sí | No | Herramientas | Sí |
+
+---
+
+## Encuestas Realizadas
+
+También hemos llevado a cabo encuestas de sondeo para evaluar el nivel de interés de un mayor número de usuarios, incluso aquellos que no participarán directamente en el futuro desarrollo de la aplicación. El objetivo de estas encuestas es obtener más respuestas y comprender mejor el mercado en el que nos adentramos.
+
+Puedes acceder al formulario enviado a usuarios particulares en el siguiente enlace:  
+[Formulario para usuarios particulares](https://docs.google.com/forms/d/e/1FAIpQLSeonfdKmCMrva_PvfdzeFLKd3KHqU8MsKQhIqf00U1ltZhzzA/viewform)
+
+También realizamos encuestas a distintas empresas que consideramos potencialmente interesadas en nuestro servicio. Aunque no todas mostraron interés, tras analizar las respuestas y hablar personalmente con ellos llegamos a la conclusión de que el mercado más atractivo para este servicio se encuentra en el sector de herramientas y tecnología.
+
+Para recopilar más información y evaluar el interés de las empresas en nuestro servicio, elaboramos un formulario específico dirigido a ellas. Puedes acceder al formulario en el siguiente enlace:  
+[Formulario para empresas](https://docs.google.com/forms/d/e/1FAIpQLSemsOaozbiOWUVs7D-Qeos6pVKIAG3nW9-PdKjwnHpgDNL-cA/viewform)
+
+---
+
+# Aspectos legales y de privacidad
+
+La participación de los usuarios piloto en la prueba del servicio implica la recopilación y gestión de datos personales. Para garantizar el cumplimiento de las normativas vigentes en materia de privacidad y protección de datos, se establecen las siguientes directrices:
+
+## 1. Recopilación y Uso de Datos
+
+Se recogerán datos personales únicamente con el **consentimiento explícito** de los usuarios piloto. La información recopilada incluirá:
+
+- **Datos identificativos** (nombre o iniciales, edad, tipo de usuario).
+- **Preferencias y feedback** respecto al servicio.
+- **Información sobre su disposición a alquilar o utilizar productos**.
+
+Los datos serán utilizados exclusivamente para **evaluar la viabilidad del servicio, mejorar la plataforma y optimizar la experiencia de usuario**.
+
+## 2. Protección y Almacenamiento de Datos
+
+- Los datos se almacenarán en **servidores seguros** con acceso restringido.
+- No se compartirán con terceros **sin la autorización expresa del usuario**.
+
+## 3. Eliminación de Datos
+
+- Una vez concluida la fase piloto, los **datos personales serán eliminados o anonimizados**, salvo que el usuario decida continuar como usuario del servicio en una versión posterior.
+- En cualquier momento, los usuarios pueden **solicitar la eliminación de sus datos** mediante un procedimiento sencillo y accesible.
+
+## 4. Cumplimiento Legal
+
+Este proceso cumplirá con las normativas aplicables, incluyendo:
+
+- **Reglamento General de Protección de Datos (RGPD)**, si la prueba se realiza en la Unión Europea.
+- **Ley de Protección de Datos Personales** del país donde se desarrolle el piloto.

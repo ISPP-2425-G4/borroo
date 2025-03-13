@@ -36,11 +36,35 @@ Fecha: 06/03/2025
 
 ---
 
-## **Nuestros usuarios piloto:**
+## **Histórico de modificaciones**
+
+| Fecha      | Versión | Realizada por   | Descripción de los cambios |
+| ---------- | ------- | --------------- | -------------------------- |
+| 06-03-2025 | v1.0    | Santiago Rosado Raya | Creación del documento |
+|  |  |  |  |
+---
+
+# Índice
+1. [Nuestros usuarios piloto](#nuestros-usuarios-piloto)
+   - [Usuarios piloto asignados por la asignatura](#usuarios-piloto-asignados-por-la-asignatura)
+   - [Usuarios piloto seleccionados por el equipo de desarrollo](#usuarios-piloto-seleccionados-por-el-equipo-de-desarrollo)
+
+2. [Usuarios piloto asignados por la asignatura](#usuarios-piloto-asignados-por-la-asignatura-1)
+   - [Frecuencia](#frecuencia)
+   - [Método de trabajo](#metodo-de-trabajo)
+   - [Canales de contacto a usar](#canales-de-contacto-a-usar)
+   - [Calificación de cada usuario piloto](#calificacion-de-cada-usuario-piloto)
+
+4. [Usuarios piloto ajenos a la asignatura](#usuarios-piloto-ajenos-a-la-asignatura)
+   - [Frecuencia](#frecuencia-1)
+   - [Método de trabajo](#metodo-de-trabajo-1)
+   - [Canales de contacto a usar](#canales-de-contacto-a-usar-1)
+
+# **Nuestros usuarios piloto:**
 
 En este proyecto contaremos con dos tipos de usuarios piloto:
 
-### **Usuarios piloto asignados por la asignatura:**
+## **Usuarios piloto asignados por la asignatura:**
 
 Son compañeros de grado universitario que se han propuesto voluntariamente para desempeñar este rol. Su participación nos permitirá recibir feedback estructurado dentro del marco académico y técnico.
 
@@ -54,7 +78,7 @@ Son compañeros de grado universitario que se han propuesto voluntariamente para
 
 ---
 
-### **Usuarios piloto seleccionados por el equipo de desarrollo:**
+## **Usuarios piloto seleccionados por el equipo de desarrollo:**
 
 Se trata de personas que hemos encuestado y que han aceptado colaborar en el desarrollo del servicio. Su aportación será clave para obtener una visión más amplia y realista sobre la viabilidad y usabilidad de la aplicación.
 
@@ -91,13 +115,13 @@ Además, crearemos un espacio dedicado exclusivamente a ellos, a través de un g
 
 ---
 
-### **Frecuencia:**
+## **Frecuencia:**
 
 Cada sprint contactaremos con los usuarios piloto y les enviaremos un Word o un Excel con todo el contenido a valorar vía WhatsApp (el contenido y formato del documento dependerá de cada Sprint). Este contacto se hará cuando el 70% de las tareas estén terminadas o cuatro días antes del siguiente Sprint, esto hará que el feedback pueda ser analizado por el equipo y se pueda tener en cuenta.
 
 ---
 
-### **Método de trabajo:**
+## **Método de trabajo:**
 
 1. Se desarrollará un documento con todo lo realizado que requiera feedback por parte de los usuarios piloto. Este documento será elaborado por el encargado de los usuarios piloto siguiendo la plantilla proporcionada en la enseñanza virtual.
 2. A los usuarios piloto se les informará sobre la posibilidad de realizar una reunión, en la que se les explicará lo trabajado durante el sprint y se les proporcionarán instrucciones detalladas para probar el sistema. Este primer contacto se realizará cuando el 70% del Sprint esté terminado o cuatro días antes de que este termine.
@@ -107,7 +131,7 @@ Cada sprint contactaremos con los usuarios piloto y les enviaremos un Word o un 
 
 ---
 
-### **Canales de contacto a usar:**
+## **Canales de contacto a usar:**
 
 El primer canal de contacto directo para hacer anuncios será el grupo de WhatsApp creado dentro de la comunidad de nuestro grupo. A través de este medio, se comunicará información relevante sobre el desarrollo del proyecto, se coordinarán las reuniones y se asegurará que todos los participantes puedan estar presentes.
 

@@ -7,7 +7,8 @@
 ##  Feedback Usuarios Piloto Asignatura  
 
 ### Sprint 1 (S1) – G4
-**Repositorio:** [https://github.com/ISPP-2425-G4/](https://github.com/ISPP-2425-G4/)
+**Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
+**Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
 **Fecha:** 10/03/2025
 
 
