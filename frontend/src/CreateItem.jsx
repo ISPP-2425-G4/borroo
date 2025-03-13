@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "../public/styles/CreateItem.css";
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 const CreateItemScreen = () => {
   const [formData, setFormData] = useState({
@@ -29,14 +30,11 @@ const CreateItemScreen = () => {
   useEffect(() => {
     const fetchEnums = async () => {
       try {
-        const response = await fetch("http://localhost:8000/objetos/enum-choices/", {
-          method: "GET",
-          credentials: "include",
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/objetos/enum-choices/`, {
+          withCredentials: true,
         });
 
-        if (!response.ok) throw new Error("Error cargando opciones.");
-
-        const data = await response.json();
+        const data = response.data;
 
         setOptions({
           categories: data.categories || [],
@@ -95,13 +93,14 @@ const CreateItemScreen = () => {
         formDataToSend.append("image_files", image);
       });
   
-      const response = await fetch("http://localhost:8000/objetos/full/", {
-        method: "POST",
-        credentials: "include",
-        body: formDataToSend,
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/`, formDataToSend, {
+        withCredentials: true,
       });
   
-      if (response.ok) {
+      // Log para verificar la respuesta del servidor
+      console.log("Respuesta del servidor:", response);
+  
+      if (response.status === 201) {
         alert("¡Item creado exitosamente!");
         setFormData({
           title: "",

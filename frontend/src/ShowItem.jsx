@@ -8,6 +8,7 @@ import { addDays } from "date-fns";
 import "../public/styles/ItemDetails.css";
 import Navbar from "./Navbar";
 import Modal from "./Modal";
+import axios from 'axios';
 
 const ShowItemScreen = () => {
   const { id } = useParams();
@@ -26,9 +27,10 @@ const ShowItemScreen = () => {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/objetos/full/${id}/`);
-        if (!response.ok) throw new Error("Error cargando el ítem.");
-        const data = await response.json();
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/objetos/full/${id}/`
+        );
+        const data = response.data;
         setItem(data);
 
         if (data.user) {
@@ -39,9 +41,10 @@ const ShowItemScreen = () => {
           const urls = await Promise.all(
             data.images.map(async (imgId) => {
               try {
-                const imgResponse = await fetch(`http://localhost:8000/objetos/item-images/${imgId}/`);
-                if (!imgResponse.ok) throw new Error("Error cargando la imagen.");
-                const imgData = await imgResponse.json();
+                const imgResponse = await axios.get(
+                  `${import.meta.env.VITE_API_BASE_URL}/objetos/item-images/${imgId}/`
+                );
+                const imgData = imgResponse.data;
                 return imgData.image;
               } catch (error) {
                 console.error(`Error al cargar la imagen ${imgId}:`, error);
@@ -65,9 +68,13 @@ const ShowItemScreen = () => {
 
   const fetchUserName = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:8000/usuarios/full/${userId}/`);
-      if (!response.ok) throw new Error("Error obteniendo el usuario.");
-      const userData = await response.json();
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${userId}/`,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      const userData = response.data;
       console.log("Usuario recibido:", userData); // Verificar respuesta
       setUserName(userData.name); // Ajusta si el nombre del usuario tiene otra key
     } catch (error) {
@@ -75,13 +82,18 @@ const ShowItemScreen = () => {
       setUserName("Usuario desconocido"); // En caso de error, mostrar un texto genérico
     }
   };
+
   const handleDelete = async (itemId) => {
     const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar este ítem?");
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:8000/objetos/full/${itemId}/`, { method: "DELETE" });
-      if (!response.ok) throw new Error("Error eliminando el ítem.");
+      await axios.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/objetos/full/${itemId}/`,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
       alert("Ítem eliminado correctamente.");
       navigate("/");
@@ -126,8 +138,6 @@ const ShowItemScreen = () => {
             <p className="image-counter">{currentImageIndex + 1} / {imageURLs.length}</p>
           </div>
         )}
-
-
 
         {errorMessage && <div className="error-message">{errorMessage}</div>}
 

@@ -1,0 +1,27 @@
+runtime: python312
+
+service: backend
+
+entrypoint: gunicorn -b :$PORT borroo.wsgi
+
+instance_class: F2
+
+env_variables:
+  DJANGO_SETTINGS_MODULE: "borroo.settings"
+  DB_ENGINE: "django.db.backends.mysql"
+  DB_NAME: "borroodb_furniture"
+  DB_USER: "borroodb_furniture"
+  DB_PASSWORD: "f78dba255f43ad12ccd7aee166b94a172337cfa1"
+  DB_HOST: "hfufq.h.filess.io"
+  DB_PORT: "3305"
+
+handlers:
+  - url: /static
+    static_dir: static/
+  - url: /media
+    static_dir: media/
+  - url: /.*
+    script: auto
+
+network:
+  instance_tag: allow-mariadb
