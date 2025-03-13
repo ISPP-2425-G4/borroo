@@ -75,7 +75,10 @@ class UserViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         user = self.get_object()
 
-        if user.username != request.user.username:
+        if (
+            user.username != request.user.username
+            and not request.user.is_superuser
+        ):
             raise PermissionDenied(
                 "No tienes permiso para eliminar este usuario")
 
@@ -84,7 +87,10 @@ class UserViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         user = self.get_object()
 
-        if user.username != request.user.username:
+        if (
+            user.username != request.user.username
+            and not request.user.is_superuser
+        ):
             raise PermissionDenied(
                 "No tienes permiso para modificar este usuario")
 
