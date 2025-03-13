@@ -1,12 +1,17 @@
 <div align=center>
 
-# BORROO PILOTS
+# BORROO
 
 ![](../imagenes/borrooLogo.png)
 
-**Devising a project (DP) – G4**  
-Repositorio: [https://github.com/ISPP-2425-G4/](https://github.com/ISPP-2425-G4/)  
-Fecha: 20/02/2025  
+## Pilots
+
+### Sprint 1 – G4
+**Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
+
+**Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
+
+Fecha: 06/03/2025  
 
 </div>
 
@@ -29,8 +34,14 @@ Fecha: 20/02/2025
 - Julia Sánchez Márquez  
 - Alejandro Sevillano Barea  
 
-[Repositorio en GitHub](https://github.com/ISPP-2425-G4/)
+---
+## **Histórico de modificaciones**
 
+| Fecha      | Versión | Realizada por   | Descripción de los cambios |
+| ---------- | ------- | --------------- | -------------------------- |
+| 06-03-2025 | v1.0    | Santiago Rosado Raya | Creación del documento |
+| 13-03-2025 | v1.1    | Marco Padilla Gómez | Historico de modificaciones añadido |
+|  |  |  |  |
 ---
 
 ## Índice
@@ -133,7 +144,7 @@ Para captar usuarios piloto externos, se tendrá en cuenta el perfil del usuario
 | 9  | JMC                | Estudiante     | 22   | Presencial  | Presencial          | Si      | Si               | Si      | Mobiliario                  | Si       |
 | 10 | GAG                | Estudiante     | 23   | Presencial  | Presencial          | Si      | Si               | Si      | Equipamiento deportivo      | Si       |
 | 11 | APM                | Autónomo       | 23   | Presencial  | Presencial          | Si      | Si               | Si      | Equipamiento médico         | Si       |
-| 12 | NMR                | Autónoma       | 23   | Presencial  | Presencial          | Si      | No               | Si      | Silla de ruedas           | No       |
+| 12 | NMR                | Autónoma       | 23   | Presencial  | Presencial          | Si      | No               | Si      | Silla de ruedas             | No       |
 | 13 | MRB                | Adulta         | 27   | Presencial  | Presencial          | Si      | Si               | Si      | Ropa                        | No       |
 | 14 | JBM                | Padre          | 36   | Presencial  | Presencial          | Si      | No               | Si      | Ropa de bebé                | No       |
 | 15 | CRB                | Madre          | 36   | Presencial  | Presencial          | Si      | No               | Si      | Mobiliario de bebé          | No       |
@@ -144,11 +155,11 @@ Para captar usuarios piloto externos, se tendrá en cuenta el perfil del usuario
 | 20 | RGG                | Adulto         | 25   | Presencial  | Presencial          | Si      | Si               | Si      | Mobiliario                  | Si       |
 | 21 | ARD                | Estudiante     | 22   | Presencial  | Telemático          | Si      | Si               | Si      | Tecnología, deporte         | Si       |
 | 22 | DRA                | Estudiante     | 22   | Presencial  | Telemático          | Si      | Si               | Si      | Tecnología, deporte         | Si       |
-| 23 | VSP                | Estudiante     | 22   | Telemático | Telemático          | Si      | Si               | Si      | Deporte                     | Si       |
-| 24 | MTG                | Estudiante     | 22   | Telemático | Telemático          | Si      | Si               | Si      | Libros                      | No       |
-| 25 | ADS                | Estudiante     | 23   | Telemático | Telemático          | Si      | No               | Si      | Artículos de pesca          | No       |
-| 26 | MTV                | Estudiante     | 22   | Telemático | Telemático          | Si      | No               | Si      | Libros                      | No       |
-| 27 | El arca de Noe    | Local/Empresa  | NA   | Presencial  | Telemático          | Si      | Si               | No      | Herramientas                | Si       |
+| 23 | VSP                | Estudiante     | 22   | Telemático  | Telemático          | Si      | Si               | Si      | Deporte                     | Si       |
+| 24 | MTG                | Estudiante     | 22   | Telemático  | Telemático          | Si      | Si               | Si      | Libros                      | No       |
+| 25 | ADS                | Estudiante     | 23   | Telemático  | Telemático          | Si      | No               | Si      | Artículos de pesca          | No       |
+| 26 | MTV                | Estudiante     | 22   | Telemático  | Telemático          | Si      | No               | Si      | Libros                      | No       |
+| 27 | El arca de Noe     | Local/Empresa  | NA   | Presencial  | Telemático          | Si      | Si               | No      | Herramientas                | Si       |
 
 ---
 
