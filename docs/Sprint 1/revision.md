@@ -177,7 +177,7 @@ Credenciales usuario:
 
 	- Usuario: User2 / Password: 123 
 
- Administrador (acceder desde ruta /admin):
+ Administrador (acceder desde ruta https://backend-dot-ispp-2425-g4.ew.r.appspot.com/admin):
 
  	- Administrador: admin_ispp / B0rr0o2025ISPP
   	 (correo por si fuese necesario: borroohelp@gmail.com)
@@ -192,6 +192,6 @@ URL y credenciales del “time tracking tool”: Desde clockify:
 	- Credenciales: borroohelp@gmail.com / B0rr0o2025ISPP
  	 (Para doble verificación, usar mismo correo y contraseña en gmail)
 
-Potential Requirements: Uso de internet para aplicacion desplegada, descrito en readme de git para aplicacion local
+Potential Requirements: Uso de internet para aplicacion desplegada, descrito en readme de git para aplicacion local 
 
 Enlace video demo:  https://youtu.be/dlp_72Nuzr0
