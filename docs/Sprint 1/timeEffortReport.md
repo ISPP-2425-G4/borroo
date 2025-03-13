@@ -1852,99 +1852,89 @@
     <th>Tiempo</th>
   </tr>
   <tr>
-    <td rowspan="15">Trabajo</td>
-    <td>Revisión de metodología del modelo de rendimiento y Performance Evaluation</td>
-    <td>39 minutos y 48 segundos</td>
+    <td rowspan="12">Trabajo de gestión, organización y resolución</td>
+    <td>Implementación y configuración Zenhub</td>
+    <td>1 hora y 43 minutos</td>
   </tr>
   <tr>
-    <td>4 time effort report</td>
-    <td>23 minutos y 16 segundos</td>
+    <td>Planificación y creación de issues Zenhub subgrupo 1 - semana 1</td>
+    <td>57 minutos</td>
   </tr>
   <tr>
-    <td>Definición de roles</td>
-    <td>14 minutos y 56 segundos</td>
+    <td>Planificación y creación de issues Zenhub subgrupo 1 - semana 2</td>
+    <td>48 minutos</td>
   </tr>
   <tr>
-    <td>Acta de reunión 18/02</td>
-    <td>1 hora, 4 minutos y 33 segundos</td>
+    <td>Planificación y creación de issues Zenhub subgrupo 1 - semana 3 y arreglo semana 2</td>
+    <td>36 minutos</td>
   </tr>
   <tr>
-    <td>Modelo de rendimiento</td>
-    <td>48 minutos y 28 segundos</td>
+    <td>Reajuste de issues Zenhub</td>
+    <td>43 minutos</td>
   </tr>
   <tr>
-    <td>Análisis de riesgos</td>
-    <td>56 minutos y 40 segundos</td>
+    <td>Revisión y corrección tareas subgrupo 1 - semana 1 (modelos y filtros de motor de búsqueda)</td>
+    <td>57 minutos</td>
   </tr>
   <tr>
-    <td>Plan de gestión de riesgos revisión</td>
-    <td>27 minutos y 48 segundos</td>
+    <td>Categorización de issues</td>
+    <td>20 minutos</td>
   </tr>
   <tr>
-    <td>Revisión y corrección de registro de riesgos</td>
-    <td>24 minutos y 3 segundos</td>
+    <td>Gestión de tareas y organización - semana 2</td>
+    <td>1 hora y 35 minutos</td>
   </tr>
   <tr>
-    <td>Riesgos (plan de gestión de riesgos)</td>
-    <td>1 hora, 22 minutos y 38 segundos</td>
+    <td>Creación de servidor alojado en Oracle para la DB y configuración</td>
+    <td>2 horas y 10 minutos</td>
   </tr>
   <tr>
-    <td>Píldora sesión 2b</td>
-    <td>29 minutos y 32 segundos</td>
+    <td>Revisión de paginación y funcionamiento de la base de datos</td>
+    <td>16 minutos</td>
   </tr>
   <tr>
-    <td>Realización de MVP</td>
-    <td>1 hora, 29 minutos y 18 segundos</td>
+    <td>Gestión, revisiones y organización final del sprint (semana 3)</td>
+    <td>1 hora y 37 minutos</td>
   </tr>
   <tr>
-    <td>Píldora sesión 2a</td>
-    <td>35 minutos y 53 segundos</td>
+    <td>Despliegue 12/03/25</td>
+    <td>5 horas y 7 minutos</td>
   </tr>
   <tr>
-    <td>Píldora sesión 1</td>
-    <td>49 minutos y 35 segundos</td>
+    <td rowspan="2">Documentación</td>
+    <td>Actas de reunión 10/03 y 09/03</td>
+    <td>1 hora y 2 minutos</td>
   </tr>
   <tr>
-    <td>Realización de puntos de subgrupo (matriz DAFO y MVP)</td>
-    <td>1 hora, 39 minutos y 44 segundos</td>
+    <td>Coordinación tareas subgrupo 1 y realización informe de comienzo de sprint</td>
+    <td>1 hora y 31 minutos</td>
   </tr>
   <tr>
-    <td>Presentación</td>
-    <td>38 minutos y 33 segundos</td>
+    <td rowspan="2">Reunión</td>
+    <td>Reunión 09/03</td>
+    <td>51 minutos</td>
   </tr>
   <tr>
-    <td>Búsqueda de idea de negocio</td>
-    <td>43 minutos y 0 segundos</td>
+    <td>Reunión representantes</td>
+    <td>36 minutos</td>
   </tr>
   <tr>
-    <td rowspan="4">Reuniones</td>
-    <td>Reunión 18/02</td>
-    <td>1 hora, 32 minutos y 37 segundos</td>
+    <td rowspan="2">Píldoras teóricas</td>
+    <td>Píldora 5a</td>
+    <td>26 minutos</td>
   </tr>
   <tr>
-    <td>Reunión 13/02</td>
-    <td>1 hora, 14 minutos y 24 segundos</td>
+    <td>Píldora 5b</td>
+    <td>46 minutos</td>
   </tr>
   <tr>
-    <td>Reunión 06/02</td>
-    <td>1 hora, 54 minutos y 59 segundos</td>
+    <td rowspan="2">Clases</td>
+    <td>Clase 21/02</td>
+    <td>3 horas y 50 minutos</td>
   </tr>
   <tr>
-    <td>Reunión 03/02</td>
-    <td>2 horas, 10 minutos y 0 segundos</td>
-  </tr>
-  <tr>
-    <td rowspan="3">Clase</td>
-    <td>Clase 31/01/25</td>
-    <td>3 horas y 40 minutos</td>
-  </tr>
-  <tr>
-    <td>Clase 07/02/25</td>
-    <td>3 horas y 40 minutos</td>
-  </tr>
-  <tr>
-    <td>Clase 14/02/25</td>
-    <td>3 horas y 40 minutos</td>
+    <td>Clase 07/03</td>
+    <td>3 horas y 50 minutos</td>
   </tr>
 </table>
 
