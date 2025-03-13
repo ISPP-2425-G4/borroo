@@ -243,6 +243,11 @@ Añadir a lo citado anteriormente que se asistió a todas las clases de feedback
 
 
 ### **Fernández Mota, Francisco**
+Durante la primera semana del Sprint 1, desarrollé el UML en función de los requisitos de la aplicación y junto al PM y los GMs gestionamos las tareas, y luego hice un reparto de estas a mi subgrupo. 
+
+A lo largo de la segunda semana de desarrollo hice algunas correcciones al UML, me dediqué a revisar parte de las Pull Request del desarrollo y avances de mi subgrupo y gestionar nuevas tareas debido a problemas que tuvimos con la planificación inicial. 
+
+Finalmente, la tercera semana nos reunimos para recoger el trabajo desarrollado a lo largo del Sprint y crear nuevas tareas para cerrar esta primera etapa de implementación del código, luego hice un script para poblar la DB con datos de prueba (seeders). Pase el documento de comunicación con los usuarios piloto a formato markdown, y finalmente estuve con mi compañera Julia revisamos el backend e implementamos validaciones en las funciones relacionadas con los alquileres para aportar seguridad a la aplicación.
 
 
 ### **García Rodríguez, Javier**
