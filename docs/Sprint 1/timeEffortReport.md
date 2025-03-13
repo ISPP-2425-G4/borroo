@@ -1860,6 +1860,119 @@
 </table>
 
 ### Martin Muñoz, Álvaro
+<table border="1">
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="2">Trabajo</td>
+    <td>Inicializando estructura frontend</td>
+    <td>1h09min</td>
+  </tr>
+  <tr>
+    <td>Enlazar backend con frontend</td>
+    <td>1h01min39s</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Trabajo</td>
+    <td>Enlazar backend con frontend</td>
+    <td>1h01m42s</td>
+  </tr>
+  <tr>
+    <td>Comprobar funcionamiento conexión backend-frontend</td>
+    <td>47min</td>
+  </tr>
+  <tr>
+    <td>Guía de implementación</td>
+    <td>1h08min</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Guía de implementación</td>
+    <td>34min</td>
+  </tr>
+  <tr>
+    <td>Trabajo</td>
+    <td>Buscar plantilla react</td>
+    <td>41min11s</td>
+  </tr>
+  <tr>
+    <td>Trabajo</td>
+    <td>Arreglar error en la bd</td>
+    <td>40min</td>
+  </tr>
+  <tr>
+    <td>Trabajo</td>
+    <td>Implementar prototipo menu principal</td>
+    <td>1h07min</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Implementar prototipo menu principal</td>
+    <td>2h17min</td>
+  </tr>
+  <tr>
+    <td>Trabajo</td>
+    <td>Arreglo de bug en las rutas del backend</td>
+    <td>40min</td>
+  </tr>
+  <tr>
+    <td>Trabajo</td>
+    <td>Comprobar funcionamiento jwt</td>
+    <td>31min44s</td>
+  </tr>
+  <tr>
+    <td>Trabajo</td>
+    <td>Arreglos frontend menu principal</td>
+    <td>3h12min</td>
+  </tr>
+  <tr>
+    <td>Trabajo</td>
+    <td>Integración al develop y ajustes de Layout.jsx</td>
+    <td>1h25min</td>
+  </tr>
+  <tr>
+    <td>Trabajo</td>
+    <td>Validación formularios frontend</td>
+    <td>47min47s</td>
+  </tr>
+  <tr>
+    <td>Trabajo</td>
+    <td>Implementacion navbar en todas las pantallas, validaciones formulario y obligar login para crear objeto</td>
+    <td>1h31min</td>
+  </tr>
+  <tr>
+    <td>Trabajo</td>
+    <td>Arreglar error jwt</td>
+    <td>49min30s</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Píldoras Teóricas</td>
+    <td>Sesión 05a</td>
+    <td>27min</td>
+  </tr>
+  <tr>
+    <td>Sesión 05b</td>
+    <td>47min</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Reuniones</td>
+    <td>09/03/2025</td>
+    <td>1h12min</td>
+  </tr>
+  <tr>
+    <td>21/02/2025</td>
+    <td>3h50min</td>
+  </tr>
+  <tr>
+    <td>7/03/2025</td>
+    <td>3h50min</td>
+  </tr>
+</table>
+
 ### Naredo Bernardos, Ignacio
 
 <table>
@@ -2090,7 +2203,6 @@
 </table>
 
 ### Periañez Franco, Luis Javier
-# Registro de Actividades
 
 <table>
   <tr>
