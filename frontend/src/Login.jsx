@@ -39,7 +39,13 @@ const Login = () => {
         throw new Error(data.error || "Error al iniciar sesión");
       }
     } catch (error) {
-      setError(error.message || "Error al conectar con el servidor");
+      // Manejar el error 404 (usuario no encontrado o credenciales incorrectas)
+      if (error.response && error.response.status === 404) {
+        setError("El usuario no existe o los datos son incorrectos.");
+      } else {
+        // Manejar otros errores
+        setError(error.message || "Error al conectar con el servidor");
+      }
     } finally {
       setLoading(false);
     }

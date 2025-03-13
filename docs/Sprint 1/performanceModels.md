@@ -6,9 +6,12 @@
 
 ## MODELO DE RENDIMIENTO - ANÁLISIS CUANTITATIVO
 
-### Sprint 1 (S1) – G4
-**Repositorio:** [https://github.com/ISPP-2425-G4/](https://github.com/ISPP-2425-G4/)
-**Fecha:** 13/03/2025
+### Sprint 1 – G4
+**Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
+
+**Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
+
+**Fecha:** 12/03/2025
 
 
 </div>
@@ -32,6 +35,35 @@
 - Julia Sánchez Márquez
 - Alejandro Sevillano Barea
 
+---
+
+## **Histórico de modificaciones**
+| Fecha      | Versión | Realizada por   | Descripción de los cambios |
+| ---------- | ------- | --------------- | -------------------------- |
+| 12-03-2025 | v1.0    | Luis Javier Periáñez Franco | Creación del documento |
+| 12-03-2025 | v1.1    | Pablo Díaz Ordóñez | Pasar documento a Markdown y metricas para los jefes de subgrupo |
+| 13-03-2025 | v1.2    | Marco Padilla Gómez | Añadir histórico de modificaciones |
+| 13-03-2025 | v1.3    |  Pablo Díaz Ordóñez | Modificaciones y revisiones de métricas |
+
+
+---
+
+## Índice
+1. [Objetivo del Modelo](#1-objetivo-del-modelo)
+2. [Categorías de Evaluación y Métricas](#2-categorías-de-evaluación-y-métricas)
+    - [Entrega y Cumplimiento (EC)](#21-entrega-y-cumplimiento-ec)
+    - [Calidad del Trabajo (C)](#22-calidad-del-trabajo-c)
+    - [Eficiencia (E)](#23-eficiencia-e)
+    - [Colaboración y Trabajo en Equipo (CO)](#24-colaboración-y-trabajo-en-equipo-co)
+3. [Cálculo del Desempeño Total](#3-cálculo-del-desempeño-total)
+    - [Ejemplo de Evaluación](#31-ejemplo-de-evaluación)
+4. [Proceso de Evaluación y Ponderación por Subgrupos](#4-proceso-de-evaluación-y-ponderación-por-subgrupos)
+    - [Ponderación de Evaluación](#41-ponderación-de-evaluación)
+5. [Evaluación Anónima y Ponderación Final](#5-evaluación-anónima-y-ponderación-final)
+6. [Responsabilidades del Jefe de Subgrupo](#6-responsabilidades-del-jefe-de-subgrupo)
+7. [Cómo Enfrentar un Bajo Rendimiento](#7-cómo-enfrentar-un-bajo-rendimiento)
+
+
 
 
 ---
@@ -43,139 +75,67 @@ El presente modelo tiene como finalidad evaluar el desempeño de cada miembro de
 
 ---
 
-### 2. Categorías de Evaluación y Métricas
+## 2. Categorías de Evaluación y Métricas
 Cada miembro del equipo será evaluado en cinco categorías clave, con puntuaciones del 1 al 10.
 
-#### 2.1 Productividad (P)
-Mide la cantidad de trabajo realizado en comparación con los objetivos asignados.
+### 2.1 Entrega y Cumplimiento (EC)
+Evalúa la cantidad de trabajo realizado en relación con los objetivos asignados y el cumplimiento de los plazos de entrega.
 
-**Fórmula:**
-<div align="center">
-P = (Tareas completadas / Tareas asignadas) × 10
-</div>
+- **1-4 puntos:** No cumple con los plazos y no completa la mayoría de sus tareas asignadas.
+- **5-7 puntos:** Cumple con la mayoría de los objetivos, pero presenta algunos retrasos o entregas incompletas.
+- **8-10 puntos:** Cumple con todos los objetivos y plazos sin retrasos significativos.
 
-**Ejemplo:**
-Si un empleado tenía asignadas 20 tareas y completó 18, su puntuación sería:
-
-<div align="center">
-P = (18 / 20) × 10 = 9.0
-</div>
-
-#### 2.2 Calidad del Trabajo (C)
+### 2.2 Calidad del Trabajo (C)
 Evalúa la precisión y efectividad del trabajo realizado.
 
-**Fórmula:**
-<div align="center">
-C = 10 − ((Errores o correcciones necesarias / Total de tareas entregadas) × 10)
-</div>
+- **1-4 puntos:** Trabajo con errores frecuentes que requiere correcciones constantes.
+- **5-7 puntos:** Trabajo con errores menores, corregibles sin impacto significativo.
+- **8-10 puntos:** Trabajo de alta calidad, bien estructurado y sin necesidad de correcciones.
 
-**Ejemplo:**
-Si un empleado entregó 10 proyectos y 2 necesitaron corrección, su puntuación sería:
+### 2.3 Eficiencia (E)
+Mide la capacidad de completar tareas en el tiempo esperado.
 
-<div align="center">
-C = 10 − ((2 / 10) × 10) = 8.0
-</div>
+- **1-4 puntos:** Se demora constantemente en las tareas, tardando mucho más de lo esperado (+20%).
+- **5-7 puntos:** Completa las tareas en el tiempo promedio esperado (+/-10%).
+- **8-10 puntos:** Es eficiente y rápido, completando las tareas en menos tiempo del estimado (-10% o más rápido).
 
-#### 2.3 Eficiencia (E)
-Mide el tiempo promedio para completar tareas comparado con el estándar esperado.
+### 2.4 Colaboración y Trabajo en Equipo (CO)
+Mide la participación en reuniones, apoyo a compañeros y la contribución al ambiente laboral.
 
-**Interpretación:**
-- E = 0 → Tiempo exacto esperado
-- E < 0 → Más tiempo de lo esperado
-- E > 0 → Menos tiempo de lo esperado
+- **1-4 puntos:** Baja colaboración y poca interacción con el equipo.
+- **5-7 puntos:** Participación moderada, con algunas contribuciones al equipo.
+- **8-10 puntos:** Alta colaboración, liderazgo y generación de un ambiente positivo.
 
-**Fórmula:**
-<div align="center">
-E = ((Tiempo estimado − Tiempo real) / Tiempo estimado) × 100
-</div>
 
-**Ejemplo:**
-Si se esperaba que una tarea tardara 150 minutos y el empleado tardó 220, su puntuación sería:
-
-<div align="center">
-E = ((150 − 220) / 150) × 100 = −46.6%
-</div>
-
-Por tanto, ha tardado un 46% más de lo que debería de haber tardado
-
-#### 2.4 Colaboración y Trabajo en Equipo (CO)
-Mide la participación en reuniones, apoyo a compañeros y contribución al ambiente laboral.
-
-**Criterios (Promedio de evaluaciones de compañeros y supervisores):**
-- Baja colaboración: 1-4
-- Colabora ocasionalmente: 5-7
-- Alta colaboración y liderazgo: 8-10
-
-#### 2.5 Cumplimiento de Plazos (CP)
-Mide la entrega oportuna de tareas.
-
-**Fórmula:**
-<div align="center">
-CP = 10 − ((Tareas retrasadas / Total de entregas) × 10)
-</div>
-
-**Ejemplo:**
-Si un empleado tenía 20 entregas y se retrasó en 2, su puntuación sería:
-
-<div align="center">
-CP = 10 − ((2 / 20) × 10) = 9.0
-</div>
-
-#### 2.6 Puntualidad (PU)
-Mide la asistencia y entrega oportuna de tareas.
-
-**Fórmula:**
-<div align="center">
-PU = 10 − ((Inasistencias / Total días de trabajo) × 10)
-</div>
-
-**Ejemplo:**
-Si un empleado faltó 1 día de 20 laborales, su puntuación sería:
-
-<div align="center">
-PU = 10 − ((1 / 20) × 10) = 9.5
-</div>
-
-#### 2.7 Liderazgo y Coordinación (LC)
+### 2.5 Liderazgo y Coordinación (LC)
 Mide la capacidad del jefe de subgrupo para organizar, motivar y guiar a su equipo, así como la eficacia en la comunicación y resolución de conflictos.
 
 **Criterios (Promedio de evaluaciones del equipo y resultados de gestión):**
-- Baja capacidad de liderazgo: 1-4
-- Coordinación adecuada: 5-7
-- Excelente liderazgo y organización: 8-10
+- **1-4 puntos:** Baja capacidad de liderazgo
+- **5-7 puntos:** Coordinación adecuada
+- **8-10 puntos:** Excelente liderazgo y organización
 
-**Fórmula:**
-<div align="center">
-LC = 10 − ((Problemas no resueltos / Total de incidencias reportadas) × 10)
-</div>
-
-**Ejemplo:**
-Si se reportaron 10 incidencias y 2 quedaron sin resolver, su puntuación sería:
-
-<div align="center">
-LC = 10 − ((2 / 10) × 10) = 8.0
-</div>
 
 ---
 
 ### 3. Cálculo del Desempeño Total
-El desempeño total se calcula con el promedio de las cinco categorías:
+El desempeño total se calcula con el promedio de las cuatro categorías:
 
 <div align="center">
-DT = (P + C + CO + CP + PU) / 5
+DT = (EC + C + E + CO) / 4
 </div>
 
-Y una Eficiencia de E. En el caso de un jefe de subgrupo, se añade LC a la ecuación siendo la fórmula:
+En el caso de un jefe de subgrupo, se añade LC a la ecuación siendo la fórmula:
 
 <div align="center">
-DT = (P + C + CO + CP + PU + LC) / 6
+DT = (EC + C + E + CO+ LC) / 5
 </div>
 
 **Ejemplo de Evaluación:**
-| Nombre | Productividad (P) | Calidad (C) | Colaboración (CO) | Cumplimiento de Plazos (CP) | Puntualidad (PU) | Eficiencia (E) | Desempeño Total (DT) |
-|--------|------------------|-------------|------------------|----------------------------|-----------------|----------------|---------------------|
-| Juan   | 9.0              | 8.0         | 8.5               | 7.0                        | 8.5             | 48.0%          | 8.2                 |
-| Ana    | 8.5              | 9.0         | 7.5               | 10.0                       | 9.0             | 0.0%           | 8.8                 |
+| Nombre | Entrega y Cumplimiento (EC) | Calidad (C) | Colaboración (CO) | Eficiencia (E) | Desempeño Total (DT) |
+|--------|----------------------------|-------------|-------------------|----------------|---------------------|
+| Juan   | 6.0                        | 8.0         | 8.0               | 7.0            | 7.25                |
+| Ana    | 8.0                        | 5.0         | 7.0               | 6.0            | 6.5                 |
 
 ---
 
@@ -210,4 +170,9 @@ validar las evaluaciones de manera precisa.
 
 Con este modelo se busca una evaluación justa y equitativa, facilitando el proceso de 
 valoración del rendimiento de cada miembro del equipo mientras se mantiene la anonimidad
-y se le da un mayor peso a las interacciones y trabajo dentro de cada subgrupo
+y se le da un mayor peso a las interacciones y trabajo dentro de cada subgrupo.
+
+---
+
+### 7. Como enfrentar un bajo rendimiento
+Si algún miembro del grupo no cumple con un rendimiento aceptable (inferior a 5), se llevará a cabo una reunión con su jefe de subgrupo correspondiente para abordar la situación y buscar una solución al problema. Durante esta reunión, se analizarán las posibles causas de su bajo rendimiento y se definirán medidas correctivas, como la asignación de tareas más sencillas o la adición de un miembro del equipo como soporte en sus tareas. Además, se establecerán plazos para evaluar el progreso y se dará seguimiento más cercano que al resto de miembros. En caso de no haber mejoras, se podrán tomar decisiones adicionales para garantizar el rendimiento global del equipo.

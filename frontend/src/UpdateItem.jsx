@@ -20,6 +20,7 @@ const UpdateItemScreen = () => {
   const [options, setOptions] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const [images, setImages] = useState([]); // Imágenes nuevas
   const [existingImages, setExistingImages] = useState([]); // Imágenes actuales (IDs y URLs)
@@ -35,6 +36,14 @@ const UpdateItemScreen = () => {
           }
         );
         const itemData = itemResponse.data;
+
+        // Verificar si el usuario actual es el propietario del objeto
+        const currentUser = JSON.parse(localStorage.getItem("user"));
+        if (!currentUser || currentUser.id !== itemData.user) {
+          alert("No tienes permiso para acceder a esta página.");
+          navigate("/");
+          return;
+        }
 
         const enumResponse = await axios.get(
           `${import.meta.env.VITE_API_BASE_URL}/objetos/enum-choices/`,
@@ -72,9 +81,18 @@ const UpdateItemScreen = () => {
     };
 
     if (id) fetchData();
-  }, [id]);
+  }, [id, navigate]);
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "price") {
+      // Permitir solo números y máximo dos decimales
+      const regex = /^\d{0,8}(\.\d{0,2})?$/;
+      if (!regex.test(value) && value !== "") {
+        return; // No actualiza el estado si el formato no es válido
+      }
+    }
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -100,7 +118,45 @@ const UpdateItemScreen = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
+    setFieldErrors({});
 
+    const errors = {};
+
+    if (!formData.title || !formData.description || !formData.category || !formData.cancel_type || !formData.price_category || !formData.price) {
+      setErrorMessage("Por favor, completa todos los campos.");
+      return;
+    }
+
+    if (!formData.title) {
+      errors.title = "El título es obligatorio.";
+    } else if (formData.title.length > 255) {
+      errors.title = "El título no puede exceder los 255 caracteres.";
+    } else if (!/^[A-Za-z]/.test(formData.title)) {
+      errors.title = "El título debe comenzar con una letra.";
+    }
+
+    if (!formData.description) {
+      errors.description = "La descripción es obligatoria.";
+    } else if (formData.description.length > 1000) {
+      errors.description = "La descripción no puede exceder los 1000 caracteres.";
+    } else if (!/^[A-Za-z]/.test(formData.description)) {
+      errors.description = "La descripción debe comenzar con una letra.";
+    }
+
+    if (!formData.price) {
+      errors.price = "El precio es obligatorio.";
+    } else if (isNaN(formData.price) || parseFloat(formData.price) <= 0) {
+      errors.price = "El precio debe ser un número mayor a 0.";
+    } else if (formData.price.includes(".") && formData.price.split(".")[1].length > 2) {
+      errors.price = "El precio solo puede tener hasta dos decimales.";
+    } else if (formData.price.length > 10) {
+      errors.price = "El precio no puede superar los 10 dígitos en total.";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
     try {
       const formDataToSend = new FormData();
 
@@ -165,12 +221,14 @@ const UpdateItemScreen = () => {
 
         <form onSubmit={handleSubmit}>
           {/* Título */}
+          {fieldErrors.title && <div className="error-message">{fieldErrors.title}</div>}
           <div className="input-group">
             <FiFileText className="input-icon" />
             <input type="text" name="title" value={formData.title} onChange={handleChange} required />
           </div>
 
           {/* Descripción */}
+          {fieldErrors.description && <div className="error-message">{fieldErrors.description}</div>}
           <div className="input-group">
             <FiEdit className="input-icon" />
             <textarea name="description" value={formData.description} onChange={handleChange} required />
@@ -200,6 +258,7 @@ const UpdateItemScreen = () => {
           )}
 
           {/* Precio */}
+          {fieldErrors.price && <div className="error-message">{fieldErrors.price}</div>}
           <div className="input-group">
             <FiDollarSign className="input-icon" />
             <input type="number" step="0.01" name="price" value={formData.price} onChange={handleChange} required />

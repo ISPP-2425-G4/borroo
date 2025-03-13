@@ -6,8 +6,11 @@
 
 ## PERFORMANCE EVALUATION
 
-### Sprint 1 (S1) – G4
-**Repositorio:** [https://github.com/ISPP-2425-G4/](https://github.com/ISPP-2425-G4/)
+### Sprint 1 – G4
+**Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
+
+**Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
+
 **Fecha:** 13/03/2025
 
 
@@ -32,7 +35,19 @@
 - JULIA SANCHEZ MARQUEZ
 - ALEJANDRO SEVILLANO BAREA
 
-**Version: _#DP1_**
+---
+
+## **Histórico de modificaciones**
+| Fecha      | Versión | Realizada por   | Descripción de los cambios |
+| ---------- | ------- | --------------- | -------------------------- |
+| 20-02-2025 | v1.0    | Marco Padilla Gómez | Creación del documento |
+| 20-03-2025 | v1.1    | Todos los miembros | Añadir datos sobre el trabajo realizado |
+| 13-03-2025 | v2.0    | Marco Padilla Gómez | Actualizar documento para S1 |
+
+
+---
+
+**Version: _#S1_**
 
 ---
 
@@ -42,27 +57,25 @@
 
 | Student | #DP1 | #S1 | #S2 | #S3 | #PPL | #WPL | Total | Weight |
 |---------|------|-----|-----|-----|------|------|--------------|---------|
-| Blanco Mora, David | 10 | | | | | | | |
-| Díaz Ordóñez, Pablo | 10 | | | | | | | |
-| Espinosa Naranjo, Pablo | 10 | | | | | | | | |
-| Fernandez Rodriguez, Jesus | 10 | | | | | | | |
-| Fernández Mota, Francisco | 10 | | | | | | | |
-| García Rodríguez, Javier | 10 | | | | | | | |
-| Gonzalez Ortiz, Miguel | 10 | | | | | | | |
-| Martin Muñoz, Álvaro | 10 | | | | | | | |
+| Blanco Mora, David | 10 | 9,9 | | | | | | |
+| Díaz Ordóñez, Pablo | 10 | 10 | | | | | | |
+| Espinosa Naranjo, Pablo | 10 |10 | | | | | | | |
+| Fernandez Rodriguez, Jesus | 10 | 10| | | | | | |
+| Fernández Mota, Francisco | 10 | 10 | | | | | | |
+| García Rodríguez, Javier | 10 | 10| | | | | | |
+| Gonzalez Ortiz, Miguel | 10 | 10| | | | | | |
+| Martin Muñoz, Álvaro | 10 |10 | | | | | | |
 | Naredo Bernardos, Ignacio | 10 | | | | | | | |
-| Nieto Vicioso, Javier | 10 | | | | | | | |
-| Padilla Gómez, Marco | 10 | | | | | | | |
-| Palomo García, Miguel | 10 | | | | | | | |
-| Periañez Franco, Luis Javier | 10 | | | | | | | |
-| Picón Garrote, Alexander | 10 | | | | | | | |
-| Rosado Raya, Santiago | 10 | | | | | | | |
-| Sánchez Márquez, Julia | 10 | | | | | | | |
-| Sevillano Barea, Alejandro | 10 | | | | | | | |
+| Nieto Vicioso, Javier | 10 | 10 | | | | | | |
+| Padilla Gómez, Marco | 10 |10 | | | | | | |
+| Palomo García, Miguel | 10 | 10| | | | | | |
+| Periañez Franco, Luis Javier | 10 | 10| | | | | | |
+| Picón Garrote, Alexander | 10 |10 | | | | | | |
+| Rosado Raya, Santiago | 10 | 10  | | | | | | |
+| Sánchez Márquez, Julia | 10 | 10| | | | | | |
+| Sevillano Barea, Alejandro | 10 |10 | | | | | | |
+| Total | 170 |169,9 | | | | | | |
 
-**Total: 170**  
-
----
 
 # Individual Contribution Summary  
 
@@ -192,3 +205,141 @@ Durante la primera semana, mi tarea fue la misma que la de todos los integrantes
 Durante la segunda semana, nos enfocamos en realizar un análisis exhaustivo de los competidores, identificando tanto sus fortalezas como sus debilidades.
 
 Durante la tercera semana, creé la landing page con el objetivo de ofrecer una vista previa de la página que deseamos desarrollar, destacando sus funcionalidades principales.
+
+
+## Sprint 1 (#S1)
+
+### **Blanco Mora, David**  
+Durante la primera semana del sprint 1, elaboré junto a Santiago Rosado, el documento de usuarios piloto con el protocolo a seguir durante el proceso de evaluación del software desarrollado. 
+
+Durante la segunda semana me dediqué a reelaborar el modelo de rendimiento ya que en éste teníamos maneras muy complejas de evaluar el desempeño individual y hubo que simplificarlo para poder hacer una evaluación más realista. 
+
+Durante la tercera semana del sprint, me encargué del desarrollo de las pruebas para la funcionalidad de alquilar un objeto, y también de elaborar el documento de revisión del software. 
+
+También visualicé el contenido de las píldoras teóricas correspondientes a las sesiones 05a, 05b. 
+
+### **Díaz Ordóñez, Pablo**  
+
+Durante la primera semana del sprint 1, llevé a cabo junto a Javier Nieto la realización del plan de gestión de requisitos y el registro de requisitos, documentos necesarios para conocer como desarrollar la aplicación. En muy pequeña medida, ayudé a comenzar el diagrama UML que se realize. Únicamente comencé a ver las partes por las que estaría formado, pero de manera muy inicial, de manera previa a la division de las tareas que tenía mi subgrupo.
+
+Durante la segunda semana, llevé a cabo la realización del workflow correspondiente a los commits, además de registrar y documentar los riesgos que habían surgido durante el sprint, además del estado en el que se encontraban y la forma de enfrentarlos.
+
+En la tercera semana, pasé los 17 Commitment Agreement a formato .md (markdown), además del informe de uso de la IA, el informe de performanceEvaluation y performanceModels (añadiendo una nueva métrica para evaluar a los jefes de los subgrupos y actualizando el documento). También pasé los 17 protocolos de gestión de conflictos a dicho formato, además de rellenar el presente documento y el informe de timeEffort. Comentar que me informé sobre como llevar a cabo el despliegue e intenté llevarlo a cabo sin éxito.
+
+También visualicé los videos de las Theory Pills correspondientes a las sesiones 05a y 05b.
+
+
+### **Espinosa Naranjo, Pablo**
+Durante la primera semana del sprint 1, me encargué de aplicar la conexión entre el backend y el frontend del proyecto, lo cual conllevó más tiempo del previsto, al tener que informarse previamente de como era posible conectar los frameworks seleccionados (Django y React), y posteriormente enfrentar los distintos errores de configuración que aparecieron. También comencé a formarme acerca del framework de frontend escogido por el equipo. 
+
+Durante la segunda semana, me encargué de implementar una estructura sobre como se realizaría en el frontend el sistema de busqueda y filtrado de los objetos en alquiler, comunicandome con mi compañero Ignacio Naredo, encargado de esas funcionalidades en backend, para cual debía ser la lógica a seguir para las funcionalidades. También dedique tiempo al apoyo a compañeros en distintas dificultades encontradas en sus tareas, y a informarme  sobre como hacer que el frontend sea “Responsive” en futuros sprints. 
+
+Durante la tercera semana, me encargué de conectar las funciones de backend y frontend mencionadas anteriormente, además de cambiar ciertos estilos para que la página principal se mostrase de forma clara y acorde al estilo de la aplicación que pretendemos seguir, junto a mi compañero Álvaro Martín. También me encargué del despliegue en gcloud de la aplicación, y del desarrollo del documento de revisión. 
+
+Añadir a lo citado anteriormente que se asistió a todas las clases de feedback y a la reunión del equipo. También se visualizaron todas las píldoras teóricas. 
+
+
+### **Fernández Rodríguez, Jesús**
+Durante la primera semana, trabajé en la creación de workflows de integración continua para el desarrollo del proyecto.
+
+En la segunda semana, me enfoqué en el desarrollo del backend del modelo de ítem y sus endpoints asociados. Además, comencé a trabajar en el despliegue en App Engine.
+
+Durante la tercera semana, completé el despliegue de la aplicación en App Engine, implementé el manejo de imágenes para la puesta en alquiler de objetos, ayudé a mis compañeros con configuraciones del proyecto y realicé varios ajustes en las pantallas del frontend relacionadas con la funcionalidad de alquiler.
+
+### **Fernández Mota, Francisco**
+Durante la primera semana del Sprint 1, desarrollé el UML en función de los requisitos de la aplicación y junto al PM y los GMs gestionamos las tareas, y luego hice un reparto de estas a mi subgrupo. 
+
+A lo largo de la segunda semana de desarrollo hice algunas correcciones al UML, me dediqué a revisar parte de las Pull Request del desarrollo y avances de mi subgrupo y gestionar nuevas tareas debido a problemas que tuvimos con la planificación inicial. 
+
+Finalmente, la tercera semana nos reunimos para recoger el trabajo desarrollado a lo largo del Sprint y crear nuevas tareas para cerrar esta primera etapa de implementación del código, luego hice un script para poblar la DB con datos de prueba (seeders). Pase el documento de comunicación con los usuarios piloto a formato markdown, y finalmente estuve con mi compañera Julia revisamos el backend e implementamos validaciones en las funciones relacionadas con los alquileres para aportar seguridad a la aplicación.
+
+
+### **García Rodríguez, Javier**
+
+Como jefe de proyecto, durante la primera semana del sprint 1, estuve planificando las tareas que mi subgrupo iba a durante este primer sprint. Principalmente, operaciones CRUD asociadas objetos, y gestión de usuarios y registros. No obstante, esta semana fue algo compleja debido a la aparición de problemas y riesgos que se me fueron comunicando durante toda la semana, tratando de organizar y resolver los problemas de la forma más eficiente y correcta posible. Desde problemas con la puesta en marcha del proyecto, con asignación de tareas. Se me comunicaba prácticamente a diario problemas y cuestiones que podían modificar, ya fuese de manera leve, moderado y severo. 
+
+Durante la segunda semana estuve, una vez más, tratando de coordinar aquellas incidencias que se nos planteaban entre los subgrupos, incidencias y problemas que acarreaban retrasos e incongruencias en tareas, e incluso en el sprint. Además, estuve preparando la presentación para la semana indicada.
+
+En esta última semana, se ha visto el proyecto afectado de forma grave por una desastrosa planificación, de la cual me considero responsable, en la que todo el proceso se ha visto acelerado, donde no se han podido seguir como estaba establecido en los distintos planes y otras decisiones.
+
+
+
+### **González Ortiz, Miguel**
+Durante el desarrollo S1 me he dedicado principalmente a la implementación de la entidad de usuario, de la creación de sus operaciones CRUD y sus validaciones. 
+
+En la segunda semana me centre en la implementación del login y registro en la parte del backend, y la realización de pruebas unitarias para las operaciones CRUD de la entidad usuarios. 
+
+Por último, la última semana me centre en el manejo de errores de las validaciones en el frontend y backend, además, a lo largo del S1 me he encargado de la revisión de PR de mi subgrupo debido a mi rol de QA.
+
+### **Martín Muñoz, Álvaro**
+Primera semana: Durante la primera semana, me enfoqué en la configuración inicial del frontend, comenzando con la estructuración básica y la integración con el backend. Me aseguré de que ambos sistemas estuvieran correctamente conectados y funcionando sin problemas. Para ello, trabajé en enlazar el backend con el frontend en dos fases, revisando y probando la conexión varias veces para asegurarme de que todo estuviera correctamente establecido. Además, creé una guía básica de desarrollo como formación para los compañeros del grupo, con el fin de facilitar el entendimiento de las herramientas y procesos a seguir dentro del proyecto. También me dediqué a la búsqueda de una plantilla React adecuada para el proyecto, que se ajustara a nuestras necesidades de diseño y funcionalidad. 
+
+Segunda semana: En la segunda semana, me centré en la resolución de problemas y en la mejora de la funcionalidad del proyecto. Uno de los primeros desafíos fue solucionar un error en la base de datos, lo cual pude resolver rápidamente. Después, trabajé en el diseño e implementación del menú principal del proyecto, creando un prototipo que cumpliera con los requisitos establecidos. A lo largo de la semana, también me aseguré de corregir errores relacionados con las rutas del backend, lo que permitió que la comunicación entre las distintas partes del sistema fuera más eficiente. Además, validé el funcionamiento de la autenticación mediante JWT, realizando las pruebas necesarias para asegurarme de que el sistema de seguridad funcionara correctamente. 
+
+Tercera semana: Durante la tercera semana, me dediqué principalmente a realizar ajustes en el frontend, mejorando la apariencia y el comportamiento del menú principal. Trabajé en la integración del proyecto al branch de desarrollo principal, y realicé modificaciones en el layout de la interfaz de usuario para mejorar la experiencia de navegación. Además, me encargué de la validación de formularios en el frontend, asegurándome de que los datos se enviaran correctamente y se validaran antes de su procesamiento. También implementé un navbar en todas las pantallas del proyecto y realicé validaciones adicionales para garantizar que los usuarios se autenticaran correctamente antes de poder crear objetos dentro de la aplicación. 
+
+Otras actividades: Además de las tareas de desarrollo, realicé algunos ajustes adicionales relacionados con el sistema de autenticación JWT, corrigiendo pequeños errores que surgieron en el proceso. También completé las sesiones de Píldoras Teóricas, donde profundicé en aspectos clave del desarrollo y la arquitectura de software. 
+
+Reuniones y clases: Participé en varias reuniones importantes durante estas semanas, como la del 09/03/2025, donde se discutieron avances y se realizaron planeamientos del proyecto. También asistí a las clases de formación del 21/02/2025 y 7/03/2025, donde se revisaron aspectos teóricos y prácticos que complementaron mi aprendizaje en el desarrollo de la aplicación. 
+
+### **Naredo Bernardos, Ignacio**
+Durante la primera semana del S1 realice la conexión con la base de datos, la cual luego tuve que cambiar debido a que cambiamos la idea que tenia acerca de como desplegar nuestra base de datos y realice la estructura principal del backend de nuestro proyecto.
+
+Durante la segunda semana del S1, mi tarea fue comenzar a estructurar la base de datos para que se pudiesen realizar busquedas y filtrado de los objetos a alquilar, esto me dio considerables problemas debido a que no teniamos muy claro como gestionar la conexion de la base de datos, además colaboré para arreglar fallos en el frontend que se habían cometido.
+
+Durante la tercera semana terminé de implementar la busqueda y los filtros avanzados tanto en backend como ayudando a mi compañero encargado del frontend, por último termine de ajustar junto a un compañero la base de datos y ayude junto a mi subgrupo a realizar el despliegue de la aplicación.
+
+### **Nieto Vicioso, Javier**
+
+
+### **Padilla Gómez, Marco**
+Tras la semana de evaluación, empecé creando el Github Project del repositorio y estableciendo todos los milestones, etiquetas en el tablero. 
+
+En la siguiente semana, estuve con los modelos del item y price y comprobé que funcionaran, pero después de un malentendido con las tareas que pertenecían a un grupo y a otro, se acabó perdiendo ese trabajo. Añadí la paginación para todo el proyecto y añadí dependencias que requería nuestro proyecto en el requirements.txt. 
+
+En esta última semana, me he focalizado en documentación para que no hubiera sorpresas de cara al final de la entrega, actualicé los documentos de timeEffort y de performanceEvaluation, elaboré el KBreport, añadí el feedback a las bases de datos de conocimiento, tanto la común como la propia y estuve añadiendo tablas de historico de modificaciones y revisando los proyectos clave del failure condition. 
+
+### **Palomo García, Miguel**
+Durante la primera semana me dedique al desarrollo e implementacion de frontend del navbar y el register
+
+Durante la segunda semana me dedique al desarrollo e implementaicon de frontend de login y jwt además de la presentacion completa
+
+Durante la tercera semana me dedique a arreglar errores relacionado con el login y el register ademas de la presentacion completa
+
+### **Periañez Franco, Luis Javier**
+Durante la implementación del proyecto, me enfoqué en el desarrollo del frontend, comenzando por la incorporación de la barra de navegación (navbar) y la estructura base del proyecto. Principalmente, trabajé en la funcionalidad del CRUD de objetos, implementando las operaciones de creación, actualización y eliminación.
+
+Posteriormente, mejoré la estética de la interfaz, añadiendo la gestión de imágenes para ofrecer una mejor visualización y facilitando la asociación de estas con los usuarios. Además, solucioné diversos problemas que surgieron a lo largo del proceso de desarrollo.
+
+Asimismo, participé activamente en reuniones, contribuyendo con ideas y asegurando que el desarrollo avanzara de manera eficiente.
+
+### **Picón Garrote, Alexander**
+Durante la primera semana del sprint 1, estuve planificando todas las tareas que mi subgrupo iba a tener que llevar a cabo para completar el sprint goal que se estableció, entre ellas, desglose este de la mejor forma posible para que todos los miembros del subgrupo tuvieran estimaciones similares, una vez hice esto desarrollando un informe con todas ellas, los miembros implicados y todo procedí a realizar la implementación de zenhub con la organización de este y la configuración para que todo estuviese enlazado y preparado para funcionar en el sprint 1 creando las etiquetas oportunas. 
+
+La siguiente semana del sprint pase toda la planificación del informe al tablero de zenhub creando todas las tareas asignadas a los miembros de mi subgrupo, clasificándolas por funcionalidad y poniendo una descripción acorde a lo pedido en cada tarea. A los dos días tuve que hacer un reajuste en casi todas las tareas porque definimos nuevos formatos para las mismas. Al final de la semana revisé las tareas de los miembros de mis subgrupos desplegando de forma local el proyecto y notificando de los fallos que encontré revisando estas. Por último, hice un estudio de más de 12 bases de datos que encontré comparando distintos planes ya que necesitábamos un servidor para alojar la base de datos, al final opté por desplegarle en render después de ver muchas limitaciones de las demás. 
+
+En la última semana volví a revisar todas las tareas que llevaban los miembros de mi subgrupo, gestionando y organizando problemas que se encontraron y soluciones para estos. Hice las actas respectivas a las dos últimas reuniones que tuvimos y estuve por un gran tiempo intentando desplegar la aplicación debido a los problemas que tenían miembros del equipo con el despliegue. 
+
+A todo esto, añadir las reuniones que se tuvieron en este periodo y toda la gestión continua que se ha llevado a cabo durante todo el sprint con los miembros del propio subgrupo y con los representantes de los otros subgrupos para toma de decisiones del proyecto. 
+
+### **Rosado Raya, Santiago**
+La primera semana estuve diseñando los canales de comunicación para los usuarios piloto de la asignatura y estableciendo contacto con ellos para garantizar una comunicación fluida y efectiva.
+
+Durante la segunda semana, desarrollé la entidad Rent, asistí a una reunión de mitad de Sprint y trabajé en la creación de más documentación dirigida a los usuarios piloto.
+
+En la tercera semana, he estado en contacto con los usuarios piloto, elaborando más documentación para ellos y recopilando el feedback. También he revisado y aceptado las pull requests de los compañeros de mi subgrupo. También participé como usuario piloto para otro grupo, el 8, y mejoré algunos documentos para darles el toque final.
+
+
+
+### **Sánchez Márquez, Julia**
+Durante la primera semana del Sprint 1, colaboré con mi compañero Francisco en el desarrollo del diagrama UML. Aunque enfrentamos varios desafíos y recibimos observaciones de nuestros compañeros, logramos remodelarlo hasta alcanzar la versión definitiva. Paralelamente, inicié el proyecto base utilizando las herramientas que el equipo nos había facilitado. 
+
+En la segunda semana, en mi rol de desarrolladora, implementé todas las rutas relacionadas con la entidad Renta, trabajo que adelantaría para la siguiente fase. 
+
+Durante la última semana, me centré en probar el correcto funcionamiento de todas las URLs. Como era de esperarse, surgieron varios inconvenientes. Inicialmente, se presentó un problema en la base de datos, el cual solucioné con el apoyo de mis compañeros durante una reunión de coordinación. Siguiendo una recomendación, intenté crear un archivo seeder.py para poblar la base de datos y facilitar las pruebas, pero al notar que esta tarea consumía más tiempo del esperado, opté por crear objetos manualmente y trabajar con ellos en local. Durante este proceso, identifiqué y corregí un error de tipos en el modelo Rent tras un tiempo de investigación, y posteriormente ajusté la lógica de las rutas para resolver otros problemas detectados. 
+
+Antes de subir los cambios, la implementación de un workflow me permitió detectar que el código no era lo suficientemente eficiente, lo que me llevó a refactorizarlo. Una vez subidos los cambios, colaboré con un compañero que necesitaba ayuda en una parte del código, realizando las modificaciones necesarias para que pudiera continuar con su trabajo. Finalmente, junto a Francisco, implementé todas las validaciones en el backend para prevenir cualquier acceso no deseado. 
+
+Para concluir, creé el usuario administrador de la aplicación, convertí algunos documentos a Markdown en colaboración con Francisco y finalicé la visualización de las “Theroy Pills”. 
+
+### **Sevillano Barea, Alejandro**

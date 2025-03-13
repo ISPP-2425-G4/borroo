@@ -4,13 +4,10 @@
 
 ![](../../imagenes/borrooLogo.png)
 
-##  Commitment Agreement Usuarios Piloto Asignatura 
+##  Commitment Agreement Usuarios Piloto Asignatura Template
 
-### Sprint 1 – G4
-**Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
-
-**Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
-
+### Sprint 1 (S1) – G4
+**Repositorio:** [https://github.com/ISPP-2425-G4/](https://github.com/ISPP-2425-G4/)
 **Fecha:** 10/03/2025
 
 
@@ -38,13 +35,13 @@
 
 
 ---
-**Nombre**: Pablo Olivencia Moreno  
+**Nombre**: [Nombre del Usuario]  
 
-**Fecha**: 12/03/2025  
+**Fecha**: [DD/MM/AAAA]  
 
 **Versión del Proyecto**: 1.0  
 
-**Grupo de trabajo**: G7
+**Grupo de trabajo**: [Grupo de trabajo de cada persona]  
 
 ## Compromiso
 
@@ -67,4 +64,4 @@ Al firmar este documento, entiendo y acepto las responsabilidades que se me han 
 En caso de incumplimiento de los compromisos mencionados anteriormente, su evaluación será nula.  
 
 **Firma del Usuario**
-![](firmasUp/firma_pablo.png)
+

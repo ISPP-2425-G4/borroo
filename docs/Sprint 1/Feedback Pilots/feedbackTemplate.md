@@ -4,7 +4,7 @@
 
 ![](../../imagenes/borrooLogo.png)
 
-##  Feedback Usuarios Piloto Asignatura  
+##  Feedback Usuarios Piloto Asignatura Template 
 
 ### Sprint 1 (S1) – G4
 **Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
