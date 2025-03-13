@@ -85,13 +85,13 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 	-   El sistema muestra un mensaje de éxito.
 	-   Se redirige al usuario a la pantalla de inicio de sesión.
 	-   El usuario puede iniciar sesión con sus credenciales recién creadas.
-[](capturasRevision/register1.png)
-[](capturasRevision/register2.png)
+![](capturasRevision/register1.png)
+![](capturasRevision/register2.png)
 
 ### Caso 3: Visualización de objetos  disponibles para alquiler
 1.  El usuario accede a la página principal
 2.  El usuario puede ver los detalles básicos de cada objeto en la tarjeta de presentación.
-[](capturasRevision/mostrar_objetos.png)
+![](capturasRevision/mostrar_objetos.png)
 
 ### Caso 4: Visualización con filtrado de búsqueda  por  nombre, categoría y precio
 1.  El usuario accede a la página principal con todos los anuncios
@@ -99,9 +99,9 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 	-   Barra de búsqueda en función del nombre del objeto
 	-   Filtrado de categoría a la que pertenece el objeto a alquilar
 	-   Barra adaptable para el rango de precio declarado
-[](capturasRevision/filtrado_por_nombre.png)
-[](capturasRevision/filtrado_por_categoria.png)
-[](capturasRevision/filtrado_precio.png)
+![](capturasRevision/filtrado_por_nombre.png)
+![](capturasRevision/filtrado_por_categoria.png)
+![](capturasRevision/filtrado_precio.png)
 
 ### Caso 5: Visualización de detalles de un anuncio
 1.  El usuario, desde la vista principal, selecciona el anuncio que le interesa
@@ -111,7 +111,7 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 	-   Política de cancelación
 	-   Precio
 	-   Usuario anunciante
-[](capturasRevision/detalles_objeto.png)
+![](capturasRevision/detalles_objeto.png)
 
 ### Caso 6: Solicitud de  alquiler de  objeto
 1.  El usuario accede a la plataforma y navega por la página principal donde se muestran los objetos disponibles.
@@ -121,10 +121,10 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 5.  El usuario presiona el botón "Solicitar alquiler".
 6.  El sistema muestra un cuadro de diálogo de confirmación con las fechas seleccionadas y el precio.
 7.  El usuario confirma la solicitud presionando el botón "Confirmar".
-[](capturasRevision/solicitud_alquiler1.png)
-[](capturasRevision/solicitud_alquiler2.png)
-[](capturasRevision/solicitud_alquiler3.png)
-[](capturasRevision/solicitud_alquiler4.png)
+![](capturasRevision/solicitud_alquiler1.png)
+![](capturasRevision/solicitud_alquiler2.png)
+![](capturasRevision/solicitud_alquiler3.png)
+![](capturasRevision/solicitud_alquiler4.png)
 ### Caso 7: Crear publicación de alquiler
 1.  El usuario accede a la plataforma e inicia sesión.
 2.  El usuario navega a la sección "Poner en alquiler".
@@ -138,8 +138,8 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 	-   Precio del alquiler.
 	-   Opcionalmente, el usuario puede añadir imágenes del objeto.
 5.  El usuario presiona el botón "Publicar".
-[](capturasRevision/crear_publicacion.png)
-[](capturasRevision/objeto_creado.png)
+![](capturasRevision/crear_publicacion.png)
+![](capturasRevision/objeto_creado.png)
 
 ### Caso 8: Editar  publicación de alquiler
 1.  El usuario selecciona la publicación que desea editar.
@@ -154,8 +154,8 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 	-   Precio del alquiler.
 	-   Imagen del objeto (opcional).
 5.  El usuario presiona el botón "Actualizar".
-[](capturasRevision/editar_publicacion.png)
-[](capturasRevision/objeto_editado.png)
+![](capturasRevision/editar_publicacion.png)
+![](capturasRevision/objeto_editado.png)
 
 ### Caso 9: Eliminar objeto de alquiler
 1.  El usuario selecciona el anuncio del objeto que desea eliminar
@@ -163,8 +163,8 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 3.  Se indica por medio de un mensaje al usuario si está seguro de querer eliminar el anuncio del objeto
 4.  El usuario presiona el botón de “Aceptar”
 5.  Se muestra un mensaje de que se ha eliminado correctamente
-[](capturasRevision/eliminar_objeto.png)
-[](capturasRevision/objeto_eliminado.png)
+![](capturasRevision/eliminar_objeto.png)
+![](capturasRevision/objeto_eliminado.png)
 
 ## 3. Datos necesarios para la revisión
 **Los datos necesarios para la revisión son**: 
