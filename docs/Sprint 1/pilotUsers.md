@@ -4,13 +4,14 @@
 
 ![](../imagenes/borrooLogo.png)
 
-## Pilots
+## Comunicación Usuarios Piloto
 
 ### Sprint 1 – G4
 **Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
+
 **Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
 
-Fecha: 20/02/2025  
+Fecha: 06/03/2025  
 
 </div>
 
@@ -34,192 +35,172 @@ Fecha: 20/02/2025
 - Alejandro Sevillano Barea  
 
 ---
+
 ## **Histórico de modificaciones**
 
 | Fecha      | Versión | Realizada por   | Descripción de los cambios |
 | ---------- | ------- | --------------- | -------------------------- |
-| 20-02-2025 | v1.0    | Santiago Rosado Raya | Creación del documento |
-| 13-03-2025 | v1.1    | Marco Padilla Gómez | Historico de modificaciones añadido |
+| 06-03-2025 | v1.0    | Santiago Rosado Raya | Creación del documento |
 |  |  |  |  |
 ---
 
-## Índice
+# Índice
+1. [Nuestros usuarios piloto](#nuestros-usuarios-piloto)
+   - [Usuarios piloto asignados por la asignatura](#usuarios-piloto-asignados-por-la-asignatura)
+   - [Usuarios piloto seleccionados por el equipo de desarrollo](#usuarios-piloto-seleccionados-por-el-equipo-de-desarrollo)
 
-1. [Tipos de usuarios](#tipos-de-usuarios)
-2. [Interacción con los usuarios pilotos](#interacción-con-los-usuarios-pilotos)
-3. [Frecuencia](#frecuencia)
-4. [Canal de contacto](#canal-de-contacto)
-5. [Temas a tratar](#temas-a-tratar)
-6. [Calificación de usuarios pilotos](#calificación-de-usuarios-pilotos)
-7. [Usuarios Piloto contactados por el equipo](#usuarios-piloto-contactados-por-el-equipo)
-8. [Encuestas realizadas](#encuestas-realizadas)
-9. [Aspectos legales y de privacidad](#aspectos-legales-y-de-privacidad)
-   - [Recopilación y uso de datos](#recopilación-y-uso-de-datos)
-   - [Protección y Almacenamiento de Datos](#protección-y-almacenamiento-de-datos)
-   - [Eliminación de datos](#eliminación-de-datos)
-   - [Cumplimiento legal](#cumplimiento-legal)
+2. [Usuarios piloto asignados por la asignatura](#usuarios-piloto-asignados-por-la-asignatura-1)
+   - [Frecuencia](#frecuencia)
+   - [Método de trabajo](#metodo-de-trabajo)
+   - [Canales de contacto a usar](#canales-de-contacto-a-usar)
+   - [Calificación de cada usuario piloto](#calificacion-de-cada-usuario-piloto)
 
----
+4. [Usuarios piloto ajenos a la asignatura](#usuarios-piloto-ajenos-a-la-asignatura)
+   - [Frecuencia](#frecuencia-1)
+   - [Método de trabajo](#metodo-de-trabajo-1)
+   - [Canales de contacto a usar](#canales-de-contacto-a-usar-1)
+5. [Feedback](#feedback)
 
-## Usuarios Piloto  
-Para validar la propuesta de valor de la plataforma, es fundamental identificar a los primeros usuarios que podrían beneficiarse del servicio. Estos usuarios representan distintos perfiles con necesidades específicas que encajan con el modelo de alquiler en lugar de compra.  
+# **Nuestros usuarios piloto:**
 
----
+En este proyecto contaremos con dos tipos de usuarios piloto:
 
-### Tipos de usuarios:  
-Los usuarios a los que está destinado nuestro servicio son personas particulares por lo que podemos clasificar a nuestros usuarios pilotos dentro de muchas posibles categorías, por ejemplo:  
+## **Usuarios piloto asignados por la asignatura:**
 
-- **Estudiantes universitarios**: Necesitan electrodomésticos, muebles o dispositivos tecnológicos por períodos limitados sin necesidad de comprarlos.  
-- **Pequeñas empresas y locales**: Pequeñas empresas que estén interesadas en poner en alquiler o alquilar algunos objetos.  
-- **Familias con niños**: Necesitan productos temporales como cunas o juguetes sin hacer grandes inversiones.  
-- **Viajeros y turistas**: Requieren artículos temporales como maletas, bicicletas o cámaras sin adquirirlos permanentemente.  
-- **Personas en rehabilitación o con movilidad reducida**: Personas que requieren equipamiento médico o de apoyo (sillas de ruedas, andadores) solo por un tiempo determinado.  
-- **Deportistas**: Personas que estén interesadas en comenzar a practicar eventualmente un deporte cuyo equipo para realizarlo deba ser adquirido.  
+Son compañeros de grado universitario que se han propuesto voluntariamente para desempeñar este rol. Su participación nos permitirá recibir feedback estructurado dentro del marco académico y técnico.
 
-En resumen, cualquier persona puede ser un posible usuario de nuestro servicio.  
-
-Aun así, creemos que la mayoría de nuestros usuarios serán adolescentes y adultos jóvenes de hasta 35 años. Nuestro servicio está dirigido a personas que, por razones de espacio, presupuesto u otros motivos, prefieren alquilar en lugar de comprar.  
-
-Está pensado tanto para quienes desean obtener un beneficio económico aprovechando lo que ya poseen como para aquellos que buscan acceder temporalmente a determinados materiales a un costo menor que el de compra.  
+| Nombre del estudiante | Grupo al que pertenecen |
+|----------------------|---------------------|
+| Ángel García Escudero | 9 |
+| Daniel Flores de Francisco | 11 |
+| Josué Rodríguez López | 8 |
+| Karim Youssafi Benichikh | 9 |
+| Pablo Olivencia Moreno | 7 |
 
 ---
 
-## Interacción con los usuarios pilotos  
-Nuestra interacción con los usuarios pilotos dependerá de si el usuario es un compañero voluntario del sistema de usuarios pilotos o si es una persona con la que nosotros nos hayamos puesto en contacto. Dependiendo de estas dos cuestiones aquí definiremos con qué frecuencia trataremos con estos usuarios, qué canal usaremos dependiendo de las circunstancias y de qué se hablará cada vez que contactemos con el usuario.  
+## **Usuarios piloto seleccionados por el equipo de desarrollo:**
 
-También se definirá la política de calificación de los usuarios voluntarios de la propia asignatura.  
+Se trata de personas que hemos encuestado y que han aceptado colaborar en el desarrollo del servicio. Su aportación será clave para obtener una visión más amplia y realista sobre la viabilidad y usabilidad de la aplicación.
 
----
-
-## Frecuencia  
-Independientemente de si el usuario es un voluntario de la asignatura o una persona contactada por el equipo, se establecerá un contacto al menos cuatro días antes de cada entrega de sprint. Esto garantizará que su feedback pueda ser analizado a tiempo e integrado en el mismo sprint.  
-
-En el caso de los usuarios contactados por el equipo, somos conscientes de que no todos estarán disponibles en el momento deseado. Por ello, se seleccionará un mínimo de cinco personas para evaluar cada entregable no técnico, asegurando así una retroalimentación suficiente y representativa.  
-
----
-
-## Canal de contacto  
-Para los usuarios propuestos por la asignatura, se priorizará el contacto presencial, ya que permite establecer una relación más cercana y facilita una mejor comunicación y comprensión mutua. Sin embargo, en caso de que existan dificultades de horario u otras limitaciones, el contacto se mantendrá de forma telemática a través de WhatsApp y/o Discord, creando un espacio dedicado exclusivamente a la interacción con estos usuarios.  
-
-En el caso de los usuarios contactados por nuestro equipo, también se dará preferencia a un primer contacto presencial, con la intención de establecer una mejor dinámica de comunicación. Idealmente, el resto de las interacciones también serían presenciales, aunque entendemos que esto puede no ser siempre viable. Por ello, en caso de ser necesario, el contacto se llevará a cabo mediante reuniones telemáticas, garantizando así la continuidad del proceso de evaluación y feedback.  
-
----
-
-## Temas a tratar  
-Con los usuarios propuestos se abordarán aspectos relacionados con las funcionalidades del sistema, el diseño y sus implementaciones. Además, se les pedirá que identifiquen posibles bugs o errores y que sugieran mejoras. Dado que estos usuarios tienen un perfil más técnico, su feedback estará enfocado en el desarrollo y optimización del servicio, proporcionando información valiosa para refinar tanto el funcionamiento como la estructura del sistema.  
-
-Por otro lado, con los usuarios contactados directamente por el equipo se adoptará un enfoque más orientado a la experiencia de usuario. En este caso, el objetivo principal será evaluar el diseño de interfaces, comprobar si las funcionalidades cumplen con las expectativas y analizar la usabilidad del sistema. Se tratará de entender cómo perciben el servicio, qué dificultades encuentran y qué aspectos podrían mejorarse para optimizar la experiencia del usuario final.  
-
----
-
-## Calificación de usuarios pilotos
-
-Como parte de esta asignatura, contamos con usuarios piloto asignados, es decir, compañeros de curso que deben ser calificados en cada entrega. Para asegurar que su participación sea significativa y que su feedback resulte útil en el proceso de desarrollo del software, aplicaremos un método de trabajo estructurado.
-
-En primer lugar, identificaremos el momento óptimo para la recepción de feedback antes de cada entrega de sprint. Para ello, elaboraremos un documento en **Word o Excel** que recogerá todos los temas a tratar, con la opción de añadir aspectos adicionales que los propios usuarios consideren relevantes.
-
-Durante cada sesión de revisión con estos usuarios, se abordarán los puntos establecidos en el documento. Su calificación dependerá de su nivel de implicación, la información aportada y la calidad de su análisis. De este modo, garantizaremos que su participación no solo contribuya al desarrollo del software, sino que también les haga sentir parte activa y útil en el proceso.
+| Num | ID  | Canal preferente |
+|----|-----|-----------------|
+| 1  | PNS | Presencial/Discord |
+| 2  | AFG | Presencial/Discord |
+| 3  | PMB | Discord |
+| 4  | MBM | Presencial |
+| 5  | JMC | Presencial |
+| 6  | GAG | Presencial |
+| 7  | APM | Presencial |
+| 8  | MON | Presencial |
+| 9  | IDM | Presencial |
+| 10 | RGG | Presencial |
+| 11 | ARD | Telemático |
+| 12 | DRA | Telemático |
+| 13 | VSP | Presencial/Discord |
+| 14 | NRO | Presencial |
+| 15 | ERR | Presencial |
+| 16 | SGA | Presencial |
+| 17 | EAR | Presencial |
+| 18 | El Arca de Noé | Presencial/Telemático |
+| 19 | MMN | Presencial/WhatsApp |
+| 20 | IRG | Presencial/WhatsApp |
 
 ---
 
-## Usuarios Piloto contactados por el equipo
+# **Usuarios piloto asignados por la asignatura:**
 
-Para la captación de usuarios piloto externos, tomaremos como referencia el perfil de usuario objetivo de nuestro servicio y recopilaremos la información relevante de cada participante.
+Para estos usuarios, priorizaremos las interacciones presenciales con el objetivo de fortalecer la relación y generar un ambiente de confianza, permitiendo que el feedback sea lo más cercano y directo posible.
 
-Como se ha mencionado previamente, se dará prioridad a un primer contacto **presencial**, aunque también podrá realizarse de manera **telemática** en caso de ser necesario.
-
-Para cada usuario, almacenaremos información clave y sus respuestas sobre el servicio, asegurando que cualquier dato privado permanezca protegido. La estructura de la información recopilada será la siguiente:
-
-- **Identificador (Id):** Para preservar la privacidad, se utilizarán las iniciales de la persona como identificador. En el caso de locales o empresas, se guardará el nombre de la entidad.
-- **Tipo de usuario (Usuario):** Se clasificará según una característica principal dentro de las siguientes categorías:
-  - Estudiante universitario
-  - Padre/Madre de familia
-  - Adolescente
-  - Adulto
-  - Autónomo
-  - Empresa
-- **Edad:** Se registrará la edad del usuario.
-- **Primer contacto (1ºContacto):** Se documentará la forma en que se estableció el primer contacto con el usuario.
-- **Canal de contacto (Canal):** Se registrará el canal preferido por el usuario para futuras interacciones.
-- **Interés en el servicio (Interés):** Se almacenará la respuesta del usuario a la pregunta sobre si considera el servicio interesante y si estaría dispuesto a utilizarlo.
-- **Disposición a alquilar sus pertenencias (Deja en alquiler):** Se recogerá su respuesta ante la posibilidad de poner en alquiler algún objeto propio.
-- **Interés en alquilar objetos (Alquila):** Se preguntará si estaría dispuesto a alquilar algún objeto en particular.
-- **Categoría de interés (Categoría):** Si el usuario muestra interés en alquilar o poner en alquiler objetos, se le pedirá que especifique en qué categoría estaría más interesado.
-- **Colaboración con el proyecto (Colabora):** Se registrará si el usuario está dispuesto a seguir colaborando y proporcionando feedback adicional para el desarrollo del servicio.
-
-| #  | Id   | Usuario     | Edad | 1ºContacto | Canal       | Interés | Deja en alquiler | Alquila | Categoría                          | Colabora |
-|----|------|------------|------|------------|-------------|---------|------------------|---------|------------------------------------|----------|
-| 1  | PG C | Estudiante | 22   | Presencial | Presencial  | Sí      | Sí               | Sí      | Deporte y tecnología              | No       |
-| 2  | PNS  | Estudiante | 22   | Presencial | Presencial/Discord | Sí | Sí | Sí | Tecnología y deporte | Sí |
-| 3  | AFG  | Estudiante | 22   | Presencial | Presencial/Discord | Sí | Sí | Sí | Tecnología | Sí |
-| 4  | JOT  | Estudiante | 23   | Presencial | Presencial/Discord | Sí | Sí | Sí | Ropa | No |
-| 5  | PMB  | Estudiante | 23   | Presencial | Discord | Sí | Sí | Sí | Videojuegos | Sí |
-| 6  | TMG  | Madre | 60 | Presencial | Presencial | Sí | Sí | Sí | Maletas | No |
-| 7  | RBM  | Padre | 60 | Presencial | Presencial | Sí | No | Sí | Cámaras | No |
-| 8  | MBM  | Adulta | 25 | Presencial | Presencial | Sí | Sí | Sí | Equipamiento deportivo | Sí |
-| 9  | JMC  | Estudiante | 22 | Presencial | Presencial | Sí | Sí | Sí | Mobiliario | Sí |
-| 10 | GAG  | Estudiante | 23 | Presencial | Presencial | Sí | Sí | Sí | Equipamiento deportivo | Sí |
-| 11 | APM  | Autónomo | 23 | Presencial | Presencial | Sí | Sí | Sí | Equipamiento médico | Sí |
-| 12 | NMR  | Autónoma | 23 | Presencial | Presencial | Sí | No | Sí | Silla de ruedas | No |
-| 13 | MRB  | Adulta | 27 | Presencial | Presencial | Sí | Sí | Sí | Ropa | No |
-| 14 | JBM  | Padre | 36 | Presencial | Presencial | Sí | No | Sí | Ropa de bebé | No |
-| 15 | CRB  | Madre | 36 | Presencial | Presencial | Sí | No | Sí | Mobiliario de bebé | No |
-| 16 | MON  | Adulta | 25 | Presencial | Presencial | Sí | Sí | Sí | Electrodomésticos | Sí |
-| 17 | CON  | Empresaria | 33 | Presencial | Presencial | Sí | No | Sí | Proyector | No |
-| 18 | BFB  | Adulta | 50 | Presencial | Presencial | Sí | Sí | Sí | Maleta | No |
-| 19 | IDM  | Adulta | 24 | Presencial | Presencial | Sí | Sí | Sí | Electrodomésticos | Sí |
-| 20 | RGG  | Adulto | 25 | Presencial | Presencial | Sí | Sí | Sí | Mobiliario | Sí |
-| 21 | ARD  | Estudiante | 22 | Presencial | Telemático | Sí | Sí | Sí | Tecnología, deporte | Sí |
-| 22 | DRA  | Estudiante | 22 | Presencial | Telemático | Sí | Sí | Sí | Tecnología, deporte | Sí |
-| 23 | VSP  | Estudiante | 22 | Telemática | Telemática | Sí | Sí | Sí | Deporte | Sí |
-| 24 | MTG  | Estudiante | 22 | Telemática | Telemática | Sí | Sí | Sí | Libros | No |
-| 25 | ADS  | Estudiante | 23 | Telemática | Telemática | Sí | No | Sí | Artículos de pesca | No |
-| 26 | MTV  | Estudiante | 22 | Telemática | Telemática | Sí | Sí | No | Libros | No |
-| 27 | El Arca de Noé | Local/Empresa | NA | Presencial | Telemática | Sí | Sí | No | Herramientas | Sí |
+Además, crearemos un espacio dedicado exclusivamente a ellos, a través de un grupo de WhatsApp, donde podremos comunicarnos de forma ágil, coordinar reuniones y resolver dudas. Siempre que sea posible, organizaremos reuniones presenciales para maximizar la calidad de las interacciones y garantizar un mejor seguimiento de sus aportaciones. Sin embargo, en caso de que no sea viable llevarlas a cabo de manera presencial, se optará por realizar reuniones telemáticas a través de la herramienta Discord, asegurando así una comunicación fluida y efectiva independientemente de las circunstancias.
 
 ---
 
-## Encuestas Realizadas
+## **Frecuencia:**
 
-También hemos llevado a cabo encuestas de sondeo para evaluar el nivel de interés de un mayor número de usuarios, incluso aquellos que no participarán directamente en el futuro desarrollo de la aplicación. El objetivo de estas encuestas es obtener más respuestas y comprender mejor el mercado en el que nos adentramos.
-
-Puedes acceder al formulario enviado a usuarios particulares en el siguiente enlace:  
-[Formulario para usuarios particulares](https://docs.google.com/forms/d/e/1FAIpQLSeonfdKmCMrva_PvfdzeFLKd3KHqU8MsKQhIqf00U1ltZhzzA/viewform)
-
-También realizamos encuestas a distintas empresas que consideramos potencialmente interesadas en nuestro servicio. Aunque no todas mostraron interés, tras analizar las respuestas y hablar personalmente con ellos llegamos a la conclusión de que el mercado más atractivo para este servicio se encuentra en el sector de herramientas y tecnología.
-
-Para recopilar más información y evaluar el interés de las empresas en nuestro servicio, elaboramos un formulario específico dirigido a ellas. Puedes acceder al formulario en el siguiente enlace:  
-[Formulario para empresas](https://docs.google.com/forms/d/e/1FAIpQLSemsOaozbiOWUVs7D-Qeos6pVKIAG3nW9-PdKjwnHpgDNL-cA/viewform)
+Cada sprint contactaremos con los usuarios piloto y les enviaremos un Word o un Excel con todo el contenido a valorar vía WhatsApp (el contenido y formato del documento dependerá de cada Sprint). Este contacto se hará cuando el 70% de las tareas estén terminadas o cuatro días antes del siguiente Sprint, esto hará que el feedback pueda ser analizado por el equipo y se pueda tener en cuenta.
 
 ---
 
-# Aspectos legales y de privacidad
+## **Método de trabajo:**
 
-La participación de los usuarios piloto en la prueba del servicio implica la recopilación y gestión de datos personales. Para garantizar el cumplimiento de las normativas vigentes en materia de privacidad y protección de datos, se establecen las siguientes directrices:
+1. Se desarrollará un documento con todo lo realizado que requiera feedback por parte de los usuarios piloto. Este documento será elaborado por el encargado de los usuarios piloto siguiendo la plantilla proporcionada en la enseñanza virtual.
+2. A los usuarios piloto se les informará sobre la posibilidad de realizar una reunión, en la que se les explicará lo trabajado durante el sprint y se les proporcionarán instrucciones detalladas para probar el sistema. Este primer contacto se realizará cuando el 70% del Sprint esté terminado o cuatro días antes de que este termine.
+3. Una vez concretada la reunión, esta se llevará a cabo explicando todos los aspectos clave, incluyendo el método de evaluación de sus aportaciones. Además, se les entregará el documento de feedback para que lo completen, junto con la fecha límite de entrega, establecida dos días antes del fin del sprint.
+4. Tras la primera reunión, se otorgará tiempo a los usuarios para que prueben el sistema. Si durante este proceso surgen dudas, podrán comunicarse con los miembros del equipo de desarrollo a través de los grupos de WhatsApp y Discord habilitados para este propósito.
+5. Finalmente, una vez completado el documento y recopilado el feedback, los usuarios lo entregarán mediante Discord, utilizando un canal exclusivo para la recepción de estos informes.
 
-## 1. Recopilación y Uso de Datos
+---
 
-Se recogerán datos personales únicamente con el **consentimiento explícito** de los usuarios piloto. La información recopilada incluirá:
+## **Canales de contacto a usar:**
 
-- **Datos identificativos** (nombre o iniciales, edad, tipo de usuario).
-- **Preferencias y feedback** respecto al servicio.
-- **Información sobre su disposición a alquilar o utilizar productos**.
+El primer canal de contacto directo para hacer anuncios será el grupo de WhatsApp creado dentro de la comunidad de nuestro grupo. A través de este medio, se comunicará información relevante sobre el desarrollo del proyecto, se coordinarán las reuniones y se asegurará que todos los participantes puedan estar presentes.
 
-Los datos serán utilizados exclusivamente para **evaluar la viabilidad del servicio, mejorar la plataforma y optimizar la experiencia de usuario**.
+En caso de que las reuniones presenciales no sean posibles, se optará por realizarlas de manera telemática a través de Discord, una plataforma útil para llamadas informales y para la gestión de documentación.
 
-## 2. Protección y Almacenamiento de Datos
+Para el envío de documentación por parte del equipo de desarrollo, se creará un canal exclusivo en Discord, donde se compartirán los archivos necesarios de forma organizada.
 
-- Los datos se almacenarán en **servidores seguros** con acceso restringido.
-- No se compartirán con terceros **sin la autorización expresa del usuario**.
+Del mismo modo, se habilitará un canal separado en Discord para la recepción de documentos por parte de los usuarios piloto, asegurando así un flujo de información estructurado y accesible para todos los involucrados.
 
-## 3. Eliminación de Datos
+---
+## Calificación de cada usuario piloto
 
-- Una vez concluida la fase piloto, los **datos personales serán eliminados o anonimizados**, salvo que el usuario decida continuar como usuario del servicio en una versión posterior.
-- En cualquier momento, los usuarios pueden **solicitar la eliminación de sus datos** mediante un procedimiento sencillo y accesible.
+Además de los canales de comunicación y recepción de documentación mencionados,  se establecerán criterios de evaluación para medir el nivel de participación y  compromiso de los usuarios piloto en el proceso de prueba del sistema.
+Los usuarios serán evaluados según los siguientes niveles de implicación:
 
-## 4. Cumplimiento Legal
+| Rango de Calificación | Trabajo realizado |
+|----------------------|-------------------------------------------------------------------|
+| **10** | **Aporta información adicional y sugerencias más allá de lo solicitado:** Ha rellenado toda la información requerida con detalle, demostrando que ha probado e indagado en el proyecto y ofreciendo ideas o mejoras adicionales al equipo de desarrollo. |
+| **8-9** | **Cumple con todos los requisitos y proporciona feedback útil:** Ha completado el documento con toda la información requerida y ha aportado observaciones que ayudan al equipo de desarrollo a mejorar el sistema. |
+| **6-7** | **Rellena la información solicitada, pero sin gran detalle:** Ha completado el documento, aunque sin profundizar demasiado en sus respuestas o sin aportar comentarios adicionales. |
+| **5** | **Entrega el documento, pero con poco esfuerzo:** Ha rellenado la información, pero de manera superficial o sin mostrar un verdadero interés en la evaluación del sistema. |
+| **1-4** | **No completa toda la información requerida:** Ha entregado el documento, pero con datos incompletos o sin haber probado correctamente el sistema. |
+| **0** | **No envía el documento:** No ha cumplido con la entrega del feedback dentro del plazo establecido. |
 
-Este proceso cumplirá con las normativas aplicables, incluyendo:
+---
 
-- **Reglamento General de Protección de Datos (RGPD)**, si la prueba se realiza en la Unión Europea.
-- **Ley de Protección de Datos Personales** del país donde se desarrolle el piloto.
+# Usuarios piloto ajenos a la asignatura
+
+Además de los usuarios piloto asignados por la asignatura, hemos contactado con un  grupo de usuarios piloto voluntarios externos a través de diversos canales telemáticos,  incluyendo empresas, familiares y amigos. Su participación es fundamental, ya que  nos permitirá evaluar el sistema desde una perspectiva más amplia y diversa,  incorporando opiniones y experiencias de personas con diferentes niveles de  conocimiento y uso de la tecnología.  
+
+A diferencia de los usuarios asignados por la asignatura, cuyo enfoque está dentro del  marco académico, estos usuarios voluntarios aportarán una visión más práctica y  cercana a situaciones reales, lo que nos permitirá detectar posibles mejoras en la  usabilidad, accesibilidad y funcionalidad del sistema en un contexto de uso cotidiano.  
+
+Además, contar con una variedad de perfiles, incluyendo usuarios con experiencia en  el ámbito empresarial y tecnológico, nos permitirá evaluar la viabilidad del sistema  más allá del entorno educativo, considerando su posible aplicación en sectores  profesionales. Esta diversidad de feedback facilitará la identificación de fortalezas y  áreas de mejora, enriqueciendo el desarrollo y optimización del proyecto antes de su  implementación final.  
+
+---
+
+## Frecuencia
+
+Cada sprint, contactaremos con los usuarios piloto y les enviaremos un documento  con el contenido a valorar a través de los canales de comunicación preferidos por cada usuario.  
+
+Esta evaluación se hará cuando al menos el 70% de las tareas planificadas estén  implementadas o cuatro días antes del siguiente sprint, de manera que el feedback  recibido por parte de los usuarios piloto pueda ser analizado y tenido en cuenta por el equipo.  
+
+La evaluación a realizar será totalmente guiada, de forma que los usuarios estén al  tanto de las funcionalidades que van a probar. Por otra parte, se espera obtener  feedback de al menos 5 usuarios voluntarios, con el fin de obtener una opinión contrastada.  
+
+---
+
+## Método de trabajo
+
+1. Se desarrollará un documento con las funcionalidades implementadas que requieran feedback por parte de los usuarios piloto. Este documento será elaborado el encargado de los usuarios piloto siguiendo la plantilla proporcionada en enseñanza virtual. 
+2. A los usuarios piloto se les informará sobre la posibilidad de realizar una reunión,  totalmente guiada, en la que se les explicará lo implementado durante el sprint y se  les darán instrucciones para poder probar el sistema.  
+3. Una vez acordada la reunión, esta se llevará a cabo explicando todos los aspectos clave del sistema. En esta reunión el encargado de los usuarios piloto deberá ir anotando toda información relevante que le vayan proponiendo los usuarios piloto como mejoras.  
+4. Finalmente, una vez completado el documento y recopilado el feedback, el encargado de los usuarios piloto hará un documento con toda la información aportada por estos usuarios piloto.
+
+---
+
+## Canales de contacto a usar
+
+Para estos usuarios piloto voluntarios, se priorizará la comunicación telemática debido  a su diversidad geográfica y disponibilidad, garantizando a su vez una comunicación  eficiente y estructurada, aunque también se harán muchas reuniones presenciales.
+
+Los principales canales de comunicación para los usuarios piloto voluntarios serán:  
+
+- **Correo electrónico**: Para el envío formal de documentos y recopilación de feedback.  
+- **WhatsApp**: Para consultas rápidas y coordinación de reuniones.  
+- **Discord**: Para reuniones telemáticas y entrega de documentos en un canal exclusivo.  
+
+Se garantizará un seguimiento estructurado de las aportaciones de los usuarios  mediante la asignación de un responsable dentro del equipo de desarrollo que se  encargará de gestionar sus dudas y coordinar la entrega de sus evaluaciones.  
+
+---
+
+# Feedback
+El proceso de recopilación y gestión del feedback estará a cargo del encargado de los usuarios piloto. Esta persona se encargará de recoger las opiniones, sugerencias y observaciones de los usuarios, asegurándose de utilizar los métodos de trabajo previamente definidos según la tipología de cada usuario. Una vez recopilada toda la información, será su responsabilidad analizarla y organizarla de manera estructurada para facilitar su interpretación y aplicación. Posteriormente, transmitirá de forma clara y detallada todos los comentarios y mejoras sugeridas al equipo de desarrolladores del sistema, garantizando así una comunicación eficiente que permita optimizar y mejorar la plataforma en función de la experiencia y necesidades reales de los usuarios.

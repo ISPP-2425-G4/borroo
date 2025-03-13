@@ -37,6 +37,14 @@
 
 ---
 
+| Fecha      | Versión | Realizada por   | Descripción de los cambios |
+| ---------- | ------- | --------------- | -------------------------- |
+| 10-03-2025 | v1.0    | Santiago Rosado Raya | Creación del documento |
+
+
+---
+
+
 ## **Cómo rellenar el documento:**
 En este documento se tendrán que rellenar los campos marcados con la información que se pide.
 
