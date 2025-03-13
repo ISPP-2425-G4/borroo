@@ -26,6 +26,7 @@ const ShowItemScreen = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // Índice actual
   const [requestedDates, setRequestedDates] = useState([]); // Solicitudes (amarillo), de momento en gris
   const [bookedDates, setBookedDates] = useState([]);
+  const [isOwner, setIsOwner] = useState(false); // Estado para verificar si el usuario es el propietario
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -38,6 +39,11 @@ const ShowItemScreen = () => {
 
         if (data.user) {
           fetchUserName(data.user);
+          // Verificar si el usuario actual es el propietario del ítem
+          const currentUser = JSON.parse(localStorage.getItem("user"));
+          if (currentUser && currentUser.id === data.user) {
+            setIsOwner(true);
+          }
         }
 
         if (data.images && data.images.length > 0) {
@@ -240,23 +246,28 @@ const ShowItemScreen = () => {
 
         </div>
 
-        <button className="rental-btn" onClick={() => setShowRentalModal(true)}>Solicitar alquiler</button>
+        {/* 🔹 Botón de solicitar alquiler */}
+        {!isOwner && (
+          <button className="rental-btn" onClick={() => setShowRentalModal(true)}>Solicitar alquiler</button>
+        )}
 
         {/* 🔹 Botones de acción */}
-        <div className="button-group">
-          <button className="btn edit-btn" onClick={() => navigate(`/update-item/${id}`)}><FiEdit /> Editar</button>
-          <button className="rental-btn delete-btn" onClick={() => handleDelete(id)}><FiTrash2 /> Eliminar</button>
-          <button className="btn" onClick={() => navigate("/")}><FiArrowLeft /> Volver al inicio</button>
+        {isOwner && (
+          <div className="button-group">
+            <button className="btn edit-btn" onClick={() => navigate(`/update-item/${id}`)}><FiEdit /> Editar</button>
+            <button className="rental-btn delete-btn" onClick={() => handleDelete(id)}><FiTrash2 /> Eliminar</button>
+          </div>
+        )}
+        <button className="btn" onClick={() => navigate("/")}><FiArrowLeft /> Volver al inicio</button>
 
-          {showRentalModal && (
-            <Modal
-              title="Confirmar Solicitud"
-              message={`¿Quieres solicitar el objeto "${item.title}" del ${dateRange[0].startDate.toLocaleDateString()} al ${dateRange[0].endDate.toLocaleDateString()}?`}
-              onCancel={() => setShowRentalModal(false)}
-              onConfirm={() => handleRentalRequest()}
-            />
-          )}
-        </div>
+        {showRentalModal && (
+          <Modal
+            title="Confirmar Solicitud"
+            message={`¿Quieres solicitar el objeto "${item.title}" del ${dateRange[0].startDate.toLocaleDateString()} al ${dateRange[0].endDate.toLocaleDateString()}?`}
+            onCancel={() => setShowRentalModal(false)}
+            onConfirm={() => handleRentalRequest()}
+          />
+        )}
       </div>
     </div>
   );

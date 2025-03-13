@@ -36,6 +36,14 @@ const UpdateItemScreen = () => {
         );
         const itemData = itemResponse.data;
 
+        // Verificar si el usuario actual es el propietario del objeto
+        const currentUser = JSON.parse(localStorage.getItem("user"));
+        if (!currentUser || currentUser.id !== itemData.user) {
+          alert("No tienes permiso para acceder a esta página.");
+          navigate("/");
+          return;
+        }
+
         const enumResponse = await axios.get(
           `${import.meta.env.VITE_API_BASE_URL}/objetos/enum-choices/`,
           {
@@ -72,7 +80,7 @@ const UpdateItemScreen = () => {
     };
 
     if (id) fetchData();
-  }, [id]);
+  }, [id, navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
