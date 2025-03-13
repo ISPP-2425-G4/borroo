@@ -168,7 +168,8 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 
 ## 3. Datos necesarios para la revisión
 **Los datos necesarios para la revisión son**: 
-URL landing page: 
+URL landing page: https://sites.google.com/view/borroo/
+
 Credenciales usuario:  
 
 	- Usuario: User1 / Password: 123 
