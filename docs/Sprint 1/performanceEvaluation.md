@@ -59,22 +59,22 @@
 |---------|------|-----|-----|-----|------|------|--------------|---------|
 | Blanco Mora, David | 10 | 9,9 | | | | | | |
 | Díaz Ordóñez, Pablo | 10 | 10 | | | | | | |
-| Espinosa Naranjo, Pablo | 10 | | | | | | | | |
+| Espinosa Naranjo, Pablo | 10 |10 | | | | | | | |
 | Fernandez Rodriguez, Jesus | 10 | 10| | | | | | |
 | Fernández Mota, Francisco | 10 | 10 | | | | | | |
 | García Rodríguez, Javier | 10 | 10| | | | | | |
 | Gonzalez Ortiz, Miguel | 10 | 10| | | | | | |
-| Martin Muñoz, Álvaro | 10 | | | | | | | |
+| Martin Muñoz, Álvaro | 10 |10 | | | | | | |
 | Naredo Bernardos, Ignacio | 10 | | | | | | | |
 | Nieto Vicioso, Javier | 10 | 10 | | | | | | |
-| Padilla Gómez, Marco | 10 | | | | | | | |
+| Padilla Gómez, Marco | 10 |10 | | | | | | |
 | Palomo García, Miguel | 10 | 10| | | | | | |
 | Periañez Franco, Luis Javier | 10 | 10| | | | | | |
-| Picón Garrote, Alexander | 10 | | | | | | | |
+| Picón Garrote, Alexander | 10 |10 | | | | | | |
 | Rosado Raya, Santiago | 10 | 10  | | | | | | |
 | Sánchez Márquez, Julia | 10 | 10| | | | | | |
-| Sevillano Barea, Alejandro | 10 | | | | | | | |
-| Total | 170 | | | | | | | |
+| Sevillano Barea, Alejandro | 10 |10 | | | | | | |
+| Total | 170 |169,9 | | | | | | |
 
 
 # Individual Contribution Summary  
@@ -272,7 +272,15 @@ En la segunda semana me centre en la implementación del login y registro en la 
 Por último, la última semana me centre en el manejo de errores de las validaciones en el frontend y backend, además, a lo largo del S1 me he encargado de la revisión de PR de mi subgrupo debido a mi rol de QA.
 
 ### **Martín Muñoz, Álvaro**
+Primera semana: Durante la primera semana, me enfoqué en la configuración inicial del frontend, comenzando con la estructuración básica y la integración con el backend. Me aseguré de que ambos sistemas estuvieran correctamente conectados y funcionando sin problemas. Para ello, trabajé en enlazar el backend con el frontend en dos fases, revisando y probando la conexión varias veces para asegurarme de que todo estuviera correctamente establecido. Además, creé una guía básica de desarrollo como formación para los compañeros del grupo, con el fin de facilitar el entendimiento de las herramientas y procesos a seguir dentro del proyecto. También me dediqué a la búsqueda de una plantilla React adecuada para el proyecto, que se ajustara a nuestras necesidades de diseño y funcionalidad. 
 
+Segunda semana: En la segunda semana, me centré en la resolución de problemas y en la mejora de la funcionalidad del proyecto. Uno de los primeros desafíos fue solucionar un error en la base de datos, lo cual pude resolver rápidamente. Después, trabajé en el diseño e implementación del menú principal del proyecto, creando un prototipo que cumpliera con los requisitos establecidos. A lo largo de la semana, también me aseguré de corregir errores relacionados con las rutas del backend, lo que permitió que la comunicación entre las distintas partes del sistema fuera más eficiente. Además, validé el funcionamiento de la autenticación mediante JWT, realizando las pruebas necesarias para asegurarme de que el sistema de seguridad funcionara correctamente. 
+
+Tercera semana: Durante la tercera semana, me dediqué principalmente a realizar ajustes en el frontend, mejorando la apariencia y el comportamiento del menú principal. Trabajé en la integración del proyecto al branch de desarrollo principal, y realicé modificaciones en el layout de la interfaz de usuario para mejorar la experiencia de navegación. Además, me encargué de la validación de formularios en el frontend, asegurándome de que los datos se enviaran correctamente y se validaran antes de su procesamiento. También implementé un navbar en todas las pantallas del proyecto y realicé validaciones adicionales para garantizar que los usuarios se autenticaran correctamente antes de poder crear objetos dentro de la aplicación. 
+
+Otras actividades: Además de las tareas de desarrollo, realicé algunos ajustes adicionales relacionados con el sistema de autenticación JWT, corrigiendo pequeños errores que surgieron en el proceso. También completé las sesiones de Píldoras Teóricas, donde profundicé en aspectos clave del desarrollo y la arquitectura de software. 
+
+Reuniones y clases: Participé en varias reuniones importantes durante estas semanas, como la del 09/03/2025, donde se discutieron avances y se realizaron planeamientos del proyecto. También asistí a las clases de formación del 21/02/2025 y 7/03/2025, donde se revisaron aspectos teóricos y prácticos que complementaron mi aprendizaje en el desarrollo de la aplicación. 
 
 ### **Naredo Bernardos, Ignacio**
 Durante la primera semana del S1 realice la conexión con la base de datos, la cual luego tuve que cambiar debido a que cambiamos la idea que tenia acerca de como desplegar nuestra base de datos y realice la estructura principal del backend de nuestro proyecto.
@@ -306,7 +314,13 @@ Posteriormente, mejoré la estética de la interfaz, añadiendo la gestión de i
 Asimismo, participé activamente en reuniones, contribuyendo con ideas y asegurando que el desarrollo avanzara de manera eficiente.
 
 ### **Picón Garrote, Alexander**
+Durante la primera semana del sprint 1, estuve planificando todas las tareas que mi subgrupo iba a tener que llevar a cabo para completar el sprint goal que se estableció, entre ellas, desglose este de la mejor forma posible para que todos los miembros del subgrupo tuvieran estimaciones similares, una vez hice esto desarrollando un informe con todas ellas, los miembros implicados y todo procedí a realizar la implementación de zenhub con la organización de este y la configuración para que todo estuviese enlazado y preparado para funcionar en el sprint 1 creando las etiquetas oportunas. 
 
+La siguiente semana del sprint pase toda la planificación del informe al tablero de zenhub creando todas las tareas asignadas a los miembros de mi subgrupo, clasificándolas por funcionalidad y poniendo una descripción acorde a lo pedido en cada tarea. A los dos días tuve que hacer un reajuste en casi todas las tareas porque definimos nuevos formatos para las mismas. Al final de la semana revisé las tareas de los miembros de mis subgrupos desplegando de forma local el proyecto y notificando de los fallos que encontré revisando estas. Por último, hice un estudio de más de 12 bases de datos que encontré comparando distintos planes ya que necesitábamos un servidor para alojar la base de datos, al final opté por desplegarle en render después de ver muchas limitaciones de las demás. 
+
+En la última semana volví a revisar todas las tareas que llevaban los miembros de mi subgrupo, gestionando y organizando problemas que se encontraron y soluciones para estos. Hice las actas respectivas a las dos últimas reuniones que tuvimos y estuve por un gran tiempo intentando desplegar la aplicación debido a los problemas que tenían miembros del equipo con el despliegue. 
+
+A todo esto, añadir las reuniones que se tuvieron en este periodo y toda la gestión continua que se ha llevado a cabo durante todo el sprint con los miembros del propio subgrupo y con los representantes de los otros subgrupos para toma de decisiones del proyecto. 
 
 ### **Rosado Raya, Santiago**
 La primera semana estuve diseñando los canales de comunicación para los usuarios piloto de la asignatura y estableciendo contacto con ellos para garantizar una comunicación fluida y efectiva.
