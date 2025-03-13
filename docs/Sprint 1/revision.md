@@ -176,11 +176,20 @@ Credenciales usuario:
 
 	- Usuario: User2 / Password: 123 
 
+ Administrador (acceder desde ruta /admin):
+
+ 	- Administrador: admin_ispp / B0rr0o2025ISPP
+  	 (correo por si fuese necesario: borroohelp@gmail.com)
+ 
+
 URL deployment platform: https://frontend-dot-ispp-2425-g4.ew.r.appspot.com/ 
 
 URL Github Repository: https://github.com/ISPP-2425-G4/borroo 
 
-URL y credenciales del “time tracking tool”: 
+URL y credenciales del “time tracking tool”: Desde clockify:
+
+	- Credenciales: borroohelp@gmail.com / B0rr0o2025ISPP
+ 	 (Para doble verificación, usar mismo correo y contraseña en gmail)
 
 Potential Requirements: No procede 
 
