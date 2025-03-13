@@ -145,6 +145,12 @@ Durante la segunda semana, trabajé en el desarrollo del plan de metodología de
 
 Durante la tercera semana, trabajé junto a mi subgrupo en la realización del documento de metodología del desarrollo, además realicé junto a 3 miembros del equipo la base de conocimiento en Docusaurus, tanto pasando a formato Markdown los PDFs como añadiendo a la base de conocimiento común a todos los grupos el feedback proporcionado.
 
+Durante la primera semana del S1 realice la conexión con la base de datos, la cual luego tuve que cambiar debido a que cambiamos la idea que tenia acerca de como desplegar nuestra base de datos y realice la estructura principal del backend de nuestro proyecto.
+
+Durante la segunda semana del S1, mi tarea fue comenzar a estructurar la base de datos para que se pudiesen realizar busquedas y filtrado de los objetos a alquilar, esto me dio considerables problemas debido a que no teniamos muy claro como gestionar la conexion de la base de datos, además colaboré para arreglar fallos en el frontend que se habían cometido.
+
+Durante la tercera semana terminé de implementar la busqueda y los filtros avanzados tanto en backend como ayudando a mi compañero encargado del frontend, por último termine de ajustar junto a un compañero la base de datos y ayude junto a mi subgrupo a realizar el despliegue de la aplicación.
+
 ### **Nieto Vicioso, Javier**
 Durante la primera semana, participé en la búsqueda de alternativas para el proyecto, explorando ideas como "crear y compartir itinerarios de viaje" y "web para gestión de tareas del hogar". Tras analizar los competidores de estas ideas, se llegó a la conclusión de que el mercado era complicado. Al final de la semana, el equipo se dividió en subgrupos y yo junto con mi subgrupo hicimos la descripción del equipo, el reporte sobre el uso de la IA, y la gestión del código y conocimiento común.
 
