@@ -220,6 +220,14 @@ Durante la tercera semana, creé la landing page con el objetivo de ofrecer una 
 
 ### **Díaz Ordóñez, Pablo**  
 
+Durante la primera semana del sprint 1, llevé a cabo junto a Javier Nieto la realización del plan de gestión de requisitos y el registro de requisitos, documentos necesarios para conocer como desarrollar la aplicación. En muy pequeña medida, ayudé a comenzar el diagrama UML que se realize. Únicamente comencé a ver las partes por las que estaría formado, pero de manera muy inicial, de manera previa a la division de las tareas que tenía mi subgrupo.
+
+Durante la segunda semana, llevé a cabo la realización del workflow correspondiente a los commits, además de registrar y documentar los riesgos que habían surgido durante el sprint, además del estado en el que se encontraban y la forma de enfrentarlos.
+
+En la tercera semana, pasé los 17 Commitment Agreement a formato .md (markdown), además del informe de uso de la IA, el informe de performanceEvaluation y performanceModels (añadiendo una nueva métrica para evaluar a los jefes de los subgrupos). También pasé los 17 protocolos de gestión de conflictos a dicho formato, además de rellenar el presente documento y el informe de timeEffort. Comentar que me informé sobre como llevar a cabo el despliegue e intenté llevarlo a cabo sin éxito.
+
+También visualicé los videos de las Theory Pills correspondientes a las sesiones 05a y 05b.
+
 
 ### **Espinosa Naranjo, Pablo**
 
