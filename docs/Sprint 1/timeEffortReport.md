@@ -1553,6 +1553,10 @@
     <td>15 minutos</td>
   </tr>
   <tr>
+    <td>Actualizar modelo de rendimiento</td>
+    <td>25 minutos</td>
+  </tr>
+  <tr>
     <td>Reuniones</td>
     <td>Reunión 09/03/2025 - Sprint 1</td>
     <td>1 hora y 9 minutos</td>
