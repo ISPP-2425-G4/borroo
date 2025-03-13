@@ -1691,6 +1691,125 @@
 ### Periañez Franco, Luis Javier
 ### Picón Garrote, Alexander
 ### Rosado Raya, Santiago
+<table border="1">
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="20">Trabajo</td>
+    <td>Comunicación usuarios piloto</td>
+    <td>1 hora 19 minutos</td>
+  </tr>
+  <tr>
+    <td>Puesta en contacto con usuarios piloto y preparación de entorno</td>
+    <td>1 hora 20 minutos</td>
+  </tr>
+  <tr>
+    <td>Puesta a punto canal usuarios piloto</td>
+    <td>22 minutos</td>
+  </tr>
+  <tr>
+    <td>Contacto último usuario piloto</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>Implementar entidad rent</td>
+    <td>2 horas 4 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglo entidad rent</td>
+    <td>25 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglo entidad rent</td>
+    <td>32 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión documento rendimiento</td>
+    <td>43 minutos</td>
+  </tr>
+  <tr>
+    <td>Creación documento usuario piloto</td>
+    <td>41 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión PR #5 (repo documentación) y creación de Commitment Agreement usuarios piloto</td>
+    <td>1 hora 19 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión PR desarrollo vista alquiler objeto #108</td>
+    <td>32 minutos</td>
+  </tr>
+  <tr>
+    <td>Contacto usuarios piloto Sprint 1</td>
+    <td>41 minutos</td>
+  </tr>
+  <tr>
+    <td>Contacto usuarios piloto Sprint 1</td>
+    <td>10 minutos</td>
+  </tr>
+  <tr>
+    <td>Tratamiento CA UP</td>
+    <td>16 minutos</td>
+  </tr>
+  <tr>
+    <td>Guía usuarios piloto</td>
+    <td>42 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisar PR #144, #142, #140</td>
+    <td>35 minutos</td>
+  </tr>
+  <tr>
+    <td>CA usuario piloto no asignatura</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>Pasar a MD documentos referentes a los UP</td>
+    <td>53 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión PR #147, #146, #152</td>
+    <td>25 minutos</td>
+  </tr>
+  <tr>
+    <td>Mejora de documentos UP</td>
+    <td>1 hora 37 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Reuniones</td>
+    <td>Reunión mitad Sprint 1</td>
+    <td>1 hora 9 minutos</td>
+  </tr>
+  <tr>
+    <td>Recopilación feedback usuarios pilotos</td>
+    <td>56 minutos</td>
+  </tr>
+  <tr>
+    <td>Recopilación feedback usuarios pilotos</td>
+    <td>1 hora 18 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clase</td>
+    <td>Clase 21/02/2025</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 07/03/2025</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Total</td>
+    <td colspan="2">29 horas 8 minutos</td>
+  </tr>
+  <tr>
+    <td>Enlace Clockify</td>
+    <td colspan="2"><a href="https://app.clockify.me/shared/67d32d1f06a063047edacfdf" target="_blank">Clockify</a></td>
+  </tr>
+</table>
+
 ### Sánchez Márquez, Julia
 ### Sevillano Barea, Alejandro
 <table>
