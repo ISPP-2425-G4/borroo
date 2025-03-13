@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 const Layout = () => {
   const [productos, setProductos] = useState([]);
@@ -21,7 +22,6 @@ const Layout = () => {
   const [categoria, setCategoria] = useState("");
   const [precio, setPrecio] = useState([0, 100]);
   const [productosFiltrados, setProductosFiltrados] = useState([]);
-
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
@@ -45,18 +45,13 @@ const Layout = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:8000/objetos/full", {
-          method: "GET",
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/objetos/full`, {
           headers: {
             "Content-Type": "application/json"
           }
         });
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
+        const data = response.data;
         if (data.results) {
           setProductos(data.results);
           console.log(data.results);
@@ -84,8 +79,6 @@ const Layout = () => {
     setProductosFiltrados(filtered);
   }
   , [productos, categoria, precio, searchTerm]);
-
-
 
   return (
     <Box sx={{ overflowX: "hidden"}}>
@@ -156,7 +149,8 @@ const Layout = () => {
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
-              gap: 2
+              gap: 2,
+              width: "100%"
             }}
           >
             {productosFiltrados?.map((producto, index) => (

@@ -19,6 +19,7 @@ def is_authorized(condition=True, authenticated=True):
             {'error': 'No tienes permisos para realizar esta acción.'})
 
 
+
 class RentViewSet(viewsets.ModelViewSet):
     queryset = Rent.objects.all()
     serializer_class = RentSerializer

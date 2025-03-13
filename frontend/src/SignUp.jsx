@@ -2,6 +2,9 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiLock, FiMail, FiInfo, FiPhone, FiMapPin, FiHome, FiFlag, FiCheckCircle } from "react-icons/fi";
 import "../public/styles/Login.css";
+import axios from 'axios';
+import Navbar from "./Navbar";
+import { Box } from "@mui/material";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -58,16 +61,24 @@ const Signup = () => {
       
       // Añadir campos adicionales requeridos por el backend
       submitFormData.append("password1", formData.password); // Por compatibilidad
+
+      // Log para verificar los datos que se están enviando
+      console.log("Datos enviados:", Object.fromEntries(submitFormData.entries()));
   
-      const response = await fetch("http://localhost:8000/usuarios/full/", {
-        method: "POST",
-        body: submitFormData,
-        credentials: "include",
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/`,
+        submitFormData,
+        {
+          withCredentials: true, // Equivalente a 'credentials: "include"'
+        }
+      );
+
+      // Log para verificar la respuesta del servidor
+      console.log("Respuesta del servidor:", response);
   
-      if (response.ok) {
+      if (response.status === 201) {
         // Registro exitoso y obtenemos los tokens
-        const data = await response.json();
+        const data = response.data;
         
         // Guardar los tokens JWT en localStorage
         localStorage.setItem('access_token', data.access);
@@ -76,7 +87,7 @@ const Signup = () => {
         navigate("/");
       } else {
         // Manejar errores de formulario desde el backend
-        const data = await response.json();
+        const data = response.data;
         
         if (typeof data === 'object' && !Array.isArray(data)) {
           // Si la respuesta contiene errores de formulario
@@ -87,6 +98,7 @@ const Signup = () => {
         }
       }
     } catch (error) {
+      console.error("Error en la solicitud:", error);
       setError(error.message || "Error al conectar con el servidor");
     } finally {
       setLoading(false);
@@ -100,6 +112,8 @@ const Signup = () => {
   };
 
   return (
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Navbar />
     <div className="login-container">
     <div  className="login-spacer"> </div>
       <div className="login-box signup-box">
@@ -277,6 +291,7 @@ const Signup = () => {
         </p>
       </div>
     </div>
+    </Box>
   );
 };
 

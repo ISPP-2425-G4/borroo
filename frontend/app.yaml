@@ -1,0 +1,27 @@
+runtime: python312
+service: frontend
+
+handlers:
+  # Serve all static assets with caching (including nested paths)
+  - url: /(.*\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|json))$
+    static_files: dist/\1
+    upload: dist/.*\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|json)$
+    secure: always
+    http_headers:
+      Cache-Control: "public, max-age=31536000"
+
+  # Special handler for assets directory
+  - url: /assets/(.*)
+    static_files: dist/assets/\1
+    upload: dist/assets/(.*)
+    secure: always
+    http_headers:
+      Cache-Control: "public, max-age=31536000"
+
+  # Catch all handler to index.html
+  - url: /.*
+    static_files: dist/index.html
+    upload: dist/index.html
+    secure: always
+    http_headers:
+      Cache-Control: "no-cache"

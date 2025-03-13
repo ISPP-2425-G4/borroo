@@ -29,7 +29,8 @@ SECRET_KEY = ('django-insecure-lwit61b*3n^2z!*$&7p=7+jp&c%edbvcn0=!)zvj@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['backend-dot-ispp-2425-g4.ew.r.appspot.com', 'localhost',
+                 '127.0.0.1']
 
 dotenv_file = ".env"
 load_dotenv(dotenv_file)
@@ -86,6 +87,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
+    "https://frontend-dot-ispp-2425-g4.ew.r.appspot.com",
     "http://localhost:5173",
 ]
 

@@ -49,5 +49,4 @@ class Item(models.Model):
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, related_name='images',
                              on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='item_images/',
-                              default='../static/image.png')
+    image = models.URLField()
