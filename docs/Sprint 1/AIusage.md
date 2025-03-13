@@ -1,10 +1,16 @@
 ﻿<div align="center">
-# BORROO
-![](../imágenes/borrooLogo.png)
-## AI-USAGE
 
-### Sprint 1 (S1) – G4
-**Repositorio:** [https://github.com/ISPP-2425-G4/](https://github.com/ISPP-2425-G4/)
+# BORROO
+
+![](../imagenes/borrooLogo.png)
+
+## AI-usage
+
+### Sprint 1 – G4
+**Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
+
+**Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
+
 **Fecha:** 20/02/2025
 
 
@@ -29,7 +35,16 @@
 - Julia Sánchez Márquez
 - Alejandro Sevillano Barea
 
+---
 
+## **Histórico de modificaciones**
+
+| Fecha      | Versión | Realizada por   | Descripción de los cambios |
+| ---------- | ------- | --------------- | -------------------------- |
+| 20-02-2025 | v1.0    | Javi Garcia Rodríguez | Creación del documento |
+| 20-02-2025 | v1.1    | Pablo Díaz Ordoñez, Jesús Fernandez Rodríguez y Julia Sánchez Márquez | Añadir portada, link para excel del uso, pequeñas modificaciones |
+| 10-03-2025 | v2.0    | Pablo Díaz Ordóñez | Adaptación de documento a Markdown |
+| 23-03-2025 | v2.1    | Marco Padilla Gómez | Arreglo de la foto e histórico añadido |
 
 ---
 
