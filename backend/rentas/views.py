@@ -109,10 +109,11 @@ class RentViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['put'])
     def cancel_rent(self, request, pk=None):
+        user = request.user if not AnonymousUser else None
         rent = self.get_object()
         renter = rent.renter
         authenticated = request.user.is_authenticated
-        permission = renter == request.user
+        permission = renter == user
         is_authorized(condition=permission, authenticated=authenticated)
 
         if rent.rent_status in [RentStatus.BOOKED, RentStatus.REQUESTED]:
