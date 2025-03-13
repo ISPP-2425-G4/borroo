@@ -4,7 +4,7 @@
 
 ![](../../imagenes/borrooLogo.png)
 
-##  Commitment Agreement Usuarios Piloto Asignatura 
+##  Commitment Agreement Usuarios Piloto Asignatura Template
 
 ### Sprint 1 (S1) – G4
 **Repositorio:** [https://github.com/ISPP-2425-G4/](https://github.com/ISPP-2425-G4/)
