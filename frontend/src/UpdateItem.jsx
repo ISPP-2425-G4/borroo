@@ -108,7 +108,7 @@ const UpdateItemScreen = () => {
       }
 
       // 4️⃣ Enviar solicitud PUT al backend
-      const response = await axios.put(
+      await axios.put(
         `${import.meta.env.VITE_API_BASE_URL}/objetos/full/${id}/`,
         formDataToSend,
         {
