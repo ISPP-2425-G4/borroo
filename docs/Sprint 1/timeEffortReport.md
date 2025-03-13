@@ -1429,6 +1429,53 @@
     <th>Detalles de la actividad</th>
     <th>Tiempo</th>
   </tr>
+  <tr>
+    <td rowspan="8">Trabajo</td>
+    <td>Doc: Comunicación usuarios piloto</td>
+    <td>1h48min</td>
+  </tr>
+  <tr>
+    <td>Planteamiento de test de tomar alquilado un objeto</td>
+    <td>1h5min</td>
+  </tr>
+  <tr>
+    <td>Modificación modelo de rendimiento</td>
+    <td>1h25min</td>
+  </tr>
+  <tr>
+    <td>Despliegue</td>
+    <td>2h37min</td>
+  </tr>
+  <tr>
+    <td>tests Tomar alquilado un objeto</td>
+    <td>5h12min</td>
+  </tr>
+  <tr>
+    <td>Arreglo: tests Tomar alquilado un objeto</td>
+    <td>47min</td>
+  </tr>
+  <tr>
+    <td>Píldoras teóricas</td>
+    <td>1h12min</td>
+  </tr>
+  <tr>
+    <td>Doc: revision.md</td>
+    <td>3h50min</td>
+  </tr>
+  <tr>
+    <td rowspan="1">Reuniones</td>
+    <td>Reunión 09/03</td>
+    <td>1h12min</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 07/03</td>
+    <td>3h50min</td>
+  </tr>
+  <tr>
+    <td>Clase 21/02</td>
+    <td>3h50min</td>
+  </tr>
 </table>
 
 ### Díaz Ordoñez, Pablo
