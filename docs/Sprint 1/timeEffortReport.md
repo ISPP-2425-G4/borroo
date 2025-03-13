@@ -41,7 +41,7 @@
 | ---------- | ------- | --------------- | -------------------------- |
 | 20-02-2025 | v1.0    | Marco Padilla Gómez | Creación del documento |
 | 20-02-2025 | v1.1    | Todos los miembros | Añadir datos sobre el trabajo realizado |
-| 11-03-2025 | v2.0    | Marco Padilla Gómez | Actualización del documento para el S1 |
+| 11-03-2025 | v2.0    | Marco Padilla Gómez | Actualización del documento para el S1 e historico de modificaciones añadido |
 |  |     |  |  |
 
 ## DP
