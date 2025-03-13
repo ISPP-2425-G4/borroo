@@ -6,9 +6,12 @@
 
 ## MODELO DE RENDIMIENTO - ANÁLISIS CUANTITATIVO
 
-### Sprint 1 (S1) – G4
-**Repositorio:** [https://github.com/ISPP-2425-G4/](https://github.com/ISPP-2425-G4/)
-**Fecha:** 13/03/2025
+### Sprint 1 – G4
+**Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
+
+**Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
+
+**Fecha:** 12/03/2025
 
 
 </div>
@@ -32,7 +35,14 @@
 - Julia Sánchez Márquez
 - Alejandro Sevillano Barea
 
+---
 
+## **Histórico de modificaciones**
+| Fecha      | Versión | Realizada por   | Descripción de los cambios |
+| ---------- | ------- | --------------- | -------------------------- |
+| 12-03-2025 | v1.0    | Luis Javier Periáñez Franco | Creación del documento |
+| 12-03-2025 | v1.1    | Pablo Díaz Ordóñez | Pasar documento a Markdown y metricas para los jefes de subgrupo |
+| 13-03-2025 | v1.2    | Marco Padilla Gómez | Añadir histórico de modificaciones |
 
 ---
 
