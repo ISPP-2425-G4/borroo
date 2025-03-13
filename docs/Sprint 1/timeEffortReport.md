@@ -1500,7 +1500,7 @@
     <td>1 hora y 47 minutos</td>
   </tr>
   <tr>
-    <td rowspan="13">Trabajo de documentación</td>
+    <td rowspan="14">Trabajo de documentación</td>
     <td>Realizar UML de la aplicación</td>
     <td>24 minutos</td>
   </tr>
@@ -1549,12 +1549,12 @@
     <td>15 minutos</td>
   </tr>
   <tr>
-    <td>Rellenar mi parte del timeEffort del Sprint 1</td>
-    <td>15 minutos</td>
-  </tr>
-  <tr>
     <td>Actualizar modelo de rendimiento</td>
     <td>25 minutos</td>
+  </tr>
+  <tr>
+    <td>Rellenar mi parte del timeEffort del Sprint 1</td>
+    <td>20 minutos</td>
   </tr>
   <tr>
     <td>Reuniones</td>
@@ -1570,7 +1570,12 @@
     <td>Clase 07/03/25</td>
     <td>3 horas y 50 minutos</td>
   </tr>
+  <tr>
+    <td>Enlace Clockify</td>
+    <td colspan="2"><a href="https://app.clockify.me/shared/67d3345bef0d12419bc1c07e" target="_blank">Clockify</a></td>
+  </tr>
 </table>
+
 
 
 
@@ -1691,7 +1696,7 @@
 ### Periañez Franco, Luis Javier
 ### Picón Garrote, Alexander
 ### Rosado Raya, Santiago
-<table border="1">
+<table>
   <tr>
     <th>Tarea</th>
     <th>Detalles de la actividad</th>
