@@ -150,12 +150,6 @@ const Signup = () => {
     }
   };
 
-  // Función para mostrar errores de campo específicos
-  const getFieldError = (fieldName) => {
-    return formErrors[fieldName] ? 
-      <div className="field-error">{formErrors[fieldName].join(', ')}</div> : null;
-  };
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Navbar />
