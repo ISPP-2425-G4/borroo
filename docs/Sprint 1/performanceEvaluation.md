@@ -313,6 +313,14 @@ En la tercera semana, he estado en contacto con los usuarios piloto, elaborando 
 
 
 ### **Sánchez Márquez, Julia**
+Durante la primera semana del Sprint 1, colaboré con mi compañero Francisco en el desarrollo del diagrama UML. Aunque enfrentamos varios desafíos y recibimos observaciones de nuestros compañeros, logramos remodelarlo hasta alcanzar la versión definitiva. Paralelamente, inicié el proyecto base utilizando las herramientas que el equipo nos había facilitado. 
 
+En la segunda semana, en mi rol de desarrolladora, implementé todas las rutas relacionadas con la entidad Renta, trabajo que adelantaría para la siguiente fase. 
+
+Durante la última semana, me centré en probar el correcto funcionamiento de todas las URLs. Como era de esperarse, surgieron varios inconvenientes. Inicialmente, se presentó un problema en la base de datos, el cual solucioné con el apoyo de mis compañeros durante una reunión de coordinación. Siguiendo una recomendación, intenté crear un archivo seeder.py para poblar la base de datos y facilitar las pruebas, pero al notar que esta tarea consumía más tiempo del esperado, opté por crear objetos manualmente y trabajar con ellos en local. Durante este proceso, identifiqué y corregí un error de tipos en el modelo Rent tras un tiempo de investigación, y posteriormente ajusté la lógica de las rutas para resolver otros problemas detectados. 
+
+Antes de subir los cambios, la implementación de un workflow me permitió detectar que el código no era lo suficientemente eficiente, lo que me llevó a refactorizarlo. Una vez subidos los cambios, colaboré con un compañero que necesitaba ayuda en una parte del código, realizando las modificaciones necesarias para que pudiera continuar con su trabajo. Finalmente, junto a Francisco, implementé todas las validaciones en el backend para prevenir cualquier acceso no deseado. 
+
+Para concluir, creé el usuario administrador de la aplicación, convertí algunos documentos a Markdown en colaboración con Francisco y finalicé la visualización de las “Theroy Pills”. 
 
 ### **Sevillano Barea, Alejandro**
