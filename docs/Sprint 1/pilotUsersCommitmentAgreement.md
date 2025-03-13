@@ -6,8 +6,11 @@
 
 ##  Commitment Agreement Usuarios Piloto Asignatura 
 
-### Sprint 1 (S1) – G4
-**Repositorio:** [https://github.com/ISPP-2425-G4/](https://github.com/ISPP-2425-G4/)
+### Sprint 1 – G4
+**Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
+
+**Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
+
 **Fecha:** 10/03/2025
 
 
@@ -28,11 +31,16 @@
 - Miguel Palomo García
 - Luis Javier Periáñez Franco
 - Alexander Picón Garrote
-- Santiago Rosado Raya (writer)
+- Santiago Rosado Raya
 - Julia Sánchez Márquez
 - Alejandro Sevillano Barea
 
+## **Histórico de modificaciones**
 
+| Fecha      | Versión | Realizada por   | Descripción de los cambios |
+| ---------- | ------- | --------------- | -------------------------- |
+| 10-03-2025 | v1.0    | Santiago Rosado Raya | Creación y elaboración del documento |
+| 13-03-2025 | v1.1    | Marco Padilla Gómez | Añadir histórico y cambio de nombre acorde al que pedian |
 
 ---
 **Nombre**: [Nombre del Usuario]  
