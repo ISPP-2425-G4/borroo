@@ -99,7 +99,7 @@ Cada sprint contactaremos con los usuarios piloto y les enviaremos un Word o un 
 
 ### **Método de trabajo:**
 
-1. Se desarrollará un documento con todo lo realizado que requiera feedback por parte de los usuarios piloto. Este documento será elaborado por el equipo de desarrollo siguiendo la plantilla proporcionada en la enseñanza virtual.
+1. Se desarrollará un documento con todo lo realizado que requiera feedback por parte de los usuarios piloto. Este documento será elaborado por el encargado de los usuarios piloto siguiendo la plantilla proporcionada en la enseñanza virtual.
 2. A los usuarios piloto se les informará sobre la posibilidad de realizar una reunión, en la que se les explicará lo trabajado durante el sprint y se les proporcionarán instrucciones detalladas para probar el sistema. Este primer contacto se realizará cuando el 70% del Sprint esté terminado o cuatro días antes de que este termine.
 3. Una vez concretada la reunión, esta se llevará a cabo explicando todos los aspectos clave, incluyendo el método de evaluación de sus aportaciones. Además, se les entregará el documento de feedback para que lo completen, junto con la fecha límite de entrega, establecida dos días antes del fin del sprint.
 4. Tras la primera reunión, se otorgará tiempo a los usuarios para que prueben el sistema. Si durante este proceso surgen dudas, podrán comunicarse con los miembros del equipo de desarrollo a través de los grupos de WhatsApp y Discord habilitados para este propósito.
@@ -157,17 +157,16 @@ La evaluación a realizar será totalmente guiada, de forma que los usuarios est
 
 ## Método de trabajo
 
-1. Se desarrollará un documento con las funcionalidades implementadas que requieran  feedback por parte de los usuarios piloto. Este documento será elaborado por el  equipo de desarrollo siguiendo la plantilla proporcionada en enseñanza virtual.  
-2. A los usuarios piloto se les informará sobre la posibilidad de realizar una reunión,  totalmente guiada, en la que se les explicará lo implementado durante el sprint y se  les entregarán instrucciones detalladas para poder probar el sistema.  
-3. Una vez acordada la reunión, esta se llevará a cabo explicando todos los aspectos  clave, incluyendo el método de evaluación de sus aportaciones. Además, se les  entregará el documento de feedback para que lo completen, junto con la fecha límite  de entrega, establecida dos días antes del fin del sprint.  
-4. Tras la conclusión de la primera reunión, se otorgará tiempo a los usuarios para que  prueben el sistema. Si durante este proceso surgen dudas o tienen alguna otra  cuestión, podrán comunicarse con los miembros del equipo encargados a través de  **WhatsApp** o **Discord** (a elección del usuario).  
-5. Finalmente, una vez completado el documento y recopilado el feedback, los usuarios  lo entregarán a través del canal de comunicación establecido.  
+1. Se desarrollará un documento con las funcionalidades implementadas que requieran feedback por parte de los usuarios piloto. Este documento será elaborado el encargado de los usuarios piloto siguiendo la plantilla proporcionada en enseñanza virtual. 
+2. A los usuarios piloto se les informará sobre la posibilidad de realizar una reunión,  totalmente guiada, en la que se les explicará lo implementado durante el sprint y se  les darán instrucciones para poder probar el sistema.  
+3. Una vez acordada la reunión, esta se llevará a cabo explicando todos los aspectos clave del sistema. En esta reunión el encargado de los usuarios piloto deberá ir anotando toda información relevante que le vayan proponiendo los usuarios piloto como mejoras.  
+4. Finalmente, una vez completado el documento y recopilado el feedback, el encargado de los usuarios piloto hará un documento con toda la información aportada por estos usuarios piloto.
 
 ---
 
 ## Canales de contacto a usar
 
-Para estos usuarios piloto voluntarios, se priorizará la comunicación telemática debido  a su diversidad geográfica y disponibilidad, garantizando a su vez una comunicación  eficiente y estructurada.  
+Para estos usuarios piloto voluntarios, se priorizará la comunicación telemática debido  a su diversidad geográfica y disponibilidad, garantizando a su vez una comunicación  eficiente y estructurada, aunque también se harán muchas reuniones presenciales.
 
 Los principales canales de comunicación para los usuarios piloto voluntarios serán:  
 
