@@ -26,6 +26,7 @@ const CreateItemScreen = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const [fieldErrors, setFieldErrors] = useState({});
 
   useEffect(() => {
     const fetchEnums = async () => {
@@ -46,6 +47,10 @@ const CreateItemScreen = () => {
         setErrorMessage("No se pudieron cargar las opciones.");
       }
     };
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      navigate("/login");
+    }
 
     fetchEnums();
   }, []);
@@ -68,7 +73,42 @@ const CreateItemScreen = () => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage("");
-  
+    setFieldErrors({});
+
+    const errors = {};
+    
+    if(!formData.title || !formData.description || !formData.category || !formData.cancel_type || !formData.price_category || !formData.price) {
+      setErrorMessage("Por favor, completa todos los campos.");
+      setLoading(false);
+      return;
+    }
+    
+    if (!formData.title) {
+      errors.title = "El título es obligatorio.";
+    } else if (formData.title.length > 255) {
+      errors.title = "El título no puede exceder los 255 caracteres.";
+    } else if (!/^[A-Za-z]/.test(formData.title)) {
+      errors.title = "El título debe comenzar con una letra.";
+    }
+
+    if (!formData.description) {
+      errors.description = "La descripción es obligatoria.";
+    } else if (formData.description.length > 1000) {
+      errors.description = "La descripción no puede exceder los 1000 caracteres.";
+    } else if (!/^[A-Za-z]/.test(formData.description)) {
+      errors.description = "La descripción debe comenzar con una letra.";
+    } 
+    if (parseInt(formData.price) <= 0) {
+      errors.price = "El precio debe ser un número mayor a 0.";
+    }
+
+    if (Object.keys(errors).length > 0) {
+  setFieldErrors(errors);
+  setLoading(false);
+  return;
+};
+
+
     try {
       const formDataToSend = new FormData();
       const allowedKeys = ["title", "description", "category", "cancel_type", "price_category", "price"];
@@ -128,10 +168,9 @@ const CreateItemScreen = () => {
   return (
     <div className="create-item-container">
       <Navbar />
-      <div className="form-box">
+      <div className="form-box" style={{ marginTop: "2.5rem" }}>
         <h2>Crear Publicación</h2>
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
-
+        {errorMessage && <div className="error-message-2">{errorMessage}</div>}
         <form onSubmit={handleSubmit}>
           <InputField
             icon={<FiFileText />}
@@ -139,9 +178,8 @@ const CreateItemScreen = () => {
             name="title"
             placeholder="Título"
             value={formData.title}
-            onChange={handleChange}
-          />
-
+            onChange={handleChange}/>
+          {fieldErrors.title && <div className="error-message-2" >{fieldErrors.title}</div>} 
           <TextareaField
             icon={<FiEdit />}
             name="description"
@@ -149,6 +187,7 @@ const CreateItemScreen = () => {
             value={formData.description}
             onChange={handleChange}
           />
+          {fieldErrors.description && <div className="error-message-2">{fieldErrors.description}</div>}
 
           <SelectField
             icon={<FiLayers />}
@@ -180,12 +219,13 @@ const CreateItemScreen = () => {
           <InputField
             icon={<FiDollarSign />}
             type="number"
-            step="0.01"
+            step="1"
             name="price"
             placeholder="Precio"
             value={formData.price}
             onChange={handleChange}
           />
+          {fieldErrors.price && <div className="error-message-2">{fieldErrors.price}</div>}
 
           {/* ✅ Input para subir múltiples imágenes */}
           <p className="instruction-text">⚠️ Para seleccionar varios archivos, mantén presionada la tecla <strong>Ctrl</strong> (Windows) o <strong>Cmd</strong> (Mac) mientras eliges los archivos.</p>
@@ -245,6 +285,7 @@ SelectField.propTypes = {
 };
 InputField.propTypes = {
   icon: PropTypes.element.isRequired,
+  error: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,

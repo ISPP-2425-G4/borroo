@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiLock } from "react-icons/fi";
 import "../public/styles/Login.css";
 import axios from 'axios';
+import Navbar from "./Navbar";
+import { Box } from "@mui/material";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -44,6 +46,8 @@ const Login = () => {
   };
 
   return (
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Navbar />
     <div className="login-container">
       <div className="login-box">
         <h2>Iniciar Sesión</h2>
@@ -78,6 +82,7 @@ const Login = () => {
         </p>
       </div>
     </div>
+    </Box>
   );
 };
 
