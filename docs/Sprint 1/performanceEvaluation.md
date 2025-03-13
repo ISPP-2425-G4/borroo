@@ -60,16 +60,16 @@
 | Blanco Mora, David | 10 | 9,9 | | | | | | |
 | Díaz Ordóñez, Pablo | 10 | 10 | | | | | | |
 | Espinosa Naranjo, Pablo | 10 | | | | | | | | |
-| Fernandez Rodriguez, Jesus | 10 | | | | | | | |
+| Fernandez Rodriguez, Jesus | 10 | 10| | | | | | |
 | Fernández Mota, Francisco | 10 | 10 | | | | | | |
-| García Rodríguez, Javier | 10 | | | | | | | |
-| Gonzalez Ortiz, Miguel | 10 | | | | | | | |
+| García Rodríguez, Javier | 10 | 10| | | | | | |
+| Gonzalez Ortiz, Miguel | 10 | 10| | | | | | |
 | Martin Muñoz, Álvaro | 10 | | | | | | | |
 | Naredo Bernardos, Ignacio | 10 | | | | | | | |
 | Nieto Vicioso, Javier | 10 | 10 | | | | | | |
 | Padilla Gómez, Marco | 10 | | | | | | | |
-| Palomo García, Miguel | 10 | | | | | | | |
-| Periañez Franco, Luis Javier | 10 | | | | | | | |
+| Palomo García, Miguel | 10 | 10| | | | | | |
+| Periañez Franco, Luis Javier | 10 | 10| | | | | | |
 | Picón Garrote, Alexander | 10 | | | | | | | |
 | Rosado Raya, Santiago | 10 | 10  | | | | | | |
 | Sánchez Márquez, Julia | 10 | 10| | | | | | |
@@ -240,7 +240,11 @@ Añadir a lo citado anteriormente que se asistió a todas las clases de feedback
 
 
 ### **Fernández Rodríguez, Jesús**
+Durante la primera semana, trabajé en la creación de workflows de integración continua para el desarrollo del proyecto.
 
+En la segunda semana, me enfoqué en el desarrollo del backend del modelo de ítem y sus endpoints asociados. Además, comencé a trabajar en el despliegue en App Engine.
+
+Durante la tercera semana, completé el despliegue de la aplicación en App Engine, implementé el manejo de imágenes para la puesta en alquiler de objetos, ayudé a mis compañeros con configuraciones del proyecto y realicé varios ajustes en las pantallas del frontend relacionadas con la funcionalidad de alquiler.
 
 ### **Fernández Mota, Francisco**
 
@@ -256,7 +260,11 @@ En esta última semana, se ha visto el proyecto afectado de forma grave por una 
 
 
 ### **González Ortiz, Miguel**
+Durante el desarrollo S1 me he dedicado principalmente a la implementación de la entidad de usuario, de la creación de sus operaciones CRUD y sus validaciones. 
 
+En la segunda semana me centre en la implementación del login y registro en la parte del backend, y la realización de pruebas unitarias para las operaciones CRUD de la entidad usuarios. 
+
+Por último, la última semana me centre en el manejo de errores de las validaciones en el frontend y backend, además, a lo largo del S1 me he encargado de la revisión de PR de mi subgrupo debido a mi rol de QA.
 
 ### **Martín Muñoz, Álvaro**
 
@@ -279,10 +287,18 @@ En la siguiente semana, estuve con los modelos del item y price y comprobé que 
 En esta última semana, me he focalizado en documentación para que no hubiera sorpresas de cara al final de la entrega, actualicé los documentos de timeEffort y de performanceEvaluation, elaboré el KBreport, añadí el feedback a las bases de datos de conocimiento, tanto la común como la propia y estuve añadiendo tablas de historico de modificaciones y revisando los proyectos clave del failure condition. 
 
 ### **Palomo García, Miguel**
+Durante la primera semana me dedique al desarrollo e implementacion de frontend del navbar y el register
 
+Durante la segunda semana me dedique al desarrollo e implementaicon de frontend de login y jwt además de la presentacion completa
+
+Durante la tercera semana me dedique a arreglar errores relacionado con el login y el register ademas de la presentacion completa
 
 ### **Periañez Franco, Luis Javier**
+Durante la implementación del proyecto, me enfoqué en el desarrollo del frontend, comenzando por la incorporación de la barra de navegación (navbar) y la estructura base del proyecto. Principalmente, trabajé en la funcionalidad del CRUD de objetos, implementando las operaciones de creación, actualización y eliminación.
 
+Posteriormente, mejoré la estética de la interfaz, añadiendo la gestión de imágenes para ofrecer una mejor visualización y facilitando la asociación de estas con los usuarios. Además, solucioné diversos problemas que surgieron a lo largo del proceso de desarrollo.
+
+Asimismo, participé activamente en reuniones, contribuyendo con ideas y asegurando que el desarrollo avanzara de manera eficiente.
 
 ### **Picón Garrote, Alexander**
 
