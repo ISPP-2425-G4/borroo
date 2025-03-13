@@ -1599,6 +1599,10 @@
     <tbody>
         <tr>
             <td rowspan="7">Código</td>
+            <td>Github</td>
+            <td>49 minutos</td>
+        </tr>
+        <tr>
             <td>Modelos de Item y price</td>
             <td>2 horas y 25 minutos</td>
         </tr>
@@ -1622,12 +1626,12 @@
             <td>Paginación</td>
             <td>35 minutos</td>
         </tr>
-	    <tr>
+	      <tr>
             <td>Actualizar el requirements</td>
             <td>31 minutos</td>
         </tr>
         <tr>
-            <td rowspan="11">Documentación</td>
+            <td rowspan="13">Documentación</td>
 	        <td>Añadir feedback en la base de conocimientos común</td>
             <td>1 hora y 2 minutos</td>
         </tr>
@@ -1668,8 +1672,16 @@
             <td>2 horas y 10 minutos</td>
         </tr>
         <tr>
-            <td >Rellenar el timeEffort y el performance evaluation</td>
+            <td>Rellenar el timeEffort y el performance evaluation</td>
             <td>30 minutos</td>
+        </tr>
+        <tr>
+            <td>Revision de PR de usuarios pilotos</td>
+            <td>8 minutos</td>
+        </tr>
+        <tr>
+            <td >Subir documentos a la KB</td>
+            <td>32 minutos</td>
         </tr>
         <tr>
             <td rowspan="2">Píldoras teóricas</td>
@@ -1688,6 +1700,10 @@
         <tr>
             <td>Clase 07/03</td>
             <td>3 horas y 50 minutos</td>
+        </tr>
+        <tr>
+            <td>Enlace Clockify</td>
+            <td colspan="2"><a href="https://app.clockify.me/shared/67d33c1706a063047edaf675" target="_blank">Clockify</a></td>
         </tr>
     </tbody>
 </table>
