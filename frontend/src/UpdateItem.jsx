@@ -6,10 +6,11 @@ import {
   FiLayers,
   FiXCircle,
   FiDollarSign,
-
+  FiTrash2,
 } from "react-icons/fi";
 import "../public/styles/CreateItem.css";
 import Navbar from "./Navbar";
+import axios from 'axios';
 
 const UpdateItemScreen = () => {
   const { id } = useParams();
@@ -22,18 +23,26 @@ const UpdateItemScreen = () => {
 
   const [images, setImages] = useState([]); // Imágenes nuevas
   const [existingImages, setExistingImages] = useState([]); // Imágenes actuales (IDs y URLs)
-
+  const [removedImages, setRemovedImages] = useState([]); // Imágenes actuales eliminadas
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const itemResponse = await fetch(`http://localhost:8000/objetos/full/${id}/`);
-        if (!itemResponse.ok) throw new Error("Error cargando el ítem.");
-        const itemData = await itemResponse.json();
+        const itemResponse = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/objetos/full/${id}/`,
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        const itemData = itemResponse.data;
 
-        const enumResponse = await fetch("http://localhost:8000/objetos/enum-choices/");
-        if (!enumResponse.ok) throw new Error("Error cargando opciones.");
-        const enumData = await enumResponse.json();
+        const enumResponse = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/objetos/enum-choices/`,
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        const enumData = enumResponse.data;
 
         setFormData(itemData);
         setOptions(enumData);
@@ -42,8 +51,13 @@ const UpdateItemScreen = () => {
         if (itemData.images && itemData.images.length > 0) {
           const imgs = await Promise.all(
             itemData.images.map(async (imgId) => {
-              const imgResponse = await fetch(`http://localhost:8000/objetos/item-images/${imgId}/`);
-              const imgData = await imgResponse.json();
+              const imgResponse = await axios.get(
+                `${import.meta.env.VITE_API_BASE_URL}/objetos/item-images/${imgId}/`,
+                {
+                  headers: { "Content-Type": "application/json" },
+                }
+              );
+              const imgData = imgResponse.data;
               return { id: imgId, url: imgData.image };
             })
           );
@@ -71,9 +85,17 @@ const UpdateItemScreen = () => {
     e.target.value = "";
   };
 
-  // Limpiar imágenes nuevas seleccionadas
+  // Eliminar una imagen seleccionada
+  const handleRemoveImage = (index) => {
+    setImages(images.filter((_, i) => i !== index));
+  };
 
-
+  // Eliminar una imagen actual visualmente
+  const handleRemoveExistingImage = (index) => {
+    const removedImage = existingImages[index];
+    setRemovedImages([...removedImages, removedImage]);
+    setExistingImages(existingImages.filter((_, i) => i !== index));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -94,25 +116,26 @@ const UpdateItemScreen = () => {
         images.forEach((image) => {
           formDataToSend.append("image_files", image);
         });
-      } else if (existingImages.length === 0) {
-        // Si no hay imágenes nuevas y todas fueron eliminadas, enviamos `image_files` vacío
-        formDataToSend.append("image_files", "");
       }
 
+      // 3️⃣ Agregar IDs de imágenes actuales que no se eliminaron
+      const remainingImageIds = existingImages.map(img => img.id);
+      remainingImageIds.forEach(id => formDataToSend.append("remaining_image_ids", id));
 
+      // Depuración: Mostrar el contenido de formDataToSend
+      for (let pair of formDataToSend.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+      }
 
       // 4️⃣ Enviar solicitud PUT al backend
-      const response = await fetch(`http://localhost:8000/objetos/full/${id}/`, {
-        method: "PUT",
-        credentials: "include",
-        body: formDataToSend,
-      });
-
-      if (!response.ok) {
-        const errorResponse = await response.json();
-        console.error("Respuesta del servidor:", errorResponse);
-        throw new Error("Error al actualizar el ítem.");
-      }
+      await axios.put(
+        `${import.meta.env.VITE_API_BASE_URL}/objetos/full/${id}/`,
+        formDataToSend,
+        {
+          headers: { "Content-Type": "multipart/form-data" },  // Indica que estás enviando datos tipo FormData
+          withCredentials: true,  // Equivalente a 'credentials: "include"'
+        }
+      );
 
       alert("¡Ítem actualizado exitosamente!");
       navigate("/");
@@ -186,10 +209,27 @@ const UpdateItemScreen = () => {
           {existingImages.length > 0 && (
             <div className="image-gallery">
               <p>Imágenes actuales:</p>
-              {existingImages.map((img) => (
+              {existingImages.map((img, index) => (
                 <div key={img.id} className="image-item">
                   <img src={img.url} alt="existing" className="item-image" />
+                  <button type="button" onClick={() => handleRemoveExistingImage(index)}>
+                    <FiTrash2 /> Eliminar
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
 
+          {/* Imágenes nuevas seleccionadas */}
+          {images.length > 0 && (
+            <div className="image-gallery">
+              <p>Imágenes nuevas seleccionadas:</p>
+              {images.map((image, index) => (
+                <div key={index} className="image-item">
+                  <img src={URL.createObjectURL(image)} alt="new" className="item-image" />
+                  <button type="button" onClick={() => handleRemoveImage(index)}>
+                    <FiTrash2 /> Eliminar
+                  </button>
                 </div>
               ))}
             </div>

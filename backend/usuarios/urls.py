@@ -7,6 +7,7 @@ from . import views
 
 app_name = "app"
 
+# Configura el router
 router = DefaultRouter()
 router.register(r'full', UserViewSet, basename='user')
 

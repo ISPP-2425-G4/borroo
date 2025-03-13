@@ -8,9 +8,14 @@ import {
   TextField,
   Card,
   CardContent,
-  Slider
+  Slider,
+  Tooltip
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from 'axios';
+
+const DEFAULT_IMAGE = "../public/default_image.png"; // Reemplaza con la ruta correcta de la imagen por defecto
 
 const Layout = () => {
   const [productos, setProductos] = useState([]);
@@ -19,7 +24,6 @@ const Layout = () => {
   const [categoria, setCategoria] = useState("");
   const [precio, setPrecio] = useState([0, 100]);
   const [productosFiltrados, setProductosFiltrados] = useState([]);
-
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
@@ -33,24 +37,33 @@ const Layout = () => {
     setPrecio(newValue);
   }
 
+  const truncateDescription = (description, length = 100) => {
+    if (description.length > length) {
+      return description.substring(0, length) + "..."; 
+    }
+    return description;
+  };
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:8000/objetos/full", {
-          method: "GET",
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/objetos/full`, {
           headers: {
             "Content-Type": "application/json"
           }
         });
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
+        const data = response.data;
         if (data.results) {
-          setProductos(data.results);
-          console.log(data.results);
+          const productosConImagen = await Promise.all(
+            data.results.map(async (producto) => {
+              const imageUrl = producto.images && producto.images.length > 0
+                ? await obtenerImagen(producto.images[0])
+                : DEFAULT_IMAGE;
+              return { ...producto, imageUrl };
+            })
+          );
+          setProductos(productosConImagen);
         } else {
           setError("No products found");
         }
@@ -60,23 +73,28 @@ const Layout = () => {
     };
 
     fetchProducts();
-    
   }, []);
 
-  useEffect(() => {
-    const filtered = productos.filter((producto) => {
-      return (
-        (categoria === "" || producto.category_display === categoria) &&
-        (producto.price >= precio[0] && producto.price <= precio[1]) &&
-        (producto.title.toLowerCase().includes(searchTerm.toLowerCase()))
-      )
+  const obtenerImagen = async (imgId) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/objetos/item-images/${imgId}/`
+      );
+      return response.data.image;
+    } catch (error) {
+      console.error(`Error al cargar la imagen ${imgId}:`, error);
+      return DEFAULT_IMAGE;
     }
-    );
+  };
+
+  useEffect(() => {
+    const filtered = productos.filter((producto) => (
+      (categoria === "" || producto.category_display === categoria) &&
+      (producto.price >= precio[0] && producto.price <= precio[1]) &&
+      (producto.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    ));
     setProductosFiltrados(filtered);
-  }
-  , [productos, categoria, precio, searchTerm]);
-
-
+  }, [productos, categoria, precio, searchTerm]);
 
   return (
     <Box sx={{ overflowX: "hidden"}}>
@@ -100,7 +118,6 @@ const Layout = () => {
             value={searchTerm}
             onChange={handleInputChange}
             variant="outlined"
-           
             sx={{ minWidth: "250px" }}
           />
           <Select
@@ -147,7 +164,8 @@ const Layout = () => {
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
-              gap: 2
+              gap: 2,
+              width: "100%"
             }}
           >
             {productosFiltrados?.map((producto, index) => (
@@ -160,6 +178,7 @@ const Layout = () => {
                   flexDirection: "column"
                 }}
               >
+                <Link to={`/show-item/${producto.id}`}>
                 <Card
                   sx={{
                     height: "100%",
@@ -167,11 +186,12 @@ const Layout = () => {
                     flexDirection: "column"
                   }}
                 >
+                  <img src={producto.imageUrl} alt="Imagen del producto" style={{ width: "100%", height: "150px", objectFit: "cover" }} />
                   <CardContent
                     sx={{
                       flexGrow: 1,
-                      backgroundColor: "black",
-                      color: "white",
+                      backgroundColor: "#D8D8D8",
+                      color: "black",
                       p: 2,
                       borderRadius: 1
                     }}
@@ -180,16 +200,22 @@ const Layout = () => {
                       {producto.title}
                     </Typography>
                     <Typography variant="body2" gutterBottom>
-                      {producto.description}
-                    </Typography>
-                    <Typography variant="body2" gutterBottom>
                       {producto.category_display}
                     </Typography>
                     <Typography variant="body2">
                       {producto.price}€ / {producto.price_category_display}
                     </Typography>
+                    <Tooltip
+                      title={producto.description}
+                      arrow
+                    >
+                      <Typography variant="body2" gutterBottom>
+                        {truncateDescription(producto.description, 100)}
+                      </Typography>
+                    </Tooltip>
                   </CardContent>
                 </Card>
+                </Link>
               </Box>
             ))}
           </Box>
