@@ -240,7 +240,11 @@ Durante la tercera semana, creé la landing page con el objetivo de ofrecer una 
 
 
 ### **Padilla Gómez, Marco**
+Tras la semana de evaluación, empecé creando el Github Project del repositorio y estableciendo todos los milestones, etiquetas en el tablero. 
 
+En la siguiente semana, estuve con los modelos del item y price y comprobé que funcionaran, pero después de un malentendido con las tareas que pertenecían a un grupo y a otro, se acabó perdiendo ese trabajo. Añadí la paginación para todo el proyecto y añadí dependencias que requería nuestro proyecto en el requirements.txt. 
+
+En esta última semana, me he focalizado en documentación para que no hubiera sorpresas de cara al final de la entrega, actualicé los documentos de timeEffort y de performanceEvaluation, elaboré el KBreport, añadí el feedback a las bases de datos de conocimiento, tanto la común como la propia y estuve añadiendo tablas de historico de modificaciones y revisando los proyectos clave del failure condition. 
 
 ### **Palomo García, Miguel**
 
