@@ -24,6 +24,9 @@ class ItemSerializer(serializers.ModelSerializer):
     image_files = serializers.ListField(
         child=serializers.ImageField(), write_only=True, required=False
     )
+    remaining_image_ids = serializers.ListField(
+        child=serializers.IntegerField(), write_only=True, required=False
+    )
 
     class Meta:
         model = Item
@@ -31,7 +34,7 @@ class ItemSerializer(serializers.ModelSerializer):
             'id', 'title', 'description', 'category', 'category_display',
             'cancel_type', 'cancel_type_display', 'price_category',
             'price_category_display', 'price', 'images', 'image_files',
-            'user'
+            'remaining_image_ids', 'user'
         ]
 
     def create(self, validated_data):
@@ -61,14 +64,17 @@ class ItemSerializer(serializers.ModelSerializer):
         instance.price = validated_data.get('price', instance.price)
 
         image_files = validated_data.pop('image_files', None)
+        remaining_image_ids = validated_data.pop('remaining_image_ids', [])
 
-        if image_files is not None:
-            for old_image in instance.images.all():
+        # Eliminar imágenes que no están en remaining_image_ids
+        for old_image in instance.images.all():
+            if old_image.id not in remaining_image_ids:
                 old_image.delete()  # Eliminar registro en la base de datos
 
-            # Agregar las nuevas imágenes
+        # Agregar las nuevas imágenes
+        if image_files is not None:
             for image in image_files:
-                image_url, delete_url = self.upload_image_to_imgbb(image)
+                image_url = self.upload_image_to_imgbb(image)
                 ItemImage.objects.create(item=instance, image=image_url)
 
         instance.save()
