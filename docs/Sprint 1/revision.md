@@ -1,7 +1,7 @@
 ﻿# BORROO
 
 Revisión
-![](../imágenes/borrooLogo.png)
+![](../imagenes/borrooLogo.png)
 
 Sprint 1 – G4
 
