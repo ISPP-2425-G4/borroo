@@ -210,7 +210,13 @@ Durante la tercera semana, creé la landing page con el objetivo de ofrecer una 
 ## Sprint 1 (#S1)
 
 ### **Blanco Mora, David**  
+Durante la primera semana del sprint 1, elaboré junto a Santiago Rosado, el documento de usuarios piloto con el protocolo a seguir durante el proceso de evaluación del software desarrollado. 
 
+Durante la segunda semana me dediqué a reelaborar el modelo de rendimiento ya que en éste teníamos maneras muy complejas de evaluar el desempeño individual y hubo que simplificarlo para poder hacer una evaluación más realista. 
+
+Durante la tercera semana del sprint, me encargué del desarrollo de las pruebas para la funcionalidad de alquilar un objeto, y también de elaborar el documento de revisión del software. 
+
+También visualicé el contenido de las píldoras teóricas correspondientes a las sesiones 05a, 05b. 
 
 ### **Díaz Ordóñez, Pablo**  
 
