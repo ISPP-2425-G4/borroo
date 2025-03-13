@@ -47,13 +47,14 @@ class RentViewSet(viewsets.ModelViewSet):
         start_date = request.data.get('start_date')
         end_date = request.data.get('end_date')
         user = self.request.user if not AnonymousUser else None
-        authenticated = self.request.user.is_authenticated
+        # De momento se puede autenticar
+        # authenticated = self.request.user.is_authenticated
 
         item = get_object_or_404(Item, pk=item_id)
 
         not_rent_yourself = user != item.user
 
-        is_authorized(condition=not_rent_yourself, authenticated=authenticated)
+        is_authorized(condition=not_rent_yourself)
 
         if Rent.objects.filter(item=item, start_date__lte=end_date,
                                # por dentro django usa la pk de item
