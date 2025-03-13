@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import Navbar from "./Navbar";
 import { Outlet } from "react-router-dom";
+import axios from 'axios';
 
 const SearchItemByName = () => {
   const [productos, setProductos] = useState([]);
@@ -22,18 +23,15 @@ const SearchItemByName = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/objetos/search_item?title=${searchQuery}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/objetos/search_item`,
+          {
+            params: { title: searchQuery },
+            headers: { "Content-Type": "application/json" },
+          }
+        );
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
+        const data = response.data;
         if (data.results) {
           setProductos(data.results);
         } else {

@@ -8,6 +8,7 @@ import {
   MenuItem,
   Typography
 } from "@mui/material";
+import axios from 'axios';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -25,14 +26,13 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       // Opcional: llamar al backend para cerrar la sesión del lado del servidor
-      await fetch('/api/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        // Podrías enviar el ID del usuario si es necesario
-        body: JSON.stringify({ user_id: user?.id })
-      });
+      await axios.post(
+        "/api/logout",
+        { user_id: user?.id },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     } finally {

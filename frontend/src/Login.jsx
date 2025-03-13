@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiLock } from "react-icons/fi";
 import "../public/styles/Login.css";
+import axios from 'axios';
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -16,21 +17,23 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:8000/usuarios/login/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-        credentials: "include",
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/login/`,
+        { username, password },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true, // Equivalente a `credentials: "include"` en fetch
+        }
+      );
 
-      if (response.ok) {
-        const data = await response.json();
+      if (response.status === 200) {
+        const data = response.data;
         localStorage.setItem("access_token", data.access);
         localStorage.setItem("refresh_token", data.refresh);
         localStorage.setItem("user", JSON.stringify(data.user));
         navigate("/");
       } else {
-        const data = await response.json();
+        const data = response.data;
         throw new Error(data.error || "Error al iniciar sesión");
       }
     } catch (error) {
