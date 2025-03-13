@@ -1,13 +1,20 @@
-# Time Effort Report
+<div align="center">
 
-## Borroo - G4
-## Sprint 1 (S1)
+# BORROO
 
-**Repositorio:** [GitHub](https://github.com/ISPP-2425-G4/borroo)
+![](../imagenes/borrooLogo.png)
+
+## Time effort report
+
+### Sprint 1 – G4
+**Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
 
 **Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
 
 **Fecha:** 11/03/2025
+
+
+</div>
 
 ### Miembros:
 - David Blanco Mora
