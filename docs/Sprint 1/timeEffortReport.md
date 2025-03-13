@@ -1630,7 +1630,127 @@
 </table>
 
 ### Fernández Rodríguez, Jesús
+
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="6">Trabajo</td>
+      <td>Workflows de CI</td>
+      <td>2 horas 51 minutos</td>
+    </tr>
+    <tr>
+      <td>Entidad item</td>
+      <td>54 minutos</td>
+    </tr>
+    <tr>
+      <td>Despliegue AppEngine</td>
+      <td>8 horas 25 minutos</td>
+    </tr>
+    <tr>
+      <td>Bugs y fixes</td>
+      <td>6 horas</td>
+    </tr>
+    <tr>
+      <td>Implementación backend item</td>
+      <td>2 horas 29 minutos</td>
+    </tr>
+    <tr>
+      <td>Pair programming</td>
+      <td colspan="2">1 hora 30 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Reuniones</td>
+      <td>Reunión 09/03/2025</td>
+      <td>1 hora 10 minutos</td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td rowspan="2">Clase</td>
+      <td>Clase 21/2/25</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 7/3/25</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+  </tbody>
+</table>
+
 ### Fernández Mota, Francisco
+
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="7">Trabajo</td>
+    <td>UML</td>
+    <td>6 horas y 23 minutos</td>
+  </tr>
+  <tr>
+    <td>Gestión de tareas y organización con PM y GMs</td>
+    <td>4 horas y 40 minutos</td>
+  </tr>
+  <tr>
+    <td>Reparto de tareas del subgrupo</td>
+    <td>27 minutos</td>
+  </tr>
+  <tr>
+    <td>Pull Requests</td>
+    <td>27 minutos</td>
+  </tr>
+  <tr>
+    <td>Seeders</td>
+    <td>1 hora y 29 minutos</td>
+  </tr>
+  <tr>
+    <td>Comunicación con usuarios piloto a formato markdown</td>
+    <td>25 minutos</td>
+  </tr>
+  <tr>
+    <td>Pair programming de validaciones y control de errores</td>
+    <td>2 horas y 31 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Píldoras teóricas</td>
+    <td>Session 05a</td>
+    <td>27 minutos</td>
+  </tr>
+  <tr>
+    <td>Session 05b</td>
+    <td>37 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Reuniones</td>
+    <td>Reunión 22/2/25</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>Reunión 10/3/25</td>
+    <td>40 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clase</td>
+    <td>Clase 21/2/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 7/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
+
 ### García Rodríguez, Javier
 
 <table>
@@ -1679,8 +1799,135 @@
 
 
 ### González Ortiz, Miguel
+
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="9">Trabajo</td>
+    <td>Implementar entidad usuario y desarrollo de sus operaciones CRUD</td>
+    <td>2 horas y 16 minutos</td>
+  </tr>
+  <tr>
+    <td>Implementación login y registro de usuarios</td>
+    <td>2 horas y 12 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando errores con la entidad usuario para realizar las pruebas unitarias CRUD de usuarios</td>
+    <td>3 horas y 34 minutos</td>
+  </tr>
+  <tr>
+    <td>Pruebas unitarias CRUD de usuarios</td>
+    <td>2 horas y 24 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando bug del login</td>
+    <td>28 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando pruebas unitarias de actualización y eliminación de usuarios</td>
+    <td>2 horas y 5 minutos</td>
+  </tr>
+  <tr>
+    <td>Pruebas unitarias CRUD de objetos</td>
+    <td>1 hora y 54 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando test de update objetos y ayudando al despliegue</td>
+    <td>1 hora y 2 minutos</td>
+  </tr>
+  <tr>
+    <td>Buscando errores de validación en operaciones con usuarios y backend</td>
+    <td>3 horas y 53 minutos</td>
+  </tr>
+  <tr>
+    <td>Reuniones</td>
+    <td>Reunión 09/03/2025</td>
+    <td>1 hora y 13 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 21-02-25</td>
+    <td>3 horas y 40 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 07-03-25</td>
+    <td>3 horas y 40 minutos</td>
+  </tr>
+</table>
+
 ### Martin Muñoz, Álvaro
 ### Naredo Bernardos, Ignacio
+
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="8">Trabajo</td>
+    <td>Conexión BBDD</td>
+    <td>3 horas y 35 minutos</td>
+  </tr>
+  <tr>
+    <td>Filtro de categorías</td>
+    <td>2 horas y 10 minutos</td>
+  </tr>
+  <tr>
+    <td>Estructura de backend</td>
+    <td>1 hora y 42 minutos</td>
+  </tr>
+  <tr>
+    <td>Método búsqueda</td>
+    <td>1 hora y 11 minutos</td>
+  </tr>
+  <tr>
+    <td>Guía Conexión BBDD</td>
+    <td>28 minutos</td>
+  </tr>
+  <tr>
+    <td>Despliegue app engine</td>
+    <td>2 horas y 21 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglo fallos y gestión equipo</td>
+    <td>1 hora y 39 minutos</td>
+  </tr>
+  <tr>
+    <td>Inicio de modelado de datos</td>
+    <td>2 horas y 10 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 21/02</td>
+    <td>3 horas y 40 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 07/03</td>
+    <td>3 horas y 40 minutos</td>
+  </tr>
+  <tr>
+    <td>Reuniones</td>
+    <td>Reunión</td>
+    <td>1 hora y 11 minutos</td>
+  </tr>
+  <tr>
+    <td>Docusaurus</td>
+    <td>Base de conocimiento</td>
+    <td>1 hora y 25 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldoras teóricas</td>
+    <td>Ver videos de píldoras</td>
+    <td>1 hora y 13 minutos</td>
+  </tr>
+</table>
+
+
 ### Nieto Vicioso, Javier
 ### Padilla Gómez, Marco
 <table>
@@ -1693,7 +1940,7 @@
     </thead>
     <tbody>
         <tr>
-            <td rowspan="7">Código</td>
+            <td rowspan="8">Código</td>
             <td>Github</td>
             <td>49 minutos</td>
         </tr>
@@ -1811,26 +2058,27 @@
     <th>Tiempo</th>
   </tr>
   <tr>
-    <td rowspan="8">Trabajo</td>
+    <td rowspan="5">Trabajo</td>
     <td>Desarrollo frontend de Registro</td>
-    <td>2 hora y 30 minutos</td>
+    <td>2 horas y 30 minutos</td>
   </tr>
   <tr>
-    <td>Desarrollo frontend de Inicio sesion</td>
-    <td>2 hora 31 minutos</td>
+    <td>Desarrollo frontend de Inicio sesión</td>
+    <td>2 horas 31 minutos</td>
   </tr>
   <tr>
-    <td>Arreglo backend/frontend inicio de sesion registro</td>
+    <td>Arreglo backend/frontend inicio de sesión registro</td>
     <td>10 minutos</td>
   </tr>
   <tr>
-    <td>Presentacion</td>
-    <td>12 horas </td>
+    <td>Presentación</td>
+    <td>12 horas</td>
   </tr>
   <tr>
-    <td>Implementacion jwt</td>
+    <td>Implementación JWT</td>
     <td>2 horas y 19 minutos</td>
   </tr>
+  <tr>
     <td rowspan="2">Clases</td>
     <td>Clase 21-02-25</td>
     <td>3 horas y 40 minutos</td>
@@ -1840,8 +2088,57 @@
     <td>3 horas y 40 minutos</td>
   </tr>
 </table>
+
 ### Periañez Franco, Luis Javier
-### Picón Garrote, Alexander
+# Registro de Actividades
+
+<table>
+  <tr>
+    <th>Categoría</th>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="6">Trabajo</td>
+    <td>Implementación de la estructura base del frontend</td>
+    <td>Creación de la navbar y organización de la arquitectura del proyecto</td>
+    <td>2 horas 45 minutos</td>
+  </tr>
+  <tr>
+    <td>Desarrollo frontend del CRUD de objetos</td>
+    <td>Implementación de las operaciones de creación, actualización y eliminación</td>
+    <td>6 horas</td>
+  </tr>
+  <tr>
+    <td>Desarrollo frontend de implementación de imágenes</td>
+    <td>Integración de imágenes para mejorar la visualización y asociación con el usuario</td>
+    <td>6 horas</td>
+  </tr>
+  <tr>
+    <td>Desarrollo frontend del User</td>
+    <td>Implementación de las funcionalidades relacionadas con el usuario</td>
+    <td>1 hora 30 minutos</td>
+  </tr>
+  <tr>
+    <td>Corrección de errores y mejoras</td>
+    <td>Solución de problemas surgidos durante el desarrollo</td>
+    <td>2 horas</td>
+  </tr>
+  <tr>
+    <td>Asistencia a reuniones</td>
+    <td>Participación en reuniones de seguimiento y planificación</td>
+    <td>2 horas</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+  </tr>
+  <tr>
+    <td>Clase 07-03-25</td>
+    <td>Asistencia y participación en la clase del 7 de marzo</td>
+    <td>3 horas 40 minutos</td>
+  </tr>
+</table>
 
 ### Picón Garrote, Alexander  
 
@@ -2058,7 +2355,93 @@
   </tr>
 </table>
 
-### Sánchez Márquez, Julia
+### Sánchez Márquez, Julia 
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="16">Trabajo</td>
+      <td>Creación de diagrama UML</td>
+      <td>5 horas y 20 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar incongruencias en el diagrama</td>
+      <td>1 hora</td>
+    </tr>
+    <tr>
+      <td>Inicializar proyecto base</td>
+      <td>8 minutos</td>
+    </tr>
+    <tr>
+      <td>Implementar todos los endpoint de Rentas</td>
+      <td>3 hora y 5 minutos</td>
+    </tr>
+    <tr>
+      <td>Implementar backend rentas para aceptar o rechazar un alquiler + Validar todas los endpoints</td>
+      <td>3 horas y 31 minutos</td>
+    </tr>
+    <tr>
+      <td>Solucionar errores con bbdd</td>
+      <td>1 hora y  35 minutos</td>
+    </tr>
+    <tr>
+      <td>Intento seeder para probar endpoints</td>
+      <td>20 minutos</td>
+    </tr>
+    <tr>
+      <td>Creacion de objetos para probar endpoints + probar endpoints</td>
+      <td>21 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar fallo modelo Rent</td>
+      <td>14 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar fallo Codacy</td>
+      <td>25 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar método POST Rent + serializer</td>
+      <td>32 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar migraciones + solucionar fallo url para david</td>
+      <td>19 minutos</td>
+    </tr>
+    <tr>
+      <td>Convertir docs de pdf a md</td>
+      <td>24 minutos</td>
+    </tr>
+    <tr>
+      <td>Crear usuario admin</td>
+      <td>15 minutos</td>
+    </tr>
+    <tr>
+      <td>Theory Pill S02 A</td>
+      <td>26 minutos</td>
+    </tr>
+    <tr>
+      <td>Theory Pill S02 B</td>
+      <td>46minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 21/02/25</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 7/3/25</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+  </tbody>
+</table>
+
 ### Sevillano Barea, Alejandro
 <table>
   <tr>
