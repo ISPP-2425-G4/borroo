@@ -168,6 +168,7 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 
 ## 3. Datos necesarios para la revisión
 **Los datos necesarios para la revisión son**: 
+
 URL landing page: https://sites.google.com/view/borroo/
 
 Credenciales usuario:  
@@ -191,6 +192,6 @@ URL y credenciales del “time tracking tool”: Desde clockify:
 	- Credenciales: borroohelp@gmail.com / B0rr0o2025ISPP
  	 (Para doble verificación, usar mismo correo y contraseña en gmail)
 
-Potential Requirements: No procede 
+Potential Requirements: Uso de internet para aplicacion desplegada, descrito en readme de git para aplicacion local
 
 Enlace de demo:  
