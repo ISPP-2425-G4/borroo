@@ -290,6 +290,11 @@ Durante la segunda semana del S1, mi tarea fue comenzar a estructurar la base de
 Durante la tercera semana terminé de implementar la busqueda y los filtros avanzados tanto en backend como ayudando a mi compañero encargado del frontend, por último termine de ajustar junto a un compañero la base de datos y ayude junto a mi subgrupo a realizar el despliegue de la aplicación.
 
 ### **Nieto Vicioso, Javier**
+Durante la primera semana, estuve trabajando junto a Pablo Díaz en el registro de requisitos y en la elaboración del plan de gestión de requisitos para la aplicación. El documento incluye tanto requisitos funcionales como no funcionales, además de requisitos legales, técnicos y organizacionales. También se elaboró el plan de gestión de requisitos, que define cómo se gestionarán estos a lo largo del ciclo de vida del proyecto.
+
+Durante la segunda semana, me encargué de preparar el entorno local y mejorar la página de detalles de un producto a nivel visual. Además, trabajé en la creación de un calendario de solicitudes que permite a los usuarios crear solicitudes de alquiler a un arrendador determinado. Cabe destacar que, aunque el calendario ya estaba implementado, no se conectó al backend, ya que aún no estaba disponible. También realicé tareas de depuración y resolución de conflictos con el código recién subido, solucionando algunos bugs.
+
+Esta semana, creé un modal personalizado para la solicitud de un objeto con una advertencia de fecha, y realicé capturas de pantalla para los usuarios piloto del frontend. Mejoré la estética de la página principal, vinculando el listado de objetos con sus detalles y truncando descripciones. Además, probé la autenticación con JWT en el backend, pero no pude solucionar los problemas con la validación del token, lo que impidió verificar correctamente al usuario. A pesar de ello, logré conectar el frontend y backend de las solicitudes de objeto, corregí errores en el listado de objetos y comencé a probar la implementación de imágenes.
 
 
 ### **Padilla Gómez, Marco**
