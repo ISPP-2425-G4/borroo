@@ -1861,6 +1861,73 @@
 
 ### Martin Muñoz, Álvaro
 ### Naredo Bernardos, Ignacio
+
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="8">Trabajo</td>
+    <td>Conexión BBDD</td>
+    <td>3 horas y 35 minutos</td>
+  </tr>
+  <tr>
+    <td>Filtro de categorías</td>
+    <td>2 horas y 10 minutos</td>
+  </tr>
+  <tr>
+    <td>Estructura de backend</td>
+    <td>1 hora y 42 minutos</td>
+  </tr>
+  <tr>
+    <td>Método búsqueda</td>
+    <td>1 hora y 11 minutos</td>
+  </tr>
+  <tr>
+    <td>Guía Conexión BBDD</td>
+    <td>28 minutos</td>
+  </tr>
+  <tr>
+    <td>Despliegue app engine</td>
+    <td>2 horas y 21 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglo fallos y gestión equipo</td>
+    <td>1 hora y 39 minutos</td>
+  </tr>
+  <tr>
+    <td>Inicio de modelado de datos</td>
+    <td>2 horas y 10 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 21/02</td>
+    <td>3 horas y 40 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 07/03</td>
+    <td>3 horas y 40 minutos</td>
+  </tr>
+  <tr>
+    <td>Reuniones</td>
+    <td>Reunión</td>
+    <td>1 hora y 11 minutos</td>
+  </tr>
+  <tr>
+    <td>Docusaurus</td>
+    <td>Base de conocimiento</td>
+    <td>1 hora y 25 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldoras teóricas</td>
+    <td>Ver videos de píldoras</td>
+    <td>1 hora y 13 minutos</td>
+  </tr>
+</table>
+
+
 ### Nieto Vicioso, Javier
 ### Padilla Gómez, Marco
 <table>
@@ -2023,6 +2090,56 @@
 </table>
 
 ### Periañez Franco, Luis Javier
+# Registro de Actividades
+
+<table>
+  <tr>
+    <th>Categoría</th>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="6">Trabajo</td>
+    <td>Implementación de la estructura base del frontend</td>
+    <td>Creación de la navbar y organización de la arquitectura del proyecto</td>
+    <td>2 horas 45 minutos</td>
+  </tr>
+  <tr>
+    <td>Desarrollo frontend del CRUD de objetos</td>
+    <td>Implementación de las operaciones de creación, actualización y eliminación</td>
+    <td>6 horas</td>
+  </tr>
+  <tr>
+    <td>Desarrollo frontend de implementación de imágenes</td>
+    <td>Integración de imágenes para mejorar la visualización y asociación con el usuario</td>
+    <td>6 horas</td>
+  </tr>
+  <tr>
+    <td>Desarrollo frontend del User</td>
+    <td>Implementación de las funcionalidades relacionadas con el usuario</td>
+    <td>1 hora 30 minutos</td>
+  </tr>
+  <tr>
+    <td>Corrección de errores y mejoras</td>
+    <td>Solución de problemas surgidos durante el desarrollo</td>
+    <td>2 horas</td>
+  </tr>
+  <tr>
+    <td>Asistencia a reuniones</td>
+    <td>Participación en reuniones de seguimiento y planificación</td>
+    <td>2 horas</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+  </tr>
+  <tr>
+    <td>Clase 07-03-25</td>
+    <td>Asistencia y participación en la clase del 7 de marzo</td>
+    <td>3 horas 40 minutos</td>
+  </tr>
+</table>
+
 
 ### Picón Garrote, Alexander
 
@@ -2146,7 +2263,93 @@
   </tr>
 </table>
 
-### Sánchez Márquez, Julia
+### Sánchez Márquez, Julia 
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="16">Trabajo</td>
+      <td>Creación de diagrama UML</td>
+      <td>5 horas y 20 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar incongruencias en el diagrama</td>
+      <td>1 hora</td>
+    </tr>
+    <tr>
+      <td>Inicializar proyecto base</td>
+      <td>8 minutos</td>
+    </tr>
+    <tr>
+      <td>Implementar todos los endpoint de Rentas</td>
+      <td>3 hora y 5 minutos</td>
+    </tr>
+    <tr>
+      <td>Implementar backend rentas para aceptar o rechazar un alquiler + Validar todas los endpoints</td>
+      <td>3 horas y 31 minutos</td>
+    </tr>
+    <tr>
+      <td>Solucionar errores con bbdd</td>
+      <td>1 hora y  35 minutos</td>
+    </tr>
+    <tr>
+      <td>Intento seeder para probar endpoints</td>
+      <td>20 minutos</td>
+    </tr>
+    <tr>
+      <td>Creacion de objetos para probar endpoints + probar endpoints</td>
+      <td>21 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar fallo modelo Rent</td>
+      <td>14 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar fallo Codacy</td>
+      <td>25 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar método POST Rent + serializer</td>
+      <td>32 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar migraciones + solucionar fallo url para david</td>
+      <td>19 minutos</td>
+    </tr>
+    <tr>
+      <td>Convertir docs de pdf a md</td>
+      <td>24 minutos</td>
+    </tr>
+    <tr>
+      <td>Crear usuario admin</td>
+      <td>15 minutos</td>
+    </tr>
+    <tr>
+      <td>Theory Pill S02 A</td>
+      <td>26 minutos</td>
+    </tr>
+    <tr>
+      <td>Theory Pill S02 B</td>
+      <td>46minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 21/02/25</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 7/3/25</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+  </tbody>
+</table>
+
 ### Sevillano Barea, Alejandro
 <table>
   <tr>
