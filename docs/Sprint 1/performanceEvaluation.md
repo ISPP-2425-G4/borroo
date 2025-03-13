@@ -247,6 +247,13 @@ Añadir a lo citado anteriormente que se asistió a todas las clases de feedback
 
 ### **García Rodríguez, Javier**
 
+Como jefe de proyecto, durante la primera semana del sprint 1, estuve planificando las tareas que mi subgrupo iba a durante este primer sprint. Principalmente, operaciones CRUD asociadas objetos, y gestión de usuarios y registros. No obstante, esta semana fue algo compleja debido a la aparición de problemas y riesgos que se me fueron comunicando durante toda la semana, tratando de organizar y resolver los problemas de la forma más eficiente y correcta posible. Desde problemas con la puesta en marcha del proyecto, con asignación de tareas. Se me comunicaba prácticamente a diario problemas y cuestiones que podían modificar, ya fuese de manera leve, moderado y severo. 
+
+Durante la segunda semana estuve, una vez más, tratando de coordinar aquellas incidencias que se nos planteaban entre los subgrupos, incidencias y problemas que acarreaban retrasos e incongruencias en tareas, e incluso en el sprint. Además, estuve preparando la presentación para la semana indicada.
+
+En esta última semana, se ha visto el proyecto afectado de forma grave por una desastrosa planificación, de la cual me considero responsable, en la que todo el proceso se ha visto acelerado, donde no se han podido seguir como estaba establecido en los distintos planes y otras decisiones.
+
+
 
 ### **González Ortiz, Miguel**
 
