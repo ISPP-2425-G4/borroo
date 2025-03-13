@@ -40,9 +40,9 @@
 | Fecha      | Versión | Realizada por   | Descripción de los cambios |
 | ---------- | ------- | --------------- | -------------------------- |
 | 20-02-2025 | v1.0    | Marco Padilla Gómez | Creación del documento |
-| 20-02-2025 | v1.1    | Todos los miembros | Añadir datos sobre el trabajo realizado |
+| 20-02-2025 | v1.1    | Todos los miembros | Añadir datos sobre el trabajo realizado en el DP |
 | 11-03-2025 | v2.0    | Marco Padilla Gómez | Actualización del documento para el S1 e historico de modificaciones añadido |
-|  |     |  |  |
+| 13-03-2025 | v2.1    | Todos los miembros | Añadir datos sobre el trabajo realizado en el S1 |
 
 ## DP
 
@@ -1412,6 +1412,110 @@
 ### Naredo Bernardos, Ignacio
 ### Nieto Vicioso, Javier
 ### Padilla Gómez, Marco
+<table>
+    <thead>
+        <tr>
+            <th>Tarea</th>
+            <th>Detalles de la actividad</th>
+            <th>Tiempo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="7">Código</td>
+            <td>Modelos de Item y price</td>
+            <td>2 horas y 25 minutos</td>
+        </tr>
+        <tr>
+            <td>Bug de los modelos de Item y Price</td>
+            <td>19 minutos</td>
+        </tr>
+        <tr>
+            <td>Script para prueba de modelos</td>
+            <td>1 hora y 18 minutos</td>
+        </tr>
+        <tr>
+            <td>Fix flake8</td>
+            <td>26 minutos</td>
+        </tr>
+        <tr>
+            <td>Filtros</td>
+            <td>14 minutos</td>
+        </tr>
+        <tr>
+            <td>Paginación</td>
+            <td>35 minutos</td>
+        </tr>
+	    <tr>
+            <td>Actualizar el requirements</td>
+            <td>31 minutos</td>
+        </tr>
+        <tr>
+            <td rowspan="11">Documentación</td>
+	        <td>Añadir feedback en la base de conocimientos común</td>
+            <td>1 hora y 2 minutos</td>
+        </tr>
+        <tr>
+            <td>Añadir feedback semana 5 en nuestra kb</td>
+            <td>12 minutos</td>
+        </tr>
+        <tr>
+            <td>Realización del KBreport</td>
+            <td>43 minutos</td>
+        </tr>
+        <tr>
+            <td>Actualizar el performance Evaluation para S1</td>
+            <td>11 minutos</td>
+        </tr>
+        <tr>
+            <td>Pasar el timeEffort de pdf a md</td>
+            <td>1 hora y 3 minutos</td>
+        </tr>
+        <tr>
+            <td>Preparación de los demás documentos de la entrega</td>
+            <td>15 minutos</td>
+        </tr>
+        <tr>
+            <td>Subir el kbreport</td>
+            <td>6 minutos</td>
+        </tr>
+        <tr>
+            <td>Añadir feedback general de la semana 4 y 5 a nuestra base de datos propia</td>
+            <td>33 minutos</td>
+        </tr>
+        <tr>
+            <td>Subir plantilla del timeEffort</td>
+            <td>4 minutos</td>
+        </tr>
+        <tr>
+            <td>Revisión y añadir histórico de modificaciones a los documentos</td>
+            <td>2 horas y 10 minutos</td>
+        </tr>
+        <tr>
+            <td >Rellenar el timeEffort y el performance evaluation</td>
+            <td>30 minutos</td>
+        </tr>
+        <tr>
+            <td rowspan="2">Píldoras teóricas</td>
+            <td>Píldora 5a</td>
+            <td>26 minutos</td>
+        </tr>
+        <tr>
+            <td>Píldora 5b</td>
+            <td>46 minutos</td>
+        </tr>
+        <tr>
+            <td rowspan="2">Clases</td>
+            <td>Clase 21/02</td>
+            <td>3 horas y 50 minutos</td>
+        </tr>
+        <tr>
+            <td>Clase 07/03</td>
+            <td>3 horas y 50 minutos</td>
+        </tr>
+    </tbody>
+</table>
+
 ### Palomo García, Miguel
 ### Periañez Franco, Luis Javier
 ### Picón Garrote, Alexander
