@@ -5,6 +5,7 @@ from rest_framework import status, filters
 from .models import Rent, RentStatus
 from .serializers import RentSerializer
 from rest_framework.exceptions import NotAuthenticated, PermissionDenied, NotFound
+from django.contrib.auth.models import AnonymousUser
 
 
 def is_authorized(condition=True, authenticated=True):
@@ -23,15 +24,16 @@ class RentViewSet(viewsets.ModelViewSet):
     ordering = ['-start_date']
 
     def get_queryset(self):
-        user = self.request.user
+        user = self.request.user if not AnonymousUser else None
         authenticated = self.request.user.is_authenticated
+        permission = True
         pk = self.kwargs.get('pk')
         if pk is not None:
             rent = Rent.objects.filter(pk=pk).first()
             if rent is None:
                 raise NotFound({'error': 'El alquiler no existe.'})
-            permission = rent.renter == self.request.user
-            is_authorized(condition=permission, authenticated=authenticated)
+            permission = rent.renter == user
+        is_authorized(condition=permission, authenticated=authenticated)
         return Rent.objects.filter(renter=user)
 
     @action(detail=False, methods=['post'])
