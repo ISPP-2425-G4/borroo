@@ -57,22 +57,22 @@
 
 | Student | #DP1 | #S1 | #S2 | #S3 | #PPL | #WPL | Total | Weight |
 |---------|------|-----|-----|-----|------|------|--------------|---------|
-| Blanco Mora, David | 10 | | | | | | | |
-| Díaz Ordóñez, Pablo | 10 | | | | | | | |
+| Blanco Mora, David | 10 | 9,9 | | | | | | |
+| Díaz Ordóñez, Pablo | 10 | 10 | | | | | | |
 | Espinosa Naranjo, Pablo | 10 | | | | | | | | |
 | Fernandez Rodriguez, Jesus | 10 | | | | | | | |
-| Fernández Mota, Francisco | 10 | | | | | | | |
+| Fernández Mota, Francisco | 10 | 10 | | | | | | |
 | García Rodríguez, Javier | 10 | | | | | | | |
 | Gonzalez Ortiz, Miguel | 10 | | | | | | | |
 | Martin Muñoz, Álvaro | 10 | | | | | | | |
 | Naredo Bernardos, Ignacio | 10 | | | | | | | |
-| Nieto Vicioso, Javier | 10 | | | | | | | |
+| Nieto Vicioso, Javier | 10 | 10 | | | | | | |
 | Padilla Gómez, Marco | 10 | | | | | | | |
 | Palomo García, Miguel | 10 | | | | | | | |
 | Periañez Franco, Luis Javier | 10 | | | | | | | |
 | Picón Garrote, Alexander | 10 | | | | | | | |
-| Rosado Raya, Santiago | 10 | | | | | | | |
-| Sánchez Márquez, Julia | 10 | | | | | | | |
+| Rosado Raya, Santiago | 10 | 10  | | | | | | |
+| Sánchez Márquez, Julia | 10 | 10| | | | | | |
 | Sevillano Barea, Alejandro | 10 | | | | | | | |
 | Total | 170 | | | | | | | |
 
