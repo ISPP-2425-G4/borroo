@@ -33,8 +33,8 @@
 | Fecha      | Versión | Realizada por   | Descripción de los cambios |
 | ---------- | ------- | --------------- | -------------------------- |
 | 20-02-2025 | v1.0    | Marco Padilla Gómez | Creación del documento |
-| 20-02-2025 | v2.0    | Todos los miembros | Añadir datos sobre el trabajo realizado |
-| 11-03-2025 | v3.0    | Marco Padilla Gómez | Actualización del documento para el S1 |
+| 20-02-2025 | v1.1    | Todos los miembros | Añadir datos sobre el trabajo realizado |
+| 11-03-2025 | v2.0    | Marco Padilla Gómez | Actualización del documento para el S1 |
 |  |     |  |  |
 
 ## DP
