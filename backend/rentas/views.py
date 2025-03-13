@@ -10,9 +10,9 @@ from django.contrib.auth.models import AnonymousUser
 
 def is_authorized(condition=True, authenticated=True):
     if not authenticated:
-        raise NotAuthenticated({'error': 'Debes estar autenticado para ver tus alquileres.'})
+        raise NotAuthenticated({'error': 'Debes estar autenticado.'})
     elif not condition:
-        raise PermissionDenied({'error': 'No tienes permisos'})
+        raise PermissionDenied({'error': 'No tienes permisos para realizar esta acción.'})
 
 
 class RentViewSet(viewsets.ModelViewSet):
@@ -127,7 +127,8 @@ class RentViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         rent = self.get_object()
         renter = rent.renter
+        user = request.user if not AnonymousUser else None
         authenticated = request.user.is_authenticated
-        permission = renter == request.user
+        permission = renter == user
         is_authorized(condition=permission, authenticated=authenticated)
         return super().destroy(request, *args, **kwargs)
