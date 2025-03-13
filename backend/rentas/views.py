@@ -1,15 +1,22 @@
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework import status, filters
 from .models import Rent, RentStatus
 from .serializers import RentSerializer
+from rest_framework.exceptions import NotAuthenticated, PermissionDenied, NotFound
+
+
+def is_authorized(condition=True, authenticated=True):
+    if not authenticated:
+        raise NotAuthenticated({'error': 'Debes estar autenticado para ver tus alquileres.'})
+    elif not condition:
+        raise PermissionDenied({'error': 'No tienes permisos'})
 
 
 class RentViewSet(viewsets.ModelViewSet):
     queryset = Rent.objects.all()
     serializer_class = RentSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['payment_status']
     ordering_fields = ['total_price', 'start_date']
@@ -17,17 +24,23 @@ class RentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_staff:
-            return Rent.objects.all()
+        authenticated = self.request.user.is_authenticated
+        pk = self.kwargs.get('pk')
+        if pk is not None:
+            rent = Rent.objects.filter(pk=pk).first()
+            if rent is None:
+                raise NotFound({'error': 'El alquiler no existe.'})
+            permission = rent.renter == self.request.user
+            is_authorized(condition=permission, authenticated=authenticated)
         return Rent.objects.filter(renter=user)
 
     @action(detail=False, methods=['post'])
     def first_request(self, request, *args, **kwargs):
-        item_id = request.data.get('item')
+        objeto_id = self.kwargs.get('id')
         start_date = request.data.get('start_date')
         end_date = request.data.get('end_date')
-
-        if Rent.objects.filter(item_id=item_id, start_date__lte=end_date,
+        is_authorized(authenticated=self.request.user.is_authenticated)
+        if Rent.objects.filter(item_id=objeto_id, start_date__lte=end_date,
                                end_date__gte=start_date).exists():
             return Response(
                 {'error': 'El objeto no está disponible en esas fechas'},
@@ -35,7 +48,7 @@ class RentViewSet(viewsets.ModelViewSet):
 
         serializer = RentSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(renter=request.user, item=item_id)
+            serializer.save(renter=request.user, item=objeto_id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -95,6 +108,10 @@ class RentViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['put'])
     def cancel_rent(self, request, pk=None):
         rent = self.get_object()
+        renter = rent.renter
+        authenticated = request.user.is_authenticated
+        permission = renter == request.user
+        is_authorized(condition=permission, authenticated=authenticated)
 
         if rent.rent_status in [RentStatus.BOOKED, RentStatus.REQUESTED]:
             rent.rent_status = RentStatus.CANCELLED
@@ -104,3 +121,11 @@ class RentViewSet(viewsets.ModelViewSet):
             {'error': 'No se puede cancelar un alquiler en este estado'},
             status=400
         )
+
+    def destroy(self, request, *args, **kwargs):
+        rent = self.get_object()
+        renter = rent.renter
+        authenticated = request.user.is_authenticated
+        permission = renter == request.user
+        is_authorized(condition=permission, authenticated=authenticated)
+        return super().destroy(request, *args, **kwargs)
