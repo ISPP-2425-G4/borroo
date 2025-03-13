@@ -1693,6 +1693,42 @@
 </table>
 
 ### Palomo García, Miguel
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="8">Trabajo</td>
+    <td>Desarrollo frontend de Registro</td>
+    <td>2 hora y 30 minutos</td>
+  </tr>
+  <tr>
+    <td>Desarrollo frontend de Inicio sesion</td>
+    <td>2 hora 31 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglo backend/frontend inicio de sesion registro</td>
+    <td>10 minutos</td>
+  </tr>
+  <tr>
+    <td>Presentacion</td>
+    <td>12 horas </td>
+  </tr>
+  <tr>
+    <td>Implementacion jwt</td>
+    <td>2 horas y 19 minutos</td>
+  </tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 21-02-25</td>
+    <td>3 horas y 40 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 07-03-25</td>
+    <td>3 horas y 40 minutos</td>
+  </tr>
+</table>
 ### Periañez Franco, Luis Javier
 ### Picón Garrote, Alexander
 ### Rosado Raya, Santiago
