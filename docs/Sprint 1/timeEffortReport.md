@@ -1433,6 +1433,96 @@
 
 ### Díaz Ordoñez, Pablo
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="3">Trabajo de código</td>
+    <td>Preparar entorno de trabajo</td>
+    <td>22 minutos</td>
+  </tr>
+  <tr>
+    <td>Informarme sobre despliegue para intentar llevarlo a cabo e intento sin éxito</td>
+    <td>1 hora y 43 minutos</td>
+  </tr>
+  <tr>
+    <td>Crear workflow de commits</td>
+    <td>1 hora y 47 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="13">Trabajo de documentación</td>
+    <td>Realizar UML de la aplicación</td>
+    <td>24 minutos</td>
+  </tr>
+  <tr>
+    <td>Realizar plan de gestión de requisitos y registro de requisitos</td>
+    <td>1 hora y 26 minutos</td>
+  </tr>
+  <tr>
+    <td>Realizar registro de requisitos</td>
+    <td>1 hora y 57 minutos</td>
+  </tr>
+  <tr>
+    <td>Completar y revisar registro de requisitos y plan de gestión de requisitos</td>
+    <td>57 minutos</td>
+  </tr>
+  <tr>
+    <td>Registrar y documentar riesgos del sprint 1</td>
+    <td>1 hora y 41 minutos</td>
+  </tr>
+  <tr>
+    <td>Pasar commitment agreements a formato .md</td>
+    <td>1 hora y 4 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldoras teóricas (2 sesiones- 05a y 05b)</td>
+    <td>1 hora y 14 minutos</td>
+  </tr>
+  <tr>
+    <td>Pasar commitment agreements a formato .md, añadir sus fotos</td>
+    <td>27 minutos</td>
+  </tr>
+  <tr>
+    <td>Pasar report de uso de la IA a formato .md</td>
+    <td>29 minutos</td>
+  </tr>
+  <tr>
+    <td>Evaluación y modelo de rendimiento en formato .md, añadir nueva métrica de medida de jefes de subgrupo</td>
+    <td>1 hora y 22 minutos</td>
+  </tr>
+  <tr>
+    <td>Pasar los protocolos de gestión de conflictos a formato .md</td>
+    <td>57 minutos</td>
+  </tr>
+  <tr>
+    <td>Rellenar mi parte del performanceEvaluation del Sprint 1</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>Rellenar mi parte del timeEffort del Sprint 1</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>Reuniones</td>
+    <td>Reunión 09/03/2025 - Sprint 1</td>
+    <td>1 hora y 9 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 21/02/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 07/03/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
+
+
 ### Espinosa Naranjo, Pablo
 ### Fernández Rodríguez, Jesús
 ### Fernández Mota, Francisco
