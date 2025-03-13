@@ -31,20 +31,25 @@
 - Miguel Palomo García
 - Luis Javier Periáñez Franco
 - Alexander Picón Garrote
-- Santiago Rosado Raya (writer)
+- Santiago Rosado Raya
 - Julia Sánchez Márquez
 - Alejandro Sevillano Barea
 
+## **Histórico de modificaciones**
 
+| Fecha      | Versión | Realizada por   | Descripción de los cambios |
+| ---------- | ------- | --------------- | -------------------------- |
+| 10-03-2025 | v1.0    | Santiago Rosado Raya | Creación y elaboración del documento |
+| 13-03-2025 | v1.1    | Marco Padilla Gómez | Añadir histórico y cambio de nombre acorde al que pedian |
 
 ---
-**Nombre**: Pablo Olivencia Moreno  
+**Nombre**: [Nombre del Usuario]  
 
-**Fecha**: 12/03/2025  
+**Fecha**: [DD/MM/AAAA]  
 
 **Versión del Proyecto**: 1.0  
 
-**Grupo de trabajo**: G7
+**Grupo de trabajo**: [Grupo de trabajo de cada persona]  
 
 ## Compromiso
 
@@ -67,4 +72,4 @@ Al firmar este documento, entiendo y acepto las responsabilidades que se me han 
 En caso de incumplimiento de los compromisos mencionados anteriormente, su evaluación será nula.  
 
 **Firma del Usuario**
-![](firmasUp/firma_pablo.png)
+
