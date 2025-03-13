@@ -1518,3 +1518,62 @@
 ### Rosado Raya, Santiago
 ### Sánchez Márquez, Julia
 ### Sevillano Barea, Alejandro
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="8">Trabajo</td>
+    <td>Configuración de ZenHub</td>
+    <td>1 hora y 44 minutos</td>
+  </tr>
+  <tr>
+    <td>Asociación del ZenHub con GitHub</td>
+    <td>31 minutos</td>
+  </tr>
+  <tr>
+    <td>Asignación de tareas en ZenHub</td>
+    <td>18 minutos</td>
+  </tr>
+  <tr>
+    <td>Preparar entorno de pruebas unitarias</td>
+    <td>3 horas y 51 minutos</td>
+  </tr>
+  <tr>
+    <td>Test unitarios de búsqueda</td>
+    <td>2 horas y 54 minutos</td>
+  </tr>
+  <tr>
+    <td>Reportes de bugs</td>
+    <td>36 minutos</td>
+  </tr>
+  <tr>
+    <td>Despliegue 12/03/2025</td>
+    <td>2 horas y 49 minutos</td>
+  </tr>
+  <tr>
+    <td>Modificación de la Landing page</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>Reuniones</td>
+    <td>Reunión 09/03/2025</td>
+    <td>1 hora y 13 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldoras Teóricas</td>
+    <td>Visualización de las Píldoras teóricas 5a y 5b</td>
+    <td>1 hora y 13 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 21-02-25</td>
+    <td>3 horas y 40 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 07-03-25</td>
+    <td>3 horas y 40 minutos</td>
+  </tr>
+</table>
