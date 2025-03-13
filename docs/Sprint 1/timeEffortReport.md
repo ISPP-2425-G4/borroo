@@ -1580,6 +1580,55 @@
 
 
 ### Espinosa Naranjo, Pablo
+
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="4">Trabajo</td>
+      <td>Union backend y frontend</td>
+      <td>2h27min</td>
+    </tr>
+    <tr>
+      <td>Desarrollo frontend (formación react, filtrado y busqueda, estilo, formación “responsive”) </td>
+      <td>11h32min</td>
+    </tr>
+    <tr>
+      <td>Despliegue</td>
+      <td>4h57min</td>
+    </tr>
+    <tr>
+      <td>Doc: revision.md</td>
+      <td>3h50min</td>
+    </tr>
+    <tr>
+      <td rowspan="1">Reuniones</td>
+      <td>Reunión 09/03</td>
+      <td>1h30min</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 07/03</td>
+      <td>3h50min</td>
+    </tr>
+    <tr>
+      <td>Clase 21/02</td>
+      <td>3h50min</td>
+    </tr>
+    <tr>
+      <td rowspan="1">Píldoras</td>
+      <td>Sesión 5a y 5b</td>
+      <td>1h16min</td>
+    </tr>
+  </tbody>
+</table>
+
 ### Fernández Rodríguez, Jesús
 ### Fernández Mota, Francisco
 ### García Rodríguez, Javier
