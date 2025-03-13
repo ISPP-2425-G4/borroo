@@ -1681,6 +1681,73 @@
 ### González Ortiz, Miguel
 ### Martin Muñoz, Álvaro
 ### Naredo Bernardos, Ignacio
+
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="8">Trabajo</td>
+    <td>Conexión BBDD</td>
+    <td>3 horas y 35 minutos</td>
+  </tr>
+  <tr>
+    <td>Filtro de categorías</td>
+    <td>2 horas y 10 minutos</td>
+  </tr>
+  <tr>
+    <td>Estructura de backend</td>
+    <td>1 hora y 42 minutos</td>
+  </tr>
+  <tr>
+    <td>Método búsqueda</td>
+    <td>1 hora y 11 minutos</td>
+  </tr>
+  <tr>
+    <td>Guía Conexión BBDD</td>
+    <td>28 minutos</td>
+  </tr>
+  <tr>
+    <td>Despliegue app engine</td>
+    <td>2 horas y 21 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglo fallos y gestión equipo</td>
+    <td>1 hora y 39 minutos</td>
+  </tr>
+  <tr>
+    <td>Inicio de modelado de datos</td>
+    <td>2 horas y 10 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 21/02</td>
+    <td>3 horas y 40 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 07/03</td>
+    <td>3 horas y 40 minutos</td>
+  </tr>
+  <tr>
+    <td>Reuniones</td>
+    <td>Reunión</td>
+    <td>1 hora y 11 minutos</td>
+  </tr>
+  <tr>
+    <td>Docusaurus</td>
+    <td>Base de conocimiento</td>
+    <td>1 hora y 25 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldoras teóricas</td>
+    <td>Ver videos de píldoras</td>
+    <td>1 hora y 13 minutos</td>
+  </tr>
+</table>
+
+
 ### Nieto Vicioso, Javier
 ### Padilla Gómez, Marco
 <table>
