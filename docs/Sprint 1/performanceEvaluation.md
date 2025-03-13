@@ -6,8 +6,11 @@
 
 ## PERFORMANCE EVALUATION
 
-### Sprint 1 (S1) – G4
-**Repositorio:** [https://github.com/ISPP-2425-G4/](https://github.com/ISPP-2425-G4/)
+### Sprint 1 – G4
+**Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
+
+**Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
+
 **Fecha:** 13/03/2025
 
 
@@ -32,7 +35,19 @@
 - JULIA SANCHEZ MARQUEZ
 - ALEJANDRO SEVILLANO BAREA
 
-**Version: _#DP1_**
+---
+
+## **Histórico de modificaciones**
+| Fecha      | Versión | Realizada por   | Descripción de los cambios |
+| ---------- | ------- | --------------- | -------------------------- |
+| 20-02-2025 | v1.0    | Marco Padilla Gómez | Creación del documento |
+| 20-03-2025 | v1.1    | Todos los miembros | Añadir datos sobre el trabajo realizado |
+| 13-03-2025 | v2.0    | Marco Padilla Gómez | Actualizar documento para S1 |
+
+
+---
+
+**Version: _#S1_**
 
 ---
 
@@ -59,10 +74,8 @@
 | Rosado Raya, Santiago | 10 | | | | | | | |
 | Sánchez Márquez, Julia | 10 | | | | | | | |
 | Sevillano Barea, Alejandro | 10 | | | | | | | |
+| Total | 170 | | | | | | | |
 
-**Total: 170**  
-
----
 
 # Individual Contribution Summary  
 
@@ -192,3 +205,56 @@ Durante la primera semana, mi tarea fue la misma que la de todos los integrantes
 Durante la segunda semana, nos enfocamos en realizar un análisis exhaustivo de los competidores, identificando tanto sus fortalezas como sus debilidades.
 
 Durante la tercera semana, creé la landing page con el objetivo de ofrecer una vista previa de la página que deseamos desarrollar, destacando sus funcionalidades principales.
+
+
+## Sprint 1 (#S1)
+
+### **Blanco Mora, David**  
+
+
+### **Díaz Ordóñez, Pablo**  
+
+
+### **Espinosa Naranjo, Pablo**
+
+
+### **Fernández Rodríguez, Jesús**
+
+
+### **Fernández Mota, Francisco**
+
+
+### **García Rodríguez, Javier**
+
+
+### **González Ortiz, Miguel**
+
+
+### **Martín Muñoz, Álvaro**
+
+
+### **Naredo Bernardos, Ignacio**
+
+
+### **Nieto Vicioso, Javier**
+
+
+### **Padilla Gómez, Marco**
+
+
+### **Palomo García, Miguel**
+
+
+### **Periañez Franco, Luis Javier**
+
+
+### **Picón Garrote, Alexander**
+
+
+### **Rosado Raya, Santiago**
+
+
+### **Sánchez Márquez, Julia**
+
+
+### **Sevillano Barea, Alejandro**
