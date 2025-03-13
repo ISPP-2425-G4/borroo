@@ -60,16 +60,16 @@
 | Blanco Mora, David | 10 | 9,9 | | | | | | |
 | Díaz Ordóñez, Pablo | 10 | 10 | | | | | | |
 | Espinosa Naranjo, Pablo | 10 | | | | | | | | |
-| Fernandez Rodriguez, Jesus | 10 | | | | | | | |
+| Fernandez Rodriguez, Jesus | 10 | 10| | | | | | |
 | Fernández Mota, Francisco | 10 | 10 | | | | | | |
-| García Rodríguez, Javier | 10 | | | | | | | |
-| Gonzalez Ortiz, Miguel | 10 | | | | | | | |
+| García Rodríguez, Javier | 10 | 10| | | | | | |
+| Gonzalez Ortiz, Miguel | 10 | 10| | | | | | |
 | Martin Muñoz, Álvaro | 10 | | | | | | | |
 | Naredo Bernardos, Ignacio | 10 | | | | | | | |
 | Nieto Vicioso, Javier | 10 | 10 | | | | | | |
 | Padilla Gómez, Marco | 10 | | | | | | | |
-| Palomo García, Miguel | 10 | | | | | | | |
-| Periañez Franco, Luis Javier | 10 | | | | | | | |
+| Palomo García, Miguel | 10 | 10| | | | | | |
+| Periañez Franco, Luis Javier | 10 | 10| | | | | | |
 | Picón Garrote, Alexander | 10 | | | | | | | |
 | Rosado Raya, Santiago | 10 | 10  | | | | | | |
 | Sánchez Márquez, Julia | 10 | 10| | | | | | |
@@ -240,7 +240,11 @@ Añadir a lo citado anteriormente que se asistió a todas las clases de feedback
 
 
 ### **Fernández Rodríguez, Jesús**
+Durante la primera semana, trabajé en la creación de workflows de integración continua para el desarrollo del proyecto.
 
+En la segunda semana, me enfoqué en el desarrollo del backend del modelo de ítem y sus endpoints asociados. Además, comencé a trabajar en el despliegue en App Engine.
+
+Durante la tercera semana, completé el despliegue de la aplicación en App Engine, implementé el manejo de imágenes para la puesta en alquiler de objetos, ayudé a mis compañeros con configuraciones del proyecto y realicé varios ajustes en las pantallas del frontend relacionadas con la funcionalidad de alquiler.
 
 ### **Fernández Mota, Francisco**
 Durante la primera semana del Sprint 1, desarrollé el UML en función de los requisitos de la aplicación y junto al PM y los GMs gestionamos las tareas, y luego hice un reparto de estas a mi subgrupo. 
@@ -261,7 +265,11 @@ En esta última semana, se ha visto el proyecto afectado de forma grave por una 
 
 
 ### **González Ortiz, Miguel**
+Durante el desarrollo S1 me he dedicado principalmente a la implementación de la entidad de usuario, de la creación de sus operaciones CRUD y sus validaciones. 
 
+En la segunda semana me centre en la implementación del login y registro en la parte del backend, y la realización de pruebas unitarias para las operaciones CRUD de la entidad usuarios. 
+
+Por último, la última semana me centre en el manejo de errores de las validaciones en el frontend y backend, además, a lo largo del S1 me he encargado de la revisión de PR de mi subgrupo debido a mi rol de QA.
 
 ### **Martín Muñoz, Álvaro**
 
@@ -284,10 +292,18 @@ En la siguiente semana, estuve con los modelos del item y price y comprobé que 
 En esta última semana, me he focalizado en documentación para que no hubiera sorpresas de cara al final de la entrega, actualicé los documentos de timeEffort y de performanceEvaluation, elaboré el KBreport, añadí el feedback a las bases de datos de conocimiento, tanto la común como la propia y estuve añadiendo tablas de historico de modificaciones y revisando los proyectos clave del failure condition. 
 
 ### **Palomo García, Miguel**
+Durante la primera semana me dedique al desarrollo e implementacion de frontend del navbar y el register
 
+Durante la segunda semana me dedique al desarrollo e implementaicon de frontend de login y jwt además de la presentacion completa
+
+Durante la tercera semana me dedique a arreglar errores relacionado con el login y el register ademas de la presentacion completa
 
 ### **Periañez Franco, Luis Javier**
+Durante la implementación del proyecto, me enfoqué en el desarrollo del frontend, comenzando por la incorporación de la barra de navegación (navbar) y la estructura base del proyecto. Principalmente, trabajé en la funcionalidad del CRUD de objetos, implementando las operaciones de creación, actualización y eliminación.
 
+Posteriormente, mejoré la estética de la interfaz, añadiendo la gestión de imágenes para ofrecer una mejor visualización y facilitando la asociación de estas con los usuarios. Además, solucioné diversos problemas que surgieron a lo largo del proceso de desarrollo.
+
+Asimismo, participé activamente en reuniones, contribuyendo con ideas y asegurando que el desarrollo avanzara de manera eficiente.
 
 ### **Picón Garrote, Alexander**
 
@@ -302,6 +318,14 @@ En la tercera semana, he estado en contacto con los usuarios piloto, elaborando 
 
 
 ### **Sánchez Márquez, Julia**
+Durante la primera semana del Sprint 1, colaboré con mi compañero Francisco en el desarrollo del diagrama UML. Aunque enfrentamos varios desafíos y recibimos observaciones de nuestros compañeros, logramos remodelarlo hasta alcanzar la versión definitiva. Paralelamente, inicié el proyecto base utilizando las herramientas que el equipo nos había facilitado. 
 
+En la segunda semana, en mi rol de desarrolladora, implementé todas las rutas relacionadas con la entidad Renta, trabajo que adelantaría para la siguiente fase. 
+
+Durante la última semana, me centré en probar el correcto funcionamiento de todas las URLs. Como era de esperarse, surgieron varios inconvenientes. Inicialmente, se presentó un problema en la base de datos, el cual solucioné con el apoyo de mis compañeros durante una reunión de coordinación. Siguiendo una recomendación, intenté crear un archivo seeder.py para poblar la base de datos y facilitar las pruebas, pero al notar que esta tarea consumía más tiempo del esperado, opté por crear objetos manualmente y trabajar con ellos en local. Durante este proceso, identifiqué y corregí un error de tipos en el modelo Rent tras un tiempo de investigación, y posteriormente ajusté la lógica de las rutas para resolver otros problemas detectados. 
+
+Antes de subir los cambios, la implementación de un workflow me permitió detectar que el código no era lo suficientemente eficiente, lo que me llevó a refactorizarlo. Una vez subidos los cambios, colaboré con un compañero que necesitaba ayuda en una parte del código, realizando las modificaciones necesarias para que pudiera continuar con su trabajo. Finalmente, junto a Francisco, implementé todas las validaciones en el backend para prevenir cualquier acceso no deseado. 
+
+Para concluir, creé el usuario administrador de la aplicación, convertí algunos documentos a Markdown en colaboración con Francisco y finalicé la visualización de las “Theroy Pills”. 
 
 ### **Sevillano Barea, Alejandro**
