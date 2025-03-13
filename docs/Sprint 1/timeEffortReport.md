@@ -1693,7 +1693,7 @@
     </thead>
     <tbody>
         <tr>
-            <td rowspan="7">Código</td>
+            <td rowspan="8">Código</td>
             <td>Github</td>
             <td>49 minutos</td>
         </tr>
@@ -1840,8 +1840,11 @@
     <td>3 horas y 40 minutos</td>
   </tr>
 </table>
+
 ### Periañez Franco, Luis Javier
+
 ### Picón Garrote, Alexander
+
 ### Rosado Raya, Santiago
 <table>
   <tr>
