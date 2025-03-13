@@ -1842,6 +1842,56 @@
 </table>
 
 ### Periañez Franco, Luis Javier
+# Registro de Actividades
+
+<table>
+  <tr>
+    <th>Categoría</th>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="6">Trabajo</td>
+    <td>Implementación de la estructura base del frontend</td>
+    <td>Creación de la navbar y organización de la arquitectura del proyecto</td>
+    <td>2 horas 45 minutos</td>
+  </tr>
+  <tr>
+    <td>Desarrollo frontend del CRUD de objetos</td>
+    <td>Implementación de las operaciones de creación, actualización y eliminación</td>
+    <td>6 horas</td>
+  </tr>
+  <tr>
+    <td>Desarrollo frontend de implementación de imágenes</td>
+    <td>Integración de imágenes para mejorar la visualización y asociación con el usuario</td>
+    <td>6 horas</td>
+  </tr>
+  <tr>
+    <td>Desarrollo frontend del User</td>
+    <td>Implementación de las funcionalidades relacionadas con el usuario</td>
+    <td>1 hora 30 minutos</td>
+  </tr>
+  <tr>
+    <td>Corrección de errores y mejoras</td>
+    <td>Solución de problemas surgidos durante el desarrollo</td>
+    <td>2 horas</td>
+  </tr>
+  <tr>
+    <td>Asistencia a reuniones</td>
+    <td>Participación en reuniones de seguimiento y planificación</td>
+    <td>2 horas</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+  </tr>
+  <tr>
+    <td>Clase 07-03-25</td>
+    <td>Asistencia y participación en la clase del 7 de marzo</td>
+    <td>3 horas 40 minutos</td>
+  </tr>
+</table>
+
 
 ### Picón Garrote, Alexander
 
