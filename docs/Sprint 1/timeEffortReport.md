@@ -1842,6 +1842,112 @@
 </table>
 ### Periañez Franco, Luis Javier
 ### Picón Garrote, Alexander
+
+### Picón Garrote, Alexander  
+
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="15">Trabajo</td>
+    <td>Revisión de metodología del modelo de rendimiento y Performance Evaluation</td>
+    <td>39 minutos y 48 segundos</td>
+  </tr>
+  <tr>
+    <td>4 time effort report</td>
+    <td>23 minutos y 16 segundos</td>
+  </tr>
+  <tr>
+    <td>Definición de roles</td>
+    <td>14 minutos y 56 segundos</td>
+  </tr>
+  <tr>
+    <td>Acta de reunión 18/02</td>
+    <td>1 hora, 4 minutos y 33 segundos</td>
+  </tr>
+  <tr>
+    <td>Modelo de rendimiento</td>
+    <td>48 minutos y 28 segundos</td>
+  </tr>
+  <tr>
+    <td>Análisis de riesgos</td>
+    <td>56 minutos y 40 segundos</td>
+  </tr>
+  <tr>
+    <td>Plan de gestión de riesgos revisión</td>
+    <td>27 minutos y 48 segundos</td>
+  </tr>
+  <tr>
+    <td>Revisión y corrección de registro de riesgos</td>
+    <td>24 minutos y 3 segundos</td>
+  </tr>
+  <tr>
+    <td>Riesgos (plan de gestión de riesgos)</td>
+    <td>1 hora, 22 minutos y 38 segundos</td>
+  </tr>
+  <tr>
+    <td>Píldora sesión 2b</td>
+    <td>29 minutos y 32 segundos</td>
+  </tr>
+  <tr>
+    <td>Realización de MVP</td>
+    <td>1 hora, 29 minutos y 18 segundos</td>
+  </tr>
+  <tr>
+    <td>Píldora sesión 2a</td>
+    <td>35 minutos y 53 segundos</td>
+  </tr>
+  <tr>
+    <td>Píldora sesión 1</td>
+    <td>49 minutos y 35 segundos</td>
+  </tr>
+  <tr>
+    <td>Realización de puntos de subgrupo (matriz DAFO y MVP)</td>
+    <td>1 hora, 39 minutos y 44 segundos</td>
+  </tr>
+  <tr>
+    <td>Presentación</td>
+    <td>38 minutos y 33 segundos</td>
+  </tr>
+  <tr>
+    <td>Búsqueda de idea de negocio</td>
+    <td>43 minutos y 0 segundos</td>
+  </tr>
+  <tr>
+    <td rowspan="4">Reuniones</td>
+    <td>Reunión 18/02</td>
+    <td>1 hora, 32 minutos y 37 segundos</td>
+  </tr>
+  <tr>
+    <td>Reunión 13/02</td>
+    <td>1 hora, 14 minutos y 24 segundos</td>
+  </tr>
+  <tr>
+    <td>Reunión 06/02</td>
+    <td>1 hora, 54 minutos y 59 segundos</td>
+  </tr>
+  <tr>
+    <td>Reunión 03/02</td>
+    <td>2 horas, 10 minutos y 0 segundos</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Clase</td>
+    <td>Clase 31/01/25</td>
+    <td>3 horas y 40 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 07/02/25</td>
+    <td>3 horas y 40 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 14/02/25</td>
+    <td>3 horas y 40 minutos</td>
+  </tr>
+</table>
+
 ### Rosado Raya, Santiago
 <table>
   <tr>
