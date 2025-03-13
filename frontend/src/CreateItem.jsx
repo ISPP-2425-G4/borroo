@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FiFileText, FiEdit, FiLayers, FiXCircle, FiDollarSign } from "react-icons/fi";
+import { FiFileText, FiEdit, FiLayers, FiXCircle, FiDollarSign, FiTrash2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import "../public/styles/CreateItem.css";
@@ -61,13 +61,13 @@ const CreateItemScreen = () => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-  
-    // Agregar nuevas imágenes sin eliminar las anteriores
     setImages((prevImages) => [...prevImages, ...files]);
-  
-    // Generar y agregar vistas previas de las nuevas imágenes
+    e.target.value = "";
   };
-  
+
+  const handleRemoveImage = (index) => {
+    setImages(images.filter((_, i) => i !== index));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -103,11 +103,10 @@ const CreateItemScreen = () => {
     }
 
     if (Object.keys(errors).length > 0) {
-  setFieldErrors(errors);
-  setLoading(false);
-  return;
-};
-
+      setFieldErrors(errors);
+      setLoading(false);
+      return;
+    }
 
     try {
       const formDataToSend = new FormData();
@@ -162,8 +161,6 @@ const CreateItemScreen = () => {
       setLoading(false);
     }
   };
-  
-  
 
   return (
     <div className="create-item-container">
@@ -232,7 +229,22 @@ const CreateItemScreen = () => {
           <div className="input-group">
             <label className="input-icon">📷</label>
             <input type="file" multiple accept="image/*" onChange={handleImageChange} />
+          </div>
+
+          {/* Imágenes nuevas seleccionadas */}
+          {images.length > 0 && (
+            <div className="image-gallery">
+              <p>Imágenes nuevas seleccionadas:</p>
+              {images.map((image, index) => (
+                <div key={index} className="image-item">
+                  <img src={URL.createObjectURL(image)} alt="new" className="item-image" />
+                  <button type="button" onClick={() => handleRemoveImage(index)}>
+                    <FiTrash2 /> Eliminar
+                  </button>
+                </div>
+              ))}
             </div>
+          )}
 
           <button type="submit" className="primary-btn" disabled={loading}>
             {loading ? "Publicando..." : "Publicar"}
@@ -243,9 +255,7 @@ const CreateItemScreen = () => {
   );
 };
 
-
 const InputField = ({ icon, ...props }) => (
-  
   <div className="input-group">
     <span className="input-icon">{icon}</span>
     <input {...props} required />
@@ -274,7 +284,6 @@ const SelectField = ({ icon, options, placeholder, ...props }) => (
   </div>
 );
 
-
 SelectField.propTypes = {
   icon: PropTypes.element.isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({
@@ -300,4 +309,5 @@ TextareaField.propTypes = {
   })).isRequired,
   placeholder: PropTypes.string.isRequired,
 };
+
 export default CreateItemScreen;
