@@ -230,6 +230,13 @@ También visualicé los videos de las Theory Pills correspondientes a las sesion
 
 
 ### **Espinosa Naranjo, Pablo**
+Durante la primera semana del sprint 1, me encargué de aplicar la conexión entre el backend y el frontend del proyecto, lo cual conllevó más tiempo del previsto, al tener que informarse previamente de como era posible conectar los frameworks seleccionados (Django y React), y posteriormente enfrentar los distintos errores de configuración que aparecieron. También comencé a formarme acerca del framework de frontend escogido por el equipo. 
+
+Durante la segunda semana, me encargué de implementar una estructura sobre como se realizaría en el frontend el sistema de busqueda y filtrado de los objetos en alquiler, comunicandome con mi compañero Ignacio Naredo, encargado de esas funcionalidades en backend, para cual debía ser la lógica a seguir para las funcionalidades. También dedique tiempo al apoyo a compañeros en distintas dificultades encontradas en sus tareas, y a informarme  sobre como hacer que el frontend sea “Responsive” en futuros sprints. 
+
+Durante la tercera semana, me encargué de conectar las funciones de backend y frontend mencionadas anteriormente, además de cambiar ciertos estilos para que la página principal se mostrase de forma clara y acorde al estilo de la aplicación que pretendemos seguir, junto a mi compañero Álvaro Martín. También me encargué del despliegue en gcloud de la aplicación, y del desarrollo del documento de revisión. 
+
+Añadir a lo citado anteriormente que se asistió a todas las clases de feedback y a la reunión del equipo. También se visualizaron todas las píldoras teóricas. 
 
 
 ### **Fernández Rodríguez, Jesús**
