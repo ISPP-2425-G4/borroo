@@ -2042,6 +2042,143 @@
 
 
 ### Nieto Vicioso, Javier
+<table border="1">
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="7">Código</td>
+      <td>Configurando el entorno en local, configurando el backend con mariaDB (05/03/2025)</td>
+      <td>29 minutos</td>
+    </tr>
+    <tr>
+      <td>Acabando de configurar el entorno en local (frontend + backend) (06/03/2025)</td>
+      <td>16 minutos</td>
+    </tr>
+    <tr>
+      <td>Probando la aplicación y creando una issue de bug y arreglándolo (07/03/2025)</td>
+      <td>51 minutos</td>
+    </tr>
+    <tr>
+      <td>Visualizando y entendiendo el código de backend sobre los usuarios y los objetos y probando a asociar un item a un usuario cuando se crea el item (09/03/2025)</td>
+      <td>1 hora 4 minutos</td>
+    </tr>
+    <tr>
+      <td>Mejora visual de la página de detalles de un producto (09/03/2025)</td>
+      <td>34 minutos</td>
+    </tr>
+    <tr>
+      <td>Mejorando la vista de detalles de un producto con la primera versión del calendario y resolviendo conflictos y entendiendo nuevo código subido (09/03/2025)</td>
+      <td>52 minutos</td>
+    </tr>
+    <tr>
+      <td>Mejora visual de la vista de los detalles de un objeto (09/03/2025)</td>
+      <td>1 hora 6 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="3">Documentación</td>
+      <td>Realizando el plan de gestión de los requisitos e iniciando el registro de requisitos (24/02/2025)</td>
+      <td>1 hora y 22 minutos</td>
+    </tr>
+    <tr>
+      <td>Añadiendo más requisitos funcionales y no funcionales al Registro de requisitos con sus criterios de aceptación, prioridad e interesados (25/02/2025)</td>
+      <td>58 minutos</td>
+    </tr>
+    <tr>
+      <td>Añadiendo todos los requisitos funcionales faltantes, menos los de administración (26/02/2025)</td>
+      <td>1 hora y 11 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="4">Píldoras teóricas</td>
+      <td>Píldora 5a</td>
+      <td>26 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldora 5b</td>
+      <td>46 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 21/02</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 07/03</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Reuniones</td>
+      <td>Reunión 09/03/2025</td>
+      <td>1 hora y 11 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="22">Código</td>
+      <td>Creación de la primera versión de solicitar el alquiler de un objeto (sólo estética) (10/03/2025)</td>
+      <td>38 minutos</td>
+    </tr>
+    <tr>
+      <td>Creando un modal de confirmación de la solicitud personalizado para la app e implementándolo en la solicitud de objeto (10/03/2025)</td>
+      <td>47 minutos</td>
+    </tr>
+    <tr>
+      <td>Cambiado la forma en la que se muestra un item no existente, comprobando todo el código de los detalles de un objeto y realizando la PR (10/03/2025)</td>
+      <td>38 minutos</td>
+    </tr>
+    <tr>
+      <td>Haciendo las capturas de frontend para los usuarios piloto con objetos de prueba (12/03/2025)</td>
+      <td>20 minutos</td>
+    </tr>
+    <tr>
+      <td>Probando la app en develop para comprobar que todo funciona correctamente (12/03/2025)</td>
+      <td>26 minutos</td>
+    </tr>
+    <tr>
+      <td>Probando y viendo la funcionalidad de listado de objetos para corregir fallos (12/03/2025)</td>
+      <td>19 minutos</td>
+    </tr>
+    <tr>
+      <td>Corrigiendo algunas funcionalidades del listado de objetos (descripción, link provisional objetos y probando implementar imágenes (no implementado todavía)) (12/03/2025)</td>
+      <td>57 minutos</td>
+    </tr>
+    <tr>
+      <td>Probando el backend de las solicitudes de objeto (12/03/2025)</td>
+      <td>30 minutos</td>
+    </tr>
+    <tr>
+      <td>Probando backend y buscando un error de la base de datos (Error en databases de settings.py) (12/03/2025)</td>
+      <td>1 hora</td>
+    </tr>
+    <tr>
+      <td>Configurando la base de datos y probando el backend (12/03/2025)</td>
+      <td>22 minutos</td>
+    </tr>
+    <tr>
+      <td>Entendiendo y probando el backend y la autenticación mediante peticiones de postman y django rest framework (13/03/2025)</td>
+      <td>33 minutos</td>
+    </tr>
+    <tr>
+      <td>Probando con postman la autenticación con Jwt, e intentando hacer que funcione esta autenticación con "Bearer" mediante varios métodos sin haber sido capaz (13/03/2025)</td>
+      <td>2 horas 26 minutos</td>
+    </tr>
+    <tr>
+      <td>Probando la autenticación con jwt para ver cómo funciona, con postman, jwt.io y modificando el código en local (13/03/2025)</td>
+      <td>41 minutos</td>
+    </tr>
+    <tr>
+      <td>Resolviendo errores de frontend nuevos y probando de nuevo la autenticación de la app que sigue sin funcionar con jwt (13/03/2025)</td>
+      <td>29 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglando la conexión frontend-backend de la solicitud de un objeto (13/03/2025)</td>
+      <td>1 hora 51 minutos</td>
+    </tr>
+  </tbody>
+</table>
 ### Padilla Gómez, Marco
 <table>
     <thead>
