@@ -2015,7 +2015,93 @@
   </tr>
 </table>
 
-### Sánchez Márquez, Julia
+### Sánchez Márquez, Julia 
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="16">Trabajo</td>
+      <td>Creación de diagrama UML</td>
+      <td>5 horas y 20 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar incongruencias en el diagrama</td>
+      <td>1 hora</td>
+    </tr>
+    <tr>
+      <td>Inicializar proyecto base</td>
+      <td>8 minutos</td>
+    </tr>
+    <tr>
+      <td>Implementar todos los endpoint de Rentas</td>
+      <td>3 hora y 5 minutos</td>
+    </tr>
+    <tr>
+      <td>Implementar backend rentas para aceptar o rechazar un alquiler + Validar todas los endpoints</td>
+      <td>3 horas y 31 minutos</td>
+    </tr>
+    <tr>
+      <td>Solucionar errores con bbdd</td>
+      <td>1 hora y  35 minutos</td>
+    </tr>
+    <tr>
+      <td>Intento seeder para probar endpoints</td>
+      <td>20 minutos</td>
+    </tr>
+    <tr>
+      <td>Creacion de objetos para probar endpoints + probar endpoints</td>
+      <td>21 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar fallo modelo Rent</td>
+      <td>14 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar fallo Codacy</td>
+      <td>25 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar método POST Rent + serializer</td>
+      <td>32 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar migraciones + solucionar fallo url para david</td>
+      <td>19 minutos</td>
+    </tr>
+    <tr>
+      <td>Convertir docs de pdf a md</td>
+      <td>24 minutos</td>
+    </tr>
+    <tr>
+      <td>Crear usuario admin</td>
+      <td>15 minutos</td>
+    </tr>
+    <tr>
+      <td>Theory Pill S02 A</td>
+      <td>26 minutos</td>
+    </tr>
+    <tr>
+      <td>Theory Pill S02 B</td>
+      <td>46minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 21/02/25</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 7/3/25</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+  </tbody>
+</table>
+
 ### Sevillano Barea, Alejandro
 <table>
   <tr>
