@@ -1632,6 +1632,52 @@
 ### Fernández Rodríguez, Jesús
 ### Fernández Mota, Francisco
 ### García Rodríguez, Javier
+
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="2">Trabajo</td>
+    <td>Preparación presentación</td>
+    <td>7 horas</td>
+  </tr>
+  <tr>
+    <td>Gestión de tareas y organización del proyecto durante el S1</td>
+    <td>13 horas y 17 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clase</td>
+    <td>Clase 21/2/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 7/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Reuniones</td>
+    <td>Reunión 22/2/25</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>Reunión 09/03/2025</td>
+    <td>1 hora y 12 minutos</td>
+  </tr>
+  <tr>
+    <td>Reunión representantes</td>
+    <td>33 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldoras teóricas</td>
+    <td>Sesión 05a y 05b</td>
+    <td>1 hora y 13 minutos</td>
+  </tr>
+</table>
+
+
 ### González Ortiz, Miguel
 ### Martin Muñoz, Álvaro
 ### Naredo Bernardos, Ignacio
