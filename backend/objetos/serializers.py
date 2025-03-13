@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from .models import Item, ItemImage
 import os
-from django.conf import settings
+import requests
+import base64
 
 
 class ItemImageSerializer(serializers.ModelSerializer):
@@ -43,7 +44,8 @@ class ItemSerializer(serializers.ModelSerializer):
 
         # Guardar las imágenes asociadas al item
         for image in image_files:
-            ItemImage.objects.create(item=item, image=image)
+            image_url = self.upload_image_to_imgbb(image)
+            ItemImage.objects.create(item=item, image=image_url)
 
         return item
 
@@ -62,15 +64,27 @@ class ItemSerializer(serializers.ModelSerializer):
 
         if image_files is not None:
             for old_image in instance.images.all():
-                image_path = os.path.join(settings.MEDIA_ROOT,
-                                          str(old_image.image))
-                if os.path.exists(image_path):
-                    os.remove(image_path)  # Eliminar archivo del sistema
                 old_image.delete()  # Eliminar registro en la base de datos
 
-            # 2️⃣ Agregar las nuevas imágenes
+            # Agregar las nuevas imágenes
             for image in image_files:
-                ItemImage.objects.create(item=instance, image=image)
+                image_url, delete_url = self.upload_image_to_imgbb(image)
+                ItemImage.objects.create(item=instance, image=image_url)
 
         instance.save()
         return instance
+
+    def upload_image_to_imgbb(self, image):
+        url = "https://api.imgbb.com/1/upload"
+        image_base64 = base64.b64encode(image.read()).decode('utf-8')
+        payload = {
+            "key": os.getenv("IMGBB_API_KEY"),
+            "image": image_base64,
+        }
+        response = requests.post(url, data=payload)
+        response_data = response.json()
+        if 'data' in response_data:
+            return response_data['data']['url']
+        else:
+            print(response_data)
+            raise Exception("Error uploading image to Imgbb")
