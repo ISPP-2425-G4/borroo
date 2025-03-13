@@ -4,7 +4,6 @@ import { FiArrowLeft, FiTrash2, FiEdit, FiFileText, FiLayers, FiXCircle, FiDolla
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { addDays } from "date-fns";
 import "../public/styles/ItemDetails.css";
 import Navbar from "./Navbar";
 import Modal from "./Modal";
@@ -18,11 +17,15 @@ const ShowItemScreen = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState("");  // 🔹 Nuevo estado para el nombre del usuario
-  const [dateRange, setDateRange] = useState([
-    { startDate: new Date(), endDate: addDays(new Date(), 7), key: "selection" },
-  ]);
+  const [dateRange, setDateRange] = useState([{
+    startDate: new Date(),
+    endDate: new Date(),
+    key: "selection",
+  }]);
   const [showRentalModal, setShowRentalModal] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // Índice actual
+  const [requestedDates, setRequestedDates] = useState([]); // Solicitudes (amarillo), de momento en gris
+  const [bookedDates, setBookedDates] = useState([]);
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -55,6 +58,30 @@ const ShowItemScreen = () => {
 
           setImageURLs(urls.filter((url) => url !== null));
         }
+        // Obtener fechas ocupadas
+        const rentResponse = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/rentas/full/item/${id}/`
+        );
+        const rents = rentResponse.data;
+
+        const requested = [];
+        const booked = [];
+        rents.forEach((rent) => {
+          const start = new Date(rent.start_date);
+          const end = new Date(rent.end_date);
+          const days = [];
+          for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+            days.push(new Date(d));
+          }
+          if (rent.rent_status === "requested") {
+            requested.push(...days);
+          } else if (rent.rent_status === "BOOKED") {
+            booked.push(...days);
+          }
+        });
+
+        setRequestedDates(requested);
+        setBookedDates(booked);
       } catch (error) {
         console.error("Error fetching item:", error);
         setErrorMessage("No se pudo cargar el ítem.");
@@ -194,7 +221,23 @@ const ShowItemScreen = () => {
             ranges={dateRange}
             onChange={(ranges) => setDateRange([ranges.selection])}
             minDate={new Date()}
+            disabledDates={[...requestedDates, ...bookedDates]}
           />
+            {/* TODO: Añadir colores a las fechas ocupadas
+            }
+            dayContentRenderer={(date) => {
+              const dateString = date.toISOString().split("T")[0];
+              
+              const isRequested = requestedDates.some(
+                (d) => d.toISOString().split("T")[0] === dateString
+              );
+              const isBooked = bookedDates.some(
+                (d) => d.toISOString().split("T")[0] === dateString
+              );
+            }}
+            */}
+
+
         </div>
 
         <button className="rental-btn" onClick={() => setShowRentalModal(true)}>Solicitar alquiler</button>

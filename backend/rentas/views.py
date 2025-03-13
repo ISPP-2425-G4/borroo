@@ -40,6 +40,13 @@ class RentViewSet(viewsets.ModelViewSet):
         is_authorized(condition=permission, authenticated=authenticated)
         return Rent.objects.filter(renter=user)
 
+    @action(detail=False, methods=['get'], url_path=r'item/(?P<pk>\d+)')
+    def rentas_por_item(self, request, pk=None):
+        item = get_object_or_404(Item, pk=pk)
+        rents = Rent.objects.filter(item=item)
+        serializer = RentSerializer(rents, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     @action(detail=False, methods=['post'])
     def first_request(self, request, *args, **kwargs):
         # el frontend pasa la informacion necesaria en el body
