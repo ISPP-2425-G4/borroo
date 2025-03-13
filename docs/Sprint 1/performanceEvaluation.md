@@ -275,8 +275,10 @@ En esta última semana, me he focalizado en documentación para que no hubiera s
 
 ### **Rosado Raya, Santiago**
 La primera semana estuve diseñando los canales de comunicación para los usuarios piloto de la asignatura y estableciendo contacto con ellos para garantizar una comunicación fluida y efectiva.
+
 Durante la segunda semana, desarrollé la entidad Rent, asistí a una reunión de mitad de Sprint y trabajé en la creación de más documentación dirigida a los usuarios piloto.
-En la tercera semana, he estado en contacto con los usuarios piloto, elaborando más documentación para ellos y revisando y aceptando pull requests. También participé como usuario piloto para otro grupo, el 8, y mejoré algunos documentos para darles el toque final.
+
+En la tercera semana, he estado en contacto con los usuarios piloto, elaborando más documentación para ellos y recopilando el feedback. También he revisado y aceptado las pull requests de los compañeros de mi subgrupo. También participé como usuario piloto para otro grupo, el 8, y mejoré algunos documentos para darles el toque final.
 
 
 
