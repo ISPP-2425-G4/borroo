@@ -1691,7 +1691,7 @@
 ### Periañez Franco, Luis Javier
 ### Picón Garrote, Alexander
 ### Rosado Raya, Santiago
-<table border="1">
+<table>
   <tr>
     <th>Tarea</th>
     <th>Detalles de la actividad</th>
