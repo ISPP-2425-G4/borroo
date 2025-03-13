@@ -15,6 +15,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 
+const DEFAULT_IMAGE = "../public/default_image.png"; // Reemplaza con la ruta correcta de la imagen por defecto
+
 const Layout = () => {
   const [productos, setProductos] = useState([]);
   const [error, setError] = useState(null);
@@ -53,8 +55,15 @@ const Layout = () => {
 
         const data = response.data;
         if (data.results) {
-          setProductos(data.results);
-          console.log(data.results);
+          const productosConImagen = await Promise.all(
+            data.results.map(async (producto) => {
+              const imageUrl = producto.images && producto.images.length > 0
+                ? await obtenerImagen(producto.images[0])
+                : DEFAULT_IMAGE;
+              return { ...producto, imageUrl };
+            })
+          );
+          setProductos(productosConImagen);
         } else {
           setError("No products found");
         }
@@ -64,21 +73,28 @@ const Layout = () => {
     };
 
     fetchProducts();
-    
   }, []);
 
-  useEffect(() => {
-    const filtered = productos.filter((producto) => {
-      return (
-        (categoria === "" || producto.category_display === categoria) &&
-        (producto.price >= precio[0] && producto.price <= precio[1]) &&
-        (producto.title.toLowerCase().includes(searchTerm.toLowerCase()))
-      )
+  const obtenerImagen = async (imgId) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/objetos/item-images/${imgId}/`
+      );
+      return response.data.image;
+    } catch (error) {
+      console.error(`Error al cargar la imagen ${imgId}:`, error);
+      return DEFAULT_IMAGE;
     }
-    );
+  };
+
+  useEffect(() => {
+    const filtered = productos.filter((producto) => (
+      (categoria === "" || producto.category_display === categoria) &&
+      (producto.price >= precio[0] && producto.price <= precio[1]) &&
+      (producto.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    ));
     setProductosFiltrados(filtered);
-  }
-  , [productos, categoria, precio, searchTerm]);
+  }, [productos, categoria, precio, searchTerm]);
 
   return (
     <Box sx={{ overflowX: "hidden"}}>
@@ -102,7 +118,6 @@ const Layout = () => {
             value={searchTerm}
             onChange={handleInputChange}
             variant="outlined"
-           
             sx={{ minWidth: "250px" }}
           />
           <Select
@@ -171,11 +186,12 @@ const Layout = () => {
                     flexDirection: "column"
                   }}
                 >
+                  <img src={producto.imageUrl} alt="Imagen del producto" style={{ width: "100%", height: "150px", objectFit: "cover" }} />
                   <CardContent
                     sx={{
                       flexGrow: 1,
-                      backgroundColor: "black",
-                      color: "white",
+                      backgroundColor: "#D8D8D8",
+                      color: "black",
                       p: 2,
                       borderRadius: 1
                     }}
