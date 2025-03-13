@@ -1,11 +1,20 @@
-## Borroo - G4
-## Sprint 1 (S1)
+<div align="center">
 
-**Repositorio:** [GitHub](https://github.com/ISPP-2425-G4/borroo)
+# BORROO
+
+![](../imagenes/borrooLogo.png)
+
+## KB report
+
+### Sprint 1 – G4
+**Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
 
 **Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
 
 **Fecha:** 11/03/2025
+
+
+</div>
 
 ### Miembros:
 - David Blanco Mora
