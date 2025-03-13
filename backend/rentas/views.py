@@ -36,11 +36,11 @@ class RentViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             item = Item.objects.get(id=item_id)  # Buscar el objeto Item
             try:
-                user = User.objects.get(id=request.user.id) 
+                user = User.objects.get(id=request.user.id)
             except User.DoesNotExist:
-                return Response({"error": "El usuario no existe."}, 
+                return Response({"error": "El usuario no existe."},
                                 status=status.HTTP_400_BAD_REQUEST)
-            serializer.save(renter=user, item=item) 
+            serializer.save(renter=user, item=item)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
