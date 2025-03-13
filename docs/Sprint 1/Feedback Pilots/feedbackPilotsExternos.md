@@ -44,7 +44,7 @@ Los usuarios piloto que han podido ofrecer feedback en este Sprint han sido 6, c
 | ID  | Canal de Contacto |
 |-----|----------------------|
 | VSP | Presencial          |
-| MTG | Presencial          |
+| MBM | Presencial          |
 | AFG | Telemático          |
 | PSN | Telemático          |
 | NRO | Presencial          |
