@@ -677,6 +677,7 @@
 </table>
 
 ### Naredo Bernardos, Ignacio
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -684,45 +685,40 @@
     <th>Tiempo</th>
   </tr>
   <tr>
-    <td rowspan="4">Documentación-DP</td>
-    <td>Cliente/Usuario</td>
-    <td>1 hora y 12 minutos</td>
+    <td rowspan="4">Trabajo</td>
+    <td>Conexión BD</td>
+    <td>4 horas y 1 minuto</td>
   </tr>
   <tr>
-    <td>Competidores</td>
-    <td>4 horas y 27 minutos</td>
+    <td>Método búsqueda</td>
+    <td>1 hora y 22 minutos</td>
   </tr>
   <tr>
-    <td>Revisión</td>
-    <td>3 hora y 38 minutos</td>
+    <td>Filtro categorías</td>
+    <td>2 horas y 10 minutos</td>
   </tr>
   <tr>
-    <td>Uso de la IA</td>
-    <td>21 minutos</td>
+    <td>Despliegue app engine</td>
+    <td>2 horas y 21 minutos</td>
   </tr>
   <tr>
     <td rowspan="2">Clases</td>
-    <td>Clase 07/02</td>
-    <td>3 horas y 50 minutos</td>
+    <td>Clase 21/02</td>
+    <td>4 horas</td>
   </tr>
   <tr>
-    <td>Clase 14/02</td>
-    <td>3 horas y 50 minutos</td>
+    <td>Clase 07/03</td>
+    <td>4 horas</td>
   </tr>
   <tr>
     <td>Reuniones</td>
     <td>Reunión de grupo</td>
-    <td>5 horas y 2 minutos</td>
+    <td>1 hora y 11 minutos</td>
   </tr>
   <tr>
-	  <td>Docusaurus</td>
-    <td>Creación y subida docs Docusaurus</td>
-    <td>6 horas y 56 minutos</td>
-  </tr>
-  <tr>
-    <td >Pildoras teóricas</td>
-    <td>Ver videos de pildoras</td>
-    <td>1 hora y 10 minutos</td>
+    <td>Píldoras teóricas</td>
+    <td>Ver videos de píldoras</td>
+    <td>2 horas y 24 minutos</td>
   </tr>
 </table>
 
