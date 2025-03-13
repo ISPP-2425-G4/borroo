@@ -4,7 +4,7 @@
 
 ![](../imagenes/borrooLogo.png)
 
-## Comunicación Usuarios Piloto
+## Pilot Users
 
 ### Sprint 1 – G4
 **Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
