@@ -41,7 +41,7 @@ Fecha: 06/03/2025
 | Fecha      | Versión | Realizada por   | Descripción de los cambios |
 | ---------- | ------- | --------------- | -------------------------- |
 | 06-03-2025 | v1.0    | Santiago Rosado Raya | Creación del documento |
-|  |  |  |  |
+| 13-03-2025 | v1.1 | Santiago Rosado Raya | Mejora de pequeños errores del documento |
 ---
 
 # Índice
@@ -118,7 +118,7 @@ Además, crearemos un espacio dedicado exclusivamente a ellos, a través de un g
 
 ## **Frecuencia:**
 
-Cada sprint contactaremos con los usuarios piloto y les enviaremos un Word o un Excel con todo el contenido a valorar vía WhatsApp (el contenido y formato del documento dependerá de cada Sprint). Este contacto se hará cuando el 70% de las tareas estén terminadas o cuatro días antes del siguiente Sprint, esto hará que el feedback pueda ser analizado por el equipo y se pueda tener en cuenta.
+Cada sprint contactaremos con los usuarios piloto y les enviaremos un Word o un Excel con todo el contenido a valorar vía WhatsApp (el contenido y formato del documento dependerá de cada Sprint). Este contacto se hará cuando el 70% de las tareas estén terminadas o cuatro días antes del siguiente Sprint. Se les dará 36 horas para rellenar y enviar el feedback, esto hará que el feedback pueda ser analizado por el equipo y se pueda tener en cuenta.
 
 ---
 
@@ -128,7 +128,7 @@ Cada sprint contactaremos con los usuarios piloto y les enviaremos un Word o un 
 2. A los usuarios piloto se les informará sobre la posibilidad de realizar una reunión, en la que se les explicará lo trabajado durante el sprint y se les proporcionarán instrucciones detalladas para probar el sistema. Este primer contacto se realizará cuando el 70% del Sprint esté terminado o cuatro días antes de que este termine.
 3. Una vez concretada la reunión, esta se llevará a cabo explicando todos los aspectos clave, incluyendo el método de evaluación de sus aportaciones. Además, se les entregará el documento de feedback para que lo completen, junto con la fecha límite de entrega, establecida dos días antes del fin del sprint.
 4. Tras la primera reunión, se otorgará tiempo a los usuarios para que prueben el sistema. Si durante este proceso surgen dudas, podrán comunicarse con los miembros del equipo de desarrollo a través de los grupos de WhatsApp y Discord habilitados para este propósito.
-5. Finalmente, una vez completado el documento y recopilado el feedback, los usuarios lo entregarán mediante Discord, utilizando un canal exclusivo para la recepción de estos informes.
+5. Finalmente, una vez completado el documento y recopilado el feedback, dentro del tiempo establecido (36 horas), los usuarios lo entregarán mediante Discord, utilizando un canal exclusivo para la recepción de estos informes.
 
 ---
 
