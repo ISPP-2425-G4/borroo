@@ -2,7 +2,7 @@
 
 # BORROO
 
-![](../imagenes/borrooLogo.png)
+![](../../imagenes/borrooLogo.png)
 
 ##  Commitment Agreement Usuarios Piloto Asignatura 
 
@@ -35,13 +35,13 @@
 
 
 ---
-**Nombre**: [Nombre del Usuario]  
+**Nombre**: Daniel Flores de Francisco 
 
-**Fecha**: [DD/MM/AAAA]  
+**Fecha**: 10/03/2025  
 
 **Versión del Proyecto**: 1.0  
 
-**Grupo de trabajo**: [Grupo de trabajo de cada persona]  
+**Grupo de trabajo**: G11
 
 ## Compromiso
 
@@ -64,4 +64,4 @@ Al firmar este documento, entiendo y acepto las responsabilidades que se me han 
 En caso de incumplimiento de los compromisos mencionados anteriormente, su evaluación será nula.  
 
 **Firma del Usuario**
-
+![](firmasUp/firma_daniel.png)

@@ -2,9 +2,9 @@
 
 # BORROO
 
-![](../imagenes/borrooLogo.png)
+![](../../imagenes/borrooLogo.png)
 
-##  Commitment Agreement Usuarios Piloto Externos 
+##  Commitment Agreement Usuarios Piloto Asignatura 
 
 ### Sprint 1 (S1) – G4
 **Repositorio:** [https://github.com/ISPP-2425-G4/](https://github.com/ISPP-2425-G4/)
@@ -35,6 +35,13 @@
 
 
 ---
+**Nombre**: Ángel García Escudero 
+
+**Fecha**: 11/03/2025 
+
+**Versión del Proyecto**: 1.0  
+
+**Grupo de trabajo**: G9 
 
 ## Compromiso
 
@@ -44,12 +51,17 @@ Como usuario piloto del proyecto **Borroo**, me comprometo a cumplir con los sig
 
 - **Participación Activa**: Me comprometo a participar en las sesiones programadas, reuniones de seguimiento y encuestas o entrevistas que el equipo del proyecto requiera para recopilar información relevante.  
 
+- **Registro y Reporte de Incidencias**: Me comprometo a documentar cualquier error, fallo o inconveniente que detecte durante el uso del sistema y comunicarlo a través de los canales establecidos por el equipo del proyecto y rellenar el documento asignado a cada Sprint.  
+
 - **Colaboración y Confidencialidad**: Me comprometo a mantener la confidencialidad del proyecto y no divulgar información sensible sobre su funcionamiento, características o resultados de las pruebas sin autorización previa del equipo responsable.  
+
+- **Cumplimiento del Proceso de Trabajo**: Acepto seguir el método de trabajo establecido en el documento *"Comunicación usuarios piloto"*, lo que incluye la asistencia a reuniones, la entrega de **feedback** en los tiempos acordados y el uso de los canales de comunicación definidos.  
 
 - **Uso del Feedback**: Autorizo al equipo del proyecto a utilizar mi retroalimentación y los datos recopilados durante el período de prueba para mejorar el sistema sin que ello implique una compensación adicional o derechos sobre el producto final.  
 
-Por motivos de privacidad, los usuarios piloto que no pertenecen a la asignatura no necesitan incluir su nombre y firma. Se considera válida su participación si han aceptado ser usuarios piloto y son conocedores de estas condiciones.  
-
 Al firmar este documento, entiendo y acepto las responsabilidades que se me han asignado y me comprometo a cumplirlas según lo establecido en este acuerdo.  
 
-En caso de incumplimiento de los compromisos mencionados anteriormente, su evaluación será nula.
+En caso de incumplimiento de los compromisos mencionados anteriormente, su evaluación será nula.  
+
+**Firma del Usuario**
+![](firmasUp/firma_angel.png)
