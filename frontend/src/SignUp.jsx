@@ -99,7 +99,21 @@ const Signup = () => {
       }
     } catch (error) {
       console.error("Error en la solicitud:", error);
-      setError(error.message || "Error al conectar con el servidor");
+      if (error.response) {
+        const data = error.response.data;
+  
+        // Si el error proviene del campo postal_code
+        if (data.postal_code) {
+          setError("Código postal incorrecto. Verifique e intente de nuevo.");
+        } else {
+          setError(error.message || "Error al conectar con el servidor");
+        }
+  
+        // Guardar errores específicos en el estado para mostrarlos debajo del campo correspondiente
+        setFormErrors(data);
+      } else {
+        setError("Error al conectar con el servidor");
+      }
     } finally {
       setLoading(false);
     }

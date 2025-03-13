@@ -56,6 +56,15 @@ const CreateItemScreen = () => {
   }, []);
 
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "price") {
+      // Permitir solo números y máximo dos decimales
+      const regex = /^\d{0,8}(\.\d{0,2})?$/;
+      if (!regex.test(value) && value !== "") {
+        return; // No actualiza el estado si el formato no es válido
+      }
+    }
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -98,8 +107,14 @@ const CreateItemScreen = () => {
     } else if (!/^[A-Za-z]/.test(formData.description)) {
       errors.description = "La descripción debe comenzar con una letra.";
     } 
-    if (parseInt(formData.price) <= 0) {
+    if (!formData.price) {
+      errors.price = "El precio es obligatorio.";
+    } else if (isNaN(formData.price) || parseFloat(formData.price) <= 0) {
       errors.price = "El precio debe ser un número mayor a 0.";
+    } else if (formData.price.includes(".") && formData.price.split(".")[1].length > 2) {
+      errors.price = "El precio solo puede tener hasta dos decimales.";
+    } else if (formData.price.length > 10) {
+      errors.price = "El precio no puede superar los 10 dígitos en total.";
     }
 
     if (Object.keys(errors).length > 0) {

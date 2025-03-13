@@ -1,5 +1,8 @@
 from django.db import models
 
+from django.core.validators import MinValueValidator
+from django.core.validators import MaxValueValidator, DecimalValidator
+
 
 class ItemCategory(models.TextChoices):
     TECHNOLOGY = ('technology', 'Tecnología')
@@ -28,7 +31,7 @@ class PriceCategory(models.TextChoices):
 class Item(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(max_length=1000)
     category = models.CharField(
         max_length=50,
         choices=ItemCategory.choices
@@ -41,7 +44,13 @@ class Item(models.Model):
         max_length=10,
         choices=PriceCategory.choices
     )
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2, validators=[
+            MinValueValidator(0.01, message="El precio debe ser mayor a 0."),
+            MaxValueValidator(99999999.99,
+                              message="El precio no puede ser \
+                                  mayor a 99,999,999.99."),
+            DecimalValidator(max_digits=10, decimal_places=2)
+        ])
     user = models.ForeignKey('usuarios.User', related_name='items',
                              on_delete=models.CASCADE)
 
