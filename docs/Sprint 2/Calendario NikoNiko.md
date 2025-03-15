@@ -68,7 +68,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Ignacio Naredo Bernardos |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Javier Nieto Vicioso |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Marco Padilla Gómez |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| Miguel Palomo García |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Miguel Palomo García |:blush:  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Luis Javier Periáñez Franco |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Alexander Picón Garrote |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Santiago Rosado Raya |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
