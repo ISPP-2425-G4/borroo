@@ -10,7 +10,7 @@ def upload_image_to_imgbb(image):
         "key": os.getenv("IMGBB_API_KEY"),
         "image": image_base64,
     }
-    response = requests.post(url, data=payload)
+    response = requests.post(url, data=payload, timeout=10)
     response_data = response.json()
     if 'data' in response_data:
         return response_data['data']['url']

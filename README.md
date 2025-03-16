@@ -146,14 +146,14 @@ Las imágenes en el backend se manejan como URLs. Para subir las imágenes a un 
 La función `upload_image_to_imgbb` se encarga de subir la imagen a ImgBB y devolver la URL correspondiente:
 
 ```python
-def upload_image_to_imgbb(self, image):
+def upload_image_to_imgbb(image):
     url = "https://api.imgbb.com/1/upload"
     image_base64 = base64.b64encode(image.read()).decode('utf-8')
     payload = {
         "key": os.getenv("IMGBB_API_KEY"),
         "image": image_base64,
     }
-    response = requests.post(url, data=payload)
+    response = requests.post(url, data=payload, timeout=10)
     response_data = response.json()
     if 'data' in response_data:
         return response_data['data']['url']
