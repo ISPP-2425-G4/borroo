@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from .models import Item, ItemImage
-import os
-import requests
-import base64
+from utils.utils import upload_image_to_imgbb
 
 
 class ItemImageSerializer(serializers.ModelSerializer):
@@ -47,7 +45,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
         # Guardar las imágenes asociadas al item
         for image in image_files:
-            image_url = self.upload_image_to_imgbb(image)
+            image_url = upload_image_to_imgbb(image)
             ItemImage.objects.create(item=item, image=image_url)
 
         return item
@@ -74,23 +72,8 @@ class ItemSerializer(serializers.ModelSerializer):
         # Agregar las nuevas imágenes
         if image_files is not None:
             for image in image_files:
-                image_url = self.upload_image_to_imgbb(image)
+                image_url = upload_image_to_imgbb(image)
                 ItemImage.objects.create(item=instance, image=image_url)
 
         instance.save()
         return instance
-
-    def upload_image_to_imgbb(self, image):
-        url = "https://api.imgbb.com/1/upload"
-        image_base64 = base64.b64encode(image.read()).decode('utf-8')
-        payload = {
-            "key": os.getenv("IMGBB_API_KEY"),
-            "image": image_base64,
-        }
-        response = requests.post(url, data=payload)
-        response_data = response.json()
-        if 'data' in response_data:
-            return response_data['data']['url']
-        else:
-            print(response_data)
-            raise Exception("Error uploading image to Imgbb")

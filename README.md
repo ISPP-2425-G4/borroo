@@ -9,6 +9,7 @@
 - [Instalación](#instalación)
 - [Ejecutar el proyecto](#ejecutar-el-proyecto)
 - [Ejecutar Tests](#ejecutar-tests)
+- [Indicaciones respecto al desarrollo](#indicaciones-respecto-al-desarrollo)
 
 ## Descripción
 
@@ -20,6 +21,7 @@ Borroo facilita el intercambio temporal de bienes, permitiendo a los usuarios en
 - **Backend:** Django
 - **Tests:** Pytest
 - **Base de Datos:** MariaDB
+
 
 ## Instalación
 
@@ -61,6 +63,9 @@ Asegúrate de tener instalados los siguientes componentes:
    ```sh
    cd backend
    copy .env.local.example .env
+
+   cd frontend
+   copy .env.local.example .env
    ```
 
 6. **Configurar la base de datos**
@@ -99,3 +104,66 @@ Asegúrate de tener instalados los siguientes componentes:
    cd backend
    pytest
    ```
+
+## Indicaciones respecto al desarrollo
+
+### Uso de Axios para Fetching de Datos
+
+En este proyecto, las solicitudes HTTP al backend se realizan utilizando la biblioteca **Axios**. Para asegurar que la aplicación funcione tanto en un entorno local como en un entorno desplegado, se utiliza la variable de entorno `VITE_API_BASE_URL` para definir la URL base de la API.
+
+Ejemplo de uso:
+
+```javascript
+useEffect(() => {
+    const fetchEnums = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/objetos/enum-choices/`, {
+          withCredentials: true,
+        });
+
+        const data = response.data;
+
+        setOptions({
+          categories: data.categories || [],
+          cancel_types: data.cancel_types || [],
+          price_categories: data.price_categories || [],
+        });
+      } catch (error) {
+        console.error("Error fetching enums:", error);
+        setErrorMessage("No se pudieron cargar las opciones.");
+      }
+    };
+
+    fetchEnums();
+}, []); 
+```
+En este ejemplo, se realiza una solicitud GET para obtener una lista de enums desde el backend. La URL de la API se construye dinámicamente utilizando `import.meta.env.VITE_API_BASE_URL`, lo que permite que la aplicación sea flexible en diferentes entornos.
+
+### Manejo de Imágenes en el Backend
+
+Las imágenes en el backend se manejan como URLs. Para subir las imágenes a un servidor externo, se utiliza el servicio **ImgBB**, que permite alojar imágenes de manera gratuita y obtener una URL pública para acceder a ellas.
+
+La función `upload_image_to_imgbb` se encarga de subir la imagen a ImgBB y devolver la URL correspondiente:
+
+```python
+def upload_image_to_imgbb(image):
+    url = "https://api.imgbb.com/1/upload"
+    image_base64 = base64.b64encode(image.read()).decode('utf-8')
+    payload = {
+        "key": os.getenv("IMGBB_API_KEY"),
+        "image": image_base64,
+    }
+    response = requests.post(url, data=payload, timeout=10)
+    response_data = response.json()
+    if 'data' in response_data:
+        return response_data['data']['url']
+    else:
+        print(response_data)
+        raise Exception("Error uploading image to Imgbb")
+```
+Esta función que se encuentra en el archivo `utils.py` convierte la imagen a base64 y la envía al servidor de ImgBB utilizando una solicitud POST. Si la subida es exitosa, se devuelve la URL de la imagen, que luego puede ser almacenada en la base de datos y utilizada en la aplicación.
+
+Para importar la función en tu archivo usa el siguiente fragmento de código:
+```python
+   from utils.utils import upload_image_to_imgbb
+```
