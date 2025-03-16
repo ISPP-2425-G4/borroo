@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 import datetime
 from django.core.exceptions import PermissionDenied
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password, make_password
 from .models import User
 from .serializers import UserSerializer
 from rest_framework import viewsets, status
@@ -9,17 +9,14 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import action
-from django.contrib.auth.hashers import make_password
-
+from rest_framework.decorators import api_view, permission_classes
 
 def index(request):
     return JsonResponse({"message": "Hello from Django!"})
 
-
 def get_message(request):
     now = datetime.datetime.now().strftime("%H:%M:%S")
     return JsonResponse({"message": f"Hola desde Django! Hora actual: {now}"})
-
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -29,12 +26,12 @@ class UserViewSet(viewsets.ModelViewSet):
         """Registro de usuario y generación de token JWT"""
         data = request.data.copy()
 
+        # Encriptar la contraseña antes de validar el serializer
+        data["password"] = make_password(data["password"])
+
         # Validar el serializer primero
         serializer = self.get_serializer(data=data)
         if serializer.is_valid():
-            # Si la contraseña es válida, aplicamos el hash
-            data["password"] = make_password(data["password"])
-
             # Guardamos el usuario con la contraseña encriptada
             user = serializer.save()
 
@@ -104,3 +101,19 @@ class UserViewSet(viewsets.ModelViewSet):
                 "No tienes permiso para modificar este usuario")
 
         return super().update(request, *args, **kwargs)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def check_username(request):
+    username = request.query_params.get('username')
+    if User.objects.filter(username=username).exists():
+        return JsonResponse({'exists': True})
+    return JsonResponse({'exists': False})
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def check_email(request):
+    email = request.query_params.get('email')
+    if User.objects.filter(email=email).exists():
+        return JsonResponse({'exists': True})
+    return JsonResponse({'exists': False})
