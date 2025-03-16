@@ -1,10 +1,11 @@
 from decimal import Decimal
 from django.db import models
 from usuarios.models import User  # Importamos el modelo User
-from objetos.models import Item  # Importamos el modelo Item
+from objetos.models import Item, CancelType  # Importamos el modelo Item
 
 
 class RentStatus(models.TextChoices):
+    ACCEPTED = "accepted", "Accepted"
     REQUESTED = "requested", "Requested"
     BOOKED = "booked", "Booked"
     PICKED_UP = "picked_up", "Picked Up"
