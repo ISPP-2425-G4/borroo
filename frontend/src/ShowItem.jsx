@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FiArrowLeft, FiTrash2, FiEdit, FiFileText, FiLayers, FiXCircle, FiDollarSign } from "react-icons/fi";
+import { FiTrash2, FiEdit, FiFileText, FiLayers, FiXCircle, FiDollarSign } from "react-icons/fi";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -212,20 +212,27 @@ const ShowItemScreen = () => {
 
         {errorMessage && <div className="error-message">{errorMessage}</div>}
 
+        {/* TODO Añadir detalles del propietario */}
+        <div className={`user-card ${isOwner ? "highlight" : ""}`}>
+          <p><strong>Publicado por:</strong> {userName}</p>
+          {isOwner && <span className="owner-badge">
+            <strong>¡Eres el propietario de este producto!</strong></span>}
+        </div>
+
         <div className="item-details">
           <p><FiFileText /> <strong>Descripción:</strong> {item.description}</p>
           <p><FiLayers /> <strong>Categoría:</strong> {item.category_display}</p>
           <p><FiXCircle /> <strong>Política de cancelación:</strong> {item.cancel_type_display}</p>
           <p><FiDollarSign /> <strong>Precio:</strong> {item.price} € / {item.price_category_display}</p>
-          <p><strong>Publicado por:</strong> {userName}</p>
         </div>
 
         {/* 🔹 Calendario */}
         <div className="calendar-container">
-          <h3>Selecciona un rango de fechas para el alquiler</h3>
+          {!isOwner ? <h3>Selecciona un rango de fechas para el alquiler</h3>
+            : <h3>Calendario de disponibilidad</h3>}
           <DateRange
-            ranges={dateRange}
-            onChange={(ranges) => setDateRange([ranges.selection])}
+            ranges={isOwner ? [] : dateRange}
+            onChange={(ranges) => { if (!isOwner) { setDateRange([ranges.selection]); } }}
             minDate={new Date()}
             disabledDates={[...requestedDates, ...bookedDates]}
           />
@@ -255,10 +262,9 @@ const ShowItemScreen = () => {
         {isOwner && (
           <div className="button-group">
             <button className="btn edit-btn" onClick={() => navigate(`/update-item/${id}`)}><FiEdit /> Editar</button>
-            <button className="rental-btn delete-btn" onClick={() => handleDelete(id)}><FiTrash2 /> Eliminar</button>
+            <button className="btn delete-btn" onClick={() => handleDelete(id)}><FiTrash2 /> Eliminar</button>
           </div>
         )}
-        <button className="btn" onClick={() => navigate("/")}><FiArrowLeft /> Volver al inicio</button>
 
         {showRentalModal && (
           <Modal
