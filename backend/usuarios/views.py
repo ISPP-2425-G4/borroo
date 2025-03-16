@@ -11,12 +11,15 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import action
 from rest_framework.decorators import api_view, permission_classes
 
+
 def index(request):
     return JsonResponse({"message": "Hello from Django!"})
+
 
 def get_message(request):
     now = datetime.datetime.now().strftime("%H:%M:%S")
     return JsonResponse({"message": f"Hola desde Django! Hora actual: {now}"})
+
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -102,6 +105,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return super().update(request, *args, **kwargs)
 
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def check_username(request):
@@ -109,6 +113,7 @@ def check_username(request):
     if User.objects.filter(username=username).exists():
         return JsonResponse({'exists': True})
     return JsonResponse({'exists': False})
+
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
