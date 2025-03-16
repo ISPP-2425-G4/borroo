@@ -224,8 +224,8 @@ const ShowItemScreen = () => {
         <div className="calendar-container">
           <h3>Selecciona un rango de fechas para el alquiler</h3>
           <DateRange
-            ranges={dateRange}
-            onChange={(ranges) => setDateRange([ranges.selection])}
+            ranges={isOwner ? [] : dateRange}
+            onChange={(ranges) => { if (!isOwner) { setDateRange([ranges.selection]); } }}
             minDate={new Date()}
             disabledDates={[...requestedDates, ...bookedDates]}
           />
