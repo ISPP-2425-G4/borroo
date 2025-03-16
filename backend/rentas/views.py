@@ -24,16 +24,14 @@ def is_authorized(condition=True, authenticated=True):
 
 def is_cancelled(condition=False):
     if condition:
-        return Response(
-            {"error": "El alquiler está cancelado y no se puede modificar."},
-            status=status.HTTP_400_BAD_REQUEST)
+        raise PermissionDenied(
+            {"error": "El alquiler está cancelado y no se puede modificar."})
 
 
 def is_earlier(condition=False):
     if condition:
-        return Response(
-                    {"error": "Aún no es el día."},
-                    status=status.HTTP_400_BAD_REQUEST)
+        raise PermissionDenied(
+            {"error": "Aún no es el día."})
 
 
 def apply_penalty(rent):
@@ -147,8 +145,7 @@ class RentViewSet(viewsets.ModelViewSet):
             return Response({'status': 'Solicitud rechazada. '
                             'El alquiler se ha cancelado.'})
         else:
-            return Response({'error': 'No existe un response adecuado'},
-                            status=status.HTTP_400_BAD_REQUEST)
+            raise PermissionDenied({'error': 'No existe un response adecuado'})
 
     @action(detail=True, methods=['put'])
     def change_status(self, request, pk=None):
@@ -210,12 +207,12 @@ class RentViewSet(viewsets.ModelViewSet):
             return Response({'status':
                              'Objeto devuelto. El objeto ha sido devuelto.'})
         else:
-            return Response({'error': 'Acción no reconocida'},
-                            status.HTTP_400_BAD_REQUEST)
+            raise PermissionDenied({'error': 'Acción no reconocida'})
 
     @action(detail=True, methods=['put'])
     def cancel_rent(self, request, pk=None):
         user = request.user if not AnonymousUser else None
+        now = timezone.now()
         rent = self.get_object()
         renter = rent.renter
         authenticated = request.user.is_authenticated
@@ -228,7 +225,7 @@ class RentViewSet(viewsets.ModelViewSet):
             return Response({'status': 'Alquiler cancelado exitosamente'})
         elif rent.rent_status == RentStatus.BOOKED:
             days_diff = (rent.start_date.date() - now.date()).days
-            cancel_type = rent.item.cancel_type()
+            cancel_type = rent.item.cancel_type
             refund_percentage = apply_refund(cancel_type, days_diff)
             refund_amount = Decimal(str(rent.total_price)) * refund_percentage
             rent.rent_status = RentStatus.CANCELLED
@@ -238,9 +235,8 @@ class RentViewSet(viewsets.ModelViewSet):
                 'refund_percentage': str(refund_percentage),
                 'refund_amount': str(refund_amount)})
         else:
-            return Response(
-                {'error': 'No se puede cancelar un alquiler en este estado'},
-                status.HTTP_400_BAD_REQUEST)
+            raise Response(
+                {'error': 'No se puede cancelar un alquiler en este estado'})
 
     def destroy(self, request, *args, **kwargs):
         rent = self.get_object()
