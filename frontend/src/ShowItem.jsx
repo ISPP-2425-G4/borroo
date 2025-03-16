@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FiArrowLeft, FiTrash2, FiEdit, FiFileText, FiLayers, FiXCircle, FiDollarSign } from "react-icons/fi";
+import { FiTrash2, FiEdit, FiFileText, FiLayers, FiXCircle, FiDollarSign } from "react-icons/fi";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -255,10 +255,9 @@ const ShowItemScreen = () => {
         {isOwner && (
           <div className="button-group">
             <button className="btn edit-btn" onClick={() => navigate(`/update-item/${id}`)}><FiEdit /> Editar</button>
-            <button className="rental-btn delete-btn" onClick={() => handleDelete(id)}><FiTrash2 /> Eliminar</button>
+            <button className="btn delete-btn" onClick={() => handleDelete(id)}><FiTrash2 /> Eliminar</button>
           </div>
         )}
-        <button className="btn" onClick={() => navigate("/")}><FiArrowLeft /> Volver al inicio</button>
 
         {showRentalModal && (
           <Modal
