@@ -126,3 +126,13 @@ class RentViewSet(viewsets.ModelViewSet):
         permission = renter == user
         is_authorized(condition=permission, authenticated=authenticated)
         return super().destroy(request, *args, **kwargs)
+
+    def get_all_rent_request(self, request):
+        user = request.user if not AnonymousUser else None
+        authenticated = request.user.is_authenticated
+        owner = request.data.get('user')
+        permission = user == owner
+        is_authorized(condition=permission, authenticated=authenticated)
+        all_rent_requests = Rent.objects.filter(item__user=owner and
+                                                RentStatus.REQUESTED)
+        return Response(all_rent_requests, status=status.HTTP_200_OK)
