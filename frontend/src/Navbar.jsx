@@ -121,6 +121,16 @@ const Navbar = () => {
         >
           Poner en alquiler
         </Typography>
+        <Typography component={Link}
+          to="/all-requests"
+          sx={{
+            textDecoration: "none",
+            color: "white",
+            "&:hover": { color: "#fbbf24" },
+          }}
+        >
+          Solicitudes
+        </Typography>
       </Box>
 
       {/* Iconos de acciones */}
