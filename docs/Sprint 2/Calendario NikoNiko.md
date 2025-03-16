@@ -63,7 +63,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Jesús Fernández Rodríguez |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Francisco Fernández Mota |:smiley:|:blush:|  |  |  |  |  |  |  |  |  |  |  |  |
 | Javier García Rodríguez |:smiley:| :blush: |  |  |  |  |  |  |  |  |  |  |  |  |
-| Miguel González Ortiz |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Miguel González Ortiz |  |:smiley:|  |  |  |  |  |  |  |  |  |  |  |  |
 | Álvaro Martín Muñoz |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Ignacio Naredo Bernardos |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Javier Nieto Vicioso |:smiley:|:smiley:|  |  |  |  |  |  |  |  |  |  |  |  |
