@@ -66,7 +66,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Miguel González Ortiz |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Álvaro Martín Muñoz |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Ignacio Naredo Bernardos |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| Javier Nieto Vicioso |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Javier Nieto Vicioso |:smiley:|:smiley:|  |  |  |  |  |  |  |  |  |  |  |  |
 | Marco Padilla Gómez |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Miguel Palomo García |:blush:  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Luis Javier Periáñez Franco |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
