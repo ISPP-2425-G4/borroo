@@ -127,7 +127,7 @@ class RentViewSet(viewsets.ModelViewSet):
         is_authorized(condition=permission, authenticated=authenticated)
         return super().destroy(request, *args, **kwargs)
 
-    def get_all_rent_request(self, request):
+    def all_requests(self, request):
         user = request.user if not AnonymousUser else None
         authenticated = request.user.is_authenticated
         owner = request.data.get('user')
