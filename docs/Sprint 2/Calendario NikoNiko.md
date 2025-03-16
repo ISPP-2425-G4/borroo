@@ -62,7 +62,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Pablo Espinosa Naranjo |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Jesús Fernández Rodríguez |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Francisco Fernández Mota |:smiley:|:blush:|  |  |  |  |  |  |  |  |  |  |  |  |
-| Javier García Rodríguez |:smiley:|  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Javier García Rodríguez |:smiley:| :blush: |  |  |  |  |  |  |  |  |  |  |  |  |
 | Miguel González Ortiz |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Álvaro Martín Muñoz |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Ignacio Naredo Bernardos |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
@@ -72,5 +72,5 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Luis Javier Periáñez Franco |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Alexander Picón Garrote |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Santiago Rosado Raya |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| Julia Sánchez Márquez |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Julia Sánchez Márquez |  | :blush: |  |  |  |  |  |  |  |  |  |  |  |  |
 | Alejandro Sevillano Barea |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
