@@ -27,6 +27,7 @@ const ShowItemScreen = () => {
   const [requestedDates, setRequestedDates] = useState([]); // Solicitudes (amarillo), de momento en gris
   const [bookedDates, setBookedDates] = useState([]);
   const [isOwner, setIsOwner] = useState(false); // Estado para verificar si el usuario es el propietario
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -44,6 +45,7 @@ const ShowItemScreen = () => {
           if (currentUser && currentUser.id === data.user) {
             setIsOwner(true);
           }
+          setIsAuthenticated(!!currentUser);
         }
 
         if (data.images && data.images.length > 0) {
@@ -231,8 +233,8 @@ const ShowItemScreen = () => {
           {!isOwner ? <h3>Selecciona un rango de fechas para el alquiler</h3>
             : <h3>Calendario de disponibilidad</h3>}
           <DateRange
-            ranges={isOwner ? [] : dateRange}
-            onChange={(ranges) => { if (!isOwner) { setDateRange([ranges.selection]); } }}
+            ranges={ isOwner || !isAuthenticated ? [] : dateRange}
+            onChange={(ranges) => { if (!isOwner || isAuthenticated) { setDateRange([ranges.selection]); } }}
             minDate={new Date()}
             disabledDates={[...requestedDates, ...bookedDates]}
           />
@@ -254,9 +256,18 @@ const ShowItemScreen = () => {
         </div>
 
         {/* 🔹 Botón de solicitar alquiler */}
-        {!isOwner && (
-          <button className="rental-btn" onClick={() => setShowRentalModal(true)}>Solicitar alquiler</button>
-        )}
+        <div className="rental-action">
+          {!isOwner && !isAuthenticated ? (
+            <p>
+              Para solicitar un alquiler, debes estar registrado.{" "}
+              <a href="/login">Inicia sesión</a> o <a href="/signup">regístrate</a>.
+            </p>
+          ) : (
+            !isOwner && isAuthenticated && (
+              <button className="rental-btn" onClick={() => setShowRentalModal(true)}>Solicitar alquiler</button>
+            )
+          )}
+        </div>
 
         {/* 🔹 Botones de acción */}
         {isOwner && (
