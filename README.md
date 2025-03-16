@@ -143,7 +143,7 @@ En este ejemplo, se realiza una solicitud GET para obtener una lista de enums de
 
 Las imágenes en el backend se manejan como URLs. Para subir las imágenes a un servidor externo, se utiliza el servicio **ImgBB**, que permite alojar imágenes de manera gratuita y obtener una URL pública para acceder a ellas.
 
-La función `upload_image_to_imgbb` se encarga de subir la imagen a ImgBB y devolver la URL correspondiente, puedes reusarla en tu clase donde necesites una imagen:
+La función `upload_image_to_imgbb` se encarga de subir la imagen a ImgBB y devolver la URL correspondiente:
 
 ```python
 def upload_image_to_imgbb(self, image):
@@ -161,4 +161,9 @@ def upload_image_to_imgbb(self, image):
         print(response_data)
         raise Exception("Error uploading image to Imgbb")
 ```
-Esta función convierte la imagen a base64 y la envía al servidor de ImgBB utilizando una solicitud POST. Si la subida es exitosa, se devuelve la URL de la imagen, que luego puede ser almacenada en la base de datos y utilizada en la aplicación.
+Esta función que se encuentra en el archivo `utils.py` convierte la imagen a base64 y la envía al servidor de ImgBB utilizando una solicitud POST. Si la subida es exitosa, se devuelve la URL de la imagen, que luego puede ser almacenada en la base de datos y utilizada en la aplicación.
+
+Para importar la función en tu archivo usa el siguiente fragmento de código:
+```python
+   from utils.utils import upload_image_to_imgbb
+```
