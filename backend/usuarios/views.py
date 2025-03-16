@@ -28,11 +28,17 @@ class UserViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         """Registro de usuario y generación de token JWT"""
         data = request.data.copy()
-        data["password"] = make_password(data["password"])
 
+        # Validar el serializer primero
         serializer = self.get_serializer(data=data)
         if serializer.is_valid():
+            # Si la contraseña es válida, aplicamos el hash
+            data["password"] = make_password(data["password"])
+
+            # Guardamos el usuario con la contraseña encriptada
             user = serializer.save()
+
+            # Generamos los tokens
             refresh = RefreshToken.for_user(user)
             return Response({
                 "user": serializer.data,
@@ -40,7 +46,10 @@ class UserViewSet(viewsets.ModelViewSet):
                 "access": str(refresh.access_token),
             }, status=status.HTTP_201_CREATED)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({
+            "error": "Error en la validación de datos",
+            "details": serializer.errors
+        }, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=False, methods=["post"], permission_classes=[AllowAny])
     def login(self, request):
