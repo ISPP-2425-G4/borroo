@@ -13,6 +13,9 @@ class ItemSerializer(serializers.ModelSerializer):
     category_display = serializers.CharField(
         source='get_category_display', read_only=True
     )
+    subcategory_display = serializers.CharField(
+        source='get_subcategory_display', read_only=True
+    )
     cancel_type_display = serializers.CharField(
         source='get_cancel_type_display', read_only=True
     )
@@ -30,7 +33,8 @@ class ItemSerializer(serializers.ModelSerializer):
         model = Item
         fields = [
             'id', 'title', 'description', 'category', 'category_display',
-            'cancel_type', 'cancel_type_display', 'price_category',
+            'subcategory', 'subcategory_display', 'cancel_type',
+            'cancel_type_display', 'price_category',
             'price_category_display', 'price', 'images', 'image_files',
             'remaining_image_ids', 'user'
         ]
@@ -55,6 +59,8 @@ class ItemSerializer(serializers.ModelSerializer):
         instance.description = validated_data.get('description',
                                                   instance.description)
         instance.category = validated_data.get('category', instance.category)
+        instance.subcategory = validated_data.get('subcategory',
+                                                  instance.subcategory)
         instance.cancel_type = validated_data.get('cancel_type',
                                                   instance.cancel_type)
         instance.price_category = validated_data.get('price_category',

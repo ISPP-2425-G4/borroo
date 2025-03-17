@@ -95,11 +95,14 @@ const Layout = () => {
   useEffect(() => {
     const filtered = productos.filter((producto) => (
       (categoria === "" || producto.category_display === categoria) &&
+      (subcategoria === "" || producto.subcategory_display === subcategoria) &&
       (producto.price >= precio[0] && producto.price <= precio[1]) &&
       (producto.title.toLowerCase().includes(searchTerm.toLowerCase()))
     ));
     setProductosFiltrados(filtered);
-  }, [productos, categoria, precio, searchTerm]);
+  }, [productos, categoria, subcategoria, precio, searchTerm]);
+
+
 
   return (
     <Box sx={{ overflowX: "hidden"}}>
@@ -155,21 +158,21 @@ const Layout = () => {
             <MenuItem value="">
               <em>Seleccione una subcategoría</em>
             </MenuItem>
-            <MenuItem value="computers">💻 Ordenadores</MenuItem>
-            <MenuItem value="computer_accessories">🖥️ Accesorios de ordenador</MenuItem>
-            <MenuItem value="smartphones">📱 Smartphones</MenuItem>
-            <MenuItem value="tablets">📱 Tablets</MenuItem>
-            <MenuItem value="cameras">📸 Cámaras</MenuItem>
-            <MenuItem value="consoles">🎮 Consolas</MenuItem>
-            <MenuItem value="tv">📺 Televisores</MenuItem>
-            <MenuItem value="monitors">🖥️ Monitores</MenuItem>
-            <MenuItem value="smarthome">🏠 Hogar inteligente</MenuItem>
-            <MenuItem value="audio">🔊 Audio</MenuItem>
-            <MenuItem value="smartwatches">⌚ Smartwatches</MenuItem>
-            <MenuItem value="printers_scanners">🖨️ Impresoras y escáneres</MenuItem>
-            <MenuItem value="drones">🚁 Drones</MenuItem>
-            <MenuItem value="projectors">📽️ Proyectores</MenuItem>
-            <MenuItem value="technology__others">🔧 Otros</MenuItem>
+            <MenuItem value="Ordenadores">💻 Ordenadores</MenuItem>
+            <MenuItem value="Accesorios de ordenador">🖥️ Accesorios de ordenador</MenuItem>
+            <MenuItem value="Smartphones">📱 Smartphones</MenuItem>
+            <MenuItem value="Tablets">📱 Tablets</MenuItem>
+            <MenuItem value="Cámaras">📸 Cámaras</MenuItem>
+            <MenuItem value="Consolas">🎮 Consolas</MenuItem>
+            <MenuItem value="Televisores">📺 Televisores</MenuItem>
+            <MenuItem value="Monitores">🖥️ Monitores</MenuItem>
+            <MenuItem value="Hogar inteligente">🏠 Hogar inteligente</MenuItem>
+            <MenuItem value="Audio">🔊 Audio</MenuItem>
+            <MenuItem value="Smartwatches">⌚ Smartwatches</MenuItem>
+            <MenuItem value="Impresoras y escáneres">🖨️ Impresoras y escáneres</MenuItem>
+            <MenuItem value="Drones">🚁 Drones</MenuItem>
+            <MenuItem value="Proyectores">📽️ Proyectores</MenuItem>
+            <MenuItem value="Otros (Tecnología)">🔧 Otros</MenuItem>
           </Select>)}
           {categoria === "Deporte" && (
           <Select
@@ -182,22 +185,22 @@ const Layout = () => {
             <MenuItem value="">
               <em>Seleccione una subcategoría</em>
             </MenuItem>
-            <MenuItem value="cycling">🚴‍♂️ Ciclismo</MenuItem>
-            <MenuItem value="gym">🏋️‍♂️ Gimnasio</MenuItem>
-            <MenuItem value="calisthenics">🤸‍♂️ Calistenia</MenuItem>
-            <MenuItem value="running">🏃‍♂️ Running</MenuItem>
-            <MenuItem value="ball_sports">⚽ Deportes de pelota</MenuItem>
-            <MenuItem value="racket_sports">🎾 Deportes de raqueta</MenuItem>
-            <MenuItem value="paddle_sports">🛶 Deportes de remo</MenuItem>
-            <MenuItem value="martial_arts">🥋 Artes marciales</MenuItem>
-            <MenuItem value="snow_sports">🏂 Deportes de nieve</MenuItem>
-            <MenuItem value="skateboarding">🛹 Skate</MenuItem>
-            <MenuItem value="beach_sports">🏖️ Deportes de playa</MenuItem>
-            <MenuItem value="pool_sports">🏊‍♂️ Deportes de piscina</MenuItem>
-            <MenuItem value="river_sports">🚣‍♂️ Deportes de río</MenuItem>
-            <MenuItem value="mountain_sports">🏞️ Deportes de montaña</MenuItem>
-            <MenuItem value="extreme_sports">🏄‍♂️ Deportes extremos</MenuItem>
-            <MenuItem value="sports_others">🔧 Otros</MenuItem>
+            <MenuItem value="Ciclismo">🚴‍♂️ Ciclismo</MenuItem>
+            <MenuItem value="Gimnasio">🏋️‍♂️ Gimnasio</MenuItem>
+            <MenuItem value="Calistenia">🤸‍♂️ Calistenia</MenuItem>
+            <MenuItem value="Running">🏃‍♂️ Running</MenuItem>
+            <MenuItem value="Deportes de pelota">⚽ Deportes de pelota</MenuItem>
+            <MenuItem value="Deportes de raqueta">🎾 Deportes de raqueta</MenuItem>
+            <MenuItem value="Deportes de remo">🛶 Deportes de remo</MenuItem>
+            <MenuItem value="Artes marciales">🥋 Artes marciales</MenuItem>
+            <MenuItem value="Deportes de nieve">🏂 Deportes de nieve</MenuItem>
+            <MenuItem value="Skate">🛹 Skate</MenuItem>
+            <MenuItem value="Deportes de playa">🏖️ Deportes de playa</MenuItem>
+            <MenuItem value="Deportes de piscina">🏊‍♂️ Deportes de piscina</MenuItem>
+            <MenuItem value="Deportes de río">🚣‍♂️ Deportes de río</MenuItem>
+            <MenuItem value="Deportes de montaña">🏞️ Deportes de montaña</MenuItem>
+            <MenuItem value="Deportes extremos">🏄‍♂️ Deportes extremos</MenuItem>
+            <MenuItem value="Otros (Deporte)">🔧 Otros</MenuItem>
           </Select>
         )}
         {categoria === "Bricolaje" && (
@@ -211,16 +214,16 @@ const Layout = () => {
             <MenuItem value="">
               <em>Seleccione una subcategoría</em>
             </MenuItem>
-            <MenuItem value="electric_tools">🔌 Herramientas eléctricas</MenuItem>
-            <MenuItem value="manual_tools">🔧 Herramientas manuales</MenuItem>
-            <MenuItem value="machines">🔩 Máquinas</MenuItem>
-            <MenuItem value="electricity">⚡ Electricidad</MenuItem>
-            <MenuItem value="plumbing">🚰 Fontanería</MenuItem>
-            <MenuItem value="woodworking">🪚 Carpintería</MenuItem>
-            <MenuItem value="painting">🎨 Pintura</MenuItem>
-            <MenuItem value="gardening">🌱 Jardinería</MenuItem>
-            <MenuItem value="decoration">🖼️ Decoración</MenuItem>
-            <MenuItem value="diy_others">🔧 Otros</MenuItem>
+            <MenuItem value="Herramientas eléctricas">🔌 Herramientas eléctricas</MenuItem>
+            <MenuItem value="Herramientas manuales">🔧 Herramientas manuales</MenuItem>
+            <MenuItem value="Máquinas">🔩 Máquinas</MenuItem>
+            <MenuItem value="Electricidad">⚡ Electricidad</MenuItem>
+            <MenuItem value="Fontanería">🚰 Fontanería</MenuItem>
+            <MenuItem value="Carpintería">🪚 Carpintería</MenuItem>
+            <MenuItem value="Pintura">🎨 Pintura</MenuItem>
+            <MenuItem value="Jardinería">🌱 Jardinería</MenuItem>
+            <MenuItem value="Decoración">🖼️ Decoración</MenuItem>
+            <MenuItem value="Otros (Bricolaje)">🔧 Otros</MenuItem>
           </Select>
         )}
 
@@ -235,21 +238,21 @@ const Layout = () => {
             <MenuItem value="">
               <em>Seleccione una subcategoría</em>
             </MenuItem>
-            <MenuItem value="summer_clothing">🌞 Ropa de verano</MenuItem>
-            <MenuItem value="winter_clothing">❄️ Ropa de invierno</MenuItem>
-            <MenuItem value="mevent_clothing">🎩 Ropa de evento para hombre</MenuItem>
-            <MenuItem value="wevent_clothing">👗 Ropa de evento para mujer</MenuItem>
-            <MenuItem value="sport_event_apparel">⚽ Ropa de evento deportivo</MenuItem>
-            <MenuItem value="mshoes">👟 Zapatos para hombre</MenuItem>
-            <MenuItem value="wshoes">👠 Zapatos para mujer</MenuItem>
-            <MenuItem value="suits">👔 Trajes</MenuItem>
-            <MenuItem value="dresses">👗 Vestidos</MenuItem>
-            <MenuItem value="jewelry">💍 Joyería</MenuItem>
-            <MenuItem value="watches">⌚ Relojes</MenuItem>
-            <MenuItem value="bags">👜 Bolsos</MenuItem>
-            <MenuItem value="sunglasses">🕶️ Gafas de sol</MenuItem>
-            <MenuItem value="hats">👒 Sombreros</MenuItem>
-            <MenuItem value="clothing_others">🔧 Otros</MenuItem>
+            <MenuItem value="Ropa de verano">🌞 Ropa de verano</MenuItem>
+            <MenuItem value="Ropa de invierno">❄️ Ropa de invierno</MenuItem>
+            <MenuItem value="Ropa de evento para hombre">🎩 Ropa de evento para hombre</MenuItem>
+            <MenuItem value="Ropa de evento para mujer">👗 Ropa de evento para mujer</MenuItem>
+            <MenuItem value="Ropa de evento deportivo">⚽ Ropa de evento deportivo</MenuItem>
+            <MenuItem value="Zapatos para hombre">👟 Zapatos para hombre</MenuItem>
+            <MenuItem value="Zapatos para mujer">👠 Zapatos para mujer</MenuItem>
+            <MenuItem value="Trajes">👔 Trajes</MenuItem>
+            <MenuItem value="Vestidos">👗 Vestidos</MenuItem>
+            <MenuItem value="Joyería">💍 Joyería</MenuItem>
+            <MenuItem value="Relojes">⌚ Relojes</MenuItem>
+            <MenuItem value="Bolsos">👜 Bolsos</MenuItem>
+            <MenuItem value="Gafas de sol">🕶️ Gafas de sol</MenuItem>
+            <MenuItem value="Sombreros">👒 Sombreros</MenuItem>
+            <MenuItem value="Otros (Ropa)">🔧 Otros</MenuItem>
           </Select>
         )}
 
@@ -264,16 +267,16 @@ const Layout = () => {
             <MenuItem value="">
               <em>Seleccione una subcategoría</em>
             </MenuItem>
-            <MenuItem value="home_furniture">🛋️ Muebles de hogar</MenuItem>
-            <MenuItem value="home_appliances">🏠 Electrodomésticos</MenuItem>
-            <MenuItem value="event_equipment">🎪 Equipamiento para eventos</MenuItem>
-            <MenuItem value="kids_furniture">🛏️ Muebles para niños</MenuItem>
-            <MenuItem value="office_furniture">💼 Muebles de oficina</MenuItem>
-            <MenuItem value="kitchen">🍽️ Cocina</MenuItem>
-            <MenuItem value="bathroom">🚿 Baño</MenuItem>
-            <MenuItem value="garden_furniture">🌳 Muebles de jardín</MenuItem>
-            <MenuItem value="decoration_ambience">🕯️ Decoración y ambiente</MenuItem>
-            <MenuItem value="furniture_and_logistics_others">🔧 Otros</MenuItem>
+            <MenuItem value="Muebles de hogar">🛋️ Muebles de hogar</MenuItem>
+            <MenuItem value="Electrodomésticos">🏠 Electrodomésticos</MenuItem>
+            <MenuItem value="Equipamiento para eventos">🎪 Equipamiento para eventos</MenuItem>
+            <MenuItem value="Muebles para niños">🛏️ Muebles para niños</MenuItem>
+            <MenuItem value="Muebles de oficina">💼 Muebles de oficina</MenuItem>
+            <MenuItem value="Cocina">🍽️ Cocina</MenuItem>
+            <MenuItem value="Baño">🚿 Baño</MenuItem>
+            <MenuItem value="Muebles de jardín">🌳 Muebles de jardín</MenuItem>
+            <MenuItem value="Decoración y ambiente">🕯️ Decoración y ambiente</MenuItem>
+            <MenuItem value="Otros (Mobiliario y logística)">🔧 Otros</MenuItem>
           </Select>
         )}
 
@@ -288,16 +291,16 @@ const Layout = () => {
             <MenuItem value="">
               <em>Seleccione una subcategoría</em>
             </MenuItem>
-            <MenuItem value="videogames">🎮 Videojuegos</MenuItem>
-            <MenuItem value="board_games">🎲 Juegos de mesa</MenuItem>
-            <MenuItem value="books">📚 Libros</MenuItem>
-            <MenuItem value="movies">🎬 Películas</MenuItem>
-            <MenuItem value="music">🎶 Música</MenuItem>
-            <MenuItem value="instruments">🎸 Instrumentos</MenuItem>
-            <MenuItem value="party">🎉 Fiesta</MenuItem>
-            <MenuItem value="camping">🏕️ Camping</MenuItem>
-            <MenuItem value="travel">✈️ Viaje</MenuItem>
-            <MenuItem value="other_entertainment">🔧 Otros</MenuItem>
+            <MenuItem value="Videojuegos">🎮 Videojuegos</MenuItem>
+            <MenuItem value="Juegos de mesa">🎲 Juegos de mesa</MenuItem>
+            <MenuItem value="Libros">📚 Libros</MenuItem>
+            <MenuItem value="Películas">🎬 Películas</MenuItem>
+            <MenuItem value="Música">🎶 Música</MenuItem>
+            <MenuItem value="Instrumentos">🎸 Instrumentos</MenuItem>
+            <MenuItem value="Fiesta">🎉 Fiesta</MenuItem>
+            <MenuItem value="Camping">🏕️ Camping</MenuItem>
+            <MenuItem value="Viaje">✈️ Viaje</MenuItem>
+            <MenuItem value="Otros (Entretenimiento)">🔧 Otros</MenuItem>
           </Select>
           )}
 
@@ -363,6 +366,9 @@ const Layout = () => {
                     </Typography>
                     <Typography variant="body2" gutterBottom>
                       {producto.category_display}
+                    </Typography>
+                    <Typography variant="body2" gutterBottom>
+                      {producto.subcategory_display}
                     </Typography>
                     <Typography variant="body2">
                       {producto.price}€ / {producto.price_category_display}

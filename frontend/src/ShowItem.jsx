@@ -219,7 +219,8 @@ const ShowItemScreen = () => {
         <div className="item-details">
           <p><FiFileText /> <strong>Descripción:</strong> {item.description}</p>
           <p><FiLayers /> <strong>Categoría:</strong> {item.category_display}</p>
-  
+          <p><FiLayers /> <strong>Subcategoría:</strong> {item.subcategory_display}</p>
+
           {/* 🔹 Política de cancelación con tooltip */}
           <div className="cancel-policy-wrapper">
           <div className="policy-label">

@@ -30,7 +30,7 @@ class ItemSubcategory(models.TextChoices):
     PRINTERS_SCANNERS = ('printers_scanners', 'Impresoras y escáneres')
     DRONES = ('drones', 'Drones')
     PROJECTORS = ('projectors', 'Proyectores')
-    TECHNOLOGY_OTHERS = ('technology_others', 'Otros')
+    TECHNOLOGY_OTHERS = ('technology_others', 'Otros (Tecnología)')
 
     # SPORTS
     CYCLING = ('cycling', 'Ciclismo')
@@ -48,7 +48,7 @@ class ItemSubcategory(models.TextChoices):
     RIVER_SPORTS = ('river_sports', 'Deportes de río')
     MOUNTAIN_SPORTS = ('mountain_sports', 'Deportes de montaña')
     EXTREME_SPORTS = ('extreme_sports', 'Deportes extremos')
-    SPORTS_OTHERS = ('sports_others', 'Otros')
+    SPORTS_OTHERS = ('sports_others', 'Otros (Deporte)')
 
     # DIY
     ELECTRIC_TOOLS = ('electric_tools', 'Herramientas eléctricas')
@@ -60,7 +60,7 @@ class ItemSubcategory(models.TextChoices):
     PAINTING = ('painting', 'Pintura')
     GARDENING = ('gardening', 'Jardinería')
     DECORATION = ('decoration', 'Decoración')
-    DIY_OTHERS = ('diy_others', 'Otros')
+    DIY_OTHERS = ('diy_others', 'Otros (Bricolaje)')
 
     # CLOTHING
     SUMMER_CLOTHING = ('summer_clothing', 'Ropa de verano')
@@ -77,7 +77,7 @@ class ItemSubcategory(models.TextChoices):
     BAGS = ('bags', 'Bolsos')
     SUNGLASSES = ('sunglasses', 'Gafas de sol')
     HATS = ('hats', 'Sombreros')
-    CLOTHING_OTHERS = ('clothing_others', 'Otros')
+    CLOTHING_OTHERS = ('clothing_others', 'Otros (Ropa)')
 
     # FURNITURE_AND_LOGISTICS
     HOME_FURNITURE = ('home_furniture', 'Muebles de hogar')
@@ -90,7 +90,7 @@ class ItemSubcategory(models.TextChoices):
     GARDEN_FURNITURE = ('garden_furniture', 'Muebles de jardín')
     DECORATION_AMBIENCE = ('decoration_ambience', 'Decoración y ambiente')
     FURNITURE_AND_LOGISTICS_OTHERS = ('furniture_and_logistics_others',
-                                      'Otros')
+                                      'Otros (Mobiliario y logística)')
 
     # ENTERTAINMENT
     VIDEOGAMES = ('videogames', 'Videojuegos')
@@ -102,7 +102,7 @@ class ItemSubcategory(models.TextChoices):
     PARTY = ('party', 'Fiesta')
     CAMPING = ('camping', 'Camping')
     TRAVEL = ('travel', 'Viaje')
-    OTHER_ENTERTAINMENT = ('other_entertainment', 'Otros')
+    OTHER_ENTERTAINMENT = ('other_entertainment', 'Otros (Entretenimiento)')
 
     # NONE
     NONE = ('none', 'Ninguno')
@@ -130,7 +130,7 @@ class Item(models.Model):
         max_length=50,
         choices=ItemCategory.choices
     )
-    ItemSubcategory = models.CharField(
+    subcategory = models.CharField(
         max_length=50,
         choices=ItemSubcategory.choices
     )
