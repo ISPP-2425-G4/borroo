@@ -40,30 +40,18 @@ def apply_penalty(rent):
     return rent.total_price
 
 
+REFUND_RULES = {
+    "flexible": [(2, Decimal("1.00")), (1, Decimal("0.50"))],
+    "medium": [(7, Decimal("1.00")), (3, Decimal("0.50"))],
+    "strict": [(30, Decimal("1.00")), (14, Decimal("0.50"))],
+}
+
+
 def apply_refund(cancel_type, days_diff):
-    if cancel_type == 'flexible':
-        if days_diff >= 2:
-            return Decimal("1.00")  # 100%
-        elif days_diff == 1:
-            return Decimal("0.50")  # 50%
-        else:
-            return Decimal("0.00")  # 0%
-    elif cancel_type == 'medium':
-        if days_diff >= 7:
-            return Decimal("1.00")
-        elif days_diff >= 3:
-            return Decimal("0.50")
-        else:
-            return Decimal("0.00")
-    elif cancel_type == 'strict':
-        if days_diff >= 30:
-            return Decimal("1.00")
-        elif days_diff >= 14:
-            return Decimal("0.50")
-        else:
-            return Decimal("0.00")
-    else:
-        return Decimal("0.00")
+    for threshold, refund in REFUND_RULES.get(cancel_type, []):
+        if days_diff >= threshold:
+            return refund
+    return Decimal("0.00")  # Default refund
 
 
 class RentViewSet(viewsets.ModelViewSet):
