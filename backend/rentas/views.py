@@ -22,12 +22,6 @@ def is_authorized(condition=True, authenticated=True):
             {'error': 'No tienes permisos para realizar esta acción.'})
 
 
-def is_cancelled(condition=False):
-    if condition:
-        raise PermissionDenied(
-            {"error": "El alquiler está cancelado y no se puede modificar."})
-
-
 def is_earlier(condition=False):
     if condition:
         raise PermissionDenied(
@@ -145,7 +139,9 @@ class RentViewSet(viewsets.ModelViewSet):
         is_renter = (user == rent.renter)
         is_owner = (user == rent.item.user)
 
-        is_cancelled(condition=rent.rent_status == RentStatus.CANCELLED)
+        if rent.rent_status == RentStatus.CANCELLED:
+            raise PermissionDenied({'error': 'El alquiler está cancelado y no '
+                                    'se puede modificar.'})
 
         # Caso: pasar de ACCEPTED a BOOKED (tras pago)
         if (rent.rent_status == RentStatus.ACCEPTED
@@ -156,17 +152,13 @@ class RentViewSet(viewsets.ModelViewSet):
 
         # Caso: pasar de BOOKED a PCIKED_UP (dentro de la fecha)
         if (rent.rent_status == RentStatus.BOOKED
-                and response == "PICKED_UP"
-                and is_authorized(condition=is_renter,
-                                  authenticated=authenticated)):
-            return self._handle_picked_up(rent, now)
+                and response == "PICKED_UP"):
+            return self._handle_picked_up(rent, now, is_renter, authenticated)
 
         # Caso: pasar de PICKED_UP a RETURNED (dentro de la fecha)
         if (rent.rent_status == RentStatus.PICKED_UP
-                and response == "RETURNED"
-                and is_authorized(condition=is_owner,
-                                  authenticated=authenticated)):
-            return self._handle_returned(rent, now)
+                and response == "RETURNED"):
+            return self._handle_returned(rent, now, is_owner, authenticated)
 
         raise PermissionDenied({'error': 'Acción no reconocida'})
 
@@ -175,7 +167,8 @@ class RentViewSet(viewsets.ModelViewSet):
         rent.save()
         return Response({'status': message})
 
-    def _handle_picked_up(self, rent, now):
+    def _handle_picked_up(self, rent, now, is_renter, authenticated):
+        is_authorized(condition=is_renter, authenticated=authenticated)
         is_earlier(condition=now < rent.start_date)
 
         refund_window = timedelta(minutes=30)
@@ -192,7 +185,8 @@ class RentViewSet(viewsets.ModelViewSet):
                                    "Objeto entregado. El objeto ha sido "
                                    "entregado.")
 
-    def _handle_returned(self, rent, now):
+    def _handle_returned(self, rent, now, is_owner, authenticated):
+        is_authorized(condition=is_owner, authenticated=authenticated)
         is_earlier(condition=now < rent.start_date)
         if now > rent.end_date:
             apply_penalty(rent)
