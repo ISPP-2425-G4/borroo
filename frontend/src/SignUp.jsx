@@ -35,7 +35,7 @@ const Signup = () => {
 
   useEffect(() => {
     const requiredFields = ["username", "name", "surname", "email", "phone_number", "country", "city", "address", "postal_code", "password", "password2"];
-    const isValid = requiredFields.every(field => formData[field].trim() !== "");
+    const isValid = requiredFields.every(field => formData[field] && formData[field].trim() !== "");
     setIsFormValid(isValid);
   }, [formData]);
 
