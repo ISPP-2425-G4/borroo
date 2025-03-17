@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import "../public/styles/CreateItem.css";
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
 
 const CreateItemScreen = () => {
   const [formData, setFormData] = useState({
@@ -226,7 +227,7 @@ const CreateItemScreen = () => {
             onChange={handleChange}
             placeholder="Selecciona una categoría"
           />
-
+          <CancelPolicyTooltip />
           <SelectField
             icon={<FiXCircle />}
             name="cancel_type"
@@ -234,8 +235,9 @@ const CreateItemScreen = () => {
             value={formData.cancel_type}
             onChange={handleChange}
             placeholder="Selecciona una política de cancelación"
+            
           />
-
+          
           <SelectField
             icon={<FiLayers />}
             name="price_category"
