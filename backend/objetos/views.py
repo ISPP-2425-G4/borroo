@@ -4,7 +4,7 @@ from .serializers import ItemSerializer, ItemImageSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import ItemCategory, CancelType, PriceCategory
+from .models import ItemCategory, CancelType, PriceCategory, ItemSubcategory
 
 
 class EnumChoicesView(APIView):
@@ -13,7 +13,10 @@ class EnumChoicesView(APIView):
             {"value": choice.value, "label": choice.label}
             for choice in ItemCategory
         ]
-
+        subcategories = [
+            {"value": choice.value, "label": choice.label}
+            for choice in ItemSubcategory
+        ]
         cancel_types = [
             {"value": choice.value, "label": choice.label}
             for choice in CancelType
@@ -27,6 +30,7 @@ class EnumChoicesView(APIView):
         return Response(
             {
                 "categories": categories,
+                "subcategories": subcategories,
                 "cancel_types": cancel_types,
                 "price_categories": price_categories,
             },

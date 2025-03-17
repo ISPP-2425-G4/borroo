@@ -12,6 +12,7 @@ const CreateItemScreen = () => {
     title: "",
     description: "",
     category: "",
+    subcategory: "",
     cancel_type: "",
     price_category: "",
     price: "",
@@ -20,6 +21,7 @@ const CreateItemScreen = () => {
   const [images, setImages] = useState([]);
   const [options, setOptions] = useState({
     categories: [],
+    subcategories: [],
     cancel_types: [],
     price_categories: [],
   });
@@ -40,6 +42,7 @@ const CreateItemScreen = () => {
 
         setOptions({
           categories: data.categories || [],
+          subcategories: data.subcategories || [],
           cancel_types: data.cancel_types || [],
           price_categories: data.price_categories || [],
         });
@@ -87,7 +90,7 @@ const CreateItemScreen = () => {
 
     const errors = {};
     
-    if(!formData.title || !formData.description || !formData.category || !formData.cancel_type || !formData.price_category || !formData.price) {
+    if(!formData.title || !formData.description || !formData.category || !formData.subcategory || !formData.cancel_type || !formData.price_category || !formData.price) {
       setErrorMessage("Por favor, completa todos los campos.");
       setLoading(false);
       return;
@@ -126,7 +129,7 @@ const CreateItemScreen = () => {
 
     try {
       const formDataToSend = new FormData();
-      const allowedKeys = ["title", "description", "category", "cancel_type", "price_category", "price"];
+      const allowedKeys = ["title", "description", "category", "subcategory", "cancel_type", "price_category", "price"];
       
       Object.keys(formData).forEach((key) => {
         if (allowedKeys.includes(key)) {
@@ -161,6 +164,7 @@ const CreateItemScreen = () => {
           title: "",
           description: "",
           category: "",
+          subcategory: "",
           cancel_type: "",
           price_category: "",
           price: "",
@@ -207,6 +211,14 @@ const CreateItemScreen = () => {
             name="category"
             options={options.categories}
             value={formData.category}
+            onChange={handleChange}
+            placeholder="Selecciona una categoría"
+          />
+          <SelectField
+            icon={<FiLayers />}
+            name="subcategory"
+            options={options.subcategories}
+            value={formData.subcategory}
             onChange={handleChange}
             placeholder="Selecciona una categoría"
           />

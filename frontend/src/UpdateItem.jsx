@@ -124,7 +124,7 @@ const UpdateItemScreen = () => {
 
     const errors = {};
 
-    if (!formData.title || !formData.description || !formData.category || !formData.cancel_type || !formData.price_category || !formData.price) {
+    if (!formData.title || !formData.description || !formData.category || !formData.Subcategory || !formData.cancel_type || !formData.price_category || !formData.price) {
       setErrorMessage("Por favor, completa todos los campos.");
       return;
     }
@@ -261,6 +261,21 @@ const UpdateItemScreen = () => {
                 >
                   <option value="" disabled>Selecciona una categoría</option>
                   {options.categories.map(({ value, label }) => (
+                    <option key={value} value={value}>{label}</option>
+                  ))}
+                </select>
+                <span className="select-arrow">▼</span>
+              </div>
+              <div className="input-group">
+                <FiLayers className="input-icon" />
+                <select
+                  name="subcategory"
+                  value={formData.subcategory || ""}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="" disabled>Selecciona una subcategoría</option>
+                  {options.subcategories.map(({ value, label }) => (
                     <option key={value} value={value}>{label}</option>
                   ))}
                 </select>
