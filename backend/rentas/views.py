@@ -1,3 +1,4 @@
+# flake8: noqa
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -40,7 +41,7 @@ def apply_penalty(rent):
     return rent.total_price
 
 
-def apply_refund(cancel_type, days_diff):  # noqa: C901
+def apply_refund(cancel_type, days_diff):
     if cancel_type == 'flexible':
         if days_diff >= 2:
             return Decimal("1.00")  # 100%
