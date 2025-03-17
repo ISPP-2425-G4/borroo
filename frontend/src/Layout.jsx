@@ -22,6 +22,7 @@ const Layout = () => {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [categoria, setCategoria] = useState("");
+  const [subcategoria, setSubcategoria] = useState("");
   const [precio, setPrecio] = useState([0, 100]);
   const [productosFiltrados, setProductosFiltrados] = useState([]);
 
@@ -31,6 +32,10 @@ const Layout = () => {
 
   const handleCategoriaChange = (e) => {
     setCategoria(e.target.value);
+  };
+
+  const handleSubcategoriaChange = (e) => {
+    setSubcategoria(e.target.value);
   };
 
   const handlePrecioChange = (event, newValue) => {
@@ -139,6 +144,163 @@ const Layout = () => {
             </MenuItem>
             <MenuItem value="Entretenimiento">🎮 Entretenimiento</MenuItem>
           </Select>
+          {categoria === "Tecnología" && (
+          <Select
+            value={subcategoria}
+            onChange={handleSubcategoriaChange}
+            displayEmpty
+            variant="outlined"
+            sx={{ minWidth: "250px" }}
+          >
+            <MenuItem value="">
+              <em>Seleccione una subcategoría</em>
+            </MenuItem>
+            <MenuItem value="computers">💻 Ordenadores</MenuItem>
+            <MenuItem value="computer_accessories">🖥️ Accesorios de ordenador</MenuItem>
+            <MenuItem value="smartphones">📱 Smartphones</MenuItem>
+            <MenuItem value="tablets">📱 Tablets</MenuItem>
+            <MenuItem value="cameras">📸 Cámaras</MenuItem>
+            <MenuItem value="consoles">🎮 Consolas</MenuItem>
+            <MenuItem value="tv">📺 Televisores</MenuItem>
+            <MenuItem value="monitors">🖥️ Monitores</MenuItem>
+            <MenuItem value="smarthome">🏠 Hogar inteligente</MenuItem>
+            <MenuItem value="audio">🔊 Audio</MenuItem>
+            <MenuItem value="smartwatches">⌚ Smartwatches</MenuItem>
+            <MenuItem value="printers_scanners">🖨️ Impresoras y escáneres</MenuItem>
+            <MenuItem value="drones">🚁 Drones</MenuItem>
+            <MenuItem value="projectors">📽️ Proyectores</MenuItem>
+            <MenuItem value="technology__others">🔧 Otros</MenuItem>
+          </Select>)}
+          {categoria === "Deporte" && (
+          <Select
+            value={subcategoria}
+            onChange={handleSubcategoriaChange}
+            displayEmpty
+            variant="outlined"
+            sx={{ minWidth: "250px"}}
+          >
+            <MenuItem value="">
+              <em>Seleccione una subcategoría</em>
+            </MenuItem>
+            <MenuItem value="cycling">🚴‍♂️ Ciclismo</MenuItem>
+            <MenuItem value="gym">🏋️‍♂️ Gimnasio</MenuItem>
+            <MenuItem value="calisthenics">🤸‍♂️ Calistenia</MenuItem>
+            <MenuItem value="running">🏃‍♂️ Running</MenuItem>
+            <MenuItem value="ball_sports">⚽ Deportes de pelota</MenuItem>
+            <MenuItem value="racket_sports">🎾 Deportes de raqueta</MenuItem>
+            <MenuItem value="paddle_sports">🛶 Deportes de remo</MenuItem>
+            <MenuItem value="martial_arts">🥋 Artes marciales</MenuItem>
+            <MenuItem value="snow_sports">🏂 Deportes de nieve</MenuItem>
+            <MenuItem value="skateboarding">🛹 Skate</MenuItem>
+            <MenuItem value="beach_sports">🏖️ Deportes de playa</MenuItem>
+            <MenuItem value="pool_sports">🏊‍♂️ Deportes de piscina</MenuItem>
+            <MenuItem value="river_sports">🚣‍♂️ Deportes de río</MenuItem>
+            <MenuItem value="mountain_sports">🏞️ Deportes de montaña</MenuItem>
+            <MenuItem value="extreme_sports">🏄‍♂️ Deportes extremos</MenuItem>
+            <MenuItem value="sports_others">🔧 Otros</MenuItem>
+          </Select>
+        )}
+        {categoria === "Bricolaje" && (
+          <Select
+            value={subcategoria}
+            onChange={handleSubcategoriaChange}
+            displayEmpty
+            variant="outlined"
+            sx={{ minWidth: "250px" }}
+          >
+            <MenuItem value="">
+              <em>Seleccione una subcategoría</em>
+            </MenuItem>
+            <MenuItem value="electric_tools">🔌 Herramientas eléctricas</MenuItem>
+            <MenuItem value="manual_tools">🔧 Herramientas manuales</MenuItem>
+            <MenuItem value="machines">🔩 Máquinas</MenuItem>
+            <MenuItem value="electricity">⚡ Electricidad</MenuItem>
+            <MenuItem value="plumbing">🚰 Fontanería</MenuItem>
+            <MenuItem value="woodworking">🪚 Carpintería</MenuItem>
+            <MenuItem value="painting">🎨 Pintura</MenuItem>
+            <MenuItem value="gardening">🌱 Jardinería</MenuItem>
+            <MenuItem value="decoration">🖼️ Decoración</MenuItem>
+            <MenuItem value="diy_others">🔧 Otros</MenuItem>
+          </Select>
+        )}
+
+        {categoria === "Ropa" && (
+          <Select
+            value={subcategoria}
+            onChange={handleSubcategoriaChange}
+            displayEmpty
+            variant="outlined"
+            sx={{ minWidth: "250px" }}
+          >
+            <MenuItem value="">
+              <em>Seleccione una subcategoría</em>
+            </MenuItem>
+            <MenuItem value="summer_clothing">🌞 Ropa de verano</MenuItem>
+            <MenuItem value="winter_clothing">❄️ Ropa de invierno</MenuItem>
+            <MenuItem value="mevent_clothing">🎩 Ropa de evento para hombre</MenuItem>
+            <MenuItem value="wevent_clothing">👗 Ropa de evento para mujer</MenuItem>
+            <MenuItem value="sport_event_apparel">⚽ Ropa de evento deportivo</MenuItem>
+            <MenuItem value="mshoes">👟 Zapatos para hombre</MenuItem>
+            <MenuItem value="wshoes">👠 Zapatos para mujer</MenuItem>
+            <MenuItem value="suits">👔 Trajes</MenuItem>
+            <MenuItem value="dresses">👗 Vestidos</MenuItem>
+            <MenuItem value="jewelry">💍 Joyería</MenuItem>
+            <MenuItem value="watches">⌚ Relojes</MenuItem>
+            <MenuItem value="bags">👜 Bolsos</MenuItem>
+            <MenuItem value="sunglasses">🕶️ Gafas de sol</MenuItem>
+            <MenuItem value="hats">👒 Sombreros</MenuItem>
+            <MenuItem value="clothing_others">🔧 Otros</MenuItem>
+          </Select>
+        )}
+
+        {categoria === "Mobiliario y logística" && (
+          <Select
+            value={subcategoria}
+            onChange={handleSubcategoriaChange}
+            displayEmpty
+            variant="outlined"
+            sx={{ minWidth: "250px" }}
+          >
+            <MenuItem value="">
+              <em>Seleccione una subcategoría</em>
+            </MenuItem>
+            <MenuItem value="home_furniture">🛋️ Muebles de hogar</MenuItem>
+            <MenuItem value="home_appliances">🏠 Electrodomésticos</MenuItem>
+            <MenuItem value="event_equipment">🎪 Equipamiento para eventos</MenuItem>
+            <MenuItem value="kids_furniture">🛏️ Muebles para niños</MenuItem>
+            <MenuItem value="office_furniture">💼 Muebles de oficina</MenuItem>
+            <MenuItem value="kitchen">🍽️ Cocina</MenuItem>
+            <MenuItem value="bathroom">🚿 Baño</MenuItem>
+            <MenuItem value="garden_furniture">🌳 Muebles de jardín</MenuItem>
+            <MenuItem value="decoration_ambience">🕯️ Decoración y ambiente</MenuItem>
+            <MenuItem value="furniture_and_logistics_others">🔧 Otros</MenuItem>
+          </Select>
+        )}
+
+        {categoria === "Entretenimiento" && (
+          <Select
+            value={subcategoria}
+            onChange={handleSubcategoriaChange}
+            displayEmpty
+            variant="outlined"
+            sx={{ minWidth: "250px" }}
+          >
+            <MenuItem value="">
+              <em>Seleccione una subcategoría</em>
+            </MenuItem>
+            <MenuItem value="videogames">🎮 Videojuegos</MenuItem>
+            <MenuItem value="board_games">🎲 Juegos de mesa</MenuItem>
+            <MenuItem value="books">📚 Libros</MenuItem>
+            <MenuItem value="movies">🎬 Películas</MenuItem>
+            <MenuItem value="music">🎶 Música</MenuItem>
+            <MenuItem value="instruments">🎸 Instrumentos</MenuItem>
+            <MenuItem value="party">🎉 Fiesta</MenuItem>
+            <MenuItem value="camping">🏕️ Camping</MenuItem>
+            <MenuItem value="travel">✈️ Viaje</MenuItem>
+            <MenuItem value="other_entertainment">🔧 Otros</MenuItem>
+          </Select>
+          )}
+
           <Box sx={{ display: "flex", alignItems: "center", flexDirection:"column" }}>
             <Typography variant="body1" sx={{ mr: 2, color:"black" }}> Precio: </Typography>
           <Slider
