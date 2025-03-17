@@ -87,6 +87,16 @@ Asegúrate de tener instalados los siguientes componentes:
    python manage.py migrate
    ```
 
+8. **Ejecutar seeders para poblar la base de datos**
+   ```sh
+   python seeders.py
+   ```
+   Este archivo genera 10 objetos en la base de datos y 5 usuarios, para iniciar sesión puedes hacerlo con el usuario:
+   ```sh
+   User1
+   Borroo_25
+   ```
+
 ## Ejecutar el proyecto
    ```sh
    # Backend
