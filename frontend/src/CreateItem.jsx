@@ -28,6 +28,7 @@ const CreateItemScreen = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const [fieldErrors, setFieldErrors] = useState({});
+  const [, setIsFormValid] = useState(false);
 
   useEffect(() => {
     const fetchEnums = async () => {
@@ -54,8 +55,23 @@ const CreateItemScreen = () => {
     }
 
     fetchEnums();
-  }, []);
+  }, [navigate]);
 
+  const validateForm = () => {
+    const { title, description, category, cancel_type, price_category, price } = formData;
+    const isValid =
+      title.trim() !== "" &&
+      description.trim() !== "" &&
+      category.trim() !== "" &&
+      cancel_type.trim() !== "" &&
+      price_category.trim() !== "" &&
+      price.trim() !== "" &&
+      !isNaN(price) &&
+      parseFloat(price) > 0;
+    
+    setIsFormValid(isValid);
+  };
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -67,12 +83,13 @@ const CreateItemScreen = () => {
       }
     }
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    validateForm(); // Llama a la validación cada vez que cambia un campo
   };
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setImages((prevImages) => [...prevImages, ...files]);
-    e.target.value = "";
+    validateForm(); // Validar después de añadir imágenes
   };
 
   const handleRemoveImage = (index) => {
@@ -178,6 +195,8 @@ const CreateItemScreen = () => {
     }
   };
 
+  const isSubmitDisabled = loading || !formData.title || !formData.description || !formData.category || !formData.cancel_type || !formData.price_category || !formData.price;
+
   return (
     <div className="create-item-container">
       <Navbar />
@@ -263,9 +282,14 @@ const CreateItemScreen = () => {
             </div>
           )}
 
-          <button type="submit" className="primary-btn" disabled={loading}>
+          <button 
+            type="submit" 
+            className={`primary-btn ${isSubmitDisabled ? "disabled-btn" : ""}`} 
+            disabled={isSubmitDisabled}
+          >
             {loading ? "Publicando..." : "Publicar"}
           </button>
+
         </form>
       </div>
     </div>

@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 import datetime
 from django.core.exceptions import PermissionDenied
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password, make_password
 from .models import User, PricingPlan
 from .serializers import UserSerializer
 from rest_framework import viewsets, status
@@ -9,7 +9,6 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import action
-from django.contrib.auth.hashers import make_password
 
 
 def index(request):
@@ -29,12 +28,12 @@ class UserViewSet(viewsets.ModelViewSet):
         """Registro de usuario y generación de token JWT"""
         data = request.data.copy()
 
+        # Encriptar la contraseña antes de validar el serializer
+        data["password"] = make_password(data["password"])
+
         # Validar el serializer primero
         serializer = self.get_serializer(data=data)
         if serializer.is_valid():
-            # Si la contraseña es válida, aplicamos el hash
-            data["password"] = make_password(data["password"])
-
             # Guardamos el usuario con la contraseña encriptada
             user = serializer.save()
 

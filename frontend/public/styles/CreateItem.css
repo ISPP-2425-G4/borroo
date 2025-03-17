@@ -124,6 +124,21 @@ textarea {
   background: #1e40af;
   transform: scale(1.02);
 }
+.disabled-btn {
+  cursor: not-allowed; /* Cambia el cursor a "prohibido" */
+  opacity: 0.6; /* Reduce la opacidad */
+  background-color: #ccc; /* Color gris para indicar que está deshabilitado */
+  pointer-events: none; /* Evita que se pueda hacer clic */
+}
+.rental-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #ccc;
+  pointer-events: none;
+}
+.rental-btn:disabled:hover {
+  cursor: not-allowed;
+}
 
 /* ====== CARRUSEL DE IMÁGENES ====== */
 .image-container {

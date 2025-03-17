@@ -23,6 +23,8 @@ const UpdateItemScreen = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
+  const [, setIsFormValid] = useState(false);
+  const [loading] = useState(false);
 
   const [images, setImages] = useState([]); // Imágenes nuevas
   const [existingImages, setExistingImages] = useState([]); // Imágenes actuales (IDs y URLs)
@@ -85,6 +87,20 @@ const UpdateItemScreen = () => {
     if (id) fetchData();
   }, [id, navigate]);
 
+  const validateForm = () => {
+    const { title, description, category, cancel_type, price_category, price } = formData;
+    const isValid =
+      title.trim() !== "" &&
+      description.trim() !== "" &&
+      category.trim() !== "" &&
+      cancel_type.trim() !== "" &&
+      price_category.trim() !== "" &&
+      price.trim() !== "" &&
+      !isNaN(price) &&
+      parseFloat(price) > 0;
+    
+    setIsFormValid(isValid);
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -96,13 +112,14 @@ const UpdateItemScreen = () => {
       }
     }
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    validateForm(); // Llama a la validación cada vez que cambia un campo
   };
 
   // Manejar imágenes nuevas seleccionadas
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setImages(files); // Solo permitimos nuevas imágenes, no acumulamos
-    e.target.value = "";
+    validateForm(); // Validar después de añadir imágenes
   };
 
   // Eliminar una imagen seleccionada
@@ -213,6 +230,7 @@ const UpdateItemScreen = () => {
       </div>
     );
   }
+  const isSubmitDisabled = loading || !formData.title || !formData.description || !formData.category || !formData.cancel_type || !formData.price_category || !formData.price;
 
   return (
     <div className="rental-container">
@@ -354,7 +372,13 @@ const UpdateItemScreen = () => {
           )}
   
           <input type="file" multiple accept="image/*" onChange={handleImageChange} />
-          <button type="submit" className="rental-btn">Actualizar</button>
+          <button 
+            type="submit" 
+            className={`primary-btn ${isSubmitDisabled ? "disabled-btn" : ""}`} 
+            disabled={isSubmitDisabled}
+          >
+            {loading ? "Actualizando..." : "Actualizar"}
+          </button>
         </form>
       </div>
     </div>
