@@ -129,7 +129,7 @@ const Signup = () => {
     // Validar que nombres, apellidos, país, ciudad y dirección comiencen con una letra
     const textFields = ["name", "surname", "country", "city", "address"];
     textFields.forEach(field => {
-      if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ]/.test(formData[field])) {
+      if (formData[field] && !/^[A-Za-zÁÉÍÓÚáéíóúÑñ]/.test(formData[field])) {
         errors[field] = `El campo ${field} debe comenzar con una letra.`;
       }
     });
@@ -139,7 +139,7 @@ const Signup = () => {
       errors.password = "La contraseña debe contener al menos una letra mayúscula.";
     }
     // eslint-disable-next-line no-useless-escape
-    if (!/(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])/.test(formData.password)) {
+    if (!/(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>/?])/.test(formData.password)) {
       errors.password = "La contraseña debe contener al menos un carácter especial.";
     }
     if (!/(?=.*\d)/.test(formData.password)) {
