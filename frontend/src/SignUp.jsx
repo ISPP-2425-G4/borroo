@@ -138,6 +138,7 @@ const Signup = () => {
     if (!/(?=.*[A-Z])/.test(formData.password)) {
       errors.password = "La contraseña debe contener al menos una letra mayúscula.";
     }
+    // eslint-disable-next-line no-useless-escape
     if (!/(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])/.test(formData.password)) {
       errors.password = "La contraseña debe contener al menos un carácter especial.";
     }
