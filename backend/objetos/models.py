@@ -102,7 +102,7 @@ class ItemSubcategory(models.TextChoices):
     PARTY = ('party', 'Fiesta')
     CAMPING = ('camping', 'Camping')
     TRAVEL = ('travel', 'Viaje')
-    OTHER_ENTERTAINMENT = ('other_entertainment', 'Otro entretenimiento')
+    OTHER_ENTERTAINMENT = ('other_entertainment', 'Otros')
 
     # NONE
     NONE = ('none', 'Ninguno')
