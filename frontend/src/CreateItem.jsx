@@ -28,7 +28,7 @@ const CreateItemScreen = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const [fieldErrors, setFieldErrors] = useState({});
-  const [isFormValid, setIsFormValid] = useState(false);
+  const [, setIsFormValid] = useState(false);
 
   useEffect(() => {
     const fetchEnums = async () => {
@@ -195,6 +195,8 @@ const CreateItemScreen = () => {
     }
   };
 
+  const isSubmitDisabled = loading || !formData.title || !formData.description || !formData.category || !formData.cancel_type || !formData.price_category || !formData.price;
+
   return (
     <div className="create-item-container">
       <Navbar />
@@ -280,9 +282,14 @@ const CreateItemScreen = () => {
             </div>
           )}
 
-          <button type="submit" className="primary-btn" disabled={!isFormValid || loading}>
+          <button 
+            type="submit" 
+            className={`primary-btn ${isSubmitDisabled ? "disabled-btn" : ""}`} 
+            disabled={isSubmitDisabled}
+          >
             {loading ? "Publicando..." : "Publicar"}
           </button>
+
         </form>
       </div>
     </div>

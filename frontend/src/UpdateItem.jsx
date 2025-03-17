@@ -23,7 +23,8 @@ const UpdateItemScreen = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
-  const [isFormValid, setIsFormValid] = useState(false);
+  const [, setIsFormValid] = useState(false);
+  const [loading] = useState(false);
 
   const [images, setImages] = useState([]); // Imágenes nuevas
   const [existingImages, setExistingImages] = useState([]); // Imágenes actuales (IDs y URLs)
@@ -229,6 +230,7 @@ const UpdateItemScreen = () => {
       </div>
     );
   }
+  const isSubmitDisabled = loading || !formData.title || !formData.description || !formData.category || !formData.cancel_type || !formData.price_category || !formData.price;
 
   return (
     <div className="rental-container">
@@ -370,7 +372,13 @@ const UpdateItemScreen = () => {
           )}
   
           <input type="file" multiple accept="image/*" onChange={handleImageChange} />
-          <button type="submit" className="rental-btn" disabled={!isFormValid}>Actualizar</button>
+          <button 
+            type="submit" 
+            className={`primary-btn ${isSubmitDisabled ? "disabled-btn" : ""}`} 
+            disabled={isSubmitDisabled}
+          >
+            {loading ? "Actualizando..." : "Actualizar"}
+          </button>
         </form>
       </div>
     </div>
