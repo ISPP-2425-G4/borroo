@@ -100,13 +100,13 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return super().update(request, *args, **kwargs)
 
-
     @action(detail=True, methods=['post'])
     def upgrade_to_premium(self, request, pk=None):
         user = self.get_object()
         if user.pricing_plan != PricingPlan.FREE:
             return Response(
-                {'error': 'Solo los usuarios con plan free pueden actualizar a premium.'},
+                {'error': 'Solo los usuarios con plan free pueden '
+                 'actualizar a premium.'},
                 status=status.HTTP_400_BAD_REQUEST)
         user.pricing_plan = PricingPlan.PREMIUM
         user.save()
@@ -119,7 +119,8 @@ class UserViewSet(viewsets.ModelViewSet):
         user = self.get_object()
         if user.pricing_plan != PricingPlan.PREMIUM:
             return Response(
-                {'error': 'Solo los usuarios con plan premium pueden cambiar a free.'},
+                {'error': 'Solo los usuarios con plan premium'
+                 'pueden cambiar a free.'},
                 status=status.HTTP_400_BAD_REQUEST
             )
         user.pricing_plan = PricingPlan.FREE
