@@ -21,7 +21,7 @@ class TestSearchItemsView:
             {"id": 5, "title": "Escritorio de Oficina",
              "category": ItemCategory.FURNITURE_AND_LOGISTICS, "price": 250},
             {"id": 6, "title": "Curso de Programación",
-             "category": ItemCategory.TRAINING, "price": 500},
+             "category": ItemCategory.ENTERTAINMENT, "price": 500},
         ]
         return items
 

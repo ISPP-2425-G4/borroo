@@ -11,7 +11,7 @@ class ItemCategory(models.TextChoices):
     CLOTHING = ('clothing', 'Ropa')
     FURNITURE_AND_LOGISTICS = ('furniture_and_logistics',
                                'Mobiliario y logística')
-    TRAINING = ('training', 'Entrenamiento')
+    ENTERTAINMENT = ('entertainment', 'Entretenimiento')
 
 class ItemSubcategory(models.TextChoices):
     # TECHNOLOGY

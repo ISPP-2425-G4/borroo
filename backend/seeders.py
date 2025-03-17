@@ -38,7 +38,7 @@ def create_items():
             description=f'Descripción del objeto {i}',
             category=random.choice(['technology', 'sports', 'diy',
                                     'clothing', 'furniture_and_logistics',
-                                    'training']),
+                                    'entertainment']),
             subcategory=ItemSubcategory.NONE,
             cancel_type=random.choice(['flexible', 'medium', 'strict']),
             price_category=random.choice(['hour', 'day', 'week', 'month',
