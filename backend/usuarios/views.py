@@ -2,7 +2,7 @@ from django.http import JsonResponse
 import datetime
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.hashers import check_password, make_password
-from .models import User
+from .models import User, PricingPlan
 from .serializers import UserSerializer
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -100,20 +100,31 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return super().update(request, *args, **kwargs)
 
+    @action(detail=True, methods=['post'])
+    def upgrade_to_premium(self, request, pk=None):
+        user = self.get_object()
+        if user.pricing_plan != PricingPlan.FREE:
+            return Response(
+                {'error': 'Solo los usuarios con plan free pueden '
+                 'actualizar a premium.'},
+                status=status.HTTP_400_BAD_REQUEST)
+        user.pricing_plan = PricingPlan.PREMIUM
+        user.save()
+        return Response(
+            {'message': 'Plan actualizado a premium.'},
+            status=status.HTTP_200_OK)
 
-@api_view(['GET'])
-@permission_classes([AllowAny])
-def check_username(request):
-    username = request.query_params.get('username')
-    if User.objects.filter(username=username).exists():
-        return JsonResponse({'exists': True})
-    return JsonResponse({'exists': False})
-
-
-@api_view(['GET'])
-@permission_classes([AllowAny])
-def check_email(request):
-    email = request.query_params.get('email')
-    if User.objects.filter(email=email).exists():
-        return JsonResponse({'exists': True})
-    return JsonResponse({'exists': False})
+    @action(detail=True, methods=['post'])
+    def downgrade_to_free(self, request, pk=None):
+        user = self.get_object()
+        if user.pricing_plan != PricingPlan.PREMIUM:
+            return Response(
+                {'error': 'Solo los usuarios con plan premium'
+                 'pueden cambiar a free.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        user.pricing_plan = PricingPlan.FREE
+        user.save()
+        return Response(
+            {'message': 'Plan actualizado a free.'},
+            status=status.HTTP_200_OK)
