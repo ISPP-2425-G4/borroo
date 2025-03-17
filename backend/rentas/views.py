@@ -1,4 +1,3 @@
-# flake8: noqa
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -23,18 +22,6 @@ def is_authorized(condition=True, authenticated=True):
             {'error': 'No tienes permisos para realizar esta acción.'})
 
 
-def is_cancelled(condition=False):
-    if condition:
-        raise PermissionDenied(
-            {"error": "El alquiler está cancelado y no se puede modificar."})
-
-
-def is_earlier(condition=False):
-    if condition:
-        raise PermissionDenied(
-            {"error": "Aún no es el día."})
-
-
 def apply_penalty(rent):
     penalty = Decimal(str(rent.total_price)) * Decimal("0.10")
     rent.total_price = float(Decimal(str(rent.total_price)) + penalty)
@@ -42,29 +29,15 @@ def apply_penalty(rent):
 
 
 def apply_refund(cancel_type, days_diff):
-    if cancel_type == 'flexible':
-        if days_diff >= 2:
-            return Decimal("1.00")  # 100%
-        elif days_diff == 1:
-            return Decimal("0.50")  # 50%
-        else:
-            return Decimal("0.00")  # 0%
-    elif cancel_type == 'medium':
-        if days_diff >= 7:
-            return Decimal("1.00")
-        elif days_diff >= 3:
-            return Decimal("0.50")
-        else:
-            return Decimal("0.00")
-    elif cancel_type == 'strict':
-        if days_diff >= 30:
-            return Decimal("1.00")
-        elif days_diff >= 14:
-            return Decimal("0.50")
-        else:
-            return Decimal("0.00")
-    else:
-        return Decimal("0.00")
+    thresholds = {
+        'flexible': [(2, Decimal("1.00")), (1, Decimal("0.50"))],
+        'medium': [(7, Decimal("1.00")), (3, Decimal("0.50"))],
+        'strict': [(30, Decimal("1.00")), (14, Decimal("0.50"))],
+    }
+    for threshold, refund in thresholds.get(cancel_type, []):
+        if days_diff >= threshold:
+            return refund
+    return Decimal("0.00")
 
 
 class RentViewSet(viewsets.ModelViewSet):
@@ -153,62 +126,66 @@ class RentViewSet(viewsets.ModelViewSet):
         rent = self.get_object()
         response = request.data.get("response")
         now = timezone.now()
-
         user = self.request.user if not AnonymousUser else None
         authenticated = self.request.user.is_authenticated
-        is_renter = user == rent.renter
-        is_owner = user == rent.item.user
+        is_renter = (user == rent.renter)
+        is_owner = (user == rent.item.user)
 
-        is_cancelled(condition=rent.rent_status == RentStatus.CANCELLED)
-        # Caso: pasar de ACCEPTED a BOOKED (tras pago)
+        if rent.rent_status == RentStatus.CANCELLED:
+            raise PermissionDenied({"error": "El alquiler está cancelado y "
+                                    "no se puede modificar."})
+
         if (rent.rent_status == RentStatus.ACCEPTED
                 and rent.payment_status == PaymentStatus.PAID):
-            rent.rent_status = RentStatus.BOOKED
-            rent.save()
-            return Response({'status': 'Alquiler reservado. '
-                            'El objeto ha sido reservado.'})
+            return self._handle_accepted(rent)
 
+        if response == "PICKED_UP":
+            return self._handle_picked_up(rent, now, is_renter, authenticated)
+
+        if response == "RETURNED":
+            return self._handle_returned(rent, now, is_owner, authenticated)
+
+        raise PermissionDenied({"error": "Acción no reconocida."})
+
+    def _handle_accepted(self, rent):
+        # Caso: pasar de ACCEPTED a BOOKED (tras pago)
+        rent.rent_status = RentStatus.BOOKED
+        rent.save()
+        return Response({"status": "Alquiler reservado. El objeto ha sido "
+                         "reservado."})
+
+    def _handle_picked_up(self, rent, now, is_renter, authenticated):
         # Caso: pasar de BOOKED a PCIKED_UP (dentro de la fecha)
-        elif (rent.rent_status == RentStatus.BOOKED
-              and is_authorized(condition=is_renter,
-                                authenticated=authenticated)
-              and response == 'PICKED_UP'):
-
-            is_earlier(condition=now < rent.start_date)
-
-            refund_window = timedelta(minutes=30)
-            if now > rent.start_date:
-                if now <= rent.start_date + refund_window:
-                    refund = Decimal(str(rent.total_price)) * Decimal("0.10")
-                    rent.total_price = float(Decimal(str(rent.total_price))
-                                             - refund)
+        is_authorized(condition=is_renter, authenticated=authenticated)
+        if now < rent.start_date:
+            raise PermissionDenied({"error": "Aún no es el día para entregar "
+                                    "el objeto."})
+        refund_window = timedelta(minutes=30)
+        if now > rent.start_date:
+            if now <= rent.start_date + refund_window:
+                refund = Decimal(str(rent.total_price)) * Decimal("0.10")
+                rent.total_price = float(Decimal(str(rent.total_price))
+                                         - refund)
             else:
-                return Response(
-                    {"error":
-                     "El tiempo para obtener el reembolso ha expirado."},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            rent.rent_status = RentStatus.PICKED_UP
-            rent.save()
-            return Response({'status':
-                             'Objeto entregado. El objeto ha sido entregado.'})
+                raise PermissionDenied({"error": "El tiempo para obtener el "
+                                        "reembolso ha expirado."})
+        rent.rent_status = RentStatus.PICKED_UP
+        rent.save()
+        return Response({"status": "Objeto entregado. El objeto ha sido "
+                         "entregado."})
 
+    def _handle_returned(self, rent, now, is_owner, authenticated):
         # Caso: pasar de PICKED_UP a RETURNED (dentro de la fecha)
-        elif (rent.rent_status == RentStatus.PICKED_UP
-              and is_authorized(condition=is_owner,
-                                authenticated=authenticated)
-              and response == "RETURNED"):
-            is_earlier(condition=now < rent.start_date)
-
-            if now > rent.end_date:
-                # Avisar con notificacion que debe realizar el pago
-                apply_penalty(rent)
-            rent.rent_status = RentStatus.RETURNED
-            rent.save()
-            return Response({'status':
-                             'Objeto devuelto. El objeto ha sido devuelto.'})
-        else:
-            raise PermissionDenied({'error': 'Acción no reconocida'})
+        is_authorized(condition=is_owner, authenticated=authenticated)
+        if now < rent.start_date:
+            raise PermissionDenied({"error": "Aún no es el día para devolver "
+                                    "el objeto."})
+        if now > rent.end_date:
+            apply_penalty(rent)
+        rent.rent_status = RentStatus.RETURNED
+        rent.save()
+        return Response({"status": "Objeto devuelto. El objeto ha sido "
+                         "devuelto."})
 
     @action(detail=True, methods=['put'])
     def cancel_rent(self, request, pk=None):
