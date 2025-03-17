@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiLock, FiMail, FiInfo, FiPhone, FiMapPin, FiHome, FiFlag, FiCheckCircle } from "react-icons/fi";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import "../public/styles/Login.css";
 import axios from 'axios';
 import Navbar from "./Navbar";
@@ -25,7 +26,17 @@ const Signup = () => {
   const [error, setError] = useState("");
   const [formErrors, setFormErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
   const navigate = useNavigate();
+  
+
+  useEffect(() => {
+    const requiredFields = ["username", "name", "surname", "email", "phone_number", "country", "city", "address", "postal_code", "password", "password2"];
+    const isValid = requiredFields.every(field => formData[field].trim() !== "");
+    setIsFormValid(isValid);
+  }, [formData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,6 +48,8 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isFormValid) return;
+
     setLoading(true);
     setError("");
     setFormErrors({});
@@ -306,13 +319,20 @@ const Signup = () => {
             <div className="input-group">
               <FiLock className="input-icon" />
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Contraseña"
                 required
                 value={formData.password}
                 onChange={handleChange}
               />
+              <button
+              type="button"
+              className="toggle-password"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+            </button>
             </div>
   
             {/* Confirmar contraseña */}
@@ -320,20 +340,27 @@ const Signup = () => {
             <div className="input-group">
               <FiLock className="input-icon" />
               <input
-                type="password"
+                type={showPassword2 ? "text" : "password"}
                 name="password2"
                 placeholder="Confirmar contraseña"
                 required
                 value={formData.password2}
                 onChange={handleChange}
               />
+              <button
+              type="button"
+              className="toggle-password"
+              onClick={() => setShowPassword2(!showPassword)}
+            >
+              {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+            </button>
             </div>
   
             {/* Botón de envío */}
             <button
               type="submit"
               className="login-btn"
-              disabled={loading}
+              disabled={!isFormValid || loading}
             >
               {loading ? "Procesando..." : "Crear cuenta"}
             </button>
