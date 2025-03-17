@@ -53,7 +53,7 @@ const CreateItemScreen = () => {
     }
 
     fetchEnums();
-  }, [navigate]);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
