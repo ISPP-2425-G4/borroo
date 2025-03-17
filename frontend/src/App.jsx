@@ -6,6 +6,9 @@ import Signup from "./SignUp";
 import UpdateItem from "./UpdateItem";
 import ShowItem from "./ShowItem";
 import SearchItemByName from "./SearchItemByName";
+import RecuperarContraseñaConfirm from "./RecuperarContraseñaConfirm";
+import RecuperarContraseñaComplete from "./RecuperarContraseñaComplete";
+import RecuperarContraseña from "./RecuperarContraseña";
 
 function App() {
   return (
@@ -20,6 +23,10 @@ function App() {
         <Route path="/show-item/:id" element={<ShowItem />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/objetos/search_item" element={<SearchItemByName />} />
+        <Route path="/recoverPassword" element={<RecuperarContraseñaConfirm />} />
+        <Route path="/recoverPasswordDone" element={<RecuperarContraseñaComplete />} />
+        <Route path="/recoverPasswordNew" element={<RecuperarContraseña />} />
+
       </Routes>
     </Router>
   );
