@@ -7,7 +7,7 @@ django.setup()
 
 import random
 from usuarios.models import User
-from objetos.models import Item, ItemImage
+from objetos.models import Item, ItemImage, ItemSubcategory
 from decimal import Decimal
 
 
@@ -39,6 +39,7 @@ def create_items():
             category=random.choice(['technology', 'sports', 'diy',
                                     'clothing', 'furniture_and_logistics',
                                     'training']),
+            subcategory=ItemSubcategory.NONE,
             cancel_type=random.choice(['flexible', 'medium', 'strict']),
             price_category=random.choice(['hour', 'day', 'week', 'month',
                                           'year']),
