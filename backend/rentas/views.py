@@ -140,50 +140,44 @@ class RentViewSet(viewsets.ModelViewSet):
         rent = self.get_object()
         response = request.data.get("response")
         now = timezone.now()
-
         user = self.request.user if not AnonymousUser else None
         authenticated = self.request.user.is_authenticated
-        is_renter = user == rent.renter
-        is_owner = user == rent.item.user
+        is_renter = (user == rent.renter)
+        is_owner = (user == rent.item.user)
 
         is_cancelled(condition=rent.rent_status == RentStatus.CANCELLED)
+
         # Caso: pasar de ACCEPTED a BOOKED (tras pago)
         if (rent.rent_status == RentStatus.ACCEPTED
                 and rent.payment_status == PaymentStatus.PAID):
             return self._change_status(rent, RentStatus.BOOKED,
-                                       "Alquiler reservado. El objeto "
-                                       "ha sido reservado.")
+                                       "Alquiler reservado. El objeto ha "
+                                       "sido reservado.")
 
         # Caso: pasar de BOOKED a PCIKED_UP (dentro de la fecha)
-        elif (rent.rent_status == RentStatus.BOOKED
-              and is_authorized(condition=is_renter,
-                                authenticated=authenticated)
-              and response == 'PICKED_UP'):
-
-            is_earlier(condition=now < rent.start_date)
+        if (rent.rent_status == RentStatus.BOOKED
+                and response == "PICKED_UP"
+                and is_authorized(condition=is_renter,
+                                  authenticated=authenticated)):
             return self._handle_picked_up(rent, now)
 
         # Caso: pasar de PICKED_UP a RETURNED (dentro de la fecha)
-        elif (rent.rent_status == RentStatus.PICKED_UP
-              and is_authorized(condition=is_owner,
-                                authenticated=authenticated)
-              and response == "RETURNED"):
-            is_earlier(condition=now < rent.start_date)
+        if (rent.rent_status == RentStatus.PICKED_UP
+                and response == "RETURNED"
+                and is_authorized(condition=is_owner,
+                                  authenticated=authenticated)):
+            return self._handle_returned(rent, now)
 
-            if now > rent.end_date:
-                # Avisar con notificacion que debe realizar el pago
-                apply_penalty(rent)
-            return self._change_status(rent, RentStatus.RETURNED, "Objeto "
-                                       "devuelto. El objeto ha sido devuelto")
-        else:
-            raise PermissionDenied({'error': 'Acción no reconocida'})
+        raise PermissionDenied({'error': 'Acción no reconocida'})
 
     def _change_status(self, rent, new_status, message):
         rent.rent_status = new_status
         rent.save()
         return Response({'status': message})
 
-    def _handle_picked_up(self, rent, now, is_renter):
+    def _handle_picked_up(self, rent, now):
+        is_earlier(condition=now < rent.start_date)
+
         refund_window = timedelta(minutes=30)
         if now > rent.start_date:
             if now <= rent.start_date + refund_window:
@@ -197,6 +191,14 @@ class RentViewSet(viewsets.ModelViewSet):
         return self._change_status(rent, RentStatus.PICKED_UP,
                                    "Objeto entregado. El objeto ha sido "
                                    "entregado.")
+
+    def _handle_returned(self, rent, now):
+        is_earlier(condition=now < rent.start_date)
+        if now > rent.end_date:
+            apply_penalty(rent)
+        return self._change_status(rent, RentStatus.RETURNED,
+                                   "Objeto devuelto. El objeto ha sido "
+                                   "devuelto.")
 
     @action(detail=True, methods=['put'])
     def cancel_rent(self, request, pk=None):
