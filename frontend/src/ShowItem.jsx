@@ -8,6 +8,9 @@ import "../public/styles/ItemDetails.css";
 import Navbar from "./Navbar";
 import Modal from "./Modal";
 import axios from 'axios';
+import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
+
+
 
 const ShowItemScreen = () => {
   const { id } = useParams();
@@ -199,7 +202,8 @@ const ShowItemScreen = () => {
     <div className="item-details-container">
       <Navbar />
       <div className="content-container">
-      <h2 className="item-title">{item.title}</h2>
+        <h2 className="item-title">{item.title}</h2>
+  
         {/* 🔹 Carrusel de imágenes */}
         {imageURLs.length > 0 && (
           <div className="image-container">
@@ -209,17 +213,27 @@ const ShowItemScreen = () => {
             <p className="image-counter">{currentImageIndex + 1} / {imageURLs.length}</p>
           </div>
         )}
-
+  
         {errorMessage && <div className="error-message">{errorMessage}</div>}
-
+  
         <div className="item-details">
           <p><FiFileText /> <strong>Descripción:</strong> {item.description}</p>
           <p><FiLayers /> <strong>Categoría:</strong> {item.category_display}</p>
-          <p><FiXCircle /> <strong>Política de cancelación:</strong> {item.cancel_type_display}</p>
+  
+          {/* 🔹 Política de cancelación con tooltip */}
+          <div className="cancel-policy-wrapper">
+          <div className="policy-label">
+            <FiXCircle />
+            <strong>Política de cancelación:</strong>
+          </div>
+          <p className="policy-value">{item.cancel_type_display}</p>
+          <CancelPolicyTooltip />
+          </div>
+  
           <p><FiDollarSign /> <strong>Precio:</strong> {item.price} € / {item.price_category_display}</p>
           <p><strong>Publicado por:</strong> {userName}</p>
         </div>
-
+  
         {/* 🔹 Calendario */}
         <div className="calendar-container">
           <h3>Selecciona un rango de fechas para el alquiler</h3>
@@ -229,37 +243,29 @@ const ShowItemScreen = () => {
             minDate={new Date()}
             disabledDates={[...requestedDates, ...bookedDates]}
           />
-            {/* TODO: Añadir colores a las fechas ocupadas
-            }
-            dayContentRenderer={(date) => {
-              const dateString = date.toISOString().split("T")[0];
-              
-              const isRequested = requestedDates.some(
-                (d) => d.toISOString().split("T")[0] === dateString
-              );
-              const isBooked = bookedDates.some(
-                (d) => d.toISOString().split("T")[0] === dateString
-              );
-            }}
-            */}
-
-
         </div>
-
+  
         {/* 🔹 Botón de solicitar alquiler */}
         {!isOwner && (
           <button className="rental-btn" onClick={() => setShowRentalModal(true)}>Solicitar alquiler</button>
         )}
-
+  
         {/* 🔹 Botones de acción */}
         {isOwner && (
           <div className="button-group">
-            <button className="btn edit-btn" onClick={() => navigate(`/update-item/${id}`)}><FiEdit /> Editar</button>
-            <button className="rental-btn delete-btn" onClick={() => handleDelete(id)}><FiTrash2 /> Eliminar</button>
+            <button className="btn edit-btn" onClick={() => navigate(`/update-item/${id}`)}>
+              <FiEdit /> Editar
+            </button>
+            <button className="rental-btn delete-btn" onClick={() => handleDelete(id)}>
+              <FiTrash2 /> Eliminar
+            </button>
           </div>
         )}
-        <button className="btn" onClick={() => navigate("/")}><FiArrowLeft /> Volver al inicio</button>
-
+  
+        <button className="btn" onClick={() => navigate("/")}>
+          <FiArrowLeft /> Volver al inicio
+        </button>
+  
         {showRentalModal && (
           <Modal
             title="Confirmar Solicitud"
@@ -271,6 +277,7 @@ const ShowItemScreen = () => {
       </div>
     </div>
   );
+  
 };
 
 export default ShowItemScreen;
