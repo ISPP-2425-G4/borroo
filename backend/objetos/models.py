@@ -13,6 +13,7 @@ class ItemCategory(models.TextChoices):
                                'Mobiliario y logística')
     ENTERTAINMENT = ('entertainment', 'Entretenimiento')
 
+
 class ItemSubcategory(models.TextChoices):
     # TECHNOLOGY
     COMPUTERS = ('computers', 'Ordenadores')
@@ -29,8 +30,8 @@ class ItemSubcategory(models.TextChoices):
     PRINTERS_SCANNERS = ('printers_scanners', 'Impresoras y escáneres')
     DRONES = ('drones', 'Drones')
     PROJECTORS = ('projectors', 'Proyectores')
-    TECHNOLOGY__OTHERS = ('technology__others', 'Otros')
-    
+    TECHNOLOGY_OTHERS = ('technology_others', 'Otros')
+
     # SPORTS
     CYCLING = ('cycling', 'Ciclismo')
     GYM = ('gym', 'Gimnasio')
@@ -51,7 +52,7 @@ class ItemSubcategory(models.TextChoices):
 
     # DIY
     ELECTRIC_TOOLS = ('electric_tools', 'Herramientas eléctricas')
-    MANUAL_TOOLS = ('manual_tools', 'Herramientas manuales')    
+    MANUAL_TOOLS = ('manual_tools', 'Herramientas manuales')
     MACHINES = ('machines', 'Máquinas')
     ELECTRICITY = ('electricity', 'Electricidad')
     PLUMBING = ('plumbing', 'Fontanería')
@@ -88,7 +89,8 @@ class ItemSubcategory(models.TextChoices):
     BATHROOM = ('bathroom', 'Baño')
     GARDEN_FURNITURE = ('garden_furniture', 'Muebles de jardín')
     DECORATION_AMBIENCE = ('decoration_ambience', 'Decoración y ambiente')
-    FURNITURE_AND_LOGISTICS_OTHERS = ('furniture_and_logistics_others', 'Otros')
+    FURNITURE_AND_LOGISTICS_OTHERS = ('furniture_and_logistics_others',
+                                      'Otros')
 
     # ENTERTAINMENT
     VIDEOGAMES = ('videogames', 'Videojuegos')
