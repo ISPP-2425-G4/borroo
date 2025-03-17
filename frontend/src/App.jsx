@@ -6,6 +6,7 @@ import Signup from "./SignUp";
 import UpdateItem from "./UpdateItem";
 import ShowItem from "./ShowItem";
 import SearchItemByName from "./SearchItemByName";
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/objetos/search_item" element={<SearchItemByName />} />
       </Routes>
+      <Footer/>
     </Router>
   );
 }
