@@ -54,7 +54,7 @@ const CreateItemScreen = () => {
     }
 
     fetchEnums();
-  }, []);
+  }, [navigate]);
 
   const validateForm = () => {
     const { title, description, category, cancel_type, price_category, price } = formData;
