@@ -192,10 +192,11 @@ if not DEBUG:
 
 # configurar email y configurar servidor smtp
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Servidor SMTP de Gmail
-EMAIL_PORT = 587  # Puerto para TLS
-EMAIL_USE_TLS = True  # Usar TLS
-EMAIL_HOST_USER = 'borroohelp@gmail.com'  # Tu dirección de correo
-EMAIL_HOST_PASSWORD = 'seek hhts ehnn fayy'  # Tu contraseña
-DEFAULT_FROM_EMAIL = 'borroohelp@gmail.com'
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND',
+                          'django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')

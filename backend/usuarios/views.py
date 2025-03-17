@@ -14,6 +14,8 @@ from django.utils.timezone import now
 from django.core.mail import send_mail
 from django.urls import reverse
 from rest_framework.views import APIView
+from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 
 
 def index(request):
@@ -161,6 +163,36 @@ class PasswordResetRequestView(APIView):
 
 class PasswordResetConfirmView(APIView):
     """Vista para confirmar el cambio de contraseña."""
+    def validate_password(self, password):
+        """Aplica las validaciones de la contraseña definidas en el modelo."""
+        validators = [
+            RegexValidator(
+                regex=r'^(?=.*[A-Z])',
+                message='La contraseña debe contener'
+                'al menos una letra mayúscula.'
+            ),
+            RegexValidator(
+                regex=r'^(?=.*\d)',
+                message='La contraseña debe contener al menos un número.'
+            ),
+            RegexValidator(
+                regex=r'^(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])',
+                message='La contraseña debe contener'
+                'al menos un carácter especial.'
+            ),
+            RegexValidator(
+                regex=r'^.{8,}$',
+                message='La contraseña debe tener al menos 8 caracteres.'
+            ),
+        ]
+
+        # Ejecutar todas las validaciones
+        for validator in validators:
+            try:
+                validator(password)
+            except ValidationError as e:
+                raise ValidationError(e.messages)
+
     def post(self, request, token):
         user = User.objects.filter(reset_token=token).first()
 
@@ -172,6 +204,13 @@ class PasswordResetConfirmView(APIView):
         if not new_password:
             return Response({
                 "error": "Debes proporcionar una nueva contraseña"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        # Validar la contraseña con las reglas del modelo
+        try:
+            self.validate_password(new_password)
+        except ValidationError as e:
+            return Response({"error": e.messages},
                             status=status.HTTP_400_BAD_REQUEST)
 
         # Guardamos la nueva contraseña encriptada
