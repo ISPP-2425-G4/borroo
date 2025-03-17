@@ -10,6 +10,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import action
 
+
 def index(request):
     return JsonResponse({"message": "Hello from Django!"})
 
