@@ -51,7 +51,7 @@ def apply_refund(cancel_type, days_diff):
     for threshold, refund in REFUND_RULES.get(cancel_type, []):
         if days_diff >= threshold:
             return refund
-    return Decimal("0.00")  # Default refund
+    return Decimal("0.00")
 
 
 class RentViewSet(viewsets.ModelViewSet):
@@ -150,10 +150,9 @@ class RentViewSet(viewsets.ModelViewSet):
         # Caso: pasar de ACCEPTED a BOOKED (tras pago)
         if (rent.rent_status == RentStatus.ACCEPTED
                 and rent.payment_status == PaymentStatus.PAID):
-            rent.rent_status = RentStatus.BOOKED
-            rent.save()
-            return Response({'status': 'Alquiler reservado. '
-                            'El objeto ha sido reservado.'})
+            return self._change_status(rent, RentStatus.BOOKED,
+                                       "Alquiler reservado. El objeto "
+                                       "ha sido reservado.")
 
         # Caso: pasar de BOOKED a PCIKED_UP (dentro de la fecha)
         elif (rent.rent_status == RentStatus.BOOKED
@@ -162,23 +161,7 @@ class RentViewSet(viewsets.ModelViewSet):
               and response == 'PICKED_UP'):
 
             is_earlier(condition=now < rent.start_date)
-
-            refund_window = timedelta(minutes=30)
-            if now > rent.start_date:
-                if now <= rent.start_date + refund_window:
-                    refund = Decimal(str(rent.total_price)) * Decimal("0.10")
-                    rent.total_price = float(Decimal(str(rent.total_price))
-                                             - refund)
-            else:
-                return Response(
-                    {"error":
-                     "El tiempo para obtener el reembolso ha expirado."},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
-            rent.rent_status = RentStatus.PICKED_UP
-            rent.save()
-            return Response({'status':
-                             'Objeto entregado. El objeto ha sido entregado.'})
+            return self._handle_picked_up(rent, now)
 
         # Caso: pasar de PICKED_UP a RETURNED (dentro de la fecha)
         elif (rent.rent_status == RentStatus.PICKED_UP
@@ -190,12 +173,30 @@ class RentViewSet(viewsets.ModelViewSet):
             if now > rent.end_date:
                 # Avisar con notificacion que debe realizar el pago
                 apply_penalty(rent)
-            rent.rent_status = RentStatus.RETURNED
-            rent.save()
-            return Response({'status':
-                             'Objeto devuelto. El objeto ha sido devuelto.'})
+            return self._change_status(rent, RentStatus.RETURNED, "Objeto "
+                                       "devuelto. El objeto ha sido devuelto")
         else:
             raise PermissionDenied({'error': 'Acción no reconocida'})
+
+    def _change_status(self, rent, new_status, message):
+        rent.rent_status = new_status
+        rent.save()
+        return Response({'status': message})
+
+    def _handle_picked_up(self, rent, now, is_renter):
+        refund_window = timedelta(minutes=30)
+        if now > rent.start_date:
+            if now <= rent.start_date + refund_window:
+                refund = Decimal(str(rent.total_price)) * Decimal("0.10")
+                rent.total_price = float(Decimal(str(rent.total_price))
+                                         - refund)
+            else:
+                return Response({"error": "El tiempo para obtener el "
+                                " reembolso ha expirado."},
+                                status=status.HTTP_400_BAD_REQUEST)
+        return self._change_status(rent, RentStatus.PICKED_UP,
+                                   "Objeto entregado. El objeto ha sido "
+                                   "entregado.")
 
     @action(detail=True, methods=['put'])
     def cancel_rent(self, request, pk=None):
