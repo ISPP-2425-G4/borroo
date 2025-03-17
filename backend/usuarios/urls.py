@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import UserViewSet, check_username, check_email
+from .views import PasswordResetRequestView, PasswordResetConfirmView
 
 
 from . import views
@@ -18,5 +19,9 @@ urlpatterns = [
     path('check_username/', check_username,
          name='check_username'),
     path('check_email/', check_email, name='check_email'),
+    path("password_reset/", PasswordResetRequestView.as_view(),
+         name="password_reset"),
+    path("password_reset_confirm/<str:token>/",
+         PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
 
 ]

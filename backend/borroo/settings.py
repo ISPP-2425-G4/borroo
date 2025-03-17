@@ -188,3 +188,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Para producción, cuando sirvas archivos estáticos
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+# configurar email y configurar servidor smtp
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Servidor SMTP de Gmail
+EMAIL_PORT = 587  # Puerto para TLS
+EMAIL_USE_TLS = True  # Usar TLS
+EMAIL_HOST_USER = 'borroohelp@gmail.com'  # Tu dirección de correo
+EMAIL_HOST_PASSWORD = 'seek hhts ehnn fayy'  # Tu contraseña
+DEFAULT_FROM_EMAIL = 'borroohelp@gmail.com'
