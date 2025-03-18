@@ -122,7 +122,7 @@ const Navbar = () => {
           Poner en alquiler
         </Typography>
         <Typography component={Link}
-          to="/all-requests"
+          to="/rental_requests"
           sx={{
             textDecoration: "none",
             color: "white",

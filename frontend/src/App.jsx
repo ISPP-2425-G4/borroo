@@ -6,6 +6,7 @@ import Signup from "./SignUp";
 import UpdateItem from "./UpdateItem";
 import ShowItem from "./ShowItem";
 import SearchItemByName from "./SearchItemByName";
+import RentRequestBoard from "./RentRequestBoard";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/show-item/:id" element={<ShowItem />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/objetos/search_item" element={<SearchItemByName />} />
+        <Route path="/rental_requests" element={<RentRequestBoard />} />
       </Routes>
     </Router>
   );
