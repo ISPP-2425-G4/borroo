@@ -95,8 +95,11 @@ const Navbar = () => {
       {/* Enlaces de navegación (visible en pantallas medianas y mayores) */}
       <Box
         sx={{
-          display: { xs: "none", md: "flex" },
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           gap: 2,
+          ml:14
         }}
       >
         <Typography

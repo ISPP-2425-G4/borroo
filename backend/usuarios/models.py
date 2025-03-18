@@ -9,7 +9,6 @@ text_validator = RegexValidator(
 
 class PricingPlan(models.TextChoices):
     FREE = 'free', 'Free'
-    BASIC = 'basic', 'Basic'
     PREMIUM = 'premium', 'Premium'
 
 
