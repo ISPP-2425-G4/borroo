@@ -108,6 +108,98 @@ class ItemSubcategory(models.TextChoices):
     NONE = ('none', 'Ninguno')
 
 
+DICCIONARIO_SUBCATEGORIAS = {
+    ItemCategory.TECHNOLOGY: [
+        ItemSubcategory.COMPUTERS,
+        ItemSubcategory.COMPUTER_ACCESSORIES,
+        ItemSubcategory.SMARTPHONES,
+        ItemSubcategory.TABLETS,
+        ItemSubcategory.CAMERAS,
+        ItemSubcategory.CONSOLES,
+        ItemSubcategory.TV,
+        ItemSubcategory.MONITORS,
+        ItemSubcategory.SMARTHOME,
+        ItemSubcategory.AUDIO,
+        ItemSubcategory.SMARTWATCHES,
+        ItemSubcategory.PRINTERS_SCANNERS,
+        ItemSubcategory.DRONES,
+        ItemSubcategory.PROJECTORS,
+        ItemSubcategory.TECHNOLOGY_OTHERS
+    ],
+    ItemCategory.SPORTS: [
+        ItemSubcategory.CYCLING,
+        ItemSubcategory.GYM,
+        ItemSubcategory.CALISTHENICS,
+        ItemSubcategory.RUNNING,
+        ItemSubcategory.BALL_SPORTS,
+        ItemSubcategory.RACKET_SPORTS,
+        ItemSubcategory.PADDLE_SPORTS,
+        ItemSubcategory.MARTIAL_ARTS,
+        ItemSubcategory.SNOW_SPORTS,
+        ItemSubcategory.SKATEBOARDING,
+        ItemSubcategory.BEACH_SPORTS,
+        ItemSubcategory.POOL_SPORTS,
+        ItemSubcategory.RIVER_SPORTS,
+        ItemSubcategory.MOUNTAIN_SPORTS,
+        ItemSubcategory.EXTREME_SPORTS,
+        ItemSubcategory.SPORTS_OTHERS
+    ],
+    ItemCategory.DIY: [
+        ItemSubcategory.ELECTRIC_TOOLS,
+        ItemSubcategory.MANUAL_TOOLS,
+        ItemSubcategory.MACHINES,
+        ItemSubcategory.ELECTRICITY,
+        ItemSubcategory.PLUMBING,
+        ItemSubcategory.WOODWORKING,
+        ItemSubcategory.PAINTING,
+        ItemSubcategory.GARDENING,
+        ItemSubcategory.DECORATION,
+        ItemSubcategory.DIY_OTHERS
+    ],
+    ItemCategory.CLOTHING: [
+        ItemSubcategory.SUMMER_CLOTHING,
+        ItemSubcategory.WINTER_CLOTHING,
+        ItemSubcategory.MEVENT_CLOTHING,
+        ItemSubcategory.WEVENT_CLOTHING,
+        ItemSubcategory.SPORT_EVENT_APPAREL,
+        ItemSubcategory.MSHOES,
+        ItemSubcategory.WSHOES,
+        ItemSubcategory.SUITS,
+        ItemSubcategory.DRESSES,
+        ItemSubcategory.JEWELRY,
+        ItemSubcategory.WATCHES,
+        ItemSubcategory.BAGS,
+        ItemSubcategory.SUNGLASSES,
+        ItemSubcategory.HATS,
+        ItemSubcategory.CLOTHING_OTHERS
+    ],
+    ItemCategory.FURNITURE_AND_LOGISTICS: [
+        ItemSubcategory.HOME_FURNITURE,
+        ItemSubcategory.HOME_APPLIANCES,
+        ItemSubcategory.EVENT_EQUIPMENT,
+        ItemSubcategory.KIDS_FURNITURE,
+        ItemSubcategory.OFFICE_FURNITURE,
+        ItemSubcategory.KITCHEN,
+        ItemSubcategory.BATHROOM,
+        ItemSubcategory.GARDEN_FURNITURE,
+        ItemSubcategory.DECORATION_AMBIENCE,
+        ItemSubcategory.FURNITURE_AND_LOGISTICS_OTHERS
+    ],
+    ItemCategory.ENTERTAINMENT: [
+        ItemSubcategory.VIDEOGAMES,
+        ItemSubcategory.BOARD_GAMES,
+        ItemSubcategory.BOOKS,
+        ItemSubcategory.MOVIES,
+        ItemSubcategory.MUSIC,
+        ItemSubcategory.INSTRUMENTS,
+        ItemSubcategory.PARTY,
+        ItemSubcategory.CAMPING,
+        ItemSubcategory.TRAVEL,
+        ItemSubcategory.OTHER_ENTERTAINMENT
+    ],
+}
+
+
 class CancelType(models.TextChoices):
     FLEXIBLE = ('flexible', 'Flexible')
     MEDIUM = ('medium', 'Medio')
