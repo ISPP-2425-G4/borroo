@@ -128,27 +128,9 @@ class RentViewSet(viewsets.ModelViewSet):
         return super().destroy(request, *args, **kwargs)
 
     @action(detail=False, methods=['get'])
-    def all_requests(self, request):
-        user = request.user if not AnonymousUser else None
-        authenticated = request.user.is_authenticated
-        owner = request.data.get('user')
-        permission = user == owner
-        is_authorized(condition=permission, authenticated=authenticated)
-        all_rent_requests = Rent.objects.filter(item__user=owner and
-                                                RentStatus.REQUESTED)
-        return Response(all_rent_requests, status=status.HTTP_200_OK)
-           
-    @action(detail=False, methods=['get'])
     def rental_requests(self, request):
-        user = request.user
-
-        error = 'Debes estar autenticado para ver las solicitudes de alquiler.'
-        if not user:
-            raise NotAuthenticated({'error': error})
-
+        user = self.request.user if not AnonymousUser else None
         rental_requests = Rent.objects.filter(item__user=user,
                                               rent_status=RentStatus.REQUESTED)
-
         serializer = RentSerializer(rental_requests, many=True)
-
         return Response(serializer.data, status=status.HTTP_200_OK)
