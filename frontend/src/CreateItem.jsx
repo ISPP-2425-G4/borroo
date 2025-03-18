@@ -30,6 +30,7 @@ const CreateItemScreen = () => {
   const navigate = useNavigate();
   const [fieldErrors, setFieldErrors] = useState({});
   const [, setIsFormValid] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   useEffect(() => {
     const fetchEnums = async () => {
@@ -102,12 +103,14 @@ const CreateItemScreen = () => {
     setLoading(true);
     setErrorMessage("");
     setFieldErrors({});
+    setShowErrorMessage(false);
 
     const errors = {};
     
     if(!formData.title || !formData.description || !formData.category || !formData.cancel_type || !formData.price_category || !formData.price) {
       setErrorMessage("Por favor, completa todos los campos.");
       setLoading(false);
+      setShowErrorMessage(true);
       return;
     }
     
@@ -154,17 +157,20 @@ const CreateItemScreen = () => {
       errors.price_category = "La categoría de precio es obligatoria.";
     } else if (!options.price_categories.map((opt) => opt.value).includes(formData.price_category)) {
       errors.price_category = "Selecciona una categoría de precio válida.";
+
     }
 
     if (images.length === 0) {
       setErrorMessage("Por favor, selecciona al menos una imagen.");
       setLoading(false);
+      setShowErrorMessage(true);
       return;
     }
 
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       setLoading(false);
+      setShowErrorMessage(true);
       return;
     }
 
@@ -329,7 +335,7 @@ const CreateItemScreen = () => {
           </button>
           {/* ✅ Mensaje de error */}
           <Box sx={{display:"flex", flexDirection:"row", gap:2, mt:2, alignContent:"center", alignItems:"center", justifyContent:"center"}}>
-          {fieldErrors.title || fieldErrors.description || fieldErrors.category || fieldErrors.price_category || fieldErrors.cancel_type || images.length === 0 ? ( <div className="error-message">Por favor, revisa los errores.</div> ) : null}
+          {showErrorMessage && ( <div className="error-message">Por favor, revisa los errores.</div> ) }
           </Box>
         </form>
       </div>

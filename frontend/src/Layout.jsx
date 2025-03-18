@@ -101,9 +101,9 @@ const Layout = () => {
   return (
     <Box sx={{ overflowX: "hidden"}}>
       <Navbar />
-      <Container maxWidth={false} sx={{ py: 4, bgcolor:"white", width: "100vw", minHeight: "90vh", justifyContent:"center", alignItems:"center", mt:"48px"}}>
+      <Container maxWidth={false} sx={{ py: 4, bgcolor:"white", width: "100vw", minHeight: "90vh", justifyContent:"center", alignItems:"center", mt:"48px", maxHeight:"100vh", overflowY:"auto"}}>
         <Box sx={{display:"flex", flexDirection:"column", alignItems:"center", gap:2}}>
-        <Typography variant="h6" align="center" gutterBottom sx={{color:"black"}}>
+        <Typography variant="h6" align="center" gutterBottom sx={{color:"black", mt:2}}>
           Filtros
         </Typography>
         <Box
