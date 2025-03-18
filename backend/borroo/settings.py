@@ -14,7 +14,6 @@ from pathlib import Path
 from datetime import timedelta
 import os
 from dotenv import load_dotenv
-import environ
 
 env = environ.Env()
 environ.Env.read_env()
@@ -35,8 +34,6 @@ DEBUG = True
 ALLOWED_HOSTS = ['backend-dot-ispp-2425-g4.ew.r.appspot.com', 'localhost',
                  '127.0.0.1']
 
-dotenv_file = ".env"
-load_dotenv(dotenv_file)
 
 STRIPE_PUBLIC_KEY = "pk_test_51R40o5CYu4v8DwUZa9XqJ5Z8F72qzFJ229ZOpYvV9toOHxPpJJAAF4kHllmFo3LUcAB8DvLcOsNYuq7XWuxLmQfu00P1I1hNXP"
 STRIPE_SECRET_KEY = "sk_test_51R40o5CYu4v8DwUZjoGIROJcsUyhnX5bsDH7ihfVuoNAn6IOgTqudxGBa7EBYV1qOw1DNPvALqzZvkthrvkABgJ300wxyvCwvY"
