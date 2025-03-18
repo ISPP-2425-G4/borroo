@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import action
+from rest_framework.decorators import api_view, permission_classes
 
 
 def index(request):
@@ -53,17 +54,22 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=["post"], permission_classes=[AllowAny])
     def login(self, request):
         """Login de usuario y generación de token JWT"""
-        username = request.data.get("username").strip()
-        password = request.data.get("password").strip()
+        username = request.data.get("username")
+        password = request.data.get("password")
 
         if not username or not password:
             return Response({"error": "Se requiere usuario y contraseña"},
                             status=status.HTTP_400_BAD_REQUEST)
 
-        # Verificar usuario correcto y contraseña correcta
-        user = User.objects.filter(username=username).first()
+        # Verificar si el usuario existe
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return Response({"error": "Usuario no encontrado"},
+                            status=status.HTTP_404_NOT_FOUND)
 
-        if not user or not check_password(password, user.password):
+        # Comprobar si la contraseña es correcta
+        if not check_password(password, user.password):
             return Response({"error": "Credenciales incorrectas"},
                             status=status.HTTP_401_UNAUTHORIZED)
 
@@ -127,3 +133,21 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(
             {'message': 'Plan actualizado a free.'},
             status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def check_username(request):
+    username = request.query_params.get('username')
+    if User.objects.filter(username=username).exists():
+        return JsonResponse({'exists': True})
+    return JsonResponse({'exists': False})
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def check_email(request):
+    email = request.query_params.get('email')
+    if User.objects.filter(email=email).exists():
+        return JsonResponse({'exists': True})
+    return JsonResponse({'exists': False})
