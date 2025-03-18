@@ -2,7 +2,7 @@ from django.http import JsonResponse
 import datetime
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.hashers import check_password, make_password
-from .models import User
+from .models import User, PricingPlan
 from .serializers import UserSerializer
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -134,6 +134,7 @@ class UserViewSet(viewsets.ModelViewSet):
             {'message': 'Plan actualizado a free.'},
             status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def check_username(request):
@@ -141,6 +142,7 @@ def check_username(request):
     if User.objects.filter(username=username).exists():
         return JsonResponse({'exists': True})
     return JsonResponse({'exists': False})
+
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
