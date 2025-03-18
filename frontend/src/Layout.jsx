@@ -73,6 +73,7 @@ const Layout = () => {
     };
 
     fetchProducts();
+    
   }, []);
 
   const obtenerImagen = async (imgId) => {
@@ -88,6 +89,7 @@ const Layout = () => {
   };
 
   useEffect(() => {
+    console.log("Productos:", productos);
     const filtered = productos.filter((producto) => (
       (categoria === "" || producto.category_display === categoria) &&
       (producto.price >= precio[0] && producto.price <= precio[1]) &&
