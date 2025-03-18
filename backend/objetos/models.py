@@ -2,6 +2,7 @@ from django.db import models
 
 from django.core.validators import MinValueValidator
 from django.core.validators import MaxValueValidator, DecimalValidator
+from django.core.exceptions import ValidationError
 
 
 class ItemCategory(models.TextChoices):
@@ -28,10 +29,16 @@ class PriceCategory(models.TextChoices):
     YEAR = ('year', 'Año')
 
 
+def validar_nombre(valor):
+    if not valor.strip():
+        raise ValidationError('El nombre no puede estar vacío.')
+
+
 class Item(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=255)
-    description = models.TextField(max_length=1000)
+    title = models.CharField(max_length=255, validators=[validar_nombre])
+    description = models.TextField(max_length=1000,
+                                   validators=[validar_nombre])
     category = models.CharField(
         max_length=50,
         choices=ItemCategory.choices

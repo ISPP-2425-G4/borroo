@@ -34,6 +34,7 @@ class ItemSerializer(serializers.ModelSerializer):
             'price_category_display', 'price', 'images', 'image_files',
             'remaining_image_ids', 'user'
         ]
+        read_only_fields = ('user',)
 
     def create(self, validated_data):
         image_files = validated_data.pop('image_files', [])
