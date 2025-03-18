@@ -58,7 +58,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Nombre | 15 marzo | 16 marzo | 17 marzo | 18 marzo | 19 marzo | 20 marzo | 21 marzo | 22 marzo | 23 marzo | 24 marzo | 25 marzo | 26 marzo | 27 marzo | 28 marzo |
 | ------ | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | David Blanco Mora |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| Pablo Díaz Ordóñez |  | :blush: | :blush: |  |  |  |  |  |  |  |  |  |  |  |
+| Pablo Díaz Ordóñez |  | :blush: | :blush: | :blush: |  |  |  |  |  |  |  |  |  |  |
 | Pablo Espinosa Naranjo |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Jesús Fernández Rodríguez |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | Francisco Fernández Mota |:smiley:|:blush:|  |  |  |  |  |  |  |  |  |  |  |  |
