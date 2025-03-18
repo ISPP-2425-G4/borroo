@@ -11,6 +11,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import action
 from rest_framework.decorators import api_view, permission_classes
 
+
 def index(request):
     return JsonResponse({"message": "Hello from Django!"})
 
@@ -103,7 +104,6 @@ class UserViewSet(viewsets.ModelViewSet):
                 "No tienes permiso para modificar este usuario")
 
         return super().update(request, *args, **kwargs)
-
 
     @action(detail=True, methods=['post'])
     def upgrade_to_premium(self, request, pk=None):
