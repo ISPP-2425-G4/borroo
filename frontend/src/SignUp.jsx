@@ -500,9 +500,9 @@ const Signup = () => {
               <button
               type="button"
               className="toggle-password"
-              onClick={() => setShowPassword2(!showPassword)}
+              onClick={() => setShowPassword2(!showPassword2)}
             >
-              {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+              {showPassword2 ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
             </button>
             </div>
   
