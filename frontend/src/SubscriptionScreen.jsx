@@ -9,10 +9,6 @@ const SubscriptionScreen = () => {
   const user = JSON.parse(localStorage.getItem("user")); 
   const token = localStorage.getItem("access_token"); 
 
-  if (!token) {
-    alert("No se encontró el token de autenticación. Por favor, inicia sesión nuevamente.");
-    return;
-  }
 
   const planLabels = {
     free: "Gratis",
@@ -20,10 +16,15 @@ const SubscriptionScreen = () => {
   };
 
   useEffect(() => {
+    if (!token) {
+      alert("No se encontró el token de autenticación. Por favor, inicia sesión nuevamente.");
+      return;
+    }
+    
     if (user) {
       setCurrentPlan(user.pricing_plan); // 'free' o 'premium'
     }
-  }, [user]);
+  }, [user, token]);
 
   const handlePlanChange = async (targetPlan) => {
     if (!user || currentPlan === targetPlan) return;
