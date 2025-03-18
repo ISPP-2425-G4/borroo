@@ -6,6 +6,7 @@ import "../public/styles/CreateItem.css";
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
+import { Box } from "@mui/system";
 
 const CreateItemScreen = () => {
   const [formData, setFormData] = useState({
@@ -29,6 +30,7 @@ const CreateItemScreen = () => {
   const navigate = useNavigate();
   const [fieldErrors, setFieldErrors] = useState({});
   const [, setIsFormValid] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   useEffect(() => {
     const fetchEnums = async () => {
@@ -101,12 +103,14 @@ const CreateItemScreen = () => {
     setLoading(true);
     setErrorMessage("");
     setFieldErrors({});
+    setShowErrorMessage(false);
 
     const errors = {};
     
     if(!formData.title || !formData.description || !formData.category || !formData.cancel_type || !formData.price_category || !formData.price) {
       setErrorMessage("Por favor, completa todos los campos.");
       setLoading(false);
+      setShowErrorMessage(true);
       return;
     }
     
@@ -121,7 +125,7 @@ const CreateItemScreen = () => {
     if (!formData.description) {
       errors.description = "La descripción es obligatoria.";
     } else if (formData.description.length > 1000) {
-      errors.description = "La descripción no puede exceder los 1000 caracteres.";
+      errors.description = "La descripcAión no puede exceder los 1000 caracteres.";
     } else if (!/^[A-Za-z]/.test(formData.description)) {
       errors.description = "La descripción debe comenzar con una letra.";
     } 
@@ -133,11 +137,40 @@ const CreateItemScreen = () => {
       errors.price = "El precio solo puede tener hasta dos decimales.";
     } else if (formData.price.length > 10) {
       errors.price = "El precio no puede superar los 10 dígitos en total.";
+    } else if (formData.price > 10000) {
+      errors.price = "El precio no puede superar los $10,000.";
+    }
+
+    if(!formData.category) {
+      errors.category = "La categoría es obligatoria.";
+    } else if (!options.categories.map((opt) => opt.value).includes(formData.category)) {
+      errors.category = "Selecciona una categoría válida.";
+    }
+
+    if(!formData.cancel_type) {
+      errors.cancel_type = "La política de cancelación es obligatoria.";
+    } else if (!options.cancel_types.map((opt) => opt.value).includes(formData.cancel_type)) {
+      errors.cancel_type = "Selecciona una política de cancelación válida.";
+    }
+
+    if(!formData.price_category) {
+      errors.price_category = "La categoría de precio es obligatoria.";
+    } else if (!options.price_categories.map((opt) => opt.value).includes(formData.price_category)) {
+      errors.price_category = "Selecciona una categoría de precio válida.";
+
+    }
+
+    if (images.length === 0) {
+      setErrorMessage("Por favor, selecciona al menos una imagen.");
+      setLoading(false);
+      setShowErrorMessage(true);
+      return;
     }
 
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       setLoading(false);
+      setShowErrorMessage(true);
       return;
     }
 
@@ -198,20 +231,22 @@ const CreateItemScreen = () => {
   const isSubmitDisabled = loading || !formData.title || !formData.description || !formData.category || !formData.cancel_type || !formData.price_category || !formData.price;
 
   return (
-    <div className="create-item-container">
+    <div 
+      style={{width: "100%", height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
       <Navbar />
-      <div className="form-box" style={{ marginTop: "2.5rem" }}>
+      <div style={{ marginTop: "6rem",  backgroundColor: "white", padding: "2rem", borderRadius: "10px", boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)", maxHeight: "100%", overflowY: "auto", width: "100%", marginBottom: "2rem"}}> 
         <h2>Crear Publicación</h2>
-        {errorMessage && <div className="error-message-2">{errorMessage}</div>}
-        <form onSubmit={handleSubmit}>
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+        <form onSubmit={handleSubmit} style={{width: "60vw"}}>
           <InputField
             icon={<FiFileText />}
             type="text"
             name="title"
             placeholder="Título"
             value={formData.title}
-            onChange={handleChange}/>
-          {fieldErrors.title && <div className="error-message-2" >{fieldErrors.title}</div>} 
+            onChange={handleChange}
+            />
+          {fieldErrors.title && <div className="error-message" >{fieldErrors.title}</div>} 
           <TextareaField
             icon={<FiEdit />}
             name="description"
@@ -219,7 +254,7 @@ const CreateItemScreen = () => {
             value={formData.description}
             onChange={handleChange}
           />
-          {fieldErrors.description && <div className="error-message-2">{fieldErrors.description}</div>}
+          {fieldErrors.description && <div className="error-message">{fieldErrors.description}</div>}
 
           <SelectField
             icon={<FiLayers />}
@@ -229,7 +264,8 @@ const CreateItemScreen = () => {
             onChange={handleChange}
             placeholder="Selecciona una categoría"
           />
-          <CancelPolicyTooltip />
+          {fieldErrors.category && <div className="error-message">{fieldErrors.category}</div>}
+          <Box sx={{display:"flex", flexDirection:"row", gap:2, width:"100%"}}>
           <SelectField
             icon={<FiXCircle />}
             name="cancel_type"
@@ -239,6 +275,11 @@ const CreateItemScreen = () => {
             placeholder="Selecciona una política de cancelación"
             
           />
+
+          <CancelPolicyTooltip />
+          
+          </Box>
+          {fieldErrors.cancel_type && <div className="error-message">{fieldErrors.cancel_type}</div>}
           
           <SelectField
             icon={<FiLayers />}
@@ -248,20 +289,21 @@ const CreateItemScreen = () => {
             onChange={handleChange}
             placeholder="Selecciona una categoría de precio"
           />
+          {fieldErrors.price_category && <div className="error-message">{fieldErrors.price_category}</div>}
 
           <InputField
             icon={<FiDollarSign />}
             type="number"
-            step="1"
+            step="0.01"
             name="price"
             placeholder="Precio"
             value={formData.price}
             onChange={handleChange}
           />
-          {fieldErrors.price && <div className="error-message-2">{fieldErrors.price}</div>}
+          {fieldErrors.price && <div className="error-message">{fieldErrors.price}</div>}
 
           {/* ✅ Input para subir múltiples imágenes */}
-          <p className="instruction-text">⚠️ Para seleccionar varios archivos, mantén presionada la tecla <strong>Ctrl</strong> (Windows) o <strong>Cmd</strong> (Mac) mientras eliges los archivos.</p>
+          {/* <p className="instruction-text">⚠️ Para seleccionar varios archivos, mantén presionada la tecla <strong>Ctrl</strong> (Windows) o <strong>Cmd</strong> (Mac) mientras eliges los archivos.</p> */}
           <div className="input-group">
             <label className="input-icon">📷</label>
             <input type="file" multiple accept="image/*" onChange={handleImageChange} />
@@ -272,7 +314,7 @@ const CreateItemScreen = () => {
             <div className="image-gallery">
               <p>Imágenes nuevas seleccionadas:</p>
               {images.map((image, index) => (
-                <div key={index} className="image-item">
+                <div key={index}style={{display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center"}}>
                   <img src={URL.createObjectURL(image)} alt="new" className="item-image" />
                   <button type="button" onClick={() => handleRemoveImage(index)}>
                     <FiTrash2 /> Eliminar
@@ -281,6 +323,8 @@ const CreateItemScreen = () => {
               ))}
             </div>
           )}
+          {fieldErrors.image && <div className="error-message">{fieldErrors.image}</div>}
+          {/* ✅ Botón de envío */}
 
           <button 
             type="submit" 
@@ -289,7 +333,10 @@ const CreateItemScreen = () => {
           >
             {loading ? "Publicando..." : "Publicar"}
           </button>
-
+          {/* ✅ Mensaje de error */}
+          <Box sx={{display:"flex", flexDirection:"row", gap:2, mt:2, alignContent:"center", alignItems:"center", justifyContent:"center"}}>
+          {showErrorMessage && ( <div className="error-message">Por favor, revisa los errores.</div> ) }
+          </Box>
         </form>
       </div>
     </div>
