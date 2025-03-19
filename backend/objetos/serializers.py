@@ -32,7 +32,7 @@ class ItemSerializer(serializers.ModelSerializer):
             'id', 'title', 'description', 'category', 'category_display',
             'cancel_type', 'cancel_type_display', 'price_category',
             'price_category_display', 'price', 'images', 'image_files',
-            'remaining_image_ids', 'user', 'draft_mode'
+            'remaining_image_ids', 'user'
         ]
 
     def validate(self, data):
@@ -62,7 +62,6 @@ class ItemSerializer(serializers.ModelSerializer):
         validated_data.pop('images', None)
         user = validated_data.pop('user')
 
-        # Create the item
         item = Item.objects.create(user=user, **validated_data)
 
         # Save associated images

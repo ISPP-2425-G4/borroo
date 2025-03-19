@@ -57,8 +57,7 @@ def create_items():
             price_category=random.choice(['hour', 'day', 'week', 'month',
                                           'year']),
             price=Decimal(random.uniform(2, 30)),
-            user=random.choice(users),
-            draft_mode=False,
+            user=random.choice(users)
         )
     print('Items created successfully!')
 

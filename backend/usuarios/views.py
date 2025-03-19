@@ -1,6 +1,5 @@
 from django.http import JsonResponse
 import datetime
-from django.core.exceptions import PermissionDenied
 from django.contrib.auth.hashers import check_password, make_password
 from .models import User, PricingPlan
 from .serializers import UserSerializer
@@ -10,6 +9,13 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import action
 from rest_framework.decorators import api_view, permission_classes
+import uuid
+from django.utils.timezone import now
+from django.core.mail import send_mail
+from rest_framework.views import APIView
+from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
+import os
 
 
 def index(request):
@@ -81,29 +87,29 @@ class UserViewSet(viewsets.ModelViewSet):
             "access": str(refresh.access_token),
         }, status=status.HTTP_200_OK)
 
-    def destroy(self, request, *args, **kwargs):
-        user = self.get_object()
+    # def destroy(self, request, *args, **kwargs):
+    #     user = self.get_object()
 
-        if (
-            user.username != request.user.username
-            and not request.user.is_superuser
-        ):
-            raise PermissionDenied(
-                "No tienes permiso para eliminar este usuario")
+    #     if (
+    #         user.username != request.user.username
+    #         and not request.user.is_superuser
+    #     ):
+    #         raise PermissionDenied(
+    #             "No tienes permiso para eliminar este usuario")
 
-        return super().destroy(request, *args, **kwargs)
+    #     return super().destroy(request, *args, **kwargs)
 
-    def update(self, request, *args, **kwargs):
-        user = self.get_object()
+    # def update(self, request, *args, **kwargs):
+    #     user = self.get_object()
 
-        if (
-            user.username != request.user.username
-            and not request.user.is_superuser
-        ):
-            raise PermissionDenied(
-                "No tienes permiso para modificar este usuario")
+    #     if (
+    #         user.username != request.user.username
+    #         and not request.user.is_superuser
+    #     ):
+    #         raise PermissionDenied(
+    #             "No tienes permiso para modificar este usuario")
 
-        return super().update(request, *args, **kwargs)
+    #     return super().update(request, *args, **kwargs)
 
     @action(detail=True, methods=['post'])
     def upgrade_to_premium(self, request, pk=None):
@@ -151,3 +157,100 @@ def check_email(request):
     if User.objects.filter(email=email).exists():
         return JsonResponse({'exists': True})
     return JsonResponse({'exists': False})
+
+# Recuperacion de contraseña
+
+
+class PasswordResetRequestView(APIView):
+    """Vista para solicitar el restablecimiento de contraseña."""
+    def post(self, request):
+        email = request.data.get("email")
+        user = User.objects.filter(email=email).first()
+
+        if not user:
+            return Response({
+                "error": "No se encontró un usuario con ese email."},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        # Generamos un token único
+        user.reset_token = str(uuid.uuid4())
+        user.reset_token_expiration = now()
+        user.save()
+
+        frontend_base_url = os.getenv("RECOVER_PASSWORD")
+        frontend_url = f"{frontend_base_url}recoverPasswordNew"
+        reset_link = f"{frontend_url}?token={user.reset_token}"
+
+        send_mail(
+            "Recuperación de contraseña",
+            f"Haz clic en el siguiente enlace para restablecer tu contraseña: "
+            f"{reset_link}",
+            "no-reply@tuapp.com",
+            [user.email],
+            fail_silently=False,
+        )
+
+        return Response({"message": "Correo de recuperación enviado"},
+                        status=status.HTTP_200_OK)
+
+
+class PasswordResetConfirmView(APIView):
+    """Vista para confirmar el cambio de contraseña."""
+    def validate_password(self, password):
+        """Aplica las validaciones de la contraseña definidas en el modelo."""
+        validators = [
+            RegexValidator(
+                regex=r'^(?=.*[A-Z])',
+                message='La contraseña debe contener'
+                'al menos una letra mayúscula.'
+            ),
+            RegexValidator(
+                regex=r'^(?=.*\d)',
+                message='La contraseña debe contener al menos un número.'
+            ),
+            RegexValidator(
+                regex=r'^(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])',
+                message='La contraseña debe contener'
+                'al menos un carácter especial.'
+            ),
+            RegexValidator(
+                regex=r'^.{8,}$',
+                message='La contraseña debe tener al menos 8 caracteres.'
+            ),
+        ]
+
+        # Ejecutar todas las validaciones
+        for validator in validators:
+            try:
+                validator(password)
+            except ValidationError as e:
+                raise ValidationError(e.messages)
+
+    def post(self, request, token):
+        user = User.objects.filter(reset_token=token).first()
+
+        if not user or not user.is_reset_token_valid():
+            return Response({"error": "Token inválido o expirado"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        new_password = request.data.get("password")
+        if not new_password:
+            return Response({
+                "error": "Debes proporcionar una nueva contraseña"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        # Validar la contraseña con las reglas del modelo
+        try:
+            self.validate_password(new_password)
+        except ValidationError as e:
+            return Response({"error": e.messages},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        # Guardamos la nueva contraseña encriptada
+        user.password = make_password(new_password)
+        user.reset_token = None  # Limpiamos el token después de usarlo
+        user.reset_token_expiration = None
+        user.save()
+
+        return Response({"message": "Contraseña actualizada correctamente"},
+                        status=status.HTTP_200_OK)
