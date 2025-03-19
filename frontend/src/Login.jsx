@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiLock } from "react-icons/fi";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import "../public/styles/Login.css";
 import axios from 'axios';
 import Navbar from "./Navbar";
@@ -11,7 +12,14 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsFormValid(username.trim() !== "" && password.trim() !== "");
+  }, [username, password]);
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,14 +80,21 @@ const Login = () => {
           <div className="input-group">
             <FiLock className="input-icon" />
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Contraseña"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <button
+              type="button"
+              className="toggle-password"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+            </button>
           </div>
-          <button type="submit" className="login-btn" disabled={loading}>
+          <button type="submit" className="login-btn" disabled={!isFormValid || loading}>
             {loading ? "Procesando..." : "Ingresar"}
           </button>
         </form>

@@ -1,15 +1,15 @@
 from django.http import JsonResponse
 import datetime
 from django.core.exceptions import PermissionDenied
-from django.contrib.auth.hashers import check_password
-from .models import User
+from django.contrib.auth.hashers import check_password, make_password
+from .models import User, PricingPlan
 from .serializers import UserSerializer
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import action
-from django.contrib.auth.hashers import make_password
+from rest_framework.decorators import api_view, permission_classes
 
 
 def index(request):
@@ -29,12 +29,12 @@ class UserViewSet(viewsets.ModelViewSet):
         """Registro de usuario y generación de token JWT"""
         data = request.data.copy()
 
+        # Encriptar la contraseña antes de validar el serializer
+        data["password"] = make_password(data["password"])
+
         # Validar el serializer primero
         serializer = self.get_serializer(data=data)
         if serializer.is_valid():
-            # Si la contraseña es válida, aplicamos el hash
-            data["password"] = make_password(data["password"])
-
             # Guardamos el usuario con la contraseña encriptada
             user = serializer.save()
 
@@ -54,17 +54,22 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=["post"], permission_classes=[AllowAny])
     def login(self, request):
         """Login de usuario y generación de token JWT"""
-        username = request.data.get("username").strip()
-        password = request.data.get("password").strip()
+        username = request.data.get("username")
+        password = request.data.get("password")
 
         if not username or not password:
             return Response({"error": "Se requiere usuario y contraseña"},
                             status=status.HTTP_400_BAD_REQUEST)
 
-        # Verificar usuario correcto y contraseña correcta
-        user = User.objects.filter(username=username).first()
+        # Verificar si el usuario existe
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return Response({"error": "Usuario no encontrado"},
+                            status=status.HTTP_404_NOT_FOUND)
 
-        if not user or not check_password(password, user.password):
+        # Comprobar si la contraseña es correcta
+        if not check_password(password, user.password):
             return Response({"error": "Credenciales incorrectas"},
                             status=status.HTTP_401_UNAUTHORIZED)
 
@@ -99,3 +104,50 @@ class UserViewSet(viewsets.ModelViewSet):
                 "No tienes permiso para modificar este usuario")
 
         return super().update(request, *args, **kwargs)
+
+    @action(detail=True, methods=['post'])
+    def upgrade_to_premium(self, request, pk=None):
+        user = self.get_object()
+        if user.pricing_plan != PricingPlan.FREE:
+            return Response(
+                {'error': 'Solo los usuarios con plan free pueden '
+                 'actualizar a premium.'},
+                status=status.HTTP_400_BAD_REQUEST)
+        user.pricing_plan = PricingPlan.PREMIUM
+        user.save()
+        return Response(
+            {'message': 'Plan actualizado a premium.'},
+            status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['post'])
+    def downgrade_to_free(self, request, pk=None):
+        user = self.get_object()
+        if user.pricing_plan != PricingPlan.PREMIUM:
+            return Response(
+                {'error': 'Solo los usuarios con plan premium'
+                 'pueden cambiar a free.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        user.pricing_plan = PricingPlan.FREE
+        user.save()
+        return Response(
+            {'message': 'Plan actualizado a free.'},
+            status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def check_username(request):
+    username = request.query_params.get('username')
+    if User.objects.filter(username=username).exists():
+        return JsonResponse({'exists': True})
+    return JsonResponse({'exists': False})
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def check_email(request):
+    email = request.query_params.get('email')
+    if User.objects.filter(email=email).exists():
+        return JsonResponse({'exists': True})
+    return JsonResponse({'exists': False})
