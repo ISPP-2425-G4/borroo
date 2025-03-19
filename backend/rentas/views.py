@@ -80,7 +80,8 @@ class RentViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        serializer = RentSerializer(data=request.data)
+        serializer = RentSerializer(data=request.data,
+                                    context={'item_instance': item})
 
         if serializer.is_valid():
             serializer.save(renter=user, item=item)

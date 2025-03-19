@@ -14,7 +14,7 @@ class RentSerializer(serializers.ModelSerializer):
                             'payment_status', 'renter')
 
     def validate(self, data):
-        item = data.get('item')
+        item = self.context.get('item_instance')
         start_date = data.get("start_date")
         end_date = data.get("end_date")
 
