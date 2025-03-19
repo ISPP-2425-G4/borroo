@@ -32,25 +32,13 @@ class ItemSerializer(serializers.ModelSerializer):
             'id', 'title', 'description', 'category', 'category_display',
             'cancel_type', 'cancel_type_display', 'price_category',
             'price_category_display', 'price', 'images', 'image_files',
-            'remaining_image_ids', 'user', 'draft_mode'
+            'remaining_image_ids', 'user'
         ]
 
     def create(self, validated_data):
         image_files = validated_data.pop('image_files', [])
         validated_data.pop('images', None)
         user = validated_data.pop('user')
-
-        # Restricción: No más de 10 ítems con draft_mode False
-        if Item.objects.filter(user=user, draft_mode=False).count() >= 10:
-            raise serializers.ValidationError(
-                "No puedes tener más de 10 ítems con draft_mode en False."
-            )
-
-        # Restricción: No más de 15 ítems en total
-        if Item.objects.filter(user=user).count() >= 15:
-            raise serializers.ValidationError(
-                "No puedes tener más de 15 ítems en total."
-            )
 
         # Crear el item sin la relación many-to-many
         item = Item.objects.create(user=user, **validated_data)
