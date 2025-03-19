@@ -61,23 +61,24 @@ const Navbar = () => {
   }, []);
 
   return (
-    <Box
-      component="header"
-      sx={{
-        backgroundColor: "#2563eb",
-        color: "white",
-        p: "1rem 2rem",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        position: "fixed",
-        top: 0,
-        width: "100%",
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-        zIndex: 1100,
-        height: "60px",
-      }}
-    >
+<Box
+  component="header"
+  sx={{
+    backgroundColor: "#2563eb",
+    color: "white",
+    p: "1rem 2rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    position: "fixed",   // ✅ BIEN
+    top: 0,
+    width: "100%",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    zIndex: 1100,
+    height: "60px",       // ✅ ALTURA FIJA (clave)
+  }}
+>
+
       {/* Logo */}
       <Typography
         variant="h6"

@@ -98,7 +98,7 @@ const CreateItemScreen = () => {
     setImages(images.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, isDraft = false)  => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage("");
@@ -186,13 +186,12 @@ const CreateItemScreen = () => {
   
       // Obtener usuario autenticado desde localStorage o contexto
       const user = JSON.parse(localStorage.getItem("user")); 
-      console.log(user);
       if (user && user.id) {
         formDataToSend.append("user", user.id);
       } else {
         throw new Error("Usuario no autenticado");
       }
-  
+      formDataToSend.append("draft_mode", isDraft ? "true" : "false");
       // Agregar imágenes
       images.forEach((image) => {
         formDataToSend.append("image_files", image);
@@ -206,7 +205,11 @@ const CreateItemScreen = () => {
       console.log("Respuesta del servidor:", response);
   
       if (response.status === 201) {
-        alert("¡Item creado exitosamente!");
+        if (isDraft){
+          alert("¡Item guardado como borrador exitosamente!");
+        }
+        else{
+        alert("¡Item creado exitosamente!");}
         setFormData({
           title: "",
           description: "",
@@ -227,7 +230,9 @@ const CreateItemScreen = () => {
       setLoading(false);
     }
   };
-
+  const handleSaveAsDraft = (e) => {
+    handleSubmit(e, true); // true indica que es un borrador
+  };
   const isSubmitDisabled = loading || !formData.title || !formData.description || !formData.category || !formData.cancel_type || !formData.price_category || !formData.price;
 
   return (
@@ -324,15 +329,44 @@ const CreateItemScreen = () => {
             </div>
           )}
           {fieldErrors.image && <div className="error-message">{fieldErrors.image}</div>}
-          {/* ✅ Botón de envío */}
+          <Box sx={{ display: "flex", flexDirection: "row", gap: 2, mt: 3 }}>
+  <button 
+    type="button" 
+    className={`primary-btn ${isSubmitDisabled ? "disabled-btn" : ""}`} 
+    disabled={isSubmitDisabled}
+    onClick={handleSaveAsDraft}
+    style={{
+      flex: 1,
+      backgroundColor: isSubmitDisabled ? "#cccccc" : "#555555",
+      color: "white",
+      padding: "12px",
+      borderRadius: "8px",
+      fontWeight: "bold",
+      cursor: isSubmitDisabled ? "not-allowed" : "pointer",
+      transition: "background-color 0.3s"
+    }}
+  >
+    Guardar como Borrador
+  </button>
 
-          <button 
-            type="submit" 
-            className={`primary-btn ${isSubmitDisabled ? "disabled-btn" : ""}`} 
-            disabled={isSubmitDisabled}
-          >
-            {loading ? "Publicando..." : "Publicar"}
-          </button>
+  <button 
+    type="submit" 
+    className={`primary-btn ${isSubmitDisabled ? "disabled-btn" : ""}`} 
+    disabled={isSubmitDisabled}
+    style={{
+      flex: 1,
+      backgroundColor: isSubmitDisabled ? "#cccccc" : "#1976d2",
+      color: "white",
+      padding: "12px",
+      borderRadius: "8px",
+      fontWeight: "bold",
+      cursor: isSubmitDisabled ? "not-allowed" : "pointer",
+      transition: "background-color 0.3s"
+    }}
+  >
+    {loading ? "Publicando..." : "Publicar"}
+  </button>
+</Box>
           {/* ✅ Mensaje de error */}
           <Box sx={{display:"flex", flexDirection:"row", gap:2, mt:2, alignContent:"center", alignItems:"center", justifyContent:"center"}}>
           {showErrorMessage && ( <div className="error-message">Por favor, revisa los errores.</div> ) }

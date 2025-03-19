@@ -111,7 +111,6 @@ const ShowItemScreen = () => {
         }
       );
       const userData = response.data;
-      console.log("Usuario recibido:", userData); // Verificar respuesta
       setUserName(userData.name); // Ajusta si el nombre del usuario tiene otra key
     } catch (error) {
       console.error("Error fetching user:", error);
@@ -203,6 +202,7 @@ const ShowItemScreen = () => {
       <Navbar />
       <div className="content-container">
         <h2 className="item-title">{item.title}</h2>
+        <h2 className="item-title">{item.draft_mode}</h2>
   
         {/* 🔹 Carrusel de imágenes */}
         {imageURLs.length > 0 && (
@@ -261,7 +261,36 @@ const ShowItemScreen = () => {
             </button>
           </div>
         )}
-  
+  {item.draft_mode && (
+  <div style={{ 
+    backgroundColor: "#fff8c4", 
+    padding: "1rem", 
+    borderRadius: "8px", 
+    margin: "1rem 0", 
+    textAlign: "center", 
+    border: "1px solid #e0c243" 
+  }}>
+    <h3 style={{ color: "#b58900", marginBottom: "1rem" }}>📌 BORRADOR</h3>
+    <button 
+      className="rental-btn" 
+      style={{
+        backgroundColor: "#1976d2",
+        color: "white",
+        padding: "10px 20px",
+        borderRadius: "8px",
+        fontWeight: "bold",
+        cursor: "pointer",
+        border: "none"
+      }}
+      onClick={() => {
+        // 🔜 Aquí iría tu función handlePublish() cuando la tengas
+        alert("Aquí irá la llamada a publicar el ítem");
+      }}
+    >
+      Publicar
+    </button>
+  </div>
+)}
         <button className="btn" onClick={() => navigate("/")}>
           <FiArrowLeft /> Volver al inicio
         </button>
