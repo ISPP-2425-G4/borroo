@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from decimal import Decimal
 from datetime import timedelta
+from django.contrib.auth.models import AnonymousUser
 
 
 def is_authorized(condition=True, authenticated=True):
@@ -187,6 +188,7 @@ class RentViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['put'])
     def cancel_rent(self, request, pk=None):
         user = request.user if not AnonymousUser else None
+        authenticated = request.user.is_authenticated
         now = timezone.now()
         rent = self.get_object()
         renter = rent.renter
