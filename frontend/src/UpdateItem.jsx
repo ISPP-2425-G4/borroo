@@ -124,7 +124,7 @@ const UpdateItemScreen = () => {
 
     const errors = {};
 
-    if (!formData.title || !formData.description || !formData.category || !formData.Subcategory || !formData.cancel_type || !formData.price_category || !formData.price) {
+    if (!formData.title || !formData.description || !formData.category || !formData.subcategory || !formData.cancel_type || !formData.price_category || !formData.price) {
       setErrorMessage("Por favor, completa todos los campos.");
       return;
     }
