@@ -133,6 +133,7 @@ const Navbar = () => {
           }}
         >
          Solicitudes
+        </Typography>
         <Typography
           component={Link}
           to="/pricing-plan"
