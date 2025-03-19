@@ -9,12 +9,14 @@ const SubscriptionScreen = () => {
   const user = JSON.parse(localStorage.getItem("user")); 
   const token = localStorage.getItem("access_token"); 
 
+
   const planLabels = {
     free: "Gratis",
     premium: "Premium",
   };
 
   useEffect(() => {
+    
     if (user) {
       setCurrentPlan(user.pricing_plan); // 'free' o 'premium'
     }
@@ -28,7 +30,7 @@ const SubscriptionScreen = () => {
       const url = `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${user.id}/${targetPlan === 'premium' ? 'upgrade_to_premium' : 'downgrade_to_free'}/`;
 
       await axios.post(url, null, {
-        // headers: { Authorization: `Bearer ${token}` },
+       // headers: { Authorization: `Bearer ${token}` },
       });
 
       const updatedUser = { ...user, pricing_plan: targetPlan };
@@ -61,7 +63,6 @@ const SubscriptionScreen = () => {
               <li>✅ Incluye anuncios</li>
               <li>🚫 Sin productos destacados</li>
             </ul>
-            {/* Mostrar el botón solo si hay token */}
             {token && currentPlan !== 'free' && (
               <button
                 onClick={() => handlePlanChange('free')}
@@ -83,7 +84,6 @@ const SubscriptionScreen = () => {
               <li>🔓 Sin límite de productos activos</li>
               <li>🔓 Sin límite de borradores</li>
             </ul>
-            {/* Mostrar el botón solo si hay token */}
             {token && currentPlan !== 'premium' && (
               <button
                 onClick={() => handlePlanChange('premium')}
