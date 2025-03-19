@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Item, ItemImage
+from .models import Item, ItemImage, ItemRequest
 from utils.utils import upload_image_to_imgbb
 
 
@@ -98,3 +98,10 @@ class ItemSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+
+class ItemRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ItemRequest
+        fields = ['id', 'title', 'description',
+                  'category', 'price', 'user', 'approved']
