@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import ItemRequestApprovalViewSet, ItemRequestView, ItemViewSet
 from .views import FilterByCategory, FilterByPrice, SearchItemsView
-from .views import ItemImageViewSet, EnumChoicesView
+from .views import ItemImageViewSet, EnumChoicesView, PublishItemView
 
 router = DefaultRouter()
 router.register(r'full', ItemViewSet)
@@ -26,4 +26,5 @@ urlpatterns = [
     ),
     path('create_item_request/', ItemRequestView.as_view(),
          name='create_item_request'),
+    path('publish_item/', PublishItemView.as_view(), name='publish_item'),
 ]
