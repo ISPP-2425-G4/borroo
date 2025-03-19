@@ -158,7 +158,31 @@ const ShowItemScreen = () => {
   }
 
   if (!item) return <p>No se encontró el ítem.</p>;
+  const handlePublishItem = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
 
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/objetos/publish_item/`,
+        { item_id: item.id, user_id: user.id },
+        {
+          headers: { 
+            "Content-Type": "application/json",
+          }
+        }
+      );
+  
+      if (response.status === 200) {
+        alert("¡El ítem se ha publicado correctamente!");
+        navigate(0); // Refresca la página
+      } else {
+        alert("Hubo un problema al publicar el ítem.");
+      }
+    } catch (error) {
+      console.error("Error al publicar el ítem:", error);
+      alert("Error al publicar el ítem.");
+    }
+  };
   const handleRentalRequest = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -261,7 +285,7 @@ const ShowItemScreen = () => {
             </button>
           </div>
         )}
-  {item.draft_mode && (
+ {item.draft_mode && (
   <div style={{ 
     backgroundColor: "#fff8c4", 
     padding: "1rem", 
@@ -282,10 +306,7 @@ const ShowItemScreen = () => {
         cursor: "pointer",
         border: "none"
       }}
-      onClick={() => {
-        // 🔜 Aquí iría tu función handlePublish() cuando la tengas
-        alert("Aquí irá la llamada a publicar el ítem");
-      }}
+      onClick={handlePublishItem}
     >
       Publicar
     </button>

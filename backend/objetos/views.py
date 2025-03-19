@@ -1,4 +1,7 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, permissions
+
+from usuarios.models import User
 from .models import Item, ItemImage, ItemRequest
 from .serializers import ItemRequestSerializer, ItemSerializer
 from .serializers import ItemImageSerializer
@@ -150,8 +153,10 @@ class ItemRequestApprovalViewSet(viewsets.ViewSet):
 class PublishItemView(APIView):
     def post(self, request, *args, **kwargs):
         item_id = request.data.get('item_id')
+        user_id = request.data.get('user_id')
+        user = get_object_or_404(User, id=user_id)
         try:
-            item = Item.objects.get(id=item_id, user=request.user)
+            item = Item.objects.get(id=item_id, user=user)
             item.publish()
             return Response(
                 {"message": "Ítem publicado con éxito"},
