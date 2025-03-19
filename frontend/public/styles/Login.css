@@ -117,6 +117,31 @@ input, select {
     margin-bottom: 0.5rem;
 }
 
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px; /* 🔹 Tamaño más pequeño */
+    color: #007bff; /* 🔹 Color azul */
+    padding: 5px; /* 🔹 Para reducir el tamaño del botón */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .toggle-password:hover {
+    color: #0056b3; /* 🔹 Azul más oscuro al pasar por encima */
+    transform: scale(1.1); /* 🔹 Efecto de aumento sutil */
+  }
+  
+  .toggle-password svg {
+    width: 18px; /* 🔹 Ajuste del tamaño del icono */
+    height: 18px;
+  }
+  
+
 /* Media query para pantallas pequeñas donde el formulario podría ser demasiado grande */
 @media (max-height: 800px) {
     .login-box {

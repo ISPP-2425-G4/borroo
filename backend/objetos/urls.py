@@ -1,12 +1,14 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import ItemViewSet, SearchItemsView, EnumChoicesView
-from .views import FilterByCategory, FilterByPrice
-from .views import ItemImageViewSet
+from .views import ItemRequestApprovalViewSet, ItemRequestView, ItemViewSet
+from .views import FilterByCategory, FilterByPrice, SearchItemsView
+from .views import ItemImageViewSet, EnumChoicesView
 
 router = DefaultRouter()
 router.register(r'full', ItemViewSet)
 router.register(r'item-images', ItemImageViewSet)
+router.register(r'approve_request', ItemRequestApprovalViewSet,
+                basename='item-request-approve')
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -22,4 +24,6 @@ urlpatterns = [
         FilterByPrice.as_view(),
         name='pri_item'
     ),
+    path('create_item_request/', ItemRequestView.as_view(),
+         name='create_item_request'),
 ]

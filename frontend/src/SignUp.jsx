@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiLock, FiMail, FiInfo, FiPhone, FiMapPin, FiHome, FiFlag, FiCheckCircle } from "react-icons/fi";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import "../public/styles/Login.css";
 import axios from 'axios';
 import Navbar from "./Navbar";
-import { Box } from "@mui/material";
+import { Box, TextField, Autocomplete } from "@mui/material";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -25,7 +26,35 @@ const Signup = () => {
   const [error, setError] = useState("");
   const [formErrors, setFormErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const [countries, setCountries] = useState([]);
   const navigate = useNavigate();
+  
+
+  useEffect(() => {
+    const requiredFields = ["username", "name", "surname", "email", "phone_number", "country", "city", "address", "postal_code", "password", "password2"];
+    const isValid = requiredFields.every(field => formData[field] && formData[field].trim() !== "");
+    setIsFormValid(isValid);
+  }, [formData]);
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await axios.get("https://restcountries.com/v3.1/all?lang=es");
+        const countryOptions = response.data.map(country => ({
+          value: country.cca2,
+          label: country.translations.spa.common
+        }));
+        setCountries(countryOptions);
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      }
+    };
+
+    fetchCountries();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,8 +64,62 @@ const Signup = () => {
     }));
   };
 
+  const handleCountryChange = (event, value) => {
+    // Si value es un objeto (selección de la lista)
+    if (value && typeof value === 'object') {
+      setFormData(prevData => ({
+        ...prevData,
+        country: value.label
+      }));
+    } 
+    // Si value es un string (entrada manual)
+    else if (typeof value === 'string') {
+      setFormData(prevData => ({
+        ...prevData,
+        country: value
+      }));
+    }
+    // Si value es null (borrado)
+    else {
+      setFormData(prevData => ({
+        ...prevData,
+        country: ""
+      }));
+    }
+  };
+
+  const handleCountryKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // Prevenir el envío del formulario
+      
+      // Obtener el texto actual del campo
+      const inputValue = event.target.value.toLowerCase();
+      
+      // Filtrar países que coincidan con lo que está escribiendo
+      const filteredCountries = countries.filter(country => 
+        country.label.toLowerCase().includes(inputValue)
+      );
+      
+      // Si hay resultados filtrados, seleccionar el primero
+      if (filteredCountries.length > 0) {
+        setFormData(prevData => ({
+          ...prevData,
+          country: filteredCountries[0].label
+        }));
+      } else {
+        // Si no hay coincidencias, mantener el texto ingresado
+        setFormData(prevData => ({
+          ...prevData,
+          country: event.target.value
+        }));
+      }
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isFormValid) return;
+
     setLoading(true);
     setError("");
     setFormErrors({});
@@ -51,18 +134,33 @@ const Signup = () => {
     // Validaciones manuales
     const errors = {};
   
-    // Validar que el teléfono tenga 9 dígitos
-    if (!/^\d{9}$/.test(formData.phone_number)) {
-      errors.phone_number = "El teléfono debe tener exactamente 9 dígitos.";
+    // Validar que el teléfono siga el formato indicado en el models.py
+    if (!/^\+?[0-9]{7,15}$/.test(formData.phone_number)) {
+      errors.phone_number = "Introduce un número de teléfono válido.";
     }
   
     // Validar que nombres, apellidos, país, ciudad y dirección comiencen con una letra
     const textFields = ["name", "surname", "country", "city", "address"];
     textFields.forEach(field => {
-      if (!/^[A-Za-z]/.test(formData[field])) {
+      if (formData[field] && !/^[A-Za-zÁÉÍÓÚáéíóúÑñ]/.test(formData[field])) {
         errors[field] = `El campo ${field} debe comenzar con una letra.`;
       }
     });
+
+    // Validar la contraseña
+    if (!/(?=.*[A-Z])/.test(formData.password)) {
+      errors.password = "La contraseña debe contener al menos una letra mayúscula.";
+    }
+    // eslint-disable-next-line no-useless-escape
+    if (!/(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>/?])/.test(formData.password)) {
+      errors.password = "La contraseña debe contener al menos un carácter especial.";
+    }
+    if (!/(?=.*\d)/.test(formData.password)) {
+      errors.password = "La contraseña debe contener al menos un número.";
+    }
+    if (formData.password.length < 8) {
+      errors.password = "La contraseña debe tener al menos 8 caracteres.";
+    }
   
     // Validar que todos los campos obligatorios estén completos
     const requiredFields = ["username", "name", "surname", "email", "phone_number", "country", "city", "address", "postal_code", "password", "password2"];
@@ -71,6 +169,40 @@ const Signup = () => {
         errors[field] = "Este campo es obligatorio.";
       }
     });
+
+    // Verificar si el nombre de usuario ya existe
+    try {
+      const usernameCheckResponse = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/check_username/`,
+        { params: { username: formData.username } }
+      );
+
+      if (usernameCheckResponse.data.exists) {
+        errors.username = "El nombre de usuario ya existe.";
+      }
+    } catch (error) {
+      console.error("Error verificando el nombre de usuario:", error);
+      setError("Error verificando el nombre de usuario");
+      setLoading(false);
+      return;
+    }
+
+    // Verificar si el correo electrónico ya existe
+    try {
+      const emailCheckResponse = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/check_email/`,
+        { params: { email: formData.email } }
+      );
+
+      if (emailCheckResponse.data.exists) {
+        errors.email = "El correo electrónico ya existe.";
+      }
+    } catch (error) {
+      console.error("Error verificando el correo electrónico:", error);
+      setError("Error verificando el correo electrónico");
+      setLoading(false);
+      return;
+    }
   
     // Si hay errores, detener el envío del formulario
     if (Object.keys(errors).length > 0) {
@@ -233,13 +365,44 @@ const Signup = () => {
             {formErrors.country && <div className="field-error">{formErrors.country}</div>}
             <div className="input-group">
               <FiFlag className="input-icon" />
-              <input
-                type="text"
-                name="country"
-                placeholder="País"
-                required
-                value={formData.country}
-                onChange={handleChange}
+              <Autocomplete
+                options={countries}
+                getOptionLabel={(option) => {
+                  // Maneja los casos donde option puede ser string u objeto
+                  if (typeof option === 'string') return option;
+                  return option?.label || '';
+                }}
+                onChange={handleCountryChange}
+                onKeyDown={handleCountryKeyDown}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    name="country"
+                    placeholder="País"
+                    variant="outlined"
+                    fullWidth
+                    error={!!formErrors.country}
+                    required
+                  />
+                )}
+                freeSolo
+                autoSelect
+                filterOptions={(options, state) => {
+                  // Esto mantiene visible la lista filtrada de opciones
+                  return options.filter(option => 
+                    option.label.toLowerCase().includes(state.inputValue.toLowerCase())
+                  );
+                }}
+                value={formData.country ? 
+                  (countries.find(c => c.label === formData.country) || formData.country) : 
+                  null
+                }
+                sx={{
+                  width: '100%',
+                  '& .MuiOutlinedInput-root': {
+                    padding: '0.5rem',
+                  }
+                }}
               />
             </div>
   
@@ -306,13 +469,20 @@ const Signup = () => {
             <div className="input-group">
               <FiLock className="input-icon" />
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Contraseña"
                 required
                 value={formData.password}
                 onChange={handleChange}
               />
+              <button
+              type="button"
+              className="toggle-password"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+            </button>
             </div>
   
             {/* Confirmar contraseña */}
@@ -320,20 +490,27 @@ const Signup = () => {
             <div className="input-group">
               <FiLock className="input-icon" />
               <input
-                type="password"
+                type={showPassword2 ? "text" : "password"}
                 name="password2"
                 placeholder="Confirmar contraseña"
                 required
                 value={formData.password2}
                 onChange={handleChange}
               />
+              <button
+              type="button"
+              className="toggle-password"
+              onClick={() => setShowPassword2(!showPassword2)}
+            >
+              {showPassword2 ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+            </button>
             </div>
   
             {/* Botón de envío */}
             <button
               type="submit"
               className="login-btn"
-              disabled={loading}
+              disabled={!isFormValid || loading}
             >
               {loading ? "Procesando..." : "Crear cuenta"}
             </button>

@@ -44,7 +44,8 @@ form {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  margin-top: 0;
+  /* gap: 0.8rem; */
 }
 
 /* ====== INPUTS ====== */
@@ -124,6 +125,21 @@ textarea {
   background: #1e40af;
   transform: scale(1.02);
 }
+.disabled-btn {
+  cursor: not-allowed; /* Cambia el cursor a "prohibido" */
+  opacity: 0.6; /* Reduce la opacidad */
+  background-color: #ccc; /* Color gris para indicar que está deshabilitado */
+  pointer-events: none; /* Evita que se pueda hacer clic */
+}
+.rental-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #ccc;
+  pointer-events: none;
+}
+.rental-btn:disabled:hover {
+  cursor: not-allowed;
+}
 
 /* ====== CARRUSEL DE IMÁGENES ====== */
 .image-container {
@@ -180,21 +196,21 @@ textarea {
 /* ====== CONTENEDOR DE IMÁGENES ====== */
 .image-gallery {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+ 
   margin-bottom: 1rem;
   max-width: 100%;
   padding: 10px;
-  overflow: hidden;
+  overflow: auto;
 }
 
 /* ====== IMAGEN INDIVIDUAL ====== */
 .item-image {
   width: 100%;
   max-width: 200px;
-  height: auto;
+  height: 200px;
   object-fit: contain;
   border-radius: 8px;
   border: 1px solid #ddd;
