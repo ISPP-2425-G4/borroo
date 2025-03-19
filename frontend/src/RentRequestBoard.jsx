@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
+import { Box } from "@mui/system";
 
 const DEFAULT_IMAGE = "../public/default_image.png";
 
@@ -10,8 +11,14 @@ const RentRequestBoard = () => {
     useEffect(() => {
         const fetchRequests = async () => {
             try {
+                const user = JSON.parse(localStorage.getItem("user"));
+                if (!user || !user.id) {
+                    alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
+                    return;
+                }
                 const response = await axios.get(
-                    `${import.meta.env.VITE_API_BASE_URL}/rentas/full/rental_requests/`
+                    `${import.meta.env.VITE_API_BASE_URL}/rentas/full/rental_requests/`,
+                    { params: { user: user.id } }
                 );
                 console.log("Datos recibidos del backend:", response.data);
 
@@ -49,18 +56,33 @@ const RentRequestBoard = () => {
         }
     };
 
-    const handleAccept = (renta) => {
-        console.log(`Aceptar solicitud de alquiler: ${renta.title}`);
-        // Lógica para aceptar la solicitud (por ejemplo, cambiar estado en backend)
-    };
+    const handleResponse = async (renta, responseType) => {
+        try {
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (!user || !user.id) {
+                alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
+                return;
+            }
+            const response = await axios.put(
+                `${import.meta.env.VITE_API_BASE_URL}/rentas/full/${renta.id}/respond_request/`,
+                {
+                    response: responseType,
+                    rent: renta.id
+                }
+            );
+            console.log(response.data);
 
-    const handleReject = (renta) => {
-        console.log(`Rechazar solicitud de alquiler: ${renta.title}`);
-        // Lógica para rechazar la solicitud (por ejemplo, cambiar estado en backend)
+            // Filtrar la solicitud aceptada/rechazada de la lista
+            setRequests((prevRequests) =>
+                prevRequests.filter((request) => request.id !== renta.id)
+            );
+        } catch (error) {
+            console.error(`Error al procesar la solicitud:`, error.response?.data || error.message);
+        }
     };
 
     return (
-        <div className="p-4">
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <Navbar />
             {requests.length === 0 ? (
                 <p>No hay solicitudes de alquiler disponibles.</p>
@@ -81,13 +103,13 @@ const RentRequestBoard = () => {
                                 <div className="mt-4 flex justify-between">
                                     <button
                                         className="bg-green-500 text-white px-4 py-2 rounded"
-                                        onClick={() => handleAccept(request)}
+                                        onClick={() => handleResponse(request, "accepted")}
                                     >
                                         Aceptar
                                     </button>
                                     <button
                                         className="bg-red-500 text-white px-4 py-2 rounded"
-                                        onClick={() => handleReject(request)}
+                                        onClick={() => handleResponse(request, "rejected")}
                                     >
                                         Rechazar
                                     </button>
@@ -97,7 +119,7 @@ const RentRequestBoard = () => {
                     ))}
                 </div>
             )}
-        </div>
+        </Box>
     );
 };
 
