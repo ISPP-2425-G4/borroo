@@ -35,15 +35,36 @@ class ItemSerializer(serializers.ModelSerializer):
             'remaining_image_ids', 'user'
         ]
 
+    def validate(self, data):
+        """
+        Validate that the user doesn't exceed the item limits.
+        """
+        user = data.get('user')
+        draft_mode = data.get('draft_mode', False)
+
+        # Restricción: No más de 10 ítems con draft_mode False
+        item_count = Item.objects.filter(user=user, draft_mode=False).count()
+        if not draft_mode and item_count >= 10:
+            raise serializers.ValidationError(
+                "No puedes tener más de 10 ítems con draft_mode en False."
+            )
+
+        # Restricción: No más de 15 ítems en total
+        if Item.objects.filter(user=user).count() >= 15:
+            raise serializers.ValidationError(
+                "No puedes tener más de 15 ítems en total."
+            )
+
+        return data
+
     def create(self, validated_data):
         image_files = validated_data.pop('image_files', [])
         validated_data.pop('images', None)
         user = validated_data.pop('user')
 
-        # Crear el item sin la relación many-to-many
         item = Item.objects.create(user=user, **validated_data)
 
-        # Guardar las imágenes asociadas al item
+        # Save associated images
         for image in image_files:
             image_url = upload_image_to_imgbb(image)
             ItemImage.objects.create(item=item, image=image_url)
