@@ -69,7 +69,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Álvaro Martín Muñoz |  |  |  | :blush: |  |  |  |  |  |  |  |  |  |  |
 | Ignacio Naredo Bernardos |  | :smiley: |  | :blush:|:smiley:  |  |  |  |  |  |  |  |  |  |
 | Javier Nieto Vicioso |:smiley:|:smiley:|  |  |  |  |  |  |  |  |  |  |  |  |
-| Marco Padilla Gómez |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Marco Padilla Gómez |  |  |  | :angry: |  |  |  |  |  |  |  |  |  |  |
 | Miguel Palomo García |:blush:|:smiley:|:smiley:|:blush:|:smiley:|  |  |  |  |  |  |  |  |  |
 | Luis Javier Periáñez Franco | :blush: | :blush:  | :blush:  | :blush:  |:angry:   |  |  |  |  |  |  |  |  |  |
 | Alexander Picón Garrote |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
