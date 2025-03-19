@@ -2,6 +2,7 @@ from django.db import models
 
 from django.core.validators import MinValueValidator
 from django.core.validators import MaxValueValidator, DecimalValidator
+from django.core.exceptions import ValidationError
 
 
 class ItemCategory(models.TextChoices):
@@ -54,6 +55,22 @@ class Item(models.Model):
     user = models.ForeignKey('usuarios.User', related_name='items',
                              on_delete=models.CASCADE)
     draft_mode = models.BooleanField(default=False)
+
+    def publish(self):
+        if (
+            self.user.pricing_plan == "free"
+            and (
+                Item.objects.filter(user=self.user, draft_mode=False)
+                .count()
+                >= 10
+            )
+        ):
+            raise ValidationError(
+                "No puedes tener más de 10 ítems publicados con el plan Free."
+            )
+
+        self.draft_mode = False
+        self.save()
 
 
 class ItemImage(models.Model):

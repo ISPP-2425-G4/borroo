@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import ItemCategory, CancelType, PriceCategory
 from rest_framework.decorators import action
+from django.core.exceptions import ValidationError
 
 
 class EnumChoicesView(APIView):
@@ -144,3 +145,26 @@ class ItemRequestApprovalViewSet(viewsets.ViewSet):
         item_serializer = ItemSerializer(item)
 
         return Response(item_serializer.data, status=status.HTTP_201_CREATED)
+
+
+class PublishItemView(APIView):
+    def post(self, request, *args, **kwargs):
+        item_id = request.data.get('item_id')
+        try:
+            item = Item.objects.get(id=item_id, user=request.user)
+            item.publish()
+            return Response(
+                {"message": "Ítem publicado con éxito"},
+                status=status.HTTP_200_OK,
+            )
+
+        except Item.DoesNotExist:
+            return Response(
+                {"error": "Ítem no encontrado"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        except ValidationError as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
