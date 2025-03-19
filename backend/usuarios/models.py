@@ -8,8 +8,8 @@ text_validator = RegexValidator(
 
 
 class PricingPlan(models.TextChoices):
-    FREE = 'free', 'Free'
-    PREMIUM = 'premium', 'Premium'
+    FREE = ('free', 'Gratis')
+    PREMIUM = ('premium', 'Premium')
 
 
 class User(models.Model):
