@@ -12,10 +12,10 @@ from rest_framework.decorators import api_view, permission_classes
 import uuid
 from django.utils.timezone import now
 from django.core.mail import send_mail
-from django.urls import reverse
 from rest_framework.views import APIView
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
+import os
 
 
 def index(request):
@@ -143,10 +143,9 @@ class PasswordResetRequestView(APIView):
         user.reset_token_expiration = now()
         user.save()
 
-        # Generamos el enlace de recuperación
-        reset_link = request.build_absolute_uri(
-            reverse("app:password_reset_confirm",
-                    kwargs={"token": user.reset_token}))
+        frontend_base_url = os.getenv("RECOVER_PASSWORD")
+        frontend_url = f"{frontend_base_url}recoverPasswordNew"
+        reset_link = f"{frontend_url}?token={user.reset_token}"
 
         send_mail(
             "Recuperación de contraseña",

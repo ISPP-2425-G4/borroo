@@ -7,8 +7,8 @@ import axios from 'axios';
 import "../public/styles/Login.css";
 import { Box } from "@mui/material";
 
-const RecuperarContraseña = () => {
-    const [password, setPassword] = useState("");
+const RecuperarContraseñaConfirm = () => {
+    const [email, setEmail] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -20,8 +20,8 @@ const RecuperarContraseña = () => {
   
       try {
         const response = await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/usuarios/login/`,
-          {password },
+          `${import.meta.env.VITE_API_BASE_URL}/usuarios/password_reset/`,
+          {email },
           {
             headers: { "Content-Type": "application/json" },
             withCredentials: true, // Equivalente a `credentials: "include"` en fetch
@@ -29,7 +29,7 @@ const RecuperarContraseña = () => {
         );
   
         if (response.status === 200) {
-          navigate("/");
+          navigate("/recoverPasswordDone");
         } else {
           const data = response.data;
           throw new Error(data.error || "Error al iniciar sesión");
@@ -52,21 +52,21 @@ const RecuperarContraseña = () => {
       <Navbar />
       <div className="recover-container">
       <div className="login-box">
-        <h2>Ingrese su nueva contraseña</h2>
+        <h2>Recupera tu contraseña</h2>
         {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <FiLock className="input-icon" />
             <input
-              type="password"
-              placeholder="Contraseña"
+              type="email"
+              placeholder="Correo electronico"
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <button type="submit" className="login-btn" disabled={loading}>
-            {loading ? "Procesando..." : "Restablecer contraseña"}
+            {loading ? "Procesando..." : "Ingresar"}
           </button>
         </form>
         <p className="register-link">
@@ -78,4 +78,4 @@ const RecuperarContraseña = () => {
   );
 };
 
-export default RecuperarContraseña;
+export default RecuperarContraseñaConfirm;

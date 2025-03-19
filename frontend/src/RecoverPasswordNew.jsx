@@ -7,11 +7,16 @@ import axios from 'axios';
 import "../public/styles/Login.css";
 import { Box } from "@mui/material";
 
-const RecuperarContraseñaConfirm = () => {
-    const [email, setEmail] = useState("");
+import { useSearchParams } from "react-router-dom";
+
+const RecuperarContraseña = () => {
+    const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    
+    const [searchParams] = useSearchParams();
+    const token = searchParams.get("token");
   
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -20,11 +25,11 @@ const RecuperarContraseñaConfirm = () => {
   
       try {
         const response = await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/usuarios/login/`,
-          {email },
+          `${import.meta.env.VITE_API_BASE_URL}/usuarios/password_reset_confirm/${token}/`, // Agregar el token a la URL
+          { password },
           {
             headers: { "Content-Type": "application/json" },
-            withCredentials: true, // Equivalente a `credentials: "include"` en fetch
+            withCredentials: true, // Para enviar cookies si es necesario
           }
         );
   
@@ -35,38 +40,46 @@ const RecuperarContraseñaConfirm = () => {
           throw new Error(data.error || "Error al iniciar sesión");
         }
       } catch (error) {
-        // Manejar el error 404 (usuario no encontrado o credenciales incorrectas)
-        if (error.response && error.response.status === 404) {
-          setError("El correo no está registrado.");
+        if (error.response) {
+          const { status, data } = error.response;
+      
+          if (status === 404) {
+            setError("El correo no está registrado.");
+          } else if (status === 400) {
+            setError(data?.error || "Solicitud incorrecta");
+          } else {
+            setError(data?.message || "Error al conectar con el servidor");
+          }
         } else {
-          // Manejar otros errores
-          setError(error.message || "Error al conectar con el servidor");
+          setError("Error al conectar con el servidor");
         }
+        console.error(error);
       } finally {
         setLoading(false);
       }
-    };
+
+    }
   
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Navbar />
       <div className="recover-container">
       <div className="login-box">
-        <h2>Recupera tu contraseña</h2>
+        <h2>Ingrese su nueva contraseña</h2>
         {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <FiLock className="input-icon" />
             <input
-              type="email"
-              placeholder="Correo electronico"
+              type="password"
+              placeholder="Contraseña"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <button type="submit" className="login-btn" disabled={loading}>
-            {loading ? "Procesando..." : "Ingresar"}
+            {loading ? "Procesando..." : "Restablecer contraseña"}
           </button>
         </form>
         <p className="register-link">
@@ -78,4 +91,4 @@ const RecuperarContraseñaConfirm = () => {
   );
 };
 
-export default RecuperarContraseñaConfirm;
+export default RecuperarContraseña;
