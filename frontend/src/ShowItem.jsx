@@ -9,6 +9,7 @@ import Navbar from "./Navbar";
 import Modal from "./Modal";
 import axios from 'axios';
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
+import dayjs from "dayjs";
 
 
 
@@ -168,19 +169,19 @@ const ShowItemScreen = () => {
         return;
       }
 
-      const startDateUTC = new Date(dateRange[0].startDate).toISOString();
-      const endDateUTC = new Date(dateRange[0].endDate).toISOString();
+      const startDateLocal = dayjs(dateRange[0].startDate).format('YYYY-MM-DD HH:mm:ss');
+      const endDateLocal = dayjs(dateRange[0].endDate).format('YYYY-MM-DD HH:mm:ss');
 
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/rentas/full/first_request/`,
         {
           item: id,
-          start_date: startDateUTC,
-          end_date: endDateUTC,
+          start_date: startDateLocal,
+          end_date: endDateLocal,
           renter: user.id,
         },
         {
-          headers: {
+          headers: {  
             "Content-Type": "application/json",
           },
         }
