@@ -95,8 +95,11 @@ const Navbar = () => {
       {/* Enlaces de navegación (visible en pantallas medianas y mayores) */}
       <Box
         sx={{
-          display: { xs: "none", md: "flex" },
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           gap: 2,
+          ml:14
         }}
       >
         <Typography
@@ -129,19 +132,36 @@ const Navbar = () => {
             "&:hover": { color: "#fbbf24" },
           }}
         >
-          Solicitudes
+         Solicitudes
+        <Typography
+          component={Link}
+          to="/pricing-plan"
+          sx={{
+            textDecoration: "none",
+            color: "white",
+            "&:hover": { color: "#fbbf24" },
+          }}
+        >
+          Plan de suscripción
         </Typography>
       </Box>
 
       {/* Iconos de acciones */}
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-      {user ? (
-          <div className="user-info">
-            <strong>Hola, {user.name}</strong>
-          </div>
-        ) : (
-          <strong></strong>
+          {user ? (
+      <div className="user-info" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <strong>Hola, {user.name}</strong>
+        {user.pricing_plan === 'premium' && (
+          <img 
+            src="../public/premium.png" 
+            alt="Premium" 
+            style={{ width: '24px', height: '24px' }} 
+          />
         )}
+      </div>
+    ) : (
+      <strong></strong>
+)}
         {/* Icono de usuario con menú */}
         <IconButton onClick={handleLoginClick} sx={{ color: "white" }}>
           <FiUser size={24} />
@@ -230,6 +250,17 @@ const Navbar = () => {
           >
             Poner en alquiler
           </Typography>
+          <Typography
+          component={Link}
+          to="/pricing-plan"
+          sx={{
+            textDecoration: "none",
+            color: "white",
+            "&:hover": { color: "#fbbf24" },
+          }}
+        >
+          Plan de suscripción
+        </Typography>
         </Box>
       )}
     </Box>

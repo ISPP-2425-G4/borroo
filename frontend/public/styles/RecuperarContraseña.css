@@ -1,0 +1,24 @@
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 80px);
+    background-color: #f3f4f6;
+    padding-top: 400px; 
+    width: 100vw;
+    padding-bottom: 30px;
+}
+
+
+
+.recover-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start; /* Alinea desde arriba para poder usar margin-top */
+    min-height: 100vh; /* Usa altura completa de la ventana */
+    background-color: #f3f4f6;
+    padding: 0 20px; /* Añade padding horizontal pero no vertical */
+    width: 100%; /* Usa 100% en lugar de 100vw para evitar scroll horizontal */
+    box-sizing: border-box; /* Asegura que el padding esté incluido en el width */
+}

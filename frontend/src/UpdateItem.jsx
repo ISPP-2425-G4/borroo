@@ -11,6 +11,8 @@ import {
 import "../public/styles/CreateItem.css";
 import Navbar from "./Navbar";
 import axios from 'axios';
+import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
+
 
 const UpdateItemScreen = () => {
   const { id } = useParams();
@@ -21,6 +23,8 @@ const UpdateItemScreen = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
+  const [, setIsFormValid] = useState(false);
+  const [loading] = useState(false);
 
   const [images, setImages] = useState([]); // Imágenes nuevas
   const [existingImages, setExistingImages] = useState([]); // Imágenes actuales (IDs y URLs)
@@ -83,6 +87,20 @@ const UpdateItemScreen = () => {
     if (id) fetchData();
   }, [id, navigate]);
 
+  const validateForm = () => {
+    const { title, description, category, cancel_type, price_category, price } = formData;
+    const isValid =
+      title.trim() !== "" &&
+      description.trim() !== "" &&
+      category.trim() !== "" &&
+      cancel_type.trim() !== "" &&
+      price_category.trim() !== "" &&
+      price.trim() !== "" &&
+      !isNaN(price) &&
+      parseFloat(price) > 0;
+    
+    setIsFormValid(isValid);
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -94,13 +112,14 @@ const UpdateItemScreen = () => {
       }
     }
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    validateForm(); // Llama a la validación cada vez que cambia un campo
   };
 
   // Manejar imágenes nuevas seleccionadas
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setImages(files); // Solo permitimos nuevas imágenes, no acumulamos
-    e.target.value = "";
+    validateForm(); // Validar después de añadir imágenes
   };
 
   // Eliminar una imagen seleccionada
@@ -211,6 +230,7 @@ const UpdateItemScreen = () => {
       </div>
     );
   }
+  const isSubmitDisabled = loading || !formData.title || !formData.description || !formData.category || !formData.cancel_type || !formData.price_category || !formData.price;
 
   return (
     <div className="rental-container">
@@ -218,52 +238,109 @@ const UpdateItemScreen = () => {
       <div className="rental-box">
         <h2>Editar Publicación</h2>
         {errorMessage && <div className="error-message">{errorMessage}</div>}
-
+  
         <form onSubmit={handleSubmit}>
           {/* Título */}
           {fieldErrors.title && <div className="error-message">{fieldErrors.title}</div>}
           <div className="input-group">
             <FiFileText className="input-icon" />
-            <input type="text" name="title" value={formData.title} onChange={handleChange} required />
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              required
+            />
           </div>
-
+  
           {/* Descripción */}
           {fieldErrors.description && <div className="error-message">{fieldErrors.description}</div>}
           <div className="input-group">
             <FiEdit className="input-icon" />
-            <textarea name="description" value={formData.description} onChange={handleChange} required />
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              required
+            />
           </div>
-
+  
           {/* Categorías y opciones */}
           {options && (
             <>
-              {[
-                { name: "category", options: options.categories, icon: FiLayers },
-                { name: "cancel_type", options: options.cancel_types, icon: FiXCircle },
-                { name: "price_category", options: options.price_categories, icon: FiLayers },
-              ].map(({ name, options, icon: Icon }) => (
-                <div className="input-group" key={name}>
-                  <Icon className="input-icon" />
-                  <select name={name} value={formData[name] || ""} onChange={handleChange} required>
-                    <option value="" disabled>{`Selecciona ${name.replace("_", " ")}`}</option>
-                    {options.map(({ value, label }) => (
-                      <option key={value} value={value}>
-                        {label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              ))}
+              {/* Categoría */}
+              <div className="input-group">
+                <FiLayers className="input-icon" />
+                <select
+                  name="category"
+                  value={formData.category || ""}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="" disabled>Selecciona una categoría</option>
+                  {options.categories.map(({ value, label }) => (
+                    <option key={value} value={value}>{label}</option>
+                  ))}
+                </select>
+                <span className="select-arrow">▼</span>
+              </div>
+  
+              {/* Política de Cancelación con Tooltip arriba */}
+            <div className="field-group">
+              <div className="field-label">
+                <CancelPolicyTooltip /> {/* 🔹 Ahora aparece al lado del título, no dentro del input */}
+              </div>
+              <div className="input-group">
+                <FiXCircle className="input-icon" />
+                <select
+                  name="cancel_type"
+                  value={formData.cancel_type || ""}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="" disabled>Selecciona una política de cancelación</option>
+                  {options.cancel_types.map(({ value, label }) => (
+                    <option key={value} value={value}>{label}</option>
+                  ))}
+                </select>
+                <span className="select-arrow">▼</span>
+              </div>
+            </div>
+
+  
+              {/* Categoría de Precio */}
+              <div className="input-group">
+                <FiLayers className="input-icon" />
+                <select
+                  name="price_category"
+                  value={formData.price_category || ""}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="" disabled>Selecciona una categoría de precio</option>
+                  {options.price_categories.map(({ value, label }) => (
+                    <option key={value} value={value}>{label}</option>
+                  ))}
+                </select>
+                <span className="select-arrow">▼</span>
+              </div>
             </>
           )}
-
+  
           {/* Precio */}
           {fieldErrors.price && <div className="error-message">{fieldErrors.price}</div>}
           <div className="input-group">
             <FiDollarSign className="input-icon" />
-            <input type="number" step="0.01" name="price" value={formData.price} onChange={handleChange} required />
+            <input
+              type="number"
+              step="0.01"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              required
+            />
           </div>
-
+  
           {/* Imágenes actuales */}
           {existingImages.length > 0 && (
             <div className="image-gallery">
@@ -278,7 +355,7 @@ const UpdateItemScreen = () => {
               ))}
             </div>
           )}
-
+  
           {/* Imágenes nuevas seleccionadas */}
           {images.length > 0 && (
             <div className="image-gallery">
@@ -293,13 +370,20 @@ const UpdateItemScreen = () => {
               ))}
             </div>
           )}
-
+  
           <input type="file" multiple accept="image/*" onChange={handleImageChange} />
-          <button type="submit" className="rental-btn">Actualizar</button>
+          <button 
+            type="submit" 
+            className={`primary-btn ${isSubmitDisabled ? "disabled-btn" : ""}`} 
+            disabled={isSubmitDisabled}
+          >
+            {loading ? "Actualizando..." : "Actualizar"}
+          </button>
         </form>
       </div>
     </div>
   );
+  
 };
 
 export default UpdateItemScreen;

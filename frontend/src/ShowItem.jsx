@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FiArrowLeft, FiTrash2, FiEdit, FiFileText, FiLayers, FiXCircle, FiDollarSign } from "react-icons/fi";
+import { FiTrash2, FiEdit, FiFileText, FiLayers, FiXCircle, FiDollarSign } from "react-icons/fi";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -8,6 +8,9 @@ import "../public/styles/ItemDetails.css";
 import Navbar from "./Navbar";
 import Modal from "./Modal";
 import axios from 'axios';
+import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
+
+
 
 const ShowItemScreen = () => {
   const { id } = useParams();
@@ -27,6 +30,7 @@ const ShowItemScreen = () => {
   const [requestedDates, setRequestedDates] = useState([]); // Solicitudes (amarillo), de momento en gris
   const [bookedDates, setBookedDates] = useState([]);
   const [isOwner, setIsOwner] = useState(false); // Estado para verificar si el usuario es el propietario
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -44,6 +48,7 @@ const ShowItemScreen = () => {
           if (currentUser && currentUser.id === data.user) {
             setIsOwner(true);
           }
+          setIsAuthenticated(!!currentUser);
         }
 
         if (data.images && data.images.length > 0) {
@@ -199,7 +204,8 @@ const ShowItemScreen = () => {
     <div className="item-details-container">
       <Navbar />
       <div className="content-container">
-      <h2 className="item-title">{item.title}</h2>
+        <h2 className="item-title">{item.title}</h2>
+  
         {/* 🔹 Carrusel de imágenes */}
         {imageURLs.length > 0 && (
           <div className="image-container">
@@ -209,56 +215,67 @@ const ShowItemScreen = () => {
             <p className="image-counter">{currentImageIndex + 1} / {imageURLs.length}</p>
           </div>
         )}
-
+  
         {errorMessage && <div className="error-message">{errorMessage}</div>}
 
+        {/* TODO Añadir detalles del propietario */}
+        <div className={`user-card ${isOwner ? "highlight" : ""}`}>
+          <p><strong>Publicado por:</strong> {userName}</p>
+          {isOwner && <span className="owner-badge">
+            <strong>¡Eres el propietario de este producto!</strong></span>}
+        </div>
+
+  
         <div className="item-details">
           <p><FiFileText /> <strong>Descripción:</strong> {item.description}</p>
           <p><FiLayers /> <strong>Categoría:</strong> {item.category_display}</p>
-          <p><FiXCircle /> <strong>Política de cancelación:</strong> {item.cancel_type_display}</p>
+  
+          {/* 🔹 Política de cancelación con tooltip */}
+          <div className="cancel-policy-wrapper">
+          <div className="policy-label">
+            <FiXCircle />
+            <strong>Política de cancelación:</strong>
+          </div>
+          <p className="policy-value">{item.cancel_type_display}</p>
+          <CancelPolicyTooltip />
+          </div>
+  
           <p><FiDollarSign /> <strong>Precio:</strong> {item.price} € / {item.price_category_display}</p>
-          <p><strong>Publicado por:</strong> {userName}</p>
         </div>
-
+  
         {/* 🔹 Calendario */}
         <div className="calendar-container">
-          <h3>Selecciona un rango de fechas para el alquiler</h3>
+          {!isOwner ? <h3>Selecciona un rango de fechas para el alquiler</h3>
+            : <h3>Calendario de disponibilidad</h3>}
           <DateRange
-            ranges={dateRange}
-            onChange={(ranges) => setDateRange([ranges.selection])}
+            ranges={ isOwner || !isAuthenticated ? [] : dateRange}
+            onChange={(ranges) => { if (!isOwner || isAuthenticated) { setDateRange([ranges.selection]); } }}
             minDate={new Date()}
             disabledDates={[...requestedDates, ...bookedDates]}
           />
-            {/* TODO: Añadir colores a las fechas ocupadas
-            }
-            dayContentRenderer={(date) => {
-              const dateString = date.toISOString().split("T")[0];
-              
-              const isRequested = requestedDates.some(
-                (d) => d.toISOString().split("T")[0] === dateString
-              );
-              const isBooked = bookedDates.some(
-                (d) => d.toISOString().split("T")[0] === dateString
-              );
-            }}
-            */}
-
-
         </div>
-
+  
         {/* 🔹 Botón de solicitar alquiler */}
-        {!isOwner && (
-          <button className="rental-btn" onClick={() => setShowRentalModal(true)}>Solicitar alquiler</button>
-        )}
+        <div className="rental-action">
+          {!isOwner && !isAuthenticated ? (
+            <p>
+              Para solicitar un alquiler, debes estar registrado.{" "}
+              <a href="/login">Inicia sesión</a> o <a href="/signup">regístrate</a>.
+            </p>
+          ) : (
+            !isOwner && isAuthenticated && (
+              <button className="rental-btn" onClick={() => setShowRentalModal(true)}>Solicitar alquiler</button>
+            )
+          )}
+        </div>
 
         {/* 🔹 Botones de acción */}
         {isOwner && (
           <div className="button-group">
             <button className="btn edit-btn" onClick={() => navigate(`/update-item/${id}`)}><FiEdit /> Editar</button>
-            <button className="rental-btn delete-btn" onClick={() => handleDelete(id)}><FiTrash2 /> Eliminar</button>
+            <button className="btn delete-btn" onClick={() => handleDelete(id)}><FiTrash2 /> Eliminar</button>
           </div>
         )}
-        <button className="btn" onClick={() => navigate("/")}><FiArrowLeft /> Volver al inicio</button>
 
         {showRentalModal && (
           <Modal
@@ -271,6 +288,7 @@ const ShowItemScreen = () => {
       </div>
     </div>
   );
+  
 };
 
 export default ShowItemScreen;
