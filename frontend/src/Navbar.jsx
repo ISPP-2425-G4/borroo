@@ -124,35 +124,17 @@ const Navbar = () => {
         >
           Poner en alquiler
         </Typography>
-        <Typography
-          component={Link}
-          to="/pricing-plan"
-          sx={{
-            textDecoration: "none",
-            color: "white",
-            "&:hover": { color: "#fbbf24" },
-          }}
-        >
-          Plan de suscripción
-        </Typography>
       </Box>
 
       {/* Iconos de acciones */}
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
       {user ? (
-  <div className="user-info" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-    <strong>Hola, {user.name}</strong>
-    {user.pricing_plan === 'premium' && (
-      <img 
-        src="../public/premium.png" 
-        alt="Premium" 
-        style={{ width: '24px', height: '24px' }} 
-      />
-    )}
-  </div>
-) : (
-  <strong></strong>
-)}
+          <div className="user-info">
+            <strong>Hola, {user.name}</strong>
+          </div>
+        ) : (
+          <strong></strong>
+        )}
         {/* Icono de usuario con menú */}
         <IconButton onClick={handleLoginClick} sx={{ color: "white" }}>
           <FiUser size={24} />
