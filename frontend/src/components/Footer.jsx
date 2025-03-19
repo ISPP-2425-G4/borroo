@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaFacebook, FaTwitter, FaInstagram} from "react-icons/fa";
+import { FaFacebook, FaXTwitter, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa6";
 import "../../public/styles/Footer.css";
 
 const Footer = () => {
@@ -16,6 +16,15 @@ const Footer = () => {
           </ul>
         </div>
 
+        {/* Enlaces legales */}
+        <div className="footer-section">
+          <h3>Enlaces Legales</h3>
+          <ul>
+            <li><a href="/politica-privacidad" target="_blank" rel="noopener noreferrer">Política de Privacidad</a></li>
+            <li><a href="/terminos-servicio" target="_blank" rel="noopener noreferrer">Términos de Servicio</a></li>
+          </ul>
+        </div>
+
         {/* Contacto */}
         <div className="footer-section">
           <h3>Contacto</h3>
@@ -27,8 +36,10 @@ const Footer = () => {
           <h3>Redes Sociales</h3>
           <div className="social-links">
             <a href="https://facebook.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
-            <a href="https://twitter.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
+            <a href="https://x.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaXTwitter /></a>
             <a href="https://instagram.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
+            <a href="https://linkedin.com/company/BorrooApp" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
+            <a href="https://youtube.com/c/BorrooApp" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
           </div>
         </div>
         
