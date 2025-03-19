@@ -101,6 +101,9 @@ const Login = () => {
         <p className="register-link">
           ¿No tienes cuenta? <Link to="/signup">Regístrate</Link>
         </p>
+        <p className="register-link">
+         <Link to="/recoverPassword"> No recuerdo mi contraseña</Link>
+        </p>
       </div>
     </div>
     </Box>

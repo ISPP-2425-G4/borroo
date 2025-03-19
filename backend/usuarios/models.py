@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import EmailValidator, RegexValidator
+from django.utils.timezone import now
 
 text_validator = RegexValidator(
     regex=r'^[A-Za-zÁÉÍÓÚáéíóúÑñ].*',
@@ -72,6 +73,15 @@ class User(models.Model):
     owner_rating = models.FloatField(default=0.0)
     # Atributo derivado que se necesita la entidad de reviews
     renter_rating = models.FloatField(default=0.0)
+    reset_token = models.CharField(max_length=255, blank=True, null=True)
+    reset_token_expiration = models.DateTimeField(blank=True, null=True)
+
+    def is_reset_token_valid(self):
+        """Verifica si el token sigue siendo
+        válido (por ejemplo, dentro de 10 min)."""
+        if not self.reset_token_expiration:
+            return False
+        return (now() - self.reset_token_expiration).total_seconds() < 600
 
     def __str__(self):
         return self.username

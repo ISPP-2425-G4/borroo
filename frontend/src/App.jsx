@@ -7,6 +7,9 @@ import UpdateItem from "./UpdateItem";
 import ShowItem from "./ShowItem";
 import SearchItemByName from "./SearchItemByName";
 import Footer from './components/Footer';
+import RecoverPassword from "./RecoverPassword";
+import RecoverPasswordDone from "./RecoverPasswordDone";
+import RecoverPasswordNew from "./RecoverPasswordNew";
 
 function App() {
   return (
@@ -21,6 +24,10 @@ function App() {
         <Route path="/show-item/:id" element={<ShowItem />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/objetos/search_item" element={<SearchItemByName />} />
+        <Route path="/recoverPassword" element={<RecoverPassword />} />
+        <Route path="/recoverPasswordDone" element={<RecoverPasswordDone />} />
+        <Route path="/recoverPasswordNew" element={<RecoverPasswordNew />} />
+
       </Routes>
       <Footer/>
     </Router>
