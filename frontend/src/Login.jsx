@@ -7,7 +7,6 @@ import Navbar from "./Navbar";
 import { Box, Container, Paper, Typography, TextField, Button, InputAdornment, IconButton, CircularProgress, Alert } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-// Styled components
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
   display: 'flex',
