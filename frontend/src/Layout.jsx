@@ -102,7 +102,7 @@ const Layout = () => {
           setError("No hay productos disponibles.");
         }
       } catch (error) {
-        setError("Error al cargar los productos. Por favor, inténtelo de nuevo más tarde.");
+        setError("Error al cargar los productos. Por favor, inténtelo de nuevo más tarde.", error);
       } finally {
         setCargando(false);
       }
