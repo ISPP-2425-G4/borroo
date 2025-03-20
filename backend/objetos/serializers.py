@@ -32,7 +32,7 @@ class ItemSerializer(serializers.ModelSerializer):
             'id', 'title', 'description', 'category', 'category_display',
             'cancel_type', 'cancel_type_display', 'price_category',
             'price_category_display', 'price', 'images', 'image_files',
-            'remaining_image_ids', 'user', 'draft_mode'
+            'remaining_image_ids', 'user', 'draft_mode', 'is_featured'
         ]
 
     def validate(self, data):
@@ -41,6 +41,7 @@ class ItemSerializer(serializers.ModelSerializer):
         """
         user = data.get('user')
         draft_mode = data.get('draft_mode', False)
+        is_featured = data.get('is_featured', False)
 
         # Restricción: No más de 10 ítems con draft_mode False
         item_count = Item.objects.filter(user=user, draft_mode=False).count()
@@ -54,6 +55,21 @@ class ItemSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "No puedes tener más de 15 ítems en total."
             )
+
+        # Validación de destacados.
+        # Restriccion: Solo premium y máximo 2 objetos destacados
+        if is_featured:
+            if user.pricing_plan != 'premium':
+                raise serializers.ValidationError(
+                    "Solo los usuarios premium pueden destacar ítems."
+                )
+            featured_count = Item.objects.filter(
+                user=user, is_featured=True
+            ).count()
+            if featured_count >= 2:
+                raise serializers.ValidationError(
+                    "Solo puedes destacar hasta 2 ítems."
+                )
 
         return data
 
