@@ -11,11 +11,10 @@ from objetos.models import Item, ItemImage
 from rentas.models import Rent
 from decimal import Decimal
 from django.contrib.auth.hashers import make_password
-from datetime import datetime
 
 def clear_database():
     confirmation = input("¿Estás seguro de que deseas borrar todos los datos de la base de datos? (y/n): ")
-    if confirmation.lower() == 'y' or confirmation.lower() == 'yes':
+    if confirmation.lower() in ('y', 'yes'):
         Rent.objects.all().delete()
         ItemImage.objects.all().delete()
         Item.objects.all().delete()
@@ -40,7 +39,7 @@ def create_users():
             address=f'Calle {usernames.index(username)}',
             postal_code='28001',
             is_verified=bool(random.getrandbits(1)),
-            pricing_plan=random.choice(['free', 'basic', 'premium'])
+            pricing_plan=random.choice(['free', 'premium'])
         )
     print('Users created successfully!')
 
@@ -54,11 +53,11 @@ def create_items():
                                     'clothing', 'furniture_and_logistics',
                                     'training']),
             cancel_type=random.choice(['flexible', 'medium', 'strict']),
-            price_category=random.choice(['hour', 'day', 'week', 'month',
-                                          'year']),
+            price_category=random.choice(['hour', 'day', 'week', 'month', 'year']),
             price=Decimal(random.uniform(2, 30)),
             user=random.choice(users),
             draft_mode=False,
+            is_featured=False
         )
     print('Items created successfully!')
 
