@@ -1,11 +1,77 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiLock, FiMail, FiInfo, FiPhone, FiMapPin, FiHome, FiFlag, FiCheckCircle } from "react-icons/fi";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import "../public/styles/Login.css";
 import axios from 'axios';
 import Navbar from "./Navbar";
-import { Box, TextField, Autocomplete } from "@mui/material";
+import { 
+  Box, 
+  Container, 
+  Paper, 
+  Typography, 
+  TextField, 
+  Button, 
+  InputAdornment, 
+  IconButton, 
+  CircularProgress, 
+  Alert, 
+  MenuItem, 
+  Autocomplete,
+  styled
+} from "@mui/material";
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(4),
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  maxWidth: 550,
+  margin: '0 auto',
+  marginTop: theme.spacing(4),
+  marginBottom: theme.spacing(4),
+  borderRadius: 8,
+  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
+}));
+
+const FormContainer = styled('form')(({ theme }) => ({
+  width: '100%',
+  marginTop: theme.spacing(2)
+}));
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+  '& .MuiOutlinedInput-root': {
+    '&:hover fieldset': {
+      borderColor: theme.palette.primary.main,
+    },
+  }
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  margin: theme.spacing(2, 0),
+  padding: theme.spacing(1.2),
+  borderRadius: 4
+}));
+
+const LinkText = styled(Typography)(({ theme }) => ({
+  marginTop: theme.spacing(1.5),
+  textAlign: 'center',
+  '& a': {
+    color: theme.palette.primary.main,
+    textDecoration: 'none',
+    fontWeight: 500,
+    '&:hover': {
+      textDecoration: 'underline',
+    }
+  }
+}));
+
+const FieldError = styled(Typography)(({ theme }) => ({
+  color: theme.palette.error.main,
+  fontSize: '0.75rem',
+  marginTop: theme.spacing(-1),
+  marginBottom: theme.spacing(1)
+}));
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +86,7 @@ const Signup = () => {
     city: "",
     address: "",
     postal_code: "",
-    pricing_plan: "free" // Valor por defecto
+    pricing_plan: "free" 
   });
   
   const [error, setError] = useState("");
@@ -32,7 +98,6 @@ const Signup = () => {
   const [countries, setCountries] = useState([]);
   const navigate = useNavigate();
   
-
   useEffect(() => {
     const requiredFields = ["username", "name", "surname", "email", "phone_number", "country", "city", "address", "postal_code", "password", "password2"];
     const isValid = requiredFields.every(field => formData[field] && formData[field].trim() !== "");
@@ -65,21 +130,18 @@ const Signup = () => {
   };
 
   const handleCountryChange = (event, value) => {
-    // Si value es un objeto (selección de la lista)
     if (value && typeof value === 'object') {
       setFormData(prevData => ({
         ...prevData,
         country: value.label
       }));
     } 
-    // Si value es un string (entrada manual)
     else if (typeof value === 'string') {
       setFormData(prevData => ({
         ...prevData,
         country: value
       }));
     }
-    // Si value es null (borrado)
     else {
       setFormData(prevData => ({
         ...prevData,
@@ -90,24 +152,20 @@ const Signup = () => {
 
   const handleCountryKeyDown = (event) => {
     if (event.key === 'Enter') {
-      event.preventDefault(); // Prevenir el envío del formulario
+      event.preventDefault(); 
       
-      // Obtener el texto actual del campo
       const inputValue = event.target.value.toLowerCase();
       
-      // Filtrar países que coincidan con lo que está escribiendo
       const filteredCountries = countries.filter(country => 
         country.label.toLowerCase().includes(inputValue)
       );
       
-      // Si hay resultados filtrados, seleccionar el primero
       if (filteredCountries.length > 0) {
         setFormData(prevData => ({
           ...prevData,
           country: filteredCountries[0].label
         }));
       } else {
-        // Si no hay coincidencias, mantener el texto ingresado
         setFormData(prevData => ({
           ...prevData,
           country: event.target.value
@@ -124,22 +182,18 @@ const Signup = () => {
     setError("");
     setFormErrors({});
   
-    // Validar que las contraseñas coincidan
     if (formData.password !== formData.password2) {
       setError("Las contraseñas no coinciden");
       setLoading(false);
       return;
     }
   
-    // Validaciones manuales
     const errors = {};
   
-    // Validar que el teléfono siga el formato indicado en el models.py
     if (!/^\+?[0-9]{7,15}$/.test(formData.phone_number)) {
       errors.phone_number = "Introduce un número de teléfono válido.";
     }
   
-    // Validar que nombres, apellidos, país, ciudad y dirección comiencen con una letra
     const textFields = ["name", "surname", "country", "city", "address"];
     textFields.forEach(field => {
       if (formData[field] && !/^[A-Za-zÁÉÍÓÚáéíóúÑñ]/.test(formData[field])) {
@@ -147,11 +201,9 @@ const Signup = () => {
       }
     });
 
-    // Validar la contraseña
     if (!/(?=.*[A-Z])/.test(formData.password)) {
       errors.password = "La contraseña debe contener al menos una letra mayúscula.";
     }
-    // eslint-disable-next-line no-useless-escape
     if (!/(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>/?])/.test(formData.password)) {
       errors.password = "La contraseña debe contener al menos un carácter especial.";
     }
@@ -162,7 +214,6 @@ const Signup = () => {
       errors.password = "La contraseña debe tener al menos 8 caracteres.";
     }
   
-    // Validar que todos los campos obligatorios estén completos
     const requiredFields = ["username", "name", "surname", "email", "phone_number", "country", "city", "address", "postal_code", "password", "password2"];
     requiredFields.forEach(field => {
       if (!formData[field]) {
@@ -170,7 +221,6 @@ const Signup = () => {
       }
     });
 
-    // Verificar si el nombre de usuario ya existe
     try {
       const usernameCheckResponse = await axios.get(
         `${import.meta.env.VITE_API_BASE_URL}/usuarios/check_username/`,
@@ -187,7 +237,6 @@ const Signup = () => {
       return;
     }
 
-    // Verificar si el correo electrónico ya existe
     try {
       const emailCheckResponse = await axios.get(
         `${import.meta.env.VITE_API_BASE_URL}/usuarios/check_email/`,
@@ -204,7 +253,6 @@ const Signup = () => {
       return;
     }
   
-    // Si hay errores, detener el envío del formulario
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
       setLoading(false);
@@ -212,51 +260,41 @@ const Signup = () => {
     }
   
     try {
-      // Crear un objeto FormData para el envío
       const submitFormData = new FormData();
   
-      // Añadir todos los campos del formulario
       Object.keys(formData).forEach(key => {
-        if (key !== 'password2') { // No enviamos password2 al backend
+        if (key !== 'password2') { 
           submitFormData.append(key, formData[key]);
         }
       });
   
-      // Añadir campos adicionales requeridos por el backend
-      submitFormData.append("password1", formData.password); // Por compatibilidad
+      submitFormData.append("password1", formData.password); 
   
-      // Log para verificar los datos que se están enviando
       console.log("Datos enviados:", Object.fromEntries(submitFormData.entries()));
   
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/`,
         submitFormData,
         {
-          withCredentials: true, // Equivalente a 'credentials: "include"'
+          withCredentials: true,
         }
       );
   
-      // Log para verificar la respuesta del servidor
       console.log("Respuesta del servidor:", response);
   
       if (response.status === 201) {
-        // Registro exitoso y obtenemos los tokens
         const data = response.data;
   
-        // Guardar los tokens JWT en localStorage
         localStorage.setItem('access_token', data.access);
         localStorage.setItem('refresh_token', data.refresh);
         localStorage.setItem("user", JSON.stringify(data.user));
         navigate("/");
       } else {
-        // Manejar errores de formulario desde el backend
         const data = response.data;
   
         if (typeof data === 'object' && !Array.isArray(data)) {
-          // Si la respuesta contiene errores de formulario
           setFormErrors(data);
         } else {
-          // Error general
           throw new Error("Error al registrar usuario");
         }
       }
@@ -265,14 +303,12 @@ const Signup = () => {
       if (error.response) {
         const data = error.response.data;
   
-        // Si el error proviene del campo postal_code
         if (data.postal_code) {
           setError("Código postal incorrecto. Verifique e intente de nuevo.");
         } else {
           setError(error.message || "Error al conectar con el servidor");
         }
   
-        // Guardar errores específicos en el estado para mostrarlos debajo del campo correspondiente
         setFormErrors(data);
       } else {
         setError("Error al conectar con el servidor");
@@ -283,245 +319,317 @@ const Signup = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Navbar />
-      <div className="login-container">
-        <div className="login-spacer"> </div>
-        <div className="login-box signup-box">
-          <h2>Registrarse</h2>
-          {error && <div className="error-message">{error}</div>}
-          <form onSubmit={handleSubmit}>
-            {/* Nombre de usuario */}
-            {formErrors.username && <div className="field-error">{formErrors.username}</div>}
-            <div className="input-group">
-              <FiUser className="input-icon" />
-              <input
-                type="text"
-                name="username"
-                placeholder="Nombre de usuario"
-                required
-                value={formData.username}
-                onChange={handleChange}
-              />
-            </div>
-  
-            {/* Nombre */}
-            {formErrors.name && <div className="field-error">{formErrors.name}</div>}
-            <div className="input-group">
-              <FiInfo className="input-icon" />
-              <input
-                type="text"
-                name="name"
-                placeholder="Nombre"
-                required
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </div>
-  
-            {/* Apellido */}
-            {formErrors.surname && <div className="field-error">{formErrors.surname}</div>}
-            <div className="input-group">
-              <FiInfo className="input-icon" />
-              <input
-                type="text"
-                name="surname"
-                placeholder="Apellido"
-                required
-                value={formData.surname}
-                onChange={handleChange}
-              />
-            </div>
-  
-            {/* Correo electrónico */}
-            {formErrors.email && <div className="field-error">{formErrors.email}</div>}
-            <div className="input-group">
-              <FiMail className="input-icon" />
-              <input
-                type="email"
-                name="email"
-                placeholder="Correo electrónico"
-                required
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-  
-            {/* Número de teléfono */}
-            {formErrors.phone_number && <div className="field-error">{formErrors.phone_number}</div>}
-            <div className="input-group">
-              <FiPhone className="input-icon" />
-              <input
-                type="tel"
-                name="phone_number"
-                placeholder="Número de teléfono"
-                required
-                value={formData.phone_number}
-                onChange={handleChange}
-              />
-            </div>
-  
-            {/* País */}
-            {formErrors.country && <div className="field-error">{formErrors.country}</div>}
-            <div className="input-group">
-              <FiFlag className="input-icon" />
-              <Autocomplete
-                options={countries}
-                getOptionLabel={(option) => {
-                  // Maneja los casos donde option puede ser string u objeto
-                  if (typeof option === 'string') return option;
-                  return option?.label || '';
-                }}
-                onChange={handleCountryChange}
-                onKeyDown={handleCountryKeyDown}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    name="country"
-                    placeholder="País"
-                    variant="outlined"
-                    fullWidth
-                    error={!!formErrors.country}
-                    required
-                  />
-                )}
-                freeSolo
-                autoSelect
-                filterOptions={(options, state) => {
-                  // Esto mantiene visible la lista filtrada de opciones
-                  return options.filter(option => 
-                    option.label.toLowerCase().includes(state.inputValue.toLowerCase())
-                  );
-                }}
-                value={formData.country ? 
-                  (countries.find(c => c.label === formData.country) || formData.country) : 
-                  null
-                }
-                sx={{
-                  width: '100%',
-                  '& .MuiOutlinedInput-root': {
-                    padding: '0.5rem',
-                  }
-                }}
-              />
-            </div>
-  
-            {/* Ciudad */}
-            {formErrors.city && <div className="field-error">{formErrors.city}</div>}
-            <div className="input-group">
-              <FiMapPin className="input-icon" />
-              <input
-                type="text"
-                name="city"
-                placeholder="Ciudad"
-                required
-                value={formData.city}
-                onChange={handleChange}
-              />
-            </div>
-  
-            {/* Dirección */}
-            {formErrors.address && <div className="field-error">{formErrors.address}</div>}
-            <div className="input-group">
-              <FiHome className="input-icon" />
-              <input
-                type="text"
-                name="address"
-                placeholder="Dirección"
-                required
-                value={formData.address}
-                onChange={handleChange}
-              />
-            </div>
-  
-            {/* Código postal */}
-            {formErrors.postal_code && <div className="field-error">{formErrors.postal_code}</div>}
-            <div className="input-group">
-              <FiMapPin className="input-icon" />
-              <input
-                type="text"
-                name="postal_code"
-                placeholder="Código postal (ej. 12345 o 12345-6789)"
-                required
-                value={formData.postal_code}
-                onChange={handleChange}
-              />
-            </div>
-  
-            {/* Plan de precios */}
-            {formErrors.pricing_plan && <div className="field-error">{formErrors.pricing_plan}</div>}
-            <div className="input-group">
-              <FiCheckCircle className="input-icon" />
-              <select
-                name="pricing_plan"
-                value={formData.pricing_plan}
-                onChange={handleChange}
-                required
-              >
-                <option value="free">Plan Free</option>
-                <option value="basic">Plan Basic</option>
-                <option value="premium">Plan Premium</option>
-              </select>
-            </div>
-  
-            {/* Contraseña */}
-            {formErrors.password && <div className="field-error">{formErrors.password}</div>}
-            <div className="input-group">
-              <FiLock className="input-icon" />
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="Contraseña"
-                required
-                value={formData.password}
-                onChange={handleChange}
-              />
-              <button
-              type="button"
-              className="toggle-password"
-              onClick={() => setShowPassword(!showPassword)}
+      <Container component="main" sx={{mt: 8}}>
+        <StyledPaper elevation={3}>
+          <Typography component="h1" variant="h5" sx={{ fontWeight: 600, mb: 3 }}>
+            Registrarse
+          </Typography>
+          
+          {error && <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>}
+          
+          <FormContainer onSubmit={handleSubmit}>
+            <StyledTextField
+              variant="outlined"
+              fullWidth
+              label="Nombre de usuario"
+              name="username"
+              required
+              value={formData.username}
+              onChange={handleChange}
+              error={!!formErrors.username}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FiUser />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {formErrors.username && <FieldError>{formErrors.username}</FieldError>}
+            
+            <StyledTextField
+              variant="outlined"
+              fullWidth
+              label="Nombre"
+              name="name"
+              required
+              value={formData.name}
+              onChange={handleChange}
+              error={!!formErrors.name}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FiInfo />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {formErrors.name && <FieldError>{formErrors.name}</FieldError>}
+            
+            <StyledTextField
+              variant="outlined"
+              fullWidth
+              label="Apellido"
+              name="surname"
+              required
+              value={formData.surname}
+              onChange={handleChange}
+              error={!!formErrors.surname}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FiInfo />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {formErrors.surname && <FieldError>{formErrors.surname}</FieldError>}
+            
+            <StyledTextField
+              variant="outlined"
+              fullWidth
+              label="Correo electrónico"
+              name="email"
+              type="email"
+              required
+              value={formData.email}
+              onChange={handleChange}
+              error={!!formErrors.email}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FiMail />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {formErrors.email && <FieldError>{formErrors.email}</FieldError>}
+            
+            <StyledTextField
+              variant="outlined"
+              fullWidth
+              label="Número de teléfono"
+              name="phone_number"
+              required
+              value={formData.phone_number}
+              onChange={handleChange}
+              error={!!formErrors.phone_number}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FiPhone />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {formErrors.phone_number && <FieldError>{formErrors.phone_number}</FieldError>}
+            
+            <Autocomplete
+              options={countries}
+              getOptionLabel={(option) => {
+                if (typeof option === 'string') return option;
+                return option?.label || '';
+              }}
+              onChange={handleCountryChange}
+              onKeyDown={handleCountryKeyDown}
+              renderInput={(params) => (
+                <StyledTextField
+                  {...params}
+                  label="País"
+                  name="country"
+                  variant="outlined"
+                  fullWidth
+                  error={!!formErrors.country}
+                  required
+                  InputProps={{
+                    ...params.InputProps,
+                    startAdornment: (
+                      <>
+                        <InputAdornment position="start">
+                          <FiFlag />
+                        </InputAdornment>
+                        {params.InputProps.startAdornment}
+                      </>
+                    ),
+                  }}
+                />
+              )}
+              freeSolo
+              autoSelect
+              filterOptions={(options, state) => {
+                return options.filter(option => 
+                  option.label.toLowerCase().includes(state.inputValue.toLowerCase())
+                );
+              }}
+              value={formData.country ? 
+                (countries.find(c => c.label === formData.country) || formData.country) : 
+                null
+              }
+            />
+            {formErrors.country && <FieldError>{formErrors.country}</FieldError>}
+            
+            <StyledTextField
+              variant="outlined"
+              fullWidth
+              label="Ciudad"
+              name="city"
+              required
+              value={formData.city}
+              onChange={handleChange}
+              error={!!formErrors.city}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FiMapPin />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {formErrors.city && <FieldError>{formErrors.city}</FieldError>}
+            
+            <StyledTextField
+              variant="outlined"
+              fullWidth
+              label="Dirección"
+              name="address"
+              required
+              value={formData.address}
+              onChange={handleChange}
+              error={!!formErrors.address}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FiHome />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {formErrors.address && <FieldError>{formErrors.address}</FieldError>}
+            
+            <StyledTextField
+              variant="outlined"
+              fullWidth
+              label="Código postal (ej. 12345 o 12345-6789)"
+              name="postal_code"
+              required
+              value={formData.postal_code}
+              onChange={handleChange}
+              error={!!formErrors.postal_code}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FiMapPin />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {formErrors.postal_code && <FieldError>{formErrors.postal_code}</FieldError>}
+            
+            <StyledTextField
+              select
+              variant="outlined"
+              fullWidth
+              label="Plan de precios"
+              name="pricing_plan"
+              value={formData.pricing_plan}
+              onChange={handleChange}
+              error={!!formErrors.pricing_plan}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FiCheckCircle />
+                  </InputAdornment>
+                ),
+              }}
             >
-              {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-            </button>
-            </div>
-  
-            {/* Confirmar contraseña */}
-            {formErrors.password2 && <div className="field-error">{formErrors.password2}</div>}
-            <div className="input-group">
-              <FiLock className="input-icon" />
-              <input
-                type={showPassword2 ? "text" : "password"}
-                name="password2"
-                placeholder="Confirmar contraseña"
-                required
-                value={formData.password2}
-                onChange={handleChange}
-              />
-              <button
-              type="button"
-              className="toggle-password"
-              onClick={() => setShowPassword2(!showPassword2)}
-            >
-              {showPassword2 ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-            </button>
-            </div>
-  
-            {/* Botón de envío */}
-            <button
+              <MenuItem value="free">Plan Free</MenuItem>
+              <MenuItem value="basic">Plan Basic</MenuItem>
+              <MenuItem value="premium">Plan Premium</MenuItem>
+            </StyledTextField>
+            {formErrors.pricing_plan && <FieldError>{formErrors.pricing_plan}</FieldError>}
+            
+            <StyledTextField
+              variant="outlined"
+              fullWidth
+              label="Contraseña"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              required
+              value={formData.password}
+              onChange={handleChange}
+              error={!!formErrors.password}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FiLock />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                    >
+                      {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {formErrors.password && <FieldError>{formErrors.password}</FieldError>}
+            
+            <StyledTextField
+              variant="outlined"
+              fullWidth
+              label="Confirmar contraseña"
+              name="password2"
+              type={showPassword2 ? "text" : "password"}
+              required
+              value={formData.password2}
+              onChange={handleChange}
+              error={!!formErrors.password2}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <FiLock />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword2(!showPassword2)}
+                      edge="end"
+                    >
+                      {showPassword2 ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {formErrors.password2 && <FieldError>{formErrors.password2}</FieldError>}
+            
+            <StyledButton
               type="submit"
-              className="login-btn"
+              fullWidth
+              variant="contained"
+              color="primary"
               disabled={!isFormValid || loading}
             >
-              {loading ? "Procesando..." : "Crear cuenta"}
-            </button>
-          </form>
-          <p className="register-link">
+              {loading ? <CircularProgress size={24} color="inherit" /> : "Crear cuenta"}
+            </StyledButton>
+          </FormContainer>
+          
+          <LinkText variant="body2">
             ¿Ya tienes cuenta? <Link to="/login">Iniciar sesión</Link>
-          </p>
-        </div>
-      </div>
+          </LinkText>
+        </StyledPaper>
+      </Container>
     </Box>
   );
 };
 
-export default Signup;
+export default Signup;  
