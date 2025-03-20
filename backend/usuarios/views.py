@@ -2,7 +2,7 @@ from django.http import JsonResponse
 import datetime
 from django.contrib.auth.hashers import check_password, make_password
 from .models import User, PricingPlan
-from .serializers import UserSerializer
+from .serializers import UserSerializer, RegisterSerializer
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
@@ -38,8 +38,7 @@ class UserViewSet(viewsets.ModelViewSet):
         # Encriptar la contraseña antes de validar el serializer
         data["password"] = make_password(data["password"])
 
-        # Validar el serializer primero
-        serializer = self.get_serializer(data=data)
+        serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             # Guardamos el usuario con la contraseña encriptada
             user = serializer.save()
@@ -47,7 +46,7 @@ class UserViewSet(viewsets.ModelViewSet):
             # Generamos los tokens
             refresh = RefreshToken.for_user(user)
             return Response({
-                "user": serializer.data,
+                "user": UserSerializer(user).data,
                 "refresh": str(refresh),
                 "access": str(refresh.access_token),
             }, status=status.HTTP_201_CREATED)
