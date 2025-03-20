@@ -6,6 +6,7 @@ import Signup from "./SignUp";
 import UpdateItem from "./UpdateItem";
 import ShowItem from "./ShowItem";
 import SearchItemByName from "./SearchItemByName";
+import Footer from './components/Footer';
 import RecoverPassword from "./RecoverPassword";
 import RecoverPasswordDone from "./RecoverPasswordDone";
 import RecoverPasswordNew from "./RecoverPasswordNew";
@@ -30,6 +31,7 @@ function App() {
         <Route path="/recoverPasswordNew" element={<RecoverPasswordNew />} />
 
       </Routes>
+      <Footer/>
     </Router>
   );
 }
