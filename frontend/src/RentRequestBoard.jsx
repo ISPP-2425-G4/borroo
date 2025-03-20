@@ -2,11 +2,15 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
 import { Box, Button,Card, CardContent, CardMedia, Typography } from "@mui/material";
+import Modal from "./Modal";
 
 const DEFAULT_IMAGE = "../public/default_image.png";
 
 const RentRequestBoard = () => {
     const [requests, setRequests] = useState([]);
+    const [selectedRequest, setSelectedRequest] = useState(null);
+    const [responseType, setResponseType] = useState(null);
+    const [openModal, setOpenModal] = useState(false);
 
     useEffect(() => {
         const fetchRequests = async () => {
@@ -76,10 +80,21 @@ const RentRequestBoard = () => {
             setRequests((prevRequests) =>
                 prevRequests.filter((request) => request.id !== renta.id)
             );
+            setOpenModal(false);
         } catch (error) {
             console.error(`Error al procesar la solicitud:`, error.response?.data || error.message);
         }
     };
+
+    const openConfirmModal = (renta, responseType) => {
+        setSelectedRequest(renta);
+        setResponseType(responseType);
+        setOpenModal(true);
+    };
+
+    const closeModal = () => {
+        setOpenModal(false);
+    }
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mt: 10, p: 2 }}>
@@ -152,7 +167,7 @@ const RentRequestBoard = () => {
                                         variant="contained"
                                         color="success"
                                         size="small"
-                                        onClick={() => handleResponse(request, "accepted")}
+                                        onClick={() => openConfirmModal(request, "accepted")}
                                     >
                                         Aceptar
                                     </Button>
@@ -160,7 +175,7 @@ const RentRequestBoard = () => {
                                         variant="contained"
                                         color="error"
                                         size="small"
-                                        onClick={() => handleResponse(request, "rejected")}
+                                        onClick={() => openConfirmModal(request, "rejected")}
                                     >
                                         Rechazar
                                     </Button>
@@ -170,6 +185,15 @@ const RentRequestBoard = () => {
                     ))}
                 </Box>
             )}
+            {openModal && (
+                <Modal
+                    title={`Confirmar solicitud`}
+                    message={`¿Estás seguro de que quieres ${responseType === "accepted" ? "aceptar" : "rechazar"} esta solicitud?`}
+                    onCancel={closeModal}
+                    onConfirm={() => handleResponse(selectedRequest, responseType)}
+                />
+            )}
+
         </Box>
     );
 };
