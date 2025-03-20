@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
-import { Box } from "@mui/system";
+import { Box, Button,Card, CardContent, CardMedia, Typography } from "@mui/material";
 
 const DEFAULT_IMAGE = "../public/default_image.png";
 
@@ -87,37 +87,50 @@ const RentRequestBoard = () => {
             {requests.length === 0 ? (
                 <p>No hay solicitudes de alquiler disponibles.</p>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <Box>
                     {requests.map((request) => (
-                        <div key={request.id} className="shadow-md rounded-lg overflow-hidden">
-                            <img
-                                src={request.imageUrl}
-                                alt={request.title}
-                                className="w-full h-40 object-cover"
-                            />
-                            <div className="p-4">
-                                <h3 className="text-lg font-semibold">{request.title}</h3>
-                                <p className="text-sm text-gray-600">Solicitado por: {request.renter?.username}</p>
-                                <p className="text-sm">Inicio: {new Date(request.start_date).toLocaleDateString()}</p>
-                                <p className="text-sm">Fin: {new Date(request.end_date).toLocaleDateString()}</p>
-                                <div className="mt-4 flex justify-between">
-                                    <button
-                                        className="bg-green-500 text-white px-4 py-2 rounded"
-                                        onClick={() => handleResponse(request, "accepted")}
-                                    >
-                                        Aceptar
-                                    </button>
-                                    <button
-                                        className="bg-red-500 text-white px-4 py-2 rounded"
-                                        onClick={() => handleResponse(request, "rejected")}
-                                    >
-                                        Rechazar
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <Box
+                        key={request.id} xs={12} sm={6} md={4} lg={3} sx={{ mt: 2 }}>
+                        <Card sx={{ maxWidth: 345, boxShadow: 3 }}>
+                                <CardMedia
+                                    component="img"
+                                    height="160"
+                                    image={request.imageUrl}
+                                    alt={request.title}
+                                    sx={{ objectFit: "cover" }}
+                                />
+                                <CardContent>
+                                    <Typography variant="h6">{request.title}</Typography>
+                                    <Typography variant="body2" color="textSecondary">
+                                        Solicitado por: {request.renter?.username}
+                                    </Typography>
+                                    <Typography variant="body2">
+                                        Inicio: {new Date(request.start_date).toLocaleDateString()}
+                                    </Typography>
+                                    <Typography variant="body2">
+                                        Fin: {new Date(request.end_date).toLocaleDateString()}
+                                    </Typography>
+                                    <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+                                        <Button
+                                            variant="contained"
+                                            color="success"
+                                            onClick={() => handleResponse(request, "accepted")}
+                                        >
+                                            Aceptar
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            color="error"
+                                            onClick={() => handleResponse(request, "rejected")}
+                                        >
+                                            Rechazar
+                                        </Button>
+                                    </Box>
+                                </CardContent>
+                            </Card>
+                        </Box>
                     ))}
-                </div>
+                </Box>
             )}
         </Box>
     );
