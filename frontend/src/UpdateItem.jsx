@@ -78,6 +78,7 @@ const UpdateItemScreen = () => {
         setFormData(itemData);
         setOptions(enumData);
 
+        setFilteredSubcategories(getSubcategories(itemData.category));
         // Obtener las imágenes con ID y URL
         if (itemData.images && itemData.images.length > 0) {
           const imgs = await Promise.all(
@@ -250,14 +251,9 @@ const UpdateItemScreen = () => {
     }
   };
 
-  const handleCategoryChange = (e) => {
-    const selectedCategory = e.target.value;
-    setFormData({ ...formData, category: selectedCategory, subcategory: "" });
-  
-    let newSubcategories = [];
-  
-    if (selectedCategory === "technology") {
-      newSubcategories = [
+  const getSubcategories = (category) => {
+    const subcategories = {
+      technology: [
         { value: "computers", label: "Ordenadores" },
         { value: "computer_accessories", label: "Accesorios de ordenador" },
         { value: "smartphones", label: "Smartphones" },
@@ -274,10 +270,8 @@ const UpdateItemScreen = () => {
         { value: "projectors", label: "Proyectores" },
         { value: "technology_others", label: "Otros" },
         { value: "none", label: "Ninguno" },
-
-      ];
-    } else if (selectedCategory === "sports") {
-      newSubcategories = [
+      ],
+      sports: [
         { value: "cycling", label: "Ciclismo" },
         { value: "gym", label: "Gimnasio" },
         { value: "calisthenics", label: "Calistenia" },
@@ -295,10 +289,8 @@ const UpdateItemScreen = () => {
         { value: "extreme_sports", label: "Deportes extremos" },
         { value: "sports_others", label: "Otros (Deporte)" },
         { value: "none", label: "Ninguno" },
-
-      ];
-    } else if (selectedCategory === "diy") {
-      newSubcategories = [
+      ],
+      diy: [
         { value: "electric_tools", label: "Herramientas eléctricas" },
         { value: "manual_tools", label: "Herramientas manuales" },
         { value: "machines", label: "Máquinas" },
@@ -310,10 +302,8 @@ const UpdateItemScreen = () => {
         { value: "decoration", label: "Decoración" },
         { value: "diy_others", label: "Otros (Bricolaje)" },
         { value: "none", label: "Ninguno" },
-
-      ];
-    } else if (selectedCategory === "clothing") {
-      newSubcategories = [
+      ],
+      clothing: [
         { value: "summer_clothing", label: "Ropa de verano" },
         { value: "winter_clothing", label: "Ropa de invierno" },
         { value: "mevent_clothing", label: "Ropa de evento para hombre" },
@@ -330,10 +320,8 @@ const UpdateItemScreen = () => {
         { value: "hats", label: "Sombreros" },
         { value: "clothing_others", label: "Otros (Ropa)" },
         { value: "none", label: "Ninguno" },
-
-      ];
-    } else if (selectedCategory === "furniture_and_logistics") {
-      newSubcategories = [
+      ],
+      furniture_and_logistics: [
         { value: "home_furniture", label: "Muebles de hogar" },
         { value: "home_appliances", label: "Electrodomésticos" },
         { value: "event_equipment", label: "Equipamiento para eventos" },
@@ -345,10 +333,8 @@ const UpdateItemScreen = () => {
         { value: "decoration_ambience", label: "Decoración y ambiente" },
         { value: "furniture_and_logistics_others", label: "Otros (Mobiliario y logística)" },
         { value: "none", label: "Ninguno" },
-
-      ];
-    } else if (selectedCategory === "entertainment") {
-      newSubcategories = [
+      ],
+      entertainment: [
         { value: "videogames", label: "Videojuegos" },
         { value: "board_games", label: "Juegos de mesa" },
         { value: "books", label: "Libros" },
@@ -360,11 +346,25 @@ const UpdateItemScreen = () => {
         { value: "travel", label: "Viaje" },
         { value: "other_entertainment", label: "Otros (Entretenimiento)" },
         { value: "none", label: "Ninguno" },
-      ];
-    }
-    setFilteredSubcategories(newSubcategories);
+      ],
+    };
+  
+    return subcategories[category] || [];
   };
-
+  
+  const handleCategoryChange = (e) => {
+    const selectedCategory = e.target.value;
+  
+    // Actualizar formData con la nueva categoría y resetear subcategoría
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      category: selectedCategory,
+      subcategory: "",
+    }));
+  
+    // Obtener subcategorías y actualizar el estado
+    setFilteredSubcategories(getSubcategories(selectedCategory));
+  };
 
 
 
