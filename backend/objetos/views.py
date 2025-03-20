@@ -181,3 +181,19 @@ class ListDraftItemsView(APIView):
         items = Item.objects.filter(user=user, draft_mode=True)
         results = list(items.values('id', 'title', 'category', 'price'))
         return Response({'results': results}, status=status.HTTP_200_OK)
+
+
+class ListUserItemsView(APIView):
+    def get(self, request, user_id, *args, **kwargs):
+        user = get_object_or_404(User, id=user_id)
+        items = Item.objects.filter(user=user)
+        results = list(items.values('id', 'title', 'category',
+                                    'price', 'draft_mode'))
+        return Response({'results': results}, status=status.HTTP_200_OK)
+
+
+class ListPublishedItemsView(APIView):
+    def get(self, request, *args, **kwargs):
+        items = Item.objects.filter(draft_mode=False)
+        results = list(items.values('id', 'title', 'category', 'price'))
+        return Response({'results': results}, status=status.HTTP_200_OK)

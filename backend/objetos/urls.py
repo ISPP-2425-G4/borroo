@@ -3,7 +3,8 @@ from rest_framework.routers import DefaultRouter
 from .views import ItemRequestApprovalViewSet, ItemRequestView, ItemViewSet
 from .views import FilterByCategory, FilterByPrice, SearchItemsView
 from .views import ItemImageViewSet, EnumChoicesView, PublishItemView
-from .views import ListDraftItemsView
+from .views import ListDraftItemsView, ListUserItemsView
+from .views import ListPublishedItemsView
 
 router = DefaultRouter()
 router.register(r'full', ItemViewSet)
@@ -30,4 +31,8 @@ urlpatterns = [
     path('publish_item/', PublishItemView.as_view(), name='publish_item'),
     path('list_draft_items/<int:user_id>/', ListDraftItemsView.as_view(),
          name='list_draft_items'),
+    path('list_user_items/<int:user_id>/', ListUserItemsView.as_view(),
+         name='list_user_items'),
+    path('list_published_items/', ListPublishedItemsView.as_view(),
+         name='list_published_items'),
 ]
