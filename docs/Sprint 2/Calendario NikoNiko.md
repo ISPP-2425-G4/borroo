@@ -61,7 +61,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | David Blanco Mora           |          |          |          |                |           |          |          |          |          |          |          |          |          |          |
 | Pablo Díaz Ordóñez          |          | :blush:  | :blush:  | :blush:        |           |          |          |          |          |          |          |          |          |          |
 | Pablo Espinosa Naranjo      |          |          |          |                |           |          |          |          |          |          |          |          |          |          |
-| Jesús Fernández Rodríguez   |      :smiley:    |    :smiley:      |     :smiley:     |      :smiley:          |           |          |          |          |          |          |          |          |          |          |
+| Jesús Fernández Rodríguez   |          |          |    :smiley:      |        :smiley:        |      :smiley:     |    :smiley:      |          |          |          |          |          |          |          |          |
 | Francisco Fernández Mota    | :smiley: | :blush:  |          | :neutral_face: | :worried: |          |          |          |          |          |          |          |          |          |
 | Javier García Rodríguez     | :smiley: | :blush:  | :blush:  |                |           |          |          |          |          |          |          |          |          |          |
 | Miguel González Ortiz       |          | :smiley: |          |                |           |          |          |          |          |          |          |          |          |          |
