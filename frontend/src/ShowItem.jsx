@@ -32,7 +32,6 @@ import {
   ChevronLeft as ChevronLeftIcon, 
   ChevronRight as ChevronRightIcon 
 } from '@mui/icons-material';
-
 import Navbar from "./Navbar";
 import Modal from "./Modal";
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
@@ -44,15 +43,15 @@ const ShowItemScreen = () => {
   const [imageURLs, setImageURLs] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
-  const [userName, setUserName] = useState("");  // 🔹 Nuevo estado para el nombre del usuario
+  const [userName, setUserName] = useState("");
   const [dateRange, setDateRange] = useState([{
     startDate: new Date(),
     endDate: new Date(),
     key: "selection",
   }]);
   const [showRentalModal, setShowRentalModal] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0); // Índice actual
-  const [requestedDates, setRequestedDates] = useState([]); // Solicitudes (amarillo), de momento en gris
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [requestedDates, setRequestedDates] = useState([]);
   const [bookedDates, setBookedDates] = useState([]);
   const [isOwner, setIsOwner] = useState(false); // Estado para verificar si el usuario es el propietario
   const [priceCategory, setPriceCategory]= useState(null)
@@ -64,7 +63,7 @@ const ShowItemScreen = () => {
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    const fetchItem = async () => {
+    const fetchItemData = async () => {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_BASE_URL}/objetos/full/${id}/`
@@ -86,13 +85,13 @@ const ShowItemScreen = () => {
         } 
       } catch (error) {
         console.error("Error fetching item:", error);
-        setErrorMessage("No se pudo cargar el ítem.");
+        setErrorMessage("No se pudo cargar el ítem");
       } finally {
         setLoading(false);
       }
     };
 
-    if (id) fetchItem();
+    if (id) fetchItemData();
   }, [id]);
 
   
@@ -191,7 +190,6 @@ const ShowItemScreen = () => {
       console.error("Error fetching availability:", error);
     }
   };
-
   const getDatesInRange = (startDate, endDate) => {
     const dates = [];
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
@@ -200,74 +198,25 @@ const ShowItemScreen = () => {
     return dates;
   };
 
-
-  const handleDelete = async (itemId) => {
+  const handleDelete = async () => {
     const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar este ítem?");
     if (!confirmDelete) return;
 
     try {
       await axios.delete(
-        `${import.meta.env.VITE_API_BASE_URL}/objetos/full/${itemId}/`,
+        `${import.meta.env.VITE_API_BASE_URL}/objetos/full/${id}/`,
         {
           headers: { "Content-Type": "application/json" },
         }
       );
 
-      alert("Ítem eliminado correctamente.");
+      alert("Ítem eliminado correctamente");
       navigate("/");
     } catch (error) {
       console.error("Error deleting item:", error);
-      setErrorMessage("No se pudo eliminar el ítem.");
+      setErrorMessage("No se pudo eliminar el ítem");
     }
   };
-
-  const navigateImages = (direction) => {
-    if (direction === 'next') {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageURLs.length);
-    } else {
-      setCurrentImageIndex((prevIndex) => (prevIndex - 1 + imageURLs.length) % imageURLs.length);
-    }
-  };
-
-  if (loading) {
-    return (
-      <Box>
-        <Navbar />
-        <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px', flexDirection: 'column' }}>
-          <CircularProgress />
-          <Typography variant="body1" sx={{ mt: 2 }}>Cargando información del producto...</Typography>
-        </Container>
-      </Box>
-    );
-  }
-
-  if (!item) {
-    return (
-      <Box>
-        <Navbar />
-        <Container sx={{ textAlign: 'center', py: 4 }}>
-          <Typography variant="h5" sx={{ mb: 2 }}>No se encontró el ítem solicitado</Typography>
-          <Button variant="contained" color="primary" onClick={() => navigate('/')}>
-            Volver al inicio
-          </Button>
-        </Container>
-      </Box>
-    );
-  }
-
-  if (loading) {
-    return (
-      <div className="rental-container">
-        <Navbar />
-        <div className="rental-box">
-          <h2>Cargando...</h2>
-        </div>
-      </div>
-    );
-  }
-
-  if (!item) return <p>No se encontró el ítem.</p>;
-
   const handleRentalRequest = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -325,14 +274,14 @@ const ShowItemScreen = () => {
       );
   
       if (response.status === 201) {
-        alert("Solicitud de alquiler enviada correctamente.");
+        alert("Solicitud de alquiler enviada correctamente");
         setShowRentalModal(false);
       } else {
-        alert("Hubo un problema con la solicitud.");
+        alert("Hubo un problema con la solicitud");
       }
     } catch (error) {
       console.error("Error al solicitar alquiler:", error);
-      alert(error.response?.data?.error || "No se pudo realizar la solicitud.");
+      alert(error.response?.data?.error || "No se pudo realizar la solicitud");
     }
   };
   const convertToCET = (date) => {
@@ -341,6 +290,40 @@ const ShowItemScreen = () => {
     localDate.setHours(localDate.getHours() + cetOffset);
     return localDate.toISOString();
   };
+
+  const navigateImages = (direction) => {
+    if (direction === 'next') {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageURLs.length);
+    } else {
+      setCurrentImageIndex((prevIndex) => (prevIndex - 1 + imageURLs.length) % imageURLs.length);
+    }
+  };
+
+  if (loading) {
+    return (
+      <Box>
+        <Navbar />
+        <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px', flexDirection: 'column' }}>
+          <CircularProgress />
+          <Typography variant="body1" sx={{ mt: 2 }}>Cargando información del producto...</Typography>
+        </Container>
+      </Box>
+    );
+  }
+
+  if (!item) {
+    return (
+      <Box>
+        <Navbar />
+        <Container sx={{ textAlign: 'center', py: 4 }}>
+          <Typography variant="h5" sx={{ mb: 2 }}>No se encontró el ítem solicitado</Typography>
+          <Button variant="contained" color="primary" onClick={() => navigate('/')}>
+            Volver al inicio
+          </Button>
+        </Container>
+      </Box>
+    );
+  }
 
   return (
     <Box>

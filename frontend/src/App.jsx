@@ -6,9 +6,12 @@ import Signup from "./SignUp";
 import UpdateItem from "./UpdateItem";
 import ShowItem from "./ShowItem";
 import SearchItemByName from "./SearchItemByName";
+import RentRequestBoard from "./RentRequestBoard";
+import Footer from './components/Footer';
 import RecoverPassword from "./RecoverPassword";
 import RecoverPasswordDone from "./RecoverPasswordDone";
 import RecoverPasswordNew from "./RecoverPasswordNew";
+import SubscriptionScreen from "./SubscriptionScreen";
 
 function App() {
   return (
@@ -23,11 +26,13 @@ function App() {
         <Route path="/show-item/:id" element={<ShowItem />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/objetos/search_item" element={<SearchItemByName />} />
+        <Route path="/rental_requests" element={<RentRequestBoard />} />
+        <Route path="/pricing-plan" element={<SubscriptionScreen />} />
         <Route path="/recoverPassword" element={<RecoverPassword />} />
         <Route path="/recoverPasswordDone" element={<RecoverPasswordDone />} />
         <Route path="/recoverPasswordNew" element={<RecoverPasswordNew />} />
-
       </Routes>
+      <Footer/>
     </Router>
   );
 }

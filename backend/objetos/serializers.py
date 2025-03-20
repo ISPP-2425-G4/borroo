@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Item, ItemImage
+from .models import Item, ItemImage, ItemRequest
 from utils.utils import upload_image_to_imgbb
 
 
@@ -32,7 +32,7 @@ class ItemSerializer(serializers.ModelSerializer):
             'id', 'title', 'description', 'category', 'category_display',
             'cancel_type', 'cancel_type_display', 'price_category',
             'price_category_display', 'price', 'images', 'image_files',
-            'remaining_image_ids', 'user'
+            'remaining_image_ids', 'user', 'draft_mode'
         ]
 
     def validate(self, data):
@@ -61,6 +61,17 @@ class ItemSerializer(serializers.ModelSerializer):
         image_files = validated_data.pop('image_files', [])
         validated_data.pop('images', None)
         user = validated_data.pop('user')
+        # Restricción: No más de 10 ítems con draft_mode False
+        if Item.objects.filter(user=user, draft_mode=False).count() >= 10:
+            raise serializers.ValidationError(
+                "No puedes tener más de 10 ítems con draft_mode en False."
+            )
+
+        # Restricción: No más de 15 ítems en total
+        if Item.objects.filter(user=user).count() >= 15:
+            raise serializers.ValidationError(
+                "No puedes tener más de 15 ítems en total."
+            )
 
         item = Item.objects.create(user=user, **validated_data)
 
@@ -98,3 +109,10 @@ class ItemSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+
+class ItemRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ItemRequest
+        fields = ['id', 'title', 'description',
+                  'category', 'price', 'user', 'approved']
