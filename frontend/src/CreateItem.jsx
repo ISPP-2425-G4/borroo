@@ -210,6 +210,7 @@ const CreateItemScreen = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [loadingDash, setLoadingDash] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const navigate = useNavigate();
@@ -217,6 +218,7 @@ const CreateItemScreen = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [fetchingOptions, setFetchingOptions] = useState(true);
+  const [isDraft, setIsDraft] = useState(false);
 
   useEffect(() => {
     const fetchEnums = async () => {
@@ -320,7 +322,13 @@ const CreateItemScreen = () => {
 
   const handleSubmit = async (e, isDraft = false) => {
     e.preventDefault();
-    setLoading(true);
+    if(isDraft){
+      setIsDraft(true);
+      setLoadingDash(true);
+    }else{
+      setLoading(true);
+    }
+
     setErrorMessage("");
     setFieldErrors({});
     setShowErrorMessage(false);
@@ -381,6 +389,7 @@ const CreateItemScreen = () => {
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       setLoading(false);
+      setLoadingDash(false);
       setShowErrorMessage(true);
       return;
     }
@@ -426,6 +435,7 @@ const CreateItemScreen = () => {
       setErrorMessage(error.response?.data?.message || "Ocurrió un error al enviar el formulario.");
     } finally {
       setLoading(false);
+      setLoadingDash(false);
     }
   };
 
@@ -443,10 +453,11 @@ const CreateItemScreen = () => {
           )}
           
           {submitSuccess && (
-            <Alert severity="success" sx={{ mb: 3 }}>
-              ¡Item creado exitosamente! Redirigiendo...
-            </Alert>
-          )}
+              <Alert severity="success" sx={{ mb: 3 }}>
+                {isDraft ? '¡Item guardado exitosamente! Redirigiendo...' : '¡Item creado exitosamente! Redirigiendo...'}
+              </Alert>
+            )}
+          
 
           {fetchingOptions ? (
             <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
@@ -596,17 +607,36 @@ const CreateItemScreen = () => {
                   </ImageGallery>
                 </Box>
               )}
+              <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
               <SubmitButton 
                 type="button" 
-                disabled={loading}
+                disabled={!isFormValid ||loadingDash}
                 onClick={handleSaveAsDraft}
-                sx={{ backgroundColor: "#555555" }}
+                sx={{
+                  flex: 1,
+                  backgroundColor: (!isFormValid || loadingDash) ? '#cccccc' : '#555555',
+                  '&:hover': {
+                    backgroundColor: (!isFormValid || loadingDash) ? '#cccccc' : '#333333'
+                  }
+                }}
               >
-                <span>Guardar como Borrador</span>
+                {loadingDash ? (
+                  <>
+                    <CircularProgress size={20} color="inherit" />
+                    <span>Guardando...</span>
+                  </>
+                ) : (
+                  <>
+                    <FiUpload />
+                    <span>Guardar como Borrador</span>
+                  </>
+                )}
               </SubmitButton>
+
               <SubmitButton 
                 type="submit" 
                 disabled={!isFormValid || loading}
+                sx={{ flex: 1 }}
               >
                 {loading ? (
                   <>
@@ -620,6 +650,7 @@ const CreateItemScreen = () => {
                   </>
                 )}
               </SubmitButton>
+            </Stack>
               
               {showErrorMessage && (
                 <Alert severity="warning" sx={{ mt: 2 }}>
