@@ -215,7 +215,7 @@ const Navbar = () => {
               </IconButton>
             </Tooltip>
 
-            <Tooltip title="Drafts">
+            <Tooltip title="Borradores">
             <IconButton color="inherit" component={Link} to="/drafts">
               <Badge badgeContent={0} color="error">
               <ArticleIcon />

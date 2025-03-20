@@ -1,7 +1,7 @@
 import Navbar from "./Navbar";
 import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Container,
   Box,
@@ -13,11 +13,26 @@ import {
   Paper,
 } from "@mui/material";
 
+const IMAGEN_PREDETERMINADA = "../public/default_image.png";
+
 const DraftItemsView = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const obtenerUrlImagen = useCallback(async (imgId) => {
+    try {
+      const respuesta = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/objetos/item-images/${imgId}/`
+      );
+      console.log("Imagen cargada:", respuesta);
+      return respuesta.data.image;
+    } catch (error) {
+      console.error(`Error al cargar la imagen ${imgId}:`, error);
+      return IMAGEN_PREDETERMINADA;
+    }
+  }, []);
 
   const fetchDraftItems = useCallback(async () => {
     setLoading(true);
@@ -25,13 +40,21 @@ const DraftItemsView = () => {
       const response = await axios.get(
         `${import.meta.env.VITE_API_BASE_URL}/objetos/list_draft_items/${user.id}/`
       );
-      setItems(response.data.results || []);
+      const itemsConImagenes = await Promise.all(
+        response.data.results.map(async (item) => {
+          const urlImagen = item.images && item.images.length > 0
+            ? await obtenerUrlImagen(item.images[0])
+            : IMAGEN_PREDETERMINADA;
+          return { ...item, urlImagen };
+        })
+      );
+      setItems(itemsConImagenes);
     } catch (err) {
-      setError("Error al cargar tus borradores.");
+      setError("Error al cargar tus borradores.", err);
     } finally {
       setLoading(false);
     }
-  }, [user.id]);
+  }, [user.id, obtenerUrlImagen]);
 
   useEffect(() => {
     fetchDraftItems();
@@ -79,13 +102,14 @@ const DraftItemsView = () => {
                 >
                   <Box
                     component="img"
-                    src={item.images?.[0]?.image || "../public/default_image.png"}
+                    src={item.urlImagen}
                     alt={item.title}
                     sx={{ width: 120, height: 80, objectFit: "cover", borderRadius: 2 }}
                   />
 
                   <CardContent sx={{ flex: 1 }}>
                     <Typography variant="h6" fontWeight={600}>{item.title}</Typography>
+                    <Typography variant="body2" color="text.secondary">{item.description}</Typography>
                     <Box mt={1} display="flex" alignItems="center" gap={1}>
                       <Chip label={`${item.price}€`} color="primary" />
                       <Chip label="Borrador" color="default" />
