@@ -7,6 +7,10 @@ import axios from 'axios';
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
 import { Box, Stack, Typography, Alert, CircularProgress, Paper, Container } from "@mui/material";
 import { styled } from "@mui/system";
+import DatePicker from "react-datepicker";
+import { DateRange  } from "react-date-range";
+
+
 
 const FormContainer = styled(Paper)(() => ({
   padding: "2rem",
@@ -200,6 +204,7 @@ const CreateItemScreen = () => {
     cancel_type: "",
     price_category: "",
     price: "",
+    dates_not_available: [] //cambiar
   });
 
   const [images, setImages] = useState([]);
@@ -212,11 +217,17 @@ const CreateItemScreen = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [datesNotAvailable, setDatesNotAvailable] = useState([]);
   const navigate = useNavigate();
   const [fieldErrors, setFieldErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [fetchingOptions, setFetchingOptions] = useState(true);
+  const [dateRange, setDateRange] = useState([{
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    }]);
 
   useEffect(() => {
     const fetchEnums = async () => {
@@ -252,6 +263,17 @@ const CreateItemScreen = () => {
   useEffect(() => {
     validateForm();
   }, [formData, images]);
+
+  const handleDateChange = (dates) => {
+    const [start, end] = dates;
+    if (start && end) {
+      setDatesNotAvailable([...datesNotAvailable, [start.toISOString().split("T")[0], end.toISOString().split("T")[0]]]);
+    }
+  };
+
+  const handleRemoveDate = (index) => {
+    setDatesNotAvailable(datesNotAvailable.filter((_, i) => i !== index));
+  };
 
   const validateForm = () => {
     const { title, description, category, cancel_type, price_category, price } = formData;
@@ -385,13 +407,14 @@ const CreateItemScreen = () => {
 
     try {
       const formDataToSend = new FormData();
-      const allowedKeys = ["title", "description", "category", "cancel_type", "price_category", "price"];
+      const allowedKeys = ["title", "description", "category", "cancel_type", "price_category", "price", "dates_not_available"];
       
       Object.keys(formData).forEach((key) => {
         if (allowedKeys.includes(key)) {
           formDataToSend.append(key, formData[key]);
         }
       });
+      formDataToSend.append("dates_not_available", JSON.stringify(datesNotAvailable));
   
       // Obtener usuario autenticado desde localStorage o contexto
       const user = JSON.parse(localStorage.getItem("user")); 
@@ -498,6 +521,58 @@ const CreateItemScreen = () => {
                 <SelectArrow>▼</SelectArrow>
               </InputGroup>
               {fieldErrors.category && <ErrorMessage>{fieldErrors.category}</ErrorMessage>}
+
+              <Box>
+                <label>Fechas no disponibles:</label>
+                <DatePicker
+                  selectsRange
+                  startDate={null}
+                  endDate={null}
+                  onChange={handleDateChange}
+                  isClearable
+                  dateFormat="yyyy-MM-dd"
+                />
+              </Box>
+              <ul>
+                {datesNotAvailable.map((range, index) => (
+                  <li key={index}>
+                    {range[0]} - {range[1]} 
+                    <button type="button" onClick={() => handleRemoveDate(index)}>❌</button>
+                  </li>
+                ))}
+              </ul>
+              <Box sx={{ 
+                          display: 'flex', 
+                          flexDirection: 'column', 
+                          alignItems: 'center',
+                          '& .rdrCalendarWrapper': { 
+                            maxWidth: '100%',
+                            fontSize: '16px',
+                            border: '1px solid #e0e0e0',
+                            borderRadius: 1,
+                            overflow: 'hidden',
+                            p: 1
+                          }
+                        }}>
+              
+                  
+                        <DateRange
+                          ranges={dateRange}
+                          onChange={(ranges) => {
+                            const start = ranges.selection.startDate;
+                            const end = ranges.selection.endDate;
+              
+                            // Si el usuario selecciona el mismo día como inicio y fin, establecerlo correctamente
+                            if (start.toDateString() === end.toDateString()) {
+                              setDateRange([{ startDate: start, endDate: start, key: "selection" }]);
+                            } else {
+                              setDateRange([ranges.selection]);
+                            }
+                          }}
+                          minDate={new Date()}
+                          disabledDates={[...datesNotAvailable]}
+                        />
+                 </Box>
 
               <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
                 <Box sx={{ flex: 1, position: "relative" }}>

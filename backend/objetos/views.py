@@ -44,13 +44,8 @@ class ItemViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         print("Request data:", request.data)
         
-        # Verificamos que `fechas_no_disponibles` esté presente en la solicitud
-        fechas_no_disponibles = request.data.get("fechas_no_disponibles", [])
-        if not isinstance(fechas_no_disponibles, list):
-            return Response(
-                {"error": "El campo fechas_no_disponibles debe ser una lista de rangos de fechas"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+        start_unavailable_date = request.data.get("start_unavailable_date")
+        end_unavailable_date = request.data.get("end_unavailable_date")
 
         serializer = self.get_serializer(data=request.data)
         if not serializer.is_valid():
@@ -58,7 +53,8 @@ class ItemViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         print("Validated data:", serializer.validated_data)
-        item = serializer.save(fechas_no_disponibles=fechas_no_disponibles)
+        item = serializer.save(start_unavailable_date=start_unavailable_date)
+        item = serializer.save(end_unavailable_date=end_unavailable_date)
         print("Created item:", item)
 
         headers = self.get_success_headers(serializer.data)
@@ -69,9 +65,9 @@ class ItemViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         
         # Obtener las fechas no disponibles de la solicitud
-        fechas_no_disponibles = request.data.get("fechas_no_disponibles", instance.fechas_no_disponibles)
+        dates_not_available = request.data.get("dates_not_available", instance.dates_not_available)
 
-        if not isinstance(fechas_no_disponibles, list):
+        if not isinstance(dates_not_available, list):
             return Response(
                 {"error": "El campo fechas_no_disponibles debe ser una lista de rangos de fechas"},
                 status=status.HTTP_400_BAD_REQUEST
@@ -82,7 +78,7 @@ class ItemViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         # Guardar con las fechas actualizadas
-        item = serializer.save(fechas_no_disponibles=fechas_no_disponibles)
+        item = serializer.save(dates_not_available=dates_not_available)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 

@@ -54,7 +54,8 @@ class Item(models.Model):
     user = models.ForeignKey('usuarios.User', related_name='items',
                              on_delete=models.CASCADE)
     draft_mode = models.BooleanField(default=False)
-    dates_not_available = models.JSONField(default=list)
+    start_unavailable_date = models.DateTimeField(null=True)
+    end_unavailable_date = models.DateTimeField(null=True)
 
     
 
