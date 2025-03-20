@@ -65,6 +65,7 @@ const SubscriptionScreen = () => {
   useEffect(() => {
     if (user) {
       setCurrentPlan(user.pricing_plan);
+      console.log("Plan actual:", user.pricing_plan);
     }
   }, [user, token]);
 
