@@ -204,7 +204,7 @@ const Signup = () => {
     if (!/(?=.*[A-Z])/.test(formData.password)) {
       errors.password = "La contraseña debe contener al menos una letra mayúscula.";
     }
-    if (!/(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>/?])/.test(formData.password)) {
+    if (!/(?=.*[!@#$%^&*()_+\-=[\]{};:"\\|,.<>/?])/.test(formData.password)) {
       errors.password = "La contraseña debe contener al menos un carácter especial.";
     }
     if (!/(?=.*\d)/.test(formData.password)) {
