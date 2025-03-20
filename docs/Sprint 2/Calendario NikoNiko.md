@@ -61,7 +61,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | David Blanco Mora           |          |          |          |                |           |          |          |          |          |          |          |          |          |          |
 | Pablo Díaz Ordóñez          |          | :blush:  | :blush:  | :blush:        |           |          |          |          |          |          |          |          |          |          |
 | Pablo Espinosa Naranjo      |          |          |          |                |           |          |          |          |          |          |          |          |          |          |
-| Jesús Fernández Rodríguez   |          |          |    :smiley:      |        :smiley:        |      :smiley:     |    :smiley:      |          |          |          |          |          |          |          |          |
+| Jesús Fernández Rodríguez   |          |          |    :smiley:      |        :smiley:        |      :smiley:     |    :smiley:      |          |          |          |          |          |          |          |          
 | Francisco Fernández Mota    | :smiley: | :blush:  |          | :neutral_face: | :worried: |          |          |          |          |          |          |          |          |          |
 | Javier García Rodríguez     | :smiley: | :blush:  | :blush:  |                |           |          |          |          |          |          |          |          |          |          |
 | Miguel González Ortiz       |          | :smiley: |          |                |           |          |          |          |          |          |          |          |          |          |
@@ -71,7 +71,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Marco Padilla Gómez         |          |          |          | :angry:        |           |          |          |          |          |          |          |          |          |          |
 | Miguel Palomo García        | :blush:  | :smiley: | :smiley: | :blush:        | :smiley:  |          |          |          |          |          |          |          |          |          |
 | Luis Javier Periáñez Franco | :blush:  | :blush:  | :blush:  | :blush:        | :angry:   |          |          |          |          |          |          |          |          |          |
-| Alexander Picón Garrote     |          |          |          |                |           |          |          |          |          |          |          |          |          |          |
+| Alexander Picón Garrote     | :blush:  | :angry:  | :angry:  |   :blush:      | :blush:   |          |          |          |          |          |          |          |          |          | 
 | Santiago Rosado Raya        |          |          |          |                |           |          |          |          |          |          |          |          |          |          |
 | Julia Sánchez Márquez       |          | :blush:  |          |                | :smiley:  |          |          |          |          |          |          |          |          |          |
 | Alejandro Sevillano Barea   |          |          |          |                |           |          |          |          |          |          |          |          |          |          |
