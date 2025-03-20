@@ -28,6 +28,7 @@ def api_home(request):
             "usuarios": "/usuarios/",
             "objetos": "/objetos/",
             "rentas": "/rentas/",
+            "pagos": "/pagos/",
         }
     }
     return JsonResponse(data)
@@ -38,6 +39,7 @@ urlpatterns = [
     path("usuarios/", include("usuarios.urls")),
     path('objetos/', include('objetos.urls')),
     path('rentas/', include('rentas.urls')),
+    path('pagos/', include('pagos.urls')),
     path('admin/', admin.site.urls),
 ]
 

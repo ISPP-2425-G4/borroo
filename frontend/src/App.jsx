@@ -31,7 +31,6 @@ function App() {
         <Route path="/recoverPassword" element={<RecoverPassword />} />
         <Route path="/recoverPasswordDone" element={<RecoverPasswordDone />} />
         <Route path="/recoverPasswordNew" element={<RecoverPasswordNew />} />
-
       </Routes>
       <Footer/>
     </Router>
