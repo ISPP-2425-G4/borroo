@@ -12,6 +12,7 @@ import RecoverPassword from "./RecoverPassword";
 import RecoverPasswordDone from "./RecoverPasswordDone";
 import RecoverPasswordNew from "./RecoverPasswordNew";
 import SubscriptionScreen from "./SubscriptionScreen";
+import DraftItemsView from "./DraftsScreen";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/recoverPassword" element={<RecoverPassword />} />
         <Route path="/recoverPasswordDone" element={<RecoverPasswordDone />} />
         <Route path="/recoverPasswordNew" element={<RecoverPasswordNew />} />
+        <Route path="/drafts" element={<DraftItemsView />} />
       </Routes>
       <Footer/>
     </Router>
