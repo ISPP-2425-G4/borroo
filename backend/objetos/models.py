@@ -119,7 +119,8 @@ class ItemRequest(models.Model):
             cancel_type=self.cancel_type,
             price_category=self.price_category,
             price=self.price,
-            user=self.user
+            user=self.user,
+            draft_mode=True
         )
         self.approved = True
         self.save()
