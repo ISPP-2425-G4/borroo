@@ -32,6 +32,7 @@ const Layout = () => {
 
   const handleCategoriaChange = (e) => {
     setCategoria(e.target.value);
+    setSubcategoria("")
   };
 
   const handleSubcategoriaChange = (e) => {
