@@ -167,7 +167,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Madrid'  # O cualquier otra ciudad en CET
 
 USE_I18N = True
 
