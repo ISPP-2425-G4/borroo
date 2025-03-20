@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import ItemCategory, CancelType, PriceCategory
 from rest_framework.decorators import action
+from rest_framework.exceptions import PermissionDenied
 
 
 class EnumChoicesView(APIView):
@@ -54,6 +55,55 @@ class ItemViewSet(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED,
                         headers=headers)
+
+    @action(detail=True, methods=['post'])
+    def toggle_featured(self, request, pk=None):
+        """
+        Permite a un usuario premium destacar o quitar destacado de su objeto,
+        respetando el límite de 2 destacados.
+        """
+        item = self.get_object()
+        user = item.user
+
+        # Solo el dueño puede modificar su destacado
+        if user != request.user:
+            raise PermissionDenied(
+                "No puedes modificar destacados de otro usuario."
+            )
+
+        # Validación del plan premium
+        if user.pricing_plan != 'premium':
+            return Response(
+                {
+                    'error': 'Solo los usuarios Premium pueden destacar '
+                             'objetos.'
+                },
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Alternar destacado
+        if not item.is_featured:
+            featured_count = Item.objects.filter(
+                user=user, is_featured=True
+            ).exclude(id=item.id).count()
+            if featured_count >= 2:
+                return Response(
+                    {'error': 'Solo puedes tener hasta 2 objetos destacados.'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            item.is_featured = True
+        else:
+            item.is_featured = False
+
+        item.save()
+        return Response(
+            {
+                'message': 'El estado de destacado se actualizó '
+                           'correctamente.',
+                'is_featured': item.is_featured
+            },
+            status=status.HTTP_200_OK
+        )
 
 
 class ItemImageViewSet(viewsets.ModelViewSet):
