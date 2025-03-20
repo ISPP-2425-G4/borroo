@@ -8,7 +8,6 @@ import {
   TextField,
   Card,
   CardContent,
-  Slider,
   Tooltip,
   Paper,
   InputAdornment,
@@ -46,7 +45,7 @@ const Layout = () => {
   const [terminoBusqueda, setTerminoBusqueda] = useState("");
   const [categoria, setCategoria] = useState("");
   const [subcategoria, setSubcategoria] = useState("");
-  const [rangoPrecio, setRangoPrecio] = useState([0, 100]);
+  const [rangoPrecio, setRangoPrecio] = useState([0, 99999]);
   const [productosFiltrados, setProductosFiltrados] = useState([]);
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [cargando, setCargando] = useState(true);
@@ -57,7 +56,17 @@ const Layout = () => {
     setSubcategoria("")
   }
 
-  const manejarCambioPrecio = (_, nuevoValor) => setRangoPrecio(nuevoValor);
+  const manejarCambioPrecio = (e, index) => {
+    let nuevoValor = parseInt(e.target.value, 10);
+      if (isNaN(nuevoValor) || nuevoValor < 0) {
+      nuevoValor = 0;
+    }
+      if (index === 0) {
+      setRangoPrecio([nuevoValor, Math.max(nuevoValor, rangoPrecio[1])]);
+    } else {
+      setRangoPrecio([Math.min(nuevoValor, rangoPrecio[0]), nuevoValor]);
+    }
+  };
   const [currentPage, setCurrentPage] = useState(1);
 const itemsPerPage = 10;
 const indexOfLastItem = currentPage * itemsPerPage;
@@ -522,32 +531,6 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                     {rangoPrecio[0]}€ - {rangoPrecio[1]}€
                   </Typography>
                 </Box>
-                
-                <Slider
-                  value={rangoPrecio}
-                  onChange={manejarCambioPrecio}
-                  min={0}
-                  max={100}
-                  step={5}
-                  valueLabelDisplay="off"
-                  sx={{
-                    '& .MuiSlider-thumb': {
-                      height: 16,
-                      width: 16,
-                      '&:hover, &.Mui-focusVisible': {
-                        boxShadow: '0 0 0 8px rgba(63, 81, 181, 0.16)'
-                      }
-                    },
-                    '& .MuiSlider-track': {
-                      height: 5
-                    },
-                    '& .MuiSlider-rail': {
-                      height: 5,
-                      opacity: 0.2
-                    }
-                  }}
-                />
-                
                 <Box sx={{ 
                   display: 'flex', 
                   justifyContent: 'space-between',
@@ -557,9 +540,10 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                     size="small"
                     label="Mín"
                     value={rangoPrecio[0]}
+                    onChange={(e) => manejarCambioPrecio(e, 0)} // 0 para el campo mínimo
                     InputProps={{
                       startAdornment: <InputAdornment position="start">€</InputAdornment>,
-                      readOnly: true
+                      readOnly: false
                     }}
                     sx={{ width: '45%' }}
                   />
@@ -567,12 +551,14 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                     size="small"
                     label="Máx"
                     value={rangoPrecio[1]}
+                    onChange={(e) => manejarCambioPrecio(e, 1)} // 1 para el campo máximo
                     InputProps={{
                       startAdornment: <InputAdornment position="start">€</InputAdornment>,
-                      readOnly: true
+                      readOnly: false
                     }}
                     sx={{ width: '45%' }}
                   />
+
                 </Box>
               </Box>
             </Paper>
