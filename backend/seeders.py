@@ -39,7 +39,7 @@ def create_users():
             address=f'Calle {usernames.index(username)}',
             postal_code='28001',
             is_verified=bool(random.getrandbits(1)),
-            pricing_plan=random.choice(['free', 'premium'])
+            pricing_plan=random.choice(['free', 'basic', 'premium'])
         )
     print('Users created successfully!')
 
@@ -53,7 +53,8 @@ def create_items():
                                     'clothing', 'furniture_and_logistics',
                                     'training']),
             cancel_type=random.choice(['flexible', 'medium', 'strict']),
-            price_category=random.choice(['hour', 'day', 'week', 'month', 'year']),
+            price_category=random.choice(['hour', 'day', 'week', 'month',
+                                          'year']),
             price=Decimal(random.uniform(2, 30)),
             user=random.choice(users),
             draft_mode=False,
