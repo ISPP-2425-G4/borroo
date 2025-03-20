@@ -54,6 +54,9 @@ class Item(models.Model):
     user = models.ForeignKey('usuarios.User', related_name='items',
                              on_delete=models.CASCADE)
     draft_mode = models.BooleanField(default=False)
+    dates_not_available = models.JSONField(default=list)
+
+    
 
 
 class ItemImage(models.Model):

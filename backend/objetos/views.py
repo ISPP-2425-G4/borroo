@@ -43,17 +43,47 @@ class ItemViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         print("Request data:", request.data)
+        
+        # Verificamos que `fechas_no_disponibles` esté presente en la solicitud
+        fechas_no_disponibles = request.data.get("fechas_no_disponibles", [])
+        if not isinstance(fechas_no_disponibles, list):
+            return Response(
+                {"error": "El campo fechas_no_disponibles debe ser una lista de rangos de fechas"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
         serializer = self.get_serializer(data=request.data)
         if not serializer.is_valid():
             print("Validation errors:", serializer.errors)
-        serializer.is_valid(raise_exception=True)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         print("Validated data:", serializer.validated_data)
-        item = serializer.save()
+        item = serializer.save(fechas_no_disponibles=fechas_no_disponibles)
         print("Created item:", item)
 
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED,
-                        headers=headers)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        
+        # Obtener las fechas no disponibles de la solicitud
+        fechas_no_disponibles = request.data.get("fechas_no_disponibles", instance.fechas_no_disponibles)
+
+        if not isinstance(fechas_no_disponibles, list):
+            return Response(
+                {"error": "El campo fechas_no_disponibles debe ser una lista de rangos de fechas"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        # Guardar con las fechas actualizadas
+        item = serializer.save(fechas_no_disponibles=fechas_no_disponibles)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ItemImageViewSet(viewsets.ModelViewSet):
