@@ -71,7 +71,8 @@ const Navbar = () => {
   const navItems = [
     { title: "Inicio", path: "/" },
     { title: "Poner en alquiler", path: "/create-item" },
-    { title: "Plan de suscripción", path: "/pricing-plan" }
+    { title: "Plan de suscripción", path: "/pricing-plan" },
+    ...(user ? [{ title: "Mis solicitudes", path: "/rental_requests" }] : [])
   ];
 
   const toggleDrawer = (open) => (event) => {
