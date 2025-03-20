@@ -58,6 +58,12 @@ const Layout = () => {
   }
 
   const manejarCambioPrecio = (_, nuevoValor) => setRangoPrecio(nuevoValor);
+  const [currentPage, setCurrentPage] = useState(1);
+const itemsPerPage = 10;
+const indexOfLastItem = currentPage * itemsPerPage;
+const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+const currentItems = productosFiltrados.slice(indexOfFirstItem, indexOfLastItem);
+const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
   
   const reiniciarFiltros = () => {
     setTerminoBusqueda("");
@@ -92,32 +98,37 @@ const Layout = () => {
   useEffect(() => {
     const obtenerProductos = async () => {
       setCargando(true);
+      let nextUrl = `${import.meta.env.VITE_API_BASE_URL}/objetos/list_published_items`;
+      let allResults = [];
+  
       try {
-        const respuesta = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/objetos/full`, {
-          headers: { "Content-Type": "application/json" }
-        });
-
-        const datos = respuesta.data;
-        if (datos.results) {
-          const productosConImagenes = await Promise.all(
-            datos.results.map(async (producto) => {
-              const urlImagen = producto.images && producto.images.length > 0
-                ? await obtenerUrlImagen(producto.images[0])
-                : IMAGEN_PREDETERMINADA;
-              return { ...producto, urlImagen };
-            })
-          );
-          setProductos(productosConImagenes);
-        } else {
-          setError("No hay productos disponibles.");
+        while (nextUrl) {
+          const respuesta = await axios.get(nextUrl, {
+            headers: { "Content-Type": "application/json" }
+          });
+          console.log("Página cargada:", respuesta.data);
+          allResults = [...allResults, ...respuesta.data.results];
+          nextUrl = respuesta.data.next; // avanza a la siguiente página
         }
+  
+        const productosConImagenes = await Promise.all(
+          allResults.map(async (producto) => {
+            const urlImagen = producto.images && producto.images.length > 0
+              ? await obtenerUrlImagen(producto.images[0])
+              : IMAGEN_PREDETERMINADA;
+            return { ...producto, urlImagen };
+          })
+        );
+  
+        setProductos(productosConImagenes);
       } catch (error) {
-        setError("Error al cargar los productos. Por favor, inténtelo de nuevo más tarde.", error);
+        console.error(error);
+        setError("Error al cargar los productos.");
       } finally {
         setCargando(false);
       }
     };
-
+  
     obtenerProductos();
   }, [obtenerUrlImagen]);
 
@@ -667,7 +678,7 @@ const Layout = () => {
                       flexWrap: 'wrap',
                       gap: { xs: 2, md: 3 },
                     }}>
-                      {productosFiltrados.map((producto, indice) => {
+                      {currentItems.map((producto, indice) => {
                         const { icono, color } = obtenerDetallesCategoria(producto.category_display);
                         
                         return (
@@ -893,6 +904,27 @@ const Layout = () => {
                           </Box>
                         );
                       })}
+                    </Box>
+
+                  )}{totalPages > 1 && ( 
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, gap: 2 }}>
+                      <Button 
+                        variant="contained" 
+                        disabled={currentPage === 1} 
+                        onClick={() => setCurrentPage(prev => prev - 1)}
+                      >
+                        Anterior
+                      </Button>
+                      <Typography variant="body1" sx={{ alignSelf: 'center' }}>
+                        Página {currentPage} de {totalPages}
+                      </Typography>
+                      <Button 
+                        variant="contained" 
+                        disabled={currentPage === totalPages} 
+                        onClick={() => setCurrentPage(prev => prev + 1)}
+                      >
+                        Siguiente
+                      </Button>
                     </Box>
                   )}
                 </>

@@ -212,6 +212,7 @@ const CreateItemScreen = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [loadingDash, setLoadingDash] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const navigate = useNavigate();
@@ -219,6 +220,7 @@ const CreateItemScreen = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [fetchingOptions, setFetchingOptions] = useState(true);
+  const [isDraft, setIsDraft] = useState(false);
   const [filteredSubcategories, setFilteredSubcategories] = useState([]);
 
   useEffect(() => {
@@ -428,7 +430,9 @@ const CreateItemScreen = () => {
       }
     }
   };
-
+  const handleSaveAsDraft = (e) => {
+    handleSubmit(e, true); // true indica que es un borrador
+  };
   const handleRemoveImage = (index) => {
     setImages(images.filter((_, i) => i !== index));
   };
@@ -437,9 +441,15 @@ const CreateItemScreen = () => {
     document.getElementById('image-upload').click();
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, isDraft = false) => {
     e.preventDefault();
-    setLoading(true);
+    if(isDraft){
+      setIsDraft(true);
+      setLoadingDash(true);
+    }else{
+      setLoading(true);
+    }
+
     setErrorMessage("");
     setFieldErrors({});
     setShowErrorMessage(false);
@@ -500,6 +510,7 @@ const CreateItemScreen = () => {
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       setLoading(false);
+      setLoadingDash(false);
       setShowErrorMessage(true);
       return;
     }
@@ -507,6 +518,7 @@ const CreateItemScreen = () => {
     try {
       const formDataToSend = new FormData();
       const allowedKeys = ["title", "description", "category", "subcategory", "cancel_type", "price_category", "price"];
+      formDataToSend.append("draft_mode", isDraft ? "true" : "false");
       
       Object.keys(formData).forEach((key) => {
         if (allowedKeys.includes(key)) {
@@ -544,6 +556,7 @@ const CreateItemScreen = () => {
       setErrorMessage(error.response?.data?.message || "Ocurrió un error al enviar el formulario.");
     } finally {
       setLoading(false);
+      setLoadingDash(false);
     }
   };
 
@@ -561,10 +574,11 @@ const CreateItemScreen = () => {
           )}
           
           {submitSuccess && (
-            <Alert severity="success" sx={{ mb: 3 }}>
-              ¡Item creado exitosamente! Redirigiendo...
-            </Alert>
-          )}
+              <Alert severity="success" sx={{ mb: 3 }}>
+                {isDraft ? '¡Item guardado exitosamente! Redirigiendo...' : '¡Item creado exitosamente! Redirigiendo...'}
+              </Alert>
+            )}
+          
 
           {fetchingOptions ? (
             <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
@@ -733,10 +747,36 @@ const CreateItemScreen = () => {
                   </ImageGallery>
                 </Box>
               )}
+              <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+              <SubmitButton 
+                type="button" 
+                disabled={!isFormValid ||loadingDash}
+                onClick={handleSaveAsDraft}
+                sx={{
+                  flex: 1,
+                  backgroundColor: (!isFormValid || loadingDash) ? '#cccccc' : '#555555',
+                  '&:hover': {
+                    backgroundColor: (!isFormValid || loadingDash) ? '#cccccc' : '#333333'
+                  }
+                }}
+              >
+                {loadingDash ? (
+                  <>
+                    <CircularProgress size={20} color="inherit" />
+                    <span>Guardando...</span>
+                  </>
+                ) : (
+                  <>
+                    <FiUpload />
+                    <span>Guardar como Borrador</span>
+                  </>
+                )}
+              </SubmitButton>
 
               <SubmitButton 
                 type="submit" 
                 disabled={!isFormValid || loading}
+                sx={{ flex: 1 }}
               >
                 {loading ? (
                   <>
@@ -750,6 +790,7 @@ const CreateItemScreen = () => {
                   </>
                 )}
               </SubmitButton>
+            </Stack>
               
               {showErrorMessage && (
                 <Alert severity="warning" sx={{ mt: 2 }}>
