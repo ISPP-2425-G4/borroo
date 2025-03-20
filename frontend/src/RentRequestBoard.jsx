@@ -82,53 +82,91 @@ const RentRequestBoard = () => {
     };
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mt: 10, p: 2 }}>
             <Navbar />
+            <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
+                Solicitudes de Alquiler
+            </Typography>
+
             {requests.length === 0 ? (
-                <p>No hay solicitudes de alquiler disponibles.</p>
+                <Typography>No hay solicitudes de alquiler disponibles.</Typography>
             ) : (
-                <Box>
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 2,
+                        p: 2,
+                        width: "100%",
+                        maxWidth: "800px",
+                        maxHeight: "75vh",
+                        overflowY: "auto",
+                        "&::-webkit-scrollbar": {
+                            width: "8px",
+                        },
+                        "&::-webkit-scrollbar-thumb": {
+                            backgroundColor: "#aaa",
+                            borderRadius: "4px",
+                        },
+                    }}
+                >
                     {requests.map((request) => (
-                        <Box
-                        key={request.id} xs={12} sm={6} md={4} lg={3} sx={{ mt: 2 }}>
-                        <Card sx={{ maxWidth: 345, boxShadow: 3 }}>
-                                <CardMedia
-                                    component="img"
-                                    height="160"
-                                    image={request.imageUrl}
-                                    alt={request.title}
-                                    sx={{ objectFit: "cover" }}
-                                />
-                                <CardContent>
-                                    <Typography variant="h6">{request.title}</Typography>
-                                    <Typography variant="body2" color="textSecondary">
-                                        Solicitado por: {request.renter?.username}
-                                    </Typography>
-                                    <Typography variant="body2">
-                                        Inicio: {new Date(request.start_date).toLocaleDateString()}
-                                    </Typography>
-                                    <Typography variant="body2">
-                                        Fin: {new Date(request.end_date).toLocaleDateString()}
-                                    </Typography>
-                                    <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
-                                        <Button
-                                            variant="contained"
-                                            color="success"
-                                            onClick={() => handleResponse(request, "accepted")}
-                                        >
-                                            Aceptar
-                                        </Button>
-                                        <Button
-                                            variant="contained"
-                                            color="error"
-                                            onClick={() => handleResponse(request, "rejected")}
-                                        >
-                                            Rechazar
-                                        </Button>
-                                    </Box>
-                                </CardContent>
-                            </Card>
-                        </Box>
+                        <Card
+                            key={request.id}
+                            sx={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                boxShadow: 3,
+                                p: 2,
+                                width: "100%",
+                                maxWidth: "750px",
+                                minHeight: "150px",
+                            }}
+                        >
+                            <CardMedia
+                                component="img"
+                                sx={{
+                                    width: 150,
+                                    height: 150,
+                                    objectFit: "cover",
+                                    borderRadius: "2px",
+                                    mr: 2,
+                                }}
+                                image={request.imageUrl}
+                                alt={request.title}
+                            />
+                            <CardContent sx={{ flex: 1 }}>
+                                <Typography variant="h6">{request.title}</Typography>
+                                <Typography variant="body2" color="textSecondary">
+                                    Solicitado por: {request.renter?.username}
+                                </Typography>
+                                <Typography variant="body2">
+                                    Inicio: {new Date(request.start_date).toLocaleDateString()}
+                                </Typography>
+                                <Typography variant="body2">
+                                    Fin: {new Date(request.end_date).toLocaleDateString()}
+                                </Typography>
+                                <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+                                    <Button
+                                        variant="contained"
+                                        color="success"
+                                        size="small"
+                                        onClick={() => handleResponse(request, "accepted")}
+                                    >
+                                        Aceptar
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="error"
+                                        size="small"
+                                        onClick={() => handleResponse(request, "rejected")}
+                                    >
+                                        Rechazar
+                                    </Button>
+                                </Box>
+                            </CardContent>
+                        </Card>
                     ))}
                 </Box>
             )}
