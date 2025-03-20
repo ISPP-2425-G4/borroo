@@ -446,6 +446,14 @@ const ShowItemScreen = () => {
                       <Typography variant="body2">{item.category_display}</Typography>
                     </Box>
                   </Box>
+
+                  <Box sx={{ display: 'flex', gap: 2 }}>
+                    <CategoryIcon color="action" />
+                    <Box>
+                      <Typography variant="subtitle2">Subcategoría</Typography>
+                      <Typography variant="body2">{item.subcategory_display}</Typography>
+                    </Box>
+                  </Box>
                   
                   <Divider />
                   

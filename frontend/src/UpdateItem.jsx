@@ -45,6 +45,8 @@ const UpdateItemScreen = () => {
   const [images, setImages] = useState([]);
   const [existingImages, setExistingImages] = useState([]);
   const [removedImages, setRemovedImages] = useState([]);
+  const [filteredSubcategories, setFilteredSubcategories] = useState([]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -106,11 +108,12 @@ const UpdateItemScreen = () => {
   const validateForm = () => {
     if (!formData) return;
     
-    const { title, description, category, cancel_type, price_category, price } = formData;
+    const { title, description, category, subcategory, cancel_type, price_category, price } = formData;
     const isValid =
       title?.trim() !== "" &&
       description?.trim() !== "" &&
       category?.trim() !== "" &&
+      subcategory?.trim() !== "" &&
       cancel_type?.trim() !== "" &&
       price_category?.trim() !== "" &&
       price?.trim() !== "" &&
@@ -163,7 +166,7 @@ const UpdateItemScreen = () => {
 
     const errors = {};
 
-    if (!formData.title || !formData.description || !formData.category || !formData.cancel_type || !formData.price_category || !formData.price) {
+    if (!formData.title || !formData.description || !formData.category || !formData.subcategory || !formData.cancel_type || !formData.price_category || !formData.price) {
       setErrorMessage("Por favor, completa todos los campos.");
       setLoading(false);
       return;
@@ -247,6 +250,124 @@ const UpdateItemScreen = () => {
     }
   };
 
+  const handleCategoryChange = (e) => {
+    const selectedCategory = e.target.value;
+    setFormData({ ...formData, category: selectedCategory, subcategory: "" });
+  
+    let newSubcategories = [];
+  
+    if (selectedCategory === "technology") {
+      newSubcategories = [
+        { value: "computers", label: "Ordenadores" },
+        { value: "computer_accessories", label: "Accesorios de ordenador" },
+        { value: "smartphones", label: "Smartphones" },
+        { value: "tablets", label: "Tablets" },
+        { value: "cameras", label: "Cámaras" },
+        { value: "consoles", label: "Consolas" },
+        { value: "tv", label: "Televisores" },
+        { value: "monitors", label: "Monitores" },
+        { value: "smarthome", label: "Hogar inteligente" },
+        { value: "audio", label: "Audio" },
+        { value: "smartwatchs", label: "Smartwatches" },
+        { value: "printers_scanners", label: "Impresoras y escáneres" },
+        { value: "drones", label: "Drones" },
+        { value: "projectors", label: "Proyectores" },
+        { value: "technology_others", label: "Otros" },
+        { value: "none", label: "Ninguno" },
+
+      ];
+    } else if (selectedCategory === "sports") {
+      newSubcategories = [
+        { value: "cycling", label: "Ciclismo" },
+        { value: "gym", label: "Gimnasio" },
+        { value: "calisthenics", label: "Calistenia" },
+        { value: "running", label: "Running" },
+        { value: "ball_sports", label: "Deportes de pelota" },
+        { value: "racket_sports", label: "Deportes de raqueta" },
+        { value: "paddle_sports", label: "Deportes de remo" },
+        { value: "martial_arts", label: "Artes marciales" },
+        { value: "snow_sports", label: "Deportes de nieve" },
+        { value: "skateboarding", label: "Skate" },
+        { value: "beach_sports", label: "Deportes de playa" },
+        { value: "pool_sports", label: "Deportes de piscina" },
+        { value: "river_sports", label: "Deportes de río" },
+        { value: "mountain_sports", label: "Deportes de montaña" },
+        { value: "extreme_sports", label: "Deportes extremos" },
+        { value: "sports_others", label: "Otros (Deporte)" },
+        { value: "none", label: "Ninguno" },
+
+      ];
+    } else if (selectedCategory === "diy") {
+      newSubcategories = [
+        { value: "electric_tools", label: "Herramientas eléctricas" },
+        { value: "manual_tools", label: "Herramientas manuales" },
+        { value: "machines", label: "Máquinas" },
+        { value: "electricity", label: "Electricidad" },
+        { value: "plumbing", label: "Fontanería" },
+        { value: "woodworking", label: "Carpintería" },
+        { value: "painting", label: "Pintura" },
+        { value: "gardening", label: "Jardinería" },
+        { value: "decoration", label: "Decoración" },
+        { value: "diy_others", label: "Otros (Bricolaje)" },
+        { value: "none", label: "Ninguno" },
+
+      ];
+    } else if (selectedCategory === "clothing") {
+      newSubcategories = [
+        { value: "summer_clothing", label: "Ropa de verano" },
+        { value: "winter_clothing", label: "Ropa de invierno" },
+        { value: "mevent_clothing", label: "Ropa de evento para hombre" },
+        { value: "wevent_clothing", label: "Ropa de evento para mujer" },
+        { value: "sport_event_apparel", label: "Ropa de evento deportivo" },
+        { value: "mshoes", label: "Zapatos para hombre" },
+        { value: "wshoes", label: "Zapatos para mujer" },
+        { value: "suits", label: "Trajes" },
+        { value: "dresses", label: "Vestidos" },
+        { value: "jewelry", label: "Joyería" },
+        { value: "watches", label: "Relojes" },
+        { value: "bags", label: "Bolsos" },
+        { value: "sunglasses", label: "Gafas de sol" },
+        { value: "hats", label: "Sombreros" },
+        { value: "clothing_others", label: "Otros (Ropa)" },
+        { value: "none", label: "Ninguno" },
+
+      ];
+    } else if (selectedCategory === "furniture_and_logistics") {
+      newSubcategories = [
+        { value: "home_furniture", label: "Muebles de hogar" },
+        { value: "home_appliances", label: "Electrodomésticos" },
+        { value: "event_equipment", label: "Equipamiento para eventos" },
+        { value: "kids_furniture", label: "Muebles para niños" },
+        { value: "office_furniture", label: "Muebles de oficina" },
+        { value: "kitchen", label: "Cocina" },
+        { value: "bathroom", label: "Baño" },
+        { value: "garden_furniture", label: "Muebles de jardín" },
+        { value: "decoration_ambience", label: "Decoración y ambiente" },
+        { value: "furniture_and_logistics_others", label: "Otros (Mobiliario y logística)" },
+        { value: "none", label: "Ninguno" },
+
+      ];
+    } else if (selectedCategory === "entertainment") {
+      newSubcategories = [
+        { value: "videogames", label: "Videojuegos" },
+        { value: "board_games", label: "Juegos de mesa" },
+        { value: "books", label: "Libros" },
+        { value: "movies", label: "Películas" },
+        { value: "music", label: "Música" },
+        { value: "instruments", label: "Instrumentos" },
+        { value: "party", label: "Fiesta" },
+        { value: "camping", label: "Camping" },
+        { value: "travel", label: "Viaje" },
+        { value: "other_entertainment", label: "Otros (Entretenimiento)" },
+        { value: "none", label: "Ninguno" },
+      ];
+    }
+    setFilteredSubcategories(newSubcategories);
+  };
+
+
+
+
   if (!isLoaded) {
     return (
       <Container maxWidth="md">
@@ -329,7 +450,7 @@ const UpdateItemScreen = () => {
                     labelId="category-label"
                     name="category"
                     value={formData.category || ""}
-                    onChange={handleChange}
+                    onChange={handleCategoryChange}
                     startAdornment={
                       <InputAdornment position="start">
                         <CategoryIcon />
@@ -340,6 +461,31 @@ const UpdateItemScreen = () => {
                       Selecciona una categoría
                     </MenuItem>
                     {options.categories.map(({ value, label }) => (
+                      <MenuItem key={value} value={value}>
+                        {label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+
+                <FormControl fullWidth required>
+                  <InputLabel id="subcategory-label">Subcategoría</InputLabel>
+                  <Select
+                    labelId="subcategory-label"
+                    name="subcategory"
+                    value={formData.subcategory || ""}
+                    onChange={handleChange}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <CategoryIcon />
+                      </InputAdornment>
+                    }
+                  >
+                    <MenuItem value="" disabled>
+                      Selecciona una subcategoría
+                    </MenuItem>
+                    {filteredSubcategories.map(({ value, label }) => (
                       <MenuItem key={value} value={value}>
                         {label}
                       </MenuItem>
