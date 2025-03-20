@@ -85,7 +85,9 @@ const RentRequestBoard = () => {
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <Navbar />
             {requests.length === 0 ? (
+                <Box sx={{ mt: 16, minHeight:"80vh" }}>
                 <p>No hay solicitudes de alquiler disponibles.</p>
+                </Box>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {requests.map((request) => (
