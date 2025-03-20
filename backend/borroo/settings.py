@@ -13,8 +13,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 
+
+dotenv_file = ".env"
+load_dotenv(dotenv_file)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,8 +35,9 @@ DEBUG = True
 ALLOWED_HOSTS = ['backend-dot-ispp-2425-g4.ew.r.appspot.com', 'localhost',
                  '127.0.0.1']
 
-dotenv_file = ".env"
-load_dotenv(dotenv_file)
+
+STRIPE_PUBLIC_KEY = "pk_test_51R40o5CYu4v8DwUZa9XqJ5Z8F72qzFJ229ZOpYvV9toOHxPpJJAAF4kHllmFo3LUcAB8DvLcOsNYuq7XWuxLmQfu00P1I1hNXP"
+STRIPE_SECRET_KEY = "sk_test_51R40o5CYu4v8DwUZjoGIROJcsUyhnX5bsDH7ihfVuoNAn6IOgTqudxGBa7EBYV1qOw1DNPvALqzZvkthrvkABgJ300wxyvCwvY"
 
 # Application definition
 
@@ -163,7 +167,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Madrid'  # O cualquier otra ciudad en CET
 
 USE_I18N = True
 

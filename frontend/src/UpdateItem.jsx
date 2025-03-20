@@ -1,18 +1,34 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  FiFileText,
-  FiEdit,
-  FiLayers,
-  FiXCircle,
-  FiDollarSign,
-  FiTrash2,
-} from "react-icons/fi";
-import "../public/styles/CreateItem.css";
+  Box,
+  Button,
+  Card,
+  CircularProgress,
+  Container,
+  FormControl,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  Stack,
+  TextField,
+  Typography,
+  IconButton
+} from "@mui/material";
+import {
+  Description as DescriptionIcon,
+  Edit as EditIcon,
+  Category as CategoryIcon,
+  Cancel as CancelIcon,
+  AttachMoney as MoneyIcon,
+  Delete as DeleteIcon,
+  Upload as UploadIcon
+} from "@mui/icons-material";
 import Navbar from "./Navbar";
 import axios from 'axios';
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
-
 
 const UpdateItemScreen = () => {
   const { id } = useParams();
@@ -23,12 +39,12 @@ const UpdateItemScreen = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
-  const [, setIsFormValid] = useState(false);
-  const [loading] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const [images, setImages] = useState([]); // Imágenes nuevas
-  const [existingImages, setExistingImages] = useState([]); // Imágenes actuales (IDs y URLs)
-  const [removedImages, setRemovedImages] = useState([]); // Imágenes actuales eliminadas
+  const [images, setImages] = useState([]);
+  const [existingImages, setExistingImages] = useState([]);
+  const [removedImages, setRemovedImages] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -88,19 +104,26 @@ const UpdateItemScreen = () => {
   }, [id, navigate]);
 
   const validateForm = () => {
+    if (!formData) return;
+    
     const { title, description, category, cancel_type, price_category, price } = formData;
     const isValid =
-      title.trim() !== "" &&
-      description.trim() !== "" &&
-      category.trim() !== "" &&
-      cancel_type.trim() !== "" &&
-      price_category.trim() !== "" &&
-      price.trim() !== "" &&
+      title?.trim() !== "" &&
+      description?.trim() !== "" &&
+      category?.trim() !== "" &&
+      cancel_type?.trim() !== "" &&
+      price_category?.trim() !== "" &&
+      price?.trim() !== "" &&
       !isNaN(price) &&
       parseFloat(price) > 0;
     
     setIsFormValid(isValid);
   };
+
+  useEffect(() => {
+    validateForm();
+  }, [formData]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -111,15 +134,13 @@ const UpdateItemScreen = () => {
         return; // No actualiza el estado si el formato no es válido
       }
     }
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-    validateForm(); // Llama a la validación cada vez que cambia un campo
+    setFormData({ ...formData, [name]: value });
   };
 
   // Manejar imágenes nuevas seleccionadas
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setImages(files); // Solo permitimos nuevas imágenes, no acumulamos
-    validateForm(); // Validar después de añadir imágenes
   };
 
   // Eliminar una imagen seleccionada
@@ -138,11 +159,13 @@ const UpdateItemScreen = () => {
     e.preventDefault();
     setErrorMessage("");
     setFieldErrors({});
+    setLoading(true);
 
     const errors = {};
 
     if (!formData.title || !formData.description || !formData.category || !formData.cancel_type || !formData.price_category || !formData.price) {
       setErrorMessage("Por favor, completa todos los campos.");
+      setLoading(false);
       return;
     }
 
@@ -174,8 +197,10 @@ const UpdateItemScreen = () => {
 
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
+      setLoading(false);
       return;
     }
+    
     try {
       const formDataToSend = new FormData();
 
@@ -207,8 +232,8 @@ const UpdateItemScreen = () => {
         `${import.meta.env.VITE_API_BASE_URL}/objetos/full/${id}/`,
         formDataToSend,
         {
-          headers: { "Content-Type": "multipart/form-data" },  // Indica que estás enviando datos tipo FormData
-          withCredentials: true,  // Equivalente a 'credentials: "include"'
+          headers: { "Content-Type": "multipart/form-data" },
+          withCredentials: true,
         }
       );
 
@@ -217,173 +242,311 @@ const UpdateItemScreen = () => {
     } catch (error) {
       console.error("Error actualizando el ítem:", error);
       setErrorMessage("Ocurrió un error al actualizar el ítem.");
+    } finally {
+      setLoading(false);
     }
   };
 
   if (!isLoaded) {
     return (
-      <div className="rental-container">
+      <Container maxWidth="md">
         <Navbar />
-        <div className="rental-box">
-          <h2>Cargando...</h2>
-        </div>
-      </div>
+        <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
+          <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+            <CircularProgress />
+            <Typography variant="h6" ml={2}>Cargando...</Typography>
+          </Box>
+        </Paper>
+      </Container>
     );
   }
-  const isSubmitDisabled = loading || !formData.title || !formData.description || !formData.category || !formData.cancel_type || !formData.price_category || !formData.price;
+
+  const isSubmitDisabled = loading || !isFormValid;
 
   return (
-    <div className="rental-container">
+    <Container maxWidth="md">
       <Navbar />
-      <div className="rental-box">
-        <h2>Editar Publicación</h2>
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
+      <Paper elevation={3} sx={{ p: 4, mt: 10, mb: 4 }}>
+        <Typography variant="h4" component="h2" gutterBottom>
+          Editar Publicación
+        </Typography>
+        
+        {errorMessage && (
+          <Typography color="error" variant="body2" sx={{ mb: 2 }}>
+            {errorMessage}
+          </Typography>
+        )}
   
-        <form onSubmit={handleSubmit}>
-          {/* Título */}
-          {fieldErrors.title && <div className="error-message">{fieldErrors.title}</div>}
-          <div className="input-group">
-            <FiFileText className="input-icon" />
-            <input
-              type="text"
+        <Box component="form" onSubmit={handleSubmit} noValidate>
+          <Stack spacing={3}>
+            {/* Título */}
+            <TextField
+              label="Título"
               name="title"
-              value={formData.title}
+              value={formData.title || ""}
               onChange={handleChange}
+              error={!!fieldErrors.title}
+              helperText={fieldErrors.title}
+              fullWidth
               required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <DescriptionIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
-          </div>
   
-          {/* Descripción */}
-          {fieldErrors.description && <div className="error-message">{fieldErrors.description}</div>}
-          <div className="input-group">
-            <FiEdit className="input-icon" />
-            <textarea
+            {/* Descripción */}
+            <TextField
+              label="Descripción"
               name="description"
-              value={formData.description}
+              value={formData.description || ""}
               onChange={handleChange}
+              error={!!fieldErrors.description}
+              helperText={fieldErrors.description}
+              fullWidth
+              multiline
+              rows={4}
               required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EditIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
-          </div>
   
-          {/* Categorías y opciones */}
-          {options && (
-            <>
-              {/* Categoría */}
-              <div className="input-group">
-                <FiLayers className="input-icon" />
-                <select
-                  name="category"
-                  value={formData.category || ""}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="" disabled>Selecciona una categoría</option>
-                  {options.categories.map(({ value, label }) => (
-                    <option key={value} value={value}>{label}</option>
-                  ))}
-                </select>
-                <span className="select-arrow">▼</span>
-              </div>
+            {/* Categorías y opciones */}
+            {options && (
+              <>
+                {/* Categoría */}
+                <FormControl fullWidth required>
+                  <InputLabel id="category-label">Categoría</InputLabel>
+                  <Select
+                    labelId="category-label"
+                    name="category"
+                    value={formData.category || ""}
+                    onChange={handleChange}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <CategoryIcon />
+                      </InputAdornment>
+                    }
+                  >
+                    <MenuItem value="" disabled>
+                      Selecciona una categoría
+                    </MenuItem>
+                    {options.categories.map(({ value, label }) => (
+                      <MenuItem key={value} value={value}>
+                        {label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
   
-              {/* Política de Cancelación con Tooltip arriba */}
-            <div className="field-group">
-              <div className="field-label">
-                <CancelPolicyTooltip /> {/* 🔹 Ahora aparece al lado del título, no dentro del input */}
-              </div>
-              <div className="input-group">
-                <FiXCircle className="input-icon" />
-                <select
-                  name="cancel_type"
-                  value={formData.cancel_type || ""}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="" disabled>Selecciona una política de cancelación</option>
-                  {options.cancel_types.map(({ value, label }) => (
-                    <option key={value} value={value}>{label}</option>
-                  ))}
-                </select>
-                <span className="select-arrow">▼</span>
-              </div>
-            </div>
-
+                {/* Política de Cancelación con Tooltip */}
+                <Box>
+                  <Box display="flex" alignItems="center" mb={1}>
+                    <Typography variant="subtitle2">Política de Cancelación</Typography>
+                    <Box ml={1}>
+                      <CancelPolicyTooltip />
+                    </Box>
+                  </Box>
+                  <FormControl fullWidth required>
+                    <InputLabel id="cancel-type-label">Tipo de Cancelación</InputLabel>
+                    <Select
+                      labelId="cancel-type-label"
+                      name="cancel_type"
+                      value={formData.cancel_type || ""}
+                      onChange={handleChange}
+                      startAdornment={
+                        <InputAdornment position="start">
+                          <CancelIcon />
+                        </InputAdornment>
+                      }
+                    >
+                      <MenuItem value="" disabled>
+                        Selecciona una política de cancelación
+                      </MenuItem>
+                      {options.cancel_types.map(({ value, label }) => (
+                        <MenuItem key={value} value={value}>
+                          {label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
   
-              {/* Categoría de Precio */}
-              <div className="input-group">
-                <FiLayers className="input-icon" />
-                <select
-                  name="price_category"
-                  value={formData.price_category || ""}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="" disabled>Selecciona una categoría de precio</option>
-                  {options.price_categories.map(({ value, label }) => (
-                    <option key={value} value={value}>{label}</option>
-                  ))}
-                </select>
-                <span className="select-arrow">▼</span>
-              </div>
-            </>
-          )}
+                {/* Categoría de Precio */}
+                <FormControl fullWidth required>
+                  <InputLabel id="price-category-label">Categoría de Precio</InputLabel>
+                  <Select
+                    labelId="price-category-label"
+                    name="price_category"
+                    value={formData.price_category || ""}
+                    onChange={handleChange}
+                    startAdornment={
+                      <InputAdornment position="start">
+                        <CategoryIcon />
+                      </InputAdornment>
+                    }
+                  >
+                    <MenuItem value="" disabled>
+                      Selecciona una categoría de precio
+                    </MenuItem>
+                    {options.price_categories.map(({ value, label }) => (
+                      <MenuItem key={value} value={value}>
+                        {label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </>
+            )}
   
-          {/* Precio */}
-          {fieldErrors.price && <div className="error-message">{fieldErrors.price}</div>}
-          <div className="input-group">
-            <FiDollarSign className="input-icon" />
-            <input
-              type="number"
-              step="0.01"
+            {/* Precio */}
+            <TextField
+              label="Precio"
               name="price"
-              value={formData.price}
+              type="number"
+              inputProps={{ step: "0.01" }}
+              value={formData.price || ""}
               onChange={handleChange}
+              error={!!fieldErrors.price}
+              helperText={fieldErrors.price}
+              fullWidth
               required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <MoneyIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
-          </div>
   
-          {/* Imágenes actuales */}
-          {existingImages.length > 0 && (
-            <div className="image-gallery">
-              <p>Imágenes actuales:</p>
-              {existingImages.map((img, index) => (
-                <div key={img.id} className="image-item">
-                  <img src={img.url} alt="existing" className="item-image" />
-                  <button type="button" onClick={() => handleRemoveExistingImage(index)}>
-                    <FiTrash2 /> Eliminar
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
+            {/* Imágenes actuales */}
+            {existingImages.length > 0 && (
+              <Card variant="outlined" sx={{ p: 2 }}>
+                <Typography variant="subtitle1" gutterBottom>
+                  Imágenes actuales:
+                </Typography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+                  {existingImages.map((img, index) => (
+                    <Box key={img.id} sx={{ position: 'relative', width: 150, height: 150 }}>
+                      <img
+                        src={img.url}
+                        alt="existing"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          borderRadius: '4px'
+                        }}
+                      />
+                      <IconButton
+                        size="small"
+                        onClick={() => handleRemoveExistingImage(index)}
+                        sx={{
+                          position: 'absolute',
+                          top: 5,
+                          right: 5,
+                          bgcolor: 'rgba(255, 255, 255, 0.7)',
+                          '&:hover': {
+                            bgcolor: 'rgba(255, 255, 255, 0.9)'
+                          }
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Box>
+                  ))}
+                </Box>
+              </Card>
+            )}
   
-          {/* Imágenes nuevas seleccionadas */}
-          {images.length > 0 && (
-            <div className="image-gallery">
-              <p>Imágenes nuevas seleccionadas:</p>
-              {images.map((image, index) => (
-                <div key={index} className="image-item">
-                  <img src={URL.createObjectURL(image)} alt="new" className="item-image" />
-                  <button type="button" onClick={() => handleRemoveImage(index)}>
-                    <FiTrash2 /> Eliminar
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
+            {/* Imágenes nuevas seleccionadas */}
+            {images.length > 0 && (
+              <Card variant="outlined" sx={{ p: 2 }}>
+                <Typography variant="subtitle1" gutterBottom>
+                  Imágenes nuevas seleccionadas:
+                </Typography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+                  {images.map((image, index) => (
+                    <Box key={index} sx={{ position: 'relative', width: 150, height: 150 }}>
+                      <img
+                        src={URL.createObjectURL(image)}
+                        alt="new"
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          borderRadius: '4px'
+                        }}
+                      />
+                      <IconButton
+                        size="small"
+                        onClick={() => handleRemoveImage(index)}
+                        sx={{
+                          position: 'absolute',
+                          top: 5,
+                          right: 5,
+                          bgcolor: 'rgba(255, 255, 255, 0.7)',
+                          '&:hover': {
+                            bgcolor: 'rgba(255, 255, 255, 0.9)'
+                          }
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Box>
+                  ))}
+                </Box>
+              </Card>
+            )}
   
-          <input type="file" multiple accept="image/*" onChange={handleImageChange} />
-          <button 
-            type="submit" 
-            className={`primary-btn ${isSubmitDisabled ? "disabled-btn" : ""}`} 
-            disabled={isSubmitDisabled}
-          >
-            {loading ? "Actualizando..." : "Actualizar"}
-          </button>
-        </form>
-      </div>
-    </div>
+            {/* Input para seleccionar archivos */}
+            <Button
+              variant="outlined"
+              component="label"
+              startIcon={<UploadIcon />}
+              sx={{ mt: 2 }}
+            >
+              Subir Imágenes
+              <input
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={handleImageChange}
+                hidden
+              />
+            </Button>
+  
+            {/* Botón de envío */}
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={isSubmitDisabled}
+              sx={{ mt: 3 }}
+            >
+              {loading ? (
+                <>
+                  <CircularProgress size={24} sx={{ mr: 1 }} />
+                  Actualizando...
+                </>
+              ) : (
+                "Actualizar"
+              )}
+            </Button>
+          </Stack>
+        </Box>
+      </Paper>
+    </Container>
   );
-  
 };
 
 export default UpdateItemScreen;
