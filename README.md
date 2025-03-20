@@ -109,6 +109,27 @@ Asegúrate de tener instalados los siguientes componentes:
    npm run dev
    ```
 ## Ejecutar Tests
+Los tests deben crearse en la carpeta tests/unit (en el caso de ser tests unitarios) creando un archivo por conjunto de tests.
+
+Para lanzarlos se deben seguir los siguientes pasos:
+
+
+1. Primero debe configurarse la base de datos para los tests:
+
+   ```sh
+   # Backend
+   mysql -u root -p
+
+   DROP DATABASE IF EXISTS test_borroo;
+   DROP USER IF EXISTS 'borroo'@'localhost';
+   CREATE DATABASE test_borroo;
+   CREATE USER 'borroo'@'localhost' IDENTIFIED BY 'Borroo2025';
+   GRANT ALL PRIVILEGES ON test_borroo.* TO 'borroo'@'localhost';
+   FLUSH PRIVILEGES;
+   EXIT;
+   ```
+
+2. Para lanzar todos los tests:
    ```sh
    # Backend
    cd backend

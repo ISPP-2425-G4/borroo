@@ -40,7 +40,7 @@ def create_users():
             address=f'Calle {usernames.index(username)}',
             postal_code='28001',
             is_verified=bool(random.getrandbits(1)),
-            pricing_plan=random.choice(['free', 'basic', 'premium'])
+            pricing_plan=random.choice(['free', 'premium'])
         )
     print('Users created successfully!')
 
@@ -57,7 +57,8 @@ def create_items():
             price_category=random.choice(['hour', 'day', 'week', 'month',
                                           'year']),
             price=Decimal(random.uniform(2, 30)),
-            user=random.choice(users)
+            user=random.choice(users),
+            draft_mode=False,
         )
     print('Items created successfully!')
 
