@@ -124,6 +124,16 @@ const Navbar = () => {
         >
           Poner en alquiler
         </Typography>
+        <Typography component={Link}
+          to="/rental_requests"
+          sx={{
+            textDecoration: "none",
+            color: "white",
+            "&:hover": { color: "#fbbf24" },
+          }}
+        >
+         Solicitudes
+        </Typography>
         <Typography
           component={Link}
           to="/pricing-plan"
