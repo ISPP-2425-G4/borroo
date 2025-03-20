@@ -73,7 +73,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Miguel Palomo García |:blush:|:smiley:|:smiley:|:blush:|:smiley:|  |  |  |  |  |  |  |  |  |
 | Luis Javier Periáñez Franco | :blush: | :blush:  | :blush:  | :blush:  |:angry:   |  |  |  |  |  |  |  |  |  |
 | Alexander Picón Garrote |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| Santiago Rosado Raya |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| Santiago Rosado Raya |  | :blush: | :blush: |  | :neutral_face: | :neutral_face: |  |  |  |  |  |  |  |  |
 | Julia Sánchez Márquez |  | :blush: | | | | |  |  |  |  |  |  |  |  |
 | Alejandro Sevillano Barea |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 
