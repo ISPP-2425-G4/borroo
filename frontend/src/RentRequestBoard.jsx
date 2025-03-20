@@ -56,6 +56,23 @@ const RentRequestBoard = () => {
         }
     };
 
+    const handlePayment = async (renta) => {
+        try {
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_BASE_URL}/pagos/checkout-session/${renta.id}/`
+            );
+            const stripe = await window.Stripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+            const result = await stripe.redirectToCheckout({
+                sessionId: response.data.id,
+            });
+            if (result.error) {
+                console.error(result.error);
+            }
+        } catch (error) {
+            console.error("Error al iniciar el pago:", error);
+        }
+    };
+
     const handleResponse = async (renta, responseType) => {
         try {
             const user = JSON.parse(localStorage.getItem("user"));
@@ -115,6 +132,12 @@ const RentRequestBoard = () => {
                                     >
                                         Rechazar
                                     </button>
+                                    <button
+                                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                                    onClick={() => handlePayment(request)}
+                                >
+                                    Pagar
+                                </button>
                                 </div>
                             </div>
                         </div>
