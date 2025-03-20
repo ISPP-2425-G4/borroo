@@ -173,3 +173,11 @@ class PublishItemView(APIView):
                 {"error": str(e)},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+
+class ListDraftItemsView(APIView):
+    def get(self, request, user_id, *args, **kwargs):
+        user = get_object_or_404(User, id=user_id)
+        items = Item.objects.filter(user=user, draft_mode=True)
+        results = list(items.values('id', 'title', 'category', 'price'))
+        return Response({'results': results}, status=status.HTTP_200_OK)
