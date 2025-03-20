@@ -1,10 +1,12 @@
 from rest_framework import viewsets, permissions
-from .models import Item, ItemImage
-from .serializers import ItemSerializer, ItemImageSerializer
+from .models import Item, ItemImage, ItemRequest
+from .serializers import ItemRequestSerializer, ItemSerializer
+from .serializers import ItemImageSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import ItemCategory, CancelType, PriceCategory
+from rest_framework.decorators import action
 
 
 class EnumChoicesView(APIView):
@@ -106,3 +108,39 @@ class FilterByPrice(APIView):
         results = list(items.values('id', 'title', 'category', 'price'))
 
         return Response({'results': results}, status=status.HTTP_200_OK)
+
+
+class ItemRequestView(APIView):
+    def post(self, request, *args, **kwargs):
+        # Datos de la solicitud
+        serializer = ItemRequestSerializer(data=request.data)
+
+        if serializer.is_valid():
+            item_request = serializer.save()
+            return Response({
+                'message': 'Solicitud de alquiler creada con éxito',
+                'item_request': ItemRequestSerializer(item_request).data
+            }, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ItemRequestApprovalViewSet(viewsets.ViewSet):
+
+    @action(detail=True, methods=['post'])
+    def approve_request(self, request, pk=None):
+        # Obtener la solicitud de alquiler por ID
+        item_request = ItemRequest.objects.get(id=pk)
+
+        # Asegurarnos de que no está aprobada
+        if item_request.approved:
+            return Response({'message': 'La solicitud ya ha sido aprobada'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        # Crear el nuevo objeto Item con los datos de la solicitud
+        item = item_request.approve()
+
+        # Serializar el objeto Item recién creado
+        item_serializer = ItemSerializer(item)
+
+        return Response(item_serializer.data, status=status.HTTP_201_CREATED)

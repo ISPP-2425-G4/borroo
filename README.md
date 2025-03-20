@@ -122,7 +122,7 @@ Para lanzarlos se deben seguir los siguientes pasos:
 
    DROP DATABASE IF EXISTS test_borroo;
    DROP USER IF EXISTS 'borroo'@'localhost';
-   CREATE DATABASE borroo;
+   CREATE DATABASE test_borroo;
    CREATE USER 'borroo'@'localhost' IDENTIFIED BY 'Borroo2025';
    GRANT ALL PRIVILEGES ON test_borroo.* TO 'borroo'@'localhost';
    FLUSH PRIVILEGES;

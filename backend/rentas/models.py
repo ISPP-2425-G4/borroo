@@ -5,6 +5,7 @@ from objetos.models import Item  # Importamos el modelo Item
 
 
 class RentStatus(models.TextChoices):
+    ACCEPTED = "accepted", "Accepted"
     REQUESTED = "requested", "Requested"
     BOOKED = "booked", "Booked"
     PICKED_UP = "picked_up", "Picked Up"

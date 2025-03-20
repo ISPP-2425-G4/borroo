@@ -24,17 +24,7 @@ html, body {
     margin-top: 100%; /* Espaciado del 30% de la altura de la ventana */
     background-color: transparent;
 }
-.login-box {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 350px;
-    max-width: 100%; /* Asegura responsividad */
-    margin-top: 30%; /* Posiciona a 30% de la altura de la ventana */
-    margin-bottom: 30px; /* Añade espacio al final */
-}
+
 
 /* Ajuste específico para la caja de signup que es más grande */
 .signup-box {
