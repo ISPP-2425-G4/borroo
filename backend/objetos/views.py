@@ -71,7 +71,7 @@ class SearchItemsView(APIView):
         title = request.GET.get('title', None)
         category = request.GET.get('category', None)
 
-        items = Item.objects.all()
+        items = Item.objects.filter(draft_mode=False)  # Filtrar publicados
 
         if title:
             items = items.filter(title__icontains=title)
@@ -88,7 +88,7 @@ class FilterByCategory(APIView):
 
         category = request.GET.get('category', None)
 
-        items = Item.objects.all()
+        items = Item.objects.filter(draft_mode=False)  # Filtrar publicados
 
         if category:
             items = items.filter(category=category)
@@ -103,7 +103,7 @@ class FilterByPrice(APIView):
         min_price = request.GET.get('min_price', None)
         max_price = request.GET.get('max_price', None)
 
-        items = Item.objects.all()
+        items = Item.objects.filter(draft_mode=False)  # Filtrar publicados
         if min_price:
             items = items.filter(price__gte=min_price)
         if max_price:
