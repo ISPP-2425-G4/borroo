@@ -39,7 +39,7 @@ def create_users():
             address=f'Calle {usernames.index(username)}',
             postal_code='28001',
             is_verified=bool(random.getrandbits(1)),
-            pricing_plan=random.choice(['free', 'basic', 'premium'])
+            pricing_plan=random.choice(['free', 'premium'])
         )
     print('Users created successfully!')
 

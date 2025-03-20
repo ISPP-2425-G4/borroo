@@ -2,15 +2,15 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework import status, filters
-from .models import Rent, RentStatus, Item, PaymentStatus
+from .models import Rent, RentStatus, Item, PaymentStatus, User
 from .serializers import RentSerializer
 from rest_framework.exceptions import NotAuthenticated, PermissionDenied
 from rest_framework.exceptions import NotFound
-from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from decimal import Decimal
 from datetime import timedelta
+from django.contrib.auth.models import AnonymousUser
 
 
 def is_authorized(condition=True, authenticated=True):
@@ -49,8 +49,8 @@ class RentViewSet(viewsets.ModelViewSet):
     ordering = ['-start_date']
 
     def get_queryset(self):
-        user = self.request.user if not AnonymousUser else None
         authenticated = self.request.user.is_authenticated
+        user = self.request.user if authenticated else None
         permission = True
         pk = self.kwargs.get('pk')
         if pk is not None:
@@ -74,7 +74,9 @@ class RentViewSet(viewsets.ModelViewSet):
         item_id = request.data.get('item')
         start_date = request.data.get('start_date')
         end_date = request.data.get('end_date')
-        user = self.request.user if not AnonymousUser else None
+        # authenticated = self.request.user.is_authenticated
+        user_id = request.data.get('renter')
+        user = get_object_or_404(User, pk=user_id)
         # De momento se puede autenticar
         # authenticated = self.request.user.is_authenticated
 
@@ -100,14 +102,10 @@ class RentViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['put'])
     def respond_request(self, request, pk=None):
-        rent = self.get_object()
+        rent_id = request.data.get('rent')
+        rent = get_object_or_404(Rent, pk=rent_id)
         response = request.data.get("response")
 
-        user = self.request.user if not AnonymousUser else None
-        authenticated = self.request.user.is_authenticated
-        is_owner = user == rent.item.user
-
-        is_authorized(condition=is_owner, authenticated=authenticated)
         if response == "accepted":
             rent.rent_status = RentStatus.ACCEPTED
             rent.save()
@@ -190,10 +188,10 @@ class RentViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['put'])
     def cancel_rent(self, request, pk=None):
         user = request.user if not AnonymousUser else None
+        authenticated = request.user.is_authenticated
         now = timezone.now()
         rent = self.get_object()
         renter = rent.renter
-        authenticated = request.user.is_authenticated
         permission = renter == user
         is_authorized(condition=permission, authenticated=authenticated)
 
@@ -219,8 +217,16 @@ class RentViewSet(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         rent = self.get_object()
         renter = rent.renter
-        user = request.user if not AnonymousUser else None
-        authenticated = request.user.is_authenticated
+        authenticated = self.request.user.is_authenticated
+        user = self.request.user if authenticated else None
         permission = renter == user
         is_authorized(condition=permission, authenticated=authenticated)
         return super().destroy(request, *args, **kwargs)
+
+    @action(detail=False, methods=['get'])
+    def rental_requests(self, request):
+        user_id = request.query_params.get("user")
+        rental_requests = Rent.objects.filter(item__user=user_id,
+                                              rent_status=RentStatus.REQUESTED)
+        serializer = RentSerializer(rental_requests, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

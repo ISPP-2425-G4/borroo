@@ -1,79 +1,131 @@
-import Navbar from "./Navbar";
 import { useState } from "react";
-import "../public/styles/RecuperarContraseña.css";
-import { FiLock } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
-import "../public/styles/Login.css";
-import { Box } from "@mui/material";
+import { Box, Typography, Container, Paper, TextField, Button, CircularProgress, Alert } from "@mui/material";
+import { FiLock } from "react-icons/fi";
+import Navbar from "./Navbar";
 
 const RecuperarContraseñaConfirm = () => {
-    const [email, setEmail] = useState("");
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      setLoading(true);
-      setError("");
-  
-      try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_API_BASE_URL}/usuarios/password_reset/`,
-          {email },
-          {
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true, // Equivalente a `credentials: "include"` en fetch
-          }
-        );
-  
-        if (response.status === 200) {
-          navigate("/recoverPasswordDone");
-        } else {
-          const data = response.data;
-          throw new Error(data.error || "Error al iniciar sesión");
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/password_reset/`,
+        { email },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
         }
-      } catch (error) {
-        // Manejar el error 404 (usuario no encontrado o credenciales incorrectas)
-        if (error.response && error.response.status === 404) {
-          setError("El correo no está registrado.");
-        } else {
-          // Manejar otros errores
-          setError(error.message || "Error al conectar con el servidor");
-        }
-      } finally {
-        setLoading(false);
+      );
+
+      if (response.status === 200) {
+        navigate("/recoverPasswordDone");
+      } else {
+        const data = response.data;
+        throw new Error(data.error || "Error al iniciar sesión");
       }
-    };
-  
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        setError("El correo no está registrado.");
+      } else {
+        setError(error.message || "Error al conectar con el servidor");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Navbar />
-      <div className="recover-container">
-      <div className="login-box">
-        <h2>Recupera tu contraseña</h2>
-        {error && <div className="error-message">{error}</div>}
-        <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <FiLock className="input-icon" />
-            <input
-              type="email"
-              placeholder="Correo electronico"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <button type="submit" className="login-btn" disabled={loading}>
-            {loading ? "Procesando..." : "Ingresar"}
-          </button>
-        </form>
-        <p className="register-link">
-          ¿No tienes cuenta? <Link to="/signup">Regístrate</Link>
-        </p>
-      </div>
-    </div>
+      <Container 
+        component="main" 
+        maxWidth="sm" 
+        sx={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexGrow: 1,
+          py: 4
+        }}
+      >
+        <Paper 
+          elevation={3} 
+          sx={{ 
+            p: 4, 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center',
+            width: '100%',
+            borderRadius: 2
+          }}
+        >
+          <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
+            Recupera tu contraseña
+          </Typography>
+          
+          {error && (
+            <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
+              {error}
+            </Alert>
+          )}
+          
+          <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
+            <Box sx={{ position: 'relative', mb: 3 }}>
+              <FiLock style={{ position: 'absolute', top: '50%', left: 12, transform: 'translateY(-50%)', zIndex: 1, color: '#666' }} />
+              <TextField
+                fullWidth
+                type="email"
+                placeholder="Correo electrónico"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                InputProps={{
+                  sx: { pl: 5 }
+                }}
+                variant="outlined"
+              />
+            </Box>
+            
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              disabled={loading}
+              sx={{ 
+                py: 1.5, 
+                mb: 2,
+                backgroundColor: '#1976d2',
+                '&:hover': {
+                  backgroundColor: '#1565c0',
+                },
+              }}
+            >
+              {loading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Ingresar"
+              )}
+            </Button>
+            
+            <Typography variant="body2" align="center">
+              ¿No tienes cuenta?{' '}
+              <Link to="/signup" style={{ color: '#1976d2', textDecoration: 'none' }}>
+                Regístrate
+              </Link>
+            </Typography>
+          </Box>
+        </Paper>
+      </Container>
     </Box>
   );
 };
