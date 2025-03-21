@@ -14,7 +14,6 @@ from django.core.exceptions import ValidationError
 from django.utils.dateparse import parse_date
 
 
-
 class EnumChoicesView(APIView):
     def get(self, request, *args, **kwargs):
         categories = [
@@ -60,9 +59,11 @@ class ItemViewSet(viewsets.ModelViewSet):
                 start_date = parse_date(period.get("start_date"))
                 end_date = parse_date(period.get("end_date"))
                 if start_date and end_date and start_date < end_date:
-                    UnavailablePeriod.objects.create(item=item, start_date=start_date, end_date=end_date)
+                    UnavailablePeriod.objects.create(item=item, start_date=start_date, 
+                                                     end_date=end_date)
                 else:
-                    raise serializers.ValidationError("Las fechas de indisponibilidad no son válidas.")
+                    raise serializers.ValidationError("Las fechas de "
+                    "indisponibilidad no son válidas.")
 
     def create(self, request, *args, **kwargs):
         print("Request data:", request.data)
@@ -72,14 +73,17 @@ class ItemViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         print("Validated data:", serializer.validated_data)
         item = serializer.save()
-        self.handle_unavailable_periods(item, request.data.get("unavailable_periods", []))
+        self.handle_unavailable_periods(item, request.data.get("unavailable_periods", 
+                                                               []))
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, 
+                        headers=headers)
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer = self.get_serializer(instance, data=request.data, 
+                                         partial=partial)
         serializer.is_valid(raise_exception=True)
         item = serializer.save()
         self.handle_unavailable_periods(item, request.data.get("unavailable_periods", []))

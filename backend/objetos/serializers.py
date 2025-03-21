@@ -8,10 +8,12 @@ class ItemImageSerializer(serializers.ModelSerializer):
         model = ItemImage
         fields = ['id', 'image']
 
+
 class UnavailablePeriodSerializer(serializers.ModelSerializer):
     class Meta:
         model = UnavailablePeriod
         fields = ['id', 'start_date', 'end_date']
+
 
 class ItemSerializer(serializers.ModelSerializer):
     category_display = serializers.CharField(
@@ -33,7 +35,6 @@ class ItemSerializer(serializers.ModelSerializer):
         child=serializers.IntegerField(), write_only=True, required=False
     )
     unavailable_periods = UnavailablePeriodSerializer(many=True, required=False)
-
 
     class Meta:
         model = Item
@@ -114,7 +115,6 @@ class ItemSerializer(serializers.ModelSerializer):
         image_files = validated_data.pop('image_files', None)
         remaining_image_ids = validated_data.pop('remaining_image_ids', [])
         unavailable_periods_data = validated_data.pop('unavailable_periods', [])
-
 
         # Eliminar imágenes que no están en remaining_image_ids
         for old_image in instance.images.all():
