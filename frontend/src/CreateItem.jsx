@@ -446,18 +446,6 @@ const CreateItemScreen = () => {
     document.getElementById('image-upload').click();
   };
 
-  /*const handleAddPeriod = () => {
-    // Verificar si las fechas son válidas
-    if (!startDate || !endDate || new Date(startDate) >= new Date(endDate)) {
-        setErrorMessage("Las fechas de inicio y fin no son válidas.");
-        return;
-    }
-
-    setUnavailablePeriods([...unavailablePeriods, { start_date: startDate.toISOString().split('T')[0], end_date: endDate.toISOString().split('T')[0] }]);
-    setStartDate(null);
-    setEndDate(null);
-    setErrorMessage('');
-};*/
   const handleAddPeriod = () => {
     const [startDate, endDate] = datesRange;
     
@@ -781,36 +769,62 @@ const CreateItemScreen = () => {
                 </Box>
               )}
 
-               {/* Formulario para seleccionar los períodos de indisponibilidad con un solo calendario */}
-               <div>
-                    <h4>Períodos de Indisponibilidad</h4>
-                    <div>
-                        <label>Seleccionar período de indisponibilidad:</label>
-                        <DatePicker
-                            selected={datesRange[0]}
-                            onChange={(dates) => setDatesRange(dates)}
-                            startDate={datesRange[0]}
-                            endDate={datesRange[1]}
-                            selectsRange
-                            dateFormat="yyyy-MM-dd"
-                            placeholderText="Selecciona el rango de fechas"
-                            inline
-                        />
-                    </div>
-                    <button type="button" onClick={handleAddPeriod}>Añadir Período</button>
+              {/* Formulario para seleccionar los períodos de indisponibilidad con un solo calendario */}
+              <div>
+                  <h4>Períodos de Indisponibilidad</h4>
+                  <div>
+                      <label>Seleccionar período de indisponibilidad:</label>
+                      <DatePicker
+                          selected={datesRange[0]}
+                          onChange={(dates) => setDatesRange(dates)}
+                          startDate={datesRange[0]}
+                          endDate={datesRange[1]}
+                          selectsRange
+                          dateFormat="yyyy-MM-dd"
+                          placeholderText="Selecciona el rango de fechas"
+                          inline
+                      />
+                  </div>
+                  <button type="button" onClick={handleAddPeriod}>Añadir Período</button>
 
-                    {/* Mostrar períodos agregados */}
-                    <ul>
-                        {unavailablePeriods.map((period, index) => (
-                            <li key={index}>
-                                {period.start_date} - {period.end_date}
-                            </li>
-                        ))}
-                    </ul>
+                  {/* Mostrar períodos agregados */}
+                  <ul>
+                      {unavailablePeriods.map((period, index) => (
+                          <li key={index}>
+                              {period.start_date} - {period.end_date}
+                          </li>
+                      ))}
+                  </ul>
 
-                    {/* Mensaje de error */}
-                    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                </div>
+                  {/* Mensaje de error */}
+                  {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+              </div>
+
+              <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+              <SubmitButton 
+                type="button" 
+                disabled={!isFormValid ||loadingDash}
+                onClick={handleSaveAsDraft}
+                sx={{
+                  flex: 1,
+                  backgroundColor: (!isFormValid || loadingDash) ? '#cccccc' : '#555555',
+                  '&:hover': {
+                    backgroundColor: (!isFormValid || loadingDash) ? '#cccccc' : '#333333'
+                  }
+                }}
+              >
+                {loadingDash ? (
+                  <>
+                    <CircularProgress size={20} color="inherit" />
+                    <span>Guardando...</span>
+                  </>
+                ) : (
+                  <>
+                    <FiUpload />
+                    <span>Guardar como Borrador</span>
+                  </>
+                )}
+              </SubmitButton>
 
               <SubmitButton 
                 type="submit" 
@@ -829,18 +843,18 @@ const CreateItemScreen = () => {
                   </>
                 )}
               </SubmitButton>
-            </Stack>
+              </Stack>
               
               {showErrorMessage && (
                 <Alert severity="warning" sx={{ mt: 2 }}>
                   Por favor, revisa los errores del formulario antes de enviar.
                 </Alert>
               )}
-            </form>
-          )}
+          </form>
+        )}
         </FormContainer>
       </Container>
-    </Box>
+  </Box>
   );
 };
 
