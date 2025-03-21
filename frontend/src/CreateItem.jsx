@@ -825,49 +825,7 @@ const CreateItemScreen = () => {
                   </>
                 )}
               </SubmitButton>
-              <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
-              <SubmitButton 
-                type="button" 
-                disabled={!isFormValid ||loadingDash}
-                onClick={handleSaveAsDraft}
-                sx={{
-                  flex: 1,
-                  backgroundColor: (!isFormValid || loadingDash) ? '#cccccc' : '#555555',
-                  '&:hover': {
-                    backgroundColor: (!isFormValid || loadingDash) ? '#cccccc' : '#333333'
-                  }
-                }}
-              >
-                {loadingDash ? (
-                  <>
-                    <CircularProgress size={20} color="inherit" />
-                    <span>Guardando...</span>
-                  </>
-                ) : (
-                  <>
-                    <FiUpload />
-                    <span>Guardar como Borrador</span>
-                  </>
-                )}
-              </SubmitButton>
-
-              <SubmitButton 
-                type="submit" 
-                disabled={!isFormValid || loading}
-                sx={{ flex: 1 }}
-              >
-                {loading ? (
-                  <>
-                    <CircularProgress size={20} color="inherit" />
-                    <span>Publicando...</span>
-                  </>
-                ) : (
-                  <>
-                    <FiUpload />
-                    <span>Publicar</span>
-                  </>
-                )}
-              </SubmitButton>
+              
               </Stack>
               
               {showErrorMessage && (
