@@ -825,6 +825,23 @@ const CreateItemScreen = () => {
                   </>
                 )}
               </SubmitButton>
+              <SubmitButton 
+                type="submit" 
+                disabled={!isFormValid || loading}
+                sx={{ flex: 1 }}
+              >
+                {loading ? (
+                  <>
+                    <CircularProgress size={20} color="inherit" />
+                    <span>Publicando...</span>
+                  </>
+                ) : (
+                  <>
+                    <FiUpload />
+                    <span>Publicar</span>
+                  </>
+                )}
+              </SubmitButton>
               
               </Stack>
               
