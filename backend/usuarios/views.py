@@ -1,8 +1,8 @@
 from django.http import JsonResponse
 import datetime
 from django.contrib.auth.hashers import check_password, make_password
-from .models import User, PricingPlan
-from .serializers import UserSerializer, RegisterSerializer
+from .models import Review, User, PricingPlan
+from .serializers import ReviewSerializer, UserSerializer, RegisterSerializer
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
@@ -15,6 +15,11 @@ from django.core.mail import send_mail
 from rest_framework.views import APIView
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.exceptions import AuthenticationFailed
+from objetos.models import Item
+from objetos.serializers import ItemSerializer
+from django.shortcuts import get_object_or_404
 import os
 
 
@@ -252,4 +257,102 @@ class PasswordResetConfirmView(APIView):
         user.save()
 
         return Response({"message": "Contraseña actualizada correctamente"},
+                        status=status.HTTP_200_OK)
+
+
+class UserProfileView(RetrieveAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+
+        username = self.request.query_params.get('username', None)
+
+        if not username:
+            raise AuthenticationFailed("No se proporcionó un username.")
+
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise AuthenticationFailed("El usuario no existe.")
+
+        user_items = Item.objects.filter(user=user)
+
+        user_data = UserSerializer(user).data
+        items_data = ItemSerializer(user_items, many=True).data
+
+        return Response({
+            "user": user_data,
+            "objects": items_data
+        })
+
+
+class ReviewCreateView(APIView):
+    def post(self, request, *args, **kwargs):
+        data = request.data
+
+        reviewer = get_object_or_404(User,
+                                     username=data.get("reviewer_username"))
+        reviewed_user = get_object_or_404(
+            User, username=data.get("reviewed_username"))
+
+        if reviewer == reviewed_user:
+            return Response({"error": "No puedes valorarte a ti mismo."},
+                            status=status.HTTP_400_BAD_REQUEST)
+        # Comprobar si el usuario ya dejó una reseña
+        existing_review = Review.objects.filter(
+            reviewer=reviewer, reviewed_user=reviewed_user).first()
+
+        if existing_review:
+            # Si la reseña existe, actualizarla
+            existing_review.rating = data.get("rating", existing_review.rating)
+            existing_review.comment = data.get("comment",
+                                               existing_review.comment)
+            existing_review.save()
+            return Response({"message": "Reseña actualizada correctamente"},
+                            status=status.HTTP_200_OK)
+        else:
+            # Si no existe, crear una nueva
+            Review.objects.create(
+                reviewer=reviewer,
+                reviewed_user=reviewed_user,
+                rating=data.get("rating"),
+                comment=data.get("comment")
+            )
+            return Response({"message": "Reseña creada correctamente"},
+                            status=status.HTTP_201_CREATED)
+
+
+class ReviewListView(APIView):
+    def get(self, request, *args, **kwargs):
+        username = request.query_params.get("username", None)
+
+        if not username:
+            return Response({
+                "error": "El parámetro 'username' es obligatorio"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        reviewed_user = get_object_or_404(User, username=username)
+        reviews = Review.objects.filter(reviewed_user=reviewed_user)
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ReviewDeleteView(APIView):
+    def delete(self, request, *args, **kwargs):
+        data = request.data
+        reviewer = get_object_or_404(User,
+                                     username=data.get("reviewer_username"))
+        reviewed_user = get_object_or_404(
+            User, username=data.get("reviewed_username"))
+
+        review = Review.objects.filter(
+            reviewer=reviewer, reviewed_user=reviewed_user).first()
+
+        if not review:
+            return Response({"error": "Reseña no encontrada"},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        review.delete()
+        return Response({"message": "Reseña eliminada correctamente"},
                         status=status.HTTP_200_OK)
