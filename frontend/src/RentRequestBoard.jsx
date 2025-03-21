@@ -24,22 +24,37 @@ const RentRequestBoard = () => {
                     `${import.meta.env.VITE_API_BASE_URL}/rentas/full/rental_requests/`,
                     { params: { user: user.id } }
                 );
-                console.log("Datos recibidos del backend:", response.data);
+
 
                 const data = response.data;
                 const rentas = data.results ?? data; // Si `results` no existe, usa `data` directamente
-
-                // Obtener las imágenes asociadas a cada renta
-                const rentasConImagen = await Promise.all(
+                
+                // De momento hacemos peticiones de los usuarios y objetos, pero es muy ineficiente
+                // y se puede mejorar con una sola petición al backend bien serializado
+                const rentasEnriquecidas = await Promise.all(
                     rentas.map(async (renta) => {
-                        const imageUrl =
-                            renta.item?.images?.length > 0
-                                ? await obtenerImagen(renta.item.images[0])
-                                : DEFAULT_IMAGE;
-                        return { ...renta, imageUrl };
+                        const [usuarioResponse, itemResponse] = await Promise.all([
+                            axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${renta.renter}/`),
+                            axios.get(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/${renta.item}/`)
+                        ]);
+        
+                        const usuario = usuarioResponse.data;
+                        const item = itemResponse.data;
+                        const imageUrl = item.images?.length > 0
+                            ? await obtenerImagen(item.images[0])
+                            : DEFAULT_IMAGE;
+        
+                        return { 
+                            ...renta, 
+                            renter: usuario,
+                            item: item,
+                            imageUrl
+                        };
                     })
                 );
-                setRequests(rentasConImagen);
+        
+                setRequests(rentasEnriquecidas);
+                console.log("Datos recibidos del backend:", rentasEnriquecidas);
             } catch (error) {
                 console.error("Error al obtener solicitudes de alquiler:", error);
             }
@@ -152,9 +167,22 @@ const RentRequestBoard = () => {
                                 alt={request.title}
                             />
                             <CardContent sx={{ flex: 1 }}>
-                                <Typography variant="h6">{request.title}</Typography>
+                                <Typography variant="h6">
+                                    <a href={`show-item/${request.item.id}`} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    style={{ textDecoration: "none", color: "inherit" }}>
+                                        {request.item.title}
+                                    </a>
+                                </Typography>
                                 <Typography variant="body2" color="textSecondary">
-                                    Solicitado por: {request.renter?.username}
+                                    Solicitado por: {" "}
+                                    <a href={`/user-profile/${request.renter.id}`} //Incluir enlace al perfil del usuario
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    style={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold" }}>
+                                        {request.renter.name} {request.renter.surname}
+                                    </a>
                                 </Typography>
                                 <Typography variant="body2">
                                     Inicio: {new Date(request.start_date).toLocaleDateString()}
