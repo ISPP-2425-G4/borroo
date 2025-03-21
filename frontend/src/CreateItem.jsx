@@ -7,10 +7,8 @@ import axios from 'axios';
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
 import { Box, Stack, Typography, Alert, CircularProgress, Paper, Container } from "@mui/material";
 import { styled } from "@mui/system";
-import DatePicker from "react-datepicker";
-import { DateRange  } from "react-date-range";
-
-
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 const FormContainer = styled(Paper)(() => ({
   padding: "2rem",
@@ -204,7 +202,6 @@ const CreateItemScreen = () => {
     cancel_type: "",
     price_category: "",
     price: "",
-    dates_not_available: [] //cambiar
   });
 
   const [images, setImages] = useState([]);
@@ -214,20 +211,19 @@ const CreateItemScreen = () => {
     price_categories: [],
   });
 
+  const [unavailablePeriods, setUnavailablePeriods] = useState([]);
+  //const [startDate, setStartDate] = useState('');
+  //const [endDate, setEndDate] = useState('');
+  
+  const [datesRange, setDatesRange] = useState([null, null]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [datesNotAvailable, setDatesNotAvailable] = useState([]);
   const navigate = useNavigate();
   const [fieldErrors, setFieldErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [fetchingOptions, setFetchingOptions] = useState(true);
-  const [dateRange, setDateRange] = useState([{
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    }]);
 
   useEffect(() => {
     const fetchEnums = async () => {
@@ -263,17 +259,6 @@ const CreateItemScreen = () => {
   useEffect(() => {
     validateForm();
   }, [formData, images]);
-
-  const handleDateChange = (dates) => {
-    const [start, end] = dates;
-    if (start && end) {
-      setDatesNotAvailable([...datesNotAvailable, [start.toISOString().split("T")[0], end.toISOString().split("T")[0]]]);
-    }
-  };
-
-  const handleRemoveDate = (index) => {
-    setDatesNotAvailable(datesNotAvailable.filter((_, i) => i !== index));
-  };
 
   const validateForm = () => {
     const { title, description, category, cancel_type, price_category, price } = formData;
@@ -336,6 +321,31 @@ const CreateItemScreen = () => {
 
   const triggerFileSelect = () => {
     document.getElementById('image-upload').click();
+  };
+
+  /*const handleAddPeriod = () => {
+    // Verificar si las fechas son válidas
+    if (!startDate || !endDate || new Date(startDate) >= new Date(endDate)) {
+        setErrorMessage("Las fechas de inicio y fin no son válidas.");
+        return;
+    }
+
+    setUnavailablePeriods([...unavailablePeriods, { start_date: startDate.toISOString().split('T')[0], end_date: endDate.toISOString().split('T')[0] }]);
+    setStartDate(null);
+    setEndDate(null);
+    setErrorMessage('');
+};*/
+  const handleAddPeriod = () => {
+    const [startDate, endDate] = datesRange;
+    
+    if (!startDate || !endDate || new Date(startDate) >= new Date(endDate)) {
+        setErrorMessage("Las fechas de inicio y fin no son válidas.");
+        return;
+    }
+
+    setUnavailablePeriods([...unavailablePeriods, { start_date: startDate.toISOString().split('T')[0], end_date: endDate.toISOString().split('T')[0] }]);
+    setDatesRange([null, null]);
+    setErrorMessage('');
   };
 
   const handleSubmit = async (e) => {
@@ -407,14 +417,13 @@ const CreateItemScreen = () => {
 
     try {
       const formDataToSend = new FormData();
-      const allowedKeys = ["title", "description", "category", "cancel_type", "price_category", "price", "dates_not_available"];
+      const allowedKeys = ["title", "description", "category", "cancel_type", "price_category", "price"];
       
       Object.keys(formData).forEach((key) => {
         if (allowedKeys.includes(key)) {
           formDataToSend.append(key, formData[key]);
         }
       });
-      formDataToSend.append("dates_not_available", JSON.stringify(datesNotAvailable));
   
       // Obtener usuario autenticado desde localStorage o contexto
       const user = JSON.parse(localStorage.getItem("user")); 
@@ -428,6 +437,9 @@ const CreateItemScreen = () => {
       images.forEach((image) => {
         formDataToSend.append("image_files", image);
       });
+
+      // Adjuntar los períodos de indisponibilidad
+      formDataToSend.append('unavailable_periods', JSON.stringify(unavailablePeriods));
   
       const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/`, formDataToSend, {
         withCredentials: true,
@@ -521,58 +533,6 @@ const CreateItemScreen = () => {
                 <SelectArrow>▼</SelectArrow>
               </InputGroup>
               {fieldErrors.category && <ErrorMessage>{fieldErrors.category}</ErrorMessage>}
-
-              <Box>
-                <label>Fechas no disponibles:</label>
-                <DatePicker
-                  selectsRange
-                  startDate={null}
-                  endDate={null}
-                  onChange={handleDateChange}
-                  isClearable
-                  dateFormat="yyyy-MM-dd"
-                />
-              </Box>
-              <ul>
-                {datesNotAvailable.map((range, index) => (
-                  <li key={index}>
-                    {range[0]} - {range[1]} 
-                    <button type="button" onClick={() => handleRemoveDate(index)}>❌</button>
-                  </li>
-                ))}
-              </ul>
-              <Box sx={{ 
-                          display: 'flex', 
-                          flexDirection: 'column', 
-                          alignItems: 'center',
-                          '& .rdrCalendarWrapper': { 
-                            maxWidth: '100%',
-                            fontSize: '16px',
-                            border: '1px solid #e0e0e0',
-                            borderRadius: 1,
-                            overflow: 'hidden',
-                            p: 1
-                          }
-                        }}>
-              
-                  
-                        <DateRange
-                          ranges={dateRange}
-                          onChange={(ranges) => {
-                            const start = ranges.selection.startDate;
-                            const end = ranges.selection.endDate;
-              
-                            // Si el usuario selecciona el mismo día como inicio y fin, establecerlo correctamente
-                            if (start.toDateString() === end.toDateString()) {
-                              setDateRange([{ startDate: start, endDate: start, key: "selection" }]);
-                            } else {
-                              setDateRange([ranges.selection]);
-                            }
-                          }}
-                          minDate={new Date()}
-                          disabledDates={[...datesNotAvailable]}
-                        />
-                 </Box>
 
               <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
                 <Box sx={{ flex: 1, position: "relative" }}>
@@ -668,6 +628,37 @@ const CreateItemScreen = () => {
                   </ImageGallery>
                 </Box>
               )}
+
+               {/* Formulario para seleccionar los períodos de indisponibilidad con un solo calendario */}
+               <div>
+                    <h4>Períodos de Indisponibilidad</h4>
+                    <div>
+                        <label>Seleccionar período de indisponibilidad:</label>
+                        <DatePicker
+                            selected={datesRange[0]}
+                            onChange={(dates) => setDatesRange(dates)}
+                            startDate={datesRange[0]}
+                            endDate={datesRange[1]}
+                            selectsRange
+                            dateFormat="yyyy-MM-dd"
+                            placeholderText="Selecciona el rango de fechas"
+                            inline
+                        />
+                    </div>
+                    <button type="button" onClick={handleAddPeriod}>Añadir Período</button>
+
+                    {/* Mostrar períodos agregados */}
+                    <ul>
+                        {unavailablePeriods.map((period, index) => (
+                            <li key={index}>
+                                {period.start_date} - {period.end_date}
+                            </li>
+                        ))}
+                    </ul>
+
+                    {/* Mensaje de error */}
+                    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                </div>
 
               <SubmitButton 
                 type="submit" 

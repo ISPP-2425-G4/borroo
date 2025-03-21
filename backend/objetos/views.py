@@ -1,5 +1,5 @@
-from rest_framework import viewsets, permissions
-from .models import Item, ItemImage, ItemRequest
+from rest_framework import viewsets, permissions, serializers
+from .models import Item, ItemImage, ItemRequest, UnavailablePeriod
 from .serializers import ItemRequestSerializer, ItemSerializer
 from .serializers import ItemImageSerializer
 from rest_framework.views import APIView
@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import ItemCategory, CancelType, PriceCategory
 from rest_framework.decorators import action
+from django.utils.dateparse import parse_date
+
 
 
 class EnumChoicesView(APIView):
@@ -39,46 +41,33 @@ class EnumChoicesView(APIView):
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def handle_unavailable_periods(self, item, unavailable_periods_data):
+        if unavailable_periods_data:
+            UnavailablePeriod.objects.filter(item=item).delete()
+            for period in unavailable_periods_data:
+                start_date = parse_date(period.get("start_date"))
+                end_date = parse_date(period.get("end_date"))
+                if start_date and end_date and start_date < end_date:
+                    UnavailablePeriod.objects.create(item=item, start_date=start_date, end_date=end_date)
+                else:
+                    raise serializers.ValidationError("Las fechas de indisponibilidad no son válidas.")
 
     def create(self, request, *args, **kwargs):
-        print("Request data:", request.data)
-        
-        start_unavailable_date = request.data.get("start_unavailable_date")
-        end_unavailable_date = request.data.get("end_unavailable_date")
-
         serializer = self.get_serializer(data=request.data)
-        if not serializer.is_valid():
-            print("Validation errors:", serializer.errors)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        print("Validated data:", serializer.validated_data)
-        item = serializer.save(start_unavailable_date=start_unavailable_date)
-        item = serializer.save(end_unavailable_date=end_unavailable_date)
-        print("Created item:", item)
-
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        serializer.is_valid(raise_exception=True)
+        item = serializer.save()
+        self.handle_unavailable_periods(item, request.data.get("unavailable_periods", []))
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        
-        # Obtener las fechas no disponibles de la solicitud
-        dates_not_available = request.data.get("dates_not_available", instance.dates_not_available)
-
-        if not isinstance(dates_not_available, list):
-            return Response(
-                {"error": "El campo fechas_no_disponibles debe ser una lista de rangos de fechas"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        # Guardar con las fechas actualizadas
-        item = serializer.save(dates_not_available=dates_not_available)
+        serializer.is_valid(raise_exception=True)
+        item = serializer.save()
+        self.handle_unavailable_periods(item, request.data.get("unavailable_periods", []))
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 

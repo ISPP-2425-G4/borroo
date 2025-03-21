@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Item, ItemImage, ItemRequest
+from .models import Item, ItemImage, ItemRequest, UnavailablePeriod
 from utils.utils import upload_image_to_imgbb
 
 
@@ -8,6 +8,10 @@ class ItemImageSerializer(serializers.ModelSerializer):
         model = ItemImage
         fields = ['id', 'image']
 
+class UnavailablePeriodSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UnavailablePeriod
+        fields = ['id', 'start_date', 'end_date']
 
 class ItemSerializer(serializers.ModelSerializer):
     category_display = serializers.CharField(
@@ -25,6 +29,8 @@ class ItemSerializer(serializers.ModelSerializer):
     remaining_image_ids = serializers.ListField(
         child=serializers.IntegerField(), write_only=True, required=False
     )
+    unavailable_periods = UnavailablePeriodSerializer(many=True, required=False)
+
 
     class Meta:
         model = Item
@@ -32,7 +38,7 @@ class ItemSerializer(serializers.ModelSerializer):
             'id', 'title', 'description', 'category', 'category_display',
             'cancel_type', 'cancel_type_display', 'price_category',
             'price_category_display', 'price', 'images', 'image_files',
-            'remaining_image_ids', 'user', 'draft_mode', 'start_unavailable_date', 'end_unavailable_date'
+            'remaining_image_ids', 'user', 'draft_mode', 'unavailable_periods'
         ]
 
     def validate(self, data):
@@ -59,6 +65,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         image_files = validated_data.pop('image_files', [])
+        unavailable_periods_data = validated_data.pop('unavailable_periods', [])
         validated_data.pop('images', None)
         user = validated_data.pop('user')
         # Restricción: No más de 10 ítems con draft_mode False
@@ -80,6 +87,10 @@ class ItemSerializer(serializers.ModelSerializer):
             image_url = upload_image_to_imgbb(image)
             ItemImage.objects.create(item=item, image=image_url)
 
+        # Save unavailable periods
+        for period_data in unavailable_periods_data:
+            UnavailablePeriod.objects.create(item=item, **period_data)
+
         return item
 
     def update(self, instance, validated_data):
@@ -95,6 +106,8 @@ class ItemSerializer(serializers.ModelSerializer):
 
         image_files = validated_data.pop('image_files', None)
         remaining_image_ids = validated_data.pop('remaining_image_ids', [])
+        unavailable_periods_data = validated_data.pop('unavailable_periods', [])
+
 
         # Eliminar imágenes que no están en remaining_image_ids
         for old_image in instance.images.all():
@@ -106,6 +119,11 @@ class ItemSerializer(serializers.ModelSerializer):
             for image in image_files:
                 image_url = upload_image_to_imgbb(image)
                 ItemImage.objects.create(item=instance, image=image_url)
+
+        # Actualizar periodos de indisponibilidad
+        instance.unavailableperiod_set.all().delete()
+        for period_data in unavailable_periods_data:
+            UnavailablePeriod.objects.create(item=instance, **period_data)
 
         instance.save()
         return instance

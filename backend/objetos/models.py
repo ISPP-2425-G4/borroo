@@ -54,9 +54,14 @@ class Item(models.Model):
     user = models.ForeignKey('usuarios.User', related_name='items',
                              on_delete=models.CASCADE)
     draft_mode = models.BooleanField(default=False)
-    start_unavailable_date = models.DateTimeField(null=True)
-    end_unavailable_date = models.DateTimeField(null=True)
 
+class UnavailablePeriod(models.Model):
+    item = models.ForeignKey(Item, related_name='unavailable_periods', on_delete=models.CASCADE)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+
+    class Meta:
+        unique_together = ('item', 'start_date', 'end_date')
     
 
 
