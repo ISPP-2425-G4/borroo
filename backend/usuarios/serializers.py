@@ -46,3 +46,32 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = ["id", "reviewer_username", "reviewed_user",
                   "rating", "comment"]
+
+
+class RegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'name', 'surname', 'username', 'email', 'password'
+        ]
+
+    def validate_username(self, value):
+        """Validar que el username no tenga espacios en blanco."""
+        if " " in value:
+            raise serializers.ValidationError(
+                "El nombre de usuario no puede contener espacios."
+            )
+        return value
+
+    def validate(self, data):
+        """Validar que los campos comiencen con una letra
+         y que las contraseñas coincidan."""
+        # Validar que los campos comiencen con una letra
+        fields_to_validate = ["name", "surname"]
+        for field in fields_to_validate:
+            if field in data and not re.match(r'^[A-Za-zÁÉÍÓÚáéíóúÑñ]',
+                                              data[field]):
+                raise serializers.ValidationError(
+                    {field: "Debe comenzar con una letra."}
+                )
+        return data

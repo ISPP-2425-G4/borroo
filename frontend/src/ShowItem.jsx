@@ -298,6 +298,27 @@ const ShowItemScreen = () => {
       setCurrentImageIndex((prevIndex) => (prevIndex - 1 + imageURLs.length) % imageURLs.length);
     }
   };
+  const handlePublishItem = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+  
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/objetos/publish_item/`,
+        { item_id: item.id, user_id: user.id },
+        { headers: { "Content-Type": "application/json" } }
+      );
+  
+      if (response.status === 200) {
+        alert("¡El ítem se ha publicado correctamente!");
+        navigate(0); // Refresca la página
+      } else {
+        alert("Hubo un problema al publicar el ítem.");
+      }
+    } catch (error) {
+      console.error("Error al publicar el ítem:", error);
+      alert("Error al publicar el ítem.");
+    }
+  };
 
   if (loading) {
     return (
@@ -334,6 +355,29 @@ const ShowItemScreen = () => {
           <Typography variant="h4" component="h1" gutterBottom>
             {item.title}
           </Typography>
+          {item.draft_mode && (
+  <Box 
+    sx={{ 
+      backgroundColor: "#fff8c4", 
+      p: 2, 
+      borderRadius: 2, 
+      border: "1px solid #e0c243", 
+      textAlign: "center", 
+      mb: 3 
+    }}
+  >
+    <Typography variant="h6" color="warning.main" gutterBottom>
+      📌 BORRADOR
+    </Typography>
+    <Button 
+      variant="contained" 
+      color="primary" 
+      onClick={handlePublishItem}
+    >
+      Publicar
+    </Button>
+  </Box>
+)}
 
           {errorMessage && (
             <Box sx={{ bgcolor: 'error.light', color: 'error.contrastText', p: 2, borderRadius: 1, mb: 3 }}>
@@ -468,6 +512,14 @@ const ShowItemScreen = () => {
                     <Box>
                       <Typography variant="subtitle2">Categoría</Typography>
                       <Typography variant="body2">{item.category_display}</Typography>
+                    </Box>
+                  </Box>
+
+                  <Box sx={{ display: 'flex', gap: 2 }}>
+                    <CategoryIcon color="action" />
+                    <Box>
+                      <Typography variant="subtitle2">Subcategoría</Typography>
+                      <Typography variant="body2">{item.subcategory_display}</Typography>
                     </Box>
                   </Box>
                   

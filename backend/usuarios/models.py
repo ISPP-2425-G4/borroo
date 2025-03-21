@@ -44,17 +44,21 @@ class User(models.Model):
                              validators=[
                                  EmailValidator(
                                     message="Introduce un email válido.")])
-    phone_number = models.CharField(max_length=25, validators=[
-            RegexValidator(
-                regex=r'^\+?[0-9]{7,15}$',
-                message="Introduce un número de teléfono válido."
-            )
-        ])
-    country = models.CharField(max_length=255, validators=[text_validator])
-    city = models.CharField(max_length=255, validators=[text_validator])
-    address = models.TextField(max_length=75, validators=[text_validator])
+    phone_number = models.CharField(max_length=25, null=True, blank=True,
+                                    validators=[RegexValidator(
+                                                regex=r'^\+?[0-9]{7,15}$',
+                                                message="Introduce un número"
+                                                "de teléfono válido."
+                                                )
+                                                ])
+    country = models.CharField(max_length=255, null=True, blank=True,
+                               validators=[text_validator])
+    city = models.CharField(max_length=255, null=True, blank=True,
+                            validators=[text_validator])
+    address = models.TextField(max_length=75, null=True, blank=True,
+                               validators=[text_validator])
     postal_code = models.CharField(
-        max_length=20,
+        max_length=20, null=True, blank=True,
         validators=[
             RegexValidator(
                 regex='^[0-9]{5}(-[0-9]{4})?$',
