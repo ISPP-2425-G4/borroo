@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { DateRange  } from "react-date-range";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -134,7 +134,7 @@ const ShowItemScreen = () => {
         }
       );
       const userData = response.data;
-      setUserName(userData.name);
+      setUserName(userData.username);
     } catch (error) {
       console.error("Error fetching user:", error);
       setUserName("Usuario desconocido");
@@ -405,12 +405,36 @@ const ShowItemScreen = () => {
                 <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                   <PersonIcon fontSize="large" color="primary" />
                   <Box>
-                    <Typography variant="caption" color="textSecondary">
-                      Publicado por:
-                    </Typography>
-                    <Typography variant="body1" fontWeight="medium">
+                  <Typography variant="caption" color="textSecondary">
+                    Publicado por:
+                  </Typography>
+                  <Link to={`/perfil/${encodeURIComponent(userName)}`} style={{ textDecoration: "none" }}>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        textTransform: "none",
+                        fontWeight: "bold",
+                        fontSize: "1.05rem",
+                        borderRadius: "30px",
+                        padding: "8px 20px",
+                        background: "linear-gradient(135deg, #2563eb, #1e40af)",
+                        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.15)",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        "&:hover": {
+                          background: "linear-gradient(135deg, #1e40af, #122b6d)",
+                          transform: "scale(1.05)",
+                          boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
+                        },
+                      }}
+                    >
+                      <PersonIcon sx={{ fontSize: 20, color: "white" }} />
                       {userName}
-                    </Typography>
+                    </Button>
+                  </Link>
+
+
                     {isOwner && (
                       <Chip 
                         label="Eres el propietario" 
