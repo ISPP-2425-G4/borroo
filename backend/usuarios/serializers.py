@@ -38,6 +38,7 @@ class UserSerializer(serializers.ModelSerializer):
             return data
 
 
+
 class ReviewSerializer(serializers.ModelSerializer):
     reviewer_username = serializers.CharField(
         source="reviewer.username", read_only=True)
@@ -46,6 +47,8 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = ["id", "reviewer_username", "reviewed_user",
                   "rating", "comment"]
+
+
 
 
 class RegisterSerializer(serializers.ModelSerializer):
