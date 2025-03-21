@@ -459,7 +459,7 @@ const CreateItemScreen = () => {
     setErrorMessage('');
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, isDraft = false) => {
     e.preventDefault();
     if(isDraft){
       setIsDraft(true);
@@ -800,6 +800,31 @@ const CreateItemScreen = () => {
                   {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
               </div>
 
+              <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+              <SubmitButton 
+                type="button" 
+                disabled={!isFormValid ||loadingDash}
+                onClick={handleSaveAsDraft}
+                sx={{
+                  flex: 1,
+                  backgroundColor: (!isFormValid || loadingDash) ? '#cccccc' : '#555555',
+                  '&:hover': {
+                    backgroundColor: (!isFormValid || loadingDash) ? '#cccccc' : '#333333'
+                  }
+                }}
+              >
+                {loadingDash ? (
+                  <>
+                    <CircularProgress size={20} color="inherit" />
+                    <span>Guardando...</span>
+                  </>
+                ) : (
+                  <>
+                    <FiUpload />
+                    <span>Guardar como Borrador</span>
+                  </>
+                )}
+              </SubmitButton>
               <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
               <SubmitButton 
                 type="button" 
