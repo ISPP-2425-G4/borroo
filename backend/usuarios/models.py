@@ -104,5 +104,7 @@ class Review(models.Model):
         unique_together = ("reviewer", "reviewed_user")
 
     def __str__(self):
-        return f"{self.reviewer.username} → {
-            self.reviewed_user.username}: {self.rating}"
+        return (
+            f"{self.reviewer.username} → "
+            f"{self.reviewed_user.username}: {self.rating}"
+        )
