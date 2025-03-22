@@ -1,12 +1,16 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, permissions
+
+from usuarios.models import User
 from .models import Item, ItemImage, ItemRequest
 from .serializers import ItemRequestSerializer, ItemSerializer
 from .serializers import ItemImageSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import ItemCategory, CancelType, PriceCategory
+from .models import ItemCategory, CancelType, PriceCategory, ItemSubcategory
 from rest_framework.decorators import action
+from django.core.exceptions import ValidationError
 
 
 class EnumChoicesView(APIView):
@@ -15,6 +19,11 @@ class EnumChoicesView(APIView):
             {"value": choice.value, "label": choice.label}
             for choice in ItemCategory
         ]
+
+        subcategories = [
+             {"value": choice.value, "label": choice.label}
+             for choice in ItemSubcategory
+         ]
 
         cancel_types = [
             {"value": choice.value, "label": choice.label}
@@ -29,6 +38,7 @@ class EnumChoicesView(APIView):
         return Response(
             {
                 "categories": categories,
+                "subcategories": subcategories,
                 "cancel_types": cancel_types,
                 "price_categories": price_categories,
             },
@@ -67,7 +77,7 @@ class SearchItemsView(APIView):
         title = request.GET.get('title', None)
         category = request.GET.get('category', None)
 
-        items = Item.objects.all()
+        items = Item.objects.filter(draft_mode=False)  # Filtrar publicados
 
         if title:
             items = items.filter(title__icontains=title)
@@ -84,7 +94,7 @@ class FilterByCategory(APIView):
 
         category = request.GET.get('category', None)
 
-        items = Item.objects.all()
+        items = Item.objects.filter(draft_mode=False)  # Filtrar publicados
 
         if category:
             items = items.filter(category=category)
@@ -99,7 +109,7 @@ class FilterByPrice(APIView):
         min_price = request.GET.get('min_price', None)
         max_price = request.GET.get('max_price', None)
 
-        items = Item.objects.all()
+        items = Item.objects.filter(draft_mode=False)  # Filtrar publicados
         if min_price:
             items = items.filter(price__gte=min_price)
         if max_price:
@@ -144,3 +154,54 @@ class ItemRequestApprovalViewSet(viewsets.ViewSet):
         item_serializer = ItemSerializer(item)
 
         return Response(item_serializer.data, status=status.HTTP_201_CREATED)
+
+
+class PublishItemView(APIView):
+    def post(self, request, *args, **kwargs):
+        item_id = request.data.get('item_id')
+        user_id = request.data.get('user_id')
+        user = get_object_or_404(User, id=user_id)
+        try:
+            item = Item.objects.get(id=item_id, user=user)
+            item.publish()
+            return Response(
+                {"message": "Ítem publicado con éxito"},
+                status=status.HTTP_200_OK,
+            )
+
+        except Item.DoesNotExist:
+            return Response(
+                {"error": "Ítem no encontrado"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        except ValidationError as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+
+class ListDraftItemsView(APIView):
+    def get(self, request, user_id, *args, **kwargs):
+        user = get_object_or_404(User, id=user_id)
+        items = Item.objects.filter(user=user, draft_mode=True)
+        serializer = ItemSerializer(items, many=True)
+        return Response({'results': serializer.data},
+                        status=status.HTTP_200_OK)
+
+
+class ListUserItemsView(APIView):
+    def get(self, request, user_id, *args, **kwargs):
+        user = get_object_or_404(User, id=user_id)
+        items = Item.objects.filter(user=user)
+        serializer = ItemSerializer(items, many=True)
+        return Response({'results': serializer.data},
+                        status=status.HTTP_200_OK)
+
+
+class ListPublishedItemsView(APIView):
+    def get(self, request, *args, **kwargs):
+        items = Item.objects.filter(draft_mode=False)
+        serializer = ItemSerializer(items, many=True)
+        return Response({'results': serializer.data},
+                        status=status.HTTP_200_OK)

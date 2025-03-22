@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { DateRange } from "react-date-range";
+import { useNavigate, useParams, Link } from "react-router-dom";
+import { DateRange  } from "react-date-range";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import axios from 'axios';
-
 import { 
   Box, 
   Typography, 
@@ -31,7 +32,6 @@ import {
   ChevronLeft as ChevronLeftIcon, 
   ChevronRight as ChevronRightIcon 
 } from '@mui/icons-material';
-
 import Navbar from "./Navbar";
 import Modal from "./Modal";
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
@@ -53,8 +53,14 @@ const ShowItemScreen = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [requestedDates, setRequestedDates] = useState([]);
   const [bookedDates, setBookedDates] = useState([]);
-  const [isOwner, setIsOwner] = useState(false);
+  const [isOwner, setIsOwner] = useState(false); // Estado para verificar si el usuario es el propietario
+  const [priceCategory, setPriceCategory]= useState(null)
+  const [selectedDay, setSelectedDay] = useState(null);
+  const [selectedMonths, setSelectedMonths] = useState(1);
+  const [selectedStartHour, setSelectedStartHour] = useState(null);
+  const [selectedEndHour, setSelectedEndHour] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     const fetchItemData = async () => {
@@ -66,15 +72,17 @@ const ShowItemScreen = () => {
         setItem(data);
 
         if (data.user) {
-          await fetchUserName(data.user);
+          fetchUserName(data.user);
           checkOwnerStatus(data.user);
         }
 
         if (data.images && data.images.length > 0) {
           await loadItemImages(data.images);
         }
-        
         await fetchAvailabilityData();
+        if(data.price_category){
+          setPriceCategory(data.price_category)
+        } 
       } catch (error) {
         console.error("Error fetching item:", error);
         setErrorMessage("No se pudo cargar el ítem");
@@ -86,6 +94,29 @@ const ShowItemScreen = () => {
     if (id) fetchItemData();
   }, [id]);
 
+  
+  useEffect(() => {
+    if (!item) return;
+  
+    let calculatedPrice = 0;
+  
+    if (priceCategory === "hour" && selectedStartHour !== null && selectedEndHour !== null) {
+      const hours = selectedEndHour - selectedStartHour;
+      calculatedPrice = hours * item.price;
+    }
+  
+    if (priceCategory === "day" && dateRange[0].startDate && dateRange[0].endDate) {
+      const days = Math.ceil((dateRange[0].endDate - dateRange[0].startDate) / (1000 * 60 * 60 * 24));
+      calculatedPrice = days * item.price;
+    }
+  
+    if (priceCategory === "month" && selectedDay && selectedMonths) {
+      calculatedPrice = selectedMonths * item.price;
+    }
+  
+    setTotalPrice(parseFloat(calculatedPrice.toFixed(2)));
+  }, [priceCategory, selectedStartHour, selectedEndHour, dateRange, selectedDay, selectedMonths, item]);
+  
   const checkOwnerStatus = (userId) => {
     const currentUser = JSON.parse(localStorage.getItem("user"));
     setIsAuthenticated(!!currentUser);
@@ -103,7 +134,7 @@ const ShowItemScreen = () => {
         }
       );
       const userData = response.data;
-      setUserName(userData.name);
+      setUserName(userData.username);
     } catch (error) {
       console.error("Error fetching user:", error);
       setUserName("Usuario desconocido");
@@ -159,7 +190,6 @@ const ShowItemScreen = () => {
       console.error("Error fetching availability:", error);
     }
   };
-
   const getDatesInRange = (startDate, endDate) => {
     const dates = [];
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
@@ -187,7 +217,6 @@ const ShowItemScreen = () => {
       setErrorMessage("No se pudo eliminar el ítem");
     }
   };
-
   const handleRentalRequest = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -195,10 +224,40 @@ const ShowItemScreen = () => {
         alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
         return;
       }
-
-      const startDateUTC = new Date(dateRange[0].startDate).toISOString();
-      const endDateUTC = new Date(dateRange[0].endDate).toISOString();
-
+  
+      let startDateUTC, endDateUTC;
+  
+      if (priceCategory === "hour" && selectedDay && selectedStartHour !== null && selectedEndHour !== null) {
+        // Construir fecha con hora para alquiler por horas
+        const start = new Date((selectedDay));
+        start.setHours(selectedStartHour+1, 0, 0, 0);
+  
+        const end = new Date((selectedDay));
+        end.setHours(selectedEndHour+1, 0, 0, 0);
+  
+        startDateUTC = start;
+        endDateUTC = end;
+      } 
+      else if (priceCategory === "day" && dateRange[0].startDate && dateRange[0].endDate) {
+        // Usar las fechas seleccionadas para alquiler por días
+        startDateUTC = new Date(convertToCET(dateRange[0].startDate));
+        endDateUTC = new Date(convertToCET(dateRange[0].endDate));
+      } 
+      else if (priceCategory === "month" && selectedDay && selectedMonths) {
+        // Construir fechas para alquiler por meses
+        const start = new Date(selectedDay);
+        const end = new Date(selectedDay);
+        end.setMonth(end.getMonth() + parseInt(selectedMonths));
+  
+        startDateUTC = convertToCET(start);
+        endDateUTC = convertToCET(end);
+      } 
+      else {
+        alert("Por favor, selecciona correctamente la fecha de inicio y fin.");
+        return;
+      }
+  
+      // Enviar la solicitud al servidor
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/rentas/full/first_request/`,
         {
@@ -213,7 +272,7 @@ const ShowItemScreen = () => {
           },
         }
       );
-    
+  
       if (response.status === 201) {
         alert("Solicitud de alquiler enviada correctamente");
         setShowRentalModal(false);
@@ -225,12 +284,39 @@ const ShowItemScreen = () => {
       alert(error.response?.data?.error || "No se pudo realizar la solicitud");
     }
   };
+  const convertToCET = (date) => {
+    const cetOffset = 2; // CET es UTC+1, pero ten en cuenta el horario de verano
+    const localDate = new Date(date);
+    localDate.setHours(localDate.getHours() + cetOffset);
+    return localDate.toISOString();
+  };
 
   const navigateImages = (direction) => {
     if (direction === 'next') {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageURLs.length);
     } else {
       setCurrentImageIndex((prevIndex) => (prevIndex - 1 + imageURLs.length) % imageURLs.length);
+    }
+  };
+  const handlePublishItem = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+  
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/objetos/publish_item/`,
+        { item_id: item.id, user_id: user.id },
+        { headers: { "Content-Type": "application/json" } }
+      );
+  
+      if (response.status === 200) {
+        alert("¡El ítem se ha publicado correctamente!");
+        navigate(0); // Refresca la página
+      } else {
+        alert("Hubo un problema al publicar el ítem.");
+      }
+    } catch (error) {
+      console.error("Error al publicar el ítem:", error);
+      alert("Error al publicar el ítem.");
     }
   };
 
@@ -269,6 +355,29 @@ const ShowItemScreen = () => {
           <Typography variant="h4" component="h1" gutterBottom>
             {item.title}
           </Typography>
+          {item.draft_mode && (
+  <Box 
+    sx={{ 
+      backgroundColor: "#fff8c4", 
+      p: 2, 
+      borderRadius: 2, 
+      border: "1px solid #e0c243", 
+      textAlign: "center", 
+      mb: 3 
+    }}
+  >
+    <Typography variant="h6" color="warning.main" gutterBottom>
+      📌 BORRADOR
+    </Typography>
+    <Button 
+      variant="contained" 
+      color="primary" 
+      onClick={handlePublishItem}
+    >
+      Publicar
+    </Button>
+  </Box>
+)}
 
           {errorMessage && (
             <Box sx={{ bgcolor: 'error.light', color: 'error.contrastText', p: 2, borderRadius: 1, mb: 3 }}>
@@ -340,12 +449,36 @@ const ShowItemScreen = () => {
                 <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                   <PersonIcon fontSize="large" color="primary" />
                   <Box>
-                    <Typography variant="caption" color="textSecondary">
-                      Publicado por:
-                    </Typography>
-                    <Typography variant="body1" fontWeight="medium">
+                  <Typography variant="caption" color="textSecondary">
+                    Publicado por:
+                  </Typography>
+                  <Link to={`/perfil/${encodeURIComponent(userName)}`} style={{ textDecoration: "none" }}>
+                    <Button
+                      variant="contained"
+                      sx={{
+                        textTransform: "none",
+                        fontWeight: "bold",
+                        fontSize: "1.05rem",
+                        borderRadius: "30px",
+                        padding: "8px 20px",
+                        background: "linear-gradient(135deg, #2563eb, #1e40af)",
+                        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.15)",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
+                        "&:hover": {
+                          background: "linear-gradient(135deg, #1e40af, #122b6d)",
+                          transform: "scale(1.05)",
+                          boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
+                        },
+                      }}
+                    >
+                      <PersonIcon sx={{ fontSize: 20, color: "white" }} />
                       {userName}
-                    </Typography>
+                    </Button>
+                  </Link>
+
+
                     {isOwner && (
                       <Chip 
                         label="Eres el propietario" 
@@ -379,6 +512,14 @@ const ShowItemScreen = () => {
                     <Box>
                       <Typography variant="subtitle2">Categoría</Typography>
                       <Typography variant="body2">{item.category_display}</Typography>
+                    </Box>
+                  </Box>
+
+                  <Box sx={{ display: 'flex', gap: 2 }}>
+                    <CategoryIcon color="action" />
+                    <Box>
+                      <Typography variant="subtitle2">Subcategoría</Typography>
+                      <Typography variant="body2">{item.subcategory_display}</Typography>
                     </Box>
                   </Box>
                   
@@ -450,70 +591,150 @@ const ShowItemScreen = () => {
               p: 1
             }
           }}>
-            <DateRange
-              ranges={isOwner || !isAuthenticated ? [] : dateRange}
-              onChange={(ranges) => { 
-                if (!isOwner && isAuthenticated) {
-                  setDateRange([ranges.selection]);
-                }
-              }}
-              minDate={new Date()}
-              disabledDates={[...requestedDates, ...bookedDates]}
+
+        {priceCategory === "hour" && (
+          <div> 
+            {/* Selector de día */}
+            <label>Selecciona un día:</label>
+            <DatePicker
+              selected={selectedDay}
+              onChange={(date) => setSelectedDay(date)}
+              minDate={new Date()} // Evita fechas pasadas
+              excludeDates={[...requestedDates, ...bookedDates]} // Bloquea días ocupados
+              dateFormat="yyyy/MM/dd"
+              inline // Muestra el calendario directamente
             />
 
-            <Box sx={{ display: 'flex', gap: 3, mt: 2 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Box sx={{ width: 16, height: 16, bgcolor: '#f44336', borderRadius: '50%' }}></Box>
-                <Typography variant="body2">Reservado</Typography>
-              </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Box sx={{ width: 16, height: 16, bgcolor: '#ff9800', borderRadius: '50%' }}></Box>
-                <Typography variant="body2">Solicitado</Typography>
-              </Box>
+            {/* Selector de hora de inicio */}
+            <label>Selecciona la hora de inicio:</label>
+            <select
+              value={selectedStartHour}
+              onChange={(e) => {
+                const startHour = parseInt(e.target.value);
+                setSelectedStartHour(startHour);
+                setSelectedEndHour(startHour + 1); // Automáticamente una hora después
+              }}>
+              <option value="" disabled>Selecciona una hora</option>
+              {Array.from({ length: 24 }, (_, i) => (
+                <option key={i} value={i}>
+                  {i}:00
+                </option>
+              ))}
+            </select>
+
+            {/* Selector de hora de fin */}
+            <label>Selecciona la hora de fin:</label>
+            <select
+              value={selectedEndHour}
+              onChange={(e) => setSelectedEndHour(parseInt(e.target.value))}
+              disabled={selectedStartHour === null} // Deshabilita si no hay hora inicio
+            >
+              <option value="" disabled>Selecciona una hora</option>
+              {Array.from({ length: 24 }, (_, i) => (
+                <option key={i} value={i} disabled={i <= selectedStartHour}>
+                  {i}:00
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {priceCategory === "day" && (
+          <DateRange
+            ranges={dateRange}
+            onChange={(ranges) => {
+              const start = ranges.selection.startDate;
+              const end = ranges.selection.endDate;
+
+              // Si el usuario selecciona el mismo día como inicio y fin, establecerlo correctamente
+              if (start.toDateString() === end.toDateString()) {
+                setDateRange([{ startDate: start, endDate: start, key: "selection" }]);
+              } else {
+                setDateRange([ranges.selection]);
+              }
+            }}
+            minDate={new Date()}
+            disabledDates={[...requestedDates, ...bookedDates]}
+          />
+        )}
+
+        {priceCategory === "month" && (
+          <div>
+            <label>Selecciona la fecha de inicio:</label>
+            <DatePicker
+              selected={selectedDay}
+              onChange={(date) => setSelectedDay(date)}
+              minDate={new Date()} // Evita fechas pasadas
+              excludeDates={[...requestedDates, ...bookedDates]} // Bloquea días ocupados
+              dateFormat="yyyy/MM/dd"
+              inline // Muestra el calendario directamente
+            />
+
+            <label>Selecciona la cantidad de meses:</label>
+            <select onChange={(e) => setSelectedMonths(e.target.value)}>
+              {Array.from({ length: 12 }, (_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  {i + 1} mes(es)
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        <Typography variant="body2">Total a pagar: <strong>{totalPrice} €</strong></Typography>
+          <Box sx={{ display: 'flex', gap: 3, mt: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Box sx={{ width: 16, height: 16, bgcolor: '#f44336', borderRadius: '50%' }}></Box>
+              <Typography variant="body2">Reservado</Typography>
             </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Box sx={{ width: 16, height: 16, bgcolor: '#ff9800', borderRadius: '50%' }}></Box>
+              <Typography variant="body2">Solicitado</Typography>
+            </Box>
+          </Box>
           </Box>
 
           {!isOwner && (
-            <Box sx={{ mt: 3, textAlign: 'center' }}>
-              {!isAuthenticated ? (
-                <Box sx={{ p: 2, border: '1px solid #e0e0e0', borderRadius: 1 }}>
-                  <Typography variant="body1" gutterBottom>
-                    Para solicitar un alquiler, debes estar registrado
-                  </Typography>
-                  <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 2 }}>
-                    <Button variant="outlined" color="primary" href="/login">
-                      Iniciar sesión
-                    </Button>
-                    <Button variant="contained" color="primary" href="/signup">
-                      Registrarse
-                    </Button>
-                  </Box>
+          <Box sx={{ mt: 3, textAlign: 'center' }}>
+            {!isAuthenticated ? (
+              <Box sx={{ p: 2, border: '1px solid #e0e0e0', borderRadius: 1 }}>
+                <Typography variant="body1" gutterBottom>
+                  Para solicitar un alquiler, debes estar registrado
+                </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 2 }}>
+                  <Button variant="outlined" color="primary" href="/login">
+                    Iniciar sesión
+                  </Button>
+                  <Button variant="contained" color="primary" href="/signup">
+                    Registrarse
+                  </Button>
                 </Box>
-              ) : (
-                <Button 
-                  variant="contained" 
-                  color="primary" 
-                  size="large"
-                  onClick={() => setShowRentalModal(true)}
-                >
-                  Solicitar alquiler
-                </Button>
-              )}
-            </Box>
+              </Box>
+            ) : (
+              <Button 
+                variant="contained" 
+                color="primary" 
+                size="large"
+                onClick={() => setShowRentalModal(true)}
+              >
+                Solicitar alquiler
+              </Button>
+            )}
+          </Box>
           )}
-        </Paper>
-        
-        {showRentalModal && (
+          </Paper>
+
+          {showRentalModal && (
           <Modal
-            title="Confirmar Solicitud"
-            message={`¿Quieres solicitar el objeto "${item.title}" del ${dateRange[0].startDate.toLocaleDateString()} al ${dateRange[0].endDate.toLocaleDateString()}?`}
-            onCancel={() => setShowRentalModal(false)}
-            onConfirm={handleRentalRequest}
+          title="Confirmar Solicitud"
+          message={`¿Quieres solicitar el objeto "${item.title}" del ${dateRange[0].startDate.toLocaleDateString()} al ${dateRange[0].endDate.toLocaleDateString()}?`}
+          onCancel={() => setShowRentalModal(false)}
+          onConfirm={handleRentalRequest}
           />
-        )}
-      </Container>
-    </Box>
-  );
-};
+          )}
+          </Container>
+          </Box>
+          );
+          };
 
 export default ShowItemScreen;
