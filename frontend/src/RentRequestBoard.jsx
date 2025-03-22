@@ -3,6 +3,7 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import { Box, Button, Card, CardContent, CardMedia, Typography, Skeleton } from "@mui/material";
 import Modal from "./Modal";
+import { useNavigate } from 'react-router-dom';
 
 const DEFAULT_IMAGE = "../public/default_image.png";
 
@@ -12,6 +13,7 @@ const RentRequestBoard = () => {
     const [responseType, setResponseType] = useState(null);
     const [openModal, setOpenModal] = useState(false);
     const [loading, setLoading] = useState(true); // Estado de carga de las solicitudes
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchRequests = async () => {
@@ -19,6 +21,7 @@ const RentRequestBoard = () => {
                 const user = JSON.parse(localStorage.getItem("user"));
                 if (!user || !user.id) {
                     alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
+                    navigate("/login");
                     return;
                 }
                 const response = await axios.get(
