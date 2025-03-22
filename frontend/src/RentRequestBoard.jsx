@@ -223,7 +223,7 @@ const RentRequestBoard = () => {
                                     </a>
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
-                                    Solicitado por:{" "}
+                                    <strong> Solicitado por:{" "} </strong>
                                     <a 
                                         href={`/perfil/${request.renter.username}`}
                                         target="_blank"
@@ -238,10 +238,24 @@ const RentRequestBoard = () => {
                                     </a>
                                 </Typography>
                                 <Typography variant="body2" sx={{ mb: 1 }}>
-                                    Inicio: {new Date(request.start_date).toLocaleDateString()}
+                                    <strong> Inicio: </strong> {new Date(request.start_date).toLocaleString('es-ES', {
+                                        weekday: 'long',
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    })}
                                 </Typography>
                                 <Typography variant="body2" sx={{ mb: 1 }}>
-                                    Fin: {new Date(request.end_date).toLocaleDateString()}
+                                        <strong> Fin: </strong> {new Date(request.end_date).toLocaleString('es-ES', {
+                                        weekday: 'long',
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    })}
                                 </Typography>
                                 <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
                                     <Button
