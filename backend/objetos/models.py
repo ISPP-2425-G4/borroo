@@ -154,6 +154,7 @@ class Item(models.Model):
     user = models.ForeignKey('usuarios.User', related_name='items',
                              on_delete=models.CASCADE)
     draft_mode = models.BooleanField(default=False)
+    featured = models.BooleanField(default=False)
 
     def publish(self):
         if (
