@@ -241,3 +241,4 @@ class RentViewSet(viewsets.ModelViewSet):
             )
         serializer = RentSerializer(my_requests, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
