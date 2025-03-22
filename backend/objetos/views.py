@@ -12,6 +12,7 @@ from .models import ItemCategory, CancelType, PriceCategory, ItemSubcategory
 from rest_framework.decorators import action
 from django.core.exceptions import ValidationError
 from django.utils.dateparse import parse_date
+import json
 
 
 class EnumChoicesView(APIView):
@@ -50,20 +51,35 @@ class EnumChoicesView(APIView):
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def handle_unavailable_periods(self, item, unavailable_periods_data):
         if unavailable_periods_data:
+            # Si los datos vienen como string, convertirlos a lista de diccionarios
+            if isinstance(unavailable_periods_data, str):
+                try:
+                    unavailable_periods_data = json.loads(unavailable_periods_data)
+                except json.JSONDecodeError:
+                    raise serializers.ValidationError("Formato inválido para unavailable_periods.")
+
+            # Verificar que ahora es una lista de diccionarios
+            if not isinstance(unavailable_periods_data, list):
+                raise serializers.ValidationError("Los periodos de indisponibilidad deben ser una lista.")
+
+            # Eliminar periodos previos asociados al ítem
             UnavailablePeriod.objects.filter(item=item).delete()
+
             for period in unavailable_periods_data:
+                if not isinstance(period, dict):
+                    raise serializers.ValidationError("Cada periodo debe ser un diccionario con 'start_date' y 'end_date'.")
+
                 start_date = parse_date(period.get("start_date"))
                 end_date = parse_date(period.get("end_date"))
+
                 if start_date and end_date and start_date < end_date:
-                    UnavailablePeriod.objects.create(item=item, start_date=start_date, 
-                                                     end_date=end_date)
+                    UnavailablePeriod.objects.create(item=item, start_date=start_date, end_date=end_date)
                 else:
-                    raise serializers.ValidationError("Las fechas de "
-                    "indisponibilidad no son válidas.")
+                    raise serializers.ValidationError("Las fechas de indisponibilidad no son válidas.")
 
     def create(self, request, *args, **kwargs):
         print("Request data:", request.data)
