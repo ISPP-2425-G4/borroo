@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
-import { Box, Button, Card, CardContent, CardMedia, Typography, Skeleton } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Typography, Skeleton, Tooltip } from "@mui/material";
 import Modal from "./Modal";
 import { useNavigate } from 'react-router-dom';
 
@@ -129,11 +129,11 @@ const RentRequestBoard = () => {
                         flexDirection: "column",
                         gap: 2,
                         p: 2,
-                        width: "100%", // Aseguramos que el contenedor ocupe el 100% del ancho
+                        width: "100%",
                         maxWidth: "800px",
                         maxHeight: "75vh",
                         overflowY: "auto",
-                        overflowX: "hidden", // Evitamos el desbordamiento horizontal
+                        overflowX: "hidden",
                     }}
                 >
                     {[...Array(5)].map((_, index) => (
@@ -179,7 +179,7 @@ const RentRequestBoard = () => {
                         maxWidth: "800px",
                         maxHeight: "75vh",
                         overflowY: "auto",
-                        overflowX: "hidden", // Aseguramos que no haya desbordamiento horizontal
+                        overflowX: "hidden",
                     }}
                 >
                     {requests.map((request) => (
@@ -224,18 +224,29 @@ const RentRequestBoard = () => {
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
                                     <strong> Solicitado por:{" "} </strong>
-                                    <a 
-                                        href={`/perfil/${request.renter.username}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        style={{ 
-                                            textDecoration: "none",
-                                            color: "#1976d2",
-                                            fontWeight: "bold",
-                                        }}
+                                    <Tooltip 
+                                        title={
+                                            <Box>
+                                                <Typography variant="body2"><strong>Nombre:</strong> {request.renter.name} {request.renter.surname}</Typography>
+                                                <Typography variant="body2"><strong>Email:</strong> {request.renter.email}</Typography>
+                                                <Button size="small" onClick={() => alert("Enviando mensaje...")}>Enviar Mensaje</Button>
+                                            </Box>
+                                        } 
+                                        arrow
                                     >
-                                        {request.renter.name} {request.renter.surname}
-                                    </a>
+                                        <a 
+                                            href={`/perfil/${request.renter.username}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            style={{ 
+                                                textDecoration: "none",
+                                                color: "#1976d2",
+                                                fontWeight: "bold",
+                                            }}
+                                        >
+                                            {request.renter.name} {request.renter.surname}
+                                        </a>
+                                    </Tooltip>
                                 </Typography>
                                 <Typography variant="body2" sx={{ mb: 1 }}>
                                     <strong> Inicio: </strong> {new Date(request.start_date).toLocaleString('es-ES', {
@@ -248,7 +259,7 @@ const RentRequestBoard = () => {
                                     })}
                                 </Typography>
                                 <Typography variant="body2" sx={{ mb: 1 }}>
-                                        <strong> Fin: </strong> {new Date(request.end_date).toLocaleString('es-ES', {
+                                    <strong> Fin: </strong> {new Date(request.end_date).toLocaleString('es-ES', {
                                         weekday: 'long',
                                         year: 'numeric',
                                         month: 'long',
