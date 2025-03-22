@@ -37,7 +37,7 @@ class ItemSerializer(serializers.ModelSerializer):
             'cancel_type_display', 'price_category',
             'price_category_display', 'price', 'images',
             'image_files', 'remaining_image_ids', 'user',
-            'draft_mode'
+            'draft_mode', 'featured'
         ]
 
     def validate(self, data):
