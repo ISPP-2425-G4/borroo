@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
-import { Box, Button,Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Typography, Skeleton } from "@mui/material";
 import Modal from "./Modal";
 
 const DEFAULT_IMAGE = "../public/default_image.png";
@@ -11,6 +11,7 @@ const RentRequestBoard = () => {
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [responseType, setResponseType] = useState(null);
     const [openModal, setOpenModal] = useState(false);
+    const [loading, setLoading] = useState(true); // Estado de carga de las solicitudes
 
     useEffect(() => {
         const fetchRequests = async () => {
@@ -54,7 +55,7 @@ const RentRequestBoard = () => {
                 );
         
                 setRequests(rentasEnriquecidas);
-                console.log("Datos recibidos del backend:", rentasEnriquecidas);
+                setLoading(false); // Datos cargados
             } catch (error) {
                 console.error("Error al obtener solicitudes de alquiler:", error);
             }
@@ -109,7 +110,7 @@ const RentRequestBoard = () => {
 
     const closeModal = () => {
         setOpenModal(false);
-    }
+    };
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mt: 10, p: 2 }}>
@@ -118,7 +119,51 @@ const RentRequestBoard = () => {
                 Solicitudes de Alquiler
             </Typography>
 
-            {requests.length === 0 ? (
+            {loading ? (
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 2,
+                        p: 2,
+                        width: "100%", // Aseguramos que el contenedor ocupe el 100% del ancho
+                        maxWidth: "800px",
+                        maxHeight: "75vh",
+                        overflowY: "auto",
+                        overflowX: "hidden", // Evitamos el desbordamiento horizontal
+                    }}
+                >
+                    {[...Array(5)].map((_, index) => (
+                        <Card
+                            key={index}
+                            sx={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                boxShadow: 3,
+                                p: 2,
+                                width: "100%", 
+                                maxWidth: "750px",
+                                minHeight: "150px",
+                                borderRadius: 2,
+                                overflow: "hidden",
+                            }}
+                        >
+                            <Skeleton variant="rectangular" width={150} height={150} sx={{ mr: 2 }} />
+                            <CardContent sx={{ flex: 1 }}>
+                                <Skeleton width="60%" height={25} sx={{ mb: 1 }} />
+                                <Skeleton width="40%" height={20} sx={{ mb: 1 }} />
+                                <Skeleton width="40%" height={20} sx={{ mb: 1 }} />
+                                <Skeleton width="40%" height={20} sx={{ mb: 1 }} />
+                                <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
+                                    <Skeleton width={80} height={47} />
+                                    <Skeleton width={90} height={47} />
+                                </Box>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </Box>
+            ) : requests.length === 0 ? (
                 <Typography>No hay solicitudes de alquiler disponibles.</Typography>
             ) : (
                 <Box
@@ -131,13 +176,7 @@ const RentRequestBoard = () => {
                         maxWidth: "800px",
                         maxHeight: "75vh",
                         overflowY: "auto",
-                        "&::-webkit-scrollbar": {
-                            width: "8px",
-                        },
-                        "&::-webkit-scrollbar-thumb": {
-                            backgroundColor: "#aaa",
-                            borderRadius: "4px",
-                        },
+                        overflowX: "hidden", // Aseguramos que no haya desbordamiento horizontal
                     }}
                 >
                     {requests.map((request) => (
@@ -175,7 +214,8 @@ const RentRequestBoard = () => {
                                         href={`show-item/${request.item.id}`} 
                                         target="_blank" 
                                         rel="noopener noreferrer" 
-                                        style={{ textDecoration: "none", color: "inherit" }}>
+                                        style={{ textDecoration: "none", color: "inherit" }}
+                                    >
                                         {request.item.title}
                                     </a>
                                 </Typography>
