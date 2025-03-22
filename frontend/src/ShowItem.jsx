@@ -40,6 +40,7 @@ const ShowItemScreen = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [item, setItem] = useState(null);
+  const [unavailabilityPeriods, setUnavailabilityPeriods] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
@@ -70,6 +71,7 @@ const ShowItemScreen = () => {
         );
         const data = response.data;
         setItem(data);
+        setUnavailabilityPeriods(data.unavailabilityPeriods || []);
 
         if (data.user) {
           fetchUserName(data.user);
@@ -217,11 +219,28 @@ const ShowItemScreen = () => {
       setErrorMessage("No se pudo eliminar el ítem");
     }
   };
+
+  const isDateUnavailable = (date) => {
+    return unavailabilityPeriods.some(period => {
+      const start = new Date(period.start);
+      const end = new Date(period.end);
+      return date >= start && date <= end;
+    });
+  };
+
   const handleRentalRequest = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
       if (!user || !user.id) {
         alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
+        return;
+      }
+      if (
+        isDateUnavailable(dateRange[0].startDate) ||
+        isDateUnavailable(dateRange[0].endDate) ||
+        isDateUnavailable(selectedDay)
+      ) {
+        alert("No puedes solicitar alquiler en fechas no disponibles.");
         return;
       }
   
@@ -600,7 +619,7 @@ const ShowItemScreen = () => {
               selected={selectedDay}
               onChange={(date) => setSelectedDay(date)}
               minDate={new Date()} // Evita fechas pasadas
-              excludeDates={[...requestedDates, ...bookedDates]} // Bloquea días ocupados
+              disabledDates={[...requestedDates, ...bookedDates, ...unavailabilityPeriods.map(period => ({ startDate: new Date(period.start), endDate: new Date(period.end) }))]}
               dateFormat="yyyy/MM/dd"
               inline // Muestra el calendario directamente
             />
@@ -645,7 +664,10 @@ const ShowItemScreen = () => {
             onChange={(ranges) => {
               const start = ranges.selection.startDate;
               const end = ranges.selection.endDate;
-
+              if (isDateUnavailable(start) || isDateUnavailable(end)) {
+                alert("Las fechas seleccionadas no están disponibles.");
+                return;
+              }
               // Si el usuario selecciona el mismo día como inicio y fin, establecerlo correctamente
               if (start.toDateString() === end.toDateString()) {
                 setDateRange([{ startDate: start, endDate: start, key: "selection" }]);
@@ -654,7 +676,7 @@ const ShowItemScreen = () => {
               }
             }}
             minDate={new Date()}
-            disabledDates={[...requestedDates, ...bookedDates]}
+            disabledDates={[...requestedDates, ...bookedDates, ...unavailabilityPeriods.map(period => ({ startDate: new Date(period.start), endDate: new Date(period.end) }))]}
           />
         )}
 
@@ -665,7 +687,7 @@ const ShowItemScreen = () => {
               selected={selectedDay}
               onChange={(date) => setSelectedDay(date)}
               minDate={new Date()} // Evita fechas pasadas
-              excludeDates={[...requestedDates, ...bookedDates]} // Bloquea días ocupados
+              disabledDates={[...requestedDates, ...bookedDates, ...unavailabilityPeriods.map(period => ({ startDate: new Date(period.start), endDate: new Date(period.end) }))]}
               dateFormat="yyyy/MM/dd"
               inline // Muestra el calendario directamente
             />
