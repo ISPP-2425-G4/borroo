@@ -231,7 +231,7 @@ class RentViewSet(viewsets.ModelViewSet):
                                               rent_status=RentStatus.REQUESTED)
         serializer = RentSerializer(rental_requests, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-          
+
     @action(detail=False, methods=['get'])
     def my_requests(self, request):
         user_id = request.query_params.get("user")
