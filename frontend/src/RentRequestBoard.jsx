@@ -222,7 +222,7 @@ const RentRequestBoard = () => {
                                 <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
                                     Solicitado por:{" "}
                                     <a 
-                                        href={`/user-profile/${request.renter.id}`}
+                                        href={`/perfil/${request.renter.username}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         style={{ 
