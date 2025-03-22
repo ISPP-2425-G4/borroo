@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiUser, FiLock, FiMail, FiInfo, FiPhone, FiMapPin, FiHome, FiFlag, FiCheckCircle } from "react-icons/fi";
+import { FiUser, FiLock, FiMail, FiInfo } from "react-icons/fi";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import axios from 'axios';
 import Navbar from "./Navbar";
@@ -14,9 +14,7 @@ import {
   InputAdornment, 
   IconButton, 
   CircularProgress, 
-  Alert, 
-  MenuItem, 
-  Autocomplete,
+  Alert,
   styled
 } from "@mui/material";
 
@@ -81,12 +79,6 @@ const Signup = () => {
     email: "",
     password: "",
     password2: "",
-    phone_number: "",
-    country: "",
-    city: "",
-    address: "",
-    postal_code: "",
-    pricing_plan: "free" 
   });
   
   const [error, setError] = useState("");
@@ -95,31 +87,13 @@ const Signup = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
-  const [countries, setCountries] = useState([]);
   const navigate = useNavigate();
   
   useEffect(() => {
-    const requiredFields = ["username", "name", "surname", "email", "phone_number", "country", "city", "address", "postal_code", "password", "password2"];
+    const requiredFields = ["username", "name", "surname", "email", "password", "password2"];
     const isValid = requiredFields.every(field => formData[field] && formData[field].trim() !== "");
     setIsFormValid(isValid);
   }, [formData]);
-
-  useEffect(() => {
-    const fetchCountries = async () => {
-      try {
-        const response = await axios.get("https://restcountries.com/v3.1/all?lang=es");
-        const countryOptions = response.data.map(country => ({
-          value: country.cca2,
-          label: country.translations.spa.common
-        }));
-        setCountries(countryOptions);
-      } catch (error) {
-        console.error("Error fetching countries:", error);
-      }
-    };
-
-    fetchCountries();
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -127,51 +101,6 @@ const Signup = () => {
       ...prevData,
       [name]: value
     }));
-  };
-
-  const handleCountryChange = (event, value) => {
-    if (value && typeof value === 'object') {
-      setFormData(prevData => ({
-        ...prevData,
-        country: value.label
-      }));
-    } 
-    else if (typeof value === 'string') {
-      setFormData(prevData => ({
-        ...prevData,
-        country: value
-      }));
-    }
-    else {
-      setFormData(prevData => ({
-        ...prevData,
-        country: ""
-      }));
-    }
-  };
-
-  const handleCountryKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault(); 
-      
-      const inputValue = event.target.value.toLowerCase();
-      
-      const filteredCountries = countries.filter(country => 
-        country.label.toLowerCase().includes(inputValue)
-      );
-      
-      if (filteredCountries.length > 0) {
-        setFormData(prevData => ({
-          ...prevData,
-          country: filteredCountries[0].label
-        }));
-      } else {
-        setFormData(prevData => ({
-          ...prevData,
-          country: event.target.value
-        }));
-      }
-    }
   };
 
   const handleSubmit = async (e) => {
@@ -190,11 +119,7 @@ const Signup = () => {
   
     const errors = {};
   
-    if (!/^\+?[0-9]{7,15}$/.test(formData.phone_number)) {
-      errors.phone_number = "Introduce un número de teléfono válido.";
-    }
-  
-    const textFields = ["name", "surname", "country", "city", "address"];
+    const textFields = ["name", "surname"];
     textFields.forEach(field => {
       if (formData[field] && !/^[A-Za-zÁÉÍÓÚáéíóúÑñ]/.test(formData[field])) {
         errors[field] = `El campo ${field} debe comenzar con una letra.`;
@@ -214,7 +139,7 @@ const Signup = () => {
       errors.password = "La contraseña debe tener al menos 8 caracteres.";
     }
   
-    const requiredFields = ["username", "name", "surname", "email", "phone_number", "country", "city", "address", "postal_code", "password", "password2"];
+    const requiredFields = ["username", "name", "surname", "email", "password", "password2"];
     requiredFields.forEach(field => {
       if (!formData[field]) {
         errors[field] = "Este campo es obligatorio.";
@@ -410,149 +335,6 @@ const Signup = () => {
             <StyledTextField
               variant="outlined"
               fullWidth
-              label="Número de teléfono"
-              name="phone_number"
-              required
-              value={formData.phone_number}
-              onChange={handleChange}
-              error={!!formErrors.phone_number}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <FiPhone />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            {formErrors.phone_number && <FieldError>{formErrors.phone_number}</FieldError>}
-            
-            <Autocomplete
-              options={countries}
-              getOptionLabel={(option) => {
-                if (typeof option === 'string') return option;
-                return option?.label || '';
-              }}
-              onChange={handleCountryChange}
-              onKeyDown={handleCountryKeyDown}
-              renderInput={(params) => (
-                <StyledTextField
-                  {...params}
-                  label="País"
-                  name="country"
-                  variant="outlined"
-                  fullWidth
-                  error={!!formErrors.country}
-                  required
-                  InputProps={{
-                    ...params.InputProps,
-                    startAdornment: (
-                      <>
-                        <InputAdornment position="start">
-                          <FiFlag />
-                        </InputAdornment>
-                        {params.InputProps.startAdornment}
-                      </>
-                    ),
-                  }}
-                />
-              )}
-              freeSolo
-              autoSelect
-              filterOptions={(options, state) => {
-                return options.filter(option => 
-                  option.label.toLowerCase().includes(state.inputValue.toLowerCase())
-                );
-              }}
-              value={formData.country ? 
-                (countries.find(c => c.label === formData.country) || formData.country) : 
-                null
-              }
-            />
-            {formErrors.country && <FieldError>{formErrors.country}</FieldError>}
-            
-            <StyledTextField
-              variant="outlined"
-              fullWidth
-              label="Ciudad"
-              name="city"
-              required
-              value={formData.city}
-              onChange={handleChange}
-              error={!!formErrors.city}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <FiMapPin />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            {formErrors.city && <FieldError>{formErrors.city}</FieldError>}
-            
-            <StyledTextField
-              variant="outlined"
-              fullWidth
-              label="Dirección"
-              name="address"
-              required
-              value={formData.address}
-              onChange={handleChange}
-              error={!!formErrors.address}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <FiHome />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            {formErrors.address && <FieldError>{formErrors.address}</FieldError>}
-            
-            <StyledTextField
-              variant="outlined"
-              fullWidth
-              label="Código postal (ej. 12345 o 12345-6789)"
-              name="postal_code"
-              required
-              value={formData.postal_code}
-              onChange={handleChange}
-              error={!!formErrors.postal_code}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <FiMapPin />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            {formErrors.postal_code && <FieldError>{formErrors.postal_code}</FieldError>}
-            
-            <StyledTextField
-              select
-              variant="outlined"
-              fullWidth
-              label="Plan de precios"
-              name="pricing_plan"
-              value={formData.pricing_plan}
-              onChange={handleChange}
-              error={!!formErrors.pricing_plan}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <FiCheckCircle />
-                  </InputAdornment>
-                ),
-              }}
-            >
-              <MenuItem value="free">Plan Free</MenuItem>
-              <MenuItem value="basic">Plan Basic</MenuItem>
-              <MenuItem value="premium">Plan Premium</MenuItem>
-            </StyledTextField>
-            {formErrors.pricing_plan && <FieldError>{formErrors.pricing_plan}</FieldError>}
-            
-            <StyledTextField
-              variant="outlined"
-              fullWidth
               label="Contraseña"
               name="password"
               type={showPassword ? "text" : "password"}
@@ -632,4 +414,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;  
+export default Signup;

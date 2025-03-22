@@ -1,7 +1,8 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import UserViewSet, check_username, check_email
+from .views import ReviewCreateView, ReviewDeleteView, ReviewListView
 from .views import PasswordResetRequestView, PasswordResetConfirmView
+from .views import check_username, check_email, UserProfileView, UserViewSet
 
 
 from . import views
@@ -23,5 +24,8 @@ urlpatterns = [
          name="password_reset"),
     path("password_reset_confirm/<str:token>/",
          PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
-
+    path("perfil/", UserProfileView.as_view(), name="user-profile"),
+    path("reviews/create/", ReviewCreateView.as_view(), name="review-create"),
+    path("reviews/", ReviewListView.as_view(), name="review-list"),
+    path("reviews/delete/", ReviewDeleteView.as_view(), name="review-delete"),
 ]

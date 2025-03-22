@@ -12,10 +12,15 @@ import RecoverPassword from "./RecoverPassword";
 import RecoverPasswordDone from "./RecoverPasswordDone";
 import RecoverPasswordNew from "./RecoverPasswordNew";
 import SubscriptionScreen from "./SubscriptionScreen";
+import DraftItemsView from "./DraftsScreen"; 
+import Profile from "./Profile";
+import '../public/styles/App.css';
+
 
 function App() {
   return (
     <Router>
+      <div className="app-container">
       <Routes>
         <Route path="/" element={<Layout />}>
         </Route>
@@ -31,8 +36,12 @@ function App() {
         <Route path="/recoverPassword" element={<RecoverPassword />} />
         <Route path="/recoverPasswordDone" element={<RecoverPasswordDone />} />
         <Route path="/recoverPasswordNew" element={<RecoverPasswordNew />} />
+        <Route path="/drafts" element={<DraftItemsView />} />
+        <Route path="/perfil/:username" element={<Profile />} />
+        <Route path="/show-item/:id" element={<ShowItem />} />
       </Routes>
       <Footer/>
+      </div>
     </Router>
   );
 }

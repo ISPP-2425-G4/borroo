@@ -7,7 +7,7 @@ django.setup()
 
 import random
 from usuarios.models import User
-from objetos.models import Item, ItemImage
+from objetos.models import Item, ItemImage, ItemSubcategory
 from rentas.models import Rent
 from decimal import Decimal
 from django.contrib.auth.hashers import make_password
@@ -52,13 +52,15 @@ def create_items():
             description=f'Descripción del objeto {i}',
             category=random.choice(['technology', 'sports', 'diy',
                                     'clothing', 'furniture_and_logistics',
-                                    'training']),
+                                    'entertainment']),
+            subcategory=ItemSubcategory.NONE,
             cancel_type=random.choice(['flexible', 'medium', 'strict']),
             price_category=random.choice(['hour', 'day', 'week', 'month',
                                           'year']),
             price=Decimal(random.uniform(2, 30)),
             user=random.choice(users),
             draft_mode=False,
+            featured=False
         )
     print('Items created successfully!')
 

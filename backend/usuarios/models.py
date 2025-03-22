@@ -44,17 +44,21 @@ class User(models.Model):
                              validators=[
                                  EmailValidator(
                                     message="Introduce un email válido.")])
-    phone_number = models.CharField(max_length=25, validators=[
-            RegexValidator(
-                regex=r'^\+?[0-9]{7,15}$',
-                message="Introduce un número de teléfono válido."
-            )
-        ])
-    country = models.CharField(max_length=255, validators=[text_validator])
-    city = models.CharField(max_length=255, validators=[text_validator])
-    address = models.TextField(max_length=75, validators=[text_validator])
+    phone_number = models.CharField(max_length=25, null=True, blank=True,
+                                    validators=[RegexValidator(
+                                                regex=r'^\+?[0-9]{7,15}$',
+                                                message="Introduce un número"
+                                                "de teléfono válido."
+                                                )
+                                                ])
+    country = models.CharField(max_length=255, null=True, blank=True,
+                               validators=[text_validator])
+    city = models.CharField(max_length=255, null=True, blank=True,
+                            validators=[text_validator])
+    address = models.TextField(max_length=75, null=True, blank=True,
+                               validators=[text_validator])
     postal_code = models.CharField(
-        max_length=20,
+        max_length=20, null=True, blank=True,
         validators=[
             RegexValidator(
                 regex='^[0-9]{5}(-[0-9]{4})?$',
@@ -85,3 +89,22 @@ class User(models.Model):
 
     def __str__(self):
         return self.username
+
+
+class Review(models.Model):
+    reviewer = models.ForeignKey(User, on_delete=models.CASCADE,
+                                 related_name="reviews_given")
+    reviewed_user = models.ForeignKey(User, on_delete=models.CASCADE,
+                                      related_name="reviews_received")
+    rating = models.FloatField(default=0.0)
+    comment = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("reviewer", "reviewed_user")
+
+    def __str__(self):
+        return (
+            f"{self.reviewer.username} → "
+            f"{self.reviewed_user.username}: {self.rating}"
+        )
