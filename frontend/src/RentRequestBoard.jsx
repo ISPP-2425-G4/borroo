@@ -152,6 +152,8 @@ const RentRequestBoard = () => {
                                 width: "100%",
                                 maxWidth: "750px",
                                 minHeight: "150px",
+                                borderRadius: 2,
+                                overflow: "hidden",
                             }}
                         >
                             <CardMedia
@@ -162,35 +164,43 @@ const RentRequestBoard = () => {
                                     objectFit: "cover",
                                     borderRadius: "2px",
                                     mr: 2,
+                                    boxShadow: 1,
                                 }}
                                 image={request.imageUrl}
                                 alt={request.title}
                             />
                             <CardContent sx={{ flex: 1 }}>
-                                <Typography variant="h6">
-                                    <a href={`show-item/${request.item.id}`} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer" 
-                                    style={{ textDecoration: "none", color: "inherit" }}>
+                                <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+                                    <a 
+                                        href={`show-item/${request.item.id}`} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        style={{ textDecoration: "none", color: "inherit" }}>
                                         {request.item.title}
                                     </a>
                                 </Typography>
-                                <Typography variant="body2" color="textSecondary">
-                                    Solicitado por: {" "}
-                                    <a href={`/user-profile/${request.renter.id}`} //Incluir enlace al perfil del usuario
-                                    target="_blank" 
-                                    rel="noopener noreferrer" 
-                                    style={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold" }}>
+                                <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
+                                    Solicitado por:{" "}
+                                    <a 
+                                        href={`/user-profile/${request.renter.id}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style={{ 
+                                            textDecoration: "none",
+                                            color: "#1976d2",
+                                            fontWeight: "bold",
+                                        }}
+                                    >
                                         {request.renter.name} {request.renter.surname}
                                     </a>
                                 </Typography>
-                                <Typography variant="body2">
+                                <Typography variant="body2" sx={{ mb: 1 }}>
                                     Inicio: {new Date(request.start_date).toLocaleDateString()}
                                 </Typography>
-                                <Typography variant="body2">
+                                <Typography variant="body2" sx={{ mb: 1 }}>
                                     Fin: {new Date(request.end_date).toLocaleDateString()}
                                 </Typography>
-                                <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+                                <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
                                     <Button
                                         variant="contained"
                                         color="success"
@@ -213,6 +223,7 @@ const RentRequestBoard = () => {
                     ))}
                 </Box>
             )}
+
             {openModal && (
                 <Modal
                     title={`Confirmar solicitud`}
@@ -221,7 +232,6 @@ const RentRequestBoard = () => {
                     onConfirm={() => handleResponse(selectedRequest, responseType)}
                 />
             )}
-
         </Box>
     );
 };
