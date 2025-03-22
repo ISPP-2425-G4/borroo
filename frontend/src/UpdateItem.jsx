@@ -35,6 +35,7 @@ const UpdateItemScreen = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState(null);
+  const [unavailabilityPeriods, setUnavailabilityPeriods] = useState([]);
   const [options, setOptions] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -76,6 +77,7 @@ const UpdateItemScreen = () => {
         const enumData = enumResponse.data;
 
         setFormData(itemData);
+        setUnavailabilityPeriods(itemData.unavailabilityPeriods || []);
         setOptions(enumData);
 
         setFilteredSubcategories(getSubcategories(itemData.category));
@@ -159,6 +161,21 @@ const UpdateItemScreen = () => {
     setExistingImages(existingImages.filter((_, i) => i !== index));
   };
 
+  const handleAddPeriod = () => {
+    setUnavailabilityPeriods([...unavailabilityPeriods, { start: "", end: "" }]);
+  };
+
+  const handleRemovePeriod = (index) => {
+    setUnavailabilityPeriods(unavailabilityPeriods.filter((_, i) => i !== index));
+  };
+
+  const handlePeriodChange = (index, field, value) => {
+    const updatedPeriods = [...unavailabilityPeriods];
+    updatedPeriods[index][field] = value;
+    setUnavailabilityPeriods(updatedPeriods);
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
@@ -234,7 +251,7 @@ const UpdateItemScreen = () => {
       // 4️⃣ Enviar solicitud PUT al backend
       await axios.put(
         `${import.meta.env.VITE_API_BASE_URL}/objetos/full/${id}/`,
-        formDataToSend,
+        { ...formData, unavailabilityPeriods },
         {
           headers: { "Content-Type": "multipart/form-data" },
           withCredentials: true,
@@ -670,6 +687,27 @@ const UpdateItemScreen = () => {
                 hidden
               />
             </Button>
+            <div>
+        <label>Periodos de Indisponibilidad:</label>
+        {unavailabilityPeriods.map((period, index) => (
+          <div key={index}>
+            <input
+              type="date"
+              value={period.start}
+              onChange={(e) => handlePeriodChange(index, "start", e.target.value)}
+            />
+            <input
+              type="date"
+              value={period.end}
+              onChange={(e) => handlePeriodChange(index, "end", e.target.value)}
+            />
+            <button type="button" onClick={() => handleRemovePeriod(index)}>
+              Eliminar
+            </button>
+          </div>
+        ))}
+        <button type="button" onClick={handleAddPeriod}>Añadir Periodo</button>
+      </div>
   
             {/* Botón de envío */}
             <Button

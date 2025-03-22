@@ -128,7 +128,7 @@ class ItemSerializer(serializers.ModelSerializer):
                 ItemImage.objects.create(item=instance, image=image_url)
 
         # Actualizar periodos de indisponibilidad
-        instance.unavailableperiod_set.all().delete()
+        instance.unavailable_periods.all().delete()
         for period_data in unavailable_periods_data:
             UnavailablePeriod.objects.create(item=instance, **period_data)
 
