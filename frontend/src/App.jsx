@@ -14,11 +14,13 @@ import RecoverPasswordNew from "./RecoverPasswordNew";
 import SubscriptionScreen from "./SubscriptionScreen";
 import DraftItemsView from "./DraftsScreen"; 
 import Profile from "./Profile";
+import '../public/styles/App.css';
 
 
 function App() {
   return (
     <Router>
+      <div className="app-container">
       <Routes>
         <Route path="/" element={<Layout />}>
         </Route>
@@ -39,6 +41,7 @@ function App() {
         <Route path="/show-item/:id" element={<ShowItem />} />
       </Routes>
       <Footer/>
+      </div>
     </Router>
   );
 }
