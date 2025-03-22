@@ -190,6 +190,7 @@ const SearchItemByName = () => {
                   <Typography variant="h6">{producto.title}</Typography>
                   <Typography variant="body2">{producto.description}</Typography>
                   <Typography variant="body2">{producto.category_display}</Typography>
+                  <Typography variant="body2">{producto.subcategory_display}</Typography>
                   <Typography variant="body2">
                     {producto.price}€/{producto.price_category_display}
                   </Typography>

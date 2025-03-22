@@ -7,10 +7,8 @@ import axios from 'axios';
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
 import { Box, Stack, Typography, Alert, CircularProgress, Paper, Container } from "@mui/material";
 import { styled } from "@mui/system";
-import DatePicker from "react-datepicker";
-import { DateRange  } from "react-date-range";
-
-
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 const FormContainer = styled(Paper)(() => ({
   padding: "2rem",
@@ -201,33 +199,34 @@ const CreateItemScreen = () => {
     title: "",
     description: "",
     category: "",
+    subcategory: "",
     cancel_type: "",
     price_category: "",
     price: "",
-    dates_not_available: [] //cambiar
   });
 
   const [images, setImages] = useState([]);
   const [options, setOptions] = useState({
     categories: [],
+    subcategories: [],
     cancel_types: [],
     price_categories: [],
   });
 
+  const [unavailablePeriods, setUnavailablePeriods] = useState([]);
+
+  const [datesRange, setDatesRange] = useState([null, null]);
   const [loading, setLoading] = useState(false);
+  const [loadingDash, setLoadingDash] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [datesNotAvailable, setDatesNotAvailable] = useState([]);
   const navigate = useNavigate();
   const [fieldErrors, setFieldErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [fetchingOptions, setFetchingOptions] = useState(true);
-  const [dateRange, setDateRange] = useState([{
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    }]);
+  const [isDraft, setIsDraft] = useState(false);
+  const [filteredSubcategories, setFilteredSubcategories] = useState([]);
 
   useEffect(() => {
     const fetchEnums = async () => {
@@ -241,6 +240,7 @@ const CreateItemScreen = () => {
 
         setOptions({
           categories: data.categories || [],
+          subcategories: data.subcategories || [],
           cancel_types: data.cancel_types || [],
           price_categories: data.price_categories || [],
         });
@@ -264,23 +264,13 @@ const CreateItemScreen = () => {
     validateForm();
   }, [formData, images]);
 
-  const handleDateChange = (dates) => {
-    const [start, end] = dates;
-    if (start && end) {
-      setDatesNotAvailable([...datesNotAvailable, [start.toISOString().split("T")[0], end.toISOString().split("T")[0]]]);
-    }
-  };
-
-  const handleRemoveDate = (index) => {
-    setDatesNotAvailable(datesNotAvailable.filter((_, i) => i !== index));
-  };
-
   const validateForm = () => {
-    const { title, description, category, cancel_type, price_category, price } = formData;
+    const { title, description, category, subcategory, cancel_type, price_category, price } = formData;
     const isValid =
       title.trim() !== "" &&
       description.trim() !== "" &&
       category.trim() !== "" &&
+      subcategory.trim() !== "" &&
       cancel_type.trim() !== "" &&
       price_category.trim() !== "" &&
       price.trim() !== "" &&
@@ -314,6 +304,122 @@ const CreateItemScreen = () => {
     }
   };
 
+  const handleCategoryChange = (e) => {
+    const selectedCategory = e.target.value;
+    setFormData({ ...formData, category: selectedCategory, subcategory: "" });
+  
+    let newSubcategories = [];
+  
+    if (selectedCategory === "technology") {
+      newSubcategories = [
+        { value: "computers", label: "Ordenadores" },
+        { value: "computer_accessories", label: "Accesorios de ordenador" },
+        { value: "smartphones", label: "Smartphones" },
+        { value: "tablets", label: "Tablets" },
+        { value: "cameras", label: "Cámaras" },
+        { value: "consoles", label: "Consolas" },
+        { value: "tv", label: "Televisores" },
+        { value: "monitors", label: "Monitores" },
+        { value: "smarthome", label: "Hogar inteligente" },
+        { value: "audio", label: "Audio" },
+        { value: "smartwatchs", label: "Smartwatches" },
+        { value: "printers_scanners", label: "Impresoras y escáneres" },
+        { value: "drones", label: "Drones" },
+        { value: "projectors", label: "Proyectores" },
+        { value: "technology_others", label: "Otros" },
+        { value: "none", label: "Ninguno" },
+
+      ];
+    } else if (selectedCategory === "sports") {
+      newSubcategories = [
+        { value: "cycling", label: "Ciclismo" },
+        { value: "gym", label: "Gimnasio" },
+        { value: "calisthenics", label: "Calistenia" },
+        { value: "running", label: "Running" },
+        { value: "ball_sports", label: "Deportes de pelota" },
+        { value: "racket_sports", label: "Deportes de raqueta" },
+        { value: "paddle_sports", label: "Deportes de remo" },
+        { value: "martial_arts", label: "Artes marciales" },
+        { value: "snow_sports", label: "Deportes de nieve" },
+        { value: "skateboarding", label: "Skate" },
+        { value: "beach_sports", label: "Deportes de playa" },
+        { value: "pool_sports", label: "Deportes de piscina" },
+        { value: "river_sports", label: "Deportes de río" },
+        { value: "mountain_sports", label: "Deportes de montaña" },
+        { value: "extreme_sports", label: "Deportes extremos" },
+        { value: "sports_others", label: "Otros (Deporte)" },
+        { value: "none", label: "Ninguno" },
+
+      ];
+    } else if (selectedCategory === "diy") {
+      newSubcategories = [
+        { value: "electric_tools", label: "Herramientas eléctricas" },
+        { value: "manual_tools", label: "Herramientas manuales" },
+        { value: "machines", label: "Máquinas" },
+        { value: "electricity", label: "Electricidad" },
+        { value: "plumbing", label: "Fontanería" },
+        { value: "woodworking", label: "Carpintería" },
+        { value: "painting", label: "Pintura" },
+        { value: "gardening", label: "Jardinería" },
+        { value: "decoration", label: "Decoración" },
+        { value: "diy_others", label: "Otros (Bricolaje)" },
+        { value: "none", label: "Ninguno" },
+
+      ];
+    } else if (selectedCategory === "clothing") {
+      newSubcategories = [
+        { value: "summer_clothing", label: "Ropa de verano" },
+        { value: "winter_clothing", label: "Ropa de invierno" },
+        { value: "mevent_clothing", label: "Ropa de evento para hombre" },
+        { value: "wevent_clothing", label: "Ropa de evento para mujer" },
+        { value: "sport_event_apparel", label: "Ropa de evento deportivo" },
+        { value: "mshoes", label: "Zapatos para hombre" },
+        { value: "wshoes", label: "Zapatos para mujer" },
+        { value: "suits", label: "Trajes" },
+        { value: "dresses", label: "Vestidos" },
+        { value: "jewelry", label: "Joyería" },
+        { value: "watches", label: "Relojes" },
+        { value: "bags", label: "Bolsos" },
+        { value: "sunglasses", label: "Gafas de sol" },
+        { value: "hats", label: "Sombreros" },
+        { value: "clothing_others", label: "Otros (Ropa)" },
+        { value: "none", label: "Ninguno" },
+
+      ];
+    } else if (selectedCategory === "furniture_and_logistics") {
+      newSubcategories = [
+        { value: "home_furniture", label: "Muebles de hogar" },
+        { value: "home_appliances", label: "Electrodomésticos" },
+        { value: "event_equipment", label: "Equipamiento para eventos" },
+        { value: "kids_furniture", label: "Muebles para niños" },
+        { value: "office_furniture", label: "Muebles de oficina" },
+        { value: "kitchen", label: "Cocina" },
+        { value: "bathroom", label: "Baño" },
+        { value: "garden_furniture", label: "Muebles de jardín" },
+        { value: "decoration_ambience", label: "Decoración y ambiente" },
+        { value: "furniture_and_logistics_others", label: "Otros (Mobiliario y logística)" },
+        { value: "none", label: "Ninguno" },
+
+      ];
+    } else if (selectedCategory === "entertainment") {
+      newSubcategories = [
+        { value: "videogames", label: "Videojuegos" },
+        { value: "board_games", label: "Juegos de mesa" },
+        { value: "books", label: "Libros" },
+        { value: "movies", label: "Películas" },
+        { value: "music", label: "Música" },
+        { value: "instruments", label: "Instrumentos" },
+        { value: "party", label: "Fiesta" },
+        { value: "camping", label: "Camping" },
+        { value: "travel", label: "Viaje" },
+        { value: "other_entertainment", label: "Otros (Entretenimiento)" },
+        { value: "none", label: "Ninguno" },
+      ];
+    }
+    setFilteredSubcategories(newSubcategories);
+  };
+
+
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 0) {
@@ -329,7 +435,9 @@ const CreateItemScreen = () => {
       }
     }
   };
-
+  const handleSaveAsDraft = (e) => {
+    handleSubmit(e, true); // true indica que es un borrador
+  };
   const handleRemoveImage = (index) => {
     setImages(images.filter((_, i) => i !== index));
   };
@@ -338,9 +446,28 @@ const CreateItemScreen = () => {
     document.getElementById('image-upload').click();
   };
 
-  const handleSubmit = async (e) => {
+  const handleAddPeriod = () => {
+    const [startDate, endDate] = datesRange;
+    
+    if (!startDate || !endDate || new Date(startDate) >= new Date(endDate)) {
+        setErrorMessage("Las fechas de inicio y fin no son válidas.");
+        return;
+    }
+
+    setUnavailablePeriods([...unavailablePeriods, { start_date: startDate.toISOString().split('T')[0], end_date: endDate.toISOString().split('T')[0] }]);
+    setDatesRange([null, null]);
+    setErrorMessage('');
+  };
+
+  const handleSubmit = async (e, isDraft = false) => {
     e.preventDefault();
-    setLoading(true);
+    if(isDraft){
+      setIsDraft(true);
+      setLoadingDash(true);
+    }else{
+      setLoading(true);
+    }
+
     setErrorMessage("");
     setFieldErrors({});
     setShowErrorMessage(false);
@@ -401,20 +528,21 @@ const CreateItemScreen = () => {
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       setLoading(false);
+      setLoadingDash(false);
       setShowErrorMessage(true);
       return;
     }
 
     try {
       const formDataToSend = new FormData();
-      const allowedKeys = ["title", "description", "category", "cancel_type", "price_category", "price", "dates_not_available"];
+      const allowedKeys = ["title", "description", "category", "subcategory", "cancel_type", "price_category", "price"];
+      formDataToSend.append("draft_mode", isDraft ? "true" : "false");
       
       Object.keys(formData).forEach((key) => {
         if (allowedKeys.includes(key)) {
           formDataToSend.append(key, formData[key]);
         }
       });
-      formDataToSend.append("dates_not_available", JSON.stringify(datesNotAvailable));
   
       // Obtener usuario autenticado desde localStorage o contexto
       const user = JSON.parse(localStorage.getItem("user")); 
@@ -428,6 +556,9 @@ const CreateItemScreen = () => {
       images.forEach((image) => {
         formDataToSend.append("image_files", image);
       });
+
+      // Adjuntar los períodos de indisponibilidad
+      formDataToSend.append('unavailable_periods', JSON.stringify(unavailablePeriods));
   
       const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/`, formDataToSend, {
         withCredentials: true,
@@ -446,6 +577,7 @@ const CreateItemScreen = () => {
       setErrorMessage(error.response?.data?.message || "Ocurrió un error al enviar el formulario.");
     } finally {
       setLoading(false);
+      setLoadingDash(false);
     }
   };
 
@@ -463,10 +595,11 @@ const CreateItemScreen = () => {
           )}
           
           {submitSuccess && (
-            <Alert severity="success" sx={{ mb: 3 }}>
-              ¡Item creado exitosamente! Redirigiendo...
-            </Alert>
-          )}
+              <Alert severity="success" sx={{ mb: 3 }}>
+                {isDraft ? '¡Item guardado exitosamente! Redirigiendo...' : '¡Item creado exitosamente! Redirigiendo...'}
+              </Alert>
+            )}
+          
 
           {fetchingOptions ? (
             <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
@@ -510,7 +643,7 @@ const CreateItemScreen = () => {
                 <StyledSelect
                   name="category"
                   value={formData.category}
-                  onChange={handleChange}
+                  onChange={handleCategoryChange}
                   error={!!fieldErrors.category}
                 >
                   <option value="" disabled>Selecciona una categoría</option>
@@ -522,57 +655,24 @@ const CreateItemScreen = () => {
               </InputGroup>
               {fieldErrors.category && <ErrorMessage>{fieldErrors.category}</ErrorMessage>}
 
-              <Box>
-                <label>Fechas no disponibles:</label>
-                <DatePicker
-                  selectsRange
-                  startDate={null}
-                  endDate={null}
-                  onChange={handleDateChange}
-                  isClearable
-                  dateFormat="yyyy-MM-dd"
-                />
-              </Box>
-              <ul>
-                {datesNotAvailable.map((range, index) => (
-                  <li key={index}>
-                    {range[0]} - {range[1]} 
-                    <button type="button" onClick={() => handleRemoveDate(index)}>❌</button>
-                  </li>
-                ))}
-              </ul>
-              <Box sx={{ 
-                          display: 'flex', 
-                          flexDirection: 'column', 
-                          alignItems: 'center',
-                          '& .rdrCalendarWrapper': { 
-                            maxWidth: '100%',
-                            fontSize: '16px',
-                            border: '1px solid #e0e0e0',
-                            borderRadius: 1,
-                            overflow: 'hidden',
-                            p: 1
-                          }
-                        }}>
-              
-                  
-                        <DateRange
-                          ranges={dateRange}
-                          onChange={(ranges) => {
-                            const start = ranges.selection.startDate;
-                            const end = ranges.selection.endDate;
-              
-                            // Si el usuario selecciona el mismo día como inicio y fin, establecerlo correctamente
-                            if (start.toDateString() === end.toDateString()) {
-                              setDateRange([{ startDate: start, endDate: start, key: "selection" }]);
-                            } else {
-                              setDateRange([ranges.selection]);
-                            }
-                          }}
-                          minDate={new Date()}
-                          disabledDates={[...datesNotAvailable]}
-                        />
-                 </Box>
+              <InputGroup>
+                <InputIcon>
+                  <FiLayers />
+                </InputIcon>
+                <StyledSelect
+                  name="subcategory"
+                  value={formData.subcategory}
+                  onChange={handleChange}
+                  error={!!fieldErrors.category}
+                >
+                <option value="" disabled>Selecciona una subcategoría</option>
+                 {filteredSubcategories.map(({ value, label }) => (
+                   <option key={value} value={value}>{label}</option>
+                 ))}
+                </StyledSelect>
+                <SelectArrow>▼</SelectArrow>
+              </InputGroup>
+              {fieldErrors.subcategory && <ErrorMessage>{fieldErrors.subcategory}</ErrorMessage>}
 
               <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
                 <Box sx={{ flex: 1, position: "relative" }}>
@@ -669,9 +769,66 @@ const CreateItemScreen = () => {
                 </Box>
               )}
 
+              {/* Formulario para seleccionar los períodos de indisponibilidad con un solo calendario */}
+              <div>
+                  <h4>Períodos de Indisponibilidad</h4>
+                  <div>
+                      <label>Seleccionar período de indisponibilidad:</label>
+                      <DatePicker
+                          selected={datesRange[0]}
+                          onChange={(dates) => setDatesRange(dates)}
+                          startDate={datesRange[0]}
+                          endDate={datesRange[1]}
+                          selectsRange
+                          dateFormat="yyyy-MM-dd"
+                          placeholderText="Selecciona el rango de fechas"
+                          inline
+                      />
+                  </div>
+                  <button type="button" onClick={handleAddPeriod}>Añadir Período</button>
+
+                  {/* Mostrar períodos agregados */}
+                  <ul>
+                      {unavailablePeriods.map((period, index) => (
+                          <li key={index}>
+                              {period.start_date} - {period.end_date}
+                          </li>
+                      ))}
+                  </ul>
+
+                  {/* Mensaje de error */}
+                  {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+              </div>
+
+              <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+              <SubmitButton 
+                type="button" 
+                disabled={!isFormValid ||loadingDash}
+                onClick={handleSaveAsDraft}
+                sx={{
+                  flex: 1,
+                  backgroundColor: (!isFormValid || loadingDash) ? '#cccccc' : '#555555',
+                  '&:hover': {
+                    backgroundColor: (!isFormValid || loadingDash) ? '#cccccc' : '#333333'
+                  }
+                }}
+              >
+                {loadingDash ? (
+                  <>
+                    <CircularProgress size={20} color="inherit" />
+                    <span>Guardando...</span>
+                  </>
+                ) : (
+                  <>
+                    <FiUpload />
+                    <span>Guardar como Borrador</span>
+                  </>
+                )}
+              </SubmitButton>
               <SubmitButton 
                 type="submit" 
                 disabled={!isFormValid || loading}
+                sx={{ flex: 1 }}
               >
                 {loading ? (
                   <>
@@ -686,16 +843,18 @@ const CreateItemScreen = () => {
                 )}
               </SubmitButton>
               
+              </Stack>
+              
               {showErrorMessage && (
                 <Alert severity="warning" sx={{ mt: 2 }}>
                   Por favor, revisa los errores del formulario antes de enviar.
                 </Alert>
               )}
-            </form>
-          )}
+          </form>
+        )}
         </FormContainer>
       </Container>
-    </Box>
+  </Box>
   );
 };
 

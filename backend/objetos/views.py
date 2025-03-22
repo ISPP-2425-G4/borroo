@@ -1,12 +1,18 @@
-from rest_framework import viewsets, permissions
-from .models import Item, ItemImage, ItemRequest
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets, permissions, serializers
+
+from usuarios.models import User
+from .models import Item, ItemImage, ItemRequest, UnavailablePeriod
 from .serializers import ItemRequestSerializer, ItemSerializer
 from .serializers import ItemImageSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import ItemCategory, CancelType, PriceCategory
+from .models import ItemCategory, CancelType, PriceCategory, ItemSubcategory
 from rest_framework.decorators import action
+from django.core.exceptions import ValidationError
+from django.utils.dateparse import parse_date
+import json
 
 
 class EnumChoicesView(APIView):
@@ -15,6 +21,11 @@ class EnumChoicesView(APIView):
             {"value": choice.value, "label": choice.label}
             for choice in ItemCategory
         ]
+
+        subcategories = [
+             {"value": choice.value, "label": choice.label}
+             for choice in ItemSubcategory
+         ]
 
         cancel_types = [
             {"value": choice.value, "label": choice.label}
@@ -29,6 +40,7 @@ class EnumChoicesView(APIView):
         return Response(
             {
                 "categories": categories,
+                "subcategories": subcategories,
                 "cancel_types": cancel_types,
                 "price_categories": price_categories,
             },
@@ -41,44 +53,56 @@ class ItemViewSet(viewsets.ModelViewSet):
     serializer_class = ItemSerializer
     permission_classes = [permissions.AllowAny]
 
+    def handle_unavailable_periods(self, item, unavailable_periods_data):
+        if unavailable_periods_data:
+            # Si los datos vienen como string, convertirlos a lista de diccionarios
+            if isinstance(unavailable_periods_data, str):
+                try:
+                    unavailable_periods_data = json.loads(unavailable_periods_data)
+                except json.JSONDecodeError:
+                    raise serializers.ValidationError("Formato inválido para unavailable_periods.")
+
+            # Verificar que ahora es una lista de diccionarios
+            if not isinstance(unavailable_periods_data, list):
+                raise serializers.ValidationError("Los periodos de indisponibilidad deben ser una lista.")
+
+            # Eliminar periodos previos asociados al ítem
+            UnavailablePeriod.objects.filter(item=item).delete()
+
+            for period in unavailable_periods_data:
+                if not isinstance(period, dict):
+                    raise serializers.ValidationError("Cada periodo debe ser un diccionario con 'start_date' y 'end_date'.")
+
+                start_date = parse_date(period.get("start_date"))
+                end_date = parse_date(period.get("end_date"))
+
+                if start_date and end_date and start_date < end_date:
+                    UnavailablePeriod.objects.create(item=item, start_date=start_date, end_date=end_date)
+                else:
+                    raise serializers.ValidationError("Las fechas de indisponibilidad no son válidas.")
+
     def create(self, request, *args, **kwargs):
         print("Request data:", request.data)
-        
-        start_unavailable_date = request.data.get("start_unavailable_date")
-        end_unavailable_date = request.data.get("end_unavailable_date")
-
         serializer = self.get_serializer(data=request.data)
         if not serializer.is_valid():
             print("Validation errors:", serializer.errors)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+        serializer.is_valid(raise_exception=True)
         print("Validated data:", serializer.validated_data)
-        item = serializer.save(start_unavailable_date=start_unavailable_date)
-        item = serializer.save(end_unavailable_date=end_unavailable_date)
-        print("Created item:", item)
-
+        item = serializer.save()
+        self.handle_unavailable_periods(item, request.data.get("unavailable_periods", 
+                                                               []))
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, 
+                        headers=headers)
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        
-        # Obtener las fechas no disponibles de la solicitud
-        dates_not_available = request.data.get("dates_not_available", instance.dates_not_available)
-
-        if not isinstance(dates_not_available, list):
-            return Response(
-                {"error": "El campo fechas_no_disponibles debe ser una lista de rangos de fechas"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        # Guardar con las fechas actualizadas
-        item = serializer.save(dates_not_available=dates_not_available)
+        serializer = self.get_serializer(instance, data=request.data, 
+                                         partial=partial)
+        serializer.is_valid(raise_exception=True)
+        item = serializer.save()
+        self.handle_unavailable_periods(item, request.data.get("unavailable_periods", []))
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -93,7 +117,7 @@ class SearchItemsView(APIView):
         title = request.GET.get('title', None)
         category = request.GET.get('category', None)
 
-        items = Item.objects.all()
+        items = Item.objects.filter(draft_mode=False)  # Filtrar publicados
 
         if title:
             items = items.filter(title__icontains=title)
@@ -110,7 +134,7 @@ class FilterByCategory(APIView):
 
         category = request.GET.get('category', None)
 
-        items = Item.objects.all()
+        items = Item.objects.filter(draft_mode=False)  # Filtrar publicados
 
         if category:
             items = items.filter(category=category)
@@ -125,7 +149,7 @@ class FilterByPrice(APIView):
         min_price = request.GET.get('min_price', None)
         max_price = request.GET.get('max_price', None)
 
-        items = Item.objects.all()
+        items = Item.objects.filter(draft_mode=False)  # Filtrar publicados
         if min_price:
             items = items.filter(price__gte=min_price)
         if max_price:
@@ -170,3 +194,54 @@ class ItemRequestApprovalViewSet(viewsets.ViewSet):
         item_serializer = ItemSerializer(item)
 
         return Response(item_serializer.data, status=status.HTTP_201_CREATED)
+
+
+class PublishItemView(APIView):
+    def post(self, request, *args, **kwargs):
+        item_id = request.data.get('item_id')
+        user_id = request.data.get('user_id')
+        user = get_object_or_404(User, id=user_id)
+        try:
+            item = Item.objects.get(id=item_id, user=user)
+            item.publish()
+            return Response(
+                {"message": "Ítem publicado con éxito"},
+                status=status.HTTP_200_OK,
+            )
+
+        except Item.DoesNotExist:
+            return Response(
+                {"error": "Ítem no encontrado"},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        except ValidationError as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+
+class ListDraftItemsView(APIView):
+    def get(self, request, user_id, *args, **kwargs):
+        user = get_object_or_404(User, id=user_id)
+        items = Item.objects.filter(user=user, draft_mode=True)
+        serializer = ItemSerializer(items, many=True)
+        return Response({'results': serializer.data},
+                        status=status.HTTP_200_OK)
+
+
+class ListUserItemsView(APIView):
+    def get(self, request, user_id, *args, **kwargs):
+        user = get_object_or_404(User, id=user_id)
+        items = Item.objects.filter(user=user)
+        serializer = ItemSerializer(items, many=True)
+        return Response({'results': serializer.data},
+                        status=status.HTTP_200_OK)
+
+
+class ListPublishedItemsView(APIView):
+    def get(self, request, *args, **kwargs):
+        items = Item.objects.filter(draft_mode=False)
+        serializer = ItemSerializer(items, many=True)
+        return Response({'results': serializer.data},
+                        status=status.HTTP_200_OK)
