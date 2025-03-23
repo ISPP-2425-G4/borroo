@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { DateRange  } from "react-date-range";
+import { DateRange, Calendar  } from "react-date-range";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-date-range/dist/styles.css";
@@ -614,20 +614,24 @@ const ShowItemScreen = () => {
         {priceCategory === "hour" && (
           <div> 
             {/* Selector de día */}
-            <label>Selecciona un día:</label>
-            <DatePicker
-              selected={selectedDay}
+            <Typography>Selecciona un día:</Typography>
+            <Calendar
+              date={selectedDay}
               onChange={(date) => setSelectedDay(date)}
-              minDate={new Date()} // Evita fechas pasadas
-              disabledDates={[...requestedDates, ...bookedDates, ...unavailabilityPeriods.map(period => ({ startDate: new Date(period.start), endDate: new Date(period.end) }))]}
-              dateFormat="yyyy/MM/dd"
-              inline // Muestra el calendario directamente
+              minDate={new Date()} 
+              disabledDates={[...unavailabilityPeriods.flatMap(period => {
+                const start = new Date(period.start_date);
+                const end = new Date(period.end_date);
+                const range = getDatesInRange(start, end);
+  
+                return range;
+              })]}
             />
 
             {/* Selector de hora de inicio */}
-            <label>Selecciona la hora de inicio:</label>
+            <Typography>Selecciona la hora de inicio:</Typography>
             <select
-              value={selectedStartHour}
+              value={selectedStartHour || ""}
               onChange={(e) => {
                 const startHour = parseInt(e.target.value);
                 setSelectedStartHour(startHour);
@@ -642,9 +646,9 @@ const ShowItemScreen = () => {
             </select>
 
             {/* Selector de hora de fin */}
-            <label>Selecciona la hora de fin:</label>
+            <Typography>Selecciona la hora de fin:</Typography>
             <select
-              value={selectedEndHour}
+              value={selectedEndHour || ""}
               onChange={(e) => setSelectedEndHour(parseInt(e.target.value))}
               disabled={selectedStartHour === null} // Deshabilita si no hay hora inicio
             >
