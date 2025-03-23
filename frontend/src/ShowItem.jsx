@@ -71,7 +71,7 @@ const ShowItemScreen = () => {
         );
         const data = response.data;
         setItem(data);
-        setUnavailabilityPeriods(data.unavailabilityPeriods || []);
+        setUnavailabilityPeriods(data.unavailable_periods || []);
 
         if (data.user) {
           fetchUserName(data.user);
@@ -222,8 +222,8 @@ const ShowItemScreen = () => {
 
   const isDateUnavailable = (date) => {
     return unavailabilityPeriods.some(period => {
-      const start = new Date(period.start);
-      const end = new Date(period.end);
+      const start = new Date(period.start_date); 
+      const end = new Date(period.end_date); 
       return date >= start && date <= end;
     });
   };
@@ -660,8 +660,9 @@ const ShowItemScreen = () => {
 
         {priceCategory === "day" && (
           <DateRange
-            ranges={dateRange}
+            ranges={ isOwner || !isAuthenticated ? [] : dateRange}
             onChange={(ranges) => {
+              if (!isOwner || isAuthenticated) { setDateRange([ranges.selection]); }
               const start = ranges.selection.startDate;
               const end = ranges.selection.endDate;
               if (isDateUnavailable(start) || isDateUnavailable(end)) {
@@ -676,7 +677,13 @@ const ShowItemScreen = () => {
               }
             }}
             minDate={new Date()}
-            disabledDates={[...requestedDates, ...bookedDates, ...unavailabilityPeriods.map(period => ({ startDate: new Date(period.start), endDate: new Date(period.end) }))]}
+            disabledDates={[...requestedDates, ...bookedDates, ...unavailabilityPeriods.flatMap(period => {
+              const start = new Date(period.start_date);
+              const end = new Date(period.end_date);
+              const range = getDatesInRange(start, end);
+
+              return range;
+            })]}
           />
         )}
 
