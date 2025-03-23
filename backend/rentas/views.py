@@ -85,14 +85,15 @@ class RentViewSet(viewsets.ModelViewSet):
         not_rent_yourself = user != item.user
 
         is_authorized(condition=not_rent_yourself)
-
-        if Rent.objects.filter(item=item, start_date__lte=end_date,
-                               # por dentro django usa la pk de item
-                               # para el filtro
-                               end_date__gte=start_date).exists():
+        if Rent.objects.filter(
+            item=item,
+            start_date__lte=end_date,
+            end_date__gte=start_date
+        ).exclude(rent_status=RentStatus.REQUESTED).exists():
             return Response(
                 {'error': 'El objeto no está disponible en esas fechas'},
-                status=status.HTTP_400_BAD_REQUEST)
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         serializer = RentSerializer(data=request.data)
         if serializer.is_valid():
@@ -109,13 +110,29 @@ class RentViewSet(viewsets.ModelViewSet):
         if response == "accepted":
             rent.rent_status = RentStatus.ACCEPTED
             rent.save()
-            return Response({'status': 'Solicitud aceptada. '
-                            'El vendedor ha aceptado su solicitud.'})
+
+            # 🔥 CANCELA solicitudes solapadas con estado REQUESTED
+            overlapping_rents = Rent.objects.filter(
+                item=rent.item,
+                rent_status=RentStatus.REQUESTED,
+                start_date__lt=rent.end_date,
+                end_date__gt=rent.start_date
+            ).exclude(pk=rent.pk)
+
+            overlapping_rents.update(rent_status=RentStatus.CANCELLED)
+
+            return Response({
+                'status': ('Solicitud aceptada y solicitudes '
+                           'solapadas canceladas.')
+            })
+
         elif response == "rejected":
             rent.rent_status = RentStatus.CANCELLED
             rent.save()
-            return Response({'status': 'Solicitud rechazada. '
-                            'El alquiler se ha cancelado.'})
+            return Response({
+                'status': 'Solicitud rechazada. El alquiler se ha cancelado.'
+            })
+
         else:
             raise PermissionDenied({'error': 'No existe un response adecuado'})
 
@@ -153,7 +170,7 @@ class RentViewSet(viewsets.ModelViewSet):
                          "reservado."})
 
     def _handle_picked_up(self, rent, now, is_renter, authenticated):
-        # Caso: pasar de BOOKED a PCIKED_UP (dentro de la fecha)
+        # Caso: pasar de BOOKED a PICKED_UP (dentro de la fecha)
         is_authorized(condition=is_renter, authenticated=authenticated)
         if now < rent.start_date:
             raise PermissionDenied({"error": "Aún no es el día para entregar "
