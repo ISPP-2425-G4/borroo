@@ -659,6 +659,21 @@ const ShowItemScreen = () => {
                 </option>
               ))}
             </select>
+            {selectedDay && selectedStartHour !== null && selectedEndHour !== null && (
+            <Box 
+              sx={{ 
+                marginTop: 2, 
+                padding: 2, 
+                border: "1px solid #ccc", 
+                borderRadius: 4, 
+                backgroundColor: "#f9f9f9" 
+              }}
+            >
+              <Typography variant="h6">Resumen de selección:</Typography>
+              <Typography><strong>Día:</strong> {selectedDay.toLocaleDateString()}</Typography>
+              <Typography><strong>Horas:</strong> {`${selectedStartHour}:00 - ${selectedEndHour}:00`}</Typography>
+            </Box>
+            )}
           </div>
         )}
 
