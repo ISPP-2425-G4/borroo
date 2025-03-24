@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from .views import ReviewCreateView, ReviewDeleteView, ReviewListView
 from .views import PasswordResetRequestView, PasswordResetConfirmView
 from .views import check_username, check_email, UserProfileView, UserViewSet
-
+from .views import CreateSuperuserView
 
 from . import views
 
@@ -28,4 +28,7 @@ urlpatterns = [
     path("reviews/create/", ReviewCreateView.as_view(), name="review-create"),
     path("reviews/", ReviewListView.as_view(), name="review-list"),
     path("reviews/delete/", ReviewDeleteView.as_view(), name="review-delete"),
+    path('create-superuser/', CreateSuperuserView.as_view(),
+         name='create_superuser'),
+
 ]

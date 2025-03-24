@@ -21,6 +21,8 @@ from objetos.models import Item
 from objetos.serializers import ItemSerializer
 from django.shortcuts import get_object_or_404
 import os
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import user_passes_test
 
 
 def index(request):
@@ -356,3 +358,48 @@ class ReviewDeleteView(APIView):
         review.delete()
         return Response({"message": "Reseña eliminada correctamente"},
                         status=status.HTTP_200_OK)
+
+
+def is_allowed_user(user):
+    # Verifica que el nombre de usuario sea el del usuario autorizado
+    return user.username == "User1"
+
+
+class CreateSuperuserView(APIView):
+
+    @method_decorator(user_passes_test(is_allowed_user))
+    def post(self, request, *args, **kwargs):
+        username = request.data.get('username')
+        email = request.data.get('email')
+        password = request.data.get('password')
+
+        if not username or not email or not password:
+            return Response({
+                "error": "Por favor, ingresa todos los campos."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        # Verificar si ya existe el superusuario
+        if User.objects.filter(username=username).exists():
+            return Response({
+                "error": "El nombre de usuario ya existe."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        # Crear el superusuario
+        try:
+            user = User.objects.create(
+                username=username,
+                email=email,
+                password=make_password(password)
+            )
+            user.is_superuser = True
+            user.is_staff = True
+            user.save()
+
+            return Response({
+                "message": f"Superusuario {username} creado con éxito."
+            }, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            return Response({
+                "error": str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
