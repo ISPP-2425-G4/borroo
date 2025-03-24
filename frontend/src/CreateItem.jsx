@@ -449,17 +449,23 @@ const CreateItemScreen = () => {
     document.getElementById('image-upload').click();
   };
 
+  const convertToCET = (date) => {
+    const cetOffset = 2; // CET es UTC+1, pero ten en cuenta el horario de verano
+    const localDate = new Date(date);
+    localDate.setHours(localDate.getHours() + cetOffset);
+    return localDate.toISOString();
+  };
   const handleAddPeriod = () => {
     const {startDate, endDate} = datesRange[0];
     console.log("Start Date:", startDate);
     console.log("End Date:", endDate);
     
-    if (!startDate || !endDate || new Date(startDate) >= new Date(endDate)) {
+    if (!startDate || !endDate || new Date(convertToCET(startDate)) >= new Date(convertToCET(endDate))) {
         setErrorMessage("Las fechas de inicio y fin no son válidas.");
         return;
     }
 
-    setUnavailablePeriods([...unavailablePeriods, { start_date: new Date(startDate).toISOString().split('T')[0], end_date: new Date(endDate).toISOString().split('T')[0] }]);
+    setUnavailablePeriods([...unavailablePeriods, { start_date: new Date(convertToCET(startDate)).toISOString().split('T')[0], end_date: new Date(convertToCET(endDate)).toISOString().split('T')[0] }]);
     setDatesRange([{ startDate: new Date(), endDate: new Date(), key: "selection" }]); // Reset
     setErrorMessage('');
   };
