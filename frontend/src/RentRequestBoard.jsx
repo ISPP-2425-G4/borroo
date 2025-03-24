@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
-import { Box, Button, Card, CardContent, CardMedia, Typography, Skeleton, Tooltip, CardActions } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Typography, Skeleton, Tooltip, CardActions, Tab, Tabs } from "@mui/material";
 import Modal from "./Modal";
 import { useNavigate } from 'react-router-dom';
 
@@ -14,6 +14,7 @@ const RentRequestBoard = () => {
     const [responseType, setResponseType] = useState(null);
     const [openModal, setOpenModal] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [selectedTab, setSelectedTab] = useState(0); // Estado para controlar la pestaña seleccionada
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -103,6 +104,10 @@ const RentRequestBoard = () => {
 
     const closeModal = () => setOpenModal(false);
 
+    const handleTabChange = (event, newValue) => {
+        setSelectedTab(newValue);
+    };
+
     return (
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mt: 10, p: 2 }}>
             <Navbar />
@@ -110,6 +115,11 @@ const RentRequestBoard = () => {
             <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
                 Solicitudes de Alquiler
             </Typography>
+
+            <Tabs value={selectedTab} onChange={handleTabChange} aria-label="Solicitudes Tab" sx={{ mb: 3 }}>
+                <Tab label="Solicitudes Recibidas" />
+                <Tab label="Solicitudes Enviadas" />
+            </Tabs>
 
             {loading ? (
                 <Box
@@ -157,24 +167,24 @@ const RentRequestBoard = () => {
                 </Box>
             ) : (
                 <>
-                    {/* Solicitudes recibidas */}
-                    <Typography variant="h6" sx={{ mt: 3, mb: 2, fontWeight: "bold" }}>
-                        Solicitudes recibidas
-                    </Typography>
-                    {receivedRequests.length === 0 ? (
-                        <Typography>No has recibido solicitudes de alquiler.</Typography>
-                    ) : (
-                        <RequestCardsContainer requests={receivedRequests} handleResponse={handleResponse} openConfirmModal={openConfirmModal} />
+                    {selectedTab === 0 && (
+                        <>
+                            {receivedRequests.length === 0 ? (
+                                <Typography>No has recibido solicitudes de alquiler.</Typography>
+                            ) : (
+                                <RequestCardsContainer requests={receivedRequests} handleResponse={handleResponse} openConfirmModal={openConfirmModal} />
+                            )}
+                        </>
                     )}
 
-                    {/* Solicitudes enviadas */}
-                    <Typography variant="h6" sx={{ mt: 5, mb: 2, fontWeight: "bold" }}>
-                        Solicitudes enviadas
-                    </Typography>
-                    {sentRequests.length === 0 ? (
-                        <Typography>No has enviado solicitudes de alquiler.</Typography>
-                    ) : (
-                        <RequestCardsContainer requests={sentRequests} sent={true} isOwner={false} />
+                    {selectedTab === 1 && (
+                        <>
+                            {sentRequests.length === 0 ? (
+                                <Typography>No has enviado solicitudes de alquiler.</Typography>
+                            ) : (
+                                <RequestCardsContainer requests={sentRequests} sent={true} isOwner={false} />
+                            )}
+                        </>
                     )}
                 </>
             )}
