@@ -5,9 +5,10 @@ import Navbar from "./Navbar";
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
-import { Box, Stack, Typography, Alert, CircularProgress, Paper, Container } from "@mui/material";
+import { Box, Stack, Typography, Alert, CircularProgress, Paper, Container, Button } from "@mui/material";
 import { styled } from "@mui/system";
-import DatePicker from 'react-datepicker';
+//import DatePicker from 'react-datepicker';
+import { DateRange } from "react-date-range";
 import "react-datepicker/dist/react-datepicker.css";
 
 const FormContainer = styled(Paper)(() => ({
@@ -215,7 +216,9 @@ const CreateItemScreen = () => {
 
   const [unavailablePeriods, setUnavailablePeriods] = useState([]);
 
-  const [datesRange, setDatesRange] = useState([null, null]);
+  const [datesRange, setDatesRange] =useState([
+    { startDate: new Date(), endDate: new Date(), key: "selection" }
+    ]);   
   const [loading, setLoading] = useState(false);
   const [loadingDash, setLoadingDash] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -447,15 +450,17 @@ const CreateItemScreen = () => {
   };
 
   const handleAddPeriod = () => {
-    const [startDate, endDate] = datesRange;
+    const {startDate, endDate} = datesRange[0];
+    console.log("Start Date:", startDate);
+    console.log("End Date:", endDate);
     
     if (!startDate || !endDate || new Date(startDate) >= new Date(endDate)) {
         setErrorMessage("Las fechas de inicio y fin no son válidas.");
         return;
     }
 
-    setUnavailablePeriods([...unavailablePeriods, { start_date: startDate.toISOString().split('T')[0], end_date: endDate.toISOString().split('T')[0] }]);
-    setDatesRange([null, null]);
+    setUnavailablePeriods([...unavailablePeriods, { start_date: new Date(startDate).toISOString().split('T')[0], end_date: new Date(endDate).toISOString().split('T')[0] }]);
+    setDatesRange([{ startDate: new Date(), endDate: new Date(), key: "selection" }]); // Reset
     setErrorMessage('');
   };
 
@@ -770,35 +775,43 @@ const CreateItemScreen = () => {
               )}
 
               {/* Formulario para seleccionar los períodos de indisponibilidad con un solo calendario */}
-              <div>
-                  <h4>Períodos de Indisponibilidad</h4>
-                  <div>
-                      <label>Seleccionar período de indisponibilidad:</label>
-                      <DatePicker
-                          selected={datesRange[0]}
-                          onChange={(dates) => setDatesRange(dates)}
-                          startDate={datesRange[0]}
-                          endDate={datesRange[1]}
-                          selectsRange
-                          dateFormat="yyyy-MM-dd"
-                          placeholderText="Selecciona el rango de fechas"
-                          inline
-                      />
-                  </div>
-                  <button type="button" onClick={handleAddPeriod}>Añadir Período</button>
-
-                  {/* Mostrar períodos agregados */}
-                  <ul>
-                      {unavailablePeriods.map((period, index) => (
-                          <li key={index}>
-                              {period.start_date} - {period.end_date}
-                          </li>
-                      ))}
-                  </ul>
-
-                  {/* Mensaje de error */}
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  <Typography>Seleccionar período de indisponibilidad:</Typography>
+                  <DateRange
+                      ranges={datesRange}
+                      onChange={(ranges) => setDatesRange([ranges.selection])}
+                      minDate={new Date()}
+                  />
+                  <Button 
+                      variant="contained" 
+                      color="primary" 
+                      onClick={handleAddPeriod} 
+                      sx={{ marginTop: 2 }}
+                  >
+                      Añadir Período
+                  </Button>
+                  {/* Resumen de los períodos seleccionados con estilo */}
+                  {unavailablePeriods.length > 0 && (
+                      <Box 
+                          sx={{ 
+                              marginTop: 2, 
+                              padding: 2, 
+                              border: "1px solid #ccc", 
+                              borderRadius: 4, 
+                              backgroundColor: "#f9f9f9" 
+                          }}
+                      >
+                          <Typography variant="h6">Resumen de selección:</Typography>
+                          {unavailablePeriods.map((period, index) => (
+                              <Typography key={index}>
+                                  <strong>Desde:</strong> {new Date(period.start_date).toLocaleDateString()} -  
+                                  <strong> Hasta:</strong> {new Date(period.end_date).toLocaleDateString()}
+                              </Typography>
+                          ))}
+                      </Box>
+                  )}
                   {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-              </div>
+              </Box>
 
               <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
               <SubmitButton 
