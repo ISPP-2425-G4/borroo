@@ -43,7 +43,7 @@ class UserViewSet(viewsets.ModelViewSet):
         # Encriptar la contraseña antes de validar el serializer
         data["password"] = make_password(data["password"])
 
-        serializer = RegisterSerializer(data=request.data)
+        serializer = RegisterSerializer(data=data)
         if serializer.is_valid():
             # Guardamos el usuario con la contraseña encriptada
             user = serializer.save()

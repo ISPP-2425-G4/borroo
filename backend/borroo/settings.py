@@ -33,7 +33,7 @@ SECRET_KEY = ('django-insecure-lwit61b*3n^2z!*$&7p=7+jp&c%edbvcn0=!)zvj@'
 DEBUG = True
 
 ALLOWED_HOSTS = ['backend-dot-ispp-2425-g4.ew.r.appspot.com', 'localhost',
-                 '127.0.0.1']
+                 'backend-s2-dot-ispp-2425-g4.ew.r.appspot.com', '127.0.0.1']
 
 
 STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
@@ -92,10 +92,34 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "https://frontend-dot-ispp-2425-g4.ew.r.appspot.com",
+    "https://frontend-s2-dot-ispp-2425-g4.ew.r.appspot.com",
     "http://localhost:5173",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'authorization',
+    'x-csrftoken',
+    'accept',
+    'origin',
+    'user-agent',
+    'access-control-allow-origin',
+]
+
+CORS_EXPOSE_HEADERS = [
+    'Content-Type',
+    'Authorization',
+]
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'DELETE',
+    'OPTIONS',
+]
 
 ROOT_URLCONF = 'borroo.urls'
 
