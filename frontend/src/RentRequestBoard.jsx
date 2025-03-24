@@ -255,21 +255,30 @@ const RequestCardsContainer = ({ requests, handleResponse, openConfirmModal, sen
                             {request.item.title}
                         </a>
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
-                        <strong> Solicitado por: </strong>
-                        {isOwner ? (
-                            <Tooltip title={
-                                <Card sx={{ width: 250 }}>
-                                    <CardContent>
-                                        <Typography variant="body2"><strong>Nombre:</strong> {request.renter.name} {request.renter.surname}</Typography>
-                                        <Typography variant="body2"><strong>Email:</strong> {request.renter.email}</Typography>
-                                    </CardContent>
-                                    <CardActions sx={{ justifyContent: "flex-end" }}>
-                                        {/* Botón para enviar mensaje al usuario, TODO implementar el chat*/}
-                                        <Button size="small" onClick={() => alert("Enviando mensaje...")}>Enviar Mensaje</Button>
-                                    </CardActions>
-                                </Card>
-                            } arrow>
+                    {isOwner && (
+                        <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
+                            <strong> Solicitado por: </strong>
+                            <Tooltip
+                                title={
+                                    <Card sx={{ width: 250 }}>
+                                        <CardContent>
+                                            <Typography variant="body2">
+                                                <strong>Nombre:</strong> {request.renter.name} {request.renter.surname}
+                                            </Typography>
+                                            <Typography variant="body2">
+                                                <strong>Email:</strong> {request.renter.email}
+                                            </Typography>
+                                        </CardContent>
+                                        <CardActions sx={{ justifyContent: "flex-end" }}>
+                                            {/* Botón para enviar mensaje al usuario, TODO implementar el chat */}
+                                            <Button size="small" onClick={() => alert("Enviando mensaje...")}>
+                                                Enviar Mensaje
+                                            </Button>
+                                        </CardActions>
+                                    </Card>
+                                }
+                                arrow
+                            >
                                 <a
                                     href={`/perfil/${request.renter.username}`}
                                     style={{
@@ -279,22 +288,12 @@ const RequestCardsContainer = ({ requests, handleResponse, openConfirmModal, sen
                                     }}
                                 >
                                     {request.renter.name} {request.renter.surname}
+                                    {/* TODO añadir en el modelo de la renta el campo owner para poder serializarlo
+                                    y poner "solicitado a", de momento se deja así */}
                                 </a>
                             </Tooltip>
-                        ) : (
-                            <a
-                                href={`/perfil/${request.renter.username}`}
-                                style={{
-                                    textDecoration: "none",
-                                    color: "#1976d2",
-                                    fontWeight: "bold",
-                                }}
-                            >
-                                Tú {/*TODO añadir en el modelo de la renta el campo owner para poder serializarlo
-                                  y poner "solicitado a", de momento se deja así*/  }
-                            </a>
-                        )}
-                    </Typography>
+                        </Typography>
+                    )}
                     <Typography variant="body2" sx={{ mb: 1 }}>
                         <strong> Inicio: </strong> {new Date(request.start_date).toLocaleString('es-ES', {
                             weekday: 'long',
