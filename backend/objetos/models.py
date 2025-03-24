@@ -172,8 +172,8 @@ class Item(models.Model):
 
 
 class UnavailablePeriod(models.Model):
-    item = models.ForeignKey(Item, related_name='unavailable_periods', 
-                        on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, related_name='unavailable_periods'
+                             , on_delete=models.CASCADE)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
 

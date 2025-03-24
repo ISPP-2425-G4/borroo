@@ -187,13 +187,6 @@ const UpdateItemScreen = () => {
     setUnavailablePeriods(unavailablePeriods.filter((_, i) => i !== index));
   };
 
-  const handlePeriodChange = (index, field, value) => {
-    const updatedPeriods = [...unavailablePeriods];
-    updatedPeriods[index][field] = value;
-    setUnavailablePeriods(updatedPeriods);
-  };
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
