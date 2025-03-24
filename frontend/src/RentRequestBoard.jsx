@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
-import { Box } from "@mui/system";
+import { Box, Button, Card, CardContent, CardMedia, Typography, Skeleton, Tooltip, CardActions } from "@mui/material";
+import Modal from "./Modal";
+import { useNavigate } from 'react-router-dom';
 
 const DEFAULT_IMAGE = "../public/default_image.png";
 
 const RentRequestBoard = () => {
     const [requests, setRequests] = useState([]);
+    const [selectedRequest, setSelectedRequest] = useState(null);
+    const [responseType, setResponseType] = useState(null);
+    const [openModal, setOpenModal] = useState(false);
+    const [loading, setLoading] = useState(true); // Estado de carga de las solicitudes
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchRequests = async () => {
@@ -14,28 +21,44 @@ const RentRequestBoard = () => {
                 const user = JSON.parse(localStorage.getItem("user"));
                 if (!user || !user.id) {
                     alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
+                    navigate("/login");
                     return;
                 }
                 const response = await axios.get(
                     `${import.meta.env.VITE_API_BASE_URL}/rentas/full/rental_requests/`,
                     { params: { user: user.id } }
                 );
-                console.log("Datos recibidos del backend:", response.data);
+
 
                 const data = response.data;
                 const rentas = data.results ?? data; // Si `results` no existe, usa `data` directamente
-
-                // Obtener las imágenes asociadas a cada renta
-                const rentasConImagen = await Promise.all(
+                
+                // De momento hacemos peticiones de los usuarios y objetos, pero es muy ineficiente
+                // y se puede mejorar con una sola petición al backend bien serializado
+                const rentasEnriquecidas = await Promise.all(
                     rentas.map(async (renta) => {
-                        const imageUrl =
-                            renta.item?.images?.length > 0
-                                ? await obtenerImagen(renta.item.images[0])
-                                : DEFAULT_IMAGE;
-                        return { ...renta, imageUrl };
+                        const [usuarioResponse, itemResponse] = await Promise.all([
+                            axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${renta.renter}/`),
+                            axios.get(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/${renta.item}/`)
+                        ]);
+        
+                        const usuario = usuarioResponse.data;
+                        const item = itemResponse.data;
+                        const imageUrl = item.images?.length > 0
+                            ? await obtenerImagen(item.images[0])
+                            : DEFAULT_IMAGE;
+        
+                        return { 
+                            ...renta, 
+                            renter: usuario,
+                            item: item,
+                            imageUrl
+                        };
                     })
                 );
-                setRequests(rentasConImagen);
+        
+                setRequests(rentasEnriquecidas);
+                setLoading(false); // Datos cargados
             } catch (error) {
                 console.error("Error al obtener solicitudes de alquiler:", error);
             }
@@ -53,23 +76,6 @@ const RentRequestBoard = () => {
         } catch (error) {
             console.error(`Error al cargar la imagen ${imgId}:`, error);
             return DEFAULT_IMAGE;
-        }
-    };
-
-    const handlePayment = async (renta) => {
-        try {
-            const response = await axios.post(
-                `${import.meta.env.VITE_API_BASE_URL}/pagos/checkout-session/${renta.id}/`
-            );
-            const stripe = await window.Stripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
-            const result = await stripe.redirectToCheckout({
-                sessionId: response.data.id,
-            });
-            if (result.error) {
-                console.error(result.error);
-            }
-        } catch (error) {
-            console.error("Error al iniciar el pago:", error);
         }
     };
 
@@ -93,56 +99,204 @@ const RentRequestBoard = () => {
             setRequests((prevRequests) =>
                 prevRequests.filter((request) => request.id !== renta.id)
             );
+            setOpenModal(false);
         } catch (error) {
             console.error(`Error al procesar la solicitud:`, error.response?.data || error.message);
         }
     };
 
+    const openConfirmModal = (renta, responseType) => {
+        setSelectedRequest(renta);
+        setResponseType(responseType);
+        setOpenModal(true);
+    };
+
+    const closeModal = () => {
+        setOpenModal(false);
+    };
+
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mt: 10, p: 2 }}>
             <Navbar />
-            {requests.length === 0 ? (
-                <Box sx={{ mt: 16, minHeight:"80vh" }}>
-                <p>No hay solicitudes de alquiler disponibles.</p>
+            <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
+                Solicitudes de Alquiler
+            </Typography>
+
+            {loading ? (
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 2,
+                        p: 2,
+                        width: "100%",
+                        maxWidth: "800px",
+                        maxHeight: "75vh",
+                        overflowY: "auto",
+                        overflowX: "hidden",
+                    }}
+                >
+                    {[...Array(5)].map((_, index) => (
+                        <Card
+                            key={index}
+                            sx={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                boxShadow: 3,
+                                p: 2,
+                                width: "100%", 
+                                maxWidth: "750px",
+                                minHeight: "150px",
+                                borderRadius: 2,
+                                overflow: "hidden",
+                            }}
+                        >
+                            <Skeleton variant="rectangular" width={150} height={150} sx={{ mr: 2 }} />
+                            <CardContent sx={{ flex: 1 }}>
+                                <Skeleton width="60%" height={25} sx={{ mb: 1 }} />
+                                <Skeleton width="40%" height={20} sx={{ mb: 1 }} />
+                                <Skeleton width="40%" height={20} sx={{ mb: 1 }} />
+                                <Skeleton width="40%" height={20} sx={{ mb: 1 }} />
+                                <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
+                                    <Skeleton width={80} height={47} />
+                                    <Skeleton width={90} height={47} />
+                                </Box>
+                            </CardContent>
+                        </Card>
+                    ))}
                 </Box>
+            ) : requests.length === 0 ? (
+                <Typography>No hay solicitudes de alquiler disponibles.</Typography>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 2,
+                        p: 2,
+                        width: "100%",
+                        maxWidth: "800px",
+                        maxHeight: "75vh",
+                        overflowY: "auto",
+                        overflowX: "hidden",
+                    }}
+                >
                     {requests.map((request) => (
-                        <div key={request.id} className="shadow-md rounded-lg overflow-hidden">
-                            <img
-                                src={request.imageUrl}
+                        <Card
+                            key={request.id}
+                            sx={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                boxShadow: 3,
+                                p: 2,
+                                width: "100%",
+                                maxWidth: "750px",
+                                minHeight: "150px",
+                                borderRadius: 2,
+                                overflow: "hidden",
+                            }}
+                        >
+                            <CardMedia
+                                component="img"
+                                sx={{
+                                    width: 150,
+                                    height: 150,
+                                    objectFit: "cover",
+                                    borderRadius: "2px",
+                                    mr: 2,
+                                    boxShadow: 1,
+                                }}
+                                image={request.imageUrl}
                                 alt={request.title}
-                                className="w-full h-40 object-cover"
                             />
-                            <div className="p-4">
-                                <h3 className="text-lg font-semibold">{request.title}</h3>
-                                <p className="text-sm text-gray-600">Solicitado por: {request.renter?.username}</p>
-                                <p className="text-sm">Inicio: {new Date(request.start_date).toLocaleDateString()}</p>
-                                <p className="text-sm">Fin: {new Date(request.end_date).toLocaleDateString()}</p>
-                                <div className="mt-4 flex justify-between">
-                                    <button
-                                        className="bg-green-500 text-white px-4 py-2 rounded"
-                                        onClick={() => handleResponse(request, "accepted")}
+                            <CardContent sx={{ flex: 1 }}>
+                                <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+                                    <a 
+                                        href={`show-item/${request.item.id}`}
+                                        style={{ textDecoration: "none", color: "inherit" }}
+                                    >
+                                        {request.item.title}
+                                    </a>
+                                </Typography>
+                                <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
+                                    <strong> Solicitado por:{" "} </strong>
+                                    <Tooltip title={
+                                        <Card sx={{ width: 250 }}>
+                                            <CardContent>
+                                                <Typography variant="body2"><strong>Nombre:</strong> {request.renter.name} {request.renter.surname}</Typography>
+                                                <Typography variant="body2"><strong>Email:</strong> {request.renter.email}</Typography>
+                                            </CardContent>
+                                            <CardActions sx={{ justifyContent: "flex-end" }}>
+                                                {/* Botón para enviar mensaje al usuario, TODO implementar el chat*/}
+                                                <Button size="small" onClick={() => alert("Enviando mensaje...")}>Enviar Mensaje</Button> 
+                                            </CardActions>
+                                        </Card>
+                                    } arrow>
+                                        <a 
+                                            href={`/perfil/${request.renter.username}`}
+                                            style={{ 
+                                                textDecoration: "none",
+                                                color: "#1976d2",
+                                                fontWeight: "bold",
+                                            }}
+                                        >
+                                            {request.renter.name} {request.renter.surname}
+                                        </a>
+                                    </Tooltip>
+                                </Typography>
+                                <Typography variant="body2" sx={{ mb: 1 }}>
+                                    <strong> Inicio: </strong> {new Date(request.start_date).toLocaleString('es-ES', {
+                                        weekday: 'long',
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    })}
+                                </Typography>
+                                <Typography variant="body2" sx={{ mb: 1 }}>
+                                    <strong> Fin: </strong> {new Date(request.end_date).toLocaleString('es-ES', {
+                                        weekday: 'long',
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    })}
+                                </Typography>
+                                <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
+                                    <Button
+                                        variant="contained"
+                                        color="success"
+                                        size="small"
+                                        onClick={() => openConfirmModal(request, "accepted")}
                                     >
                                         Aceptar
-                                    </button>
-                                    <button
-                                        className="bg-red-500 text-white px-4 py-2 rounded"
-                                        onClick={() => handleResponse(request, "rejected")}
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="error"
+                                        size="small"
+                                        onClick={() => openConfirmModal(request, "rejected")}
                                     >
                                         Rechazar
-                                    </button>
-                                    <button
-                                    className="bg-blue-500 text-white px-4 py-2 rounded"
-                                    onClick={() => handlePayment(request)}
-                                >
-                                    Pagar
-                                </button>
-                                </div>
-                            </div>
-                        </div>
+                                    </Button>
+                                </Box>
+                            </CardContent>
+                        </Card>
                     ))}
-                </div>
+                </Box>
+            )}
+
+            {openModal && (
+                <Modal
+                    title={`Confirmar solicitud`}
+                    message={`¿Estás seguro de que quieres ${responseType === "accepted" ? "aceptar" : "rechazar"} esta solicitud?`}
+                    onCancel={closeModal}
+                    onConfirm={() => handleResponse(selectedRequest, responseType)}
+                />
             )}
         </Box>
     );

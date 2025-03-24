@@ -8,7 +8,6 @@ import {
   TextField,
   Card,
   CardContent,
-  Slider,
   Tooltip,
   Paper,
   InputAdornment,
@@ -45,14 +44,35 @@ const Layout = () => {
   const [error, setError] = useState(null);
   const [terminoBusqueda, setTerminoBusqueda] = useState("");
   const [categoria, setCategoria] = useState("");
-  const [rangoPrecio, setRangoPrecio] = useState([0, 100]);
+  const [subcategoria, setSubcategoria] = useState("");
+  const [rangoPrecio, setRangoPrecio] = useState([0, 99999]);
   const [productosFiltrados, setProductosFiltrados] = useState([]);
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [cargando, setCargando] = useState(true);
 
   const manejarCambioBusqueda = (e) => setTerminoBusqueda(e.target.value);
-  const manejarCambioCategoria = (e) => setCategoria(e.target.value);
-  const manejarCambioPrecio = (_, nuevoValor) => setRangoPrecio(nuevoValor);
+  const manejarCambioCategoria = (e) => { 
+    setCategoria(e.target.value);
+    setSubcategoria("")
+  }
+
+  const manejarCambioPrecio = (e, index) => {
+    let nuevoValor = parseInt(e.target.value, 10);
+      if (isNaN(nuevoValor) || nuevoValor < 0) {
+      nuevoValor = 0;
+    }
+      if (index === 0) {
+      setRangoPrecio([nuevoValor, Math.max(nuevoValor, rangoPrecio[1])]);
+    } else {
+      setRangoPrecio([Math.min(nuevoValor, rangoPrecio[0]), nuevoValor]);
+    }
+  };
+  const [currentPage, setCurrentPage] = useState(1);
+const itemsPerPage = 10;
+const indexOfLastItem = currentPage * itemsPerPage;
+const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+const currentItems = productosFiltrados.slice(indexOfFirstItem, indexOfLastItem);
+const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
   
   const reiniciarFiltros = () => {
     setTerminoBusqueda("");
@@ -79,50 +99,61 @@ const Layout = () => {
     }
   }, []);
 
+
+  const handleSubcategoriaChange = (e) => {
+    setSubcategoria(e.target.value);
+  };
+
   useEffect(() => {
     const obtenerProductos = async () => {
       setCargando(true);
+      let nextUrl = `${import.meta.env.VITE_API_BASE_URL}/objetos/list_published_items`;
+      let allResults = [];
+  
       try {
-        const respuesta = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/objetos/full`, {
-          headers: { "Content-Type": "application/json" }
-        });
-
-        const datos = respuesta.data;
-        if (datos.results) {
-          const productosConImagenes = await Promise.all(
-            datos.results.map(async (producto) => {
-              const urlImagen = producto.images && producto.images.length > 0
-                ? await obtenerUrlImagen(producto.images[0])
-                : IMAGEN_PREDETERMINADA;
-              return { ...producto, urlImagen };
-            })
-          );
-          setProductos(productosConImagenes);
-        } else {
-          setError("No hay productos disponibles.");
+        while (nextUrl) {
+          const respuesta = await axios.get(nextUrl, {
+            headers: { "Content-Type": "application/json" }
+          });
+          console.log("Página cargada:", respuesta.data);
+          allResults = [...allResults, ...respuesta.data.results];
+          nextUrl = respuesta.data.next; // avanza a la siguiente página
         }
+  
+        const productosConImagenes = await Promise.all(
+          allResults.map(async (producto) => {
+            const urlImagen = producto.images && producto.images.length > 0
+              ? await obtenerUrlImagen(producto.images[0])
+              : IMAGEN_PREDETERMINADA;
+            return { ...producto, urlImagen };
+          })
+        );
+  
+        setProductos(productosConImagenes);
       } catch (error) {
-        setError("Error al cargar los productos. Por favor, inténtelo de nuevo más tarde.", error);
+        console.error(error);
+        setError("Error al cargar los productos.");
       } finally {
         setCargando(false);
       }
     };
-
+  
     obtenerProductos();
   }, [obtenerUrlImagen]);
 
   useEffect(() => {
     const filtrados = productos.filter((producto) => (
       (categoria === "" || producto.category_display === categoria) &&
+      (subcategoria === "" || producto.subcategory_display === subcategoria) &&
       (producto.price >= rangoPrecio[0] && producto.price <= rangoPrecio[1]) &&
       (terminoBusqueda === "" || producto.title.toLowerCase().includes(terminoBusqueda.toLowerCase()))
     ));
     setProductosFiltrados(filtrados);
-  }, [productos, categoria, rangoPrecio, terminoBusqueda]);
+  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda]);
 
   const hayFiltrosActivos = useMemo(() => 
-    terminoBusqueda !== "" || categoria !== "" || rangoPrecio[0] > 0 || rangoPrecio[1] < 100,
-  [terminoBusqueda, categoria, rangoPrecio]);
+    terminoBusqueda !== "" || categoria !== "" || subcategoria !== "" || rangoPrecio[0] > 0 || rangoPrecio[1] < 100,
+  [terminoBusqueda, categoria, subcategoria, rangoPrecio]);
 
   const obtenerDetallesCategoria = (nombreCategoria) => {
     return CATEGORIAS[nombreCategoria] || { icono: "•", color: "#607d8b" };
@@ -325,6 +356,164 @@ const Layout = () => {
                       </MenuItem>
                     ))}
                   </Select>
+                  {categoria === "Tecnología" && (
+                  <Select
+                    value={subcategoria}
+                    onChange={handleSubcategoriaChange}
+                    displayEmpty
+                    variant="outlined"
+                    sx={{ minWidth: "250px" }}
+                  >
+                    <MenuItem value="">
+                      <em>Seleccione una subcategoría</em>
+                    </MenuItem>
+                    <MenuItem value="Ordenadores">💻 Ordenadores</MenuItem>
+                    <MenuItem value="Accesorios de ordenador">🖥️ Accesorios de ordenador</MenuItem>
+                    <MenuItem value="Smartphones">📱 Smartphones</MenuItem>
+                    <MenuItem value="Tablets">📱 Tablets</MenuItem>
+                    <MenuItem value="Cámaras">📸 Cámaras</MenuItem>
+                    <MenuItem value="Consolas">🎮 Consolas</MenuItem>
+                    <MenuItem value="Televisores">📺 Televisores</MenuItem>
+                    <MenuItem value="Monitores">🖥️ Monitores</MenuItem>
+                    <MenuItem value="Hogar inteligente">🏠 Hogar inteligente</MenuItem>
+                    <MenuItem value="Audio">🔊 Audio</MenuItem>
+                    <MenuItem value="Smartwatches">⌚ Smartwatches</MenuItem>
+                    <MenuItem value="Impresoras y escáneres">🖨️ Impresoras y escáneres</MenuItem>
+                    <MenuItem value="Drones">🚁 Drones</MenuItem>
+                    <MenuItem value="Proyectores">📽️ Proyectores</MenuItem>
+                    <MenuItem value="Otros (Tecnología)">🔧 Otros</MenuItem>
+
+                  </Select>)}
+                  {categoria === "Deporte" && (
+                  <Select
+                    value={subcategoria}
+                    onChange={handleSubcategoriaChange}
+                    displayEmpty
+                    variant="outlined"
+                    sx={{ minWidth: "250px"}}
+                  >
+                    <MenuItem value="">
+                      <em>Seleccione una subcategoría</em>
+                    </MenuItem>
+                    <MenuItem value="Ciclismo">🚴‍♂️ Ciclismo</MenuItem>
+                    <MenuItem value="Gimnasio">🏋️‍♂️ Gimnasio</MenuItem>
+                    <MenuItem value="Calistenia">🤸‍♂️ Calistenia</MenuItem>
+                    <MenuItem value="Running">🏃‍♂️ Running</MenuItem>
+                    <MenuItem value="Deportes de pelota">⚽ Deportes de pelota</MenuItem>
+                    <MenuItem value="Deportes de raqueta">🎾 Deportes de raqueta</MenuItem>
+                    <MenuItem value="Deportes de remo">🛶 Deportes de remo</MenuItem>
+                    <MenuItem value="Artes marciales">🥋 Artes marciales</MenuItem>
+                    <MenuItem value="Deportes de nieve">🏂 Deportes de nieve</MenuItem>
+                    <MenuItem value="Skate">🛹 Skate</MenuItem>
+                    <MenuItem value="Deportes de playa">🏖️ Deportes de playa</MenuItem>
+                    <MenuItem value="Deportes de piscina">🏊‍♂️ Deportes de piscina</MenuItem>
+                    <MenuItem value="Deportes de río">🚣‍♂️ Deportes de río</MenuItem>
+                    <MenuItem value="Deportes de montaña">🏞️ Deportes de montaña</MenuItem>
+                    <MenuItem value="Deportes extremos">🏄‍♂️ Deportes extremos</MenuItem>
+                    <MenuItem value="Otros (Deporte)">🔧 Otros</MenuItem>
+
+                  </Select>
+                )}
+                {categoria === "Bricolaje" && (
+                  <Select
+                    value={subcategoria}
+                    onChange={handleSubcategoriaChange}
+                    displayEmpty
+                    variant="outlined"
+                    sx={{ minWidth: "250px" }}
+                  >
+                    <MenuItem value="">
+                      <em>Seleccione una subcategoría</em>
+                    </MenuItem>
+                    <MenuItem value="Herramientas eléctricas">🔌 Herramientas eléctricas</MenuItem>
+                    <MenuItem value="Herramientas manuales">🔧 Herramientas manuales</MenuItem>
+                    <MenuItem value="Máquinas">🔩 Máquinas</MenuItem>
+                    <MenuItem value="Electricidad">⚡ Electricidad</MenuItem>
+                    <MenuItem value="Fontanería">🚰 Fontanería</MenuItem>
+                    <MenuItem value="Carpintería">🪚 Carpintería</MenuItem>
+                    <MenuItem value="Pintura">🎨 Pintura</MenuItem>
+                    <MenuItem value="Jardinería">🌱 Jardinería</MenuItem>
+                    <MenuItem value="Decoración">🖼️ Decoración</MenuItem>
+                    <MenuItem value="Otros (Bricolaje)">🔧 Otros</MenuItem>
+                  </Select>
+                )}
+        
+                {categoria === "Ropa" && (
+                  <Select
+                    value={subcategoria}
+                    onChange={handleSubcategoriaChange}
+                    displayEmpty
+                    variant="outlined"
+                    sx={{ minWidth: "250px" }}
+                  >
+                    <MenuItem value="">
+                      <em>Seleccione una subcategoría</em>
+                    </MenuItem>
+                    <MenuItem value="Ropa de verano">🌞 Ropa de verano</MenuItem>
+                    <MenuItem value="Ropa de invierno">❄️ Ropa de invierno</MenuItem>
+                    <MenuItem value="Ropa de evento para hombre">🎩 Ropa de evento para hombre</MenuItem>
+                    <MenuItem value="Ropa de evento para mujer">👗 Ropa de evento para mujer</MenuItem>
+                    <MenuItem value="Ropa de evento deportivo">⚽ Ropa de evento deportivo</MenuItem>
+                    <MenuItem value="Zapatos para hombre">👟 Zapatos para hombre</MenuItem>
+                    <MenuItem value="Zapatos para mujer">👠 Zapatos para mujer</MenuItem>
+                    <MenuItem value="Trajes">👔 Trajes</MenuItem>
+                    <MenuItem value="Vestidos">👗 Vestidos</MenuItem>
+                    <MenuItem value="Joyería">💍 Joyería</MenuItem>
+                    <MenuItem value="Relojes">⌚ Relojes</MenuItem>
+                    <MenuItem value="Bolsos">👜 Bolsos</MenuItem>
+                    <MenuItem value="Gafas de sol">🕶️ Gafas de sol</MenuItem>
+                    <MenuItem value="Sombreros">👒 Sombreros</MenuItem>
+                    <MenuItem value="Otros (Ropa)">🔧 Otros</MenuItem>
+                  </Select>
+                )}
+        
+                {categoria === "Mobiliario y logística" && (
+                  <Select
+                    value={subcategoria}
+                    onChange={handleSubcategoriaChange}
+                    displayEmpty
+                    variant="outlined"
+                    sx={{ minWidth: "250px" }}
+                  >
+                    <MenuItem value="">
+                      <em>Seleccione una subcategoría</em>
+                    </MenuItem>
+                    <MenuItem value="Muebles de hogar">🛋️ Muebles de hogar</MenuItem>
+                    <MenuItem value="Electrodomésticos">🏠 Electrodomésticos</MenuItem>
+                    <MenuItem value="Equipamiento para eventos">🎪 Equipamiento para eventos</MenuItem>
+                    <MenuItem value="Muebles para niños">🛏️ Muebles para niños</MenuItem>
+                    <MenuItem value="Muebles de oficina">💼 Muebles de oficina</MenuItem>
+                    <MenuItem value="Cocina">🍽️ Cocina</MenuItem>
+                    <MenuItem value="Baño">🚿 Baño</MenuItem>
+                    <MenuItem value="Muebles de jardín">🌳 Muebles de jardín</MenuItem>
+                    <MenuItem value="Decoración y ambiente">🕯️ Decoración y ambiente</MenuItem>
+                    <MenuItem value="Otros (Mobiliario y logística)">🔧 Otros</MenuItem>
+                  </Select>
+                )}
+        
+                {categoria === "Entretenimiento" && (
+                  <Select
+                    value={subcategoria}
+                    onChange={handleSubcategoriaChange}
+                    displayEmpty
+                    variant="outlined"
+                    sx={{ minWidth: "250px" }}
+                  >
+                    <MenuItem value="">
+                      <em>Seleccione una subcategoría</em>
+                    </MenuItem>
+                    <MenuItem value="Videojuegos">🎮 Videojuegos</MenuItem>
+                    <MenuItem value="Juegos de mesa">🎲 Juegos de mesa</MenuItem>
+                    <MenuItem value="Libros">📚 Libros</MenuItem>
+                    <MenuItem value="Películas">🎬 Películas</MenuItem>
+                    <MenuItem value="Música">🎶 Música</MenuItem>
+                    <MenuItem value="Instrumentos">🎸 Instrumentos</MenuItem>
+                    <MenuItem value="Fiesta">🎉 Fiesta</MenuItem>
+                    <MenuItem value="Camping">🏕️ Camping</MenuItem>
+                    <MenuItem value="Viaje">✈️ Viaje</MenuItem>
+                    <MenuItem value="Otros (Entretenimiento)">🔧 Otros</MenuItem>
+                  </Select>
+                  )}
                 </FormControl>
               </Box>
 
@@ -342,32 +531,6 @@ const Layout = () => {
                     {rangoPrecio[0]}€ - {rangoPrecio[1]}€
                   </Typography>
                 </Box>
-                
-                <Slider
-                  value={rangoPrecio}
-                  onChange={manejarCambioPrecio}
-                  min={0}
-                  max={100}
-                  step={5}
-                  valueLabelDisplay="off"
-                  sx={{
-                    '& .MuiSlider-thumb': {
-                      height: 16,
-                      width: 16,
-                      '&:hover, &.Mui-focusVisible': {
-                        boxShadow: '0 0 0 8px rgba(63, 81, 181, 0.16)'
-                      }
-                    },
-                    '& .MuiSlider-track': {
-                      height: 5
-                    },
-                    '& .MuiSlider-rail': {
-                      height: 5,
-                      opacity: 0.2
-                    }
-                  }}
-                />
-                
                 <Box sx={{ 
                   display: 'flex', 
                   justifyContent: 'space-between',
@@ -377,9 +540,10 @@ const Layout = () => {
                     size="small"
                     label="Mín"
                     value={rangoPrecio[0]}
+                    onChange={(e) => manejarCambioPrecio(e, 0)} // 0 para el campo mínimo
                     InputProps={{
                       startAdornment: <InputAdornment position="start">€</InputAdornment>,
-                      readOnly: true
+                      readOnly: false
                     }}
                     sx={{ width: '45%' }}
                   />
@@ -387,12 +551,14 @@ const Layout = () => {
                     size="small"
                     label="Máx"
                     value={rangoPrecio[1]}
+                    onChange={(e) => manejarCambioPrecio(e, 1)} // 1 para el campo máximo
                     InputProps={{
                       startAdornment: <InputAdornment position="start">€</InputAdornment>,
-                      readOnly: true
+                      readOnly: false
                     }}
                     sx={{ width: '45%' }}
                   />
+
                 </Box>
               </Box>
             </Paper>
@@ -498,7 +664,7 @@ const Layout = () => {
                       flexWrap: 'wrap',
                       gap: { xs: 2, md: 3 },
                     }}>
-                      {productosFiltrados.map((producto, indice) => {
+                      {currentItems.map((producto, indice) => {
                         const { icono, color } = obtenerDetallesCategoria(producto.category_display);
                         
                         return (
@@ -593,7 +759,7 @@ const Layout = () => {
                                     label={producto.category_display}
                                     sx={{
                                       position: 'absolute',
-                                      bottom: 12,
+                                      bottom: 40,
                                       left: 12,
                                       borderRadius: '4px',
                                       fontWeight: 500,
@@ -609,6 +775,23 @@ const Layout = () => {
                                         {icono}
                                       </Box>
                                     }
+                                  />
+                                  <Chip
+                                    size="small"
+                                    label={producto.subcategory_display}
+                                    sx={{
+                                      position: 'absolute',
+                                      bottom: 12,
+                                      left: 12,
+                                      borderRadius: '4px',
+                                      fontWeight: 500,
+                                      bgcolor: alpha(color, 0.9),
+                                      color: 'white',
+                                      px: 1,
+                                      py: 0.5,
+                                      fontSize: '0.75rem',
+                                      zIndex: 1
+                                    }}
                                   />
                                 </Box>
                                 
@@ -707,6 +890,27 @@ const Layout = () => {
                           </Box>
                         );
                       })}
+                    </Box>
+
+                  )}{totalPages > 1 && ( 
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, gap: 2 }}>
+                      <Button 
+                        variant="contained" 
+                        disabled={currentPage === 1} 
+                        onClick={() => setCurrentPage(prev => prev - 1)}
+                      >
+                        Anterior
+                      </Button>
+                      <Typography variant="body1" sx={{ alignSelf: 'center' }}>
+                        Página {currentPage} de {totalPages}
+                      </Typography>
+                      <Button 
+                        variant="contained" 
+                        disabled={currentPage === totalPages} 
+                        onClick={() => setCurrentPage(prev => prev + 1)}
+                      >
+                        Siguiente
+                      </Button>
                     </Box>
                   )}
                 </>

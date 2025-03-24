@@ -1,8 +1,10 @@
 from django.db import models
 from rentas.models import Rent
 
+
 class Payment(models.Model):
-    rent = models.OneToOneField(Rent, on_delete=models.CASCADE, related_name='payment')
+    rent = models.OneToOneField(Rent, on_delete=models.CASCADE,
+                                related_name='payment')
     stripe_session_id = models.CharField(max_length=255, unique=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     currency = models.CharField(max_length=3)

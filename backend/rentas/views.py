@@ -11,6 +11,7 @@ from django.utils import timezone
 from decimal import Decimal
 from datetime import timedelta
 from django.contrib.auth.models import AnonymousUser
+from django.db.models import Q
 
 
 def is_authorized(condition=True, authenticated=True):
@@ -245,4 +246,14 @@ class RentViewSet(viewsets.ModelViewSet):
         rental_requests = Rent.objects.filter(item__user=user_id,
                                               rent_status=RentStatus.REQUESTED)
         serializer = RentSerializer(rental_requests, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['get'])
+    def my_requests(self, request):
+        user_id = request.query_params.get("user")
+        my_requests = Rent.objects.filter(
+            Q(renter=user_id) & (Q(rent_status=RentStatus.ACCEPTED) |
+                                 Q(rent_status=RentStatus.REQUESTED))
+            )
+        serializer = RentSerializer(my_requests, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
