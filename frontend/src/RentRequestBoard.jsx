@@ -174,8 +174,7 @@ const RentRequestBoard = () => {
                     {sentRequests.length === 0 ? (
                         <Typography>No has enviado solicitudes de alquiler.</Typography>
                     ) : (
-                            <RequestCardsContainer requests={sentRequests} sent={true} />
-
+                        <RequestCardsContainer requests={sentRequests} sent={true} isOwner={false} />
                     )}
                 </>
             )}
@@ -193,7 +192,7 @@ const RentRequestBoard = () => {
 };
 
 // Componente para mostrar una tarjeta de solicitud
-const RequestCardsContainer = ({ requests, handleResponse, openConfirmModal, sent = false }) => {
+const RequestCardsContainer = ({ requests, handleResponse, openConfirmModal, sent = false, isOwner= true }) => {
     return (
         <Box
             sx={{
@@ -238,7 +237,7 @@ const RequestCardsContainer = ({ requests, handleResponse, openConfirmModal, sen
                     alt={request.title}
                 />
                 <CardContent sx={{ flex: 1 }}>
-                    <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+                    <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }} >
                         <a
                             href={`show-item/${request.item.id}`}
                             style={{ textDecoration: "none", color: "inherit" }}
@@ -247,7 +246,7 @@ const RequestCardsContainer = ({ requests, handleResponse, openConfirmModal, sen
                         </a>
                     </Typography>
                     <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
-                        <strong> Solicitado por:{" "} </strong>
+                        <strong> Solicitado por: </strong> 
                         <Tooltip title={
                             <Card sx={{ width: 250 }}>
                                 <CardContent>
@@ -293,27 +292,37 @@ const RequestCardsContainer = ({ requests, handleResponse, openConfirmModal, sen
                         })}
                     </Typography>
                     <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
-                        <Button
+                        {/* Si el estatus es 'aceptado' y el pago está pendiente, mostramos el botón de pago */}
+                        {request.rent_status === "accepted" && request.payment_status === "pending" && (
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                size="small"
+                                onClick={() => alert("Iniciando proceso de pago...")} //TODO: Implementar el pago con Stripe
+                            >
+                                Pagar
+                            </Button>
+                        )}
+                        { isOwner && request.rent_status === "requested" && (<Button
                             variant="contained"
                             color="success"
                             size="small"
                             onClick={() => openConfirmModal(request, "accepted")}
                         >
                             Aceptar
-                        </Button>
-                        <Button
+                        </Button>) }
+                        { isOwner && request.rent_status === "requested" && <Button
                             variant="contained"
                             color="error"
                             size="small"
                             onClick={() => openConfirmModal(request, "rejected")}
                         >
                             Rechazar
-                        </Button>
+                        </Button> }
                     </Box>
                 </CardContent>
             </Card>
-            ))}
-
+        ))}
         </Box>
     );
 };
