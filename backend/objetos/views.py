@@ -55,8 +55,6 @@ class ItemViewSet(viewsets.ModelViewSet):
 
     def handle_unavailable_periods(self, item, unavailable_periods_data):
         if unavailable_periods_data:
-            # Si los datos vienen como string 
-            # convertirlos a lista de diccionarios
             if isinstance(unavailable_periods_data, str):
                 try:
                     unavailable_periods_data = json.loads(

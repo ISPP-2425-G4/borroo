@@ -178,7 +178,7 @@ class UnavailablePeriod(models.Model):
     end_date = models.DateTimeField()
 
     class Meta:
-        unique_together = ('item', 'start_date', 'end_date')  
+        unique_together = ('item', 'start_date', 'end_date')
 
 
 class ItemImage(models.Model):
