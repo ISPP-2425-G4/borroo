@@ -118,9 +118,7 @@ class CancelType(models.TextChoices):
 class PriceCategory(models.TextChoices):
     HOUR = ('hour', 'Hora')
     DAY = ('day', 'Día')
-    WEEK = ('week', 'Semana')
     MONTH = ('month', 'Mes')
-    YEAR = ('year', 'Año')
 
 
 class Item(models.Model):
