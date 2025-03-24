@@ -177,9 +177,7 @@ const ShowItemScreen = () => {
         const end = new Date(rent.end_date);
         const days = getDatesInRange(start, end);
         
-        if (rent.rent_status === "requested") {
-          requested.push(...days);
-        } else if (rent.rent_status === "BOOKED") {
+        if (rent.rent_status === "BOOKED") {
           booked.push(...days);
         }
       });
