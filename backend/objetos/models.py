@@ -118,9 +118,7 @@ class CancelType(models.TextChoices):
 class PriceCategory(models.TextChoices):
     HOUR = ('hour', 'Hora')
     DAY = ('day', 'Día')
-    WEEK = ('week', 'Semana')
     MONTH = ('month', 'Mes')
-    YEAR = ('year', 'Año')
 
 
 class Item(models.Model):
@@ -154,6 +152,7 @@ class Item(models.Model):
     user = models.ForeignKey('usuarios.User', related_name='items',
                              on_delete=models.CASCADE)
     draft_mode = models.BooleanField(default=False)
+    featured = models.BooleanField(default=False)
 
     def publish(self):
         if (
@@ -173,14 +172,14 @@ class Item(models.Model):
 
 
 class UnavailablePeriod(models.Model):
-    item = models.ForeignKey(Item, related_name='unavailable_periods', 
-                        on_delete=models.CASCADE)
+    item = models.ForeignKey(
+        Item, related_name='unavailable_periods', on_delete=models.CASCADE)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
 
     class Meta:
         unique_together = ('item', 'start_date', 'end_date')
-    
+
 
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, related_name='images',

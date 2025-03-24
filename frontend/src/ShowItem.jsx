@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { DateRange  } from "react-date-range";
-import DatePicker from "react-datepicker";
+import { DateRange, Calendar  } from "react-date-range";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -71,7 +70,7 @@ const ShowItemScreen = () => {
         );
         const data = response.data;
         setItem(data);
-        setUnavailabilityPeriods(data.unavailabilityPeriods || []);
+        setUnavailabilityPeriods(data.unavailable_periods || []);
 
         if (data.user) {
           fetchUserName(data.user);
@@ -222,8 +221,8 @@ const ShowItemScreen = () => {
 
   const isDateUnavailable = (date) => {
     return unavailabilityPeriods.some(period => {
-      const start = new Date(period.start);
-      const end = new Date(period.end);
+      const start = new Date(period.start_date); 
+      const end = new Date(period.end_date); 
       return date >= start && date <= end;
     });
   };
@@ -614,20 +613,24 @@ const ShowItemScreen = () => {
         {priceCategory === "hour" && (
           <div> 
             {/* Selector de día */}
-            <label>Selecciona un día:</label>
-            <DatePicker
-              selected={selectedDay}
+            <Typography>Selecciona un día:</Typography>
+            <Calendar
+              date={selectedDay}
               onChange={(date) => setSelectedDay(date)}
-              minDate={new Date()} // Evita fechas pasadas
-              disabledDates={[...requestedDates, ...bookedDates, ...unavailabilityPeriods.map(period => ({ startDate: new Date(period.start), endDate: new Date(period.end) }))]}
-              dateFormat="yyyy/MM/dd"
-              inline // Muestra el calendario directamente
+              minDate={new Date()} 
+              disabledDates={[...unavailabilityPeriods.flatMap(period => {
+                const start = new Date(period.start_date);
+                const end = new Date(period.end_date);
+                const range = getDatesInRange(start, end);
+  
+                return range;
+              })]}
             />
 
             {/* Selector de hora de inicio */}
-            <label>Selecciona la hora de inicio:</label>
+            <Typography>Selecciona la hora de inicio:</Typography>
             <select
-              value={selectedStartHour}
+              value={selectedStartHour || ""}
               onChange={(e) => {
                 const startHour = parseInt(e.target.value);
                 setSelectedStartHour(startHour);
@@ -642,9 +645,9 @@ const ShowItemScreen = () => {
             </select>
 
             {/* Selector de hora de fin */}
-            <label>Selecciona la hora de fin:</label>
+            <Typography>Selecciona la hora de fin:</Typography>
             <select
-              value={selectedEndHour}
+              value={selectedEndHour || ""}
               onChange={(e) => setSelectedEndHour(parseInt(e.target.value))}
               disabled={selectedStartHour === null} // Deshabilita si no hay hora inicio
             >
@@ -655,13 +658,29 @@ const ShowItemScreen = () => {
                 </option>
               ))}
             </select>
+            {selectedDay && selectedStartHour !== null && selectedEndHour !== null && (
+            <Box 
+              sx={{ 
+                marginTop: 2, 
+                padding: 2, 
+                border: "1px solid #ccc", 
+                borderRadius: 4, 
+                backgroundColor: "#f9f9f9" 
+              }}
+            >
+              <Typography variant="h6">Resumen de selección:</Typography>
+              <Typography><strong>Día:</strong> {selectedDay.toLocaleDateString()}</Typography>
+              <Typography><strong>Horas:</strong> {`${selectedStartHour}:00 - ${selectedEndHour}:00`}</Typography>
+            </Box>
+            )}
           </div>
         )}
 
         {priceCategory === "day" && (
           <DateRange
-            ranges={dateRange}
+            ranges={ isOwner || !isAuthenticated ? [] : dateRange}
             onChange={(ranges) => {
+              if (!isOwner || isAuthenticated) { setDateRange([ranges.selection]); }
               const start = ranges.selection.startDate;
               const end = ranges.selection.endDate;
               if (isDateUnavailable(start) || isDateUnavailable(end)) {
@@ -676,20 +695,31 @@ const ShowItemScreen = () => {
               }
             }}
             minDate={new Date()}
-            disabledDates={[...requestedDates, ...bookedDates, ...unavailabilityPeriods.map(period => ({ startDate: new Date(period.start), endDate: new Date(period.end) }))]}
+            disabledDates={[...requestedDates, ...bookedDates, ...unavailabilityPeriods.flatMap(period => {
+              const start = new Date(period.start_date);
+              const end = new Date(period.end_date);
+              const range = getDatesInRange(start, end);
+
+              return range;
+            })]}
           />
         )}
 
         {priceCategory === "month" && (
-          <div>
-            <label>Selecciona la fecha de inicio:</label>
-            <DatePicker
-              selected={selectedDay}
+            <div> 
+            {/* Selector de día */}
+            <Typography>Selecciona un día:</Typography>
+            <Calendar
+              date={selectedDay}
               onChange={(date) => setSelectedDay(date)}
-              minDate={new Date()} // Evita fechas pasadas
-              disabledDates={[...requestedDates, ...bookedDates, ...unavailabilityPeriods.map(period => ({ startDate: new Date(period.start), endDate: new Date(period.end) }))]}
-              dateFormat="yyyy/MM/dd"
-              inline // Muestra el calendario directamente
+              minDate={new Date()} 
+              disabledDates={[...unavailabilityPeriods.flatMap(period => {
+                const start = new Date(period.start_date);
+                const end = new Date(period.end_date);
+                const range = getDatesInRange(start, end);
+  
+                return range;
+              })]}
             />
 
             <label>Selecciona la cantidad de meses:</label>

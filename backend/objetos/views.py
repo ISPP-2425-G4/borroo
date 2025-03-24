@@ -55,31 +55,32 @@ class ItemViewSet(viewsets.ModelViewSet):
 
     def handle_unavailable_periods(self, item, unavailable_periods_data):
         if unavailable_periods_data:
-            # Si los datos vienen como string, convertirlos a lista de diccionarios
             if isinstance(unavailable_periods_data, str):
                 try:
-                    unavailable_periods_data = json.loads(unavailable_periods_data)
+                    unavailable_periods_data = json.loads(
+                        unavailable_periods_data)
                 except json.JSONDecodeError:
-                    raise serializers.ValidationError("Formato inválido para unavailable_periods.")
+                    raise serializers.ValidationError(
+                        "Formato inválido para unavailable_periods.")
 
             # Verificar que ahora es una lista de diccionarios
             if not isinstance(unavailable_periods_data, list):
-                raise serializers.ValidationError("Los periodos de indisponibilidad deben ser una lista.")
-
-            # Eliminar periodos previos asociados al ítem
-            UnavailablePeriod.objects.filter(item=item).delete()
+                raise serializers.ValidationError(
+                    "Los periodos de indisponibilidad deben ser una lista.")
 
             for period in unavailable_periods_data:
                 if not isinstance(period, dict):
-                    raise serializers.ValidationError("Cada periodo debe ser un diccionario con 'start_date' y 'end_date'.")
-
+                    raise serializers.ValidationError(
+                        "Cada periodo debe ser un "
+                        "diccionario con 'start_date' y 'end_date'.")
                 start_date = parse_date(period.get("start_date"))
                 end_date = parse_date(period.get("end_date"))
-
                 if start_date and end_date and start_date < end_date:
-                    UnavailablePeriod.objects.create(item=item, start_date=start_date, end_date=end_date)
+                    UnavailablePeriod.objects.create(
+                        item=item, start_date=start_date, end_date=end_date)
                 else:
-                    raise serializers.ValidationError("Las fechas de indisponibilidad no son válidas.")
+                    raise serializers.ValidationError(
+                        "Las fechas de indisponibilidad no son válidas.")
 
     def create(self, request, *args, **kwargs):
         print("Request data:", request.data)
@@ -89,21 +90,81 @@ class ItemViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         print("Validated data:", serializer.validated_data)
         item = serializer.save()
-        self.handle_unavailable_periods(item, request.data.get("unavailable_periods", 
-                                                               []))
+        self.handle_unavailable_periods(
+            item, request.data.get("unavailable_periods", []))
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, 
-                        headers=headers)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, 
-                                         partial=partial)
+        serializer = self.get_serializer(
+            instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
         item = serializer.save()
-        self.handle_unavailable_periods(item, request.data.get("unavailable_periods", []))
+        self.handle_unavailable_periods(
+            item, request.data.get("unavailable_periods", []))
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['post'])
+    def toggle_feature(self, request):
+        # Recibir desde el frontend
+        item_id = request.data.get('item_id')
+        user_id = request.data.get('user_id')
+
+        # Validaciones básicas
+        if not item_id or not user_id:
+            return Response(
+                {"error": "Faltan parámetros"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Obtener objetos
+        item = get_object_or_404(Item, pk=item_id)
+        user = get_object_or_404(User, pk=user_id)
+
+        # Validación: ¿el user es el propietario?
+        if item.user != user:
+            return Response(
+                {"error": "No puedes modificar un objeto que no es tuyo."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Validación: ¿es premium?
+        if user.pricing_plan != "premium":
+            return Response(
+                {
+                    "error": "Solo los usuarios premium pueden destacar "
+                             "objetos."
+                },
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Si ya está destacado -> desmarcar
+        if item.featured:
+            item.featured = False
+            item.save()
+            return Response(
+                {"message": "El objeto ya no es destacado."},
+                status=status.HTTP_200_OK
+            )
+
+        # Comprobar cuántos destacados tiene el usuario
+        featured_count = Item.objects.filter(user=user, featured=True).count()
+        if featured_count >= 2:
+            return Response(
+                {"error": "Solo puedes tener 2 objetos destacados."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Marcar como destacado
+        item.featured = True
+        item.save()
+        return Response(
+            {"message": "El objeto ahora es destacado."},
+            status=status.HTTP_200_OK
+        )
 
 
 class ItemImageViewSet(viewsets.ModelViewSet):

@@ -59,7 +59,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Nombre                      | 15 marzo | 16 marzo | 17 marzo | 18 marzo       | 19 marzo  | 20 marzo | 21 marzo | 22 marzo | 23 marzo | 24 marzo | 25 marzo | 26 marzo | 27 marzo | 28 marzo |
 | --------------------------- | -------- | -------- | -------- | -------------- | --------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | David Blanco Mora           |          |          |          |                |           |          |          |          |          |          |          |          |          |          |
-| Pablo Díaz Ordóñez          |          | :blush:  | :blush:  | :blush:        |           |          |          |          |          |          |          |          |          |          |
+| Pablo Díaz Ordóñez          |          | :blush:  | :blush:  | :blush:        |    :neutral_face:       |     :neutral_face:     |     :worried:     |     :worried:     |          |          |          |          |          |          |
 | Pablo Espinosa Naranjo      |          |          | :worried:|   :blush:      |  :worried:| :worried:|          |          |          |          |          |          |          |          |
 | Jesús Fernández Rodríguez   |          |          | :smiley: |   :smiley:     |  :smiley: | :smiley: |          |          |          |          |          |          |          |          
 | Francisco Fernández Mota    | :smiley: | :blush:  |          | :neutral_face: | :worried: |          |          |          |          |          |          |          |          |          |
@@ -67,7 +67,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Miguel González Ortiz       |          | :smiley: | :smiley: | :smiley:  | :smiley: | :neutral_face: |          |          |          |          |          |          |          |          |
 | Álvaro Martín Muñoz         |          |          |          | :blush:        | :worried: | :smiley: |          |          |          |          |          |          |          |
 | Ignacio Naredo Bernardos    |          | :smiley: |          | :blush:        | :smiley:  |          |          |          |          |          |          |          |          |          |
-| Javier Nieto Vicioso        | :smiley: | :smiley: | :smiley: | :blush:        | :blush:   |          |          |          |          |          |          |          |          |          |
+| Javier Nieto Vicioso        | :smiley: | :smiley: | :smiley: | :blush:        | :blush:   | :blush:  | :blush:  | :blush:  | :blush:  |          |          |          |          |          |
 | Marco Padilla Gómez         |          |          |          |    :angry:     |  :angry:  | :angry:  |          |          |          |          |          |          |          |          |
 | Miguel Palomo García        | :blush:  | :smiley: | :smiley: | :blush:        | :smiley:  |          |          |          |          |          |          |          |          |          |
 | Luis Javier Periáñez Franco | :blush:  | :blush:  | :blush:  | :blush:        | :angry:   |          |          |          |          |          |          |          |          |          |

@@ -29,13 +29,19 @@ import {
 import Navbar from "./Navbar";
 import axios from 'axios';
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
+import { DateRange } from "react-date-range";
+import { Delete } from "@mui/icons-material";
+
 
 const UpdateItemScreen = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState(null);
-  const [unavailabilityPeriods, setUnavailabilityPeriods] = useState([]);
+  const [unavailablePeriods, setUnavailablePeriods] = useState([]);
+  const [datesRange, setDatesRange] =useState([
+    { startDate: new Date(), endDate: new Date(), key: "selection" }
+    ]);
   const [options, setOptions] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -77,7 +83,7 @@ const UpdateItemScreen = () => {
         const enumData = enumResponse.data;
 
         setFormData(itemData);
-        setUnavailabilityPeriods(itemData.unavailabilityPeriods || []);
+        setUnavailablePeriods(itemData.unavailablePeriods || []);
         setOptions(enumData);
 
         setFilteredSubcategories(getSubcategories(itemData.category));
@@ -107,6 +113,7 @@ const UpdateItemScreen = () => {
 
     if (id) fetchData();
   }, [id, navigate]);
+  
 
   const validateForm = () => {
     if (!formData) return;
@@ -162,19 +169,23 @@ const UpdateItemScreen = () => {
   };
 
   const handleAddPeriod = () => {
-    setUnavailabilityPeriods([...unavailabilityPeriods, { start: "", end: "" }]);
+    const {startDate, endDate} = datesRange[0];
+    console.log("Start Date:", startDate);
+    console.log("End Date:", endDate);
+    
+    if (!startDate || !endDate || new Date(startDate) >= new Date(endDate)) {
+        setErrorMessage("Las fechas de inicio y fin no son válidas.");
+        return;
+    }
+
+    setUnavailablePeriods([...unavailablePeriods, { start_date: new Date(startDate).toISOString().split('T')[0], end_date: new Date(endDate).toISOString().split('T')[0] }]);
+    setDatesRange([{ startDate: new Date(), endDate: new Date(), key: "selection" }]); // Reset
+    setErrorMessage('');
   };
 
   const handleRemovePeriod = (index) => {
-    setUnavailabilityPeriods(unavailabilityPeriods.filter((_, i) => i !== index));
+    setUnavailablePeriods(unavailablePeriods.filter((_, i) => i !== index));
   };
-
-  const handlePeriodChange = (index, field, value) => {
-    const updatedPeriods = [...unavailabilityPeriods];
-    updatedPeriods[index][field] = value;
-    setUnavailabilityPeriods(updatedPeriods);
-  };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -243,6 +254,10 @@ const UpdateItemScreen = () => {
       const remainingImageIds = existingImages.map(img => img.id);
       remainingImageIds.forEach(id => formDataToSend.append("remaining_image_ids", id));
 
+      // Adjuntar los períodos de indisponibilidad
+      formDataToSend.append('unavailable_periods', JSON.stringify(unavailablePeriods));
+
+
       // Depuración: Mostrar el contenido de formDataToSend
       for (let pair of formDataToSend.entries()) {
         console.log(pair[0] + ': ' + pair[1]);
@@ -251,7 +266,7 @@ const UpdateItemScreen = () => {
       // 4️⃣ Enviar solicitud PUT al backend
       await axios.put(
         `${import.meta.env.VITE_API_BASE_URL}/objetos/full/${id}/`,
-        { ...formData, unavailabilityPeriods },
+        formDataToSend,
         {
           headers: { "Content-Type": "multipart/form-data" },
           withCredentials: true,
@@ -262,6 +277,9 @@ const UpdateItemScreen = () => {
       navigate("/");
     } catch (error) {
       console.error("Error actualizando el ítem:", error);
+      if (error.response) {
+        console.error("Detalles del error:", error.response.data);
+    }
       setErrorMessage("Ocurrió un error al actualizar el ítem.");
     } finally {
       setLoading(false);
@@ -687,28 +705,55 @@ const UpdateItemScreen = () => {
                 hidden
               />
             </Button>
-            <div>
-        <label>Periodos de Indisponibilidad:</label>
-        {unavailabilityPeriods.map((period, index) => (
-          <div key={index}>
-            <input
-              type="date"
-              value={period.start}
-              onChange={(e) => handlePeriodChange(index, "start", e.target.value)}
-            />
-            <input
-              type="date"
-              value={period.end}
-              onChange={(e) => handlePeriodChange(index, "end", e.target.value)}
-            />
-            <button type="button" onClick={() => handleRemovePeriod(index)}>
-              Eliminar
-            </button>
-          </div>
-        ))}
-        <button type="button" onClick={handleAddPeriod}>Añadir Periodo</button>
-      </div>
-  
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+  <Typography variant="h6">Seleccionar período de indisponibilidad:</Typography>
+
+  <DateRange
+    ranges={datesRange}
+    onChange={(ranges) => setDatesRange([ranges.selection])}
+    minDate={new Date()}
+  />
+
+  <Button 
+    variant="contained" 
+    color="primary" 
+    onClick={handleAddPeriod} 
+    sx={{ marginTop: 2 }}
+  >
+    Añadir Período
+  </Button>
+
+  {/* Resumen de períodos seleccionados */}
+  {unavailablePeriods.length > 0 && (
+    <Box 
+      sx={{ 
+        marginTop: 2, 
+        padding: 2, 
+        border: "1px solid #ccc", 
+        borderRadius: 4, 
+        backgroundColor: "#f9f9f9" 
+      }}
+    >
+      <Typography variant="h6">Períodos de Indisponibilidad</Typography>
+      {unavailablePeriods.map((period, index) => (
+        <Box 
+          key={index} 
+          sx={{ display: "flex", alignItems: "center", gap: 2, marginBottom: 1 }}
+        >
+          <Typography>
+            <strong>Desde:</strong> {new Date(period.start_date).toLocaleDateString()} -  
+            <strong> Hasta:</strong> {new Date(period.end_date).toLocaleDateString()}
+          </Typography>
+          <IconButton onClick={() => handleRemovePeriod(index)} color="error">
+            <Delete />
+          </IconButton>
+        </Box>
+      ))}
+    </Box>
+  )}
+
+  {errorMessage && <Typography color="error">{errorMessage}</Typography>}
+</Box>
             {/* Botón de envío */}
             <Button
               type="submit"
