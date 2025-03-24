@@ -173,7 +173,7 @@ const RentRequestBoard = () => {
                             {receivedRequests.length === 0 ? (
                                 <Typography>No has recibido solicitudes de alquiler.</Typography>
                             ) : (
-                                <RequestCardsContainer requests={receivedRequests} handleResponse={handleResponse} openConfirmModal={openConfirmModal} />
+                                <RequestCardsContainer requests={receivedRequests} openConfirmModal={openConfirmModal} />
                             )}
                         </>
                     )}
@@ -183,7 +183,7 @@ const RentRequestBoard = () => {
                             {sentRequests.length === 0 ? (
                                 <Typography>No has enviado solicitudes de alquiler.</Typography>
                             ) : (
-                                <RequestCardsContainer requests={sentRequests} sent={true} isOwner={false} />
+                                <RequestCardsContainer requests={sentRequests} isOwner={false} />
                             )}
                         </>
                     )}

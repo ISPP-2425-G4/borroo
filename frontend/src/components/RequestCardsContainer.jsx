@@ -1,6 +1,7 @@
 import { Box, Button, Card, CardContent, CardMedia, Typography, Tooltip, CardActions } from "@mui/material";
+import PropTypes from "prop-types";
 
-const RequestCardsContainer = ({ requests, handleResponse, openConfirmModal, sent = false, isOwner= true }) => {
+const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) => {
     return (
         <Box
             sx={{
@@ -147,5 +148,32 @@ const RequestCardsContainer = ({ requests, handleResponse, openConfirmModal, sen
         </Box>
     );
 };
+
+RequestCardsContainer.propTypes = {
+    requests: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+            imageUrl: PropTypes.string.isRequired,
+            title: PropTypes.string,
+            item: PropTypes.shape({
+                id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+                title: PropTypes.string.isRequired,
+            }).isRequired,
+            renter: PropTypes.shape({
+                name: PropTypes.string.isRequired,
+                surname: PropTypes.string.isRequired,
+                email: PropTypes.string.isRequired,
+                username: PropTypes.string.isRequired,
+            }).isRequired,
+            start_date: PropTypes.string.isRequired,
+            end_date: PropTypes.string.isRequired,
+            rent_status: PropTypes.string.isRequired,
+            payment_status: PropTypes.string.isRequired,
+        })
+    ).isRequired,
+    openConfirmModal: PropTypes.func.isRequired,
+    isOwner: PropTypes.bool,
+};
+
 
 export default RequestCardsContainer;
