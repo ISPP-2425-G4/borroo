@@ -70,21 +70,17 @@ class RentViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'])
     def first_request(self, request, *args, **kwargs):
-        # el frontend pasa la informacion necesaria en el body
         item_id = request.data.get('item')
         start_date = request.data.get('start_date')
         end_date = request.data.get('end_date')
-        # authenticated = self.request.user.is_authenticated
         user_id = request.data.get('renter')
         user = get_object_or_404(User, pk=user_id)
-        # De momento se puede autenticar
-        # authenticated = self.request.user.is_authenticated
 
         item = get_object_or_404(Item, pk=item_id)
-
         not_rent_yourself = user != item.user
-
         is_authorized(condition=not_rent_yourself)
+
+        # 🔒 Valida si ya existe una renta aceptada o reservada en esas fechas
         if Rent.objects.filter(
             item=item,
             start_date__lte=end_date,
@@ -92,6 +88,23 @@ class RentViewSet(viewsets.ModelViewSet):
         ).exclude(rent_status=RentStatus.REQUESTED).exists():
             return Response(
                 {'error': 'El objeto no está disponible en esas fechas'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # 🔥 Valida que el usuario NO tenga ya una REQUESTED solapada
+        # sobre este item
+        if Rent.objects.filter(
+            renter=user,
+            item=item,
+            rent_status=RentStatus.REQUESTED,
+            start_date__lte=end_date,
+            end_date__gte=start_date
+        ).exists():
+            return Response(
+                {
+                    'error': 'Ya tienes una solicitud pendiente para este '
+                             'objeto en esas fechas'
+                },
                 status=status.HTTP_400_BAD_REQUEST
             )
 
