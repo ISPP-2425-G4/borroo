@@ -52,7 +52,7 @@ class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
     permission_classes = [permissions.AllowAny]
-
+    
     def handle_unavailable_periods(self, item, unavailable_periods_data):
         if unavailable_periods_data:
             # Si los datos vienen como string, convertirlos a lista de diccionarios
@@ -65,9 +65,6 @@ class ItemViewSet(viewsets.ModelViewSet):
             # Verificar que ahora es una lista de diccionarios
             if not isinstance(unavailable_periods_data, list):
                 raise serializers.ValidationError("Los periodos de indisponibilidad deben ser una lista.")
-
-            # Eliminar periodos previos asociados al ítem
-            UnavailablePeriod.objects.filter(item=item).delete()
 
             for period in unavailable_periods_data:
                 if not isinstance(period, dict):
