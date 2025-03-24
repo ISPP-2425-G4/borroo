@@ -61,6 +61,8 @@ const ShowItemScreen = () => {
   const [selectedEndHour, setSelectedEndHour] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [highlighting, setHighlighting] = useState(false);
+
 
   useEffect(() => {
     const fetchItemData = async () => {
@@ -140,6 +142,24 @@ const ShowItemScreen = () => {
       setUserName("Usuario desconocido");
     }
   };
+
+  const toggleFeature = () => {
+    if (!item) return;
+    setHighlighting(true);
+    axios.post(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/toggle_feature/`, {
+        item_id: item.id,
+        user_id: item.user
+    })
+    .then(() => {
+        setItem(prev => ({ ...prev, featured: !prev.featured }));
+    })
+    .catch(error => {
+        console.error('Error destacando el objeto:', error);
+    })
+    .finally(() => {
+        setHighlighting(false);
+    });
+};
 
   const loadItemImages = async (imageIds) => {
     try {
@@ -565,6 +585,9 @@ const ShowItemScreen = () => {
                       onClick={handleDelete}
                     >
                       Eliminar
+                    </Button>
+                    <Button onClick={toggleFeature} disabled={highlighting}>
+                        {item.featured ? 'Quitar destacado' : 'Destacar objeto'}
                     </Button>
                   </Box>
                 )}
