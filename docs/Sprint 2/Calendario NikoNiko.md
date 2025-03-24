@@ -74,4 +74,4 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Alexander Picón Garrote     | :blush:  | :angry:  | :angry:  |   :blush:      | :blush:   |          |          |          |          |          |          |          |          |          | 
 | Santiago Rosado Raya        |          |          |          |                |           |          |          |          |          |          |          |          |          |          |
 | Julia Sánchez Márquez       |          | :blush:  |          |                | :smiley:  |          |          |          |          |          |          |          |          |          |
-| Alejandro Sevillano Barea   |          |          |          |                |:neutral_face: |:smiley: |          |          |          |          |          |          |          |          |
+| Alejandro Sevillano Barea   |          |          |          |                |:neutral_face: |:smiley: | :smiley:|        |          |:worried: |          |          |          |          |
