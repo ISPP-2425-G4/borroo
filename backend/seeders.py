@@ -60,6 +60,7 @@ def create_items():
             price=Decimal(random.uniform(2, 30)),
             user=random.choice(users),
             draft_mode=False,
+            featured=False
         )
     print('Items created successfully!')
 

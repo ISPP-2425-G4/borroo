@@ -73,7 +73,7 @@ const Navbar = () => {
     { title: "Inicio", path: "/" },
     { title: "Poner en alquiler", path: "/create-item" },
     { title: "Plan de suscripción", path: "/pricing-plan" },
-    { title: "Tablón de rentas", path: "/rental_requests" },
+    ...(user ? [{ title: "Mis solicitudes", path: "/rental_requests" }] : []),
   ];
 
   const toggleDrawer = (open) => (event) => {

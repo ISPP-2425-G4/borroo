@@ -102,6 +102,65 @@ class ItemViewSet(viewsets.ModelViewSet):
         self.handle_unavailable_periods(item, request.data.get("unavailable_periods", []))
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @action(detail=False, methods=['post'])
+    def toggle_feature(self, request):
+        # Recibir desde el frontend
+        item_id = request.data.get('item_id')
+        user_id = request.data.get('user_id')
+
+        # Validaciones básicas
+        if not item_id or not user_id:
+            return Response(
+                {"error": "Faltan parámetros"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Obtener objetos
+        item = get_object_or_404(Item, pk=item_id)
+        user = get_object_or_404(User, pk=user_id)
+
+        # Validación: ¿el user es el propietario?
+        if item.user != user:
+            return Response(
+                {"error": "No puedes modificar un objeto que no es tuyo."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Validación: ¿es premium?
+        if user.pricing_plan != "premium":
+            return Response(
+                {
+                    "error": "Solo los usuarios premium pueden destacar "
+                             "objetos."
+                },
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Si ya está destacado -> desmarcar
+        if item.featured:
+            item.featured = False
+            item.save()
+            return Response(
+                {"message": "El objeto ya no es destacado."},
+                status=status.HTTP_200_OK
+            )
+
+        # Comprobar cuántos destacados tiene el usuario
+        featured_count = Item.objects.filter(user=user, featured=True).count()
+        if featured_count >= 2:
+            return Response(
+                {"error": "Solo puedes tener 2 objetos destacados."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Marcar como destacado
+        item.featured = True
+        item.save()
+        return Response(
+            {"message": "El objeto ahora es destacado."},
+            status=status.HTTP_200_OK
+        )
+
 
 class ItemImageViewSet(viewsets.ModelViewSet):
     queryset = ItemImage.objects.all()
