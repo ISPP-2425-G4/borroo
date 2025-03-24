@@ -125,9 +125,7 @@ class ItemViewSet(viewsets.ModelViewSet):
         )
 
     def get_queryset(self):
-        # Obtener el queryset base
-        queryset = super().get_queryset()       
-        # Filtrar si se pasa el parámetro 'featured=true'
+        queryset = super().get_queryset()
         featured = self.request.query_params.get('featured', None)
         if featured is not None and featured.lower() == 'true':
             queryset = queryset.filter(featured=True)
