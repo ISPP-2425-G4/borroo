@@ -8,11 +8,12 @@ import { useNavigate } from 'react-router-dom';
 const DEFAULT_IMAGE = "../public/default_image.png";
 
 const RentRequestBoard = () => {
-    const [requests, setRequests] = useState([]);
+    const [receivedRequests, setReceivedRequests] = useState([]); // Solicitudes recibidas
+    const [sentRequests, setSentRequests] = useState([]); // Solicitudes enviadas
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [responseType, setResponseType] = useState(null);
     const [openModal, setOpenModal] = useState(false);
-    const [loading, setLoading] = useState(true); // Estado de carga de las solicitudes
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,41 +25,24 @@ const RentRequestBoard = () => {
                     navigate("/login");
                     return;
                 }
-                const response = await axios.get(
-                    `${import.meta.env.VITE_API_BASE_URL}/rentas/full/rental_requests/`,
-                    { params: { user: user.id } }
-                );
 
+                // Peticiones para obtener solicitudes recibidas y enviadas
+                const [receivedResponse, sentResponse] = await Promise.all([
+                    axios.get(`${import.meta.env.VITE_API_BASE_URL}/rentas/full/rental_requests/`, { params: { user: user.id } }),
+                    axios.get(`${import.meta.env.VITE_API_BASE_URL}/rentas/full/my_requests/`, { params: { user: user.id } })
+                ]);
 
-                const data = response.data;
-                const rentas = data.results ?? data; // Si `results` no existe, usa `data` directamente
-                
-                // De momento hacemos peticiones de los usuarios y objetos, pero es muy ineficiente
-                // y se puede mejorar con una sola petición al backend bien serializado
-                const rentasEnriquecidas = await Promise.all(
-                    rentas.map(async (renta) => {
-                        const [usuarioResponse, itemResponse] = await Promise.all([
-                            axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${renta.renter}/`),
-                            axios.get(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/${renta.item}/`)
-                        ]);
-        
-                        const usuario = usuarioResponse.data;
-                        const item = itemResponse.data;
-                        const imageUrl = item.images?.length > 0
-                            ? await obtenerImagen(item.images[0])
-                            : DEFAULT_IMAGE;
-        
-                        return { 
-                            ...renta, 
-                            renter: usuario,
-                            item: item,
-                            imageUrl
-                        };
-                    })
-                );
-        
-                setRequests(rentasEnriquecidas);
-                setLoading(false); // Datos cargados
+                // Procesamos las solicitudes recibidas
+                const receivedData = receivedResponse.data.results ?? receivedResponse.data;
+                const receivedEnriched = await enrichRequests(receivedData);
+                setReceivedRequests(receivedEnriched);
+
+                // Procesamos las solicitudes enviadas
+                const sentData = sentResponse.data.results ?? sentResponse.data;
+                const sentEnriched = await enrichRequests(sentData);
+                setSentRequests(sentEnriched);
+
+                setLoading(false);
             } catch (error) {
                 console.error("Error al obtener solicitudes de alquiler:", error);
             }
@@ -67,11 +51,26 @@ const RentRequestBoard = () => {
         fetchRequests();
     }, []);
 
+    const enrichRequests = async (requests) => {
+        return Promise.all(
+            requests.map(async (request) => {
+                const [userResponse, itemResponse] = await Promise.all([
+                    axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${request.renter}/`),
+                    axios.get(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/${request.item}/`)
+                ]);
+
+                const user = userResponse.data;
+                const item = itemResponse.data;
+                const imageUrl = item.images?.length > 0 ? await obtenerImagen(item.images[0]) : DEFAULT_IMAGE;
+
+                return { ...request, renter: user, item: item, imageUrl };
+            })
+        );
+    };
+
     const obtenerImagen = async (imgId) => {
         try {
-            const response = await axios.get(
-                `${import.meta.env.VITE_API_BASE_URL}/objetos/item-images/${imgId}/`
-            );
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/objetos/item-images/${imgId}/`);
             return response.data.image;
         } catch (error) {
             console.error(`Error al cargar la imagen ${imgId}:`, error);
@@ -81,22 +80,13 @@ const RentRequestBoard = () => {
 
     const handleResponse = async (renta, responseType) => {
         try {
-            const user = JSON.parse(localStorage.getItem("user"));
-            if (!user || !user.id) {
-                alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
-                return;
-            }
             const response = await axios.put(
                 `${import.meta.env.VITE_API_BASE_URL}/rentas/full/${renta.id}/respond_request/`,
-                {
-                    response: responseType,
-                    rent: renta.id
-                }
+                { response: responseType, rent: renta.id }
             );
-            console.log(response.data);
 
-            // Filtrar la solicitud aceptada/rechazada de la lista
-            setRequests((prevRequests) =>
+            // Eliminamos la solicitud de la lista tras responderla
+            setReceivedRequests((prevRequests) =>
                 prevRequests.filter((request) => request.id !== renta.id)
             );
             setOpenModal(false);
@@ -111,13 +101,12 @@ const RentRequestBoard = () => {
         setOpenModal(true);
     };
 
-    const closeModal = () => {
-        setOpenModal(false);
-    };
+    const closeModal = () => setOpenModal(false);
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mt: 10, p: 2 }}>
             <Navbar />
+
             <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
                 Solicitudes de Alquiler
             </Typography>
@@ -166,138 +155,165 @@ const RentRequestBoard = () => {
                         </Card>
                     ))}
                 </Box>
-            ) : requests.length === 0 ? (
-                <Typography>No hay solicitudes de alquiler disponibles.</Typography>
             ) : (
-                <Box
-                    sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 2,
-                        p: 2,
-                        width: "100%",
-                        maxWidth: "800px",
-                        maxHeight: "75vh",
-                        overflowY: "auto",
-                        overflowX: "hidden",
-                    }}
-                >
-                    {requests.map((request) => (
-                        <Card
-                            key={request.id}
-                            sx={{
-                                display: "flex",
-                                flexDirection: "row",
-                                alignItems: "center",
-                                boxShadow: 3,
-                                p: 2,
-                                width: "100%",
-                                maxWidth: "750px",
-                                minHeight: "150px",
-                                borderRadius: 2,
-                                overflow: "hidden",
-                            }}
-                        >
-                            <CardMedia
-                                component="img"
-                                sx={{
-                                    width: 150,
-                                    height: 150,
-                                    objectFit: "cover",
-                                    borderRadius: "2px",
-                                    mr: 2,
-                                    boxShadow: 1,
-                                }}
-                                image={request.imageUrl}
-                                alt={request.title}
-                            />
-                            <CardContent sx={{ flex: 1 }}>
-                                <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
-                                    <a 
-                                        href={`show-item/${request.item.id}`}
-                                        style={{ textDecoration: "none", color: "inherit" }}
-                                    >
-                                        {request.item.title}
-                                    </a>
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
-                                    <strong> Solicitado por:{" "} </strong>
-                                    <Tooltip title={
-                                        <Card sx={{ width: 250 }}>
-                                            <CardContent>
-                                                <Typography variant="body2"><strong>Nombre:</strong> {request.renter.name} {request.renter.surname}</Typography>
-                                                <Typography variant="body2"><strong>Email:</strong> {request.renter.email}</Typography>
-                                            </CardContent>
-                                            <CardActions sx={{ justifyContent: "flex-end" }}>
-                                                {/* Botón para enviar mensaje al usuario, TODO implementar el chat*/}
-                                                <Button size="small" onClick={() => alert("Enviando mensaje...")}>Enviar Mensaje</Button> 
-                                            </CardActions>
-                                        </Card>
-                                    } arrow>
-                                        <a 
-                                            href={`/perfil/${request.renter.username}`}
-                                            style={{ 
-                                                textDecoration: "none",
-                                                color: "#1976d2",
-                                                fontWeight: "bold",
-                                            }}
-                                        >
-                                            {request.renter.name} {request.renter.surname}
-                                        </a>
-                                    </Tooltip>
-                                </Typography>
-                                <Typography variant="body2" sx={{ mb: 1 }}>
-                                    <strong> Inicio: </strong> {new Date(request.start_date).toLocaleString('es-ES', {
-                                        weekday: 'long',
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric',
-                                        hour: '2-digit',
-                                        minute: '2-digit'
-                                    })}
-                                </Typography>
-                                <Typography variant="body2" sx={{ mb: 1 }}>
-                                    <strong> Fin: </strong> {new Date(request.end_date).toLocaleString('es-ES', {
-                                        weekday: 'long',
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric',
-                                        hour: '2-digit',
-                                        minute: '2-digit'
-                                    })}
-                                </Typography>
-                                <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
-                                    <Button
-                                        variant="contained"
-                                        color="success"
-                                        size="small"
-                                        onClick={() => openConfirmModal(request, "accepted")}
-                                    >
-                                        Aceptar
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        color="error"
-                                        size="small"
-                                        onClick={() => openConfirmModal(request, "rejected")}
-                                    >
-                                        Rechazar
-                                    </Button>
-                                </Box>
-                            </CardContent>
-                        </Card>
-                    ))}
-                </Box>
+                <>
+                    {/* Solicitudes recibidas */}
+                    <Typography variant="h6" sx={{ mt: 3, mb: 2, fontWeight: "bold" }}>
+                        Solicitudes recibidas
+                    </Typography>
+                    {receivedRequests.length === 0 ? (
+                        <Typography>No has recibido solicitudes de alquiler.</Typography>
+                    ) : (
+                        <RequestCardsContainer requests={receivedRequests} handleResponse={handleResponse} openConfirmModal={openConfirmModal} />
+                    )}
+
+                    {/* Solicitudes enviadas */}
+                    <Typography variant="h6" sx={{ mt: 5, mb: 2, fontWeight: "bold" }}>
+                        Solicitudes enviadas
+                    </Typography>
+                    {sentRequests.length === 0 ? (
+                        <Typography>No has enviado solicitudes de alquiler.</Typography>
+                    ) : (
+                            <RequestCardsContainer requests={sentRequests} sent={true} />
+
+                    )}
+                </>
             )}
 
             {openModal && (
                 <Modal
-                    title={`Confirmar solicitud`}
+                    title="Confirmar solicitud"
                     message={`¿Estás seguro de que quieres ${responseType === "accepted" ? "aceptar" : "rechazar"} esta solicitud?`}
                     onCancel={closeModal}
                     onConfirm={() => handleResponse(selectedRequest, responseType)}
                 />
             )}
+        </Box>
+    );
+};
+
+// Componente para mostrar una tarjeta de solicitud
+const RequestCardsContainer = ({ requests, handleResponse, openConfirmModal, sent = false }) => {
+    return (
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                p: 2,
+                width: "100%",
+                maxWidth: "800px",
+                maxHeight: "75vh",
+                overflowY: "auto",
+                overflowX: "hidden",
+            }}
+        >
+        {requests.map((request) => (   
+            <Card
+                key={request.id}
+                sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    boxShadow: 3,
+                    p: 2,
+                    width: "100%",
+                    maxWidth: "750px",
+                    minHeight: "150px",
+                    borderRadius: 2,
+                    overflow: "hidden",
+                }}
+            >
+                <CardMedia
+                    component="img"
+                    sx={{
+                        width: 150,
+                        height: 150,
+                        objectFit: "cover",
+                        borderRadius: "2px",
+                        mr: 2,
+                        boxShadow: 1,
+                    }}
+                    image={request.imageUrl}
+                    alt={request.title}
+                />
+                <CardContent sx={{ flex: 1 }}>
+                    <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+                        <a
+                            href={`show-item/${request.item.id}`}
+                            style={{ textDecoration: "none", color: "inherit" }}
+                        >
+                            {request.item.title}
+                        </a>
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
+                        <strong> Solicitado por:{" "} </strong>
+                        <Tooltip title={
+                            <Card sx={{ width: 250 }}>
+                                <CardContent>
+                                    <Typography variant="body2"><strong>Nombre:</strong> {request.renter.name} {request.renter.surname}</Typography>
+                                    <Typography variant="body2"><strong>Email:</strong> {request.renter.email}</Typography>
+                                </CardContent>
+                                <CardActions sx={{ justifyContent: "flex-end" }}>
+                                    {/* Botón para enviar mensaje al usuario, TODO implementar el chat*/}
+                                    <Button size="small" onClick={() => alert("Enviando mensaje...")}>Enviar Mensaje</Button>
+                                </CardActions>
+                            </Card>
+                        } arrow>
+                            <a
+                                href={`/perfil/${request.renter.username}`}
+                                style={{
+                                    textDecoration: "none",
+                                    color: "#1976d2",
+                                    fontWeight: "bold",
+                                }}
+                            >
+                                {request.renter.name} {request.renter.surname}
+                            </a>
+                        </Tooltip>
+                    </Typography>
+                    <Typography variant="body2" sx={{ mb: 1 }}>
+                        <strong> Inicio: </strong> {new Date(request.start_date).toLocaleString('es-ES', {
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        })}
+                    </Typography>
+                    <Typography variant="body2" sx={{ mb: 1 }}>
+                        <strong> Fin: </strong> {new Date(request.end_date).toLocaleString('es-ES', {
+                            weekday: 'long',
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        })}
+                    </Typography>
+                    <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
+                        <Button
+                            variant="contained"
+                            color="success"
+                            size="small"
+                            onClick={() => openConfirmModal(request, "accepted")}
+                        >
+                            Aceptar
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="error"
+                            size="small"
+                            onClick={() => openConfirmModal(request, "rejected")}
+                        >
+                            Rechazar
+                        </Button>
+                    </Box>
+                </CardContent>
+            </Card>
+            ))}
+
         </Box>
     );
 };
