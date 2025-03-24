@@ -49,6 +49,8 @@ const Layout = () => {
   const [productosFiltrados, setProductosFiltrados] = useState([]);
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [cargando, setCargando] = useState(true);
+  const [featuredItems, setFeaturedItems] = useState([]);
+
 
   const manejarCambioBusqueda = (e) => setTerminoBusqueda(e.target.value);
   const manejarCambioCategoria = (e) => { 
@@ -159,6 +161,17 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
     return CATEGORIAS[nombreCategoria] || { icono: "•", color: "#607d8b" };
   };
 
+  useEffect(() => {
+    axios.get(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/?featured=true`)
+        .then(response => {
+          console.log(response.data);  // Verifica los datos que recibes
+          setFeaturedItems(response.data.results);
+        })
+        .catch(error => {
+            console.error('Error obteniendo objetos destacados:', error);
+        });
+}, []);
+
   return (
     <Box sx={{ 
       display: 'flex', 
@@ -179,6 +192,20 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
           mx: 'auto'
         }}
       >
+         <div>
+            <h2>Objetos Destacados</h2>
+            <div>
+                {featuredItems.length > 0 ? (
+                    featuredItems.map(item => (
+                        <div key={item.id}>
+                            <Link to={`/show-item/${item.id}/`}>{item.title}</Link>
+                        </div>
+                    ))
+                ) : (
+                    <p>No hay objetos destacados.</p>
+                )}
+            </div>
+        </div>
         <Box sx={{ width: '100%', mb: 4 }}>
           <Box sx={{
             display: 'flex',
