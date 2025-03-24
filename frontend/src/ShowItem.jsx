@@ -707,15 +707,20 @@ const ShowItemScreen = () => {
         )}
 
         {priceCategory === "month" && (
-          <div>
-            <label>Selecciona la fecha de inicio:</label>
-            <DatePicker
-              selected={selectedDay}
+            <div> 
+            {/* Selector de día */}
+            <Typography>Selecciona un día:</Typography>
+            <Calendar
+              date={selectedDay}
               onChange={(date) => setSelectedDay(date)}
-              minDate={new Date()} // Evita fechas pasadas
-              disabledDates={[...requestedDates, ...bookedDates, ...unavailabilityPeriods.map(period => ({ startDate: new Date(period.start), endDate: new Date(period.end) }))]}
-              dateFormat="yyyy/MM/dd"
-              inline // Muestra el calendario directamente
+              minDate={new Date()} 
+              disabledDates={[...unavailabilityPeriods.flatMap(period => {
+                const start = new Date(period.start_date);
+                const end = new Date(period.end_date);
+                const range = getDatesInRange(start, end);
+  
+                return range;
+              })]}
             />
 
             <label>Selecciona la cantidad de meses:</label>
