@@ -116,7 +116,8 @@ class ItemSerializer(serializers.ModelSerializer):
         instance.price = validated_data.get('price', instance.price)
         image_files = validated_data.pop('image_files', None)
         remaining_image_ids = validated_data.pop('remaining_image_ids', [])
-        unavailable_periods_data = validated_data.pop('unavailable_periods', [])
+        unavailable_periods_data = validated_data.pop(
+            'unavailable_periods', [])
 
         # Eliminar imágenes que no están en remaining_image_ids
         for old_image in instance.images.all():
