@@ -4,6 +4,7 @@ import { DateRange, Calendar  } from "react-date-range";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import dayjs from "dayjs";
 import axios from 'axios';
 import { 
   Box, 
@@ -62,7 +63,6 @@ const ShowItemScreen = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [highlighting, setHighlighting] = useState(false);
-
 
   useEffect(() => {
     const fetchItemData = async () => {
@@ -160,7 +160,7 @@ const ShowItemScreen = () => {
     .finally(() => {
         setHighlighting(false);
     });
-};
+  };
 
   const loadItemImages = async (imageIds) => {
     try {
@@ -278,8 +278,8 @@ const ShowItemScreen = () => {
       } 
       else if (priceCategory === "day" && dateRange[0].startDate && dateRange[0].endDate) {
         // Usar las fechas seleccionadas para alquiler por días
-        startDateUTC = new Date(convertToCET(dateRange[0].startDate));
-        endDateUTC = new Date(convertToCET(dateRange[0].endDate));
+        startDateUTC = dayjs(dateRange[0].startDate).format("YYYY-MM-DD");
+        endDateUTC = dayjs(dateRange[0].endDate).format("YYYY-MM-DD");
       } 
       else if (priceCategory === "month" && selectedDay && selectedMonths) {
         // Construir fechas para alquiler por meses
@@ -287,8 +287,8 @@ const ShowItemScreen = () => {
         const end = new Date(selectedDay);
         end.setMonth(end.getMonth() + parseInt(selectedMonths));
   
-        startDateUTC = convertToCET(start);
-        endDateUTC = convertToCET(end);
+        startDateUTC = dayjs(start).format("YYYY-MM-DD");
+        endDateUTC = dayjs(end).format("YYYY-MM-DD");
       } 
       else {
         alert("Por favor, selecciona correctamente la fecha de inicio y fin.");
@@ -321,12 +321,6 @@ const ShowItemScreen = () => {
       console.error("Error al solicitar alquiler:", error);
       alert(error.response?.data?.error || "No se pudo realizar la solicitud");
     }
-  };
-  const convertToCET = (date) => {
-    const cetOffset = 2; // CET es UTC+1, pero ten en cuenta el horario de verano
-    const localDate = new Date(date);
-    localDate.setHours(localDate.getHours() + cetOffset);
-    return localDate.toISOString();
   };
 
   const navigateImages = (direction) => {
@@ -623,7 +617,7 @@ const ShowItemScreen = () => {
                       }}
                   >
                       {item.featured ? 'Quitar destacado' : 'Destacar objeto'}
-                  </Button>
+                    </Button>
                   </Box>
                 )}
               </Paper>

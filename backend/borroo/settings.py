@@ -195,7 +195,7 @@ TIME_ZONE = 'Europe/Madrid'  # O cualquier otra ciudad en CET
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

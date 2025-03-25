@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import dayjs from "dayjs";
 import {
   Box,
   Button,
@@ -83,7 +84,13 @@ const UpdateItemScreen = () => {
         const enumData = enumResponse.data;
 
         setFormData(itemData);
-        setUnavailablePeriods(itemData.unavailablePeriods || []);
+        setUnavailablePeriods(
+          (itemData.unavailable_periods || []).map((p) => ({
+            id: p.id,
+            start_date: dayjs(p.start_date).format("YYYY-MM-DD"),
+            end_date: dayjs(p.end_date).format("YYYY-MM-DD")
+          }))
+        );
         setOptions(enumData);
 
         setFilteredSubcategories(getSubcategories(itemData.category));
@@ -168,11 +175,9 @@ const UpdateItemScreen = () => {
     setExistingImages(existingImages.filter((_, i) => i !== index));
   };
 
-  const convertToCET = (date) => {
-    const cetOffset = 2; // CET es UTC+1, pero ten en cuenta el horario de verano
-    const localDate = new Date(date);
-    localDate.setHours(localDate.getHours() + cetOffset);
-    return localDate.toISOString();
+  const formatLocalDate = (date) => {
+    // Esto formatea la fecha en "YYYY-MM-DD" usando la hora local
+    return dayjs(date).format("YYYY-MM-DD");
   };
 
   const handleAddPeriod = () => {
@@ -180,12 +185,12 @@ const UpdateItemScreen = () => {
     console.log("Start Date:", startDate);
     console.log("End Date:", endDate);
     
-    if (!startDate || !endDate || new Date(convertToCET(startDate)) >= new Date(convertToCET(endDate))) {
+    if (!startDate || !endDate || !dayjs(startDate).isBefore(dayjs(endDate))) {
       setErrorMessage("Las fechas de inicio y fin no son válidas.");
         return;
     }
 
-    setUnavailablePeriods([...unavailablePeriods, { start_date: new Date(convertToCET(startDate)).toISOString().split('T')[0], end_date: new Date(convertToCET(endDate)).toISOString().split('T')[0] }]);
+    setUnavailablePeriods([...unavailablePeriods, { start_date: formatLocalDate(startDate), end_date: formatLocalDate(endDate) }]);
     setDatesRange([{ startDate: new Date(), endDate: new Date(), key: "selection" }]); // Reset
     setErrorMessage('');
   };
