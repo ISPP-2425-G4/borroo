@@ -46,14 +46,64 @@ RequestDetails.propTypes = {
     }).isRequired,
 };
 
+const ActionButtons = ({ request, openConfirmModal, isOwner }) => {
+    return (
+        <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
+            {request.rent_status === "accepted" && request.payment_status === "pending" && (
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={() => alert("Iniciando proceso de pago...")} //TODO: Implementar el pago con Stripe
+                >
+                    Pagar
+                </Button>
+            )}
+            {isOwner && request.rent_status === "requested" && (
+                <>
+                    <Button
+                        variant="contained"
+                        color="success"
+                        size="small"
+                        onClick={() => openConfirmModal(request, "accepted")}
+                    >
+                        Aceptar
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="error"
+                        size="small"
+                        onClick={() => openConfirmModal(request, "rejected")}
+                    >
+                        Rechazar
+                    </Button>
+                </>
+            )}
+        </Box>
+    );
+};
+
+ActionButtons.propTypes = {
+    request: PropTypes.shape({
+        rent_status: PropTypes.string.isRequired,
+        payment_status: PropTypes.string.isRequired,
+    }).isRequired,
+    openConfirmModal: PropTypes.func.isRequired,
+    isOwner: PropTypes.bool.isRequired,
+};
+
 const RequestCard = ({ request, statusTranslations, openConfirmModal, isOwner }) => {
     return (
         <Card key={request.id} sx={{ display: "flex", flexDirection: "row", alignItems: "center", boxShadow: 3, p: 2,
-            width: "100%", maxWidth: "750px", minHeight: "150px", borderRadius: 2, overflow: "hidden",}}>
-            <CardMedia component="img" sx={{ width: 150, height: 150, objectFit: "cover", borderRadius: "2px", mr: 2, boxShadow: 1,}}
-                image={request.imageUrl} alt={request.title}/>
+            width: "100%", maxWidth: "750px", minHeight: "150px", borderRadius: 2, overflow: "hidden" }}>
+            <CardMedia
+                component="img"
+                sx={{ width: 150, height: 150, objectFit: "cover", borderRadius: "2px", mr: 2, boxShadow: 1 }}
+                image={request.imageUrl}
+                alt={request.title}
+            />
             <CardContent sx={{ flex: 1 }}>
-                <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }} >
+                <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
                     <a href={`show-item/${request.item.id}`} style={{ textDecoration: "none", color: "inherit" }}>
                         {request.item.title}
                     </a>
@@ -61,49 +111,26 @@ const RequestCard = ({ request, statusTranslations, openConfirmModal, isOwner })
                 </Typography>
                 {isOwner && (
                     <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
-                        <strong> Solicitado por: </strong>
+                        <strong>Solicitado por: </strong>
                         <Tooltip title={<RequestDetails request={request} />} arrow>
-                            <a href={`/perfil/${request.renter.username}`} style={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold",}}>
+                            <a href={`/perfil/${request.renter.username}`} style={{ textDecoration: "none", color: "#1976d2", fontWeight: "bold" }}>
                                 {request.renter.name} {request.renter.surname}
                             </a>
                         </Tooltip>
                     </Typography>
                 )}
                 <Typography variant="body2" sx={{ mb: 1 }}>
-                    <strong> Inicio: </strong> {new Date(request.start_date).toLocaleString('es-ES', { weekday: 'long', year: 'numeric',
-                        month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'})}
+                    <strong>Inicio:</strong> {new Date(request.start_date).toLocaleString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                 </Typography>
                 <Typography variant="body2" sx={{ mb: 1 }}>
-                    <strong> Fin: </strong> {new Date(request.end_date).toLocaleString('es-ES', { weekday: 'long', year: 'numeric', month: 'long',
-                        day: 'numeric', hour: '2-digit', minute: '2-digit'})}
+                    <strong>Fin:</strong> {new Date(request.end_date).toLocaleString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                 </Typography>
-                <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
-                    {request.rent_status === "accepted" && request.payment_status === "pending" && (
-                        <Button variant="contained" color="primary"
-                            size="small" onClick={() => alert("Iniciando proceso de pago...")} //TODO: Implementar el pago con Stripe
-                        >
-                            Pagar
-                        </Button>
-                    )}
-                    {isOwner && request.rent_status === "requested" && (
-                        <Button variant="contained" color="success"
-                            size="small" onClick={() => openConfirmModal(request, "accepted")}
-                        >
-                            Aceptar
-                        </Button>
-                    )}
-                    {isOwner && request.rent_status === "requested" && (
-                        <Button variant="contained" color="error"
-                            size="small" onClick={() => openConfirmModal(request, "rejected")}
-                        >
-                            Rechazar
-                        </Button>
-                    )}
-                </Box>
+                <ActionButtons request={request} openConfirmModal={openConfirmModal} isOwner={isOwner} />
             </CardContent>
         </Card>
     );
 };
+
 
 RequestCard.propTypes = {
     request: PropTypes.shape({
