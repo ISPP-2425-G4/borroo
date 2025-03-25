@@ -2,9 +2,11 @@ import { Box, Button, Card, CardContent, CardMedia, Typography, Tooltip, CardAct
 import PropTypes from "prop-types";
 
 const StatusChip = ({ status, translations }) => {
+    const translatedStatus = translations && typeof translations === 'object' && translations[status];
+
     return (
         <Chip
-            label={translations[status] || status}
+            label={translatedStatus  || status}
             size="small"
             sx={{ ml: 2 }}
         />
@@ -13,7 +15,7 @@ const StatusChip = ({ status, translations }) => {
 
 StatusChip.propTypes = {
     status: PropTypes.string.isRequired,
-    translations: PropTypes.object.isRequired,
+    translations: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 const RequestDetails = ({ request }) => {
