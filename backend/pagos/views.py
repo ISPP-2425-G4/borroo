@@ -78,8 +78,8 @@ def confirmar_pago(request, session_id):
 
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
-    
-    
+
+
 @csrf_exempt
 def create_subscription_checkout(request):
     if request.method == "POST":
@@ -152,4 +152,3 @@ def confirm_subscription_checkout(request, session_id):
             return JsonResponse({'status': 'unpaid'}, status=402)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
-
