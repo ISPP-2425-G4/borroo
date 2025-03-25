@@ -79,6 +79,7 @@ def confirmar_pago(request, session_id):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
     
+    
 @csrf_exempt
 def create_subscription_checkout(request):
     if request.method == "POST":
@@ -101,7 +102,12 @@ def create_subscription_checkout(request):
                     'quantity': 1,
                 }],
                 mode='payment',
-                success_url="http://localhost:5173/pricing-plan?session_id={CHECKOUT_SESSION_ID}",
+                success_url=(
+                    (
+                        "http://localhost:5173/pricing-plan?"
+                        "session_id={CHECKOUT_SESSION_ID}"
+                    )
+                ),
                 cancel_url="http://localhost:5173/pricing-plan",
                 metadata={
                     'user_id': user.id
@@ -120,7 +126,7 @@ def confirm_subscription_checkout(request, session_id):
 
         if session.payment_status == 'paid':
             metadata = session.metadata
-            print("metadata",metadata)
+            print("metadata", metadata)
             user_id = metadata.get('user_id')
 
             if user_id:
