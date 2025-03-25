@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import axios from "axios";
 import Navbar from "./Navbar";
 import { Box, Button, Card, CardContent, CardMedia, Typography, Skeleton, Tooltip, CardActions, Tab, Tabs, Chip } from "@mui/material";
@@ -21,9 +22,10 @@ const RentRequestBoard = () => {
         requested: "Solicitada",
         accepted: "Aceptada",
         booked: "Reservada",
-        pickedUp: "Recogida",
+        picked_up: "Recogida",
         returned: "Devuelta",
-        rated: "Valorada"
+        rated: "Valorada",
+        cancelled: "Cancelada",
     };
 
     useEffect(() => {
@@ -116,6 +118,39 @@ const RentRequestBoard = () => {
     const handleTabChange = (event, newValue) => {
         setSelectedTab(newValue);
     };
+    const RequestActions = ({ request, openConfirmModal }) => {
+        return (
+            <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
+                {request.rent_status === "requested" && (
+                    <Button
+                        variant="contained"
+                        color="success"
+                        size="small"
+                        onClick={() => openConfirmModal(request, "accepted")}
+                    >
+                        Aceptar
+                    </Button>
+                )}
+                {request.rent_status === "requested" && (
+                    <Button
+                        variant="contained"
+                        color="error"
+                        size="small"
+                        onClick={() => openConfirmModal(request, "rejected")}
+                    >
+                        Rechazar
+                    </Button>
+                )}
+            </Box>
+        );
+    };
+
+    RequestActions.propTypes = {
+        request: PropTypes.shape({
+            rent_status: PropTypes.string.isRequired,
+        }).isRequired,
+        openConfirmModal: PropTypes.func.isRequired,
+    }
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mt: 10, p: 2 }}>
@@ -287,24 +322,7 @@ const RentRequestBoard = () => {
                                                         minute: '2-digit'
                                                     })}
                                                 </Typography>
-                                                <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
-                                                    {request.rent_status === "requested" && (<Button
-                                                        variant="contained"
-                                                        color="success"
-                                                        size="small"
-                                                        onClick={() => openConfirmModal(request, "accepted")}
-                                                    >
-                                                        Aceptar
-                                                    </Button>)}
-                                                    {request.rent_status === "requested" && <Button
-                                                        variant="contained"
-                                                        color="error"
-                                                        size="small"
-                                                        onClick={() => openConfirmModal(request, "rejected")}
-                                                    >
-                                                        Rechazar
-                                                    </Button>}
-                                                </Box>
+                                                <RequestActions request={request} openConfirmModal={openConfirmModal} />
                                             </CardContent>
                                         </Card>
                                     ))}
