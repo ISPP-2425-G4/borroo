@@ -111,7 +111,7 @@ class ItemViewSet(viewsets.ModelViewSet):
             else:
                 # Crear nuevo periodo
                 if UnavailablePeriod.objects.filter(
-                        item=item, 
+                        item=item,
                         start_date=start_date, end_date=end_date).exists():
                     raise serializers.ValidationError(
                         f"El período con fecha de inicio {start_date} y "
