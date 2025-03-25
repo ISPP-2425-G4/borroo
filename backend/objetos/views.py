@@ -166,6 +166,14 @@ class ItemViewSet(viewsets.ModelViewSet):
             status=status.HTTP_200_OK
         )
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        featured = self.request.query_params.get('featured', None)
+        if featured is not None and featured.lower() == 'true':
+            queryset = queryset.filter(featured=True)
+
+        return queryset
+
 
 class ItemImageViewSet(viewsets.ModelViewSet):
     queryset = ItemImage.objects.all()
