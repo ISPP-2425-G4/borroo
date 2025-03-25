@@ -586,9 +586,26 @@ const ShowItemScreen = () => {
                     >
                       Eliminar
                     </Button>
-                    <Button onClick={toggleFeature} disabled={highlighting}>
-                        {item.featured ? 'Quitar destacado' : 'Destacar objeto'}
-                    </Button>
+                    <Button 
+                      variant="outlined" 
+                      onClick={toggleFeature} 
+                      disabled={highlighting}
+                      sx={{
+                          color: '#b8860b', // Dorado oscuro para el texto
+                          borderColor: '#b8860b', // Dorado oscuro para el borde
+                          '&:hover': {
+                              backgroundColor: '#daa520', // Un dorado más fuerte en hover
+                              borderColor: '#ffd700', // Amarillo dorado
+                              color: 'white', // Para mejor contraste
+                          },
+                          '&:disabled': {
+                              color: '#a97c00', // Un dorado más opaco si está deshabilitado
+                              borderColor: '#a97c00',
+                          }
+                      }}
+                  >
+                      {item.featured ? 'Quitar destacado' : 'Destacar objeto'}
+                  </Button>
                   </Box>
                 )}
               </Paper>
