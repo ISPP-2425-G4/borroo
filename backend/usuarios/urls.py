@@ -1,9 +1,12 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import ReviewCreateView, ReviewDeleteView, ReviewListView
+from .views import CreateItemView, CreateRentView, CreateUserView
 from .views import PasswordResetRequestView, PasswordResetConfirmView
+from .views import ReviewCreateView, ReviewDeleteView, ReviewListView
+from .views import DeleteUserView, GetUserView, UpdateItemView
+from .views import DeleteItemView, DeleteRentView, UpdateRentView
 from .views import check_username, check_email, UserProfileView, UserViewSet
-from .views import CreateSuperuserView
+from .views import CreateSuperuserView, UpdateUserView
 
 from . import views
 
@@ -30,5 +33,21 @@ urlpatterns = [
     path("reviews/delete/", ReviewDeleteView.as_view(), name="review-delete"),
     path('create-superuser/', CreateSuperuserView.as_view(),
          name='create_superuser'),
+    path("admin/users/create/", CreateUserView.as_view(), name="create_user"),
+    path("admin/users/<int:user_id>/", GetUserView.as_view(), name="get_user"),
+    path("admin/users/update/<int:user_id>/", UpdateUserView.as_view(),
+         name="update_user"),
+    path("admin/users/delete/<int:user_id>/", DeleteUserView.as_view(),
+         name="delete_user"),
+    path('admin/item/create/', CreateItemView.as_view(), name='create-item'),
+    path('admin/item/<int:item_id>/update/', UpdateItemView.as_view(),
+         name='update-item'),
+    path('admin/item/<int:item_id>/delete/', DeleteItemView.as_view(),
+         name='delete-item'),
+    path('admin/rent/create/', CreateRentView.as_view(), name='create-rent'),
+    path('admin/rent/<int:rent_id>/update/', UpdateRentView.as_view(),
+         name='update-rent'),
+    path('admin/rent/<int:rent_id>/delete/', DeleteRentView.as_view(),
+         name='delete-rent'),
 
 ]
