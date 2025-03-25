@@ -54,33 +54,73 @@ class ItemViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 
     def handle_unavailable_periods(self, item, unavailable_periods_data):
-        if unavailable_periods_data:
-            if isinstance(unavailable_periods_data, str):
-                try:
-                    unavailable_periods_data = json.loads(
-                        unavailable_periods_data)
-                except json.JSONDecodeError:
-                    raise serializers.ValidationError(
-                        "Formato inválido para unavailable_periods.")
+        if not unavailable_periods_data:
+            return
 
-            # Verificar que ahora es una lista de diccionarios
-            if not isinstance(unavailable_periods_data, list):
+        if isinstance(unavailable_periods_data, str):
+            try:
+                unavailable_periods_data = json.loads(unavailable_periods_data)
+            except json.JSONDecodeError:
+                raise serializers.ValidationError("Formato inválido para "
+                                                  "unavailable_periods.")
+
+        if not isinstance(unavailable_periods_data, list):
+            raise serializers.ValidationError("Los periodos de "
+                                              "indisponibilidad deben ser "
+                                              "una lista.")
+
+        new_period_ids = set()
+        for p in unavailable_periods_data:
+            if p.get("id"):
+                new_period_ids.add(p["id"])
+
+        print(new_period_ids)
+
+        existing_periods = UnavailablePeriod.objects.filter(item=item)
+        for ep in existing_periods:
+            if ep.id not in new_period_ids:
+                ep.delete()
+
+        for period in unavailable_periods_data:
+            if not isinstance(period, dict):
                 raise serializers.ValidationError(
-                    "Los periodos de indisponibilidad deben ser una lista.")
+                    "Cada periodo debe ser un diccionario con"
+                    " 'start_date' y 'end_date'."
+                )
 
-            for period in unavailable_periods_data:
-                if not isinstance(period, dict):
+            start_date = parse_date(period.get("start_date"))
+            end_date = parse_date(period.get("end_date"))
+            if not (start_date and end_date and start_date < end_date):
+                raise serializers.ValidationError("Las fechas de "
+                                                  "indisponibilidad no son "
+                                                  "válidas.")
+
+            period_id = period.get("id")
+            if period_id:
+                # Actualizacion del periodo
+                try:
+                    up = UnavailablePeriod.objects.get(id=period_id, item=item)
+                    up.start_date = start_date
+                    up.end_date = end_date
+                    up.save()
+                except UnavailablePeriod.DoesNotExist:
                     raise serializers.ValidationError(
-                        "Cada periodo debe ser un "
-                        "diccionario con 'start_date' y 'end_date'.")
-                start_date = parse_date(period.get("start_date"))
-                end_date = parse_date(period.get("end_date"))
-                if start_date and end_date and start_date < end_date:
-                    UnavailablePeriod.objects.create(
-                        item=item, start_date=start_date, end_date=end_date)
+                        f"No existe el período con id={period_id} para este"
+                        " objeto."
+                    )
+            else:
+                # Crear nuevo periodo
+                if UnavailablePeriod.objects.filter(
+                        item=item, 
+                        start_date=start_date, end_date=end_date).exists():
+                    raise serializers.ValidationError(
+                        f"El período con fecha de inicio {start_date} y "
+                        " fin {end_date} ya existe para este objeto."
+                    )
                 else:
-                    raise serializers.ValidationError(
-                        "Las fechas de indisponibilidad no son válidas.")
+                    UnavailablePeriod.objects.create(item=item,
+                                                     start_date=start_date,
+                                                     end_date=end_date)
 
     def create(self, request, *args, **kwargs):
         print("Request data:", request.data)
@@ -165,14 +205,6 @@ class ItemViewSet(viewsets.ModelViewSet):
             {"message": "El objeto ahora es destacado."},
             status=status.HTTP_200_OK
         )
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        featured = self.request.query_params.get('featured', None)
-        if featured is not None and featured.lower() == 'true':
-            queryset = queryset.filter(featured=True)
-
-        return queryset
 
 
 class ItemImageViewSet(viewsets.ModelViewSet):
