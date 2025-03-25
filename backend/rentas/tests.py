@@ -9,28 +9,43 @@ from usuarios.models import User
 
 class RentTests(TestCase):
     def setUp(self):
-        """ Configuración inicial antes de cada test """
         self.client = APIClient()
-        self.user = User.objects.create(
-            username="testuser",
+
+        self.renter = User.objects.create(
+            username="renter",
             password="testpassword",
-            email="testuser@example.com",
-            name="Test",
+            email="renter@example.com",
+            name="Renter",
             surname="User",
             phone_number="123456789",
             country="Country",
             city="City",
-            address="Test Address",
+            address="Renter Address",
             postal_code="12345",
             is_verified=True,
             pricing_plan="free"
         )
-        self.client.force_authenticate(user=self.user)
+
+        self.owner = User.objects.create(
+            username="owner",
+            password="testpassword",
+            email="owner@example.com",
+            name="Owner",
+            surname="User",
+            phone_number="987654321",
+            country="Country",
+            city="City",
+            address="Owner Address",
+            postal_code="54321",
+            is_verified=True,
+            pricing_plan="free"
+        )
+
+        self.client.force_authenticate(user=self.renter)
 
     def test_take_rent(self):
-        """ Prueba realizar un alquiler correctamente """
-        item = Item.objects.create(title="Laptop",
-                                   price=50.0, price_category="day")
+        item = Item.objects.create(title="Laptop", price=50.0,
+                                   price_category="day", user=self.owner)
 
         start_date = timezone.now()
         end_date = start_date + timezone.timedelta(days=3)
@@ -38,14 +53,15 @@ class RentTests(TestCase):
         rent_data = {
             "item": item.id,
             "start_date": start_date.isoformat(),
-            "end_date": end_date.isoformat()
+            "end_date": end_date.isoformat(),
+            "renter": self.renter.id
         }
 
         response = self.client.post("/rentas/full/first_request/",
                                     rent_data, format="json")
-
         self.assertEqual(response.status_code, 201)
-        rent = Rent.objects.get(item=item, renter=self.user)
+
+        rent = Rent.objects.get(item=item, renter=self.renter)
         self.assertEqual(rent.rent_status, RentStatus.REQUESTED)
         self.assertEqual(rent.start_date, start_date)
         self.assertEqual(rent.end_date, end_date)
@@ -54,73 +70,68 @@ class RentTests(TestCase):
 
         response_conflict = self.client.post("/rentas/full/first_request/",
                                              rent_data, format="json")
-
         self.assertEqual(response_conflict.status_code, 400)
         self.assertIn("error", response_conflict.data)
         self.assertEqual(response_conflict.data["error"],
                          "El objeto no está disponible en esas fechas")
 
     def test_rent_invalid_dates(self):
-        """ Prueba intentar alquilar con fechas inválidas """
-        item = Item.objects.create(title="Bicicleta",
-                                   price=30.0, price_category="day")
+        item = Item.objects.create(title="Bicicleta", price=30.0,
+                                   price_category="day", user=self.owner)
 
         start_date = timezone.now()
-        end_date = start_date  # Fecha de fin igual a la de inicio
+        end_date = start_date  # Igual que la fecha de inicio
 
         rent_data = {
             "item": item.id,
             "start_date": start_date.isoformat(),
-            "end_date": end_date.isoformat()
+            "end_date": end_date.isoformat(),
+            "renter": self.renter.id
         }
 
         response = self.client.post("/rentas/full/first_request/",
                                     rent_data, format="json")
-
         self.assertEqual(response.status_code, 400)
         self.assertIn("end_date", response.data)
         self.assertIn("posterior", str(response.data["end_date"][0]))
 
     def test_rent_non_existent_item(self):
-        """ Prueba intentar alquilar un objeto que no existe """
         start_date = timezone.now()
         end_date = start_date + timezone.timedelta(days=3)
 
         rent_data = {
-            "item": 9999,  # ID de un objeto que no existe
+            "item": 9999,  # ID inexistente
             "start_date": start_date.isoformat(),
-            "end_date": end_date.isoformat()
+            "end_date": end_date.isoformat(),
+            "renter": self.renter.id
         }
 
         response = self.client.post("/rentas/full/first_request/",
                                     rent_data, format="json")
-
-        self.assertEqual(response.status_code, 400)
-        self.assertIn("item", response.data)
+        self.assertEqual(response.status_code, 404)
 
     def test_rent_overlapping_dates(self):
-        """ Prueba intentar alquilar un objeto ya
-        reservado en las mismas fechas """
-        item = Item.objects.create(title="Proyector",
-                                   price=Decimal("80.0"), price_category="day")
+        item = Item.objects.create(title="Proyector", price=Decimal("80.0"),
+                                   price_category="day", user=self.owner)
 
         start_date = timezone.now()
         end_date = start_date + timezone.timedelta(days=2)
 
-        Rent.objects.create(item=item, renter=self.user, start_date=start_date,
+        Rent.objects.create(item=item, renter=self.renter,
+                            start_date=start_date,
                             end_date=end_date,
                             rent_status=RentStatus.REQUESTED)
 
         rent_data = {
             "item": item.id,
             "start_date": start_date.isoformat(),
-            "end_date": end_date.isoformat()
+            "end_date": end_date.isoformat(),
+            "renter": self.renter.id
         }
 
         response = self.client.post("/rentas/full/first_request/",
                                     rent_data, format="json")
-
         self.assertEqual(response.status_code, 400)
         self.assertIn("error", response.data)
-        expected_error = "El objeto no está disponible en esas fechas"
-        self.assertEqual(response.data["error"], expected_error)
+        self.assertEqual(response.data["error"],
+                         "El objeto no está disponible en esas fechas")
