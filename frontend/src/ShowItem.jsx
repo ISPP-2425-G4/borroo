@@ -287,7 +287,7 @@ const ShowItemScreen = () => {
           renter: user.id,
         },
         {
-          headers: {
+          headers: {  
             "Content-Type": "application/json",
           },
         }
