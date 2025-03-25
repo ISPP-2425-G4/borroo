@@ -2,11 +2,13 @@ import { Box, Button, Card, CardContent, CardMedia, Typography, Tooltip, CardAct
 import PropTypes from "prop-types";
 
 const StatusChip = ({ status, translations }) => {
-    const translatedStatus = translations && typeof translations === 'object' && translations[status];
+    const translatedStatus = translations && typeof translations === 'object' && status in translations
+        ? translations[status]
+        : status; // Fallback a 'status' si la clave no existe
 
     return (
         <Chip
-            label={translatedStatus  || status}
+            label={translatedStatus}
             size="small"
             sx={{ ml: 2 }}
         />
