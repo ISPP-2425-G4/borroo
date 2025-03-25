@@ -56,45 +56,37 @@ class ItemViewSet(viewsets.ModelViewSet):
     def handle_unavailable_periods(self, item, unavailable_periods_data):
         if not unavailable_periods_data:
             return
-
         if isinstance(unavailable_periods_data, str):
             try:
                 unavailable_periods_data = json.loads(unavailable_periods_data)
             except json.JSONDecodeError:
                 raise serializers.ValidationError("Formato inválido para "
                                                   "unavailable_periods.")
-
         if not isinstance(unavailable_periods_data, list):
             raise serializers.ValidationError("Los periodos de "
                                               "indisponibilidad deben ser "
                                               "una lista.")
-
         new_period_ids = set()
         for p in unavailable_periods_data:
             if p.get("id"):
                 new_period_ids.add(p["id"])
-
         print(new_period_ids)
-
         existing_periods = UnavailablePeriod.objects.filter(item=item)
         for ep in existing_periods:
             if ep.id not in new_period_ids:
                 ep.delete()
-
         for period in unavailable_periods_data:
             if not isinstance(period, dict):
                 raise serializers.ValidationError(
                     "Cada periodo debe ser un diccionario con"
                     " 'start_date' y 'end_date'."
                 )
-
             start_date = parse_date(period.get("start_date"))
             end_date = parse_date(period.get("end_date"))
             if not (start_date and end_date and start_date < end_date):
                 raise serializers.ValidationError("Las fechas de "
                                                   "indisponibilidad no son "
                                                   "válidas.")
-
             period_id = period.get("id")
             if period_id:
                 # Actualizacion del periodo
