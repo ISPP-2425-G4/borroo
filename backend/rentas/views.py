@@ -87,26 +87,13 @@ class RentViewSet(viewsets.ModelViewSet):
 
         is_authorized(condition=not_rent_yourself)
 
-        if item.price_category == "hour":
-            overlapping = Rent.objects.filter(
-                item=item,
-                start_date__lt=end_date,
-                end_date__gt=start_date).exists()
-        else:
-            overlapping = Rent.objects.filter(
-                item=item,
-                start_date__lte=end_date,
-                end_date__gte=start_date).exists()
-
-        if overlapping:
+        if Rent.objects.filter(item=item, start_date__lte=end_date,
+                               end_date__gte=start_date).exists():
             return Response(
                 {'error': 'El objeto no está disponible en esas fechas'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+                status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = RentSerializer(data=request.data,
-                                    context={'item_instance': item})
-
+        serializer = RentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(renter=user, item=item)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
