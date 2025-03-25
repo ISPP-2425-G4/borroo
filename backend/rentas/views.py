@@ -54,11 +54,14 @@ class RentViewSet(viewsets.ModelViewSet):
         user = self.request.user if authenticated else None
         permission = True
         pk = self.kwargs.get('pk')
+
         if pk is not None:
             rent = Rent.objects.filter(pk=pk).first()
+
             if rent is None:
                 raise NotFound({'error': 'El alquiler no existe.'})
             permission = rent.renter == user
+
         is_authorized(condition=permission, authenticated=authenticated)
         return Rent.objects.filter(renter=user)
 
@@ -71,15 +74,12 @@ class RentViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'])
     def first_request(self, request, *args, **kwargs):
-        # el frontend pasa la informacion necesaria en el body
         item_id = request.data.get('item')
         start_date = request.data.get('start_date')
         end_date = request.data.get('end_date')
-        # authenticated = self.request.user.is_authenticated
+
         user_id = request.data.get('renter')
         user = get_object_or_404(User, pk=user_id)
-        # De momento se puede autenticar
-        # authenticated = self.request.user.is_authenticated
 
         item = get_object_or_404(Item, pk=item_id)
 
@@ -88,8 +88,6 @@ class RentViewSet(viewsets.ModelViewSet):
         is_authorized(condition=not_rent_yourself)
 
         if Rent.objects.filter(item=item, start_date__lte=end_date,
-                               # por dentro django usa la pk de item
-                               # para el filtro
                                end_date__gte=start_date).exists():
             return Response(
                 {'error': 'El objeto no está disponible en esas fechas'},
@@ -106,6 +104,9 @@ class RentViewSet(viewsets.ModelViewSet):
         rent_id = request.data.get('rent')
         rent = get_object_or_404(Rent, pk=rent_id)
         response = request.data.get("response")
+
+        # is_owner = user == rent.item.user
+        # is_authorized(condition=is_owner, authenticated=authenticated)
 
         if response == "accepted":
             rent.rent_status = RentStatus.ACCEPTED
@@ -125,6 +126,7 @@ class RentViewSet(viewsets.ModelViewSet):
         rent = self.get_object()
         response = request.data.get("response")
         now = timezone.now()
+        # cambiar este user
         user = self.request.user if not AnonymousUser else None
         authenticated = self.request.user.is_authenticated
         is_renter = (user == rent.renter)
@@ -188,6 +190,7 @@ class RentViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['put'])
     def cancel_rent(self, request, pk=None):
+        # hay que cambiar user
         user = request.user if not AnonymousUser else None
         authenticated = request.user.is_authenticated
         now = timezone.now()
@@ -236,8 +239,7 @@ class RentViewSet(viewsets.ModelViewSet):
     def my_requests(self, request):
         user_id = request.query_params.get("user")
         my_requests = Rent.objects.filter(
-            Q(renter=user_id) & (Q(rent_status=RentStatus.ACCEPTED) |
-                                 Q(rent_status=RentStatus.REQUESTED))
+            Q(renter=user_id)
             )
         serializer = RentSerializer(my_requests, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

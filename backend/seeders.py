@@ -40,9 +40,26 @@ def create_users():
             address=f'Calle {usernames.index(username)}',
             postal_code='28001',
             is_verified=bool(random.getrandbits(1)),
-            pricing_plan=random.choice(['free', 'premium'])
+            pricing_plan=random.choice(['free', 'premium']),
+            is_admin = False
         )
     print('Users created successfully!')
+
+    superuser = User.objects.create(
+        username='admin',
+        name='Admin',
+        surname='Admin',
+        email='admin@example.com',
+        password=make_password('Admin_25'),  
+        phone_number='+1234567890',
+        country='España',
+        city='Madrid',
+        address='Calle Admin',
+        postal_code='28001',
+        is_verified=True,
+        pricing_plan='premium',
+        is_admin=True 
+    )
 
 def create_items():
     users = User.objects.all()

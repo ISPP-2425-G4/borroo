@@ -79,6 +79,7 @@ class User(models.Model):
     renter_rating = models.FloatField(default=0.0)
     reset_token = models.CharField(max_length=255, blank=True, null=True)
     reset_token_expiration = models.DateTimeField(blank=True, null=True)
+    is_admin = models.BooleanField(default=False)
 
     def is_reset_token_valid(self):
         """Verifica si el token sigue siendo
