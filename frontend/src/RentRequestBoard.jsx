@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import Navbar from "./Navbar";
-import { Box, Button, Card, CardContent, CardMedia, Typography, Skeleton, Tooltip, CardActions, Tab, Tabs, Chip } from "@mui/material";
+import { Box, Button, Card, CardContent, Typography, Skeleton, Tab, Tabs } from "@mui/material";
 import Modal from "./Modal";
 import { useNavigate } from 'react-router-dom';
+import RequestCardsContainer from "./components/RequestCardsContainer";
 
 const DEFAULT_IMAGE = "../public/default_image.png";
 
@@ -18,17 +19,24 @@ const RentRequestBoard = () => {
     const [selectedTab, setSelectedTab] = useState(0); // Estado para controlar la pestaña seleccionada
     const navigate = useNavigate();
 
-    const statusTranslations = {
-        requested: "Solicitada",
-        accepted: "Aceptada",
-        booked: "Reservada",
-        picked_up: "Recogida",
-        returned: "Devuelta",
-        rated: "Valorada",
-        cancelled: "Cancelada",
-    };
-
     useEffect(() => {
+        const enrichRequests = async (requests) => {
+            return Promise.all(
+                requests.map(async (request) => {
+                    const [userResponse, itemResponse] = await Promise.all([
+                        axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${request.renter}/`),
+                        axios.get(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/${request.item}/`)
+                    ]);
+    
+                    const user = userResponse.data;
+                    const item = itemResponse.data;
+                    const imageUrl = item.images?.length > 0 ? await obtenerImagen(item.images[0]) : DEFAULT_IMAGE;
+    
+                    return { ...request, renter: user, item: item, imageUrl };
+                })
+            );
+        };
+
         const fetchRequests = async () => {
             try {
                 const user = JSON.parse(localStorage.getItem("user"));
@@ -61,24 +69,7 @@ const RentRequestBoard = () => {
         };
 
         fetchRequests();
-    }, []);
-
-    const enrichRequests = async (requests) => {
-        return Promise.all(
-            requests.map(async (request) => {
-                const [userResponse, itemResponse] = await Promise.all([
-                    axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${request.renter}/`),
-                    axios.get(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/${request.item}/`)
-                ]);
-
-                const user = userResponse.data;
-                const item = itemResponse.data;
-                const imageUrl = item.images?.length > 0 ? await obtenerImagen(item.images[0]) : DEFAULT_IMAGE;
-
-                return { ...request, renter: user, item: item, imageUrl };
-            })
-        );
-    };
+    }, [navigate]);
 
     const obtenerImagen = async (imgId) => {
         try {
@@ -216,117 +207,7 @@ const RentRequestBoard = () => {
                             {receivedRequests.length === 0 ? (
                                 <Typography>No has recibido solicitudes de alquiler.</Typography>
                             ) : (
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        gap: 2,
-                                        p: 2,
-                                        width: "100%",
-                                        maxWidth: "800px",
-                                        maxHeight: "75vh",
-                                        overflowY: "auto",
-                                        overflowX: "hidden",
-                                    }}
-                                >
-                                    {receivedRequests.map((request) => (
-                                        <Card
-                                            key={request.id}
-                                            sx={{
-                                                display: "flex",
-                                                flexDirection: "row",
-                                                alignItems: "center",
-                                                boxShadow: 3,
-                                                p: 2,
-                                                width: "100%",
-                                                maxWidth: "750px",
-                                                minHeight: "150px",
-                                                borderRadius: 2,
-                                                overflow: "hidden",
-                                            }}
-                                        >
-                                            <CardMedia
-                                                component="img"
-                                                sx={{
-                                                    width: 150,
-                                                    height: 150,
-                                                    objectFit: "cover",
-                                                    borderRadius: "2px",
-                                                    mr: 2,
-                                                    boxShadow: 1,
-                                                }}
-                                                image={request.imageUrl}
-                                                alt={request.title}
-                                            />
-                                            <CardContent sx={{ flex: 1 }}>
-                                                <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }} >
-                                                    <a
-                                                        href={`show-item/${request.item.id}`}
-                                                        style={{ textDecoration: "none", color: "inherit" }}
-                                                    >
-                                                        {request.item.title}
-                                                    </a>
-                                                </Typography>
-                                                <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
-                                                    <strong> Solicitado por: </strong>
-                                                    <Tooltip
-                                                        title={
-                                                            <Card sx={{ width: 250 }}>
-                                                                <CardContent>
-                                                                    <Typography variant="body2">
-                                                                        <strong>Nombre:</strong> {request.renter.name} {request.renter.surname}
-                                                                    </Typography>
-                                                                    <Typography variant="body2">
-                                                                        <strong>Email:</strong> {request.renter.email}
-                                                                    </Typography>
-                                                                </CardContent>
-                                                                <CardActions sx={{ justifyContent: "flex-end" }}>
-                                                                    {/* Botón para enviar mensaje al usuario, TODO implementar el chat */}
-                                                                    <Button size="small" onClick={() => alert("Enviando mensaje...")}>
-                                                                        Enviar Mensaje
-                                                                    </Button>
-                                                                </CardActions>
-                                                            </Card>
-                                                        }
-                                                        arrow
-                                                    >
-                                                        <a
-                                                            href={`/perfil/${request.renter.username}`}
-                                                            style={{
-                                                                textDecoration: "none",
-                                                                color: "#1976d2",
-                                                                fontWeight: "bold",
-                                                            }}
-                                                        >
-                                                            {request.renter.name} {request.renter.surname}
-                                                        </a>
-                                                    </Tooltip>
-                                                </Typography>
-                                                <Typography variant="body2" sx={{ mb: 1 }}>
-                                                    <strong> Inicio: </strong> {new Date(request.start_date).toLocaleString('es-ES', {
-                                                        weekday: 'long',
-                                                        year: 'numeric',
-                                                        month: 'long',
-                                                        day: 'numeric',
-                                                        hour: '2-digit',
-                                                        minute: '2-digit'
-                                                    })}
-                                                </Typography>
-                                                <Typography variant="body2" sx={{ mb: 1 }}>
-                                                    <strong> Fin: </strong> {new Date(request.end_date).toLocaleString('es-ES', {
-                                                        weekday: 'long',
-                                                        year: 'numeric',
-                                                        month: 'long',
-                                                        day: 'numeric',
-                                                        hour: '2-digit',
-                                                        minute: '2-digit'
-                                                    })}
-                                                </Typography>
-                                                <RequestActions request={request} openConfirmModal={openConfirmModal} />
-                                            </CardContent>
-                                        </Card>
-                                    ))}
-                                </Box>
+                                <RequestCardsContainer requests={receivedRequests} openConfirmModal={openConfirmModal} />
                             )}
                         </>
                     )}
@@ -336,101 +217,7 @@ const RentRequestBoard = () => {
                             {sentRequests.length === 0 ? (
                                 <Typography>No has enviado solicitudes de alquiler.</Typography>
                             ) : (
-                                <Box
-                                sx={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    gap: 2,
-                                    p: 2,
-                                    width: "100%",
-                                    maxWidth: "800px",
-                                    maxHeight: "75vh",
-                                    overflowY: "auto",
-                                    overflowX: "hidden",
-                                }}
-                            >
-                                {sentRequests.map((request) => (
-                                    <Card
-                                        key={request.id}
-                                        sx={{
-                                            display: "flex",
-                                            flexDirection: "row",
-                                            alignItems: "center",
-                                            boxShadow: 3,
-                                            p: 2,
-                                            width: "100%",
-                                            maxWidth: "750px",
-                                            minHeight: "150px",
-                                            borderRadius: 2,
-                                            overflow: "hidden",
-                                        }}
-                                    >
-                                        <CardMedia
-                                            component="img"
-                                            sx={{
-                                                width: 150,
-                                                height: 150,
-                                                objectFit: "cover",
-                                                borderRadius: "2px",
-                                                mr: 2,
-                                                boxShadow: 1,
-                                            }}
-                                            image={request.imageUrl}
-                                            alt={request.title}
-                                        />
-                                        <CardContent sx={{ flex: 1 }}>
-                                            <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }} >
-                                                <a
-                                                    href={`show-item/${request.item.id}`}
-                                                    style={{ textDecoration: "none", color: "inherit" }}
-                                                >
-                                                    {request.item.title}
-                                                </a>
-                                                <Chip
-                                                    label={statusTranslations[request.rent_status] || request.rent_status} // Si no hay traducción, se muestra el estado tal cual
-                                                    size="small"
-                                                    sx={{ ml: 2 }}
-                                                />
-                                            </Typography>
-                                            {/* TODO añadir en el modelo de la renta el campo owner para poder serializarlo
-                                             y poner "solicitado a", de momento se deja así */}
-                                            <Typography variant="body2" sx={{ mb: 1 }}>
-                                                <strong> Inicio: </strong> {new Date(request.start_date).toLocaleString('es-ES', {
-                                                    weekday: 'long',
-                                                    year: 'numeric',
-                                                    month: 'long',
-                                                    day: 'numeric',
-                                                    hour: '2-digit',
-                                                    minute: '2-digit'
-                                                })}
-                                            </Typography>
-                                            <Typography variant="body2" sx={{ mb: 1 }}>
-                                                <strong> Fin: </strong> {new Date(request.end_date).toLocaleString('es-ES', {
-                                                    weekday: 'long',
-                                                    year: 'numeric',
-                                                    month: 'long',
-                                                    day: 'numeric',
-                                                    hour: '2-digit',
-                                                    minute: '2-digit'
-                                                })}
-                                            </Typography>
-                                            <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
-                                                {/* Si el estatus es 'aceptado' y el pago está pendiente, mostramos el botón de pago */}
-                                                {request.rent_status === "accepted" && request.payment_status === "pending" && (
-                                                    <Button
-                                                        variant="contained"
-                                                        color="primary"
-                                                        size="small"
-                                                        onClick={() => alert("Iniciando proceso de pago...")} //TODO: Implementar el pago con Stripe
-                                                    >
-                                                        Pagar
-                                                    </Button>
-                                                )}
-                                            </Box>
-                                        </CardContent>
-                                    </Card>
-                                ))}
-                            </Box>
+                                <RequestCardsContainer requests={sentRequests} isOwner={false} />
                             )}
                         </>
                     )}
