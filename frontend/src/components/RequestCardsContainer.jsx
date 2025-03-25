@@ -1,7 +1,16 @@
-import { Box, Button, Card, CardContent, CardMedia, Typography, Tooltip, CardActions } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Typography, Tooltip, CardActions, Chip } from "@mui/material";
 import PropTypes from "prop-types";
 
 const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) => {
+    const statusTranslations = {
+        requested: "Solicitada",
+        accepted: "Aceptada",
+        booked: "Reservada",
+        pickedUp: "Recogida",
+        returned: "Devuelta",
+        rated: "Valorada"
+    };
+    
     return (
         <Box
             sx={{
@@ -53,6 +62,13 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                         >
                             {request.item.title}
                         </a>
+                        {!isOwner && (
+                                <Chip
+                                    label={statusTranslations[request.rent_status] || request.rent_status} // Si no hay traducción, se muestra el estado tal cual
+                                    size="small"
+                                    sx={{ ml: 2 }}
+                                />
+                            )}
                     </Typography>
                     {isOwner && (
                         <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>

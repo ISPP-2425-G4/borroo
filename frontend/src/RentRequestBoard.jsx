@@ -82,7 +82,7 @@ const RentRequestBoard = () => {
 
     const handleResponse = async (renta, responseType) => {
         try {
-            const response = await axios.put(
+            await axios.put(
                 `${import.meta.env.VITE_API_BASE_URL}/rentas/full/${renta.id}/respond_request/`,
                 { response: responseType, rent: renta.id }
             );
