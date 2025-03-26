@@ -15,6 +15,7 @@ import SubscriptionScreen from "./SubscriptionScreen";
 import DraftItemsView from "./DraftsScreen"; 
 import Profile from "./Profile";
 import '../public/styles/App.css';
+import FAQ from './components/Faq';
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/drafts" element={<DraftItemsView />} />
         <Route path="/perfil/:username" element={<Profile />} />
         <Route path="/show-item/:id" element={<ShowItem />} />
+        <Route path="/faq" element={<FAQ />} />
       </Routes>
       <Footer/>
       </div>
