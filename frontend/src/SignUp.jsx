@@ -95,7 +95,7 @@ const Signup = () => {
     const requiredFields = ["username", "name", "surname", "email", "password", "password2"];
     const isValid = requiredFields.every(field => formData[field] && formData[field].trim() !== "") && acceptTerms;
     setIsFormValid(isValid);
-  }, [formData, acceptTerms]);
+  }, [formData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
