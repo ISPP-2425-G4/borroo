@@ -223,10 +223,14 @@ const ShowItemScreen = () => {
     if (!confirmDelete) return;
 
     try {
+      const token = localStorage.getItem("access_token")
       await axios.delete(
         `${import.meta.env.VITE_API_BASE_URL}/objetos/full/${id}/`,
         {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
 
