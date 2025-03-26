@@ -47,12 +47,13 @@ class ItemSerializer(serializers.ModelSerializer):
             'image_files', 'remaining_image_ids', 'user',
             'draft_mode', 'unavailable_periods', 'featured'
         ]
+        read_only_fields = ['user']
 
     def validate(self, data):
         """
         Validate that the user doesn't exceed the item limits.
         """
-        user = data.get('user')
+        user = self.context['request'].user
         draft_mode = data.get('draft_mode', False)
 
         # Restricción: No más de 10 ítems con draft_mode False
@@ -76,7 +77,9 @@ class ItemSerializer(serializers.ModelSerializer):
         unavailable_periods_data = validated_data.pop(
             'unavailable_periods', [])
         validated_data.pop('images', None)
-        user = validated_data.pop('user')
+        user = self.context['request'].user
+        print(user)
+
         # Restricción: No más de 10 ítems con draft_mode False
         if Item.objects.filter(user=user, draft_mode=False).count() >= 10:
             raise serializers.ValidationError(

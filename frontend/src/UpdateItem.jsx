@@ -275,15 +275,20 @@ const UpdateItemScreen = () => {
         console.log(pair[0] + ': ' + pair[1]);
       }
 
-      // 4️⃣ Enviar solicitud PUT al backend
+      const token = localStorage.getItem("access_token");  // O donde estés almacenando el token
+
       await axios.put(
         `${import.meta.env.VITE_API_BASE_URL}/objetos/full/${id}/`,
         formDataToSend,
         {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
           withCredentials: true,
         }
       );
+
 
       alert("¡Ítem actualizado exitosamente!");
       navigate("/");

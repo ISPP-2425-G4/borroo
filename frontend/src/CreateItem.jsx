@@ -555,14 +555,6 @@ const CreateItemScreen = () => {
         }
       });
   
-      // Obtener usuario autenticado desde localStorage o contexto
-      const user = JSON.parse(localStorage.getItem("user")); 
-      if (user && user.id) {
-        formDataToSend.append("user", user.id);
-      } else {
-        throw new Error("Usuario no autenticado");
-      }
-  
       // Agregar imágenes
       images.forEach((image) => {
         formDataToSend.append("image_files", image);
@@ -570,8 +562,12 @@ const CreateItemScreen = () => {
 
       // Adjuntar los períodos de indisponibilidad
       formDataToSend.append('unavailable_periods', JSON.stringify(unavailablePeriods));
-  
+      
+      const accessToken = localStorage.getItem("access_token");
       const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/`, formDataToSend, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
         withCredentials: true,
       });
   

@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 
 from django.core.validators import MinValueValidator
@@ -204,8 +205,9 @@ class ItemRequest(models.Model):
         choices=PriceCategory.choices
     )
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[
-        MinValueValidator(0.01, message="El precio debe ser mayor a 0."),
-        MaxValueValidator(99999999.99,
+        MinValueValidator(Decimal("0.01"),
+                          message="El precio debe ser mayor a 0."),
+        MaxValueValidator(Decimal("99999999.99"),
                           message="El precio no puede ser mayor"
                           " a 99,999,999.99."),
         DecimalValidator(max_digits=10, decimal_places=2)

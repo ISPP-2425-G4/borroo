@@ -13,6 +13,7 @@ const Footer = () => {
           <ul>
             <li><Link to="/">Landing Page</Link></li>
             <li><a href="https://github.com/ISPP-2425-G4/borroo" target="_blank" rel="noopener noreferrer">Repositorio en GitHub</a></li>
+            <li><Link to="/faq">Preguntas Frecuentes</Link></li>
           </ul>
         </div>
 
