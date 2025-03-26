@@ -8,7 +8,7 @@ from .views import (
 )
 
 urlpatterns = [
-     path('create-rent-checkout', create_rent_checkout,
+     path('create-rent-checkout/', create_rent_checkout,
           name='create_checkout_session'),
      path('confirm-rent/<str:session_id>/', confirm_rent_checkout,
           name='confirmar_pago'),

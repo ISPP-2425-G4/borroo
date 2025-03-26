@@ -17,7 +17,7 @@ def create_rent_checkout(request):
             user = User.objects.get(id=data.get('user_id'))
             rent = Rent.objects.get(id=data.get('rent_id'))
             currency = data.get('currency', 'EUR')
-            amount = data.get('price')*100
+            amount = data.get('price')
 
             session = stripe.checkout.Session.create(
                 payment_method_types=['card'],
