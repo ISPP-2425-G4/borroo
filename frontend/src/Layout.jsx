@@ -109,13 +109,14 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
   useEffect(() => {
     const obtenerProductos = async () => {
       setCargando(true);
-      let nextUrl = `${import.meta.env.VITE_API_BASE_URL}/objetos/list_published_items`;
+      let nextUrl = `${import.meta.env.VITE_API_BASE_URL}/objetos/full`;
       let allResults = [];
   
       try {
         while (nextUrl) {
           const respuesta = await axios.get(nextUrl, {
-            headers: { "Content-Type": "application/json" }
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true 
           });
           console.log("Página cargada:", respuesta.data);
           allResults = [...allResults, ...respuesta.data.results];
