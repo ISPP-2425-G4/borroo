@@ -3,7 +3,7 @@ const faqData = [
       question: '¿Cómo puedo poner en alquiler uno de mis objetos?',
       answer: (
         <>
-          Una vez te hayas registrado e iniciado sesión, ve a la sección <strong>"Publicar objeto"</strong> desde el menú.
+          Una vez te hayas registrado e iniciado sesión, ve a la sección <strong>Publicar objeto</strong> desde el menú.
           Allí podrás subir fotos, poner una descripción, fijar el precio de alquiler por día y configurar las condiciones.
        </>
       )
