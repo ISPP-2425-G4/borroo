@@ -13,9 +13,10 @@ class UserSerializer(serializers.ModelSerializer):
             'id', 'name', 'surname', 'username', 'password', 'email',
             'phone_number', 'country', 'city', 'address', 'postal_code',
             'is_verified', 'pricing_plan', 'owner_rating', 'renter_rating',
-            'items'
+            'items', 'is_admin'
         ]
-        read_only_fields = ['id', 'owner_rating', 'renter_rating', 'items']
+        read_only_fields = ['id', 'owner_rating', 'renter_rating', 'items',
+                            'is_admin']
 
         def validate_username(self, value):
             """Validar que el username no tenga espacios en blanco."""
