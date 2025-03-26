@@ -43,6 +43,7 @@ Fecha: 25/03/2025
 | Fecha      | Versión | Realizada por           | Descripción de los cambios |
 | ---------- | ------- | ----------------------- | -------------------------- |
 | 25-03-2025 | v1.0    | Francisco Fernández Mota | Creación del documento     |
+| 26-03-2025 | v1.1    | Francisco Fernández Mota | Pequeñas modificaciones y políticas de cancelación |
 
 ---
 
@@ -72,7 +73,7 @@ Se realizará mantenimiento planificado fuera del horario de mayor actividad y s
 
 ## 4. Soporte y Atención al Cliente
 El servicio de atención al cliente está disponible en los siguientes canales:
-- **Correo electrónico:** soporte@[nombre-aplicacion].com (respuesta en 24 horas)
+- **Correo electrónico:** borroohelp@gmail.com (respuesta en 24 horas)
 - **Centro de ayuda y preguntas frecuentes**
 
 ## 5. Penalizaciones por Incumplimiento
@@ -90,7 +91,7 @@ Este SLA no cubre interrupciones causadas por:
 Este SLA puede ser modificado con previo aviso de 30 días a los usuarios. Su vigencia es indefinida mientras el servicio esté activo.
 
 ## 8. Contacto
-Para consultas sobre este SLA, contactar a soporte@[nombre-aplicacion].com
+Para consultas sobre este SLA, contactar a borroohelp@gmail.com
 
 ## 9. Precios y Tarifas
 Los usuarios de **Borroo** están sujetos a las siguientes tarifas:
@@ -106,12 +107,26 @@ Los usuarios de **Borroo** están sujetos a las siguientes tarifas:
 | Premium | 5€/mes | Publicaciones ilimitadas, sin publicidad, productos destacados |
 
 ### 9.3. Penalizaciones y Cancelaciones 
-[Por desarrollar] 
+**Borroo** recoge las siguientes políticas de cancelación:
+
+#### Flexible  
+- **24 horas antes:** reembolso total.  
+- **Menos de 24 horas:** 80% reembolso.  
+- **Después del inicio:** no hay reembolso.  
+
+#### Medio  
+- **48 horas antes:** reembolso total.  
+- **Entre 24-48 horas:** 50% reembolso.  
+- **Menos de 24 horas:** no hay reembolso.  
+
+#### Estricto  
+- **7 días antes:** 50% reembolso.  
+- **Menos de 7 días:** no hay reembolso.  
 
 ### 9.4. Métodos de Pago  
 Los pagos pueden realizarse mediante:  
-- Tarjetas de crédito/débito  
-- Transferencias bancarias  
-- Monederos electrónicos (Stripe)  
+- Tarjetas de crédito/débito
+
+Se realizan a través de la pasarela de pago Stripe.  
 
 ---
