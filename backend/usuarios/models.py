@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import EmailValidator, RegexValidator
 from django.utils.timezone import now
+from django.contrib.auth.models import AbstractUser
 
 text_validator = RegexValidator(
     regex=r'^[A-Za-zÁÉÍÓÚáéíóúÑñ].*',
@@ -13,7 +14,7 @@ class PricingPlan(models.TextChoices):
     PREMIUM = ('premium', 'Premium')
 
 
-class User(models.Model):
+class User(AbstractUser):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, validators=[text_validator])
     surname = models.CharField(max_length=255, validators=[text_validator])
@@ -80,6 +81,9 @@ class User(models.Model):
     reset_token = models.CharField(max_length=255, blank=True, null=True)
     reset_token_expiration = models.DateTimeField(blank=True, null=True)
     is_admin = models.BooleanField(default=False)
+
+    REQUIRED_FIELDS = []
+    USERNAME_FIELD = 'username'
 
     def is_reset_token_valid(self):
         """Verifica si el token sigue siendo
