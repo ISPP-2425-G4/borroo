@@ -71,7 +71,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Marco Padilla Gómez         |          |          |          |    :angry:     |  :angry:  | :angry:      |          |          |          |                 |          |          |          |          |
 | Miguel Palomo García        | :blush:  | :smiley: | :smiley: | :blush:        | :smiley:  |              |          |          |          |                 |          |          |          |          |
 | Luis Javier Periáñez Franco | :blush:  | :blush:  | :blush:  | :blush:        | :angry:   |              |          |          |          |                 |          |          |          |          |
-| Alexander Picón Garrote     | :blush:  | :angry:  | :angry:  |   :blush:      | :blush:   |              |          |          |          |                 |          |          |          |          | 
+| Alexander Picón Garrote     | :blush:  | :angry:  | :angry:  |   :blush:      | :blush:   |              |          |          |          |                 |          |          |          | :neutral_face:         | 
 | Santiago Rosado Raya        |          |          |          |                |           |              |          |          |          |                 |          |          |          |          |
 | Julia Sánchez Márquez       |          | :blush:  |          |                | :smiley:  |:neutral_face:|          |:worried: |          |:neutral_face:   |          |          |          |          |
 | Alejandro Sevillano Barea   |          |          |          |                |:neutral_face:|:smiley:   | :smiley: |          |          |:worried:        |          |          |          |          |
