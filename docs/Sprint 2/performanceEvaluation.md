@@ -6,12 +6,12 @@
 
 ## PERFORMANCE EVALUATION
 
-### Sprint 1 – G4
+### Sprint 2 – G4
 **Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
 
 **Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
 
-**Fecha:** 13/03/2025
+**Fecha:** 26/03/2025
 
 
 </div>
@@ -41,13 +41,15 @@
 | Fecha      | Versión | Realizada por   | Descripción de los cambios |
 | ---------- | ------- | --------------- | -------------------------- |
 | 20-02-2025 | v1.0    | Marco Padilla Gómez | Creación del documento |
-| 20-03-2025 | v1.1    | Todos los miembros | Añadir datos sobre el trabajo realizado |
+| 20-02-2025 | v1.1    | Todos los miembros | Añadir datos sobre el trabajo realizado |
 | 13-03-2025 | v2.0    | Marco Padilla Gómez | Actualizar documento para S1 |
+| 13-03-2025 | v2.1    | Todos los miembros | Añadir datos sobre el trabajo realizado |
+| 26-03-2025 | v3.0    | Marco Padilla Gómez | Actualizar documento para S2 |
 
 
 ---
 
-**Version: _#S1_**
+**Version: _#S2_**
 
 ---
 
@@ -78,6 +80,13 @@
 
 
 # Individual Contribution Summary  
+
+## Tabla de contenidos
+1. [Devising a Project (#DP)](#devising-a-project-dp)
+
+2. [Sprint 1](#sprint-1-s1)
+
+3. [Sprint 2](#sprint-2-s2)
 
 ## Devising a Project (#DP)
 
@@ -346,5 +355,40 @@ Durante la última semana, me centré en probar el correcto funcionamiento de to
 Antes de subir los cambios, la implementación de un workflow me permitió detectar que el código no era lo suficientemente eficiente, lo que me llevó a refactorizarlo. Una vez subidos los cambios, colaboré con un compañero que necesitaba ayuda en una parte del código, realizando las modificaciones necesarias para que pudiera continuar con su trabajo. Finalmente, junto a Francisco, implementé todas las validaciones en el backend para prevenir cualquier acceso no deseado. 
 
 Para concluir, creé el usuario administrador de la aplicación, convertí algunos documentos a Markdown en colaboración con Francisco y finalicé la visualización de las “Theroy Pills”. 
+
+### **Sevillano Barea, Alejandro**
+
+
+## Sprint 2 (#S2)
+
+### **Blanco Mora, David**  
+
+### **Díaz Ordóñez, Pablo**  
+
+### **Espinosa Naranjo, Pablo**
+
+### **Fernández Rodríguez, Jesús**
+
+### **Fernández Mota, Francisco**
+
+### **García Rodríguez, Javier**
+
+### **González Ortiz, Miguel**
+
+### **Martín Muñoz, Álvaro**
+
+### **Naredo Bernardos, Ignacio**
+
+### **Nieto Vicioso, Javier**
+
+### **Padilla Gómez, Marco**
+
+### **Palomo García, Miguel**
+
+### **Periañez Franco, Luis Javier**
+
+### **Rosado Raya, Santiago**
+
+### **Sánchez Márquez, Julia**
 
 ### **Sevillano Barea, Alejandro**
