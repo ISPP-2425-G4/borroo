@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Navbar from '../Navbar'; 
 import '../../public/styles/FAQ.css';
 import faqData from './FaqData.jsx';
