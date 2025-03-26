@@ -339,10 +339,24 @@ const ShowItemScreen = () => {
         alert("Hubo un problema al publicar el ítem.");
       }
     } catch (error) {
-      console.error("Error al publicar el ítem:", error);
-      alert("Error al publicar el ítem.");
+      console.error("Error publicando el ítem:", error);
+      console.log("Respuesta del backend:", error.response?.data);
+    
+      if (error.response?.data?.non_field_errors) {
+        setErrorMessage(error.response.data.non_field_errors[0]);
+      } else if (error.response?.data?.detail) {
+        setErrorMessage(error.response.data.detail);
+      } else if (error.response?.data?.error) {
+        setErrorMessage(error.response.data.error);
+      } else if (Array.isArray(error.response?.data) && error.response.data.length > 0) {
+        setErrorMessage(error.response.data[0]);
+      } else {
+        setErrorMessage("Ocurrió un error al intentar publicar el ítem.");
+      }
     }
+    
   };
+  
 
   if (loading) {
     return (
