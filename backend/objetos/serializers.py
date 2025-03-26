@@ -52,13 +52,13 @@ class ItemSerializer(serializers.ModelSerializer):
         item_count = Item.objects.filter(user=user, draft_mode=False).count()
         if not draft_mode and item_count >= 10:
             raise serializers.ValidationError(
-                "No puedes tener más de 10 ítems con draft_mode en False."
+                "No puedes tener más de 10 ítems publicados con el plan Free."
             )
 
         # Restricción: No más de 15 ítems en total
         if Item.objects.filter(user=user).count() >= 15:
             raise serializers.ValidationError(
-                "No puedes tener más de 15 ítems en total."
+                "No puedes tener más de 15 ítems en total con el plan Free."
             )
 
         return data
@@ -72,13 +72,13 @@ class ItemSerializer(serializers.ModelSerializer):
         # Restricción: No más de 10 ítems con draft_mode False
         if Item.objects.filter(user=user, draft_mode=False).count() >= 10:
             raise serializers.ValidationError(
-                "No puedes tener más de 10 ítems con draft_mode en False."
+                "No puedes tener más de 10 ítems publicados con el plan Free."
             )
 
         # Restricción: No más de 15 ítems en total
         if Item.objects.filter(user=user).count() >= 15:
             raise serializers.ValidationError(
-                "No puedes tener más de 15 ítems en total."
+                "No puedes tener más de 15 ítems en total con el plan Free."
             )
 
         item = Item.objects.create(user=user, **validated_data)

@@ -549,8 +549,14 @@ const CreateItemScreen = () => {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      setErrorMessage(error.response?.data?.message || "Ocurrió un error al enviar el formulario.");
-    } finally {
+      if (error.response?.data?.non_field_errors) {
+        setErrorMessage(error.response.data.non_field_errors[0]);
+      } else if (error.response?.data?.detail) {
+        setErrorMessage(error.response.data.detail);
+      } else {
+        setErrorMessage("Ocurrió un error al enviar el formulario.");
+      }
+    }finally {
       setLoading(false);
       setLoadingDash(false);
     }
