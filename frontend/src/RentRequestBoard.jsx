@@ -90,11 +90,12 @@ const RentRequestBoard = () => {
                 `${import.meta.env.VITE_API_BASE_URL}/rentas/full/${renta.id}/respond_request/`,
                 {
                     response: responseType,
-                    rent: renta.id
+                    rent: renta.id,
+                    user_id: user.id
                 }
             );
             console.log(response.data);
-
+    
             // Filtrar la solicitud aceptada/rechazada de la lista
             setRequests((prevRequests) =>
                 prevRequests.filter((request) => request.id !== renta.id)
