@@ -135,7 +135,7 @@ class RentTests(TestCase):
         self.assertIn("error", response.data)
         self.assertEqual(response.data["error"],
                          "El objeto no está disponible en esas fechas")
-        
+
     def test_rental_requests(self):
         item = Item.objects.create(
             title="Cámara",
@@ -159,7 +159,7 @@ class RentTests(TestCase):
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["item"], item.id)
         self.assertEqual(response.data[0]["renter"], self.renter.id)
-   
+
     def test_my_requests(self):
         item = Item.objects.create(
             title="Altavoz",
