@@ -62,9 +62,7 @@ Allí podrás subir fotos, poner una descripción, fijar el precio de alquiler p
 
 ### ¿Qué métodos de pago puedo usar?
 
-- Tarjeta de crédito/débito  
-- PayPal  
-- Transferencia bancaria
+Por ahora solo puedes pagar con tarjeta de crédito/debito, pero estamos trabajando para más adelante ofrecer mas variedades de pago.
 
 ---
 
