@@ -73,6 +73,8 @@ const Navbar = () => {
     { title: "Inicio", path: "/" },
     { title: "Poner en alquiler", path: "/create-item" },
     { title: "Plan de suscripción", path: "/pricing-plan" },
+    { title: "Anuncios", path: "/list_item_requests" },
+    { title: "Crear anuncio", path: "/create_item_request" },
     ...(user ? [{ title: "Mis solicitudes", path: "/rental_requests" }] : []),
   ];
 

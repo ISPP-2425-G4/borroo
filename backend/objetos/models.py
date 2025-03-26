@@ -187,6 +187,10 @@ class ItemRequest(models.Model):
         max_length=50,
         choices=ItemCategory.choices
     )
+    subcategory = models.CharField(
+        max_length=50,
+        choices=ItemSubcategory.choices
+    )
     cancel_type = models.CharField(
         max_length=10,
         choices=CancelType.choices
@@ -216,6 +220,7 @@ class ItemRequest(models.Model):
             title=self.title,
             description=self.description,
             category=self.category,
+            subcategory=self.subcategory,
             cancel_type=self.cancel_type,
             price_category=self.price_category,
             price=self.price,

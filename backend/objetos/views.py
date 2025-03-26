@@ -264,3 +264,11 @@ class ListPublishedItemsView(APIView):
         serializer = ItemSerializer(items, many=True)
         return Response({'results': serializer.data},
                         status=status.HTTP_200_OK)
+
+
+class ListItemRequestsView(APIView):
+    def get(self, request, *args, **kwargs):
+        item_requests = ItemRequest.objects.all()
+        serializer = ItemRequestSerializer(item_requests, many=True)
+        return Response({'results': serializer.data},
+                        status=status.HTTP_200_OK)

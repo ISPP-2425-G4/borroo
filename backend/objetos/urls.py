@@ -5,6 +5,7 @@ from .views import FilterByCategory, FilterByPrice, SearchItemsView
 from .views import ItemImageViewSet, EnumChoicesView, PublishItemView
 from .views import ListDraftItemsView, ListUserItemsView
 from .views import ListPublishedItemsView
+from .views import ListItemRequestsView
 
 router = DefaultRouter()
 router.register(r'full', ItemViewSet)
@@ -35,4 +36,6 @@ urlpatterns = [
          name='list_user_items'),
     path('list_published_items/', ListPublishedItemsView.as_view(),
          name='list_published_items'),
+    path('list_item_requests/', ListItemRequestsView.as_view(),
+         name='list_item_requests'),
 ]
