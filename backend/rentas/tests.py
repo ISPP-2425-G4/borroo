@@ -135,3 +135,59 @@ class RentTests(TestCase):
         self.assertIn("error", response.data)
         self.assertEqual(response.data["error"],
                          "El objeto no está disponible en esas fechas")
+        
+    def test_rental_requests(self):
+        item = Item.objects.create(
+            title="Cámara",
+            price=Decimal("100.0"),
+            price_category="day",
+            user=self.owner
+        )
+
+        Rent.objects.create(
+            item=item,
+            renter=self.renter,
+            rent_status=RentStatus.REQUESTED,
+            start_date=timezone.now(),
+            end_date=timezone.now() + timezone.timedelta(days=2)
+        )
+
+        response = self.client.get("/rentas/full/rental_requests/",
+                                   {"user": self.owner.id})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]["item"], item.id)
+        self.assertEqual(response.data[0]["renter"], self.renter.id)
+   
+    def test_my_requests(self):
+        item = Item.objects.create(
+            title="Altavoz",
+            price=Decimal("100.0"),
+            price_category="day",
+            user=self.owner
+        )
+
+        Rent.objects.create(
+            item=item,
+            renter=self.renter,
+            rent_status=RentStatus.ACCEPTED,
+            start_date=timezone.now(),
+            end_date=timezone.now() + timezone.timedelta(days=1)
+        )
+
+        Rent.objects.create(
+            item=item,
+            renter=self.renter,
+            rent_status=RentStatus.REQUESTED,
+            start_date=timezone.now(),
+            end_date=timezone.now() + timezone.timedelta(days=2)
+        )
+
+        response = self.client.get("/rentas/full/my_requests/",
+                                   {"user": self.renter.id})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 2)
+        for rent in response.data:
+            self.assertEqual(rent["renter"], self.renter.id)
