@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiLock, FiMail, FiInfo } from "react-icons/fi";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { Checkbox, FormControlLabel } from "@mui/material"; 
 import axios from 'axios';
 import Navbar from "./Navbar";
 import { 
@@ -87,13 +88,14 @@ const Signup = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+  const [acceptTerms, setAcceptTerms] = useState(false);
   const navigate = useNavigate();
   
   useEffect(() => {
     const requiredFields = ["username", "name", "surname", "email", "password", "password2"];
-    const isValid = requiredFields.every(field => formData[field] && formData[field].trim() !== "");
+    const isValid = requiredFields.every(field => formData[field] && formData[field].trim() !== "") && acceptTerms;
     setIsFormValid(isValid);
-  }, [formData]);
+  }, [formData, acceptTerms]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -106,6 +108,11 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isFormValid) return;
+
+    if(!acceptTerms) {
+      setError("Debe aceptar los términos y condiciones.");
+      return;
+    }
 
     setLoading(true);
     setError("");
@@ -393,6 +400,22 @@ const Signup = () => {
               }}
             />
             {formErrors.password2 && <FieldError>{formErrors.password2}</FieldError>}
+
+            <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={acceptTerms}
+                    onChange={(e) => setAcceptTerms(e.target.checked)}
+                    color="primary"
+                  />
+                }
+                label={
+                  <Typography variant="body2">
+                    Acepto los <Link to="/terms">términos y condiciones</Link>.
+                  </Typography>
+                }
+              />
+              {error && !acceptTerms && <FieldError>Debes aceptar los términos y condiciones.</FieldError>}
             
             <StyledButton
               type="submit"
