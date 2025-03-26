@@ -5,8 +5,11 @@ import Navbar from "./Navbar";
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
-import { Box, Stack, Typography, Alert, CircularProgress, Paper, Container } from "@mui/material";
+import { Box, Stack, Typography, Alert, CircularProgress, Paper, Container, Button } from "@mui/material";
 import { styled } from "@mui/system";
+//import DatePicker from 'react-datepicker';
+import { DateRange } from "react-date-range";
+import "react-datepicker/dist/react-datepicker.css";
 
 const FormContainer = styled(Paper)(() => ({
   padding: "2rem",
@@ -211,6 +214,11 @@ const CreateItemScreen = () => {
     price_categories: [],
   });
 
+  const [unavailablePeriods, setUnavailablePeriods] = useState([]);
+
+  const [datesRange, setDatesRange] =useState([
+    { startDate: new Date(), endDate: new Date(), key: "selection" }
+    ]);   
   const [loading, setLoading] = useState(false);
   const [loadingDash, setLoadingDash] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -441,6 +449,27 @@ const CreateItemScreen = () => {
     document.getElementById('image-upload').click();
   };
 
+  const convertToCET = (date) => {
+    const cetOffset = 2; // CET es UTC+1, pero ten en cuenta el horario de verano
+    const localDate = new Date(date);
+    localDate.setHours(localDate.getHours() + cetOffset);
+    return localDate.toISOString();
+  };
+  const handleAddPeriod = () => {
+    const {startDate, endDate} = datesRange[0];
+    console.log("Start Date:", startDate);
+    console.log("End Date:", endDate);
+    
+    if (!startDate || !endDate || new Date(convertToCET(startDate)) >= new Date(convertToCET(endDate))) {
+        setErrorMessage("Las fechas de inicio y fin no son válidas.");
+        return;
+    }
+
+    setUnavailablePeriods([...unavailablePeriods, { start_date: new Date(convertToCET(startDate)).toISOString().split('T')[0], end_date: new Date(convertToCET(endDate)).toISOString().split('T')[0] }]);
+    setDatesRange([{ startDate: new Date(), endDate: new Date(), key: "selection" }]); // Reset
+    setErrorMessage('');
+  };
+
   const handleSubmit = async (e, isDraft = false) => {
     e.preventDefault();
     if(isDraft){
@@ -530,6 +559,9 @@ const CreateItemScreen = () => {
       images.forEach((image) => {
         formDataToSend.append("image_files", image);
       });
+
+      // Adjuntar los períodos de indisponibilidad
+      formDataToSend.append('unavailable_periods', JSON.stringify(unavailablePeriods));
       
       const accessToken = localStorage.getItem("access_token");
       const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/`, formDataToSend, {
@@ -549,8 +581,14 @@ const CreateItemScreen = () => {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      setErrorMessage(error.response?.data?.message || "Ocurrió un error al enviar el formulario.");
-    } finally {
+      if (error.response?.data?.non_field_errors) {
+        setErrorMessage(error.response.data.non_field_errors[0]);
+      } else if (error.response?.data?.detail) {
+        setErrorMessage(error.response.data.detail);
+      } else {
+        setErrorMessage("Ocurrió un error al enviar el formulario.");
+      }
+    }finally {
       setLoading(false);
       setLoadingDash(false);
     }
@@ -743,6 +781,46 @@ const CreateItemScreen = () => {
                   </ImageGallery>
                 </Box>
               )}
+
+              {/* Formulario para seleccionar los períodos de indisponibilidad con un solo calendario */}
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  <Typography>Seleccionar período de indisponibilidad:</Typography>
+                  <DateRange
+                      ranges={datesRange}
+                      onChange={(ranges) => setDatesRange([ranges.selection])}
+                      minDate={new Date()}
+                  />
+                  <Button 
+                      variant="contained" 
+                      color="primary" 
+                      onClick={handleAddPeriod} 
+                      sx={{ marginTop: 2 }}
+                  >
+                      Añadir Período
+                  </Button>
+                  {/* Resumen de los períodos seleccionados con estilo */}
+                  {unavailablePeriods.length > 0 && (
+                      <Box 
+                          sx={{ 
+                              marginTop: 2, 
+                              padding: 2, 
+                              border: "1px solid #ccc", 
+                              borderRadius: 4, 
+                              backgroundColor: "#f9f9f9" 
+                          }}
+                      >
+                          <Typography variant="h6">Resumen de selección:</Typography>
+                          {unavailablePeriods.map((period, index) => (
+                              <Typography key={index}>
+                                  <strong>Desde:</strong> {new Date(period.start_date).toLocaleDateString()} -  
+                                  <strong> Hasta:</strong> {new Date(period.end_date).toLocaleDateString()}
+                              </Typography>
+                          ))}
+                      </Box>
+                  )}
+                  {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+              </Box>
+
               <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
               <SubmitButton 
                 type="button" 
@@ -768,7 +846,6 @@ const CreateItemScreen = () => {
                   </>
                 )}
               </SubmitButton>
-
               <SubmitButton 
                 type="submit" 
                 disabled={!isFormValid || loading}
@@ -786,18 +863,19 @@ const CreateItemScreen = () => {
                   </>
                 )}
               </SubmitButton>
-            </Stack>
+              
+              </Stack>
               
               {showErrorMessage && (
                 <Alert severity="warning" sx={{ mt: 2 }}>
                   Por favor, revisa los errores del formulario antes de enviar.
                 </Alert>
               )}
-            </form>
-          )}
+          </form>
+        )}
         </FormContainer>
       </Container>
-    </Box>
+  </Box>
   );
 };
 

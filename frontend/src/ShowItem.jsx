@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { DateRange  } from "react-date-range";
-import DatePicker from "react-datepicker";
+import { DateRange, Calendar  } from "react-date-range";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import dayjs from "dayjs";
 import axios from 'axios';
 import { 
   Box, 
@@ -40,6 +40,7 @@ const ShowItemScreen = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [item, setItem] = useState(null);
+  const [unavailabilityPeriods, setUnavailabilityPeriods] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
@@ -63,7 +64,6 @@ const ShowItemScreen = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [highlighting, setHighlighting] = useState(false);
 
-
   useEffect(() => {
     const fetchItemData = async () => {
       try {
@@ -72,6 +72,7 @@ const ShowItemScreen = () => {
         );
         const data = response.data;
         setItem(data);
+        setUnavailabilityPeriods(data.unavailable_periods || []);
 
         if (data.user) {
           fetchUserName(data.user);
@@ -159,7 +160,7 @@ const ShowItemScreen = () => {
     .finally(() => {
         setHighlighting(false);
     });
-};
+  };
 
   const loadItemImages = async (imageIds) => {
     try {
@@ -241,11 +242,28 @@ const ShowItemScreen = () => {
       setErrorMessage("No se pudo eliminar el ítem");
     }
   };
+
+  const isDateUnavailable = (date) => {
+    return unavailabilityPeriods.some(period => {
+      const start = new Date(period.start_date); 
+      const end = new Date(period.end_date); 
+      return date >= start && date <= end;
+    });
+  };
+
   const handleRentalRequest = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
       if (!user || !user.id) {
         alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
+        return;
+      }
+      if (
+        isDateUnavailable(dateRange[0].startDate) ||
+        isDateUnavailable(dateRange[0].endDate) ||
+        isDateUnavailable(selectedDay)
+      ) {
+        alert("No puedes solicitar alquiler en fechas no disponibles.");
         return;
       }
   
@@ -264,8 +282,8 @@ const ShowItemScreen = () => {
       } 
       else if (priceCategory === "day" && dateRange[0].startDate && dateRange[0].endDate) {
         // Usar las fechas seleccionadas para alquiler por días
-        startDateUTC = new Date(convertToCET(dateRange[0].startDate));
-        endDateUTC = new Date(convertToCET(dateRange[0].endDate));
+        startDateUTC = dayjs(dateRange[0].startDate).format("YYYY-MM-DD");
+        endDateUTC = dayjs(dateRange[0].endDate).format("YYYY-MM-DD");
       } 
       else if (priceCategory === "month" && selectedDay && selectedMonths) {
         // Construir fechas para alquiler por meses
@@ -273,8 +291,8 @@ const ShowItemScreen = () => {
         const end = new Date(selectedDay);
         end.setMonth(end.getMonth() + parseInt(selectedMonths));
   
-        startDateUTC = convertToCET(start);
-        endDateUTC = convertToCET(end);
+        startDateUTC = dayjs(start).format("YYYY-MM-DD");
+        endDateUTC = dayjs(end).format("YYYY-MM-DD");
       } 
       else {
         alert("Por favor, selecciona correctamente la fecha de inicio y fin.");
@@ -308,12 +326,6 @@ const ShowItemScreen = () => {
       alert(error.response?.data?.error || "No se pudo realizar la solicitud");
     }
   };
-  const convertToCET = (date) => {
-    const cetOffset = 2; // CET es UTC+1, pero ten en cuenta el horario de verano
-    const localDate = new Date(date);
-    localDate.setHours(localDate.getHours() + cetOffset);
-    return localDate.toISOString();
-  };
 
   const navigateImages = (direction) => {
     if (direction === 'next') {
@@ -339,10 +351,24 @@ const ShowItemScreen = () => {
         alert("Hubo un problema al publicar el ítem.");
       }
     } catch (error) {
-      console.error("Error al publicar el ítem:", error);
-      alert("Error al publicar el ítem.");
+      console.error("Error publicando el ítem:", error);
+      console.log("Respuesta del backend:", error.response?.data);
+    
+      if (error.response?.data?.non_field_errors) {
+        setErrorMessage(error.response.data.non_field_errors[0]);
+      } else if (error.response?.data?.detail) {
+        setErrorMessage(error.response.data.detail);
+      } else if (error.response?.data?.error) {
+        setErrorMessage(error.response.data.error);
+      } else if (Array.isArray(error.response?.data) && error.response.data.length > 0) {
+        setErrorMessage(error.response.data[0]);
+      } else {
+        setErrorMessage("Ocurrió un error al intentar publicar el ítem.");
+      }
     }
+    
   };
+  
 
   if (loading) {
     return (
@@ -609,7 +635,7 @@ const ShowItemScreen = () => {
                       }}
                   >
                       {item.featured ? 'Quitar destacado' : 'Destacar objeto'}
-                  </Button>
+                    </Button>
                   </Box>
                 )}
               </Paper>
@@ -639,20 +665,24 @@ const ShowItemScreen = () => {
         {priceCategory === "hour" && (
           <div> 
             {/* Selector de día */}
-            <label>Selecciona un día:</label>
-            <DatePicker
-              selected={selectedDay}
+            <Typography>Selecciona un día:</Typography>
+            <Calendar
+              date={selectedDay}
               onChange={(date) => setSelectedDay(date)}
-              minDate={new Date()} // Evita fechas pasadas
-              excludeDates={[...requestedDates, ...bookedDates]} // Bloquea días ocupados
-              dateFormat="yyyy/MM/dd"
-              inline // Muestra el calendario directamente
+              minDate={new Date()} 
+              disabledDates={[...unavailabilityPeriods.flatMap(period => {
+                const start = new Date(period.start_date);
+                const end = new Date(period.end_date);
+                const range = getDatesInRange(start, end);
+  
+                return range;
+              })]}
             />
 
             {/* Selector de hora de inicio */}
-            <label>Selecciona la hora de inicio:</label>
+            <Typography>Selecciona la hora de inicio:</Typography>
             <select
-              value={selectedStartHour}
+              value={selectedStartHour || ""}
               onChange={(e) => {
                 const startHour = parseInt(e.target.value);
                 setSelectedStartHour(startHour);
@@ -667,9 +697,9 @@ const ShowItemScreen = () => {
             </select>
 
             {/* Selector de hora de fin */}
-            <label>Selecciona la hora de fin:</label>
+            <Typography>Selecciona la hora de fin:</Typography>
             <select
-              value={selectedEndHour}
+              value={selectedEndHour || ""}
               onChange={(e) => setSelectedEndHour(parseInt(e.target.value))}
               disabled={selectedStartHour === null} // Deshabilita si no hay hora inicio
             >
@@ -680,16 +710,35 @@ const ShowItemScreen = () => {
                 </option>
               ))}
             </select>
+            {selectedDay && selectedStartHour !== null && selectedEndHour !== null && (
+            <Box 
+              sx={{ 
+                marginTop: 2, 
+                padding: 2, 
+                border: "1px solid #ccc", 
+                borderRadius: 4, 
+                backgroundColor: "#f9f9f9" 
+              }}
+            >
+              <Typography variant="h6">Resumen de selección:</Typography>
+              <Typography><strong>Día:</strong> {selectedDay.toLocaleDateString()}</Typography>
+              <Typography><strong>Horas:</strong> {`${selectedStartHour}:00 - ${selectedEndHour}:00`}</Typography>
+            </Box>
+            )}
           </div>
         )}
 
         {priceCategory === "day" && (
           <DateRange
-            ranges={dateRange}
+            ranges={ isOwner || !isAuthenticated ? [] : dateRange}
             onChange={(ranges) => {
+              if (!isOwner || isAuthenticated) { setDateRange([ranges.selection]); }
               const start = ranges.selection.startDate;
               const end = ranges.selection.endDate;
-
+              if (isDateUnavailable(start) || isDateUnavailable(end)) {
+                alert("Las fechas seleccionadas no están disponibles.");
+                return;
+              }
               // Si el usuario selecciona el mismo día como inicio y fin, establecerlo correctamente
               if (start.toDateString() === end.toDateString()) {
                 setDateRange([{ startDate: start, endDate: start, key: "selection" }]);
@@ -698,20 +747,31 @@ const ShowItemScreen = () => {
               }
             }}
             minDate={new Date()}
-            disabledDates={[...requestedDates, ...bookedDates]}
+            disabledDates={[...requestedDates, ...bookedDates, ...unavailabilityPeriods.flatMap(period => {
+              const start = new Date(period.start_date);
+              const end = new Date(period.end_date);
+              const range = getDatesInRange(start, end);
+
+              return range;
+            })]}
           />
         )}
 
         {priceCategory === "month" && (
-          <div>
-            <label>Selecciona la fecha de inicio:</label>
-            <DatePicker
-              selected={selectedDay}
+            <div> 
+            {/* Selector de día */}
+            <Typography>Selecciona un día:</Typography>
+            <Calendar
+              date={selectedDay}
               onChange={(date) => setSelectedDay(date)}
-              minDate={new Date()} // Evita fechas pasadas
-              excludeDates={[...requestedDates, ...bookedDates]} // Bloquea días ocupados
-              dateFormat="yyyy/MM/dd"
-              inline // Muestra el calendario directamente
+              minDate={new Date()} 
+              disabledDates={[...unavailabilityPeriods.flatMap(period => {
+                const start = new Date(period.start_date);
+                const end = new Date(period.end_date);
+                const range = getDatesInRange(start, end);
+  
+                return range;
+              })]}
             />
 
             <label>Selecciona la cantidad de meses:</label>
