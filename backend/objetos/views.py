@@ -269,7 +269,7 @@ class ItemViewSet(viewsets.ModelViewSet):
             {"message": "El objeto ahora es destacado."},
             status=status.HTTP_200_OK
         )
-    
+
     def get_queryset(self):
         queryset = super().get_queryset()
         featured = self.request.query_params.get('featured', None)
