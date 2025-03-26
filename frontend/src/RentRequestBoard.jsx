@@ -109,6 +109,8 @@ const RentRequestBoard = () => {
     const handleTabChange = (event, newValue) => {
         setSelectedTab(newValue);
     };
+
+
     const RequestActions = ({ request, openConfirmModal }) => {
         return (
             <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>

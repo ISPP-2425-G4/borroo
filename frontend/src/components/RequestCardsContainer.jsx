@@ -1,7 +1,16 @@
-import { Box, Button, Card, CardContent, CardMedia, Typography, Tooltip, CardActions, Chip } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Typography, Tooltip, CardActions, Chip, Alert, Snackbar } from "@mui/material";
 import PropTypes from "prop-types";
+import { useState } from "react";
+import axios from "axios";
+import { loadStripe } from "@stripe/stripe-js";
+import { useEffect } from "react";
+
 
 const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) => {
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    const [loading, setLoading] = useState(false);
+    const [notification, setNotification] =  useState({ open: false, message: "", severity: "success" });
     const statusTranslations = {
         requested: "Solicitada",
         accepted: "Aceptada",
@@ -11,6 +20,75 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
         rated: "Valorada",
         cancelled: "Cancelada",
     };
+
+    useEffect(() => {
+        const checkPayment = async () => {
+            const params = new URLSearchParams(location.search);
+            const sessionId = params.get("session_id");
+            if(sessionId){
+                try {
+                    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/pagos/confirm-rent/${sessionId}/`)
+                    if(response.data.status === "success"){
+                        window.history.replaceState({}, "", "/rental_requests");
+                        setNotification({
+                          open: true,
+                          message: "¡Pago completado con éxito!",
+                          severity: "success"
+                        });
+          
+                        setTimeout(() => {
+                          setNotification({ ...notification, open: false });
+                        }
+                        , 5000);
+                    }
+                    checkPayment();
+
+                } catch (error) {
+                    console.error(error);   
+                    setNotification({
+                        open: true,
+                        message: "Ha ocurrido un error al procesar el pago",
+                        severity: "error",
+                    });
+                    setTimeout(() => 
+                        setNotification(null),5000);
+                    } 
+                }
+            };
+            checkPayment();
+        }, [location.search]);
+
+        const handleCloseNotification = () => {
+            setNotification({ ...notification, open: false });
+          };
+
+
+    const handlePayment = async (rentId, precio) => {
+        if (!user || !rentId) return;
+        setLoading(true);
+        try {
+            const response = await axios.post(`http://localhost:8000/pagos/create-rent-checkout/`, {
+                rent_id: rentId,
+                price: parseInt(precio*100),
+                user_id: user.id,
+            },{
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            
+
+            });
+            const stripe = await loadStripe(`${import.meta.env.VITE_STRIPE_PUBLIC_KEY}`);
+            const { error } = await stripe.redirectToCheckout({ sessionId: response.data.id });
+            if (error) {
+                setNotification({ open: true, message: "Ha ocurrido un error al procesar el pago", severity: "error" });
+            }
+        } catch (error) {
+            setNotification({ open: true, message: "Ha ocurrido un error al procesar el pago" +  error, severity: "error" });
+        }
+    }
+
+
     
     return (
         <Box
@@ -141,7 +219,8 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                                 variant="contained"
                                 color="primary"
                                 size="small"
-                                onClick={() => alert("Iniciando proceso de pago...")} //TODO: Implementar el pago con Stripe
+                                onClick={() => handlePayment(request.id, request.item.price)}
+                                disabled={loading} 
                             >
                                 Pagar
                             </Button>
@@ -162,7 +241,18 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                         >
                             Rechazar
                         </Button> }
+                             <Snackbar 
+                                    open={notification.open} 
+                                    autoHideDuration={6000} 
+                                    onClose={handleCloseNotification}
+                                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                                  >
+                                    <Alert onClose={handleCloseNotification} severity={notification.severity} sx={{ width: '100%' }}>
+                                      {notification.message}
+                                    </Alert>
+                                  </Snackbar>
                     </Box>
+
                 </CardContent>
             </Card>
         ))}

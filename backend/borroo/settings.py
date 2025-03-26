@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'objetos',
     'rentas',
+    'pagos',
+    'django_extensions',
 ]
 
 REST_FRAMEWORK = {
