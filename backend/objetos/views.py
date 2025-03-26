@@ -128,11 +128,8 @@ class ItemViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         print("Validated data:", serializer.validated_data)
-        item = serializer.save()
         self.handle_unavailable_periods(
-            item, request.data.get("unavailable_periods", []))
-        serializer.save()
-
+            serializer.save(), request.data.get("unavailable_periods", []))
         headers = self.get_success_headers(serializer.data)
         return Response(
             serializer.data, status=status.HTTP_201_CREATED, headers=headers)
@@ -179,71 +176,8 @@ class ItemViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(item, data=data, partial=True)
         serializer.is_valid(raise_exception=True)
         self.handle_unavailable_periods(
-            serializer.save(), request.data.get("unavailable_periods", []))
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def destroy(self, request, *args, **kwargs):
-        # Verificamos que el usuario esté autenticado
-        if not request.user.is_authenticated:
-            return Response(
-                {"detail": "Authentication credentials were not provided."},
-                status=status.HTTP_401_UNAUTHORIZED
-            )
-
-        # Recuperamos el objeto a eliminar
-        try:
-            item = self.get_object()
-        except Item.DoesNotExist:
-            return Response({"detail": "Ítem no encontrado."},
-                            status=status.HTTP_404_NOT_FOUND)
-
-        # Verificamos que el usuario sea el propietario del ítem
-        if item.user != request.user:
-            return Response(
-                {"detail": "No tienes permiso para eliminar este ítem."},
-                status=status.HTTP_403_FORBIDDEN
-            )
-
-        # Eliminamos el objeto
-        item.delete()
-
-        return Response(
-            {"detail": "Ítem eliminado exitosamente."},
-            status=status.HTTP_204_NO_CONTENT
-        )
-
-    def update(self, request, *args, **kwargs):
-        # Verificamos que el usuario esté autenticado
-        if not request.user.is_authenticated:
-            return Response(
-                {"detail": "Authentication credentials were not provided."},
-                status=status.HTTP_401_UNAUTHORIZED
-            )
-
-        # Recuperamos el objeto a actualizar
-        try:
-            item = self.get_object()
-            print(item)
-        except Item.DoesNotExist:
-            return Response({"detail": "Ítem no encontrado."},
-                            status=status.HTTP_404_NOT_FOUND)
-
-        # Verificamos que el usuario sea el propietario del ítem
-        if item.user != request.user:
-            return Response(
-                {"detail": "No tienes permiso para actualizar este ítem."},
-                status=status.HTTP_403_FORBIDDEN
-            )
-
-        # Actualizamos el objeto
-        data = request.data.copy()
-        data['user'] = request.user.id
-
-        # Usamos el serializer para validar y guardar
-        serializer = self.get_serializer(item, data=data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
+                    serializer.save(), request.data.get(
+                        "unavailable_periods", []))
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
