@@ -199,15 +199,15 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 5. En caso de crear o actualizar, el usuario rellena los campos del formulario
 6. El usuario presiona el botón "Guardar"
 
-![](botonDashboard.png)
-![](vistaGeneralAdmin.png)
-![](crearUsuarioAdmin.png)
-![](vistaUsuariosAdmin.png)
-![](editarUsuarioAdmin.png)
-![](vistaItemsAdmin.png)
-![](editarItemAdmin.png)
-![](vistaRentasAdmin.png)
-![](editarRentaAdmin.png)
+![](capturasRevision/botonDashboard.png)
+![](capturasRevision/vistaGeneralAdmin.png)
+![](capturasRevision/crearUsuarioAdmin.png)
+![](capturasRevision/vistaUsuariosAdmin.png)
+![](capturasRevision/editarUsuarioAdmin.png)
+![](capturasRevision/vistaItemsAdmin.png)
+![](capturasRevision/editarItemAdmin.png)
+![](capturasRevision/vistaRentasAdmin.png)
+![](capturasRevision/editarRentaAdmin.png)
 
 
 ## 3. Datos necesarios para la revisión
