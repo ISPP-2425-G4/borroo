@@ -399,6 +399,31 @@ Sobre documentación, añadí al presente documento la parte que me corresponde 
 ### **González Ortiz, Miguel**
 
 ### **Martín Muñoz, Álvaro**
+<div align="justify">
+
+Informe de Actividades
+
+**Primera semana**:
+Durante la primera semana, me enfoqué en la mejora del frontend y la integración de pagos en la aplicación. Comencé con la implementación de **validadores frontend para la puesta en alquiler** (1 hora, 50 minutos, 15 segundos), asegurando que los formularios funcionaran correctamente y que los datos ingresados fueran validados de manera eficiente.
+
+Además, trabajé en la **mejora estética de la aplicación** en dos sesiones (3 horas, 57 minutos, 54 segundos y 4 horas, 17 minutos, 19 segundos), refinando la interfaz y asegurando una experiencia de usuario fluida. También solucioné un problema en la UI, dedicándome al **arreglo del frontend del tablero** (7 minutos, 13 segundos).
+
+En cuanto a la integración de pagos, implementé **Stripe en los cambios de suscripciones** (2 horas, 30 minutos, 7 segundos) y comencé a trabajar en la implementación de **Stripe para el pago de un alquiler** (24 minutos, 48 segundos), configurando el sistema y asegurando la correcta comunicación con el backend.
+
+También resolví **errores de mergeo y lint** (26 minutos, 26 segundos), evitando conflictos en el código y mejorando la calidad del proyecto. Para complementar mi aprendizaje, asistí a la **Píldora Teórica 06** (10 minutos, 56 segundos) y la **Píldora Teórica 07a** (35 minutos, 33 segundos).
+
+**Segunda semana**:
+Durante la segunda semana, continué con la integración y validación de funcionalidades clave. Terminé de implementar **Stripe para el pago de un alquiler** en una segunda sesión (2 horas, 44 minutos, 23 segundos), asegurando que el flujo de pagos funcionara sin problemas.
+
+Además, trabajé en la **validación frontend para pedir un objeto en alquiler** (32 minutos, 55 segundos), verificando que los usuarios pudieran interactuar correctamente con el sistema. Implementé los **Términos y Condiciones al registrarse** (18 minutos, 8 segundos), garantizando que todos los usuarios aceptaran las condiciones antes de crear una cuenta.
+
+También solucioné errores críticos en el sistema, incluyendo el **arreglo de un error de registro** (25 minutos, 30 segundos) y la **corrección de problemas en Codacy** (22 minutos, 12 segundos), mejorando la calidad del código y su mantenibilidad.
+
+Además de las tareas de desarrollo, participé en **evaluaciones de desempeño del equipo**, dedicando tiempo a **Time Effort** (30 minutos) y **Performance Evaluation** (10 minutos). También hice **feedback externo de un usuario piloto de Go4Surprise** (44 minutos, 36 segundos)-
+
+Para finalizar, asistí a las **clases del 14/03/2025 y 21/03/2025** (3 horas, 50 minutos cada una).
+
+</div>
 
 ### **Naredo Bernardos, Ignacio**
 
