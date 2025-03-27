@@ -13,6 +13,7 @@ from rest_framework.decorators import action
 from django.core.exceptions import ValidationError
 from django.utils.dateparse import parse_date
 import json
+from rest_framework.permissions import IsAuthenticated
 
 
 class EnumChoicesView(APIView):
@@ -349,6 +350,7 @@ class ItemRequestView(APIView):
 
 
 class ItemRequestApprovalViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
 
     @action(detail=True, methods=['post'])
     def approve_request(self, request, pk=None):
