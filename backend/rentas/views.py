@@ -104,6 +104,35 @@ class RentViewSet(viewsets.ModelViewSet):
         rent_id = request.data.get('rent')
         rent = get_object_or_404(Rent, pk=rent_id)
         response = request.data.get("response")
+        user_id = request.data.get('user_id')
+
+        if not user_id:
+            return Response(
+                {
+                    "error": "No se proporcionó el 'user_id' en el cuerpo de "
+                             "la solicitud."
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        user = get_object_or_404(User, pk=user_id)
+
+        # Validación de permisos
+        if user != rent.item.user:
+            return Response(
+                {"error": "No tienes permisos para realizar esta acción."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Solo si está en REQUESTED
+        if rent.rent_status != RentStatus.REQUESTED:
+            return Response(
+                {
+                    "error": "Solo puedes responder solicitudes en estado "
+                             "REQUESTED."
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         # is_owner = user == rent.item.user
         # is_authorized(condition=is_owner, authenticated=authenticated)
@@ -111,15 +140,25 @@ class RentViewSet(viewsets.ModelViewSet):
         if response == "accepted":
             rent.rent_status = RentStatus.ACCEPTED
             rent.save()
-            return Response({'status': 'Solicitud aceptada. '
-                            'El vendedor ha aceptado su solicitud.'})
+            return Response(
+                {
+                    'status': 'Solicitud aceptada. '
+                              'El vendedor ha aceptado la solicitud.'
+                }
+            )
+
         elif response == "rejected":
             rent.rent_status = RentStatus.CANCELLED
             rent.save()
-            return Response({'status': 'Solicitud rechazada. '
-                            'El alquiler se ha cancelado.'})
+            return Response(
+                {'status': 'Solicitud rechazada. El alquiler se ha cancelado.'}
+            )
+
         else:
-            raise PermissionDenied({'error': 'No existe un response adecuado'})
+            return Response(
+                {'error': 'La respuesta debe ser "accepted" o "rejected".'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
     @action(detail=True, methods=['put'])
     def change_status(self, request, pk=None):

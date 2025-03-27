@@ -5,6 +5,7 @@ import base64
 
 def upload_image_to_imgbb(image):
     url = "https://api.imgbb.com/1/upload"
+    image.seek(0)
     image_base64 = base64.b64encode(image.read()).decode('utf-8')
     payload = {
         "key": os.getenv("IMGBB_API_KEY"),

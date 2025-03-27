@@ -119,9 +119,7 @@ class CancelType(models.TextChoices):
 class PriceCategory(models.TextChoices):
     HOUR = ('hour', 'Hora')
     DAY = ('day', 'Día')
-    WEEK = ('week', 'Semana')
     MONTH = ('month', 'Mes')
-    YEAR = ('year', 'Año')
 
 
 class Item(models.Model):
@@ -174,6 +172,16 @@ class Item(models.Model):
         self.save()
 
 
+class UnavailablePeriod(models.Model):
+    item = models.ForeignKey(
+        Item, related_name='unavailable_periods', on_delete=models.CASCADE)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+
+    class Meta:
+        unique_together = ('item', 'start_date', 'end_date')
+
+
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, related_name='images',
                              on_delete=models.CASCADE)
@@ -187,6 +195,10 @@ class ItemRequest(models.Model):
     category = models.CharField(
         max_length=50,
         choices=ItemCategory.choices
+    )
+    subcategory = models.CharField(
+        max_length=50,
+        choices=ItemSubcategory.choices
     )
     cancel_type = models.CharField(
         max_length=10,
@@ -218,6 +230,7 @@ class ItemRequest(models.Model):
             title=self.title,
             description=self.description,
             category=self.category,
+            subcategory=self.subcategory,
             cancel_type=self.cancel_type,
             price_category=self.price_category,
             price=self.price,
