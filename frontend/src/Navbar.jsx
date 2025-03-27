@@ -115,8 +115,8 @@ const Navbar = () => {
             </IconButton>
           )}
 
-          <Box sx={{ 
-            display: { xs: 'none', md: 'flex' }, 
+          <Box sx={{
+            display: { xs: 'none', md: 'flex' },
             justifyContent: 'center',
             flexGrow: 1,
             gap: 4
@@ -141,33 +141,33 @@ const Navbar = () => {
             ))}
           </Box>
 
-          <Box sx={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: 1 
+          <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1
           }}>
             {user && (
               <Chip
-                avatar={user?.avatar ? 
-                  <Avatar src={user.avatar} alt={user.name} /> : 
+                avatar={user?.avatar ?
+                  <Avatar src={user.avatar} alt={user.name} /> :
                   <Avatar>{user.name.charAt(0)}</Avatar>
                 }
                 label={
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                     {user.name}
                     {user.pricing_plan === 'premium' && (
-                      <Box 
-                        component="img" 
-                        src="/premium.png" 
-                        alt="Premium" 
-                        sx={{ width: 16, height: 16 }} 
+                      <Box
+                        component="img"
+                        src="/premium.png"
+                        alt="Premium"
+                        sx={{ width: 16, height: 16 }}
                       />
                     )}
                   </Box>
                 }
                 variant="outlined"
-                sx={{ 
-                  color: 'white', 
+                sx={{
+                  color: 'white',
                   borderColor: 'rgba(255,255,255,0.3)',
                   display: { xs: 'none', sm: 'flex' }
                 }}
@@ -194,19 +194,24 @@ const Navbar = () => {
             >
               {user ? (
                 <>
-                <MenuItem onClick={() => { handleLoginClose(); navigate(`/perfil/${encodeURIComponent(user.username)}`); }}>
-                  Mi Perfil
-                </MenuItem>
-                <MenuItem onClick={handleLogout}>
-                  Cerrar sesión
-                </MenuItem>
+                  <MenuItem onClick={() => { handleLoginClose(); navigate(`/perfil/${encodeURIComponent(user.username)}`); }}>
+                    Mi Perfil
+                  </MenuItem>
+                  {user.username === "admin" && (
+                    <MenuItem onClick={() => { handleLoginClose(); navigate('/dashboard'); }}>
+                      Dashboard
+                    </MenuItem>
+                  )}
+                  <MenuItem onClick={handleLogout}>
+                    Cerrar sesión
+                  </MenuItem>
                 </>
               ) : (
                 <>
-                  <MenuItem onClick={() => {handleLoginClose(); navigate('/login');}}>
+                  <MenuItem onClick={() => { handleLoginClose(); navigate('/login'); }}>
                     Iniciar sesión
                   </MenuItem>
-                  <MenuItem onClick={() => {handleLoginClose(); navigate('/signup');}}>
+                  <MenuItem onClick={() => { handleLoginClose(); navigate('/signup'); }}>
                     Registrarse
                   </MenuItem>
                 </>
@@ -222,12 +227,12 @@ const Navbar = () => {
             </Tooltip>
 
             <Tooltip title="Borradores">
-            <IconButton color="inherit" component={Link} to="/drafts">
-              <Badge badgeContent={0} color="error">
-              <ArticleIcon />
-              </Badge>
-            </IconButton>
-          </Tooltip>
+              <IconButton color="inherit" component={Link} to="/drafts">
+                <Badge badgeContent={0} color="error">
+                  <ArticleIcon />
+                </Badge>
+              </IconButton>
+            </Tooltip>
 
             <Tooltip title="Carrito">
               <IconButton color="inherit">
@@ -259,11 +264,11 @@ const Navbar = () => {
                     <Typography variant="body2">
                       {user.name}
                       {user.pricing_plan === 'premium' && (
-                        <Box 
-                          component="img" 
-                          src="/premium.png" 
-                          alt="Premium" 
-                          sx={{ width: 14, height: 14, ml: 0.5, verticalAlign: 'middle' }} 
+                        <Box
+                          component="img"
+                          src="/premium.png"
+                          alt="Premium"
+                          sx={{ width: 14, height: 14, ml: 0.5, verticalAlign: 'middle' }}
                         />
                       )}
                     </Typography>
@@ -272,10 +277,10 @@ const Navbar = () => {
               </Box>
               <List>
                 {navItems.map((item) => (
-                  <ListItem 
-                    button 
-                    key={item.title} 
-                    component={Link} 
+                  <ListItem
+                    button
+                    key={item.title}
+                    component={Link}
                     to={item.path}
                     sx={{
                       '&:hover': {
@@ -288,9 +293,9 @@ const Navbar = () => {
                 ))}
                 {!user && (
                   <>
-                    <ListItem 
-                      button 
-                      component={Link} 
+                    <ListItem
+                      button
+                      component={Link}
                       to="/login"
                       sx={{
                         '&:hover': {
@@ -300,9 +305,9 @@ const Navbar = () => {
                     >
                       <ListItemText primary="Iniciar sesión" />
                     </ListItem>
-                    <ListItem 
-                      button 
-                      component={Link} 
+                    <ListItem
+                      button
+                      component={Link}
                       to="/signup"
                       sx={{
                         '&:hover': {
@@ -315,8 +320,8 @@ const Navbar = () => {
                   </>
                 )}
                 {user && (
-                  <ListItem 
-                    button 
+                  <ListItem
+                    button
                     onClick={handleLogout}
                     sx={{
                       '&:hover': {
