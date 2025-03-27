@@ -2986,6 +2986,80 @@
   </tr>
 </table>
 
+### **Picón Garrote, Alexander** ###
+
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
+<th>Tarea</th>
+<th>Detalles de la actividad</th>
+<th>Tiempo</th>
+</tr>
+<tr>
+<td rowspan="5">Código</td>
+<td>implementación pasarela de pago con stripe</td>
+<td>1 hora, 54 minutos, 26 segundos</td>
+</tr>
+<tr>
+<td>pruebas funcionamiento pasarela de pago</td>
+<td>2 horas, 13 minutos, 02 segundos</td>
+</tr>
+<tr>
+<td>implementación pasarela de pago con stripe</td>
+<td>0 horas, 28 minutos, 25 segundos</td>
+</tr>
+<tr>
+<td>inicialización de sistema de pagos</td>
+<td>0 horas, 45 minutos, 39 segundos</td>
+</tr>
+<tr>
+<td>configuración y creación de stripe</td>
+<td>1 hora, 37 minutos, 14 segundos</td>
+</tr>
+<tr>
+<td rowspan="3">Documentación</td>
+<td>revisión de desarrollo de nuevas categorías</td>
+<td>0 horas, 11 minutos, 58 segundos</td>
+</tr>
+<tr>
+<td>documento de como realizar un pago con stripe</td>
+<td>0 horas, 27 minutos, 55 segundos</td>
+</tr>
+<tr>
+<td>documentación de términos y condiciones del servicio</td>
+<td>0 horas, 50 minutos, 50 segundos</td>
+</tr>
+<tr>
+<td rowspan="3">Píldoras teóricas</td>
+<td>Píldora 6</td>
+<td>11 minutos</td>
+</tr>
+<tr>
+<td>Píldora 7a</td>
+<td>35 minutos</td>
+</tr>
+<tr>
+<td>Píldora 7b</td>
+<td>37 minutos</td>
+</tr>
+<tr>
+<td rowspan="2">Reuniones</td>
+<td>reunión representantes 15/03</td>
+<td>2 horas, 05 minutos, 17 segundos</td>
+</tr>
+<tr>
+<td>reunión representantes pagos</td>
+<td>0 horas, 56 minutos, 44 segundos</td>
+</tr>
+<tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 14/03</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 21/03</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
 
 ### **Palomo García, Miguel**
 
