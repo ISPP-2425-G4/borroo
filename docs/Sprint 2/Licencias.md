@@ -126,3 +126,29 @@ Al analizar los términos y condiciones de las herramientas utilizadas, se han i
 5. Motivos de terminación incluyen incumplimientos, solicitudes gubernamentales, decisiones de Zenhub, problemas técnicos o actividades fraudulentas.  
 6. La terminación del acceso puede incluir la eliminación de materiales del usuario.  
 7. Zenhub puede terminar el acceso a su discreción sin responsabilidad alguna.  
+
+### 5.2. Cláusulas potencialmente abusivas de CAKE.com
+
+#### **Modificación unilateral**  
+1. CAKE se reserva el derecho de modificar, suspender, actualizar, cambiar o descontinuar, temporal o permanentemente, los Servicios (o cualquier parte de ellos) en cualquier momento y sin previo aviso ni responsabilidad.  
+2. CAKE puede, a su entera discreción, modificar los Servicios o el Software, lo que puede afectar la interoperabilidad o compatibilidad con Add-Ons y Ofertas de Terceros.  
+3. Los precios establecidos en el Plan de Precios están sujetos a cambios en cualquier momento y CAKE puede modificar los precios de los Servicios a su entera discreción.  
+4. De tiempo en tiempo, CAKE podrá emitir actualizaciones para los Servicios.  
+
+#### **Rescisión unilateral**  
+1. CAKE puede limitar las conexiones a la API o suspender o cancelar la Cuenta del Usuario.  
+2. Si el método de pago predeterminado es rechazado, CAKE podrá, a su exclusiva discreción, denegar el acceso al Plan de Suscripción de manera inmediata.  
+3. CAKE puede, sin previo aviso, terminar, suspender o desconectar los Servicios en caso de impago de los cargos durante cinco (5) días calendario después de la fecha de vencimiento.  
+
+#### **Eliminación de contenidos**  
+1. CAKE puede investigar quejas y violaciones y tomar cualquier acción a su entera discreción, incluyendo la emisión de advertencias, la suspensión o desconexión de los Servicios, la eliminación de datos o contenido, o la terminación de cuentas o perfiles de usuarios.  
+
+#### **Contrato por el uso**  
+9. Al utilizar o instalar un Add-On, el usuario acepta sus términos y condiciones y reconoce haber revisado su política de privacidad.  
+
+#### **Limitación de responsabilidad**  
+1.  CAKE no será responsable del procesamiento de pagos ni de ningún asunto relacionado con ello.  
+2.  CAKE no será responsable de ningún acto u omisión de cualquier proveedor de Add-Ons o Terceros, incluyendo el acceso, modificación o eliminación de datos, independientemente de si CAKE respalda o aprueba dichos Add-Ons o Terceros.  
+3.  El usuario es el único responsable de cualquier daño que pueda sufrir por el uso o la imposibilidad de uso de los Add-Ons.  
+4.  CAKE no será responsable, bajo ninguna circunstancia, por cualquier dato o contenido visualizado a través de los Servicios, incluyendo errores, omisiones, pérdidas o daños derivados del uso, acceso o denegación de acceso a dichos datos o contenido.  
+5.  La responsabilidad por contenido y datos es exclusiva del usuario.  
