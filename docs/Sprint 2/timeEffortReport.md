@@ -7,16 +7,17 @@
 ## Time effort report
 
 ### Sprint 2 – G4
+
 **Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
 
 **Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
 
 **Fecha:** 26/03/2025
 
-
 </div>
 
 ### Miembros:
+
 - David Blanco Mora
 - Pablo Díaz Ordóñez
 - Pablo Espinosa Naranjo
@@ -37,17 +38,17 @@
 
 ## **Histórico de modificaciones**
 
-| Fecha      | Versión | Realizada por   | Descripción de los cambios |
-| ---------- | ------- | --------------- | -------------------------- |
-| 20-02-2025 | v1.0    | Marco Padilla Gómez | Creación del documento |
-| 20-02-2025 | v1.1    | Todos los miembros | Añadir datos sobre el trabajo realizado en el DP |
-| 11-03-2025 | v2.0    | Marco Padilla Gómez | Actualización del documento para el S1 e historico de modificaciones añadido |
-| 13-03-2025 | v2.1    | Todos los miembros | Añadir datos sobre el trabajo realizado en el S1 |
-| 26-03-2025 | v3.0    | Marco Padilla Gómez | Actualización del documento para el S2 |
-| 27-03-2025 | v3.1    | Todos los miembros | Añadir datos sobre el trabajo realizado en el S2 |
-
+| Fecha      | Versión  | Realizada por        | Descripción de los cambios                                                   |
+| ---------- | -------- | -------------------- | ---------------------------------------------------------------------------- |
+| 20-02-2025 | v1.0     | Marco Padilla Gómez  | Creación del documento                                                       |
+| 20-02-2025 | v1.1     |  Todos los miembros  |  Añadir datos sobre el trabajo realizado en el DP                            |
+| 11-03-2025 | v2.0     | Marco Padilla Gómez  | Actualización del documento para el S1 e historico de modificaciones añadido |
+| 13-03-2025 | v2.1     | Todos los miembros   | Añadir datos sobre el trabajo realizado en el S1                             |
+| 26-03-2025 | v3.0     | Marco Padilla Gómez  | Actualización del documento para el S2                                       |
+| 27-03-2025 | v3.1     | Todos los miembros   | Añadir datos sobre el trabajo realizado en el S2                             |
 
 ## Tabla de contenidos
+
 1. [Devising a Project (#DP)](#devising-a-project-dp)
 
 2. [Sprint 1](#sprint-1-s1)
@@ -57,6 +58,7 @@
 ## Devising a Project (#DP)
 
 ### Blanco Mora, David
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -113,6 +115,7 @@
 </table>
 
 ### Díaz Ordoñez, Pablo
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -205,6 +208,7 @@
 </table>
 
 ### Espinosa Naranjo, Pablo
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -254,6 +258,7 @@
 </table>
 
 ### Fernández Rodríguez, Jesús
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -346,6 +351,7 @@
 </table>
 
 ### Fernández Mota, Francisco
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -443,6 +449,7 @@
 </table>
 
 ### García Rodríguez, Javier
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -519,6 +526,7 @@
 </table>
 
 ### González Ortiz, Miguel
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -591,6 +599,7 @@
 </table>
 
 ### Martin Muñoz, Álvaro
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -688,85 +697,127 @@
 
 ### Naredo Bernardos, Ignacio
 
-<table>
+  <table>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+    <tr>
+      <td rowspan="4">Documentación-DP</td>
+      <td>Cliente/Usuario</td>
+      <td>1 hora y 12 minutos</td>
+    </tr>
+    <tr>
+      <td>Competidores</td>
+      <td>4 horas y 27 minutos</td>
+    </tr>
+    <tr>
+      <td>Revisión</td>
+      <td>3 horas y 38 minutos</td>
+    </tr>
+    <tr>
+      <td>Uso de la IA</td>
+      <td>21 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="4">Trabajo</td>
+      <td>Conexión BD</td>
+      <td>4 horas y 1 minuto</td>
+    </tr>
+    <tr>
+      <td>Método búsqueda</td>
+      <td>1 hora y 22 minutos</td>
+    </tr>
+    <tr>
+      <td>Filtro categorías</td>
+      <td>2 horas y 10 minutos</td>
+    </tr>
+    <tr>
+      <td>Despliegue app engine</td>
+      <td>2 horas y 21 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 07/02</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 14/02</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 21/02</td>
+      <td>4 horas</td>
+    </tr>
+    <tr>
+      <td>Clase 07/03</td>
+      <td>4 horas</td>
+    </tr>
+    <tr>
+      <td>Reuniones</td>
+      <td>Reunión de grupo</td>
+      <td>5 horas y 2 minutos</td>
+    </tr>
+    <tr>
+      <td>Docusaurus</td>
+      <td>Creación y subida docs Docusaurus</td>
+      <td>6 horas y 56 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Píldoras teóricas</td>
+      <td>Ver videos de píldoras</td>
+      <td>1 hora y 10 minutos</td>
+    </tr>
+    <tr>
+      <td>Ver videos de píldoras</td>
+      <td>2 horas y 24 minutos</td>
+    </tr>
+    <table>
   <tr>
     <th>Tarea</th>
     <th>Detalles de la actividad</th>
     <th>Tiempo</th>
   </tr>
   <tr>
-    <td rowspan="4">Documentación-DP</td>
-    <td>Cliente/Usuario</td>
-    <td>1 hora y 12 minutos</td>
+    <td rowspan="3">Alquiler</td>
+    <td>Método solicitud alquiler</td>
+    <td>3 horas y 7 minutos</td>
   </tr>
   <tr>
-    <td>Competidores</td>
-    <td>4 horas y 27 minutos</td>
+    <td>Método solicitar alquiler y sus validaciones</td>
+    <td>2 horas y 13 minutos</td>
   </tr>
   <tr>
-    <td>Revisión</td>
-    <td>3 horas y 38 minutos</td>
+    <td>Ayuda frontend admin y solicitud</td>
+    <td>3 horas</td>
   </tr>
   <tr>
-    <td>Uso de la IA</td>
-    <td>21 minutos</td>
+    <td>Base de conocimiento</td>
+    <td>Base conocimiento común</td>
+    <td>36 minutos</td>
   </tr>
   <tr>
-    <td rowspan="4">Trabajo</td>
-    <td>Conexión BD</td>
-    <td>4 horas y 1 minuto</td>
+    <td rowspan="4">Backend</td>
+    <td>Admin backend</td>
+    <td>3 horas y 16 minutos</td>
   </tr>
   <tr>
-    <td>Método búsqueda</td>
-    <td>1 hora y 22 minutos</td>
+    <td>Admin backend</td>
+    <td>2 horas y 6 minutos</td>
   </tr>
   <tr>
-    <td>Filtro categorías</td>
-    <td>2 horas y 10 minutos</td>
+    <td>Admin backend con token</td>
+    <td>2 horas y 30 minutos</td>
   </tr>
   <tr>
-    <td>Despliegue app engine</td>
-    <td>2 horas y 21 minutos</td>
+    <td>Ayuda Fullstack categorías y filtro de precio</td>
+    <td>1 hora y 30 minutos</td>
   </tr>
-  <tr>
-    <td rowspan="2">Clases</td>
-    <td>Clase 07/02</td>
-    <td>3 horas y 50 minutos</td>
-  </tr>
-  <tr>
-    <td>Clase 14/02</td>
-    <td>3 horas y 50 minutos</td>
-  </tr>
-  <tr>
-    <td>Clase 21/02</td>
-    <td>4 horas</td>
-  </tr>
-  <tr>
-    <td>Clase 07/03</td>
-    <td>4 horas</td>
-  </tr>
-  <tr>
-    <td>Reuniones</td>
-    <td>Reunión de grupo</td>
-    <td>5 horas y 2 minutos</td>
-  </tr>
-  <tr>
-    <td>Docusaurus</td>
-    <td>Creación y subida docs Docusaurus</td>
-    <td>6 horas y 56 minutos</td>
-  </tr>
-  <tr>
-    <td rowspan="2">Píldoras teóricas</td>
-    <td>Ver videos de píldoras</td>
-    <td>1 hora y 10 minutos</td>
-  </tr>
-  <tr>
-    <td>Ver videos de píldoras</td>
-    <td>2 horas y 24 minutos</td>
-  </tr>
-</table>
+  </table>
 
 ### Nieto Vicioso, Javier
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -864,6 +915,7 @@
 </table>
 
 ### Padilla Gómez, Marco
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -950,6 +1002,7 @@
 </table>
 
 ### Palomo García, Miguel
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -1012,6 +1065,7 @@
 </table>
 
 ### Periañez Franco, Luis Javier
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -1092,6 +1146,7 @@
 </table>
 
 ### Picón Garrote, Alexander
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -1196,6 +1251,7 @@
 </table>
 
 ### Rosado Raya, Santiago
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -1288,6 +1344,7 @@
 </table>
 
 ### Sánchez Márquez, Julia
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -1364,8 +1421,8 @@
   </tr>
 </table>
 
-
 ### Sevillano Barea, Alejandro
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -1430,9 +1487,10 @@
   </tr>
 </table>
 
-
 ## Sprint 1 (#S1)
+
 ### Blanco Mora, David
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -1585,9 +1643,6 @@
     <td colspan="2"><a href="https://app.clockify.me/shared/67d3345bef0d12419bc1c07e" target="_blank">Clockify</a></td>
   </tr>
 </table>
-
-
-
 
 ### Espinosa Naranjo, Pablo
 
@@ -1760,7 +1815,6 @@
   </tr>
 </table>
 
-
 ### García Rodríguez, Javier
 
 <table>
@@ -1806,7 +1860,6 @@
     <td>1 hora y 13 minutos</td>
   </tr>
 </table>
-
 
 ### González Ortiz, Miguel
 
@@ -1870,6 +1923,7 @@
 </table>
 
 ### Martin Muñoz, Álvaro
+
 <table border="1">
   <tr>
     <th>Tarea</th>
@@ -2050,8 +2104,8 @@
   </tr>
 </table>
 
-
 ### Nieto Vicioso, Javier
+
 <table border="1">
   <thead>
     <tr>
@@ -2311,6 +2365,7 @@
 </table>
 
 ### Palomo García, Miguel
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -2399,7 +2454,7 @@
   </tr>
 </table>
 
-### Picón Garrote, Alexander  
+### Picón Garrote, Alexander
 
 <table>
   <tr>
@@ -2495,6 +2550,7 @@
 </table>
 
 ### Rosado Raya, Santiago
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -2614,7 +2670,8 @@
   </tr>
 </table>
 
-### Sánchez Márquez, Julia 
+### Sánchez Márquez, Julia
+
 <table>
   <thead>
     <tr>
@@ -2702,6 +2759,7 @@
 </table>
 
 ### Sevillano Barea, Alejandro
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -2762,12 +2820,69 @@
   </tr>
 </table>
 
-
 ## Sprint 2 (#S2)
 
-### **Blanco Mora, David**  
+### **Blanco Mora, David**
 
-### **Díaz Ordóñez, Pablo**  
+<table> 
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="10">Trabajo</td>
+    <td>Feature: Tablón solicitudes</td>
+    <td>2h32min</td>
+  </tr>
+  <tr>
+    <td>Desarrollo tablón solicitudes</td>
+    <td>1h36min</td>
+  </tr>
+  <tr>
+    <td>Desarrollo tablón solicitudes</td>
+    <td>1h56min</td>
+  </tr>
+  <tr>
+    <td>Feat: Tablón solicitudes realizadas</td>
+    <td>1h</td>
+  </tr>
+  <tr>
+    <td>Modificación backend tablón de mis peticiones</td>
+    <td>20min</td>
+  </tr>
+  <tr>
+    <td>Arreglo: tests rentas</td>
+    <td>2h36min</td>
+  </tr>
+  <tr>
+    <td>Test: Tablón solicitudes</td>
+    <td>1h31min</td>
+  </tr>
+  <tr>
+    <td>Píldoras teóricas</td>
+    <td>1h23min</td>
+  </tr>
+  <tr>
+    <td>Validaciones tablón solicitudes</td>
+    <td>2h30min</td>
+  </tr>
+  <tr>
+    <td>Time-effort y performance evaluation</td>
+    <td>30min</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 14/03</td>
+    <td>3h50min</td>
+  </tr>
+  <tr>
+    <td>Clase 21/03</td>
+    <td>3h50min</td>
+  </tr>
+</table>
+
+### **Díaz Ordóñez, Pablo**
 
 <table border="1" cellspacing="0" cellpadding="5">
   <tr>
@@ -2880,8 +2995,6 @@
   </tr>
 </table>
 
-
-
 ### **Espinosa Naranjo, Pablo**
 
 ### **Fernández Rodríguez, Jesús**
@@ -2894,9 +3007,102 @@
 
 ### **Martín Muñoz, Álvaro**
 
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
+<th>Tarea</th>
+<th>Detalles de la actividad</th>
+<th>Tiempo</th>
+</tr>
+<tr>
+<td rowspan="14">Trabajo</td>
+<td>Validadores frontend puesta en alquiler</td>
+<td>1 hora, 50 minutos, 15 segundos</td>
+</tr>
+<tr>
+<td>Mejora estética de la aplicación</td>
+<td>3 horas, 57 minutos, 54 segundos</td>
+</tr>
+<tr>
+<td>Mejora estética de la aplicación</td>
+<td>4 horas, 17 minutos, 19 segundos</td>
+</tr>
+<tr>
+<td>Arreglo frontend tablero</td>
+<td>7 minutos, 13 segundos</td>
+</tr>
+<tr>
+<td>Implementar stripe en los cambios de subscripciones</td>
+<td>2 horas, 30 minutos, 7 segundos</td>
+</tr>
+<tr>
+<td>Errores de mergeo y lint</td>
+<td>26 minutos, 26 segundos</td>
+</tr>
+<tr>
+<td>Implementar stripe en el pago de un alquiler</td>
+<td>24 minutos, 48 segundos</td>
+</tr>
+<tr>
+<td>Implementar stripe en el pago de un alquiler</td>
+<td>2 horas, 44 minutos, 23 segundos</td>
+</tr>
+<tr>
+<td>Validación frontend de pedir un objeto en alquiler</td>
+<td>32 minutos, 55 segundos</td>
+</tr>
+<tr>
+<td>Términos y condiciones al registrarse</td>
+<td>18 minutos, 8 segundos</td>
+</tr>
+<tr>
+<td>Arreglar error de registro</td>
+<td>25 minutos, 30 segundos</td>
+</tr>
+<tr>
+<td>Arreglar codacy</td>
+<td>22 minutos, 12 segundos</td>
+</tr>
+<tr>
+<td>Time Effort</td>
+<td>30 minutos</td>
+</tr>
+<tr>
+<td>Performance Evaluation</td>
+<td>10 minutos</td>
+</tr>
+<tr>
+<td rowspan="2">Clases</td>
+<td>Clase 14/03</td>
+<td>3 horas, 50 minutos</td>
+</tr>
+<tr>
+<td>Clase 21/03</td>
+<td>3 horas, 50 minutos</td>
+</tr>
+<tr>
+<td rowspan="3">Píldoras teóricas</td>
+<td>Píldora 06</td>
+<td>10 minutos, 56 segundos</td>
+</tr>
+<tr>
+<td>Píldora 07a</td>
+<td>35 minutos, 33 segundos</td>
+</tr>
+<tr>
+<td>Píldora 07b</td>
+<td>37 minutos, 47 segundos</td>
+</tr>
+<tr>
+<td>Feedback Externo</td>
+<td>Usuario Piloto de Go4Surprise</td>
+<td>44 minutos, 36 segundos</td>
+</tr>
+</table>
+
 ### **Naredo Bernardos, Ignacio**
 
 ### **Nieto Vicioso, Javier**
+
 <table border="1" cellspacing="0" cellpadding="5">
   <tr>
     <th>Tarea</th>
@@ -3024,7 +3230,6 @@
   </tr>
 </table>
 
-
 ### **Padilla Gómez, Marco**
 
 <table border="1" cellspacing="0" cellpadding="5">
@@ -3055,7 +3260,7 @@
     <td>14 minutos</td>
   </tr>
   <tr>
-    <td rowspan="5">Documentación</td>
+    <td rowspan="6">Documentación</td>
     <td>Tomar feedback</td>
     <td>1 hora y 31 minutos</td>
   </tr>
@@ -3074,6 +3279,10 @@
   <tr>
     <td>Rellenar el timeEffort y el performance evaluation</td>
     <td>20 minutos</td>
+  </tr>
+  <tr>
+    <td>Actualizacion revision.md</td>
+    <td>1 hora y4 minutos</td>
   </tr>
   <tr>
     <td rowspan="3">Píldoras teóricas</td>
@@ -3099,7 +3308,7 @@
   </tr>
 </table>
 
-### **Picón Garrote, Alexander** ###
+### **Picón Garrote, Alexander**
 
 <table border="1" cellspacing="0" cellpadding="5">
 <tr>

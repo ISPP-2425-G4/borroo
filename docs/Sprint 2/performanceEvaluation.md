@@ -155,6 +155,10 @@ Durante la segunda semana, trabajé en el desarrollo del plan de metodología de
 
 Durante la tercera semana, trabajé junto a mi subgrupo en la realización del documento de metodología del desarrollo, además realicé junto a 3 miembros del equipo la base de conocimiento en Docusaurus, tanto pasando a formato Markdown los PDFs como añadiendo a la base de conocimiento común a todos los grupos el feedback proporcionado.
 
+Durante la cuarta semana, trabajé en la realización del método de solicitud de alquiler y sus validaciones así como la ayuda a fullstack de categorias y filtros de precios. 
+
+Durante la quinta semana desarrollé el admin backend, luego desarrolle el admin backend con token y finalmente colaboré en la ayuda a mis compañeros a desarrollar el fullstack de admin y el frontend de solicitud de alquileres.
+
 ### **Nieto Vicioso, Javier**
 Durante la primera semana, participé en la búsqueda de alternativas para el proyecto, explorando ideas como "crear y compartir itinerarios de viaje" y "web para gestión de tareas del hogar". Tras analizar los competidores de estas ideas, se llegó a la conclusión de que el mercado era complicado. Al final de la semana, el equipo se dividió en subgrupos y yo junto con mi subgrupo hicimos la descripción del equipo, el reporte sobre el uso de la IA, y la gestión del código y conocimiento común.
 
@@ -392,9 +396,38 @@ Sobre documentación, añadí al presente documento la parte que me corresponde 
 
 ### **García Rodríguez, Javier**
 
+Durante la primera semana, junto a los representantes de los otros 2 subgrupos (Alexander Picón y Francisco Fernández) y Miguel Palomo, nos encargamos de planificar todo el Sprint 2. Esto incluye todas las tareas que eran vitales a desarrollar en el sprint, desde backend, frontend, testing, y más. Además, se crearon todas las issues estimadas desde el inicio para poder empezar a trabajar lo más pronto posible. Además, creamos plantillas en las issues con distintos campos para facilitar una mayor comprensión de las tareas de cada miembro. Además, me encargué de 2 tareas de código, concretamente desarrollar validaciones en el backend para el formulario del login, y los métodos correspondientes a los cambios de planes de suscripción, de gratuito a premium, y viceversa, respectivamente. Esta semana también estuve preparando la presentación correspondiente al viernes 21. Recalcar la implicación diaria en resolución de dudas y conversaciones por los canales de contactos para mantener el proyecto al día. Además, tuvimos una reunión más los representantes con Miguel Palomo para valorar problemas e incidencias que se desarrollaban a la hora de implementar la pasarela de pago de Stripe.
+
+Durante la segunda semana, me centré más el el tema de documentación, concretamente en desarrollar 3 documentos: uso de la IA, las licencias de aplicaciones usadas en el proyecto, y el documento aplicado a la legislación correspondiente a nuestro proyecto, enfocándolo en leyes nacionales y europeas por las que se rige nuestro proyecto. Finalmente, estuve preparando la presentación de cara al entregable del S2. Destacar una vez más la coordinación durante esta semana, que fue un poco más compleja e intensa, pero con la que se pudo terminar todas las tareas.
+
 ### **González Ortiz, Miguel**
 
 ### **Martín Muñoz, Álvaro**
+<div align="justify">
+
+Informe de Actividades
+
+**Primera semana**:
+Durante la primera semana, me enfoqué en la mejora del frontend y la integración de pagos en la aplicación. Comencé con la implementación de **validadores frontend para la puesta en alquiler** (1 hora, 50 minutos, 15 segundos), asegurando que los formularios funcionaran correctamente y que los datos ingresados fueran validados de manera eficiente.
+
+Además, trabajé en la **mejora estética de la aplicación** en dos sesiones (3 horas, 57 minutos, 54 segundos y 4 horas, 17 minutos, 19 segundos), refinando la interfaz y asegurando una experiencia de usuario fluida. También solucioné un problema en la UI, dedicándome al **arreglo del frontend del tablero** (7 minutos, 13 segundos).
+
+En cuanto a la integración de pagos, implementé **Stripe en los cambios de suscripciones** (2 horas, 30 minutos, 7 segundos) y comencé a trabajar en la implementación de **Stripe para el pago de un alquiler** (24 minutos, 48 segundos), configurando el sistema y asegurando la correcta comunicación con el backend.
+
+También resolví **errores de mergeo y lint** (26 minutos, 26 segundos), evitando conflictos en el código y mejorando la calidad del proyecto. Para complementar mi aprendizaje, asistí a la **Píldora Teórica 06** (10 minutos, 56 segundos) y la **Píldora Teórica 07a** (35 minutos, 33 segundos).
+
+**Segunda semana**:
+Durante la segunda semana, continué con la integración y validación de funcionalidades clave. Terminé de implementar **Stripe para el pago de un alquiler** en una segunda sesión (2 horas, 44 minutos, 23 segundos), asegurando que el flujo de pagos funcionara sin problemas.
+
+Además, trabajé en la **validación frontend para pedir un objeto en alquiler** (32 minutos, 55 segundos), verificando que los usuarios pudieran interactuar correctamente con el sistema. Implementé los **Términos y Condiciones al registrarse** (18 minutos, 8 segundos), garantizando que todos los usuarios aceptaran las condiciones antes de crear una cuenta.
+
+También solucioné errores críticos en el sistema, incluyendo el **arreglo de un error de registro** (25 minutos, 30 segundos) y la **corrección de problemas en Codacy** (22 minutos, 12 segundos), mejorando la calidad del código y su mantenibilidad.
+
+Además de las tareas de desarrollo, participé en **evaluaciones de desempeño del equipo**, dedicando tiempo a **Time Effort** (30 minutos) y **Performance Evaluation** (10 minutos). También hice **feedback externo de un usuario piloto de Go4Surprise** (44 minutos, 36 segundos)-
+
+Para finalizar, asistí a las **clases del 14/03/2025 y 21/03/2025** (3 horas, 50 minutos cada una).
+
+</div>
 
 ### **Naredo Bernardos, Ignacio**
 
@@ -419,7 +452,7 @@ En general, estas dos semanas han estado enfocadas en mejoras de usabilidad, val
 
 En la primera semana del S2, me encargue de las validaciones del
 backend de la puesta en alquiler, en las cuales estuve mucho tiempo ya que había un fallo con el JWT que no detecté, hasta que eso no se arreglo no pude hacer las validaciones correspondientes.
-En la segunda semana, me encargué de tomar feedback en clase, el cual pase despues a las bases de conocimientos, tanto la grupal como la nuestra propia, tuve un fallo en la base de datos que tuve que arreglar, y añadí la pantalla de FAQ a la aplicacion con sus respectivas preguntas y respuesta. Tambien realice el nuevo KBreport, y me vi las 3 pildoras teoricas. Ya estaba arreglado el tema del JWT por lo que pude realizar las validaciones oportunas para el backend de la puesta en alquiler.
+En la segunda semana, me encargué de tomar feedback en clase, el cual pase despues a las bases de conocimientos, tanto la grupal como la nuestra propia, tuve un fallo en la base de datos que tuve que arreglar, y añadí la pantalla de FAQ a la aplicacion con sus respectivas preguntas y respuesta. Tambien realice el nuevo KBreport, y me vi las 3 pildoras teoricas. Ya estaba arreglado el tema del JWT por lo que pude realizar las validaciones oportunas para el backend de la puesta en alquiler. Tambien actualice el revision.md.
 
 ### **Picón Garrote, Alexander** ###
 

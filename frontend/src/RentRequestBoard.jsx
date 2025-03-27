@@ -83,11 +83,21 @@ const RentRequestBoard = () => {
 
     const handleResponse = async (renta, responseType) => {
         try {
-            await axios.put(
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (!user || !user.id) {
+                alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
+                return;
+            }
+            const response = await axios.put(
                 `${import.meta.env.VITE_API_BASE_URL}/rentas/full/${renta.id}/respond_request/`,
-                { response: responseType, rent: renta.id }
+                {
+                    response: responseType,
+                    rent: renta.id,
+                    user_id: user.id
+                }
             );
-
+            console.log(response.data);
+    
             // Eliminamos la solicitud de la lista tras responderla
             setReceivedRequests((prevRequests) =>
                 prevRequests.filter((request) => request.id !== renta.id)

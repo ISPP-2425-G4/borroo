@@ -75,3 +75,6 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Santiago Rosado Raya        |          |          |           |                |                |                |           |           |           |                |          |          |          |          |
 | Julia Sánchez Márquez       |          | :blush:  |           |                | :smiley:       | :neutral_face: |           | :worried: |           | :neutral_face: |          |          |          |          |
 | Alejandro Sevillano Barea   |          |          |           |                | :neutral_face: | :smiley:       | :smiley:  |           |           | :worried:      |          |          |          |          |
+
+
+

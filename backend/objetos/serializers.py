@@ -55,6 +55,7 @@ class ItemSerializer(serializers.ModelSerializer):
         """
         user = self.context['request'].user
         draft_mode = data.get('draft_mode', False)
+        image_files = self.initial_data.get('image_files')
 
         # Restricción: No más de 10 ítems con draft_mode False
         item_count = Item.objects.filter(user=user, draft_mode=False).count()
@@ -68,6 +69,14 @@ class ItemSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "No puedes tener más de 15 ítems en total con el plan Free."
             )
+
+        # Restricción: Debe subir al menos una imagen
+        image_files = data.get('image_files', [])
+        if not draft_mode and (not image_files or len(image_files) == 0):
+            raise serializers.ValidationError({
+                "image_files":
+                "Debes subir al menos una imagen para publicar el ítem."
+            })
 
         return data
 
@@ -142,7 +151,24 @@ class ItemSerializer(serializers.ModelSerializer):
 
 
 class ItemRequestSerializer(serializers.ModelSerializer):
+    category_display = serializers.CharField(
+        source='get_category_display', read_only=True
+    )
+    subcategory_display = serializers.CharField(
+         source='get_subcategory_display', read_only=True
+     )
+    cancel_type_display = serializers.CharField(
+        source='get_cancel_type_display', read_only=True
+    )
+    price_category_display = serializers.CharField(
+        source='get_price_category_display', read_only=True
+    )
+
     class Meta:
         model = ItemRequest
-        fields = ['id', 'title', 'description',
-                  'category', 'price', 'user', 'approved']
+        fields = [
+            'id', 'title', 'description',
+            'category', 'category_display', 'subcategory',
+            'subcategory_display', 'price', 'price_category',
+            'cancel_type', 'cancel_type_display',
+            'price_category_display', 'user', 'approved']
