@@ -2997,6 +2997,46 @@
 
 ### **Espinosa Naranjo, Pablo**
 
+<table>
+    <tr>
+        <th>Tarea</th>
+        <th>Detalles de la actividad</th>
+        <th>Tiempo</th>
+    </tr>
+    <tr>
+        <td rowspan="4">Trabajo</td>
+        <td>Fullstack subcategorias</td>
+        <td>11 horas 14 minutos</td>
+    </tr>
+    <tr>
+        <td>Filtro de precio</td>
+        <td>2 horas 22 minutos</td>
+    </tr>
+    <tr>
+        <td>Frontend pedir un alquiler</td>
+        <td>7 horas 56 minutos</td>
+    </tr>
+    <tr>
+        <td>Documento revisión</td>
+        <td>45 minutos</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Clase</td>
+        <td>Clase 14/3/25</td>
+        <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+        <td>Clase 21/3/25</td>
+        <td>1 hora 50 minutos</td>
+    </tr>
+    <tr>
+        <td>Píldoras teóricas</td>
+        <td>Sesion 06, 7a y 7b</td>
+        <td>1 hora 24 minutos</td>
+    </tr>
+</table>
+
+
 ### **Fernández Rodríguez, Jesús**
 
 ### **Fernández Mota, Francisco**
