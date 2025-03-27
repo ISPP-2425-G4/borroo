@@ -460,11 +460,11 @@ En la segunda semana, me encargué de tomar feedback en clase, el cual pase desp
 
 ### **Picón Garrote, Alexander** ###
 
-Durante la primera semana, mi principal actividad fue la participación en una reunión con los representantes del grupo. Esta reunión fue de suma importancia para la coordinación y el avance del proyecto de cara a la planificación del sprint. Dediqué tiempo a revisar el desarrollo de nuevas categorías, configurar y crear la implementación inicial con stripe.
+Durante la primera semana, mi principal actividad fue la participación en una reunión con los representantes del grupo. Esta reunión fue de suma importancia para la coordinación y el avance del proyecto de cara a la planificación del sprint. Dediqué tiempo a revisar el desarrollo de nuevas categorías, configurar y crear la implementación inicial con stripe.Y tuve una reunión acerca de como gestionar los pagos de la aplicación con los representantes.
+
 
 En la segunda semana, me centré en el desarrollo e implementación de la pasarela de pagos con Stripe. Dediqué tiempo a realizar pruebas de funcionamiento y participar en una reunión con representantes de pagos. Además de las tareas de desarrollo, también me encargué de la documentación, elaborando el documento sobre cómo realizar pagos con Stripe y la documentación de los términos y condiciones del servicio.
-Asimismo, continué con mi formación a través de las "píldoras teóricas". Y tuve una reunión acerca de como gestionar los pagos de la aplicación con los representantes.
-
+Asimismo, continué con mi formación a través de las "píldoras teóricas". 
 ### **Palomo García, Miguel**
 
 ### **Periañez Franco, Luis Javier**
