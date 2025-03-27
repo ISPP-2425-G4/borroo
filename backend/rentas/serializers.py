@@ -43,7 +43,7 @@ class RentSerializer(serializers.ModelSerializer):
                         "puede superar las 23 horas."
                     })
             elif price_category == "month":
-                total_days = (end_date - start_date).days + 1
+                total_days = (end_date - start_date).days
                 if start_date.month == 2:
                     if total_days not in (28, 29):
                         raise serializers.ValidationError({
