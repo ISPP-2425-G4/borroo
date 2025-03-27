@@ -226,7 +226,7 @@ Credenciales usuario:
  	- Administrador: admin_ispp / B0rr0o2025ISPP
  
 
-URL deployment platform: https://frontend-dot-ispp-2425-g4.ew.r.appspot.com/ 
+URL deployment platform: https://frontend-s2-dot-ispp-2425-g4.ew.r.appspot.com/
 
 URL Github Repository: https://github.com/ISPP-2425-G4/borroo 
 
@@ -237,4 +237,4 @@ URL y credenciales del “time tracking tool”: Desde clockify (en organizació
 
 Potential Requirements: Uso de internet para aplicacion desplegada, descrito en readme de git para aplicacion local 
 
-Enlace video demo:  https://youtu.be/dlp_72Nuzr0
+Enlace video demo:  [https://youtu.be/dlp_72Nuzr0](https://youtu.be/5WEx4Np57dI)
