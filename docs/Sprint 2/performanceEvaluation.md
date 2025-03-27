@@ -45,6 +45,7 @@
 | 13-03-2025 | v2.0    | Marco Padilla Gómez | Actualizar documento para S1 |
 | 13-03-2025 | v2.1    | Todos los miembros | Añadir datos sobre el trabajo realizado |
 | 26-03-2025 | v3.0    | Marco Padilla Gómez | Actualizar documento para S2 |
+| 27-03-2025 | v3.1    | Todos los miembros | Añadir datos sobre el trabajo realizado |
 
 
 ---
@@ -382,6 +383,10 @@ Para concluir, creé el usuario administrador de la aplicación, convertí algun
 ### **Nieto Vicioso, Javier**
 
 ### **Padilla Gómez, Marco**
+
+En la primera semana del S2, me encargue de las validaciones del
+backend de la puesta en alquiler, en las cuales estuve mucho tiempo ya que había un fallo con el JWT que no detecté, hasta que eso no se arreglo no pude hacer las validaciones correspondientes.
+En la segunda semana, me encargué de tomar feedback en clase, el cual pase despues a las bases de conocimientos, tanto la grupal como la nuestra propia, tuve un fallo en la base de datos que tuve que arreglar, y añadí la pantalla de FAQ a la aplicacion con sus respectivas preguntas y respuesta. Tambien realice el nuevo KBreport, y me vi las 3 pildoras teoricas. Ya estaba arreglado el tema del JWT por lo que pude realizar las validaciones oportunas para el backend de la puesta en alquiler.
 
 ### **Palomo García, Miguel**
 
