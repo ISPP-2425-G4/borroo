@@ -2869,9 +2869,13 @@
     <td>Píldoras teóricas 6 y 7a y 7b (25/03/2025)</td>
     <td>1 hora 23 minutos</td>
   </tr>
-  <tr>
-    <td rowspan="1"><b>Clases</b></td>
+   <tr>
+    <td rowspan="2"><b>Clases</b></td>
     <td>Clase (21/03/2025)</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase (14/03/2025)</td>
     <td>3 horas 50 minutos</td>
   </tr>
 </table>
