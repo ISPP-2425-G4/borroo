@@ -394,6 +394,10 @@ Sobre documentación, añadí al presente documento la parte que me corresponde 
 
 ### **Fernández Mota, Francisco**
 
+Durante la primera semana de desarrollo del Sprint 2, nos reunimos los representantes de los diferentes subgrupos con el PM para planificar las tareas del sprint, crear las issues y asignarlas. Tras esto, trabajé con mi compañero David para implementar tanto en backend como en frontend el tablón de solicitudes de alquiler. Cerrando la semana, desarrollé la lógica de negocio para aceptar o rechazar estas solicitudes por parte del propietario del bien solicitado e hice un excel para el cálculo del ROI y las estimaciones.
+
+Durante la segunda semana de desarrollo, habiendo terminado mis tareas, hice el acuerdo a nivel de servicio (SLA), y estuve revisando PRs además de resolver dudas y ayudar a resolver problemas surgidos a lo largo de la semana.
+
 ### **García Rodríguez, Javier**
 
 Durante la primera semana, junto a los representantes de los otros 2 subgrupos (Alexander Picón y Francisco Fernández) y Miguel Palomo, nos encargamos de planificar todo el Sprint 2. Esto incluye todas las tareas que eran vitales a desarrollar en el sprint, desde backend, frontend, testing, y más. Además, se crearon todas las issues estimadas desde el inicio para poder empezar a trabajar lo más pronto posible. Además, creamos plantillas en las issues con distintos campos para facilitar una mayor comprensión de las tareas de cada miembro. Además, me encargué de 2 tareas de código, concretamente desarrollar validaciones en el backend para el formulario del login, y los métodos correspondientes a los cambios de planes de suscripción, de gratuito a premium, y viceversa, respectivamente. Esta semana también estuve preparando la presentación correspondiente al viernes 21. Recalcar la implicación diaria en resolución de dudas y conversaciones por los canales de contactos para mantener el proyecto al día. Además, tuvimos una reunión más los representantes con Miguel Palomo para valorar problemas e incidencias que se desarrollaban a la hora de implementar la pasarela de pago de Stripe.
