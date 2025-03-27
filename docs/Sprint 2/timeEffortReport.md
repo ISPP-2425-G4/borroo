@@ -2767,6 +2767,65 @@
 
 ### **Blanco Mora, David**  
 
+<table> 
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="10">Trabajo</td>
+    <td>Feature: Tablón solicitudes</td>
+    <td>2h32min</td>
+  </tr>
+  <tr>
+    <td>Desarrollo tablón solicitudes</td>
+    <td>1h36min</td>
+  </tr>
+  <tr>
+    <td>Desarrollo tablón solicitudes</td>
+    <td>1h56min</td>
+  </tr>
+  <tr>
+    <td>Feat: Tablón solicitudes realizadas</td>
+    <td>1h</td>
+  </tr>
+  <tr>
+    <td>Modificación backend tablón de mis peticiones</td>
+    <td>20min</td>
+  </tr>
+  <tr>
+    <td>Arreglo: tests rentas</td>
+    <td>2h36min</td>
+  </tr>
+  <tr>
+    <td>Test: Tablón solicitudes</td>
+    <td>1h31min</td>
+  </tr>
+  <tr>
+    <td>Píldoras teóricas</td>
+    <td>1h23min</td>
+  </tr>
+  <tr>
+    <td>Validaciones tablón solicitudes</td>
+    <td>2h30min</td>
+  </tr>
+  <tr>
+    <td>Time-effort y performance evaluation</td>
+    <td>30min</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 14/03</td>
+    <td>3h50min</td>
+  </tr>
+  <tr>
+    <td>Clase 21/03</td>
+    <td>3h50min</td>
+  </tr>
+</table>
+
+
 ### **Díaz Ordóñez, Pablo**  
 
 <table border="1" cellspacing="0" cellpadding="5">
