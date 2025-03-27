@@ -366,6 +366,20 @@ Para concluir, creé el usuario administrador de la aplicación, convertí algun
 
 ### **Díaz Ordóñez, Pablo**  
 
+Tras la clase con la que se finalizaba el primer sprint, estuve ese primer fin de semana repasando todo el código implementado, ya que al no realizar mucho código durante el sprint 1, quería aclarar ciertas partes del código que me generaban más dudas, para poder enfrentarme a las tareas del sprint 2 con mayor soltura.
+
+Durante la primera semana del sprint 2, llevé a cabo la realización de la tarea de deshabilitar el botón de los formularios existentes hasta que no estén introducidos sus datos correctamente. Además, añadí un botón que permitía ver o esconder la contraseña del usuario al registrarse o iniciar sesión. Tras ello, surgieron varios conflictos que solventé, además de un error de puerto en mi ordenador, que lanzaba el proyecto en el puerto que no debería. También corregí un pequeño error de comportamiento de uno de los botones de las contraseñas, que no se comprobó bien al subirlo al repositorio.
+
+Siguiendo en la primera semana, inicié una tarea conjunta junto a Julia, que se trataba de las restricciones de la puesta en alquiler de un objeto, tanto de backend como de frontend. Inicialmente, hubo algunas tareas que no quedaron bien explicadas en el tablero del proyecto, por lo que tras una confusión entre compañeros sobre que trataba esta tarea y otra mas, se aclaró y se empezó a trabajar de nuevo en la tarea desde el principio, ahora sí definida.
+
+Esta tarea trajo inconvenientes ya que, tanto a Julia como a mí, no nos terminaba de salir ni conseguiamos el comportamiento deseado. Se probaron distintos puntos de vista, hasta que conseguimos avanzarla más. Debido a un problemas con los periodos de fechas inhabilitadas para alquilar un objeto, Javier Nieto nos ayudó para conseguir que funcionara. Todo ello, finalizando la semana.
+
+Ya en la segunda semana del sprint, conseguimos finalizar la tarea, más tarde de lo que nos hubiera gustado, tanto por lo que nos costó solucionar lo que se nos iba presentando como por la confusión inicial que hubo. El lunes 24 estuve con Julia reunido en Discord realizando la tarea. 
+
+Durante esta semana, tambien llevé a cabo la realización del frontend de los productos destacados, iniciando y completando la tarea en poco tiempo, resolviendo posteriormente conflictos que hubo a la hora de hacer las pull request por cambios aceptados en el código antes que estos. 
+
+Sobre documentación, añadí al presente documento la parte que me corresponde sobre mí, además de hacer lo mismo en el Time Effort Report. Añadir también que visualicé las píldoras teóricas correspondientes al sprint 2.
+
 ### **Espinosa Naranjo, Pablo**
 
 ### **Fernández Rodríguez, Jesús**
