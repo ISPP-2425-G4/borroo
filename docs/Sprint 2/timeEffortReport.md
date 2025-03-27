@@ -7,16 +7,17 @@
 ## Time effort report
 
 ### Sprint 2 – G4
+
 **Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
 
 **Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
 
 **Fecha:** 26/03/2025
 
-
 </div>
 
 ### Miembros:
+
 - David Blanco Mora
 - Pablo Díaz Ordóñez
 - Pablo Espinosa Naranjo
@@ -37,17 +38,17 @@
 
 ## **Histórico de modificaciones**
 
-| Fecha      | Versión | Realizada por   | Descripción de los cambios |
-| ---------- | ------- | --------------- | -------------------------- |
-| 20-02-2025 | v1.0    | Marco Padilla Gómez | Creación del documento |
-| 20-02-2025 | v1.1    | Todos los miembros | Añadir datos sobre el trabajo realizado en el DP |
-| 11-03-2025 | v2.0    | Marco Padilla Gómez | Actualización del documento para el S1 e historico de modificaciones añadido |
-| 13-03-2025 | v2.1    | Todos los miembros | Añadir datos sobre el trabajo realizado en el S1 |
-| 26-03-2025 | v3.0    | Marco Padilla Gómez | Actualización del documento para el S2 |
-| 27-03-2025 | v3.1    | Todos los miembros | Añadir datos sobre el trabajo realizado en el S2 |
-
+| Fecha      | Versión  | Realizada por        | Descripción de los cambios                                                   |
+| ---------- | -------- | -------------------- | ---------------------------------------------------------------------------- |
+| 20-02-2025 | v1.0     | Marco Padilla Gómez  | Creación del documento                                                       |
+| 20-02-2025 | v1.1     |  Todos los miembros  |  Añadir datos sobre el trabajo realizado en el DP                            |
+| 11-03-2025 | v2.0     | Marco Padilla Gómez  | Actualización del documento para el S1 e historico de modificaciones añadido |
+| 13-03-2025 | v2.1     | Todos los miembros   | Añadir datos sobre el trabajo realizado en el S1                             |
+| 26-03-2025 | v3.0     | Marco Padilla Gómez  | Actualización del documento para el S2                                       |
+| 27-03-2025 | v3.1     | Todos los miembros   | Añadir datos sobre el trabajo realizado en el S2                             |
 
 ## Tabla de contenidos
+
 1. [Devising a Project (#DP)](#devising-a-project-dp)
 
 2. [Sprint 1](#sprint-1-s1)
@@ -57,6 +58,7 @@
 ## Devising a Project (#DP)
 
 ### Blanco Mora, David
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -113,6 +115,7 @@
 </table>
 
 ### Díaz Ordoñez, Pablo
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -205,6 +208,7 @@
 </table>
 
 ### Espinosa Naranjo, Pablo
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -254,6 +258,7 @@
 </table>
 
 ### Fernández Rodríguez, Jesús
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -346,6 +351,7 @@
 </table>
 
 ### Fernández Mota, Francisco
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -443,6 +449,7 @@
 </table>
 
 ### García Rodríguez, Javier
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -519,6 +526,7 @@
 </table>
 
 ### González Ortiz, Miguel
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -591,6 +599,7 @@
 </table>
 
 ### Martin Muñoz, Álvaro
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -808,6 +817,7 @@
   </table>
 
 ### Nieto Vicioso, Javier
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -905,6 +915,7 @@
 </table>
 
 ### Padilla Gómez, Marco
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -991,6 +1002,7 @@
 </table>
 
 ### Palomo García, Miguel
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -1053,6 +1065,7 @@
 </table>
 
 ### Periañez Franco, Luis Javier
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -1133,6 +1146,7 @@
 </table>
 
 ### Picón Garrote, Alexander
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -1237,6 +1251,7 @@
 </table>
 
 ### Rosado Raya, Santiago
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -1329,6 +1344,7 @@
 </table>
 
 ### Sánchez Márquez, Julia
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -1405,8 +1421,8 @@
   </tr>
 </table>
 
-
 ### Sevillano Barea, Alejandro
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -1471,9 +1487,10 @@
   </tr>
 </table>
 
-
 ## Sprint 1 (#S1)
+
 ### Blanco Mora, David
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -1626,9 +1643,6 @@
     <td colspan="2"><a href="https://app.clockify.me/shared/67d3345bef0d12419bc1c07e" target="_blank">Clockify</a></td>
   </tr>
 </table>
-
-
-
 
 ### Espinosa Naranjo, Pablo
 
@@ -1801,7 +1815,6 @@
   </tr>
 </table>
 
-
 ### García Rodríguez, Javier
 
 <table>
@@ -1847,7 +1860,6 @@
     <td>1 hora y 13 minutos</td>
   </tr>
 </table>
-
 
 ### González Ortiz, Miguel
 
@@ -1911,6 +1923,7 @@
 </table>
 
 ### Martin Muñoz, Álvaro
+
 <table border="1">
   <tr>
     <th>Tarea</th>
@@ -2091,8 +2104,8 @@
   </tr>
 </table>
 
-
 ### Nieto Vicioso, Javier
+
 <table border="1">
   <thead>
     <tr>
@@ -2352,6 +2365,7 @@
 </table>
 
 ### Palomo García, Miguel
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -2440,7 +2454,7 @@
   </tr>
 </table>
 
-### Picón Garrote, Alexander  
+### Picón Garrote, Alexander
 
 <table>
   <tr>
@@ -2536,6 +2550,7 @@
 </table>
 
 ### Rosado Raya, Santiago
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -2655,7 +2670,8 @@
   </tr>
 </table>
 
-### Sánchez Márquez, Julia 
+### Sánchez Márquez, Julia
+
 <table>
   <thead>
     <tr>
@@ -2743,6 +2759,7 @@
 </table>
 
 ### Sevillano Barea, Alejandro
+
 <table>
   <tr>
     <th>Tarea</th>
@@ -2803,10 +2820,9 @@
   </tr>
 </table>
 
-
 ## Sprint 2 (#S2)
 
-### **Blanco Mora, David**  
+### **Blanco Mora, David**
 
 <table> 
   <tr>
@@ -2866,8 +2882,7 @@
   </tr>
 </table>
 
-
-### **Díaz Ordóñez, Pablo**  
+### **Díaz Ordóñez, Pablo**
 
 <table border="1" cellspacing="0" cellpadding="5">
   <tr>
@@ -2980,8 +2995,6 @@
   </tr>
 </table>
 
-
-
 ### **Espinosa Naranjo, Pablo**
 
 ### **Fernández Rodríguez, Jesús**
@@ -2994,9 +3007,102 @@
 
 ### **Martín Muñoz, Álvaro**
 
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
+<th>Tarea</th>
+<th>Detalles de la actividad</th>
+<th>Tiempo</th>
+</tr>
+<tr>
+<td rowspan="14">Trabajo</td>
+<td>Validadores frontend puesta en alquiler</td>
+<td>1 hora, 50 minutos, 15 segundos</td>
+</tr>
+<tr>
+<td>Mejora estética de la aplicación</td>
+<td>3 horas, 57 minutos, 54 segundos</td>
+</tr>
+<tr>
+<td>Mejora estética de la aplicación</td>
+<td>4 horas, 17 minutos, 19 segundos</td>
+</tr>
+<tr>
+<td>Arreglo frontend tablero</td>
+<td>7 minutos, 13 segundos</td>
+</tr>
+<tr>
+<td>Implementar stripe en los cambios de subscripciones</td>
+<td>2 horas, 30 minutos, 7 segundos</td>
+</tr>
+<tr>
+<td>Errores de mergeo y lint</td>
+<td>26 minutos, 26 segundos</td>
+</tr>
+<tr>
+<td>Implementar stripe en el pago de un alquiler</td>
+<td>24 minutos, 48 segundos</td>
+</tr>
+<tr>
+<td>Implementar stripe en el pago de un alquiler</td>
+<td>2 horas, 44 minutos, 23 segundos</td>
+</tr>
+<tr>
+<td>Validación frontend de pedir un objeto en alquiler</td>
+<td>32 minutos, 55 segundos</td>
+</tr>
+<tr>
+<td>Términos y condiciones al registrarse</td>
+<td>18 minutos, 8 segundos</td>
+</tr>
+<tr>
+<td>Arreglar error de registro</td>
+<td>25 minutos, 30 segundos</td>
+</tr>
+<tr>
+<td>Arreglar codacy</td>
+<td>22 minutos, 12 segundos</td>
+</tr>
+<tr>
+<td>Time Effort</td>
+<td>30 minutos</td>
+</tr>
+<tr>
+<td>Performance Evaluation</td>
+<td>10 minutos</td>
+</tr>
+<tr>
+<td rowspan="2">Clases</td>
+<td>Clase 14/03</td>
+<td>3 horas, 50 minutos</td>
+</tr>
+<tr>
+<td>Clase 21/03</td>
+<td>3 horas, 50 minutos</td>
+</tr>
+<tr>
+<td rowspan="3">Píldoras teóricas</td>
+<td>Píldora 06</td>
+<td>10 minutos, 56 segundos</td>
+</tr>
+<tr>
+<td>Píldora 07a</td>
+<td>35 minutos, 33 segundos</td>
+</tr>
+<tr>
+<td>Píldora 07b</td>
+<td>37 minutos, 47 segundos</td>
+</tr>
+<tr>
+<td>Feedback Externo</td>
+<td>Usuario Piloto de Go4Surprise</td>
+<td>44 minutos, 36 segundos</td>
+</tr>
+</table>
+
 ### **Naredo Bernardos, Ignacio**
 
 ### **Nieto Vicioso, Javier**
+
 <table border="1" cellspacing="0" cellpadding="5">
   <tr>
     <th>Tarea</th>
@@ -3124,7 +3230,6 @@
   </tr>
 </table>
 
-
 ### **Padilla Gómez, Marco**
 
 <table border="1" cellspacing="0" cellpadding="5">
@@ -3199,7 +3304,7 @@
   </tr>
 </table>
 
-### **Picón Garrote, Alexander** ###
+### **Picón Garrote, Alexander**
 
 <table border="1" cellspacing="0" cellpadding="5">
 <tr>
