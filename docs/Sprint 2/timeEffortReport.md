@@ -2999,6 +2999,97 @@
 
 ### **Fernández Rodríguez, Jesús**
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="15">Trabajo</td>
+    <td>Actualizar readme.md y creacion utils.py</td>
+    <td>36 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando errores de configuracion de compañeros</td>
+    <td>33 minutos</td>
+  </tr>
+  <tr>
+    <td>Validar registro frontend</td>
+    <td>1 hora y 20 minutos</td>
+  </tr>
+  <tr>
+    <td>Seeders</td>
+    <td>58 minutos</td>
+  </tr>
+  <tr>
+    <td>Backend aplicar condiciones plan de suscripcion</td>
+    <td>29 minutos</td>
+  </tr>
+  <tr>
+    <td>Testing condiciones de plan de suscripcion</td>
+    <td>1 hora y 16 minutos</td>
+  </tr>
+  <tr>
+    <td>Backend publicacion de objetos</td>
+    <td>19 minutos</td>
+  </tr>
+  <tr>
+    <td>Plantilla GDPR</td>
+    <td>11 minutos</td>
+  </tr>
+  <tr>
+    <td>Aplicar Modo Borrador a objetos</td>
+    <td>1 hora y 41 minutos</td>
+  </tr>
+  <tr>
+    <td>Despliegue appengine y corrección errores varios</td>
+    <td>3 horas y 30 minutos</td>
+  </tr>
+  <tr>
+    <td>Implementar jtw token</td>
+    <td>3 horas y 10 minutos</td>
+  </tr>
+  <tr>
+    <td>Validaciones frontend borradores y activar cuando plan de suscripcion</td>
+    <td>20 minutos</td>
+  </tr>
+  <tr>
+    <td>fixa editar objetos</td>
+    <td>1 hora y 19 minutos</td>
+  </tr>
+  <tr>
+    <td>fix validar destacados</td>
+    <td>11 minutos</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td rowspan="3">Píldoras teóricas</td>
+    <td>Session 06</td>
+    <td>11 minutos</td>
+  </tr>
+  <tr>
+    <td>Session 07a</td>
+    <td>37 minutos</td>
+  </tr>
+  <tr>
+    <td>Session 07b</td>
+    <td>39 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clase</td>
+    <td>Clase 14/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 21/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
 ### **Fernández Mota, Francisco**
 
 <table>
@@ -3056,6 +3147,69 @@
 ### **García Rodríguez, Javier**
 
 ### **González Ortiz, Miguel**
+
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="8">Trabajo</td>
+    <td>Añadiendo validadores al backend de registro de usuarios</td>
+    <td>1 horas y 31 minutos</td>
+  </tr>
+  <tr>
+    <td>Funcionalidad de recuperacion de contraseña</td>
+    <td>2 horas y 3 minutos</td>
+  </tr>
+  <tr>
+    <td>Backend solicitud en alquiler</td>
+    <td>31 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglar el formulario de registro</td>
+    <td>3 hora y 10 minutos</td>
+  </tr>
+  <tr>
+    <td>Tests de planes de suscripciones</td>
+    <td>3 hora y 10 minutos</td>
+  </tr>
+  <tr>
+    <td>Testing de recuperacion de contraseñas</td>
+    <td>1 hora y 13 minutos</td>
+  </tr>
+  <tr>
+    <td>Tests de planes de suscripciones y arreglando migraciones pago</td>
+    <td>1 hora y 45 minutos</td>
+  </tr>
+  <tr>
+    <td>Validacion login</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Píldoras teóricas</td>
+    <td>Session 06</td>
+    <td>11 minutos</td>
+  </tr>
+  <tr>
+    <td>Session 07a</td>
+    <td>37 minutos</td>
+  </tr>
+  <tr>
+    <td>Session 07b</td>
+    <td>39 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clase</td>
+    <td>Clase 14/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 21/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
 
 ### **Martín Muñoz, Álvaro**
 

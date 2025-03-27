@@ -422,6 +422,10 @@ Durante la segunda semana, me centré más el el tema de documentación, concret
 
 ### **González Ortiz, Miguel**
 
+Durante la primera semana, me enfoqué en mejorar la seguridad y funcionalidad del sistema. Implementé validadores en el backend para el registro de usuarios, asegurando la integridad de los datos ingresados. Además, desarrollé la funcionalidad de recuperación de contraseña, permitiendo a los usuarios restablecer sus credenciales de manera segura. También trabajé en la implementación del backend para la gestión de solicitudes de alquiler, facilitando la comunicación entre arrendadores y arrendatarios. Por último, corregí errores en el formulario de registro, optimizando la experiencia del usuario y garantizando un proceso de inscripción sin inconvenientes.
+
+En la segunda semana, centré mis esfuerzos en pruebas y validaciones para mejorar la estabilidad del sistema. Desarrollé y ejecuté tests para los planes de suscripción, verificando su correcto funcionamiento. Además, solucioné problemas en las migraciones relacionadas con los pagos, asegurando la correcta gestión de transacciones en la base de datos. También trabajé en la validación del proceso de inicio de sesión, reforzando la seguridad y evitando accesos no autorizados. Por último, realicé pruebas exhaustivas en la funcionalidad de recuperación de contraseña, garantizando su fiabilidad en diferentes escenarios.
+
 ### **Martín Muñoz, Álvaro**
 <div align="justify">
 
