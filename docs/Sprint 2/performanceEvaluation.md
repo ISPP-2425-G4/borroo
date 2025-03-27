@@ -408,6 +408,10 @@ Por último, visualice los videos de "Pildoras teoricas" correspondientes a este
 
 ### **Fernández Rodríguez, Jesús**
 
+Durante la primera semana, trabajé en varias correcciones y mejoras del sistema. Me enfoqué en la validación del frontend para el modo borrador y en la activación del plan de suscripción. También implementé y probé el uso de JWT tokens para mejorar la seguridad del sistema. Además, realicé ajustes en la edición de objetos y corregí errores en la configuración del backend.
+
+Durante la segunda semana, continué con el despliegue de la aplicación y la corrección de errores en el appengine. También trabajé en la aplicación del modo borrador a los objetos y realicé pruebas para validar las condiciones de los planes de suscripción en el backend. Además, desarrollé una plantilla GDPR, implementé seeders para generar datos de prueba y participé en la configuración y ajustes del sistema junto con mis compañeros.
+
 ### **Fernández Mota, Francisco**
 
 Durante la primera semana de desarrollo del Sprint 2, nos reunimos los representantes de los diferentes subgrupos con el PM para planificar las tareas del sprint, crear las issues y asignarlas. Tras esto, trabajé con mi compañero David para implementar tanto en backend como en frontend el tablón de solicitudes de alquiler. Cerrando la semana, desarrollé la lógica de negocio para aceptar o rechazar estas solicitudes por parte del propietario del bien solicitado e hice un excel para el cálculo del ROI y las estimaciones.
