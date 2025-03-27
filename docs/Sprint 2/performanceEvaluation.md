@@ -390,6 +390,22 @@ Sobre documentación, añadí al presente documento la parte que me corresponde 
 
 ### **Espinosa Naranjo, Pablo**
 
+Durante la primera semana del sprint 2, se me encomendó para la primera semana desarrollar un fullstack de "Subcategorías" de cada objeto a alquilar, el cual dependería de categorías y serviría para amplificar la clasificación de los artículos. Esto implicó una tarea de investigación sobre cada categoría, lo que me permitió definir un conjunto de subcategorías lo suficientemente amplio y diferenciado para abarcar una variedad representativa de productos. Tras esto, gasté gran cantidad del tiempo en averiguar como asociarlo a las categorías implementadas anteriormente.
+
+Una vez conseguí averiguarlo, desarrollé los cambios e implementaciones necesarias para poder implementar el fullstack. Estos cambios incluyen entendimiento y edición de modelos, funciones, populadores de datos, serializadores, vistas de formularios relacionados con item, y el propio filtrado por subcategorías en el layout principal. 
+
+Tras esto, además, se me encargó cambiar uno de los filtros (precio), ya que, tras recibir el feedback de los usuarios piloto, se observaron ciertos aspectos que eran mejorables. Corregí, así, la vista y funcionamiento del filtro, suprimiendo la barra que habia anteriormente y solucionando un problema que hacía que el precio máximo fuese de 100€.
+
+Durante la segunda semana del sprint 2, se me encargó desarrollar en frontend la vista de "peticiones de alquiler" (llamada anuncios). En esta, los usuarios podrían realizar, a modo de tablón de anuncios, solicitudes de objetos que necesitan, y de igual manera, observar las solicitudes de otros usuarios. Tras finalizar mis compañeros Ignacio y Marco el desarrollo del codigo en el backend, comenzé el desarrollo de las mismas, creando las dos pantallas requeridas.
+
+En primer lugar, desarrolle una visualización paginada de los anuncios creados por los usuarios, con una interfaz que muestra los detalles importantes de los anuncios y sigue el estilo de toda la aplicación. Además, en esta incluí los filtros creados anteriormente para "item", ya que podían ser de utilidad para usuarios que busquen clientes potenciales a los que alquilar. 
+
+En segundo lugar, desarrolle un formulario para que el usuario pueda crear sus anuncios en base a sus necesidades. Este formulario sigue la estructura de los creados anteriormente, con sus validaciones para poder ser publicado.
+
+Tras finalizar, ayudé a mi compañero Marco con el desarrollo del documento "revision.md".
+
+Por último, visualice los videos de "Pildoras teoricas" correspondientes a este Sprint (sesión 6, sesión 7a y sesión 7b)
+
 ### **Fernández Rodríguez, Jesús**
 
 ### **Fernández Mota, Francisco**
