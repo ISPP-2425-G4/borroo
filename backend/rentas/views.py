@@ -139,17 +139,32 @@ class RentViewSet(viewsets.ModelViewSet):
             return Response(
                 {
                     'status': 'Solicitud aceptada. '
+                              'El vendedor ha aceptado la solicitud.'
+                }
+            )
+
+            return Response(
+                {
+                    'status': 'Solicitud aceptada. '
                     'El vendedor ha aceptado la solicitud.'
                 }
             )
         elif response == "rejected":
             rent.rent_status = RentStatus.CANCELLED
             rent.save()
+            return Response(
+                {'status': 'Solicitud rechazada. El alquiler se ha cancelado.'}
+            )
+
             return Response({
                 "status": "Solicitud rechazada. El alquiler se ha cancelado."
             })
 
         else:
+            return Response(
+                {'error': 'La respuesta debe ser "accepted" o "rejected".'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
             return Response(
                 {"error": "No existe un response adecuado"},
                 status=status.HTTP_403_FORBIDDEN

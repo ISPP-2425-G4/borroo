@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
-import { FiFileText, FiEdit, FiLayers, FiXCircle, FiDollarSign, FiTrash2, FiImage, FiUpload } from "react-icons/fi";
+import { FiFileText, FiEdit, FiLayers, FiXCircle, FiDollarSign, FiUpload } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
-import { Box, Stack, Typography, Alert, CircularProgress, Paper, Container, Button } from "@mui/material";
+import { Box, Stack, Typography, Alert, CircularProgress, Paper, Container } from "@mui/material";
 import { styled } from "@mui/system";
-//import DatePicker from 'react-datepicker';
-import { DateRange } from "react-date-range";
-import "react-datepicker/dist/react-datepicker.css";
 
 const FormContainer = styled(Paper)(() => ({
   padding: "2rem",
@@ -104,47 +101,6 @@ const ErrorMessage = styled(Typography)(() => ({
   marginBottom: "12px",
 }));
 
-const ImageGallery = styled(Box)(() => ({
-  display: "flex",
-  flexWrap: "wrap",
-  gap: "16px",
-  marginTop: "16px",
-  marginBottom: "24px",
-}));
-
-const ImageContainer = styled(Box)(() => ({
-  position: "relative",
-  width: "150px",
-  borderRadius: "8px",
-  overflow: "hidden",
-  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-}));
-
-const PreviewImage = styled("img")(() => ({
-  width: "100%",
-  height: "120px",
-  objectFit: "cover",
-}));
-
-const RemoveButton = styled("button")(() => ({
-  position: "absolute",
-  top: "8px",
-  right: "8px",
-  background: "rgba(0, 0, 0, 0.5)",
-  color: "white",
-  border: "none",
-  borderRadius: "50%",
-  width: "30px",
-  height: "30px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  cursor: "pointer",
-  transition: "background 0.2s",
-  "&:hover": {
-    background: "rgba(0, 0, 0, 0.7)",
-  },
-}));
 
 const SubmitButton = styled("button")(({ disabled }) => ({
   width: "100%",
@@ -166,36 +122,8 @@ const SubmitButton = styled("button")(({ disabled }) => ({
   },
 }));
 
-const FileInputContainer = styled(Box)(() => ({
-  width: "100%",
-  padding: "12px",
-  borderRadius: "8px",
-  border: "1px dashed #ddd",
-  backgroundColor: "#f9f9f9",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  cursor: "pointer",
-  transition: "all 0.2s",
-  marginBottom: "1.5rem",
-  "&:hover": {
-    borderColor: "#4a90e2",
-    backgroundColor: "#f0f7ff",
-  },
-}));
 
-const HiddenFileInput = styled("input")({
-  display: "none",
-});
-
-const ImageUploadText = styled(Typography)(() => ({
-  marginTop: "8px",
-  color: "#666",
-  fontSize: "0.9rem",
-}));
-
-const CreateItemScreen = () => {
+const CreateItemRequestView = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -206,7 +134,6 @@ const CreateItemScreen = () => {
     price: "",
   });
 
-  const [images, setImages] = useState([]);
   const [options, setOptions] = useState({
     categories: [],
     subcategories: [],
@@ -214,13 +141,7 @@ const CreateItemScreen = () => {
     price_categories: [],
   });
 
-  const [unavailablePeriods, setUnavailablePeriods] = useState([]);
-
-  const [datesRange, setDatesRange] =useState([
-    { startDate: new Date(), endDate: new Date(), key: "selection" }
-    ]);   
   const [loading, setLoading] = useState(false);
-  const [loadingDash, setLoadingDash] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const navigate = useNavigate();
@@ -228,7 +149,6 @@ const CreateItemScreen = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [fetchingOptions, setFetchingOptions] = useState(true);
-  const [isDraft, setIsDraft] = useState(false);
   const [filteredSubcategories, setFilteredSubcategories] = useState([]);
 
   useEffect(() => {
@@ -265,10 +185,10 @@ const CreateItemScreen = () => {
 
   useEffect(() => {
     validateForm();
-  }, [formData, images]);
+  }, [formData]);
 
   const validateForm = () => {
-    const { title, description, category, subcategory, cancel_type, price_category, price } = formData;
+    const { title, description, category, subcategory, cancel_type,price_category, price } = formData;
     const isValid =
       title.trim() !== "" &&
       description.trim() !== "" &&
@@ -278,8 +198,7 @@ const CreateItemScreen = () => {
       price_category.trim() !== "" &&
       price.trim() !== "" &&
       !isNaN(price) &&
-      parseFloat(price) > 0 &&
-      images.length > 0;
+      parseFloat(price) > 0
     
     setIsFormValid(isValid);
   };
@@ -423,61 +342,11 @@ const CreateItemScreen = () => {
   };
 
 
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length > 0) {
-      setImages((prevImages) => [...prevImages, ...files]);
-      
-      // Limpiar error de imágenes si existe
-      if (fieldErrors.image) {
-        setFieldErrors(prev => {
-          const newErrors = {...prev};
-          delete newErrors.image;
-          return newErrors;
-        });
-      }
-    }
-  };
-  const handleSaveAsDraft = (e) => {
-    handleSubmit(e, true); // true indica que es un borrador
-  };
-  const handleRemoveImage = (index) => {
-    setImages(images.filter((_, i) => i !== index));
-  };
 
-  const triggerFileSelect = () => {
-    document.getElementById('image-upload').click();
-  };
 
-  const convertToCET = (date) => {
-    const cetOffset = 2; // CET es UTC+1, pero ten en cuenta el horario de verano
-    const localDate = new Date(date);
-    localDate.setHours(localDate.getHours() + cetOffset);
-    return localDate.toISOString();
-  };
-  const handleAddPeriod = () => {
-    const {startDate, endDate} = datesRange[0];
-    console.log("Start Date:", startDate);
-    console.log("End Date:", endDate);
-    
-    if (!startDate || !endDate || new Date(convertToCET(startDate)) >= new Date(convertToCET(endDate))) {
-        setErrorMessage("Las fechas de inicio y fin no son válidas.");
-        return;
-    }
-
-    setUnavailablePeriods([...unavailablePeriods, { start_date: new Date(convertToCET(startDate)).toISOString().split('T')[0], end_date: new Date(convertToCET(endDate)).toISOString().split('T')[0] }]);
-    setDatesRange([{ startDate: new Date(), endDate: new Date(), key: "selection" }]); // Reset
-    setErrorMessage('');
-  };
-
-  const handleSubmit = async (e, isDraft = false) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(isDraft){
-      setIsDraft(true);
-      setLoadingDash(true);
-    }else{
-      setLoading(true);
-    }
+    setLoading(true);
 
     setErrorMessage("");
     setFieldErrors({});
@@ -532,14 +401,9 @@ const CreateItemScreen = () => {
       errors.price_category = "Selecciona una categoría de precio válida.";
     }
 
-    if (images.length === 0) {
-      errors.image = "Por favor, selecciona al menos una imagen.";
-    }
-
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       setLoading(false);
-      setLoadingDash(false);
       setShowErrorMessage(true);
       return;
     }
@@ -547,7 +411,6 @@ const CreateItemScreen = () => {
     try {
       const formDataToSend = new FormData();
       const allowedKeys = ["title", "description", "category", "subcategory", "cancel_type", "price_category", "price"];
-      formDataToSend.append("draft_mode", isDraft ? "true" : "false");
       
       Object.keys(formData).forEach((key) => {
         if (allowedKeys.includes(key)) {
@@ -555,16 +418,18 @@ const CreateItemScreen = () => {
         }
       });
   
-      // Agregar imágenes
-      images.forEach((image) => {
-        formDataToSend.append("image_files", image);
-      });
+      // Obtener usuario autenticado desde localStorage o contexto
+      const user = JSON.parse(localStorage.getItem("user")); 
+      if (user && user.id) {
+        formDataToSend.append("user", user.id);
+      } else {
+        throw new Error("Usuario no autenticado");
+      }
+  
 
-      // Adjuntar los períodos de indisponibilidad
-      formDataToSend.append('unavailable_periods', JSON.stringify(unavailablePeriods));
-      
       const accessToken = localStorage.getItem("access_token");
-      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/`, formDataToSend, {
+
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/objetos/create_item_request/`, formDataToSend, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -574,23 +439,16 @@ const CreateItemScreen = () => {
       if (response.status === 201) {
         setSubmitSuccess(true);
         setTimeout(() => {
-          navigate("/");
+          navigate("/list_item_requests");
         }, 2000);
       } else {
         throw new Error("Error al crear el Item.");
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      if (error.response?.data?.non_field_errors) {
-        setErrorMessage(error.response.data.non_field_errors[0]);
-      } else if (error.response?.data?.detail) {
-        setErrorMessage(error.response.data.detail);
-      } else {
-        setErrorMessage("Ocurrió un error al enviar el formulario.");
-      }
-    }finally {
+      setErrorMessage(error.response?.data?.message || "Ocurrió un error al enviar el formulario.");
+    } finally {
       setLoading(false);
-      setLoadingDash(false);
     }
   };
 
@@ -599,7 +457,7 @@ const CreateItemScreen = () => {
       <Navbar />
       <Container maxWidth="lg" sx={{ py: 4, mt: 8 }}>
         <FormContainer elevation={3}>
-          <FormTitle variant="h5">Crear Nueva Publicación</FormTitle>
+          <FormTitle variant="h5">Crear Nuevo Anuncio</FormTitle>
           
           {errorMessage && (
             <Alert severity="error" sx={{ mb: 3 }}>
@@ -609,7 +467,7 @@ const CreateItemScreen = () => {
           
           {submitSuccess && (
               <Alert severity="success" sx={{ mb: 3 }}>
-                {isDraft ? '¡Item guardado exitosamente! Redirigiendo...' : '¡Item creado exitosamente! Redirigiendo...'}
+                {'¡Item creado exitosamente! Redirigiendo...'}
               </Alert>
             )}
           
@@ -745,107 +603,8 @@ const CreateItemScreen = () => {
                 />
               </InputGroup>
               {fieldErrors.price && <ErrorMessage>{fieldErrors.price}</ErrorMessage>}
+ 
 
-              <FileInputContainer onClick={triggerFileSelect}>
-                <FiImage size={32} color="#4a90e2" />
-                <ImageUploadText>
-                  Haz clic para seleccionar imágenes
-                </ImageUploadText>
-                <ImageUploadText variant="caption">
-                  (Para seleccionar múltiples archivos, mantén presionada la tecla Ctrl o Cmd)
-                </ImageUploadText>
-                <HiddenFileInput
-                  id="image-upload"
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  onChange={handleImageChange}
-                />
-              </FileInputContainer>
-              {fieldErrors.image && <ErrorMessage>{fieldErrors.image}</ErrorMessage>}
-
-              {images.length > 0 && (
-                <Box>
-                  <Typography variant="subtitle2" sx={{ mb: 1, color: "#555" }}>
-                    Imágenes seleccionadas ({images.length})
-                  </Typography>
-                  <ImageGallery>
-                    {images.map((image, index) => (
-                      <ImageContainer key={index}>
-                        <PreviewImage src={URL.createObjectURL(image)} alt={`Preview ${index + 1}`} />
-                        <RemoveButton onClick={() => handleRemoveImage(index)}>
-                          <FiTrash2 size={16} />
-                        </RemoveButton>
-                      </ImageContainer>
-                    ))}
-                  </ImageGallery>
-                </Box>
-              )}
-
-              {/* Formulario para seleccionar los períodos de indisponibilidad con un solo calendario */}
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                  <Typography>Seleccionar período de indisponibilidad:</Typography>
-                  <DateRange
-                      ranges={datesRange}
-                      onChange={(ranges) => setDatesRange([ranges.selection])}
-                      minDate={new Date()}
-                  />
-                  <Button 
-                      variant="contained" 
-                      color="primary" 
-                      onClick={handleAddPeriod} 
-                      sx={{ marginTop: 2 }}
-                  >
-                      Añadir Período
-                  </Button>
-                  {/* Resumen de los períodos seleccionados con estilo */}
-                  {unavailablePeriods.length > 0 && (
-                      <Box 
-                          sx={{ 
-                              marginTop: 2, 
-                              padding: 2, 
-                              border: "1px solid #ccc", 
-                              borderRadius: 4, 
-                              backgroundColor: "#f9f9f9" 
-                          }}
-                      >
-                          <Typography variant="h6">Resumen de selección:</Typography>
-                          {unavailablePeriods.map((period, index) => (
-                              <Typography key={index}>
-                                  <strong>Desde:</strong> {new Date(period.start_date).toLocaleDateString()} -  
-                                  <strong> Hasta:</strong> {new Date(period.end_date).toLocaleDateString()}
-                              </Typography>
-                          ))}
-                      </Box>
-                  )}
-                  {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-              </Box>
-
-              <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
-              <SubmitButton 
-                type="button" 
-                disabled={!isFormValid ||loadingDash}
-                onClick={handleSaveAsDraft}
-                sx={{
-                  flex: 1,
-                  backgroundColor: (!isFormValid || loadingDash) ? '#cccccc' : '#555555',
-                  '&:hover': {
-                    backgroundColor: (!isFormValid || loadingDash) ? '#cccccc' : '#333333'
-                  }
-                }}
-              >
-                {loadingDash ? (
-                  <>
-                    <CircularProgress size={20} color="inherit" />
-                    <span>Guardando...</span>
-                  </>
-                ) : (
-                  <>
-                    <FiUpload />
-                    <span>Guardar como Borrador</span>
-                  </>
-                )}
-              </SubmitButton>
               <SubmitButton 
                 type="submit" 
                 disabled={!isFormValid || loading}
@@ -864,18 +623,16 @@ const CreateItemScreen = () => {
                 )}
               </SubmitButton>
               
-              </Stack>
-              
               {showErrorMessage && (
                 <Alert severity="warning" sx={{ mt: 2 }}>
                   Por favor, revisa los errores del formulario antes de enviar.
                 </Alert>
               )}
-          </form>
-        )}
+            </form>
+          )}
         </FormContainer>
       </Container>
-  </Box>
+    </Box>
   );
 };
 
@@ -931,4 +688,4 @@ TextareaField.propTypes = {
   error: PropTypes.string,
 };
 
-export default CreateItemScreen;
+export default CreateItemRequestView;

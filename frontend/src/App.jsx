@@ -14,6 +14,8 @@ import RecoverPasswordNew from "./RecoverPasswordNew";
 import SubscriptionScreen from "./SubscriptionScreen";
 import DraftItemsView from "./DraftsScreen"; 
 import Profile from "./Profile";
+import ListItemRequests from "./ListItemRequests";
+import CreateItemRequest from "./CreateItemRequest";
 import '../public/styles/App.css';
 import FAQ from './components/Faq';
 
@@ -41,6 +43,9 @@ function App() {
         <Route path="/perfil/:username" element={<Profile />} />
         <Route path="/show-item/:id" element={<ShowItem />} />
         <Route path="/faq" element={<FAQ />} />
+        <Route path="/list_item_requests" element={<ListItemRequests />} />
+        <Route path="/create_item_request" element={<CreateItemRequest/>} />
+
       </Routes>
       <Footer/>
       </div>
