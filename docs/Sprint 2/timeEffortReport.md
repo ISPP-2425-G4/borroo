@@ -44,6 +44,7 @@
 | 11-03-2025 | v2.0    | Marco Padilla Gómez | Actualización del documento para el S1 e historico de modificaciones añadido |
 | 13-03-2025 | v2.1    | Todos los miembros | Añadir datos sobre el trabajo realizado en el S1 |
 | 26-03-2025 | v3.0    | Marco Padilla Gómez | Actualización del documento para el S2 |
+| 27-03-2025 | v3.1    | Todos los miembros | Añadir datos sobre el trabajo realizado en el S2 |
 
 
 ## Tabla de contenidos
@@ -2783,7 +2784,7 @@
 ### **Naredo Bernardos, Ignacio**
 
 ### **Nieto Vicioso, Javier**
-<table>
+<table border="1" cellspacing="0" cellpadding="5">
   <tr>
     <th>Tarea</th>
     <th>Detalles de la actividad</th>
@@ -2912,6 +2913,79 @@
 
 
 ### **Padilla Gómez, Marco**
+
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="5">Código</td>
+    <td>Validar backend puesta en alquiler</td>
+    <td>4 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglar problema con la base de datos</td>
+    <td>1 hora y 34 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadir FAQ</td>
+    <td>1 hora y 15 minutos</td>
+  </tr>
+  <tr>
+    <td>Elaborar preguntas de FAQ</td>
+    <td>28 minutos</td>
+  </tr>
+  <tr>
+    <td>Retoques FAQ</td>
+    <td>14 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="5">Documentación</td>
+    <td>Tomar feedback</td>
+    <td>1 hora y 31 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadir feedback a las bases de conocimiento</td>
+    <td>1 hora y 56 minutos</td>
+  </tr>
+  <tr>
+    <td>Realizacion del KBreport S2</td>
+    <td>36 minutos</td>
+  </tr>
+  <tr>
+    <td>Actualizar el performance Evaluation y el timeEffort para S2</td>
+    <td>18 minutos</td>
+  </tr>
+  <tr>
+    <td>Rellenar el timeEffort y el performance evaluation</td>
+    <td>20 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Píldoras teóricas</td>
+    <td>Píldora 6</td>
+    <td>11 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldora 7a</td>
+    <td>35 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldora 7b</td>
+    <td>37 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 14/03</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 21/03</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
 
 ### **Palomo García, Miguel**
 
