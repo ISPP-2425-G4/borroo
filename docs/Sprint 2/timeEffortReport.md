@@ -2997,6 +2997,46 @@
 
 ### **Espinosa Naranjo, Pablo**
 
+<table>
+    <tr>
+        <th>Tarea</th>
+        <th>Detalles de la actividad</th>
+        <th>Tiempo</th>
+    </tr>
+    <tr>
+        <td rowspan="4">Trabajo</td>
+        <td>Fullstack subcategorias</td>
+        <td>11 horas 14 minutos</td>
+    </tr>
+    <tr>
+        <td>Filtro de precio</td>
+        <td>2 horas 22 minutos</td>
+    </tr>
+    <tr>
+        <td>Frontend pedir un alquiler</td>
+        <td>7 horas 56 minutos</td>
+    </tr>
+    <tr>
+        <td>Documento revisión</td>
+        <td>45 minutos</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Clase</td>
+        <td>Clase 14/3/25</td>
+        <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+        <td>Clase 21/3/25</td>
+        <td>1 hora 50 minutos</td>
+    </tr>
+    <tr>
+        <td>Píldoras teóricas</td>
+        <td>Sesion 06, 7a y 7b</td>
+        <td>1 hora 24 minutos</td>
+    </tr>
+</table>
+
+
 ### **Fernández Rodríguez, Jesús**
 
 <table>
@@ -3722,5 +3762,74 @@
 
 
 ### **Sánchez Márquez, Julia**
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="10">Trabajo</td>
+      <td>Intentar implementar fechas indisponibles en la UI</td>
+      <td>1 hora y 46 minutos</td>
+    </tr>
+    <tr>
+      <td>Reunión con Pablo</td>
+      <td>57 minutos</td>
+    </tr>
+    <tr>
+      <td>Implementar poder ver selecciones en actualización e intentar solucionar problema fechas</td>
+      <td>54 minutos</td>
+    </tr>
+    <tr>
+      <td>Añadir poder eliminar, actualizar periodos de indisponibilidad y solucionar problema fechas</td>
+      <td>2 horas y 18 minutos</td>
+    </tr>
+    <tr>
+      <td>Testing restricciones alquiler</td>
+      <td>1 hora y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Testing restricciones alquiler</td>
+      <td>2 horas y 06 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar poder alquilar por horas</td>
+      <td>39 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar poder alquilar por meses</td>
+      <td>14 minutos</td>
+    </tr>
+    <tr>
+      <td>Rellenar documentación (time-effort, performance-evaluation...)</td>
+      <td>20 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="5">Clases</td>
+      <td>Theory Pill S06</td>
+      <td>11 minutos</td>
+    </tr>
+    <tr>
+      <td>Theory Pill S07 A</td>
+      <td>35 minutos</td>
+    </tr>
+    <tr>
+      <td>Theory Pill S07 B</td>
+      <td>37 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 14/02/25</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 21/02/25</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+  </tbody>
+</table>
 
 ### **Sevillano Barea, Alejandro**
