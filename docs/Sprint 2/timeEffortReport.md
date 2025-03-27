@@ -3103,8 +3103,8 @@
     <td>11 minutos</td>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
+    <td>Despliegue final S2</td>
+    <td>2 horas y 54 minutos</td>
   </tr>
   <tr>
     <td rowspan="3">Píldoras teóricas</td>
