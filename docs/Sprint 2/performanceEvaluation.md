@@ -494,4 +494,8 @@ En esta segunda semana preparé el documento con el guion que los usuarios pilot
 
 ### **Sánchez Márquez, Julia**
 
+Durante la primera semana me enfoqué exclusivamente en asumir el rol de desarrolladora. Implementé todas las validaciones necesarias para la entidad Rent, completé el flujo restante para permitir el alquiler de un objeto, corregí errores relacionados con el manejo de fechas y añadí validaciones específicas para este aspecto. Además, trabajé junto a mi compañero Pablo en una tarea full-stack que permitía a los propietarios inhabilitar determinadas fechas en las que no se pudiera realizar un alquiler.
+
+En la segunda semana continué con tareas similares, dando seguimiento al desarrollo conjunto con Pablo. Añadí 22 tests unitarios para verificar el correcto funcionamiento de las validaciones previamente implementadas en el modelo Rent. También corregimos errores relacionados con el alquiler por meses y por horas. Finalmente, avancé en el estudio de las píldoras teóricas como preparación para el test.
+
 ### **Sevillano Barea, Alejandro**
