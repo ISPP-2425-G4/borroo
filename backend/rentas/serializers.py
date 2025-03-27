@@ -24,6 +24,14 @@ class RentSerializer(serializers.ModelSerializer):
                     'a la fecha de inicio."'}
             )
 
+        if start_date and start_date.tzinfo is not None:
+            start_date = start_date.replace(tzinfo=None)
+        if end_date and end_date.tzinfo is not None:
+            end_date = end_date.replace(tzinfo=None)
+
+        data["start_date"] = start_date
+        data["end_date"] = end_date
+
         if item:
             price_category = item.price_category
             if price_category == "hour":

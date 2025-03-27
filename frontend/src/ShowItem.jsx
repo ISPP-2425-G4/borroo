@@ -270,13 +270,19 @@ const ShowItemScreen = () => {
       let startDateUTC, endDateUTC;
   
       if (priceCategory === "hour" && selectedDay && selectedStartHour !== null && selectedEndHour !== null) {
-        // Construir fecha con hora para alquiler por horas
-        const start = new Date((selectedDay));
-        start.setHours(selectedStartHour+1, 0, 0, 0);
-  
-        const end = new Date((selectedDay));
-        end.setHours(selectedEndHour+1, 0, 0, 0);
-  
+        const start = dayjs(selectedDay)
+        .hour(selectedStartHour + 1)
+        .minute(0)
+        .second(0)
+        .millisecond(0)
+        .format("YYYY-MM-DDTHH:mm:ss");
+        const end = dayjs(selectedDay)
+          .hour(selectedEndHour + 1)
+          .minute(0)
+          .second(0)
+          .millisecond(0)
+          .format("YYYY-MM-DDTHH:mm:ss");
+      
         startDateUTC = start;
         endDateUTC = end;
       } 
