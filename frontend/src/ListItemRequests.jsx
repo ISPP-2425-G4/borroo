@@ -1,14 +1,13 @@
 import Navbar from "./Navbar";
 import {
+  Card,
   Container,
   Box,
   Typography,
   MenuItem,
   Select,
   TextField,
-  Card,
   CardContent,
-  Tooltip,
   Paper,
   InputAdornment,
   IconButton,
@@ -18,8 +17,8 @@ import {
   FormControl,
   alpha
 } from "@mui/material";
-import { useEffect, useState, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import axios from 'axios';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
@@ -65,7 +64,7 @@ const ListItemRequestsView = () => {
     }
   };
   const [currentPage, setCurrentPage] = useState(1);
-const itemsPerPage = 10;
+const itemsPerPage = 5;
 const indexOfLastItem = currentPage * itemsPerPage;
 const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 const currentItems = productosFiltrados.slice(indexOfFirstItem, indexOfLastItem);
@@ -76,13 +75,6 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
     setCategoria("");
     setRangoPrecio([0, 100]);
   };
-
-  const truncarDescripcion = useCallback((descripcion, longitud = 100) => {
-    if (!descripcion) return "";
-    return descripcion.length > longitud 
-      ? `${descripcion.substring(0, longitud)}...`
-      : descripcion;
-  }, []);
 
   const obtenerUrlImagen = useCallback(async (imgId) => {
     try {
@@ -152,9 +144,6 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
     terminoBusqueda !== "" || categoria !== "" || subcategoria !== "" || rangoPrecio[0] > 0 || rangoPrecio[1] < 100,
   [terminoBusqueda, categoria, subcategoria, rangoPrecio]);
 
-  const obtenerDetallesCategoria = (nombreCategoria) => {
-    return CATEGORIAS[nombreCategoria] || { icono: "•", color: "#607d8b" };
-  };
 
   return (
     <Box sx={{ 
@@ -190,6 +179,10 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
             }}>
               Productos Solicitados
             </Typography>
+
+            <Button component={Link} to="/create_item_request" variant="contained" color="primary">
+              Crear un anuncio
+            </Button>
             
             <Button 
               startIcon={<FilterListIcon />}
@@ -657,201 +650,68 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                     </Paper>
                   ) : (
                     <Box sx={{
-                      display: 'flex',
+                      display: 'column',
                       flexWrap: 'wrap',
                       gap: { xs: 2, md: 3 },
                     }}>
                       {currentItems.map((producto, indice) => {
-                        const { icono, color } = obtenerDetallesCategoria(producto.category_display);
                         
                         return (
-                          <Box
+                          <Card
                             key={indice}
                             sx={{
-                              flex: { 
+                              flex: {
                                 xs: '1 0 100%',
-                                sm: '1 0 calc(50% - 16px)', 
-                                md: '1 0 calc(33.333% - 16px)', 
-                                lg: '1 0 calc(25% - 18px)' 
+                                sm: '1 0 calc(50% - 16px)',
+                                md: '1 0 calc(33.333% - 16px)',
+                                lg: '1 0 calc(25% - 18px)',
                               },
-                              maxWidth: { 
+                              maxWidth: {
                                 xs: '100%',
-                                sm: 'calc(50% - 16px)', 
-                                md: 'calc(33.333% - 16px)', 
-                                lg: 'calc(25% - 18px)' 
-                              }
+                                sm: '100%',
+                                md: '80%',
+                                lg: '70%',
+                              },
+                              border: "2px solid #1E40AF", 
+                              borderRadius: "10px", 
+                              overflow: "hidden",
+                              backgroundColor: "white",
+                              mb: 2,
                             }}
                           >
-                            <Link 
-                              to={`/show-item/${producto.id}`}
-                              style={{ 
-                                textDecoration: 'none',
-                                display: 'block', 
-                                height: '100%' 
+                            <Box
+                              sx={{
+                                backgroundColor: '#2563eb',
+                                color: 'white',
+                                padding: '12px 16px',
+                                fontWeight: 'bold',
+                                fontSize: '1.1rem',
                               }}
                             >
-                              <Card
-                                sx={{
-                                  height: "100%",
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  borderRadius: 3,
-                                  overflow: "hidden",
-                                  boxShadow: '0px 2px 8px rgba(0,0,0,0.07)',
-                                  transition: "all 0.3s ease",
-                                  "&:hover": {
-                                    transform: "translateY(-8px)",
-                                    boxShadow: '0px 8px 24px rgba(0,0,0,0.15)',
-                                    "& .producto-imagen": {
-                                      transform: "scale(1.08)"
-                                    }
-                                  }
-                                }}
-                              >
-                                <Box 
-                                  sx={{ 
-                                    position: "relative",
-                                    pt: "75%",
-                                    overflow: "hidden",
-                                    bgcolor: '#f5f5f5'
-                                  }}
-                                >
-                                  <img 
-                                    className="producto-imagen"
-                                    src={producto.urlImagen} 
-                                    alt={producto.title}
-                                    style={{ 
-                                      position: "absolute",
-                                      top: 0,
-                                      left: 0,
-                                      width: "100%", 
-                                      height: "100%", 
-                                      objectFit: "cover",
-                                      transition: "transform 0.5s ease",
-                                    }} 
-                                  />
-                                
-                                  
-                                  <Chip
-                                    size="small"
-                                    label={producto.category_display}
-                                    sx={{
-                                      position: 'absolute',
-                                      bottom: 40,
-                                      left: 12,
-                                      borderRadius: '4px',
-                                      fontWeight: 500,
-                                      bgcolor: alpha(color, 0.9),
-                                      color: 'white',
-                                      px: 1,
-                                      py: 0.5,
-                                      fontSize: '0.75rem',
-                                      zIndex: 1
-                                    }}
-                                    icon={
-                                      <Box component="span" sx={{ color: 'white', mr: -0.5 }}>
-                                        {icono}
-                                      </Box>
-                                    }
-                                  />
-                                  <Chip
-                                    size="small"
-                                    label={producto.subcategory_display}
-                                    sx={{
-                                      position: 'absolute',
-                                      bottom: 12,
-                                      left: 12,
-                                      borderRadius: '4px',
-                                      fontWeight: 500,
-                                      bgcolor: alpha(color, 0.9),
-                                      color: 'white',
-                                      px: 1,
-                                      py: 0.5,
-                                      fontSize: '0.75rem',
-                                      zIndex: 1
-                                    }}
-                                  />
-                                </Box>
-                                
-                                <CardContent
-                                  sx={{
-                                    flexGrow: 1,
-                                    p: 2.5,
-                                    "&:last-child": { pb: 3 }
-                                  }}
-                                >
-                                  <Typography 
-                                    variant="h6" 
-                                    sx={{ 
-                                      fontWeight: 600,
-                                      mb: 1,
-                                      fontSize: '1rem',
-                                      overflow: "hidden",
-                                      textOverflow: "ellipsis",
-                                      display: '-webkit-box',
-                                      WebkitLineClamp: 2,
-                                      WebkitBoxOrient: 'vertical',
-                                      lineHeight: 1.3,
-                                      height: '2.6em'
-                                    }}
-                                  >
-                                    {producto.title}
+                              {producto.title}
+                            </Box>
+                        
+                            <CardContent sx={{ p: 2.5 }}>
+                              <Typography variant="body1" sx={{ whiteSpace: "normal", wordBreak: "break-word" }}>
+                                {producto.description}
+                              </Typography>
+                        
+                              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 2 }}>
+                                <Box sx={{ display: "flex", flexDirection: "column" }}>
+                                  <Typography variant="body2" fontWeight="bold">
+                                    {producto.category_display}
                                   </Typography>
-                                  
-                                  <Box sx={{ 
-                                    display: "flex", 
-                                    justifyContent: "space-between", 
-                                    alignItems: "flex-end",
-                                    mb: 1.5
-                                  }}>
-                                    <Typography 
-                                      variant="h5" 
-                                      sx={{ 
-                                        fontWeight: 700,
-                                        color: 'primary.dark',
-                                        fontSize: '1.25rem'
-                                      }}
-                                    >
-                                      {producto.price}€
-                                    </Typography>
-                                    
-                                    <Typography 
-                                      variant="body2" 
-                                      sx={{ 
-                                        color: "text.secondary",
-                                        fontWeight: 500,
-                                        fontSize: '0.75rem'
-                                      }}
-                                    >
-                                      {producto.price_category_display}
-                                    </Typography>
-                                  </Box>
-                                  
-                                  <Tooltip
-                                    title={producto.description || "No hay descripción disponible"}
-                                    arrow
-                                    placement="top"
-                                  >
-                                    <Typography 
-                                      variant="body2" 
-                                      sx={{ 
-                                        color: "text.secondary",
-                                        fontSize: '0.8125rem',
-                                        lineHeight: 1.5,
-                                        height: "3em",
-                                        overflow: "hidden",
-                                        display: '-webkit-box',
-                                        WebkitLineClamp: 2,
-                                        WebkitBoxOrient: 'vertical'
-                                      }}
-                                    >
-                                      {truncarDescripcion(producto.description, 80)}
-                                    </Typography>
-                                  </Tooltip>
-                                </CardContent>
-                              </Card>
-                            </Link>
-                          </Box>
+                                  <Typography variant="body2" color="text.secondary">
+                                    {producto.subcategory_display}
+                                  </Typography>
+                                </Box>
+                                <Typography variant="caption" color="primary" fontWeight="bold">
+                                  {producto.price}€/{producto.price_category_display}
+
+                                </Typography>
+                              </Box>
+                            </CardContent>
+                          </Card>
                         );
                       })}
                     </Box>

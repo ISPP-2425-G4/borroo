@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FiFileText, FiEdit, FiLayers, FiXCircle, FiDollarSign, FiTrash2, FiImage, FiUpload } from "react-icons/fi";
+import { FiFileText, FiEdit, FiLayers, FiXCircle, FiDollarSign, FiUpload } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import PropTypes from 'prop-types';
@@ -101,47 +101,6 @@ const ErrorMessage = styled(Typography)(() => ({
   marginBottom: "12px",
 }));
 
-const ImageGallery = styled(Box)(() => ({
-  display: "flex",
-  flexWrap: "wrap",
-  gap: "16px",
-  marginTop: "16px",
-  marginBottom: "24px",
-}));
-
-const ImageContainer = styled(Box)(() => ({
-  position: "relative",
-  width: "150px",
-  borderRadius: "8px",
-  overflow: "hidden",
-  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-}));
-
-const PreviewImage = styled("img")(() => ({
-  width: "100%",
-  height: "120px",
-  objectFit: "cover",
-}));
-
-const RemoveButton = styled("button")(() => ({
-  position: "absolute",
-  top: "8px",
-  right: "8px",
-  background: "rgba(0, 0, 0, 0.5)",
-  color: "white",
-  border: "none",
-  borderRadius: "50%",
-  width: "30px",
-  height: "30px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  cursor: "pointer",
-  transition: "background 0.2s",
-  "&:hover": {
-    background: "rgba(0, 0, 0, 0.7)",
-  },
-}));
 
 const SubmitButton = styled("button")(({ disabled }) => ({
   width: "100%",
@@ -163,34 +122,6 @@ const SubmitButton = styled("button")(({ disabled }) => ({
   },
 }));
 
-const FileInputContainer = styled(Box)(() => ({
-  width: "100%",
-  padding: "12px",
-  borderRadius: "8px",
-  border: "1px dashed #ddd",
-  backgroundColor: "#f9f9f9",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  cursor: "pointer",
-  transition: "all 0.2s",
-  marginBottom: "1.5rem",
-  "&:hover": {
-    borderColor: "#4a90e2",
-    backgroundColor: "#f0f7ff",
-  },
-}));
-
-const HiddenFileInput = styled("input")({
-  display: "none",
-});
-
-const ImageUploadText = styled(Typography)(() => ({
-  marginTop: "8px",
-  color: "#666",
-  fontSize: "0.9rem",
-}));
 
 const CreateItemRequestView = () => {
   const [formData, setFormData] = useState({
@@ -198,14 +129,15 @@ const CreateItemRequestView = () => {
     description: "",
     category: "",
     subcategory: "",
+    cancel_type: "",
     price_category: "",
     price: "",
   });
 
-  const [images, setImages] = useState([]);
   const [options, setOptions] = useState({
     categories: [],
     subcategories: [],
+    cancel_types: [],
     price_categories: [],
   });
 
@@ -232,6 +164,7 @@ const CreateItemRequestView = () => {
         setOptions({
           categories: data.categories || [],
           subcategories: data.subcategories || [],
+          cancel_types: data.cancel_types || [],
           price_categories: data.price_categories || [],
         });
       } catch (error) {
@@ -252,20 +185,20 @@ const CreateItemRequestView = () => {
 
   useEffect(() => {
     validateForm();
-  }, [formData, images]);
+  }, [formData]);
 
   const validateForm = () => {
-    const { title, description, category, subcategory, price_category, price } = formData;
+    const { title, description, category, subcategory, cancel_type,price_category, price } = formData;
     const isValid =
       title.trim() !== "" &&
       description.trim() !== "" &&
       category.trim() !== "" &&
       subcategory.trim() !== "" &&
+      cancel_type.trim() !== "" &&
       price_category.trim() !== "" &&
       price.trim() !== "" &&
       !isNaN(price) &&
-      parseFloat(price) > 0 &&
-      images.length > 0;
+      parseFloat(price) > 0
     
     setIsFormValid(isValid);
   };
@@ -409,29 +342,7 @@ const CreateItemRequestView = () => {
   };
 
 
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length > 0) {
-      setImages((prevImages) => [...prevImages, ...files]);
-      
-      // Limpiar error de imágenes si existe
-      if (fieldErrors.image) {
-        setFieldErrors(prev => {
-          const newErrors = {...prev};
-          delete newErrors.image;
-          return newErrors;
-        });
-      }
-    }
-  };
 
-  const handleRemoveImage = (index) => {
-    setImages(images.filter((_, i) => i !== index));
-  };
-
-  const triggerFileSelect = () => {
-    document.getElementById('image-upload').click();
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -478,14 +389,16 @@ const CreateItemRequestView = () => {
       errors.category = "Selecciona una categoría válida.";
     }
 
+    if(!formData.cancel_type) {
+      errors.cancel_type = "La política de cancelación es obligatoria.";
+    } else if (!options.cancel_types.map((opt) => opt.value).includes(formData.cancel_type)) {
+      errors.cancel_type = "Selecciona una política de cancelación válida.";
+    }
+
     if(!formData.price_category) {
       errors.price_category = "La categoría de precio es obligatoria.";
     } else if (!options.price_categories.map((opt) => opt.value).includes(formData.price_category)) {
       errors.price_category = "Selecciona una categoría de precio válida.";
-    }
-
-    if (images.length === 0) {
-      errors.image = "Por favor, selecciona al menos una imagen.";
     }
 
     if (Object.keys(errors).length > 0) {
@@ -497,7 +410,7 @@ const CreateItemRequestView = () => {
 
     try {
       const formDataToSend = new FormData();
-      const allowedKeys = ["title", "description", "category", "subcategory", "price_category", "price"];
+      const allowedKeys = ["title", "description", "category", "subcategory", "cancel_type", "price_category", "price"];
       
       Object.keys(formData).forEach((key) => {
         if (allowedKeys.includes(key)) {
@@ -513,10 +426,7 @@ const CreateItemRequestView = () => {
         throw new Error("Usuario no autenticado");
       }
   
-      // Agregar imágenes
-      images.forEach((image) => {
-        formDataToSend.append("image_files", image);
-      });
+
   
       const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/objetos/create_item_request/`, formDataToSend, {
         withCredentials: true,
@@ -525,7 +435,7 @@ const CreateItemRequestView = () => {
       if (response.status === 201) {
         setSubmitSuccess(true);
         setTimeout(() => {
-          navigate("/");
+          navigate("/list_item_requests");
         }, 2000);
       } else {
         throw new Error("Error al crear el Item.");
@@ -543,7 +453,7 @@ const CreateItemRequestView = () => {
       <Navbar />
       <Container maxWidth="lg" sx={{ py: 4, mt: 8 }}>
         <FormContainer elevation={3}>
-          <FormTitle variant="h5">Crear Nueva Publicación</FormTitle>
+          <FormTitle variant="h5">Crear Nuevo Anuncio</FormTitle>
           
           {errorMessage && (
             <Alert severity="error" sx={{ mb: 3 }}>
@@ -636,12 +546,24 @@ const CreateItemRequestView = () => {
                   <InputIcon sx={{mt: 1.5}}>
                     <FiXCircle />
                   </InputIcon>
+                  <StyledSelect
+                    name="cancel_type"
+                    value={formData.cancel_type}
+                    onChange={handleChange}
+                    error={!!fieldErrors.cancel_type}
+                  >
+                    <option value="" disabled>Política de cancelación</option>
+                    {options.cancel_types.map(opt => 
+                      <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    )}
+                  </StyledSelect>
                   <SelectArrow>▼</SelectArrow>
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <CancelPolicyTooltip />
                 </Box>
               </Stack>
+              {fieldErrors.cancel_type && <ErrorMessage>{fieldErrors.cancel_type}</ErrorMessage>}
               
               <InputGroup>
                 <InputIcon>
@@ -677,42 +599,6 @@ const CreateItemRequestView = () => {
                 />
               </InputGroup>
               {fieldErrors.price && <ErrorMessage>{fieldErrors.price}</ErrorMessage>}
-
-              <FileInputContainer onClick={triggerFileSelect}>
-                <FiImage size={32} color="#4a90e2" />
-                <ImageUploadText>
-                  Haz clic para seleccionar imágenes
-                </ImageUploadText>
-                <ImageUploadText variant="caption">
-                  (Para seleccionar múltiples archivos, mantén presionada la tecla Ctrl o Cmd)
-                </ImageUploadText>
-                <HiddenFileInput
-                  id="image-upload"
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  onChange={handleImageChange}
-                />
-              </FileInputContainer>
-              {fieldErrors.image && <ErrorMessage>{fieldErrors.image}</ErrorMessage>}
-
-              {images.length > 0 && (
-                <Box>
-                  <Typography variant="subtitle2" sx={{ mb: 1, color: "#555" }}>
-                    Imágenes seleccionadas ({images.length})
-                  </Typography>
-                  <ImageGallery>
-                    {images.map((image, index) => (
-                      <ImageContainer key={index}>
-                        <PreviewImage src={URL.createObjectURL(image)} alt={`Preview ${index + 1}`} />
-                        <RemoveButton onClick={() => handleRemoveImage(index)}>
-                          <FiTrash2 size={16} />
-                        </RemoveButton>
-                      </ImageContainer>
-                    ))}
-                  </ImageGallery>
-                </Box>
-              )}
  
 
               <SubmitButton 
