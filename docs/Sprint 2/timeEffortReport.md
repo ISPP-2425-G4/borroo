@@ -3051,10 +3051,14 @@
 <td>0 horas, 56 minutos, 44 segundos</td>
 </tr>
 <tr>
-<td>Clases</td>
-<td>clase 21/03</td>
-<td>3 horas, 50 minutos, 0 segundos</td>
-</tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 14/03</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 21/03</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
 </table>
 
 ### **Palomo García, Miguel**
