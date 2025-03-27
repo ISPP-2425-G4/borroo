@@ -11,6 +11,7 @@ from django.utils import timezone
 from decimal import Decimal
 from django.contrib.auth.models import AnonymousUser
 from django.db.models import Q
+from django.utils.dateparse import parse_datetime
 
 
 def is_authorized(condition=True, authenticated=True):
@@ -74,8 +75,16 @@ class RentViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['post'])
     def first_request(self, request, *args, **kwargs):
         item_id = request.data.get('item')
-        start_date = request.data.get('start_date')
-        end_date = request.data.get('end_date')
+        front_start_date = request.data.get('start_date')
+        front_end_date = request.data.get('end_date')
+
+        start_date = parse_datetime(front_start_date)
+        end_date = parse_datetime(front_end_date)
+
+        if start_date and start_date.tzinfo is not None:
+            start_date = start_date.replace(tzinfo=None)
+        if end_date and end_date.tzinfo is not None:
+            end_date = end_date.replace(tzinfo=None)
 
         user_id = request.data.get('renter')
         user = get_object_or_404(User, pk=user_id)
@@ -91,6 +100,10 @@ class RentViewSet(viewsets.ModelViewSet):
             return Response(
                 {'error': 'El objeto no está disponible en esas fechas'},
                 status=status.HTTP_400_BAD_REQUEST)
+
+        data = request.data.copy()
+        data["start_date"] = start_date
+        data["end_date"] = end_date
 
         serializer = RentSerializer(data=request.data,
                                     context={'item_instance': item})
@@ -122,6 +135,12 @@ class RentViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_403_FORBIDDEN
             )
 
+        if response not in ["accepted", "rejected"]:
+            return Response(
+                {'error': 'La respuesta debe ser "accepted" o "rejected".'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
         # Solo si está en REQUESTED
         if rent.rent_status != RentStatus.REQUESTED:
             return Response(
@@ -148,12 +167,6 @@ class RentViewSet(viewsets.ModelViewSet):
             rent.save()
             return Response(
                 {'status': 'Solicitud rechazada. El alquiler se ha cancelado.'}
-            )
-
-        else:
-            return Response(
-                {'error': 'La respuesta debe ser "accepted" o "rejected".'},
-                status=status.HTTP_400_BAD_REQUEST
             )
 
     @action(detail=True, methods=['put'])
