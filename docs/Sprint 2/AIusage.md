@@ -75,11 +75,11 @@ Se han desarrollado 2 tabla, una para poder documentar de una forma eficiente el
 
 | ID   | Uso (Descripción)       | Nombre del Miembro | Fecha       | Enlace al Chat |
 |------|-------------------------|--------------------|------------|---------------|
-| 001  | Generación de tablas en markdown    | Javier García Rodríguez       | 26/03/2025 | [Ver chat](#https://chatgpt.com/share/67e53c4d-4460-8001-a2f6-8c09ff86b221) |
-| 002  | Análisis de cláusulas abusivas   | Javier García Rodríguez         | 27/03/2025 | [Ver chat](#https://chatgpt.com/share/67e53c75-28f4-8001-92b9-ba5531d27dbe) |
-| 003  | Detección de errores y desarrollo de código para JWT  | Jesús Fernández Rodríguez     | 26/03/2025 | [Ver chat](#https://chatgpt.com/share/67e53dbb-b41c-8010-8fe2-73bdf588cae2) |
-| 004  | Detección de errores y desarrollo de código para JWT   | Álvaro Martín Muñoz         | 26/03/2025 | [Ver chat](#https://chatgpt.com/share/67e53e39-ade0-800e-a961-1d9b0d540019) |
-| 005  | Creación de documentación  | Marco Padilla Gómez      | 25/03/2025 | No procede |
+| 001  | Generación de tablas en markdown    | Javier García Rodríguez       | 26/03/2025 | [Ver chat](https://chatgpt.com/share/67e53c4d-4460-8001-a2f6-8c09ff86b221) |
+| 002  | Análisis de cláusulas abusivas   | Javier García Rodríguez         | 27/03/2025 | [Ver chat](https://chatgpt.com/share/67e53c75-28f4-8001-92b9-ba5531d27dbe) |
+| 003  | Detección de errores y desarrollo de código para JWT  | Jesús Fernández Rodríguez     | 26/03/2025 | [Ver chat](https://chatgpt.com/share/67e53dbb-b41c-8010-8fe2-73bdf588cae2) |
+| 004  | Detección de errores y desarrollo de código para JWT   | Álvaro Martín Muñoz         | 26/03/2025 | [Ver chat](https://chatgpt.com/share/67e53e39-ade0-800e-a961-1d9b0d540019) |
+| 005  | Creación de documentación  | Marco Padilla Gómez      | 25/03/2025 | No procede (Se genera un pdf) |
 
 
 ------------------------------------------------------------------
@@ -124,19 +124,16 @@ Para calcular el porcentaje de alucinaciones de las inteligencias artificiales u
 
 Para calcular el porcentaje de alucinaciones de las inteligencias artificiales usadas, se ha determinado por obtener el porcentaje medio de alucinaciones, calculando la media aritmética de los valores registrados en la columna "% Alucinaciones". La fórmula utilizada es:
 
-\[
-\bar{X} = \frac{\sum X_i}{N}
-\]
+
+![Fórmula](https://cdn.discordapp.com/attachments/1354928711962464327/1354928723635339299/image.png?ex=67e71335&is=67e5c1b5&hm=e62e4c3f84b6f63367a68116be8e2997a86f469705446b7f7163bf73e65a59eb&)
 
 Donde:
-- \(X_i\) representa cada uno de los valores de porcentaje de alucinaciones.
-- \(N\) es el número total de desarrolladores.
+- Xi representa cada uno de los valores de porcentaje de alucinaciones.
+- N es el número total de desarrolladores.
 
 Aplicando la fórmula, el porcentaje medio de alucinaciones es:
 
-\[
-\bar{X} = \frac{25 + 25 + 50 + 60 + 0 + 15 + 25 + 20 + 40 + 20 + 25 + 35 + 40 + 37 + 30 + 5 + 30}{17} \approx 28.53\%
-\]
+![Cálculo](https://cdn.discordapp.com/attachments/1354928711962464327/1354929083196248094/image.png?ex=67e7138a&is=67e5c20a&hm=19095a577ed1e7ed0c9ebdeb254841e973d7154abf9424077be3e484e53e12d1&)
 
 ### Conclusión
 

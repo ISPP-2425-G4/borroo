@@ -64,6 +64,8 @@ const ShowItemScreen = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [highlighting, setHighlighting] = useState(false);
 
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     const fetchItemData = async () => {
       try {
@@ -121,7 +123,6 @@ const ShowItemScreen = () => {
   }, [priceCategory, selectedStartHour, selectedEndHour, dateRange, selectedDay, selectedMonths, item]);
   
   const checkOwnerStatus = (userId) => {
-    const currentUser = JSON.parse(localStorage.getItem("user"));
     setIsAuthenticated(!!currentUser);
     if (currentUser && currentUser.id === userId) {
       setIsOwner(true);
@@ -147,6 +148,7 @@ const ShowItemScreen = () => {
   const toggleFeature = () => {
     if (!item) return;
     setHighlighting(true);
+    
     axios.post(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/toggle_feature/`, {
         item_id: item.id,
         user_id: item.user
@@ -156,11 +158,19 @@ const ShowItemScreen = () => {
     })
     .catch(error => {
         console.error('Error destacando el objeto:', error);
+        
+        // Mostrar errores del backend al usuario
+        if (error.response && error.response.data) {
+            alert(error.response.data.error || "Ocurrió un error inesperado.");
+        } else {
+            alert("Error de conexión con el servidor.");
+        }
     })
     .finally(() => {
         setHighlighting(false);
     });
-  };
+};
+
 
   const loadItemImages = async (imageIds) => {
     try {
@@ -270,13 +280,19 @@ const ShowItemScreen = () => {
       let startDateUTC, endDateUTC;
   
       if (priceCategory === "hour" && selectedDay && selectedStartHour !== null && selectedEndHour !== null) {
-        // Construir fecha con hora para alquiler por horas
-        const start = new Date((selectedDay));
-        start.setHours(selectedStartHour+1, 0, 0, 0);
-  
-        const end = new Date((selectedDay));
-        end.setHours(selectedEndHour+1, 0, 0, 0);
-  
+        const start = dayjs(selectedDay)
+        .hour(selectedStartHour)
+        .minute(0)
+        .second(0)
+        .millisecond(0)
+        .format("YYYY-MM-DDTHH:mm:ss");
+        const end = dayjs(selectedDay)
+          .hour(selectedEndHour)
+          .minute(0)
+          .second(0)
+          .millisecond(0)
+          .format("YYYY-MM-DDTHH:mm:ss");
+      
         startDateUTC = start;
         endDateUTC = end;
       } 
@@ -287,12 +303,10 @@ const ShowItemScreen = () => {
       } 
       else if (priceCategory === "month" && selectedDay && selectedMonths) {
         // Construir fechas para alquiler por meses
-        const start = new Date(selectedDay);
-        const end = new Date(selectedDay);
-        end.setMonth(end.getMonth() + parseInt(selectedMonths));
-  
-        startDateUTC = dayjs(start).format("YYYY-MM-DD");
-        endDateUTC = dayjs(end).format("YYYY-MM-DD");
+        const start = dayjs(selectedDay);
+        const end = dayjs(selectedDay).add(selectedMonths, 'month');
+        startDateUTC = start.format("YYYY-MM-DD");
+        endDateUTC = end.format("YYYY-MM-DD");
       } 
       else {
         alert("Por favor, selecciona correctamente la fecha de inicio y fin.");
@@ -616,26 +630,30 @@ const ShowItemScreen = () => {
                     >
                       Eliminar
                     </Button>
-                    <Button 
-                      variant="outlined" 
-                      onClick={toggleFeature} 
-                      disabled={highlighting}
-                      sx={{
+
+                    {/* Solo mostrar si el usuario NO es "free" */}
+                    {currentUser.pricing_plan !== "free" && (
+                      <Button 
+                        variant="outlined" 
+                        onClick={toggleFeature} 
+                        disabled={highlighting}
+                        sx={{
                           color: '#b8860b', // Dorado oscuro para el texto
                           borderColor: '#b8860b', // Dorado oscuro para el borde
                           '&:hover': {
-                              backgroundColor: '#daa520', // Un dorado más fuerte en hover
-                              borderColor: '#ffd700', // Amarillo dorado
-                              color: 'white', // Para mejor contraste
+                            backgroundColor: '#daa520', // Un dorado más fuerte en hover
+                            borderColor: '#ffd700', // Amarillo dorado
+                            color: 'white', // Para mejor contraste
                           },
                           '&:disabled': {
-                              color: '#a97c00', // Un dorado más opaco si está deshabilitado
-                              borderColor: '#a97c00',
+                            color: '#a97c00', // Un dorado más opaco si está deshabilitado
+                            borderColor: '#a97c00',
                           }
-                      }}
-                  >
-                      {item.featured ? 'Quitar destacado' : 'Destacar objeto'}
-                    </Button>
+                        }}
+                      >
+                        {item.featured ? 'Quitar destacado' : 'Destacar objeto'}
+                      </Button>
+                    )}
                   </Box>
                 )}
               </Paper>
