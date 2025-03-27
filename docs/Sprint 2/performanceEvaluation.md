@@ -488,6 +488,11 @@ Asimismo, continué con mi formación a través de las "píldoras teóricas".
 ### **Palomo García, Miguel**
 
 ### **Periañez Franco, Luis Javier**
+Durante la primera semana, me dediqué a realizar la implementación de los planes de suscripción en el frontend, enfocándome especialmente en mejorar su estética y presentación visual para una mejor experiencia de usuario. Trabajé en el diseño de los distintos tipos de planes, sus precios y características, asegurando que la interfaz fuera clara, intuitiva y atractiva.
+
+En la segunda semana, me centré en desarrollar las validaciones necesarias para los planes de suscripción, con el objetivo de garantizar que los datos introducidos por el usuario fueran correctos antes de enviarlos al servidor. Esto incluyó validaciones tanto visuales como lógicas, proporcionando mensajes de error adecuados y asegurando una interacción fluida.
+
+Además, junto a mi compañero Jesús, implementamos la gestión de borradores, permitiendo a los usuarios guardar un plan de suscripción como borrador y publicarlo posteriormente. Esta funcionalidad mejora la flexibilidad del sistema, ofreciendo a los usuarios la posibilidad de trabajar de forma progresiva antes de hacer pública su suscripción.
 
 ### **Rosado Raya, Santiago**
 ### Semana 1
