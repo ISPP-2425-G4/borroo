@@ -190,7 +190,7 @@ const Profile = () => {
     }
 
     try {
-      const response = await axios.delete(
+      await axios.delete(
         `${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/users/delete/${user.id}/`,
         {
           headers: {
@@ -200,7 +200,7 @@ const Profile = () => {
       );
       alert("Usuario eliminado correctamente.");
       window.location.href = "/";
-    } catch (error) {
+    } catch {
       alert("No se pudo eliminar el usuario.");
     }
   };
