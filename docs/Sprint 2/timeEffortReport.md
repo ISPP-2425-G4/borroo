@@ -3835,3 +3835,51 @@
 
 
 ### **Sevillano Barea, Alejandro**
+
+
+<table>
+    <tr>
+        <th>Tarea</th>
+        <th>Detalles de la actividad</th>
+        <th>Tiempo</th>
+    </tr>
+    <tr>
+        <td rowspan="6">Trabajo</td>
+        <td>Testing de search items</td>
+        <td>17 minutos</td>
+    </tr>
+    <tr>
+        <td>Backend y frontend visualización de un perfil</td>
+        <td>7 horas 47 minutos</td>
+    </tr>
+    <tr>
+        <td>Arreglo de conflictos</td>
+        <td>1 hora 5 minutos</td>
+    </tr>
+    <tr>
+        <td>Testing CRUD pedir un alquiler</td>
+        <td>1 hora 19 minutos</td>
+    </tr>
+    <tr>
+        <td>Dashboard administrador</td>
+        <td>12 horas 13 minutos</td>
+    </tr>
+    <tr>
+        <td>Frontend administrador sin token</td>
+        <td>3 horas 44 minutos</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Clases</td>
+        <td>Clase 14-03-25</td>
+        <td>3 horas 40 minutos</td>
+    </tr>
+    <tr>
+        <td>Clase 21-03-25</td>
+        <td>3 horas 40 minutos</td>
+    </tr>
+    <tr>
+        <td>Píldoras teóricas</td>
+        <td>Píldoras</td>
+        <td>1 hora 25 minutos</td>
+    </tr>
+</table>
