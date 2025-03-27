@@ -3618,7 +3618,7 @@
   </thead>
   <tbody>
     <tr>
-      <td rowspan="7">Trabajo</td>
+      <td rowspan="10">Trabajo</td>
       <td>Intentar implementar fechas indisponibles en la UI</td>
       <td>1 hora y 46 minutos</td>
     </tr>
@@ -3640,7 +3640,7 @@
     </tr>
     <tr>
       <td>Testing restricciones alquiler</td>
-      <td>2 horas y 6 minutos</td>
+      <td>2 horas y 06 minutos</td>
     </tr>
     <tr>
       <td>Arreglar poder alquilar por horas</td>
