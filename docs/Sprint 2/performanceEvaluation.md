@@ -155,6 +155,10 @@ Durante la segunda semana, trabajé en el desarrollo del plan de metodología de
 
 Durante la tercera semana, trabajé junto a mi subgrupo en la realización del documento de metodología del desarrollo, además realicé junto a 3 miembros del equipo la base de conocimiento en Docusaurus, tanto pasando a formato Markdown los PDFs como añadiendo a la base de conocimiento común a todos los grupos el feedback proporcionado.
 
+Durante la cuarta semana, trabajé en la realización del método de solicitud de alquiler y sus validaciones así como la ayuda a fullstack de categorias y filtros de precios. 
+
+Durante la quinta semana desarrollé el admin backend, luego desarrolle el admin backend con token y finalmente colaboré en la ayuda a mis compañeros a desarrollar el fullstack de admin y el frontend de solicitud de alquileres.
+
 ### **Nieto Vicioso, Javier**
 Durante la primera semana, participé en la búsqueda de alternativas para el proyecto, explorando ideas como "crear y compartir itinerarios de viaje" y "web para gestión de tareas del hogar". Tras analizar los competidores de estas ideas, se llegó a la conclusión de que el mercado era complicado. Al final de la semana, el equipo se dividió en subgrupos y yo junto con mi subgrupo hicimos la descripción del equipo, el reporte sobre el uso de la IA, y la gestión del código y conocimiento común.
 
