@@ -186,6 +186,30 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 ![](capturasRevision/pantalla_pedir_alquiler.png)
 ![](capturasRevision/pedir_alquiler.png)
 
+### Caso 11: Vista y operaciones de administrador
+1. El usuario debe loggearse como administrador (Credenciales indicadas al final del documento).
+2. El usuario navega a la pestaña "Dashboard".
+3. El usuario selecciona uno de los distintos menus, entre los que se encuentran:
+	- Crear Usuario
+	- Ver Usuarios
+	- Gestion de Items
+	- Gestion de Rentas
+
+4. El usuario selecciona, en las distintas ventanas, las opciones para gestionar las entidades de la aplicación.
+5. En caso de crear o actualizar, el usuario rellena los campos del formulario
+6. El usuario presiona el botón "Guardar"
+
+![](botonDashboard.png)
+![](vistaGeneralAdmin.png)
+![](crearUsuarioAdmin.png)
+![](vistaUsuariosAdmin.png)
+![](editarUsuarioAdmin.png)
+![](vistaItemsAdmin.png)
+![](editarItemAdmin.png)
+![](vistaRentasAdmin.png)
+![](editarRentaAdmin.png)
+
+
 ## 3. Datos necesarios para la revisión
 **Los datos necesarios para la revisión son**: 
 
@@ -197,20 +221,19 @@ Credenciales usuario:
 
 	- Usuario: User2 / Password: Borroo_25 
 
- Administrador (acceder desde ruta https://backend-dot-ispp-2425-g4.ew.r.appspot.com/admin):
+ Administrador:
 
  	- Administrador: admin_ispp / B0rr0o2025ISPP
-  	 (correo por si fuese necesario: borroohelp@gmail.com)
  
 
 URL deployment platform: https://frontend-dot-ispp-2425-g4.ew.r.appspot.com/ 
 
 URL Github Repository: https://github.com/ISPP-2425-G4/borroo 
 
-URL y credenciales del “time tracking tool”: Desde clockify:
+URL y credenciales del “time tracking tool”: Desde clockify (en organización "ISPP"):
 
-	- Credenciales: borroohelp@gmail.com / B0rr0o2025ISPP
- 	 (Para doble verificación, usar mismo correo y contraseña en gmail)
+	- Credenciales: borrooclockify@gmail.com / Borroo2025
+ 	 (Para doble verificación solicitada por clockify, usar mismo correo y contraseña en gmail)
 
 Potential Requirements: Uso de internet para aplicacion desplegada, descrito en readme de git para aplicacion local 
 
