@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Django",
+            "type": "debugpy",
+            "request": "launch",
+            "args": [
+                "runserver"
+            ],
+            "django": true,
+            "autoStartBrowser": false,
+            "program": "${workspaceFolder}\\backend\\manage.py",  // Ruta al archivo manage.py
+            "python": "${workspaceFolder}\\backend\\venv\\Scripts\\python.exe",  // Ruta al intérprete de Python en el entorno virtual (para Windows)
+            "envFile": "${workspaceFolder}\\backend\\.env",  // Asegúrate de agregar esta línea
+            "env": {
+                "DJANGO_SETTINGS_MODULE": "borroo.settings"  // Reemplaza por el nombre de tu proyecto Django
+            }
+        }
+    ]
+}

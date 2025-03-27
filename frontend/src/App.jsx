@@ -17,6 +17,7 @@ import Profile from "./Profile";
 import ListItemRequests from "./ListItemRequests";
 import CreateItemRequest from "./CreateItemRequest";
 import '../public/styles/App.css';
+import FAQ from './components/Faq';
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
         <Route path="/drafts" element={<DraftItemsView />} />
         <Route path="/perfil/:username" element={<Profile />} />
         <Route path="/show-item/:id" element={<ShowItem />} />
+        <Route path="/faq" element={<FAQ />} />
         <Route path="/list_item_requests" element={<ListItemRequests />} />
         <Route path="/create_item_request" element={<CreateItemRequest/>} />
 
