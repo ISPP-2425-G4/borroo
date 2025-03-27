@@ -3608,5 +3608,74 @@
 
 
 ### **Sánchez Márquez, Julia**
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="7">Trabajo</td>
+      <td>Intentar implementar fechas indisponibles en la UI</td>
+      <td>1 hora y 46 minutos</td>
+    </tr>
+    <tr>
+      <td>Reunión con Pablo</td>
+      <td>57 minutos</td>
+    </tr>
+    <tr>
+      <td>Implementar poder ver selecciones en actualización e intentar solucionar problema fechas</td>
+      <td>54 minutos</td>
+    </tr>
+    <tr>
+      <td>Añadir poder eliminar, actualizar periodos de indisponibilidad y solucionar problema fechas</td>
+      <td>2 horas y 18 minutos</td>
+    </tr>
+    <tr>
+      <td>Testing restricciones alquiler</td>
+      <td>1 hora y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Testing restricciones alquiler</td>
+      <td>2 horas y 6 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar poder alquilar por horas</td>
+      <td>39 minutos</td>
+    </tr>
+    <tr>
+      <td>Arreglar poder alquilar por meses</td>
+      <td>14 minutos</td>
+    </tr>
+    <tr>
+      <td>Rellenar documentación (time-effort, performance-evaluation...)</td>
+      <td>20 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="5">Clases</td>
+      <td>Theory Pill S06</td>
+      <td>11 minutos</td>
+    </tr>
+    <tr>
+      <td>Theory Pill S07 A</td>
+      <td>35 minutos</td>
+    </tr>
+    <tr>
+      <td>Theory Pill S07 B</td>
+      <td>37 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 14/02/25</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 21/02/25</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+  </tbody>
+</table>
 
 ### **Sevillano Barea, Alejandro**
