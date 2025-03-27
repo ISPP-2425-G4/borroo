@@ -459,6 +459,10 @@ Para finalizar, asistí a las **clases del 14/03/2025 y 21/03/2025** (3 horas, 5
 
 ### **Naredo Bernardos, Ignacio**
 
+Durante la primera semana del S2, trabajé en la realización del método de solicitud de alquiler y sus validaciones así como la ayuda a fullstack de categorias y filtros de precios. 
+ 
+Durante la segunda semana del S2, desarrollé el admin backend, luego desarrolle el admin backend con token y finalmente colaboré en la ayuda a mis compañeros a desarrollar el fullstack de admin y el frontend de solicitud de alquileres.
+
 ### **Nieto Vicioso, Javier**
 ### Semana 1
 Durante la primera semana de este segundo sprint, mi trabajo se centró en la validación del calendario de las solicitudes de alquiler, asegurando que los usuarios no pudieran solicitar fechas no disponibles o si no estaban correctamente autenticados. También trabajé en la implementación del footer, lo que resultó más complicado de lo esperado debido a problemas con los estilos generales de la aplicación, que impedían que el footer se ubicara correctamente en la página. Finalmente, logré integrarlo de manera estable.
