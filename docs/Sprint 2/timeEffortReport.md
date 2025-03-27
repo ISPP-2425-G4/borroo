@@ -3186,6 +3186,82 @@
 
 ### **García Rodríguez, Javier**
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="12">Trabajo</td>
+    <td>Planificación tareas</td>
+    <td>55 minutos</td>
+  </tr>
+  <tr>
+    <td>Validadores backend del login #189</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Backend planes de suscripción #197</td>
+    <td>2 horas y 13 minutos</td>
+  </tr>
+  <tr>
+    <td>Preparación presentación</td>
+    <td>44 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldora teórica Session 07a</td>
+    <td>36 minutos</td>
+  </tr>
+  <tr>
+    <td>Desarrollo del calendario común</td>
+    <td>2 horas y 56 minutos</td>
+  </tr>
+  <tr>
+    <td>Desarrollo del documento de GDPR y licencias</td>
+    <td>2 horas y 56 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldora teórica sesión 06</td>
+    <td>16 minutos</td>
+  </tr>
+  <tr>
+    <td>Desarrollo del documento de licencias</td>
+    <td>1 hora y 1 minuto</td>
+  </tr>
+  <tr>
+    <td>Desarrollo del documento del uso de IA</td>
+    <td>2 horas y 15 minutos</td>
+  </tr>
+  <tr>
+    <td>Preparación presentación</td>
+    <td>2 horas y 32 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldora teórica Session 07b</td>
+    <td>43 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Reunión</td>
+    <td>Reunión planificación s2</td>
+    <td>2 horas y 15 minutos</td>
+  </tr>
+  <tr>
+    <td>Reunión representantes pasarela stripe</td>
+    <td>44 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clase</td>
+    <td>Clase 14/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 21/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
+
 ### **González Ortiz, Miguel**
 
 <table>
