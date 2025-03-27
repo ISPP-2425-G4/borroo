@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Box, Button, TextField, Typography, Grid, IconButton, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import {
@@ -15,11 +15,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Navbar from "./Navbar";
 import AdminItemDashboard from "./AdminItemDashboard";
 import AdminRentDashboard from "./AdminRentDashboard";
+import PropTypes from 'prop-types';
 
 
 const UserList = ({ users, handleEditUser, handleDeleteUser, editUserData, setEditUserData, handleUpdateUser }) => {
-    const userData = JSON.parse(localStorage.getItem("user"));
-    const isAdmin = userData && userData.is_admin === true;
 
     return (
         <Box sx={{ mt: 4 }}>
@@ -64,7 +63,7 @@ const UserList = ({ users, handleEditUser, handleDeleteUser, editUserData, setEd
                                             <EditIcon />
                                         </IconButton>
                                         {!user.is_admin && (
-                                            <IconButton onClick={() => handleDelete(user.id, user.is_admin)} color="error">
+                                            <IconButton onClick={() => handleDeleteUser(user.id, user.is_admin)} color="error">
                                                 <DeleteIcon />
                                             </IconButton>
                                         )}
@@ -110,6 +109,15 @@ const UserList = ({ users, handleEditUser, handleDeleteUser, editUserData, setEd
     );
 };
 
+UserList.propTypes = {
+    users: PropTypes.array.isRequired,
+    handleEditUser: PropTypes.func.isRequired,
+    handleDeleteUser: PropTypes.func.isRequired,
+    editUserData: PropTypes.object,
+    setEditUserData: PropTypes.func.isRequired,
+    handleUpdateUser: PropTypes.func.isRequired,
+};
+
 const AdminDashboard = () => {
     const [showCreate, setShowCreate] = useState(false);
     const [showUsers, setShowUsers] = useState(false);
@@ -129,8 +137,8 @@ const AdminDashboard = () => {
     });
     const [users, setUsers] = useState([]);
     const [editUserData, setEditUserData] = useState(null);
-    const userData = JSON.parse(localStorage.getItem("user"));
-    const isAdmin = userData && userData.is_admin === true;
+
+
 
     useEffect(() => {
         const userData = JSON.parse(localStorage.getItem("user"));
@@ -145,7 +153,7 @@ const AdminDashboard = () => {
 
         try {
             await axios.post(
-                "http://localhost:8000/usuarios/adminCustome/users/create/",
+                `${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/users/create/`,
                 formData,
                 {
                     headers: {
@@ -184,7 +192,7 @@ const AdminDashboard = () => {
                 },
             });
             setUsers(response.data);
-        } catch (error) {
+        } catch {
             alert("No autorizado. Asegúrate de estar logueado como admin.");
         }
     };
@@ -196,7 +204,7 @@ const AdminDashboard = () => {
         const token = localStorage.getItem("access_token");
         try {
             await axios.delete(
-                `http://localhost:8000/usuarios/adminCustome/users/delete/${userId}/`,
+                `${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/users/delete/${userId}/`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -205,7 +213,7 @@ const AdminDashboard = () => {
             );
             alert("Usuario eliminado correctamente.");
             fetchUsers();
-        } catch (error) {
+        } catch {
             alert("No se pudo eliminar el usuario.");
         }
     };
@@ -217,8 +225,8 @@ const AdminDashboard = () => {
     const handleUpdateUser = async () => {
         const token = localStorage.getItem("access_token");
         try {
-            const response = await axios.put(
-                `http://localhost:8000/usuarios/adminCustome/users/update/${editUserData.id}/`,
+            await axios.put(
+                `${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/users/update/${editUserData.id}/`,
                 editUserData,
                 {
                     headers: {
@@ -229,7 +237,7 @@ const AdminDashboard = () => {
             alert("Usuario actualizado correctamente.");
             setEditUserData(null);
             fetchUsers();
-        } catch (error) {
+        } catch {
             alert("Error al actualizar usuario.");
         }
     };

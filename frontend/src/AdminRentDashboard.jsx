@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import {
     Box,
@@ -61,20 +61,16 @@ const AdminRentDashboard = () => {
         payment_status: "pending",
     });
 
-
     const token = localStorage.getItem("access_token");
-    const userData = JSON.parse(localStorage.getItem("user"));
-    const isAdmin = userData && userData.is_admin === true;
-
 
     const fetchRents = async () => {
         try {
-            const response = await axios.get("http://localhost:8000/usuarios/adminCustome/rent/list/", {
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/rent/list/`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
             // Eliminar el campo item antes de guardar
-            const sanitizedRents = response.data.map(({ item, ...rest }) => rest);
+            const sanitizedRents = response.data.map(({ ...rest }) => rest);
 
             setRents(sanitizedRents);
         } catch (err) {
@@ -85,12 +81,12 @@ const AdminRentDashboard = () => {
 
     useEffect(() => {
         fetchRents();
-    }, []);
+    });
 
     const handleCreateRent = async () => {
         const token = localStorage.getItem("access_token");
         try {
-            await axios.post("http://localhost:8000/usuarios/adminCustome/rent/create/", formData, {
+            await axios.post(`${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/rent/create/`, formData, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             alert("Renta creada correctamente.");
@@ -116,13 +112,13 @@ const AdminRentDashboard = () => {
         if (!confirm) return;
 
         try {
-            await axios.delete(`http://localhost:8000/usuarios/adminCustome/rent/${rentId}/delete/`, {
+            await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/rent/${rentId}/delete/`, {
                 headers: { Authorization: `Bearer ${token}` },
                 "Content-Type": "application/json",
             });
             alert("Renta eliminada.");
             fetchRents();
-        } catch (err) {
+        } catch {
             alert("Error al eliminar renta.");
         }
     };
@@ -131,7 +127,7 @@ const AdminRentDashboard = () => {
         try {
             const { id, ...data } = editRentData;
 
-            await axios.put(`http://localhost:8000/usuarios/adminCustome/rent/${id}/update/`, data, {
+            await axios.put(`${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/rent/${id}/update/`, data, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
@@ -142,7 +138,9 @@ const AdminRentDashboard = () => {
             setRents(prevRents => prevRents.map(rent => rent.id === id ? { ...rent, ...data } : rent));
             setEditRentData(null);
         } catch (err) {
-            alert("Error al actualizar renta.");
+            if (err.response && err.response.data) {
+                alert("Error al actualizar renta. Asegúrate de que la duración mínima sea de 1 mes (30 o 31 días).");
+            }
         }
     };
 
@@ -228,7 +226,7 @@ const AdminRentDashboard = () => {
                                     <InputLabel>Estado de la renta</InputLabel>
                                     <Select
                                         name="rent_status"
-                                        value={formData.rent_status}
+                                        value={editRentData.rent_status}
                                         label="Estado de la renta"
                                         onChange={(e) =>
                                             setFormData((prev) => ({ ...prev, rent_status: e.target.value }))

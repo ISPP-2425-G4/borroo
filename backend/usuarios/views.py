@@ -561,7 +561,7 @@ class UpdateRentView(APIView):
             rent = Rent.objects.get(id=kwargs['rent_id'])
             if not request.user.is_admin:
                 return Response({
-                    "error": "No tienes permisos suficientes para actualizar esta renta."
+                    "error": "No tienes permisos para actualizar esta renta."
                 }, status=status.HTTP_403_FORBIDDEN)
 
             data = request.data.copy()
@@ -570,12 +570,13 @@ class UpdateRentView(APIView):
                 try:
                     data["item"] = Item.objects.get(id=item_id)
                 except Item.DoesNotExist:
-                    return Response({"error": "El ítem especificado no existe."}, status=404)
+                    return Response({"error": "El ítem  no existe."},
+                                    status=404)
             serializer = RentSerializer(
                 rent,
                 data=data,
                 partial=True,
-                context={"item_instance": rent.item}  # 👈 importante
+                context={"item_instance": rent.item}
             )
 
             if serializer.is_valid():

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import {
     Box,
@@ -46,11 +46,11 @@ const AdminItemDashboard = () => {
 
     const fetchItems = async () => {
         try {
-            const response = await axios.get("http://localhost:8000/usuarios/adminCustome/items/", {
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/items/`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             setItems(response.data);
-        } catch (err) {
+        } catch {
             alert("Error al obtener ítems.");
         }
     };
@@ -58,7 +58,7 @@ const AdminItemDashboard = () => {
     const handleCreateItem = async () => {
         try {
             await axios.post(
-                "http://localhost:8000/usuarios/adminCustome/item/create/",
+                `${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/item/create/`,
                 formData,
                 {
                     headers: {
@@ -70,7 +70,7 @@ const AdminItemDashboard = () => {
             setShowCreateForm(false);
             setFormData({ title: "", description: "", price: "", price_category: "" });
             fetchItems();
-        } catch (err) {
+        } catch {
             alert("Error al crear ítem.");
         }
     };
@@ -80,12 +80,12 @@ const AdminItemDashboard = () => {
         if (!confirm) return;
 
         try {
-            await axios.delete(`http://localhost:8000/usuarios/adminCustome/item/${itemId}/delete/`, {
+            await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/item/${itemId}/delete/`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             alert("Ítem eliminado.");
             fetchItems();
-        } catch (err) {
+        } catch {
             alert("Error al eliminar ítem.");
         }
     };
@@ -95,20 +95,15 @@ const AdminItemDashboard = () => {
         try {
             const {
                 id,
-                images,
-                user,
-                price_category_display,
-                category_display,
-                subcategory_display,
-                cancel_type_display,
                 ...cleanedData
             } = editItemData;
 
             // No eliminar el id
             cleanedData.id = id;
+            cleanedData.remaining_image_ids = [1];
 
             await axios.put(
-                `http://localhost:8000/usuarios/adminCustome/item/${id}/update/`,
+                `${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/item/${id}/update/`,
                 cleanedData,
                 {
                     headers: {
@@ -140,6 +135,9 @@ const AdminItemDashboard = () => {
                 </Typography>
 
                 <Box sx={{ display: "flex", gap: 2, justifyContent: "center", mb: 3 }}>
+                    <Button variant="contained" onClick={() => setShowCreateForm(true)}>
+                        Crear Ítem
+                    </Button>
                     <Button variant="outlined" onClick={fetchItems}>
                         Refrescar Lista
                     </Button>
