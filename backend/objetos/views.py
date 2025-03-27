@@ -16,6 +16,7 @@ import json
 from rest_framework.permissions import IsAuthenticated
 
 
+
 class EnumChoicesView(APIView):
     def get(self, request, *args, **kwargs):
         categories = [
