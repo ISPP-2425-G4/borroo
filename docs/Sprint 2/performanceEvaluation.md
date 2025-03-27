@@ -362,7 +362,11 @@ Para concluir, creé el usuario administrador de la aplicación, convertí algun
 
 ## Sprint 2 (#S2)
 
-### **Blanco Mora, David**  
+### **Blanco Mora, David** 
+
+En la primera semana del Sprint 2, me encargué junto a mi compañero Francisco Fernández, al desarrollo del tablón de solicitudes de rentas de objetos. Por una parte tuvimos que desarrollar la funcionalidad en backend para las solicitudes recibidas y por otro lado las solicitudes realizadas. Ésta tarea no supuso mayores problemas ya que contamos con suficiente experiencia en desarrollo de backend. 
+
+Durante la segunda semana del Sprint 2, me encargué del desarrollo de los tests de las funcionalidades implementadas para el tablón de solicitudes de rentas con el fin de comprobar su correcto funcionamiento e implementación. También me encargué de la validación en frontend, en la cual solo se permite al usuario autenticado acceder a su tablón y no al de otros usuarios de la app. Y por último, tambien me vi el contenido publicado para este sprint de las píldoras teóricas.
 
 ### **Díaz Ordóñez, Pablo**  
 
