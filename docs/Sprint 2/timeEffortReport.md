@@ -2783,6 +2783,133 @@
 ### **Naredo Bernardos, Ignacio**
 
 ### **Nieto Vicioso, Javier**
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="26"><b>Código</b></td>
+    <td>#225 Frontend notificaciones y botón para pagar: Última refactorización para merge (25/03/2025)</td>
+    <td>25 minutos</td>
+  </tr>
+  <tr>
+    <td>#225 Frontend notificaciones y botón para pagar: Cambiando el código para mejorar el mantenimiento en el futuro, quitando funciones y el componente RequestCardsContainer, añadiendo algunas funciones mínimas nuevas (25/03/2025)</td>
+    <td>37 minutos</td>
+  </tr>
+  <tr>
+    <td>#225 Frontend notificaciones y botón para pagar: Nuevos cambios y refactorizando todo para pasar el Codacy (25/03/2025)</td>
+    <td>2 horas 29 minutos</td>
+  </tr>
+  <tr>
+    <td>#225 Frontend notificaciones y botón para pagar: Probando una barra de progreso en solicitudes y tabs para desplazarse (24/03/2025)</td>
+    <td>51 minutos</td>
+  </tr>
+  <tr>
+    <td>#225 Frontend notificaciones y botón para pagar: Añadiendo algunas restricciones de los botones de las solicitudes (24/03/2025)</td>
+    <td>20 minutos</td>
+  </tr>
+  <tr>
+    <td>#225 Frontend notificaciones y botón para pagar: Refactorizando el código para unificar solicitudes enviadas y recibidas (24/03/2025)</td>
+    <td>1 hora 35 minutos</td>
+  </tr>
+  <tr>
+    <td>#225 Frontend notificaciones y botón para pagar: Entendiendo la tarea y revisando el backend (24/03/2025)</td>
+    <td>27 minutos</td>
+  </tr>
+  <tr>
+    <td>Mejorando estilos del calendario de solicitud de horas y restricciones (23/03/2025)</td>
+    <td>52 minutos</td>
+  </tr>
+  <tr>
+    <td>Completando restricciones de fechas en frontend (23/03/2025)</td>
+    <td>42 minutos</td>
+  </tr>
+  <tr>
+    <td>Ayudando con restricciones de fechas y ajustes (23/03/2025)</td>
+    <td>52 minutos</td>
+  </tr>
+  <tr>
+    <td>#227 Validaciones frontend aceptar/rechazar alquiler: Últimas validaciones, fechas de inicio y fin mejoradas y añadido un tooltip para el usuario  (22/03/2025)</td>
+    <td>1 hora 23 minutos</td>
+  </tr>
+  <tr>
+    <td>#227 Validaciones frontend aceptar/rechazar alquiler: Combinando los cambios con develop, resolviendo conflictos y mejorando los estilos para que el footer se quede abajo siempre (22/03/2025)</td>
+    <td>42 minutos</td>
+  </tr>
+  <tr>
+    <td>#227 Validaciones frontend aceptar/rechazar alquiler: Añadiendo algunas restricciones de los botones de las solicitudes(22/03/2025)</td>
+    <td>1 hora y 3 minutos</td>
+  </tr>
+  <tr>
+    <td>#227 Validaciones frontend aceptar/rechazar alquiler: Conectando con los usuarios e items (de forma poco eficiente de momento) en el rent request, más tarde habria que serializarlo desde backend (22/03/2025)</td>
+    <td>41 minutos</td>
+  </tr>
+  <tr>
+    <td>#227 Validaciones frontend aceptar/rechazar alquiler: Mejoras en la página (21/03/2025)</td>
+    <td>39 minutos</td>
+  </tr>
+  <tr>
+    <td>#227 Validaciones frontend aceptar/rechazar alquiler: Añadiendo "Mis solicitudes" en navbar (20/03/2025)</td>
+    <td>21 minutos</td>
+  </tr>
+  <tr>
+    <td>#227 Validaciones frontend aceptar/rechazar alquiler: Implementando modal de confirmación (20/03/2025)</td>
+    <td>20 minutos</td>
+  </tr>
+  <tr>
+    <td>#227 Validaciones frontend aceptar/rechazar alquiler: Mejorando estilos de aceptar/rechazar alquiler (20/03/2025)</td>
+    <td>2 horas 9 minutos</td>
+  </tr>
+  <tr>
+    <td>#207 Footer: Realizando últimas modificaciones del footer y creando PR (19/03/2025)</td>
+    <td>26 minutos</td>
+  </tr>
+  <tr>
+    <td>#207 Footer: Probando CSS del footer (19/03/2025)</td>
+    <td>57 minutos</td>
+  </tr>
+  <tr>
+    <td>#207 Footer: Mejorando el css del footer para poder centrarlo, ahora queda que se ubique al final de la página, ahora mismo se superpone (19/03/2025)</td>
+    <td>37 minutos</td>
+  </tr>
+  <tr>
+    <td>#207 Footer: Depuración de error de CSS (18/03/2025)</td>
+    <td>27 minutos</td>
+  </tr>
+  <tr>
+    <td>#194 Validación frontend solicitud de alquiler: haciendo la PR y solucionando conflictos</td>
+    <td>17 minutos</td>
+  </tr>
+  <tr>
+    <td>#207 Footer: Primera versión con enlaces a redes sociales y GitHub (17/03/2025)</td>
+    <td>1 hora 6 minutos</td>
+  </tr>
+  <tr>
+    <td>#194 Validación frontend solicitud de alquiler: Validado el calendario para que un usuario no pueda solicitar un objeto (16/03/2025)</td>
+    <td>34 minutos</td>
+  </tr>
+  <tr>
+    <td>#194 Validación frontend solicitud de alquiler: Validar calendario si es owner, primera versión de tarjeta de usuario en detalles de objeto, validación de propietario y mejoras en botones (16/03/2025)</td>
+    <td>1 hora 30 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="1"><b>Píldoras teóricas</b></td>
+    <td>Píldoras teóricas 6 y 7 (26/03/2025)</td>
+    <td>1 hora 15 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2"><b>Clases</b></td>
+    <td>Clase (21/03/2025)</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase ISPP (14/03/2025)</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+</table>
+
 
 ### **Padilla Gómez, Marco**
 
