@@ -433,6 +433,11 @@ Asimismo, continué con mi formación a través de las "píldoras teóricas". Y 
 ### **Periañez Franco, Luis Javier**
 
 ### **Rosado Raya, Santiago**
+### Semana 1
+Durante esta semana estuve analizando el feedback de los usuarios piloto para poder compartir sus comentarios con el resto de los miembros del grupo. Además, trabajé en algunos issues y revisé todas las pull requests de mi subgrupo.
+
+### Semana 2
+En esta segunda semana preparé el documento con el guion que los usuarios piloto utilizarían para proporcionarnos su feedback. Estuve en contacto con ellos y realicé algunos seguimientos guiados junto a otros usuarios piloto. También trabajé en varios issues, revisé las pull requests de los miembros de mi subgrupo y colaboré con ellos en la corrección de errores. Finalmente, cuando recibí el feedback de todos los usuarios piloto, lo analicé y los evalué conforme a lo establecido en nuestros documentos. Tambien visualicé todos los vídeos de las pildoras teóricas.
 
 ### **Sánchez Márquez, Julia**
 
