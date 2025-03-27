@@ -151,7 +151,24 @@ class ItemSerializer(serializers.ModelSerializer):
 
 
 class ItemRequestSerializer(serializers.ModelSerializer):
+    category_display = serializers.CharField(
+        source='get_category_display', read_only=True
+    )
+    subcategory_display = serializers.CharField(
+         source='get_subcategory_display', read_only=True
+     )
+    cancel_type_display = serializers.CharField(
+        source='get_cancel_type_display', read_only=True
+    )
+    price_category_display = serializers.CharField(
+        source='get_price_category_display', read_only=True
+    )
+
     class Meta:
         model = ItemRequest
-        fields = ['id', 'title', 'description',
-                  'category', 'price', 'user', 'approved']
+        fields = [
+            'id', 'title', 'description',
+            'category', 'category_display', 'subcategory',
+            'subcategory_display', 'price', 'price_category',
+            'cancel_type', 'cancel_type_display',
+            'price_category_display', 'user', 'approved']
