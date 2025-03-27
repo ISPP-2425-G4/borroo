@@ -9,7 +9,6 @@ from rest_framework.exceptions import NotFound
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from decimal import Decimal
-from datetime import timedelta
 from django.contrib.auth.models import AnonymousUser
 from django.db.models import Q
 
@@ -93,7 +92,8 @@ class RentViewSet(viewsets.ModelViewSet):
                 {'error': 'El objeto no está disponible en esas fechas'},
                 status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = RentSerializer(data=request.data)
+        serializer = RentSerializer(data=request.data,
+                                    context={'item_instance': item})
         if serializer.is_valid():
             serializer.save(renter=user, item=item)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -102,32 +102,67 @@ class RentViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['put'])
     def respond_request(self, request, pk=None):
         rent_id = request.data.get('rent')
-        rent = get_object_or_404(Rent, pk=rent_id)
+        rent = Rent.objects.get(pk=rent_id)
         response = request.data.get("response")
+        user_id = request.data.get('user_id')
 
+        if not user_id:
+            return Response(
+                {
+                   "error": "No se proporcionó el 'user_id' en el cuerpo de "
+                            "la solicitud."
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        get_object_or_404(User, pk=user_id)
+        # Validación de permisos
+        if int(user_id) != int(rent.item.user.id):
+            return Response(
+                {"error": "No tienes permisos para realizar esta acción."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Solo si está en REQUESTED
+        if rent.rent_status != RentStatus.REQUESTED:
+            return Response(
+                {
+                    "error": "Solo puedes responder solicitudes en estado "
+                    "REQUESTED."
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
         # is_owner = user == rent.item.user
         # is_authorized(condition=is_owner, authenticated=authenticated)
-
         if response == "accepted":
             rent.rent_status = RentStatus.ACCEPTED
             rent.save()
-            return Response({'status': 'Solicitud aceptada. '
-                            'El vendedor ha aceptado su solicitud.'})
+            return Response(
+                {
+                    'status': 'Solicitud aceptada. '
+                    'El vendedor ha aceptado la solicitud.'
+                }
+            )
         elif response == "rejected":
             rent.rent_status = RentStatus.CANCELLED
             rent.save()
-            return Response({'status': 'Solicitud rechazada. '
-                            'El alquiler se ha cancelado.'})
+            return Response({
+                "status": "Solicitud rechazada. El alquiler se ha cancelado."
+            })
+
         else:
-            raise PermissionDenied({'error': 'No existe un response adecuado'})
+            return Response(
+                {"error": "No existe un response adecuado"},
+                status=status.HTTP_403_FORBIDDEN
+            )
 
     @action(detail=True, methods=['put'])
     def change_status(self, request, pk=None):
-        rent = self.get_object()
+        rent = Rent.objects.get(pk=pk)
         response = request.data.get("response")
         now = timezone.now()
         # cambiar este user
-        user = self.request.user if not AnonymousUser else None
+        user = self.request.user if not isinstance(self.request.user,
+                                                   AnonymousUser) else None
         authenticated = self.request.user.is_authenticated
         is_renter = (user == rent.renter)
         is_owner = (user == rent.item.user)
@@ -156,22 +191,15 @@ class RentViewSet(viewsets.ModelViewSet):
                          "reservado."})
 
     def _handle_picked_up(self, rent, now, is_renter, authenticated):
-        # Caso: pasar de BOOKED a PCIKED_UP (dentro de la fecha)
+        # Caso: pasar de BOOKED a PCIKED_UP
         is_authorized(condition=is_renter, authenticated=authenticated)
         if now < rent.start_date:
             raise PermissionDenied({"error": "Aún no es el día para entregar "
                                     "el objeto."})
-        refund_window = timedelta(minutes=30)
-        if now > rent.start_date:
-            if now <= rent.start_date + refund_window:
-                refund = Decimal(str(rent.total_price)) * Decimal("0.10")
-                rent.total_price = float(Decimal(str(rent.total_price))
-                                         - refund)
-            else:
-                raise PermissionDenied({"error": "El tiempo para obtener el "
-                                        "reembolso ha expirado."})
-        rent.rent_status = RentStatus.PICKED_UP
-        rent.save()
+
+        Rent.objects.filter(pk=rent.pk).update(
+            rent_status=RentStatus.PICKED_UP)
+        rent.refresh_from_db()
         return Response({"status": "Objeto entregado. El objeto ha sido "
                          "entregado."})
 
@@ -182,16 +210,20 @@ class RentViewSet(viewsets.ModelViewSet):
             raise PermissionDenied({"error": "Aún no es el día para devolver "
                                     "el objeto."})
         if now > rent.end_date:
-            apply_penalty(rent)
-        rent.rent_status = RentStatus.RETURNED
-        rent.save()
+            new_total = apply_penalty(rent)
+        else:
+            new_total = rent.total_price
+        Rent.objects.filter(pk=rent.pk).update(total_price=new_total,
+                                               rent_status=RentStatus.RETURNED)
+        rent.refresh_from_db()
         return Response({"status": "Objeto devuelto. El objeto ha sido "
                          "devuelto."})
 
     @action(detail=True, methods=['put'])
     def cancel_rent(self, request, pk=None):
         # hay que cambiar user
-        user = request.user if not AnonymousUser else None
+        user = request.user if not isinstance(
+            request.user, AnonymousUser) else None
         authenticated = request.user.is_authenticated
         now = timezone.now()
         rent = self.get_object()
@@ -215,8 +247,9 @@ class RentViewSet(viewsets.ModelViewSet):
                 'refund_percentage': str(refund_percentage),
                 'refund_amount': str(refund_amount)})
         else:
-            raise Response(
-                {'error': 'No se puede cancelar un alquiler en este estado'})
+            return Response(
+                {'error': 'No se puede cancelar un alquiler en este estado'},
+                status=400)
 
     def destroy(self, request, *args, **kwargs):
         rent = self.get_object()
