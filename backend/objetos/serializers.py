@@ -56,6 +56,11 @@ class ItemSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         draft_mode = data.get('draft_mode', False)
         image_files = self.initial_data.get('image_files')
+        remaining_image_ids = data.get('remaining_image_ids', None)
+        if remaining_image_ids:
+            image_count = len(remaining_image_ids)
+        else:
+            image_count = 0
 
         # Restricción: No más de 10 ítems con draft_mode False
         item_count = Item.objects.filter(user=user, draft_mode=False).count()
@@ -72,7 +77,8 @@ class ItemSerializer(serializers.ModelSerializer):
 
         # Restricción: Debe subir al menos una imagen
         image_files = data.get('image_files', [])
-        if not draft_mode and (not image_files or len(image_files) == 0):
+        if not draft_mode and ((not image_files or len(image_files) == 0)
+                               and image_count == 0):
             raise serializers.ValidationError({
                 "image_files":
                 "Debes subir al menos una imagen para publicar el ítem."

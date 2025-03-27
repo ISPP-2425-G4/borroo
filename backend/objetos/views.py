@@ -175,6 +175,7 @@ class ItemViewSet(viewsets.ModelViewSet):
 
         # Usamos el serializer para validar y guardar
         serializer = self.get_serializer(item, data=data, partial=True)
+
         serializer.is_valid(raise_exception=True)
         self.handle_unavailable_periods(
                     serializer.save(), request.data.get(
