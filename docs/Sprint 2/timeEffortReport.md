@@ -3260,7 +3260,7 @@
     <td>14 minutos</td>
   </tr>
   <tr>
-    <td rowspan="5">Documentación</td>
+    <td rowspan="6">Documentación</td>
     <td>Tomar feedback</td>
     <td>1 hora y 31 minutos</td>
   </tr>
@@ -3279,6 +3279,10 @@
   <tr>
     <td>Rellenar el timeEffort y el performance evaluation</td>
     <td>20 minutos</td>
+  </tr>
+  <tr>
+    <td>Actualizacion revision.md</td>
+    <td>1 hora y4 minutos</td>
   </tr>
   <tr>
     <td rowspan="3">Píldoras teóricas</td>
