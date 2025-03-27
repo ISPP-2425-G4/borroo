@@ -40,9 +40,18 @@ const RentRequestBoard = () => {
         const fetchRequests = async () => {
             try {
                 const user = JSON.parse(localStorage.getItem("user"));
+                const urlParams = new URLSearchParams(window.location.search);
+                const queryUserId = urlParams.get("user");
+
                 if (!user || !user.id) {
                     alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
                     navigate("/login");
+                    return;
+                }
+                // Validación de acceso a su propio tablón
+                if (queryUserId && parseInt(queryUserId) !== user.id) {
+                    alert("No tienes permiso para ver este tablón.");
+                    navigate("/login"); 
                     return;
                 }
 
