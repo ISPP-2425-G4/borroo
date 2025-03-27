@@ -92,14 +92,16 @@ const Signup = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    const requiredFields = ["username", "name", "surname", "email", "password", "password2"];
-    const isValid = requiredFields.every(
-      field => Object.prototype.hasOwnProperty.call(formData, field) &&
-      typeof formData[field] === 'string' &&
-      formData[field].trim() !== ""
-  ) && acceptTerms;
-      setIsFormValid(isValid);
+    const { username, name, surname, email, password, password2 } = formData;
+    const fields = [username, name, surname, email, password, password2];
+  
+    const isValid =
+      fields.every(field => typeof field === 'string' && field.trim() !== "") &&
+      acceptTerms;
+  
+    setIsFormValid(isValid);
   }, [formData, acceptTerms]);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
