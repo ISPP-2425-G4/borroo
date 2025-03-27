@@ -395,6 +395,21 @@ Sobre documentación, añadí al presente documento la parte que me corresponde 
 ### **Naredo Bernardos, Ignacio**
 
 ### **Nieto Vicioso, Javier**
+### Semana 1
+Durante la primera semana de este segundo sprint, mi trabajo se centró en la validación del calendario de las solicitudes de alquiler, asegurando que los usuarios no pudieran solicitar fechas no disponibles o si no estaban correctamente autenticados. También trabajé en la implementación del footer, lo que resultó más complicado de lo esperado debido a problemas con los estilos generales de la aplicación, que impedían que el footer se ubicara correctamente en la página. Finalmente, logré integrarlo de manera estable.
+
+Otro punto clave de la semana fue la mejora de la página de aceptar/rechazar alquiler, donde realicé las validaciones necesarias para asegurar que el usuario solo pudiera realizar acciones válidas. Además, finalicé la funcionalidad, ya que el compañero que inicialmente la implementó no tenía tanta experiencia con frontend. Esto implicó mejorar los estilos y optimizar algunas funciones y llamadas al backend.
+
+Hacia el final de la semana, ayudé a Pablo Díaz con las restricciones del calendario de solicitudes, ya que no sabía cómo continuar con su tarea de frontend.
+
+### Semana 2
+Durante esta segunda semana, me enfoqué en la implementación de notificaciones para las solicitudes de alquiler y en el desarrollo del botón de pago para que, una vez aceptada una solicitud, el usuario pudiera proceder con el pago mediante Stripe, que ya se encargaría otro compañero en implementarlo.
+
+Esta tarea requirió una serie de refactorizaciones para mejorar el mantenimiento del código y asegurar su correcta integración con la plataforma. También optimicé la estructura del código eliminando componentes innecesarios y mejorando la organización de las solicitudes enviadas y recibidas.
+
+Además, implementé algunas restricciones en los botones de las solicitudes para mejorar la experiencia del usuario y asegurar que solo se mostraran las opciones adecuadas en cada estado del proceso.
+
+En general, estas dos semanas han estado enfocadas en mejoras de usabilidad, validaciones y optimización del código en el frontend, asegurando una mejor experiencia para los usuarios y facilitando la integración con el backend.
 
 ### **Padilla Gómez, Marco**
 
