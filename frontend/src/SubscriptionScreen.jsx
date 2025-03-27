@@ -143,9 +143,9 @@ const SubscriptionScreen = () => {
       const url = `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${user.id}/downgrade_to_free/`;
 
       await axios.post(url, {}, {
-        // headers: {
-        //   Authorization: `Bearer ${token}`,
-        // },
+         headers: {
+           Authorization: `Bearer ${token}`,
+         },
       });
       const updatedUser = { ...user, pricing_plan: targetPlan };
       localStorage.setItem("user", JSON.stringify(updatedUser));
