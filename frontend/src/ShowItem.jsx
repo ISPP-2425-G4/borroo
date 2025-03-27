@@ -64,6 +64,8 @@ const ShowItemScreen = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [highlighting, setHighlighting] = useState(false);
 
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     const fetchItemData = async () => {
       try {
@@ -121,7 +123,6 @@ const ShowItemScreen = () => {
   }, [priceCategory, selectedStartHour, selectedEndHour, dateRange, selectedDay, selectedMonths, item]);
   
   const checkOwnerStatus = (userId) => {
-    const currentUser = JSON.parse(localStorage.getItem("user"));
     setIsAuthenticated(!!currentUser);
     if (currentUser && currentUser.id === userId) {
       setIsOwner(true);
@@ -147,6 +148,7 @@ const ShowItemScreen = () => {
   const toggleFeature = () => {
     if (!item) return;
     setHighlighting(true);
+    
     axios.post(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/toggle_feature/`, {
         item_id: item.id,
         user_id: item.user
@@ -156,11 +158,19 @@ const ShowItemScreen = () => {
     })
     .catch(error => {
         console.error('Error destacando el objeto:', error);
+        
+        // Mostrar errores del backend al usuario
+        if (error.response && error.response.data) {
+            alert(error.response.data.error || "Ocurrió un error inesperado.");
+        } else {
+            alert("Error de conexión con el servidor.");
+        }
     })
     .finally(() => {
         setHighlighting(false);
     });
-  };
+};
+
 
   const loadItemImages = async (imageIds) => {
     try {
@@ -616,26 +626,30 @@ const ShowItemScreen = () => {
                     >
                       Eliminar
                     </Button>
-                    <Button 
-                      variant="outlined" 
-                      onClick={toggleFeature} 
-                      disabled={highlighting}
-                      sx={{
+
+                    {/* Solo mostrar si el usuario NO es "free" */}
+                    {currentUser.pricing_plan !== "free" && (
+                      <Button 
+                        variant="outlined" 
+                        onClick={toggleFeature} 
+                        disabled={highlighting}
+                        sx={{
                           color: '#b8860b', // Dorado oscuro para el texto
                           borderColor: '#b8860b', // Dorado oscuro para el borde
                           '&:hover': {
-                              backgroundColor: '#daa520', // Un dorado más fuerte en hover
-                              borderColor: '#ffd700', // Amarillo dorado
-                              color: 'white', // Para mejor contraste
+                            backgroundColor: '#daa520', // Un dorado más fuerte en hover
+                            borderColor: '#ffd700', // Amarillo dorado
+                            color: 'white', // Para mejor contraste
                           },
                           '&:disabled': {
-                              color: '#a97c00', // Un dorado más opaco si está deshabilitado
-                              borderColor: '#a97c00',
+                            color: '#a97c00', // Un dorado más opaco si está deshabilitado
+                            borderColor: '#a97c00',
                           }
-                      }}
-                  >
-                      {item.featured ? 'Quitar destacado' : 'Destacar objeto'}
-                    </Button>
+                        }}
+                      >
+                        {item.featured ? 'Quitar destacado' : 'Destacar objeto'}
+                      </Button>
+                    )}
                   </Box>
                 )}
               </Paper>
