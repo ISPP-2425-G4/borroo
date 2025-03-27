@@ -3618,12 +3618,12 @@
   </thead>
   <tbody>
     <tr>
-      <td rowspan="10">Trabajo</td>
+      <td rowspan="9">Trabajo</td>
       <td>Intentar implementar fechas indisponibles en la UI</td>
       <td>1 hora y 46 minutos</td>
     </tr>
     <tr>
-      <td>Reunión con Pablo</td>
+      <td>Reunion con Pablo</td>
       <td>57 minutos</td>
     </tr>
     <tr>
@@ -3631,7 +3631,7 @@
       <td>54 minutos</td>
     </tr>
     <tr>
-      <td>Añadir poder eliminar, actualizar periodos de indisponibilidad y solucionar problema fechas</td>
+      <td>Añadir poder eliminar, actualizar periodos de indisponibilidad  y solucionar problema fechas </td>
       <td>2 horas y 18 minutos</td>
     </tr>
     <tr>
@@ -3640,7 +3640,7 @@
     </tr>
     <tr>
       <td>Testing restricciones alquiler</td>
-      <td>2 horas y 06 minutos</td>
+      <td>2 hora y  06 minutos</td>
     </tr>
     <tr>
       <td>Arreglar poder alquilar por horas</td>
@@ -3651,13 +3651,12 @@
       <td>14 minutos</td>
     </tr>
     <tr>
-      <td>Rellenar documentación (time-effort, performance-evaluation...)</td>
+      <td>Rellenar documentacion (time-effort, performance-evaluation...)</td>
       <td>20 minutos</td>
     </tr>
     <tr>
-      <td rowspan="5">Clases</td>
       <td>Theory Pill S06</td>
-      <td>11 minutos</td>
+      <td>20 minutos</td>
     </tr>
     <tr>
       <td>Theory Pill S07 A</td>
@@ -3668,11 +3667,12 @@
       <td>37 minutos</td>
     </tr>
     <tr>
-      <td>Clase 14/02/25</td>
+      <td rowspan="2">Clases</td>
+      <td>Clase 21/02/25</td>
       <td>3 horas y 50 minutos</td>
     </tr>
     <tr>
-      <td>Clase 21/02/25</td>
+      <td>Clase 14/02/25</td>
       <td>3 horas y 50 minutos</td>
     </tr>
   </tbody>
