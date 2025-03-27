@@ -303,12 +303,10 @@ const ShowItemScreen = () => {
       } 
       else if (priceCategory === "month" && selectedDay && selectedMonths) {
         // Construir fechas para alquiler por meses
-        const start = new Date(selectedDay);
-        const end = new Date(selectedDay);
-        end.setMonth(end.getMonth() + parseInt(selectedMonths));
-  
-        startDateUTC = dayjs(start).format("YYYY-MM-DD");
-        endDateUTC = dayjs(end).format("YYYY-MM-DD");
+        const start = dayjs(selectedDay);
+        const end = dayjs(selectedDay).add(selectedMonths, 'month');
+        startDateUTC = start.format("YYYY-MM-DD");
+        endDateUTC = end.format("YYYY-MM-DD");
       } 
       else {
         alert("Por favor, selecciona correctamente la fecha de inicio y fin.");
