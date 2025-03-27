@@ -3001,6 +3001,58 @@
 
 ### **Fernández Mota, Francisco**
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="4">Trabajo</td>
+    <td>Tablón de solicitudes de alquileres</td>
+    <td>3 horas y 40 minutos</td>
+  </tr>
+  <tr>
+    <td>Tablón y aceptar y rechazar solicitudes</td>
+    <td>3 horas y 20 minutos</td>
+  </tr>
+  <tr>
+    <td>Excel ROI</td>
+    <td>36 minutos</td>
+  </tr>
+  <tr>
+    <td>SLA</td>
+    <td>1 hora y 42 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Píldoras teóricas</td>
+    <td>Session 06</td>
+    <td>11 minutos</td>
+  </tr>
+  <tr>
+    <td>Session 07a</td>
+    <td>37 minutos</td>
+  </tr>
+  <tr>
+    <td>Session 07b</td>
+    <td>39 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="1">Reuniones</td>
+    <td>Reunión 15/3/25</td>
+    <td> 2 horas y 14 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clase</td>
+    <td>Clase 14/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 21/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
 ### **García Rodríguez, Javier**
 
 ### **González Ortiz, Miguel**
