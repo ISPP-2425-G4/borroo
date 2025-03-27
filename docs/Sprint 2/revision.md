@@ -71,12 +71,6 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 	-   Nombre
 	-   Apellido
 	-   Correo electrónico
-	-   Número de teléfono
-	-   País
-	-   Ciudad
-	-   Dirección
-	-   Código postal
-	-   Plan de suscripción (Free por defecto)
 	-   Contraseña
 	-   Confirmación de contraseña
 3.  El usuario completa el formulario con su información.
@@ -92,8 +86,7 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 	-   El sistema muestra un mensaje de éxito.
 	-   Se redirige al usuario a la pantalla de inicio de sesión.
 	-   El usuario puede iniciar sesión con sus credenciales recién creadas.
-![](capturasRevision/register1.png)
-![](capturasRevision/register2.png)
+![](capturasRevision/register.png)
 
 ### Caso 3: Visualización de objetos  disponibles para alquiler
 1.  El usuario accede a la página principal
@@ -115,6 +108,7 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 2.  Se muestra una pantalla con todos los detalles del anuncio, siendo estos:
 	-   Descripción
 	-   Categoría
+	-	Subcategoría
 	-   Política de cancelación
 	-   Precio
 	-   Usuario anunciante
@@ -140,10 +134,12 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 	-   Título del objeto.
 	-   Descripción del objeto.
 	-   Categoría del objeto.
+	-	Subcategoría del objeto.
 	-   Política de cancelación (flexible, moderada, estricta, etc.).
 	-   Unidad de precio (hora, día, semana, etc.).
 	-   Precio del alquiler.
-	-   Opcionalmente, el usuario puede añadir imágenes del objeto.
+	-   El usuario debe añadir imágenes del objeto.
+	-	Disponibilidad del producto.
 5.  El usuario presiona el botón "Publicar".
 ![](capturasRevision/crear_publicacion.png)
 ![](capturasRevision/objeto_creado.png)
@@ -156,13 +152,15 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 	-   Nombre del objeto.
 	-   Descripción del objeto.
 	-   Categoría.
+	-	Subcategoría.
 	-   Política de cancelación.
 	-   Unidad de tiempo para el precio (hora, día, semana, etc.)
 	-   Precio del alquiler.
 	-   Imagen del objeto (opcional).
+	-	Disponibilidad del producto.
 5.  El usuario presiona el botón "Actualizar".
-![](capturasRevision/editar_publicacion.png)
-![](capturasRevision/objeto_editado.png)
+![](capturasRevision/editar_publicacion1.png)
+![](capturasRevision/editar_publicacion2.png)
 
 ### Caso 9: Eliminar objeto de alquiler
 1.  El usuario selecciona el anuncio del objeto que desea eliminar
@@ -171,7 +169,22 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 4.  El usuario presiona el botón de “Aceptar”
 5.  Se muestra un mensaje de que se ha eliminado correctamente
 ![](capturasRevision/eliminar_objeto.png)
-![](capturasRevision/objeto_eliminado.png)
+
+### Caso 10: Crear publicacion de anuncio
+1.  El usuario accede a la plataforma e inicia sesión.
+2.  El usuario navega a la sección "Anuncio".
+3.  El sistema muestra un formulario para crear la publicación.
+4.  El usuario completa los siguientes campos obligatorios:
+	-   Título del objeto.
+	-   Descripción del objeto.
+	-   Categoría del objeto.
+	-	Subcategoría del objeto
+	-   Política de cancelación (flexible, moderada, estricta, etc.).
+	-   Unidad de precio (hora, día, semana, etc.).
+	-   Precio del alquiler.
+5.  El usuario presiona el botón "Publicar".
+![](capturasRevision/pantalla_pedir_alquiler.png)
+![](capturasRevision/pedir_alquiler.png)
 
 ## 3. Datos necesarios para la revisión
 **Los datos necesarios para la revisión son**: 
