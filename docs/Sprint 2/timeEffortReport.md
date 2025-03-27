@@ -3632,6 +3632,108 @@
 ### **Palomo García, Miguel**
 
 ### **Periañez Franco, Luis Javier**
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="22">Trabajo</td>
+    <td>Diseño de interfaz para los planes de suscripción</td>
+    <td>35 minutos</td>
+  </tr>
+  <tr>
+    <td>Implementación inicial de los planes de suscripción en React</td>
+    <td>1 hora</td>
+  </tr>
+  <tr>
+    <td>Mejoras visuales y refactorización del componente de suscripción</td>
+    <td>45 minutos</td>
+  </tr>
+  <tr>
+    <td>Creación de lógica para seleccionar tipo de suscripción</td>
+    <td>30 minutos</td>
+  </tr>
+  <tr>
+    <td>Diseño y testeo de mensajes de éxito y error en suscripciones</td>
+    <td>30 minutos</td>
+  </tr>
+  <tr>
+    <td>Validación de campos en el formulario de suscripción</td>
+    <td>50 minutos</td>
+  </tr>
+  <tr>
+    <td>Mejoras de accesibilidad y experiencia de usuario</td>
+    <td>25 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión de lógica condicional en validaciones</td>
+    <td>30 minutos</td>
+  </tr>
+  <tr>
+    <td>Implementación de sistema de borradores con Jesús</td>
+    <td>1 hora</td>
+  </tr>
+  <tr>
+    <td>Diseño y pruebas del botón “Guardar como borrador”</td>
+    <td>45 minutos</td>
+  </tr>
+  <tr>
+    <td>Integración de borradores en la vista de detalle del ítem</td>
+    <td>1 hora</td>
+  </tr>
+  <tr>
+    <td>Revisión conjunta de flujo de borradores y publicación</td>
+    <td>30 minutos</td>
+  </tr>
+  <tr>
+    <td>Debugging de errores al cargar borradores</td>
+    <td>30 minutos</td>
+  </tr>
+  <tr>
+    <td>Resolución de conflictos en rama de desarrollo</td>
+    <td>25 minutos</td>
+  </tr>
+  <tr>
+    <td>Resolución de conflicto en componente SubscriptionPlan.js</td>
+    <td>20 minutos</td>
+  </tr>
+  <tr>
+    <td>Resolución de conflicto por push simultáneo con Jesús</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>Merge final y comprobación de conflictos resueltos</td>
+    <td>25 minutos</td>
+  </tr>
+  <tr>
+    <td>Documentación de los cambios realizados</td>
+    <td>25 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión de código y limpieza de imports</td>
+    <td>20 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión con Jesús del flujo completo de publicación</td>
+    <td>25 minutos</td>
+  </tr>
+  <tr>
+    <td>Sesión de retro sobre suscripciones y mejoras UX</td>
+    <td>30 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="1">Clase</td>
+    <td>Clase 14/03/2025</td>
+    <td>3 horas 10 minutos</td>
+  </tr>
+  <tr>
+    <td>Total</td>
+    <td colspan="2">16 horas</td>
+  </tr>
+</table>
+
 
 ### **Rosado Raya, Santiago**
 <table>
