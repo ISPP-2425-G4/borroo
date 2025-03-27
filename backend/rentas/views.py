@@ -92,14 +92,20 @@ class RentViewSet(viewsets.ModelViewSet):
         item = get_object_or_404(Item, pk=item_id)
 
         not_rent_yourself = user != item.user
-
         is_authorized(condition=not_rent_yourself)
 
-        if Rent.objects.filter(item=item, start_date__lte=end_date,
-                               end_date__gte=start_date).exists():
+        # Solo permitir si no hay ninguna renta activa
+        overlapping_rents = Rent.objects.filter(
+            item=item,
+            start_date__lte=end_date,
+            end_date__gte=start_date
+        ).exclude(rent_status=RentStatus.CANCELLED)
+
+        if overlapping_rents.exists():
             return Response(
                 {'error': 'El objeto no está disponible en esas fechas'},
-                status=status.HTTP_400_BAD_REQUEST)
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         data = request.data.copy()
         data["start_date"] = start_date

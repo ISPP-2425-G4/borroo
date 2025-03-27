@@ -1,20 +1,23 @@
 # flake8: noqa
-import os
 import django
+import os
+
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'borroo.settings')
 django.setup()
 
-import random
-from usuarios.models import User
-from objetos.models import Item, ItemImage, ItemSubcategory
-from rentas.models import Rent
-from decimal import Decimal
-from django.contrib.auth.hashers import make_password
 from datetime import datetime
+from django.contrib.auth.hashers import make_password
+from decimal import Decimal
+from rentas.models import Rent
+from objetos.models import Item, ItemImage, ItemSubcategory
+from usuarios.models import User
+import random
+
 
 def clear_database():
-    confirmation = input("¿Estás seguro de que deseas borrar todos los datos de la base de datos? (y/n): ")
+    confirmation = input(
+        "¿Estás seguro de que deseas borrar todos los datos de la base de datos? (y/n): ")
     if confirmation.lower() == 'y' or confirmation.lower() == 'yes':
         Rent.objects.all().delete()
         ItemImage.objects.all().delete()
@@ -24,6 +27,7 @@ def clear_database():
     else:
         print("Operación cancelada.")
         exit()
+
 
 def create_users():
     usernames = ['User1', 'User2', 'User3', 'User4', 'User5']
@@ -41,7 +45,7 @@ def create_users():
             postal_code='28001',
             is_verified=bool(random.getrandbits(1)),
             pricing_plan=random.choice(['free', 'premium']),
-            is_admin = False
+            is_admin=False
         )
     print('Users created successfully!')
 
@@ -50,7 +54,7 @@ def create_users():
         name='Admin',
         surname='Admin',
         email='admin@example.com',
-        password=make_password('Admin_25'),  
+        password=make_password('Admin_25'),
         phone_number='+1234567890',
         country='España',
         city='Madrid',
@@ -58,8 +62,9 @@ def create_users():
         postal_code='28001',
         is_verified=True,
         pricing_plan='premium',
-        is_admin=True 
+        is_admin=True
     )
+
 
 def create_items():
     users = User.objects.all()
@@ -72,14 +77,14 @@ def create_items():
                                     'entertainment']),
             subcategory=ItemSubcategory.NONE,
             cancel_type=random.choice(['flexible', 'medium', 'strict']),
-            price_category=random.choice(['hour', 'day', 'week', 'month',
-                                          'year']),
+            price_category=random.choice(['hour', 'day', 'month']),
             price=Decimal(random.uniform(2, 30)),
             user=random.choice(users),
             draft_mode=False,
             featured=False
         )
     print('Items created successfully!')
+
 
 if __name__ == '__main__':
     clear_database()
