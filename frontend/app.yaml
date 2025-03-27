@@ -1,5 +1,5 @@
 runtime: python312
-service: frontend
+service: frontend-s2
 
 handlers:
   # Serve all static assets with caching (including nested paths)

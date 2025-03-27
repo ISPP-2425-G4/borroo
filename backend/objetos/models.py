@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 
 from django.core.validators import MinValueValidator
@@ -118,9 +119,7 @@ class CancelType(models.TextChoices):
 class PriceCategory(models.TextChoices):
     HOUR = ('hour', 'Hora')
     DAY = ('day', 'Día')
-    WEEK = ('week', 'Semana')
     MONTH = ('month', 'Mes')
-    YEAR = ('year', 'Año')
 
 
 class Item(models.Model):
@@ -173,6 +172,16 @@ class Item(models.Model):
         self.save()
 
 
+class UnavailablePeriod(models.Model):
+    item = models.ForeignKey(
+        Item, related_name='unavailable_periods', on_delete=models.CASCADE)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+
+    class Meta:
+        unique_together = ('item', 'start_date', 'end_date')
+
+
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, related_name='images',
                              on_delete=models.CASCADE)
@@ -196,8 +205,9 @@ class ItemRequest(models.Model):
         choices=PriceCategory.choices
     )
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[
-        MinValueValidator(0.01, message="El precio debe ser mayor a 0."),
-        MaxValueValidator(99999999.99,
+        MinValueValidator(Decimal("0.01"),
+                          message="El precio debe ser mayor a 0."),
+        MaxValueValidator(Decimal("99999999.99"),
                           message="El precio no puede ser mayor"
                           " a 99,999,999.99."),
         DecimalValidator(max_digits=10, decimal_places=2)

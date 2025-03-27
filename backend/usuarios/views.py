@@ -1,6 +1,10 @@
+import re
 from django.http import JsonResponse
 import datetime
 from django.contrib.auth.hashers import check_password, make_password
+
+from rentas.models import Rent
+from rentas.serializers import RentSerializer
 from .models import Review, User, PricingPlan
 from .serializers import ReviewSerializer, UserSerializer, RegisterSerializer
 from rest_framework import viewsets, status
@@ -21,6 +25,9 @@ from objetos.models import Item
 from objetos.serializers import ItemSerializer
 from django.shortcuts import get_object_or_404
 import os
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import user_passes_test
+from rest_framework.permissions import BasePermission, IsAuthenticated
 
 
 def index(request):
@@ -43,7 +50,7 @@ class UserViewSet(viewsets.ModelViewSet):
         # Encriptar la contraseña antes de validar el serializer
         data["password"] = make_password(data["password"])
 
-        serializer = RegisterSerializer(data=request.data)
+        serializer = RegisterSerializer(data=data)
         if serializer.is_valid():
             # Guardamos el usuario con la contraseña encriptada
             user = serializer.save()
@@ -356,3 +363,247 @@ class ReviewDeleteView(APIView):
         review.delete()
         return Response({"message": "Reseña eliminada correctamente"},
                         status=status.HTTP_200_OK)
+
+
+def is_allowed_user(user):
+    # Verifica que el nombre de usuario sea el del usuario autorizado
+    return user.username == "User1"
+
+
+class CreateSuperuserView(APIView):
+
+    @method_decorator(user_passes_test(is_allowed_user))
+    def post(self, request, *args, **kwargs):
+        username = request.data.get('username')
+        email = request.data.get('email')
+        password = request.data.get('password')
+
+        if not username or not email or not password:
+            return Response({
+                "error": "Por favor, ingresa todos los campos."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            return Response({
+                "error": "Formato de correo electrónico no válido."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        if User.objects.filter(username=username).exists():
+            return Response({
+                "error": "El nombre de usuario ya existe."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            user = User.objects.create_superuser(
+                username=username,
+                email=email,
+                password=make_password(password)
+            )
+            user.is_superuser = True
+            user.is_staff = True
+            user.save()
+
+            return Response({
+                "message": f"Superusuario {username} creado con éxito."
+            }, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            return Response({
+                "error": str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class IsAdminUser(BasePermission):
+    def has_permission(self, request, view):
+        return request.user and request.user.is_superuser
+
+
+class UserListView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class CreateUserView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetUserView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def get(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+        serializer = UserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UpdateUserView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def put(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class DeleteUserView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def delete(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+        if request.user == user:
+            return Response({"error": "No puedes eliminarte a ti mismo."},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        user.delete()
+        return Response({"message": "Usuario eliminado correctamente."},
+                        status=status.HTTP_204_NO_CONTENT)
+
+
+class CreateItemView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def post(self, request, *args, **kwargs):
+        if not IsAdminUser(request.user):
+            return Response({
+                "error": "No tienes permisos suficientes para crear un ítem."
+            }, status=status.HTTP_403_FORBIDDEN)
+
+        serializer = ItemSerializer(data=request.data)
+        if serializer.is_valid():
+            item = serializer.save(user=request.user)
+            return Response(ItemSerializer(item).data,
+                            status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UpdateItemView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def put(self, request, *args, **kwargs):
+        try:
+            item = Item.objects.get(id=kwargs['item_id'])
+
+            # Verificar si el usuario es admin o dueño del ítem
+            if not IsAdminUser(request.user) and item.user != request.user:
+                return Response({
+                    "error": "No tienes permisos suficientes para actualizar"
+                    "este ítem."
+                }, status=status.HTTP_403_FORBIDDEN)
+
+            serializer = ItemSerializer(item, data=request.data, partial=True)
+            if serializer.is_valid():
+                item = serializer.save()
+                return Response(ItemSerializer(item).data,
+                                status=status.HTTP_200_OK)
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+        except Item.DoesNotExist:
+            return Response({
+                "error": "El ítem no existe."
+            }, status=status.HTTP_404_NOT_FOUND)
+
+
+class DeleteItemView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            item = Item.objects.get(id=kwargs['item_id'])
+
+            # Verificar si el usuario es admin o dueño del ítem
+            if not IsAdminUser(request.user) and item.user != request.user:
+                return Response({
+                    "error": "No tienes permisos suficientes para eliminar"
+                    "este ítem."
+                }, status=status.HTTP_403_FORBIDDEN)
+
+            item.delete()
+            return Response({
+                "message": "Ítem eliminado con éxito."
+            }, status=status.HTTP_204_NO_CONTENT)
+        except Item.DoesNotExist:
+            return Response({
+                "error": "El ítem no existe."
+            }, status=status.HTTP_404_NOT_FOUND)
+
+
+class CreateRentView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def post(self, request, *args, **kwargs):
+        if not IsAdminUser(request.user):
+            return Response({
+                "error": "No tienes permisos suficientes para crear una renta."
+            }, status=status.HTTP_403_FORBIDDEN)
+
+        serializer = RentSerializer(data=request.data)
+        if serializer.is_valid():
+            rent = serializer.save(renter=request.user)
+            return Response(RentSerializer(rent).data,
+                            status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UpdateRentView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def put(self, request, *args, **kwargs):
+        try:
+            rent = Rent.objects.get(id=kwargs['rent_id'])
+
+            # Verificar si el usuario es admin o dueño de la renta
+            if not IsAdminUser(request.user) and rent.renter != request.user:
+                return Response({
+                    "error": "No tienes permisos suficientes para actualizar"
+                    "esta renta."
+                }, status=status.HTTP_403_FORBIDDEN)
+
+            serializer = RentSerializer(rent, data=request.data, partial=True)
+            if serializer.is_valid():
+                rent = serializer.save()
+                return Response(RentSerializer(rent).data,
+                                status=status.HTTP_200_OK)
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+        except Rent.DoesNotExist:
+            return Response({
+                "error": "La renta no existe."
+            }, status=status.HTTP_404_NOT_FOUND)
+
+
+class DeleteRentView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            rent = Rent.objects.get(id=kwargs['rent_id'])
+
+            # Verificar si el usuario es admin o dueño de la renta
+            if not IsAdminUser(request.user) and rent.renter != request.user:
+                return Response({
+                    "error": "No tienes permisos suficientes para eliminar"
+                    "esta renta."
+                }, status=status.HTTP_403_FORBIDDEN)
+
+            rent.delete()
+            return Response({
+                "message": "Renta eliminada con éxito."
+            }, status=status.HTTP_204_NO_CONTENT)
+        except Rent.DoesNotExist:
+            return Response({
+                "error": "La renta no existe."
+            }, status=status.HTTP_404_NOT_FOUND)

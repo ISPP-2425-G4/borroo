@@ -24,10 +24,11 @@ import {
   Cancel as CancelIcon,
   Star as StarIcon,
   Block as BlockIcon,
-  LockOpen as LockOpenIcon
+  LockOpen as LockOpenIcon,
 } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 import Navbar from "./Navbar";
+import { loadStripe } from "@stripe/stripe-js";
 
 const PlanCard = styled(Card)(({ theme, active }) => ({
   height: "100%",
@@ -62,44 +63,129 @@ const SubscriptionScreen = () => {
     premium: "Premium",
   };
 
+
   useEffect(() => {
     if (user) {
       setCurrentPlan(user.pricing_plan);
       console.log("Plan actual:", user.pricing_plan);
     }
+    checkPlan();
   }, [user, token]);
+
+  useEffect(() => {
+    const checkPayment = async () => {
+      const params = new URLSearchParams(location.search);
+      const sessionId = params.get("session_id");
+      if (sessionId) {
+        try{
+          const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/pagos/confirm-subscription/${sessionId}/`)
+          if(response.data.status === "success"){
+              window.history.replaceState({}, "", "/pricing-plan");
+              setNotification({
+                open: true,
+                message: "¡Pago completado con éxito!",
+                severity: "success"
+              });
+
+              setTimeout(() => {
+                setNotification({ ...notification, open: false });
+              }
+              , 5000);
+              setCurrentPlan('premium');
+
+            }
+            checkPlan();
+          }
+         catch (err) {
+            console.error("Error al confirmar el pago:", err);
+            setNotification({
+              open: true,
+              message: "Hubo un error al confirmar el pago",
+              severity: "error"
+          });
+          setTimeout(() => 
+            setNotification(null), 5000);
+          }
+        }
+      };
+      checkPayment();
+      
+    }, [location.search]);
 
   const handlePlanChange = async (targetPlan) => {
     if (!user || currentPlan === targetPlan) return;
-
     setLoading(true);
     try {
-      const url = `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${user.id}/${
-        targetPlan === 'premium' ? 'upgrade_to_premium' : 'downgrade_to_free'
-      }/`;
+      if(targetPlan === 'premium') {
+      
 
-      await axios.post(url, null, {
-        // headers: { Authorization: `Bearer ${token}` },
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/pagos/create-subscription-checkout/`, {
+        price : 5,
+        currency : "eur",
+        user_id : user.id
+      },{
+        headers: {
+          // Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      
+        
       });
+      console.log(response.data); 
+      console.log
+      const stripe = await loadStripe(`${import.meta.env.VITE_STRIPE_PUBLIC_KEY}`);
+      const { error } = await stripe.redirectToCheckout({sessionId: response.data.id });
 
+      if (error) {
+        throw new Error(error.message);
+      }
+    } else {
+      const url = `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${user.id}/downgrade_to_free/`;
+
+      await axios.post(url, {}, {
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
+      });
       const updatedUser = { ...user, pricing_plan: targetPlan };
       localStorage.setItem("user", JSON.stringify(updatedUser));
       setCurrentPlan(targetPlan);
-      
+
       setNotification({
         open: true,
         message: `¡Plan actualizado a ${planLabels[targetPlan]}!`,
         severity: "success"
       });
+    }
     } catch (err) {
       console.error("Error al cambiar el plan:", err);
+      let errorMessage = "Hubo un error al cambiar el plan"
+      if(err.response?.data?.error){
+        errorMessage = err.response.data.error;
+      } else if(err.message){
+        errorMessage = err.message;
+      }
+
       setNotification({
         open: true,
-        message: "Hubo un error al cambiar el plan.",
+        message: errorMessage,
         severity: "error"
       });
+
     } finally {
       setLoading(false);
+    }
+  };
+
+  const checkPlan = async () => {
+    if (!user) return;
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${user.id}/`);
+      const updatedUser = { ...user, pricing_plan: response.data.pricing_plan };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      setCurrentPlan(response.data.pricing_plan);
+    } catch (err) {
+      console.error("Error al obtener el plan actual:", err);
     }
   };
 

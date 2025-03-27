@@ -49,6 +49,8 @@ const Layout = () => {
   const [productosFiltrados, setProductosFiltrados] = useState([]);
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [cargando, setCargando] = useState(true);
+  const [featuredItems, setFeaturedItems] = useState([]);
+
 
   const manejarCambioBusqueda = (e) => setTerminoBusqueda(e.target.value);
   const manejarCambioCategoria = (e) => { 
@@ -107,13 +109,14 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
   useEffect(() => {
     const obtenerProductos = async () => {
       setCargando(true);
-      let nextUrl = `${import.meta.env.VITE_API_BASE_URL}/objetos/list_published_items`;
+      let nextUrl = `${import.meta.env.VITE_API_BASE_URL}/objetos/full`;
       let allResults = [];
   
       try {
         while (nextUrl) {
           const respuesta = await axios.get(nextUrl, {
-            headers: { "Content-Type": "application/json" }
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true 
           });
           console.log("Página cargada:", respuesta.data);
           allResults = [...allResults, ...respuesta.data.results];
@@ -159,6 +162,43 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
     return CATEGORIAS[nombreCategoria] || { icono: "•", color: "#607d8b" };
   };
 
+useEffect(() => {
+  const obtenerProductosDestacados = async () => {
+    setCargando(true);
+    let nextUrl = `${import.meta.env.VITE_API_BASE_URL}/objetos/full/?featured=true`;
+    let allResults = [];
+
+    try {
+      while (nextUrl) {
+        const respuesta = await axios.get(nextUrl, {
+          headers: { "Content-Type": "application/json" }
+        });
+        console.log("Página cargada:", respuesta.data);
+        allResults = [...allResults, ...respuesta.data.results];
+        nextUrl = respuesta.data.next; // avanza a la siguiente página
+      }
+
+      const productosConImagenes = await Promise.all(
+        allResults.map(async (producto) => {
+          const urlImagen = producto.images && producto.images.length > 0
+            ? await obtenerUrlImagen(producto.images[0])
+            : IMAGEN_PREDETERMINADA;
+          return { ...producto, urlImagen };
+        })
+      );
+
+      setFeaturedItems(productosConImagenes);
+    } catch (error) {
+      console.error(error);
+      setError("Error al cargar los productos.");
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  obtenerProductosDestacados();
+}, [obtenerUrlImagen]);
+
   return (
     <Box sx={{ 
       display: 'flex', 
@@ -179,6 +219,253 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
           mx: 'auto'
         }}
       >
+         <div>
+         <Typography variant="h4" sx={{ 
+              fontWeight: 700, 
+              color: 'text.primary',
+              fontSize: { xs: '1.5rem', sm: '2rem' }
+            }}>
+              Productos Destacados
+            </Typography>
+            <div>
+                {featuredItems.length > 0 ? (
+                    <Box sx={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: { xs: 2, md: 3 },
+                    }}>
+                      {featuredItems.map((producto, indice) => {
+                        const { icono, color } = obtenerDetallesCategoria(producto.category_display);
+                        
+                        return (
+                          <Box
+                            key={indice}
+                            sx={{
+                              flex: { 
+                                xs: '1 0 100%',
+                                sm: '1 0 calc(50% - 16px)', 
+                                md: '1 0 calc(33.333% - 16px)', 
+                                lg: '1 0 calc(25% - 18px)' 
+                              },
+                              maxWidth: { 
+                                xs: '100%',
+                                sm: 'calc(50% - 16px)', 
+                                md: 'calc(33.333% - 16px)', 
+                                lg: 'calc(25% - 18px)' 
+                              }
+                            }}
+                          >
+                            <Link 
+                              to={`/show-item/${producto.id}`}
+                              style={{ 
+                                textDecoration: 'none',
+                                display: 'block', 
+                                height: '100%' 
+                              }}
+                            >
+                              <Card
+                                sx={{
+                                  height: "100%",
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  borderRadius: 3,
+                                  overflow: "hidden",
+                                  boxShadow: '0px 2px 8px rgba(0,0,0,0.07)',
+                                  transition: "all 0.3s ease",
+                                  "&:hover": {
+                                    transform: "translateY(-8px)",
+                                    boxShadow: '0px 8px 24px rgba(0,0,0,0.15)',
+                                    "& .producto-imagen": {
+                                      transform: "scale(1.08)"
+                                    }
+                                  }
+                                }}
+                              >
+                                <Box 
+                                  sx={{ 
+                                    position: "relative",
+                                    pt: "75%", // Relación de aspecto 4:3
+                                    overflow: "hidden",
+                                    bgcolor: '#f5f5f5'
+                                  }}
+                                >
+                                  <img 
+                                    className="producto-imagen"
+                                    src={producto.urlImagen} 
+                                    alt={producto.title}
+                                    style={{ 
+                                      position: "absolute",
+                                      top: 0,
+                                      left: 0,
+                                      width: "100%", 
+                                      height: "100%", 
+                                      objectFit: "cover",
+                                      transition: "transform 0.5s ease",
+                                    }} 
+                                  />
+                                  
+                                  <IconButton
+                                    aria-label="favorito"
+                                    sx={{
+                                      position: 'absolute',
+                                      top: 8,
+                                      right: 8,
+                                      bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                      '&:hover': {
+                                        bgcolor: 'white',
+                                      },
+                                      zIndex: 1
+                                    }}
+                                    size="small"
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                    }}
+                                  >
+                                    <FavoriteBorderIcon fontSize="small" />
+                                  </IconButton>
+                                  
+                                  <Chip
+                                    size="small"
+                                    label={producto.category_display}
+                                    sx={{
+                                      position: 'absolute',
+                                      bottom: 40,
+                                      left: 12,
+                                      borderRadius: '4px',
+                                      fontWeight: 500,
+                                      bgcolor: alpha(color, 0.9),
+                                      color: 'white',
+                                      px: 1,
+                                      py: 0.5,
+                                      fontSize: '0.75rem',
+                                      zIndex: 1
+                                    }}
+                                    icon={
+                                      <Box component="span" sx={{ color: 'white', mr: -0.5 }}>
+                                        {icono}
+                                      </Box>
+                                    }
+                                  />
+                                  <Chip
+                                    size="small"
+                                    label={producto.subcategory_display}
+                                    sx={{
+                                      position: 'absolute',
+                                      bottom: 12,
+                                      left: 12,
+                                      borderRadius: '4px',
+                                      fontWeight: 500,
+                                      bgcolor: alpha(color, 0.9),
+                                      color: 'white',
+                                      px: 1,
+                                      py: 0.5,
+                                      fontSize: '0.75rem',
+                                      zIndex: 1
+                                    }}
+                                  />
+                                </Box>
+                                
+                                <CardContent
+                                  sx={{
+                                    flexGrow: 1,
+                                    p: 2.5,
+                                    "&:last-child": { pb: 3 }
+                                  }}
+                                >
+                                  <Typography 
+                                    variant="h6" 
+                                    sx={{ 
+                                      fontWeight: 600,
+                                      mb: 1,
+                                      fontSize: '1rem',
+                                      overflow: "hidden",
+                                      textOverflow: "ellipsis",
+                                      display: '-webkit-box',
+                                      WebkitLineClamp: 2,
+                                      WebkitBoxOrient: 'vertical',
+                                      lineHeight: 1.3,
+                                      height: '2.6em'
+                                    }}
+                                  >
+                                    {producto.title}
+                                  </Typography>
+                                  
+                                  <Box sx={{ 
+                                    display: "flex", 
+                                    justifyContent: "space-between", 
+                                    alignItems: "flex-end",
+                                    mb: 1.5
+                                  }}>
+                                    <Typography 
+                                      variant="h5" 
+                                      sx={{ 
+                                        fontWeight: 700,
+                                        color: 'primary.dark',
+                                        fontSize: '1.25rem'
+                                      }}
+                                    >
+                                      {producto.price}€
+                                    </Typography>
+                                    
+                                    <Typography 
+                                      variant="body2" 
+                                      sx={{ 
+                                        color: "text.secondary",
+                                        fontWeight: 500,
+                                        fontSize: '0.75rem'
+                                      }}
+                                    >
+                                      {producto.price_category_display}
+                                    </Typography>
+                                  </Box>
+                                  
+                                  <Box sx={{ display: 'flex', mb: 1, alignItems: 'center', gap: 0.5 }}>
+                                    <LocationOnOutlinedIcon sx={{ fontSize: '0.875rem', color: 'text.secondary' }} />
+                                    <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.75rem' }}>
+                                      Madrid
+                                    </Typography>
+                                    
+                                    <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
+                                      <StarIcon sx={{ fontSize: '0.875rem', color: '#FFB400' }} />
+                                      <Typography variant="body2" sx={{ fontWeight: 500, fontSize: '0.75rem', ml: 0.5 }}>
+                                        4.8
+                                      </Typography>
+                                    </Box>
+                                  </Box>
+                                  
+                                  <Tooltip
+                                    title={producto.description || "No hay descripción disponible"}
+                                    arrow
+                                    placement="top"
+                                  >
+                                    <Typography 
+                                      variant="body2" 
+                                      sx={{ 
+                                        color: "text.secondary",
+                                        fontSize: '0.8125rem',
+                                        lineHeight: 1.5,
+                                        height: "3em",
+                                        overflow: "hidden",
+                                        display: '-webkit-box',
+                                        WebkitLineClamp: 2,
+                                        WebkitBoxOrient: 'vertical'
+                                      }}
+                                    >
+                                      {truncarDescripcion(producto.description, 80)}
+                                    </Typography>
+                                  </Tooltip>
+                                </CardContent>
+                              </Card>
+                            </Link>
+                          </Box>
+                        );
+                      })}
+                    </Box>
+                ) : (
+                    <p>No hay objetos destacados.</p>
+                )}
+            </div>
+        </div>
         <Box sx={{ width: '100%', mb: 4 }}>
           <Box sx={{
             display: 'flex',
