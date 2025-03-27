@@ -3706,6 +3706,41 @@
 </table>
 
 ### **Palomo García, Miguel**
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="3">Trabajo</td>
+    <td>Encargado de elaborar la presentación completa para todas las semanas</td>
+    <td>10 h 11 min</td>
+  </tr>
+  <tr>
+    <td>Reorganización de tareas</td>
+    <td>5 horas</td>
+  </tr>
+  <tr>
+    <td>Fullstack recuperación de contraseñas</td>
+    <td>2 h 53 min</td>
+  </tr>
+  <tr>
+    <td>Reunión</td>
+    <td>Reunión de planificación S2</td>
+    <td>2 horas y 15 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clase</td>
+    <td>Clase 14/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 21/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
 
 ### **Periañez Franco, Luis Javier**
 <table>
