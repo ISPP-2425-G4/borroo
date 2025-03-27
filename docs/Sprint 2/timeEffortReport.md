@@ -3777,7 +3777,7 @@
       <td>1 hora y 46 minutos</td>
     </tr>
     <tr>
-      <td>Reunion con Pablo</td>
+      <td>Reunión con Pablo</td>
       <td>57 minutos</td>
     </tr>
     <tr>
@@ -3785,7 +3785,7 @@
       <td>54 minutos</td>
     </tr>
     <tr>
-      <td>Añadir poder eliminar, actualizar periodos de indisponibilidad  y solucionar problema fechas </td>
+      <td>Añadir poder eliminar, actualizar periodos de indisponibilidad y solucionar problema fechas</td>
       <td>2 horas y 18 minutos</td>
     </tr>
     <tr>
@@ -3794,7 +3794,7 @@
     </tr>
     <tr>
       <td>Testing restricciones alquiler</td>
-      <td>2 hora y  06 minutos</td>
+      <td>2 horas y 06 minutos</td>
     </tr>
     <tr>
       <td>Arreglar poder alquilar por horas</td>
@@ -3805,10 +3805,11 @@
       <td>14 minutos</td>
     </tr>
     <tr>
-      <td>Rellenar documentacion (time-effort, performance-evaluation...)</td>
+      <td>Rellenar documentación (time-effort, performance-evaluation...)</td>
       <td>20 minutos</td>
     </tr>
     <tr>
+      <td rowspan="3">Theory<br>Pills</td>
       <td>Theory Pill S06</td>
       <td>20 minutos</td>
     </tr>
@@ -3831,5 +3832,6 @@
     </tr>
   </tbody>
 </table>
+
 
 ### **Sevillano Barea, Alejandro**
