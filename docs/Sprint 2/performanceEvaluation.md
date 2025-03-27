@@ -508,3 +508,12 @@ Durante la primera semana me enfoqué exclusivamente en asumir el rol de desarro
 En la segunda semana continué con tareas similares, dando seguimiento al desarrollo conjunto con Pablo. Añadí 22 tests unitarios para verificar el correcto funcionamiento de las validaciones previamente implementadas en el modelo Rent. También corregimos errores relacionados con el alquiler por meses y por horas. Finalmente, avancé en el estudio de las píldoras teóricas como preparación para el test.
 
 ### **Sevillano Barea, Alejandro**
+
+
+En la primera semana del sprint 2, me encargue del desarrollo del fullstack de visualización de perfil de un usuario, para el cual tuve que desarrollar tanto backend como frontend en el cual se mostrasen todos los datos del perfil de un usuario. Esto implico un estudio previo de entidades que no habian sido desarrolladas por mí, y una posterior implementación de funcionalidades para esta vista. Además, se busco un estilo sencillo y visualmente claro para el usuario, mostrando la información relevante del mismo
+
+Tras esto, me encargué del desarrollo del testing de las funcionalidades CRUD de las solicitudes de alquiler, funcionalidad desarrollada por mis compañeros Ignacio y Marco.
+
+En la segunda semana se me encomendo desarrollar el frontend de todas las ventanas de gestión de administrador. Comencé desarrollando las mismas de forma que yo consideraba optima, pero tras una actualización sobre la gestión interna de la contraseña del usuario, tuve que reformular lo avanzado anteriormente. Tras esto, proseguí con el desarrollo de todas las ventanas de gestión de administración, implicando añadir los CRUD de item, rentals y users con una interfaz atractiva y acorde a lo que es un dashboard de administrador.
+
+Por ultimo, visualice las pildoras teoricas
