@@ -187,9 +187,7 @@ const AdminItemDashboard = () => {
                                     >
                                         <MenuItem value="hour">Hora</MenuItem>
                                         <MenuItem value="day">Día</MenuItem>
-                                        <MenuItem value="week">Semana</MenuItem>
                                         <MenuItem value="month">Mes</MenuItem>
-                                        <MenuItem value="year">Año</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Grid>
@@ -272,9 +270,7 @@ const AdminItemDashboard = () => {
                                         >
                                             <MenuItem value="hour">Hora</MenuItem>
                                             <MenuItem value="day">Día</MenuItem>
-                                            <MenuItem value="week">Semana</MenuItem>
                                             <MenuItem value="month">Mes</MenuItem>
-                                            <MenuItem value="year">Año</MenuItem>
                                         </Select>
                                     </FormControl>
                                 </Grid>
