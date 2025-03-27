@@ -271,13 +271,13 @@ const ShowItemScreen = () => {
   
       if (priceCategory === "hour" && selectedDay && selectedStartHour !== null && selectedEndHour !== null) {
         const start = dayjs(selectedDay)
-        .hour(selectedStartHour + 1)
+        .hour(selectedStartHour)
         .minute(0)
         .second(0)
         .millisecond(0)
         .format("YYYY-MM-DDTHH:mm:ss");
         const end = dayjs(selectedDay)
-          .hour(selectedEndHour + 1)
+          .hour(selectedEndHour)
           .minute(0)
           .second(0)
           .millisecond(0)
