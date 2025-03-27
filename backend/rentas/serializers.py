@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import datetime, timedelta
 from requests import Response
 from rest_framework import serializers
 from .models import Rent
@@ -7,16 +7,25 @@ from .models import Rent
 
 
 class RentSerializer(serializers.ModelSerializer):
+    renter_name = serializers.CharField(
+        source='renter.username', read_only=True)
+
     class Meta:
         model = Rent
         fields = '__all__'
-        read_only_fields = ('item', 'total_price', 'commission', 'rent_status',
-                            'payment_status', 'renter')
+        read_only_fields = ('item', 'renter')
 
     def validate(self, data):
-        item = self.context.get('item_instance')
+        item = self.context.get('item_instance') or getattr(
+            self.instance, 'item', None)
         start_date = data.get("start_date")
         end_date = data.get("end_date")
+
+        # Convertir strings a datetime si es necesario
+        if isinstance(start_date, str):
+            start_date = datetime.fromisoformat(start_date)
+        if isinstance(end_date, str):
+            end_date = datetime.fromisoformat(end_date)
 
         if start_date and end_date and start_date >= end_date:
             raise serializers.ValidationError(
@@ -63,21 +72,12 @@ class RentSerializer(serializers.ModelSerializer):
         return rent
 
     def update(self, instance, validated_data):
-
-        instance.start_date = validated_data.get('start_date',
-                                                 instance.start_date)
-        instance.end_date = validated_data.get('end_date',
-                                               instance.end_date)
-        instance.rent_status = validated_data.get('rent_status',
-                                                  instance.rent_status)
-        instance.payment_status = validated_data.get('payment_status',
-                                                     instance.payment_status)
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
 
         instance.total_price = instance.calculate_total_price()
         instance.commission = instance.calculate_commission()
-
         instance.save()
-
         return instance
 
     def delete_rent(self, request, pk=None):

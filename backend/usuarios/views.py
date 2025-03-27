@@ -174,6 +174,7 @@ def check_email(request):
 
 class PasswordResetRequestView(APIView):
     """Vista para solicitar el restablecimiento de contraseña."""
+
     def post(self, request):
         email = request.data.get("email")
         user = User.objects.filter(email=email).first()
@@ -181,7 +182,7 @@ class PasswordResetRequestView(APIView):
         if not user:
             return Response({
                 "error": "No se encontró un usuario con ese email."},
-                            status=status.HTTP_404_NOT_FOUND)
+                status=status.HTTP_404_NOT_FOUND)
 
         # Generamos un token único
         user.reset_token = str(uuid.uuid4())
@@ -207,6 +208,7 @@ class PasswordResetRequestView(APIView):
 
 class PasswordResetConfirmView(APIView):
     """Vista para confirmar el cambio de contraseña."""
+
     def validate_password(self, password):
         """Aplica las validaciones de la contraseña definidas en el modelo."""
         validators = [
@@ -248,7 +250,7 @@ class PasswordResetConfirmView(APIView):
         if not new_password:
             return Response({
                 "error": "Debes proporcionar una nueva contraseña"},
-                            status=status.HTTP_400_BAD_REQUEST)
+                status=status.HTTP_400_BAD_REQUEST)
 
         # Validar la contraseña con las reglas del modelo
         try:
@@ -337,7 +339,7 @@ class ReviewListView(APIView):
         if not username:
             return Response({
                 "error": "El parámetro 'username' es obligatorio"},
-                            status=status.HTTP_400_BAD_REQUEST)
+                status=status.HTTP_400_BAD_REQUEST)
 
         reviewed_user = get_object_or_404(User, username=username)
         reviews = Review.objects.filter(reviewed_user=reviewed_user)
@@ -415,7 +417,7 @@ class CreateSuperuserView(APIView):
 
 class IsAdminUser(BasePermission):
     def has_permission(self, request, view):
-        return request.user and request.user.is_superuser
+        return request.user and request.user.is_admin
 
 
 class UserListView(APIView):
@@ -477,11 +479,6 @@ class CreateItemView(APIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
 
     def post(self, request, *args, **kwargs):
-        if not IsAdminUser(request.user):
-            return Response({
-                "error": "No tienes permisos suficientes para crear un ítem."
-            }, status=status.HTTP_403_FORBIDDEN)
-
         serializer = ItemSerializer(data=request.data)
         if serializer.is_valid():
             item = serializer.save(user=request.user)
@@ -496,19 +493,16 @@ class UpdateItemView(APIView):
     def put(self, request, *args, **kwargs):
         try:
             item = Item.objects.get(id=kwargs['item_id'])
-
-            # Verificar si el usuario es admin o dueño del ítem
-            if not IsAdminUser(request.user) and item.user != request.user:
+            if not request.user.is_admin and item.user != request.user:
                 return Response({
-                    "error": "No tienes permisos suficientes para actualizar"
-                    "este ítem."
+                    "error": "No tienes permisos para actualizar este ítem."
                 }, status=status.HTTP_403_FORBIDDEN)
-
-            serializer = ItemSerializer(item, data=request.data, partial=True)
+            serializer = ItemSerializer(
+                item, data=request.data, partial=True,
+                context={'request': request})
             if serializer.is_valid():
                 item = serializer.save()
-                return Response(ItemSerializer(item).data,
-                                status=status.HTTP_200_OK)
+                return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
         except Item.DoesNotExist:
@@ -520,15 +514,14 @@ class UpdateItemView(APIView):
 class DeleteItemView(APIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
 
-    def delete(self, request, *args, **kwargs):
+    def delete(self, request, item_id):
         try:
-            item = Item.objects.get(id=kwargs['item_id'])
+            item = Item.objects.get(id=item_id)
 
             # Verificar si el usuario es admin o dueño del ítem
-            if not IsAdminUser(request.user) and item.user != request.user:
+            if not request.user.is_admin and item.user != request.user:
                 return Response({
-                    "error": "No tienes permisos suficientes para eliminar"
-                    "este ítem."
+                    "error": "No tienes permisos para eliminar este ítem."
                 }, status=status.HTTP_403_FORBIDDEN)
 
             item.delete()
@@ -545,7 +538,7 @@ class CreateRentView(APIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
 
     def post(self, request, *args, **kwargs):
-        if not IsAdminUser(request.user):
+        if not request.user.is_admin:
             return Response({
                 "error": "No tienes permisos suficientes para crear una renta."
             }, status=status.HTTP_403_FORBIDDEN)
@@ -564,21 +557,33 @@ class UpdateRentView(APIView):
     def put(self, request, *args, **kwargs):
         try:
             rent = Rent.objects.get(id=kwargs['rent_id'])
-
-            # Verificar si el usuario es admin o dueño de la renta
-            if not IsAdminUser(request.user) and rent.renter != request.user:
+            if not request.user.is_admin:
                 return Response({
-                    "error": "No tienes permisos suficientes para actualizar"
-                    "esta renta."
+                    "error": "No tienes permisos suficientes para actualizar esta renta."
                 }, status=status.HTTP_403_FORBIDDEN)
 
-            serializer = RentSerializer(rent, data=request.data, partial=True)
+            data = request.data.copy()
+            item_id = data.get("item")
+            if item_id:
+                try:
+                    data["item"] = Item.objects.get(id=item_id)
+                except Item.DoesNotExist:
+                    return Response({"error": "El ítem especificado no existe."}, status=404)
+            serializer = RentSerializer(
+                rent,
+                data=data,
+                partial=True,
+                context={"item_instance": rent.item}  # 👈 importante
+            )
+
             if serializer.is_valid():
-                rent = serializer.save()
-                return Response(RentSerializer(rent).data,
+                updated_rent = serializer.save()
+                return Response(RentSerializer(updated_rent).data,
                                 status=status.HTTP_200_OK)
+
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+
         except Rent.DoesNotExist:
             return Response({
                 "error": "La renta no existe."
@@ -593,7 +598,7 @@ class DeleteRentView(APIView):
             rent = Rent.objects.get(id=kwargs['rent_id'])
 
             # Verificar si el usuario es admin o dueño de la renta
-            if not IsAdminUser(request.user) and rent.renter != request.user:
+            if not request.user.is_admin:
                 return Response({
                     "error": "No tienes permisos suficientes para eliminar"
                     "esta renta."
@@ -607,3 +612,21 @@ class DeleteRentView(APIView):
             return Response({
                 "error": "La renta no existe."
             }, status=status.HTTP_404_NOT_FOUND)
+
+
+class ListItemsView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def get(self, request):
+        items = Item.objects.all()
+        serializer = ItemSerializer(items, many=True)
+        return Response(serializer.data)
+
+
+class RentListView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def get(self, request):
+        rents = Rent.objects.all()
+        serializer = RentSerializer(rents, many=True)
+        return Response(serializer.data)

@@ -12,37 +12,39 @@ import RecoverPassword from "./RecoverPassword";
 import RecoverPasswordDone from "./RecoverPasswordDone";
 import RecoverPasswordNew from "./RecoverPasswordNew";
 import SubscriptionScreen from "./SubscriptionScreen";
-import DraftItemsView from "./DraftsScreen"; 
+import DraftItemsView from "./DraftsScreen";
 import Profile from "./Profile";
 import '../public/styles/App.css';
 import FAQ from './components/Faq';
-
+import AdminDashboard from "./AdminDashboard";
 
 function App() {
   return (
     <Router>
       <div className="app-container">
-      <Routes>
-        <Route path="/" element={<Layout />}>
-        </Route>
-        {/* Ruta para la página de login */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/create-item" element={<CreateItem />} />
-        <Route path="/update-item/:id" element={<UpdateItem />} />
-        <Route path="/show-item/:id" element={<ShowItem />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/objetos/search_item" element={<SearchItemByName />} />
-        <Route path="/rental_requests" element={<RentRequestBoard />} />
-        <Route path="/pricing-plan" element={<SubscriptionScreen />} />
-        <Route path="/recoverPassword" element={<RecoverPassword />} />
-        <Route path="/recoverPasswordDone" element={<RecoverPasswordDone />} />
-        <Route path="/recoverPasswordNew" element={<RecoverPasswordNew />} />
-        <Route path="/drafts" element={<DraftItemsView />} />
-        <Route path="/perfil/:username" element={<Profile />} />
-        <Route path="/show-item/:id" element={<ShowItem />} />
-        <Route path="/faq" element={<FAQ />} />
-      </Routes>
-      <Footer/>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+          </Route>
+          {/* Ruta para la página de login */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/create-item" element={<CreateItem />} />
+          <Route path="/update-item/:id" element={<UpdateItem />} />
+          <Route path="/show-item/:id" element={<ShowItem />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/objetos/search_item" element={<SearchItemByName />} />
+          <Route path="/rental_requests" element={<RentRequestBoard />} />
+          <Route path="/pricing-plan" element={<SubscriptionScreen />} />
+          <Route path="/recoverPassword" element={<RecoverPassword />} />
+          <Route path="/recoverPasswordDone" element={<RecoverPasswordDone />} />
+          <Route path="/recoverPasswordNew" element={<RecoverPasswordNew />} />
+          <Route path="/drafts" element={<DraftItemsView />} />
+          <Route path="/perfil/:username" element={<Profile />} />
+          <Route path="/show-item/:id" element={<ShowItem />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/dashboard" element={<AdminDashboard />} />
+
+        </Routes>
+        <Footer />
       </div>
     </Router>
   );
