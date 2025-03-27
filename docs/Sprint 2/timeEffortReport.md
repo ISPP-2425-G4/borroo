@@ -3179,6 +3179,132 @@
 ### **Periañez Franco, Luis Javier**
 
 ### **Rosado Raya, Santiago**
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="25">Trabajo</td>
+    <td>Revisión PR #255</td>
+    <td>3 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #258</td>
+    <td>8 minutos</td>
+  </tr>
+  <tr>
+    <td>Trabajo con los UP</td>
+    <td>11 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadir Time Effort</td>
+    <td>12 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión PR #267</td>
+    <td>17 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión PR #279</td>
+    <td>17 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #248</td>
+    <td>20 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #258</td>
+    <td>22 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #246</td>
+    <td>23 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión PR #255</td>
+    <td>25 minutos</td>
+  </tr>
+  <tr>
+    <td>Trabajo issue #212</td>
+    <td>27 minutos</td>
+  </tr>
+  <tr>
+    <td>Trabajo issue #224</td>
+    <td>28 minutos</td>
+  </tr>
+  <tr>
+    <td>Trabajo issue #226</td>
+    <td>10 minutos</td>
+  </tr>
+  <tr>
+    <td>Evaluación UP</td>
+    <td>32 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión PR #271</td>
+    <td>35 minutos</td>
+  </tr>
+  <tr>
+    <td>Trabajo issue #224</td>
+    <td>42 minutos</td>
+  </tr>
+  <tr>
+    <td>Desarrollo documento análisis feedback UP</td>
+    <td>48 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión PR #275, #271 y #267</td>
+    <td>53 minutos</td>
+  </tr>
+  <tr>
+    <td>Trabajo issue #212</td>
+    <td>55 minutos</td>
+  </tr>
+  <tr>
+    <td>Guión UP Sprint 2</td>
+    <td>56 minutos</td>
+  </tr>
+    <tr>
+    <td>Análisis de feedback y calificación de UP7</td>
+    <td>56 minutos</td>
+  </tr>
+  <tr>
+    <td>Evalucación UP</td>
+    <td>1 hora 15 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión PR #283</td>
+    <td>1 hora 24 minutos</td>
+  </tr>  <tr>
+    <td>Trabajo issue #212</td>
+    <td>1 hora 37 minutos</td>
+  </tr>
+  <tr>
+    <td>Trabajo issue #226 y revision PR #271</td>
+    <td>1 hora 47 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clase</td>
+    <td>Clase 14/03/2025</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 21/03/2025</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Total</td>
+    <td colspan="2">24 horas 5 minutos</td>
+  </tr>
+  <tr>
+    <td>Enlace Clockify</td>
+    <td colspan="2"><a href="https://app.clockify.me/shared/67e570add7264d5caa21a740" target="_blank">Clockify</a></td>
+  </tr>
+</table>
+
+
 
 ### **Sánchez Márquez, Julia**
 
