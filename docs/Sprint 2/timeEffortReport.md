@@ -2769,6 +2769,115 @@
 
 ### **Díaz Ordóñez, Pablo**  
 
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="22"><b>Código y documentación</b></td>
+    <td>Entender y comprender código implementado en el que no estuve implicado, para siguientes tareas de desarrollo (16/03/2025)</td>
+    <td>2 horas y 16 minutos</td>
+  </tr>
+  <tr>
+    <td>Deshabilitar botón de confirmación en formularios y ver contraseña #211 (17/03/2025)</td>
+    <td>1 hora y 57 minutos</td>
+  </tr>
+  <tr>
+    <td>Solucionar sin éxito un error al registrar usuario tras fusionar cambios de develop en mi rama (17/03/2025)</td>
+    <td>43 minutos</td>
+  </tr>
+  <tr>
+    <td>Solucionar un error al registrar usuario tras fusionar cambios de develop en mi rama (puerto usado) (17/03/2025)</td>
+    <td>12 minutos</td>
+  </tr>
+  <tr>
+    <td>Deshabilitar botón correctamente en CreateItem y UpdateItem (17/03/2025)</td>
+    <td>20 minutos</td>
+  </tr>
+  <tr>
+    <td>Resolver conflictos y error de Lint/Flake8 de Pull Request #246 (17/03/2025)</td>
+    <td>13 minutos</td>
+  </tr>
+  <tr>
+    <td>Resolver error en views.py tras resolver conflictos (18/03/2025)</td>
+    <td>25 minutos</td>
+  </tr>
+  <tr>
+    <td>Corregir comportamiento botón de ocultar contraseña y añadir NikoNiko (18/03/2025)</td>
+    <td>7 minutos</td>
+  </tr>
+  <tr>
+    <td>Full-stack restricciones puesta en alquiler (previo a aclaración de la tarea) (19/03/2025)</td>
+    <td>58 minutos</td>
+  </tr>
+  <tr>
+    <td>Full-stack restricciones puesta en alquiler (previo a aclaración de la tarea) (20/03/2025)</td>
+    <td>1 hora y 2 minutos</td>
+  </tr>
+  <tr>
+    <td>Full-stack restricciones puesta en alquiler (haciendo la tarea tras resolver confusión sobre qué abarcaba) (20/03/2025)</td>
+    <td>3 horas y 11 minutos</td>
+  </tr>
+  <tr>
+    <td>Full-stack restricciones puesta en alquiler (resolviendo problemas en frontend) (21/03/2025)</td>
+    <td>2 horas y 20 minutos</td>
+  </tr>
+  <tr>
+    <td>Full-stack restricciones puesta en alquiler (corregir error de fechas al crear item) (22/03/2025)</td>
+    <td>14 minutos</td>
+  </tr>
+  <tr>
+    <td>Full-stack restricciones puesta en alquiler (aplicarlo en update y show item) (22/03/2025)</td>
+    <td>39 minutos</td>
+  </tr>
+  <tr>
+    <td>Full-stack restricciones puesta en alquiler (mejorar estética y funcionamiento en el create item) (24/03/2025)</td>
+    <td>26 minutos</td>
+  </tr>
+  <tr>
+    <td>Full-stack restricciones puesta en alquiler (mejorar estética y funcionamiento en el update item y calendario mensual show item) (24/03/2025)</td>
+    <td>1 hora y 5 minutos</td>
+  </tr>
+  <tr>
+    <td>Reunión y trabajo con Julia sobre Full-stack restricciones puesta en alquiler (24/03/2025)</td>
+    <td>57 minutos</td>
+  </tr>
+  <tr>
+    <td>Frontend de productos destacados (24/03/2025)</td>
+    <td>1 hora y 24 minutos</td>
+  </tr>
+  <tr>
+    <td>Mejorar estética de frontend de productos destacados (25/03/2025)</td>
+    <td>48 minutos</td>
+  </tr>
+  <tr>
+    <td>Resolviendo conflictos y error en Full-stack restricciones puesta en alquiler (26/03/2025)</td>
+    <td>1 hora y 13 minutos</td>
+  </tr>
+  <tr>
+    <td>Rellenar time effort (27/03/2025)</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>Rellenar performance evaluation (27/03/2025)</td>
+    <td>23 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="1"><b>Píldoras teóricas</b></td>
+    <td>Píldoras teóricas 6 y 7a y 7b (25/03/2025)</td>
+    <td>1 hora 23 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="1"><b>Clases</b></td>
+    <td>Clase (21/03/2025)</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+</table>
+
+
+
 ### **Espinosa Naranjo, Pablo**
 
 ### **Fernández Rodríguez, Jesús**
