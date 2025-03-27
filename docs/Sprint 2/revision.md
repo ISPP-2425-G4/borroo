@@ -97,7 +97,7 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 1.  El usuario accede a la página principal con todos los anuncios
 2.  El usuario, por medio de los distintos filtros y botones que se muestran en la zona superior de la pantalla, añade las características concretas para reducir los resultados mostrados en pantalla, siendo estos:
 	-   Barra de búsqueda en función del nombre del objeto
-	-   Filtrado de categoría a la que pertenece el objeto a alquilar
+	-   Filtrado de categoría y subcategoría a la que pertenece el objeto a alquilar
 	-   Barra adaptable para el rango de precio declarado
 ![](capturasRevision/filtrado_por_nombre.png)
 ![](capturasRevision/filtrado_por_categoria.png)
