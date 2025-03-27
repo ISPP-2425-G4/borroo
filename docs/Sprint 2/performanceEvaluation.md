@@ -396,6 +396,10 @@ Sobre documentación, añadí al presente documento la parte que me corresponde 
 
 ### **García Rodríguez, Javier**
 
+Durante la primera semana, junto a los representantes de los otros 2 subgrupos (Alexander Picón y Francisco Fernández) y Miguel Palomo, nos encargamos de planificar todo el Sprint 2. Esto incluye todas las tareas que eran vitales a desarrollar en el sprint, desde backend, frontend, testing, y más. Además, se crearon todas las issues estimadas desde el inicio para poder empezar a trabajar lo más pronto posible. Además, creamos plantillas en las issues con distintos campos para facilitar una mayor comprensión de las tareas de cada miembro. Además, me encargué de 2 tareas de código, concretamente desarrollar validaciones en el backend para el formulario del login, y los métodos correspondientes a los cambios de planes de suscripción, de gratuito a premium, y viceversa, respectivamente. Esta semana también estuve preparando la presentación correspondiente al viernes 21. Recalcar la implicación diaria en resolución de dudas y conversaciones por los canales de contactos para mantener el proyecto al día. Además, tuvimos una reunión más los representantes con Miguel Palomo para valorar problemas e incidencias que se desarrollaban a la hora de implementar la pasarela de pago de Stripe.
+
+Durante la segunda semana, me centré más el el tema de documentación, concretamente en desarrollar 3 documentos: uso de la IA, las licencias de aplicaciones usadas en el proyecto, y el documento aplicado a la legislación correspondiente a nuestro proyecto, enfocándolo en leyes nacionales y europeas por las que se rige nuestro proyecto. Finalmente, estuve preparando la presentación de cara al entregable del S2. Destacar una vez más la coordinación durante esta semana, que fue un poco más compleja e intensa, pero con la que se pudo terminar todas las tareas.
+
 ### **González Ortiz, Miguel**
 
 ### **Martín Muñoz, Álvaro**
