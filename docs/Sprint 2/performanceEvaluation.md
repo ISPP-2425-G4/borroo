@@ -6,12 +6,12 @@
 
 ## PERFORMANCE EVALUATION
 
-### Sprint 1 – G4
+### Sprint 2 – G4
 **Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
 
 **Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
 
-**Fecha:** 13/03/2025
+**Fecha:** 26/03/2025
 
 
 </div>
@@ -41,13 +41,16 @@
 | Fecha      | Versión | Realizada por   | Descripción de los cambios |
 | ---------- | ------- | --------------- | -------------------------- |
 | 20-02-2025 | v1.0    | Marco Padilla Gómez | Creación del documento |
-| 20-03-2025 | v1.1    | Todos los miembros | Añadir datos sobre el trabajo realizado |
+| 20-02-2025 | v1.1    | Todos los miembros | Añadir datos sobre el trabajo realizado |
 | 13-03-2025 | v2.0    | Marco Padilla Gómez | Actualizar documento para S1 |
+| 13-03-2025 | v2.1    | Todos los miembros | Añadir datos sobre el trabajo realizado |
+| 26-03-2025 | v3.0    | Marco Padilla Gómez | Actualizar documento para S2 |
+| 27-03-2025 | v3.1    | Todos los miembros | Añadir datos sobre el trabajo realizado |
 
 
 ---
 
-**Version: _#S1_**
+**Version: _#S2_**
 
 ---
 
@@ -57,27 +60,34 @@
 
 | Student                      | #DP1 | #S1 | #S2 | #S3 | #PPL | #WPL | Total | Weight  |
 |------------------------------|------|-----|-----|-----|------|------|-------|---------|
-| Blanco Mora, David           |  10  | 9,9 |     |     |      |      |       |         |
-| Díaz Ordóñez, Pablo          |  10  | 10  |     |     |      |      |       |         |
-| Espinosa Naranjo, Pablo      |  10  | 10  |     |     |      |      |       |         |
-| Fernandez Rodriguez, Jesus   |  10  | 10  |     |     |      |      |       |         |
-| Fernández Mota, Francisco    |  10  | 10  |     |     |      |      |       |         |
-| García Rodríguez, Javier     |  10  | 10  |     |     |      |      |       |         |
-| Gonzalez Ortiz, Miguel       |  10  | 10  |     |     |      |      |       |         |
-| Martin Muñoz, Álvaro         |  10  | 10  |     |     |      |      |       |         |
-| Naredo Bernardos, Ignacio    |  10  | 10  |     |     |      |      |       |         |
-| Nieto Vicioso, Javier        |  10  | 10  |     |     |      |      |       |         |
-| Padilla Gómez, Marco         |  10  | 10  |     |     |      |      |       |         |
-| Palomo García, Miguel        |  10  | 10  |     |     |      |      |       |         |
-| Periañez Franco, Luis Javier |  10  | 10  |     |     |      |      |       |         |
-| Picón Garrote, Alexander     |  10  | 10  |     |     |      |      |       |         |
-| Rosado Raya, Santiago        |  10  | 10  |     |     |      |      |       |         |
-| Sánchez Márquez, Julia       |  10  | 10  |     |     |      |      |       |         |
-| Sevillano Barea, Alejandro   |  10  | 10  |     |     |      |      |       |         |
-| Total                        | 170  |169,9|     |     |      |      |       |         |
+| Blanco Mora, David           |  10  | 9,9 | 10  |     |      |      |       |         |
+| Díaz Ordóñez, Pablo          |  10  | 10  | 10  |     |      |      |       |         |
+| Espinosa Naranjo, Pablo      |  10  | 10  | 10  |     |      |      |       |         |
+| Fernandez Rodriguez, Jesus   |  10  | 10  | 10  |     |      |      |       |         |
+| Fernández Mota, Francisco    |  10  | 10  | 10  |     |      |      |       |         |
+| García Rodríguez, Javier     |  10  | 10  | 10  |     |      |      |       |         |
+| Gonzalez Ortiz, Miguel       |  10  | 10  | 10  |     |      |      |       |         |
+| Martin Muñoz, Álvaro         |  10  | 10  | 10  |     |      |      |       |         |
+| Naredo Bernardos, Ignacio    |  10  | 10  | 10  |     |      |      |       |         |
+| Nieto Vicioso, Javier        |  10  | 10  | 10  |     |      |      |       |         |
+| Padilla Gómez, Marco         |  10  | 10  | 10  |     |      |      |       |         |
+| Palomo García, Miguel        |  10  | 10  | 10  |     |      |      |       |         |
+| Periañez Franco, Luis Javier |  10  | 10  | 10  |     |      |      |       |         |
+| Picón Garrote, Alexander     |  10  | 10  | 10  |     |      |      |       |         |
+| Rosado Raya, Santiago        |  10  | 10  | 10  |     |      |      |       |         |
+| Sánchez Márquez, Julia       |  10  | 10  | 10  |     |      |      |       |         |
+| Sevillano Barea, Alejandro   |  10  | 10  | 10  |     |      |      |       |         |
+| Total                        | 170  |169,9| 170 |     |      |      |       |         |
 
 
 # Individual Contribution Summary  
+
+## Tabla de contenidos
+1. [Devising a Project (#DP)](#devising-a-project-dp)
+
+2. [Sprint 1](#sprint-1-s1)
+
+3. [Sprint 2](#sprint-2-s2)
 
 ## Devising a Project (#DP)
 
@@ -144,6 +154,10 @@ Durante la primera semana, mi tarea fue la misma que la de todos los integrantes
 Durante la segunda semana, trabajé en el desarrollo del plan de metodología del desarrollo y también realicé el análisis de competidores junto a los compañeros de mi subgrupo.
 
 Durante la tercera semana, trabajé junto a mi subgrupo en la realización del documento de metodología del desarrollo, además realicé junto a 3 miembros del equipo la base de conocimiento en Docusaurus, tanto pasando a formato Markdown los PDFs como añadiendo a la base de conocimiento común a todos los grupos el feedback proporcionado.
+
+Durante la cuarta semana, trabajé en la realización del método de solicitud de alquiler y sus validaciones así como la ayuda a fullstack de categorias y filtros de precios. 
+
+Durante la quinta semana desarrollé el admin backend, luego desarrolle el admin backend con token y finalmente colaboré en la ayuda a mis compañeros a desarrollar el fullstack de admin y el frontend de solicitud de alquileres.
 
 ### **Nieto Vicioso, Javier**
 Durante la primera semana, participé en la búsqueda de alternativas para el proyecto, explorando ideas como "crear y compartir itinerarios de viaje" y "web para gestión de tareas del hogar". Tras analizar los competidores de estas ideas, se llegó a la conclusión de que el mercado era complicado. Al final de la semana, el equipo se dividió en subgrupos y yo junto con mi subgrupo hicimos la descripción del equipo, el reporte sobre el uso de la IA, y la gestión del código y conocimiento común.
@@ -348,3 +362,166 @@ Antes de subir los cambios, la implementación de un workflow me permitió detec
 Para concluir, creé el usuario administrador de la aplicación, convertí algunos documentos a Markdown en colaboración con Francisco y finalicé la visualización de las “Theroy Pills”. 
 
 ### **Sevillano Barea, Alejandro**
+
+
+## Sprint 2 (#S2)
+
+### **Blanco Mora, David** 
+
+En la primera semana del Sprint 2, me encargué junto a mi compañero Francisco Fernández, al desarrollo del tablón de solicitudes de rentas de objetos. Por una parte tuvimos que desarrollar la funcionalidad en backend para las solicitudes recibidas y por otro lado las solicitudes realizadas. Ésta tarea no supuso mayores problemas ya que contamos con suficiente experiencia en desarrollo de backend. 
+
+Durante la segunda semana del Sprint 2, me encargué del desarrollo de los tests de las funcionalidades implementadas para el tablón de solicitudes de rentas con el fin de comprobar su correcto funcionamiento e implementación. También me encargué de la validación en frontend, en la cual solo se permite al usuario autenticado acceder a su tablón y no al de otros usuarios de la app. Y por último, tambien me vi el contenido publicado para este sprint de las píldoras teóricas.
+
+### **Díaz Ordóñez, Pablo**  
+
+Tras la clase con la que se finalizaba el primer sprint, estuve ese primer fin de semana repasando todo el código implementado, ya que al no realizar mucho código durante el sprint 1, quería aclarar ciertas partes del código que me generaban más dudas, para poder enfrentarme a las tareas del sprint 2 con mayor soltura.
+
+Durante la primera semana del sprint 2, llevé a cabo la realización de la tarea de deshabilitar el botón de los formularios existentes hasta que no estén introducidos sus datos correctamente. Además, añadí un botón que permitía ver o esconder la contraseña del usuario al registrarse o iniciar sesión. Tras ello, surgieron varios conflictos que solventé, además de un error de puerto en mi ordenador, que lanzaba el proyecto en el puerto que no debería. También corregí un pequeño error de comportamiento de uno de los botones de las contraseñas, que no se comprobó bien al subirlo al repositorio.
+
+Siguiendo en la primera semana, inicié una tarea conjunta junto a Julia, que se trataba de las restricciones de la puesta en alquiler de un objeto, tanto de backend como de frontend. Inicialmente, hubo algunas tareas que no quedaron bien explicadas en el tablero del proyecto, por lo que tras una confusión entre compañeros sobre que trataba esta tarea y otra mas, se aclaró y se empezó a trabajar de nuevo en la tarea desde el principio, ahora sí definida.
+
+Esta tarea trajo inconvenientes ya que, tanto a Julia como a mí, no nos terminaba de salir ni conseguiamos el comportamiento deseado. Se probaron distintos puntos de vista, hasta que conseguimos avanzarla más. Debido a un problemas con los periodos de fechas inhabilitadas para alquilar un objeto, Javier Nieto nos ayudó para conseguir que funcionara. Todo ello, finalizando la semana.
+
+Ya en la segunda semana del sprint, conseguimos finalizar la tarea, más tarde de lo que nos hubiera gustado, tanto por lo que nos costó solucionar lo que se nos iba presentando como por la confusión inicial que hubo. El lunes 24 estuve con Julia reunido en Discord realizando la tarea. 
+
+Durante esta semana, tambien llevé a cabo la realización del frontend de los productos destacados, iniciando y completando la tarea en poco tiempo, resolviendo posteriormente conflictos que hubo a la hora de hacer las pull request por cambios aceptados en el código antes que estos. 
+
+Sobre documentación, añadí al presente documento la parte que me corresponde sobre mí, además de hacer lo mismo en el Time Effort Report. Añadir también que visualicé las píldoras teóricas correspondientes al sprint 2.
+
+### **Espinosa Naranjo, Pablo**
+
+Durante la primera semana del sprint 2, se me encomendó para la primera semana desarrollar un fullstack de "Subcategorías" de cada objeto a alquilar, el cual dependería de categorías y serviría para amplificar la clasificación de los artículos. Esto implicó una tarea de investigación sobre cada categoría, lo que me permitió definir un conjunto de subcategorías lo suficientemente amplio y diferenciado para abarcar una variedad representativa de productos. Tras esto, gasté gran cantidad del tiempo en averiguar como asociarlo a las categorías implementadas anteriormente.
+
+Una vez conseguí averiguarlo, desarrollé los cambios e implementaciones necesarias para poder implementar el fullstack. Estos cambios incluyen entendimiento y edición de modelos, funciones, populadores de datos, serializadores, vistas de formularios relacionados con item, y el propio filtrado por subcategorías en el layout principal. 
+
+Tras esto, además, se me encargó cambiar uno de los filtros (precio), ya que, tras recibir el feedback de los usuarios piloto, se observaron ciertos aspectos que eran mejorables. Corregí, así, la vista y funcionamiento del filtro, suprimiendo la barra que habia anteriormente y solucionando un problema que hacía que el precio máximo fuese de 100€.
+
+Durante la segunda semana del sprint 2, se me encargó desarrollar en frontend la vista de "peticiones de alquiler" (llamada anuncios). En esta, los usuarios podrían realizar, a modo de tablón de anuncios, solicitudes de objetos que necesitan, y de igual manera, observar las solicitudes de otros usuarios. Tras finalizar mis compañeros Ignacio y Marco el desarrollo del codigo en el backend, comenzé el desarrollo de las mismas, creando las dos pantallas requeridas.
+
+En primer lugar, desarrolle una visualización paginada de los anuncios creados por los usuarios, con una interfaz que muestra los detalles importantes de los anuncios y sigue el estilo de toda la aplicación. Además, en esta incluí los filtros creados anteriormente para "item", ya que podían ser de utilidad para usuarios que busquen clientes potenciales a los que alquilar. 
+
+En segundo lugar, desarrolle un formulario para que el usuario pueda crear sus anuncios en base a sus necesidades. Este formulario sigue la estructura de los creados anteriormente, con sus validaciones para poder ser publicado.
+
+Tras finalizar, ayudé a mi compañero Marco con el desarrollo del documento "revision.md".
+
+Por último, visualice los videos de "Pildoras teoricas" correspondientes a este Sprint (sesión 6, sesión 7a y sesión 7b)
+
+### **Fernández Rodríguez, Jesús**
+
+Durante la primera semana, trabajé en varias correcciones y mejoras del sistema. Me enfoqué en la validación del frontend para el modo borrador y en la activación del plan de suscripción. También implementé y probé el uso de JWT tokens para mejorar la seguridad del sistema. Además, realicé ajustes en la edición de objetos y corregí errores en la configuración del backend.
+
+Durante la segunda semana, continué con el despliegue de la aplicación y la corrección de errores en el appengine. También trabajé en la aplicación del modo borrador a los objetos y realicé pruebas para validar las condiciones de los planes de suscripción en el backend. Además, desarrollé una plantilla GDPR, implementé seeders para generar datos de prueba y participé en la configuración y ajustes del sistema junto con mis compañeros.
+
+### **Fernández Mota, Francisco**
+
+Durante la primera semana de desarrollo del Sprint 2, nos reunimos los representantes de los diferentes subgrupos con el PM para planificar las tareas del sprint, crear las issues y asignarlas. Tras esto, trabajé con mi compañero David para implementar tanto en backend como en frontend el tablón de solicitudes de alquiler. Cerrando la semana, desarrollé la lógica de negocio para aceptar o rechazar estas solicitudes por parte del propietario del bien solicitado e hice un excel para el cálculo del ROI y las estimaciones.
+
+Durante la segunda semana de desarrollo, habiendo terminado mis tareas, hice el acuerdo a nivel de servicio (SLA), y estuve revisando PRs además de resolver dudas y ayudar a resolver problemas surgidos a lo largo de la semana.
+
+### **García Rodríguez, Javier**
+
+Durante la primera semana, junto a los representantes de los otros 2 subgrupos (Alexander Picón y Francisco Fernández) y Miguel Palomo, nos encargamos de planificar todo el Sprint 2. Esto incluye todas las tareas que eran vitales a desarrollar en el sprint, desde backend, frontend, testing, y más. Además, se crearon todas las issues estimadas desde el inicio para poder empezar a trabajar lo más pronto posible. Además, creamos plantillas en las issues con distintos campos para facilitar una mayor comprensión de las tareas de cada miembro. Además, me encargué de 2 tareas de código, concretamente desarrollar validaciones en el backend para el formulario del login, y los métodos correspondientes a los cambios de planes de suscripción, de gratuito a premium, y viceversa, respectivamente. Esta semana también estuve preparando la presentación correspondiente al viernes 21. Recalcar la implicación diaria en resolución de dudas y conversaciones por los canales de contactos para mantener el proyecto al día. Además, tuvimos una reunión más los representantes con Miguel Palomo para valorar problemas e incidencias que se desarrollaban a la hora de implementar la pasarela de pago de Stripe.
+
+Durante la segunda semana, me centré más el el tema de documentación, concretamente en desarrollar 3 documentos: uso de la IA, las licencias de aplicaciones usadas en el proyecto, y el documento aplicado a la legislación correspondiente a nuestro proyecto, enfocándolo en leyes nacionales y europeas por las que se rige nuestro proyecto. Finalmente, estuve preparando la presentación de cara al entregable del S2. Destacar una vez más la coordinación durante esta semana, que fue un poco más compleja e intensa, pero con la que se pudo terminar todas las tareas.
+
+### **González Ortiz, Miguel**
+
+Durante la primera semana, me enfoqué en mejorar la seguridad y funcionalidad del sistema. Implementé validadores en el backend para el registro de usuarios, asegurando la integridad de los datos ingresados. Además, desarrollé la funcionalidad de recuperación de contraseña, permitiendo a los usuarios restablecer sus credenciales de manera segura. También trabajé en la implementación del backend para la gestión de solicitudes de alquiler, facilitando la comunicación entre arrendadores y arrendatarios. Por último, corregí errores en el formulario de registro, optimizando la experiencia del usuario y garantizando un proceso de inscripción sin inconvenientes.
+
+En la segunda semana, centré mis esfuerzos en pruebas y validaciones para mejorar la estabilidad del sistema. Desarrollé y ejecuté tests para los planes de suscripción, verificando su correcto funcionamiento. Además, solucioné problemas en las migraciones relacionadas con los pagos, asegurando la correcta gestión de transacciones en la base de datos. También trabajé en la validación del proceso de inicio de sesión, reforzando la seguridad y evitando accesos no autorizados. Por último, realicé pruebas exhaustivas en la funcionalidad de recuperación de contraseña, garantizando su fiabilidad en diferentes escenarios.
+
+### **Martín Muñoz, Álvaro**
+<div align="justify">
+
+Informe de Actividades
+
+**Primera semana**:
+Durante la primera semana, me enfoqué en la mejora del frontend y la integración de pagos en la aplicación. Comencé con la implementación de **validadores frontend para la puesta en alquiler** (1 hora, 50 minutos, 15 segundos), asegurando que los formularios funcionaran correctamente y que los datos ingresados fueran validados de manera eficiente.
+
+Además, trabajé en la **mejora estética de la aplicación** en dos sesiones (3 horas, 57 minutos, 54 segundos y 4 horas, 17 minutos, 19 segundos), refinando la interfaz y asegurando una experiencia de usuario fluida. También solucioné un problema en la UI, dedicándome al **arreglo del frontend del tablero** (7 minutos, 13 segundos).
+
+En cuanto a la integración de pagos, implementé **Stripe en los cambios de suscripciones** (2 horas, 30 minutos, 7 segundos) y comencé a trabajar en la implementación de **Stripe para el pago de un alquiler** (24 minutos, 48 segundos), configurando el sistema y asegurando la correcta comunicación con el backend.
+
+También resolví **errores de mergeo y lint** (26 minutos, 26 segundos), evitando conflictos en el código y mejorando la calidad del proyecto. Para complementar mi aprendizaje, asistí a la **Píldora Teórica 06** (10 minutos, 56 segundos) y la **Píldora Teórica 07a** (35 minutos, 33 segundos).
+
+**Segunda semana**:
+Durante la segunda semana, continué con la integración y validación de funcionalidades clave. Terminé de implementar **Stripe para el pago de un alquiler** en una segunda sesión (2 horas, 44 minutos, 23 segundos), asegurando que el flujo de pagos funcionara sin problemas.
+
+Además, trabajé en la **validación frontend para pedir un objeto en alquiler** (32 minutos, 55 segundos), verificando que los usuarios pudieran interactuar correctamente con el sistema. Implementé los **Términos y Condiciones al registrarse** (18 minutos, 8 segundos), garantizando que todos los usuarios aceptaran las condiciones antes de crear una cuenta.
+
+También solucioné errores críticos en el sistema, incluyendo el **arreglo de un error de registro** (25 minutos, 30 segundos) y la **corrección de problemas en Codacy** (22 minutos, 12 segundos), mejorando la calidad del código y su mantenibilidad.
+
+Además de las tareas de desarrollo, participé en **evaluaciones de desempeño del equipo**, dedicando tiempo a **Time Effort** (30 minutos) y **Performance Evaluation** (10 minutos). También hice **feedback externo de un usuario piloto de Go4Surprise** (44 minutos, 36 segundos)-
+
+Para finalizar, asistí a las **clases del 14/03/2025 y 21/03/2025** (3 horas, 50 minutos cada una).
+
+</div>
+
+### **Naredo Bernardos, Ignacio**
+
+Durante la primera semana del S2, trabajé en la realización del método de solicitud de alquiler y sus validaciones así como la ayuda a fullstack de categorias y filtros de precios. 
+ 
+Durante la segunda semana del S2, desarrollé el admin backend, luego desarrolle el admin backend con token y finalmente colaboré en la ayuda a mis compañeros a desarrollar el fullstack de admin y el frontend de solicitud de alquileres.
+
+### **Nieto Vicioso, Javier**
+### Semana 1
+Durante la primera semana de este segundo sprint, mi trabajo se centró en la validación del calendario de las solicitudes de alquiler, asegurando que los usuarios no pudieran solicitar fechas no disponibles o si no estaban correctamente autenticados. También trabajé en la implementación del footer, lo que resultó más complicado de lo esperado debido a problemas con los estilos generales de la aplicación, que impedían que el footer se ubicara correctamente en la página. Finalmente, logré integrarlo de manera estable.
+
+Otro punto clave de la semana fue la mejora de la página de aceptar/rechazar alquiler, donde realicé las validaciones necesarias para asegurar que el usuario solo pudiera realizar acciones válidas. Además, finalicé la funcionalidad, ya que el compañero que inicialmente la implementó no tenía tanta experiencia con frontend. Esto implicó mejorar los estilos y optimizar algunas funciones y llamadas al backend.
+
+Hacia el final de la semana, ayudé a Pablo Díaz con las restricciones del calendario de solicitudes, ya que no sabía cómo continuar con su tarea de frontend.
+
+### Semana 2
+Durante esta segunda semana, me enfoqué en la implementación de notificaciones para las solicitudes de alquiler y en el desarrollo del botón de pago para que, una vez aceptada una solicitud, el usuario pudiera proceder con el pago mediante Stripe, que ya se encargaría otro compañero en implementarlo.
+
+Esta tarea requirió una serie de refactorizaciones para mejorar el mantenimiento del código y asegurar su correcta integración con la plataforma. También optimicé la estructura del código eliminando componentes innecesarios y mejorando la organización de las solicitudes enviadas y recibidas.
+
+Además, implementé algunas restricciones en los botones de las solicitudes para mejorar la experiencia del usuario y asegurar que solo se mostraran las opciones adecuadas en cada estado del proceso.
+
+En general, estas dos semanas han estado enfocadas en mejoras de usabilidad, validaciones y optimización del código en el frontend, asegurando una mejor experiencia para los usuarios y facilitando la integración con el backend.
+
+### **Padilla Gómez, Marco**
+
+En la primera semana del S2, me encargue de las validaciones del
+backend de la puesta en alquiler, en las cuales estuve mucho tiempo ya que había un fallo con el JWT que no detecté, hasta que eso no se arreglo no pude hacer las validaciones correspondientes.
+En la segunda semana, me encargué de tomar feedback en clase, el cual pase despues a las bases de conocimientos, tanto la grupal como la nuestra propia, tuve un fallo en la base de datos que tuve que arreglar, y añadí la pantalla de FAQ a la aplicacion con sus respectivas preguntas y respuesta. Tambien realice el nuevo KBreport, y me vi las 3 pildoras teoricas. Ya estaba arreglado el tema del JWT por lo que pude realizar las validaciones oportunas para el backend de la puesta en alquiler. Tambien actualice el revision.md.
+
+### **Picón Garrote, Alexander** ###
+
+Durante la primera semana, mi principal actividad fue la participación en una reunión con los representantes del grupo. Esta reunión fue de suma importancia para la coordinación y el avance del proyecto de cara a la planificación del sprint. Dediqué tiempo a revisar el desarrollo de nuevas categorías, configurar y crear la implementación inicial con stripe.Y tuve una reunión acerca de como gestionar los pagos de la aplicación con los representantes.
+
+
+En la segunda semana, me centré en el desarrollo e implementación de la pasarela de pagos con Stripe. Dediqué tiempo a realizar pruebas de funcionamiento y participar en una reunión con representantes de pagos. Además de las tareas de desarrollo, también me encargué de la documentación, elaborando el documento sobre cómo realizar pagos con Stripe y la documentación de los términos y condiciones del servicio.
+Asimismo, continué con mi formación a través de las "píldoras teóricas". 
+### **Palomo García, Miguel**
+
+### **Periañez Franco, Luis Javier**
+Durante la primera semana, me dediqué a realizar la implementación de los planes de suscripción en el frontend, enfocándome especialmente en mejorar su estética y presentación visual para una mejor experiencia de usuario. Trabajé en el diseño de los distintos tipos de planes, sus precios y características, asegurando que la interfaz fuera clara, intuitiva y atractiva.
+
+En la segunda semana, me centré en desarrollar las validaciones necesarias para los planes de suscripción, con el objetivo de garantizar que los datos introducidos por el usuario fueran correctos antes de enviarlos al servidor. Esto incluyó validaciones tanto visuales como lógicas, proporcionando mensajes de error adecuados y asegurando una interacción fluida.
+
+Además, junto a mi compañero Jesús, implementamos la gestión de borradores, permitiendo a los usuarios guardar un plan de suscripción como borrador y publicarlo posteriormente. Esta funcionalidad mejora la flexibilidad del sistema, ofreciendo a los usuarios la posibilidad de trabajar de forma progresiva antes de hacer pública su suscripción.
+
+### **Rosado Raya, Santiago**
+### Semana 1
+Durante esta semana estuve analizando el feedback de los usuarios piloto para poder compartir sus comentarios con el resto de los miembros del grupo. Además, trabajé en algunos issues y revisé todas las pull requests de mi subgrupo.
+
+### Semana 2
+En esta segunda semana preparé el documento con el guion que los usuarios piloto utilizarían para proporcionarnos su feedback. Estuve en contacto con ellos y realicé algunos seguimientos guiados junto a otros usuarios piloto. También trabajé en varios issues, revisé las pull requests de los miembros de mi subgrupo y colaboré con ellos en la corrección de errores. Finalmente, cuando recibí el feedback de todos los usuarios piloto, lo analicé y los evalué conforme a lo establecido en nuestros documentos. Tambien visualicé todos los vídeos de las pildoras teóricas.
+
+### **Sánchez Márquez, Julia**
+
+Durante la primera semana me enfoqué exclusivamente en asumir el rol de desarrolladora. Implementé todas las validaciones necesarias para la entidad Rent, completé el flujo restante para permitir el alquiler de un objeto, corregí errores relacionados con el manejo de fechas y añadí validaciones específicas para este aspecto. Además, trabajé junto a mi compañero Pablo en una tarea full-stack que permitía a los propietarios inhabilitar determinadas fechas en las que no se pudiera realizar un alquiler.
+
+En la segunda semana continué con tareas similares, dando seguimiento al desarrollo conjunto con Pablo. Añadí 22 tests unitarios para verificar el correcto funcionamiento de las validaciones previamente implementadas en el modelo Rent. También corregimos errores relacionados con el alquiler por meses y por horas. Finalmente, avancé en el estudio de las píldoras teóricas como preparación para el test.
+
+### **Sevillano Barea, Alejandro**
+
+
+En la primera semana del sprint 2, me encargue del desarrollo del fullstack de visualización de perfil de un usuario, para el cual tuve que desarrollar tanto backend como frontend en el cual se mostrasen todos los datos del perfil de un usuario. Esto implico un estudio previo de entidades que no habian sido desarrolladas por mí, y una posterior implementación de funcionalidades para esta vista. Además, se busco un estilo sencillo y visualmente claro para el usuario, mostrando la información relevante del mismo
+
+Tras esto, me encargué del desarrollo del testing de las funcionalidades CRUD de las solicitudes de alquiler, funcionalidad desarrollada por mis compañeros Ignacio y Marco.
+
+En la segunda semana se me encomendo desarrollar el frontend de todas las ventanas de gestión de administrador. Comencé desarrollando las mismas de forma que yo consideraba optima, pero tras una actualización sobre la gestión interna de la contraseña del usuario, tuve que reformular lo avanzado anteriormente. Tras esto, proseguí con el desarrollo de todas las ventanas de gestión de administración, implicando añadir los CRUD de item, rentals y users con una interfaz atractiva y acorde a lo que es un dashboard de administrador.
+
+Por ultimo, visualice las pildoras teoricas
