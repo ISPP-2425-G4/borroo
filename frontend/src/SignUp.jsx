@@ -93,8 +93,12 @@ const Signup = () => {
   
   useEffect(() => {
     const requiredFields = ["username", "name", "surname", "email", "password", "password2"];
-    const isValid = requiredFields.every(field => formData[field] && formData[field].trim() !== "") && acceptTerms;
-    setIsFormValid(isValid);
+    const isValid = requiredFields.every(
+      field => Object.prototype.hasOwnProperty.call(formData, field) &&
+      typeof formData[field] === 'string' &&
+      formData[field].trim() !== ""
+  ) && acceptTerms;
+      setIsFormValid(isValid);
   }, [formData, acceptTerms]);
 
   const handleChange = (e) => {
