@@ -155,11 +155,7 @@ const CreateItemRequestView = () => {
     const fetchEnums = async () => {
       setFetchingOptions(true);
       try {
-        const accessToken = localStorage.getItem("access_token");
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/objetos/enum-choices/`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
           withCredentials: true,
         });
 
@@ -431,9 +427,12 @@ const CreateItemRequestView = () => {
       }
   
 
-  
+      const accessToken = localStorage.getItem("access_token");
+
       const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/objetos/create_item_request/`, formDataToSend, {
-        
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
         withCredentials: true,
       });
   
