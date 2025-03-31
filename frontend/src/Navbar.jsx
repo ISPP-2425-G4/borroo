@@ -88,20 +88,23 @@ const Navbar = () => {
     <AppBar position="fixed" sx={{ backgroundColor: "#2563eb" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ minHeight: "64px", justifyContent: "space-between" }}>
-          <Typography
-            variant="h6"
+          <Box
             component={Link}
             to="/"
             sx={{
+              display: "flex",
+              alignItems: "center",
               textDecoration: "none",
               color: "white",
-              fontWeight: "bold",
-              letterSpacing: "0.5px",
-              flexGrow: { xs: 1, md: 0 }
+              fontWeight: "bold"
             }}
           >
-            BORROO
-          </Typography>
+            <img src="/logo.png" alt="Logo" style={{ height: 40, marginRight: 8 }} />
+            <Typography variant="h6" sx={{ letterSpacing: "0.5px" }} fontWeight="bold">
+              BORROO
+            </Typography>
+          </Box>
+
 
           {isMobile && (
             <IconButton
