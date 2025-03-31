@@ -19,6 +19,7 @@ class User(AbstractUser):
     name = models.CharField(max_length=255, validators=[text_validator])
     surname = models.CharField(max_length=255, validators=[text_validator])
     username = models.CharField(max_length=255, unique=True)
+    saldo = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     password = models.CharField(max_length=255, validators=[
             RegexValidator(
                 regex=r'^(?=.*[A-Z])',  # Al menos una mayúscula

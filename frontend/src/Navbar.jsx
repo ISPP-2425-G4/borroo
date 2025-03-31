@@ -29,6 +29,7 @@ const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [loginAnchorEl, setLoginAnchorEl] = useState(null);
+  const [saldo, setSaldo] = useState(null);
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -57,15 +58,37 @@ const Navbar = () => {
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       setUser(null);
+      setSaldo(null);
       handleLoginClose();
       navigate('/');
     }
   };
 
+  const obtenerSaldoUsuario = async (userId, accessToken) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${userId}/get_saldo/`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      setSaldo(response.data.saldo);
+    } catch (error) {
+      console.error("Error al obtener el saldo del usuario:", error);
+    }
+  };
+
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
+    const accessToken = localStorage.getItem('access_token');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+      if (accessToken) {
+        obtenerSaldoUsuario(parsedUser.id, accessToken);
+      }
     }
   }, []);
 
@@ -162,6 +185,11 @@ const Navbar = () => {
                         alt="Premium"
                         sx={{ width: 16, height: 16 }}
                       />
+                    )}
+                    {saldo !== null && (
+                      <Typography variant="body2" sx={{ ml: 1 }}>
+                        Saldo: {parseFloat(saldo).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+                      </Typography>
                     )}
                   </Box>
                 }
