@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiUser, FiHeart, FiShoppingCart, FiMenu } from "react-icons/fi";
+import { FiUser, FiHeart, FiMenu } from "react-icons/fi";
 import ArticleIcon from '@mui/icons-material/Article';
 import {
   AppBar,
@@ -230,14 +230,6 @@ const Navbar = () => {
               <IconButton color="inherit" component={Link} to="/drafts">
                 <Badge badgeContent={0} color="error">
                   <ArticleIcon />
-                </Badge>
-              </IconButton>
-            </Tooltip>
-
-            <Tooltip title="Carrito">
-              <IconButton color="inherit">
-                <Badge badgeContent={0} color="error">
-                  <FiShoppingCart />
                 </Badge>
               </IconButton>
             </Tooltip>
