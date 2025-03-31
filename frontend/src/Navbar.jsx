@@ -197,7 +197,7 @@ const Navbar = () => {
                   <MenuItem onClick={() => { handleLoginClose(); navigate(`/perfil/${encodeURIComponent(user.username)}`); }}>
                     Mi Perfil
                   </MenuItem>
-                  {user.username === "admin" && (
+                  {user.is_admin && (
                     <MenuItem onClick={() => { handleLoginClose(); navigate('/dashboard'); }}>
                       Dashboard
                     </MenuItem>
