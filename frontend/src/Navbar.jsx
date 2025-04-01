@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiUser, FiHeart, FiShoppingCart, FiMenu } from "react-icons/fi";
+import { FiUser, FiHeart, FiMenu } from "react-icons/fi";
 import ArticleIcon from '@mui/icons-material/Article';
 import {
   AppBar,
@@ -111,20 +111,23 @@ const Navbar = () => {
     <AppBar position="fixed" sx={{ backgroundColor: "#2563eb" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ minHeight: "64px", justifyContent: "space-between" }}>
-          <Typography
-            variant="h6"
+          <Box
             component={Link}
             to="/"
             sx={{
+              display: "flex",
+              alignItems: "center",
               textDecoration: "none",
               color: "white",
-              fontWeight: "bold",
-              letterSpacing: "0.5px",
-              flexGrow: { xs: 1, md: 0 }
+              fontWeight: "bold"
             }}
           >
-            BORROO
-          </Typography>
+            <img src="/logo.png" alt="Logo" style={{ height: 40, marginRight: 8 }} />
+            <Typography variant="h6" sx={{ letterSpacing: "0.5px" }} fontWeight="bold">
+              BORROO
+            </Typography>
+          </Box>
+
 
           {isMobile && (
             <IconButton
@@ -258,14 +261,6 @@ const Navbar = () => {
               <IconButton color="inherit" component={Link} to="/drafts">
                 <Badge badgeContent={0} color="error">
                   <ArticleIcon />
-                </Badge>
-              </IconButton>
-            </Tooltip>
-
-            <Tooltip title="Carrito">
-              <IconButton color="inherit">
-                <Badge badgeContent={0} color="error">
-                  <FiShoppingCart />
                 </Badge>
               </IconButton>
             </Tooltip>
