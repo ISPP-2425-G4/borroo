@@ -1,7 +1,7 @@
 import Navbar from "./Navbar";
 import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Container,
   Box,
@@ -20,6 +20,7 @@ const DraftItemsView = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const obtenerUrlImagen = useCallback(async (imgId) => {
     try {
@@ -54,7 +55,12 @@ const DraftItemsView = () => {
     } finally {
       setLoading(false);
     }
-  }, [user.id, obtenerUrlImagen]);
+
+    if (!user) {
+      navigate("/login");
+    }
+
+  }, [user.id, obtenerUrlImagen, navigate]);
 
   useEffect(() => {
     fetchDraftItems();
