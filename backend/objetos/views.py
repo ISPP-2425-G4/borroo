@@ -463,7 +463,7 @@ class ToggleLike(APIView):
             if created:
                 item.num_likes += 1
                 message = "Objeto agregado a favoritos"
-            else: 
+            else:
                 liked_item.delete()
                 item.num_likes -= 1
                 message = "Objeto eliminado de favoritos"
