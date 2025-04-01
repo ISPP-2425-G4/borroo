@@ -94,11 +94,11 @@ def confirm_rent_checkout(request, session_id):
                 except Exception as e:
                     return JsonResponse({
                         'error': f'Error al actualizar saldos: {str(e)}'},
-                                        status=400)
+                        status=400)
             else:
                 return JsonResponse({
                     'error': 'rent_id o user_id no encontrado en metadatos'},
-                                    status=400)
+                    status=400)
         else:
             return JsonResponse({'status': 'unpaid'}, status=402)
 
