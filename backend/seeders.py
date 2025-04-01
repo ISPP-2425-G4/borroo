@@ -81,7 +81,8 @@ def create_items():
             price=Decimal(random.uniform(2, 30)),
             user=random.choice(users),
             draft_mode=False,
-            featured=False
+            featured=False,
+            num_likes=0
         )
     print('Items created successfully!')
 

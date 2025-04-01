@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Item, ItemImage, ItemRequest, UnavailablePeriod
+from .models import Item, ItemImage, ItemRequest, UnavailablePeriod, LikedItem
 from utils.utils import upload_image_to_imgbb
 
 
@@ -45,7 +45,8 @@ class ItemSerializer(serializers.ModelSerializer):
             'cancel_type_display', 'price_category',
             'price_category_display', 'price', 'images',
             'image_files', 'remaining_image_ids', 'user',
-            'draft_mode', 'unavailable_periods', 'featured'
+            'draft_mode', 'unavailable_periods', 'featured',
+            'num_likes'
         ]
         read_only_fields = ['user']
 
@@ -154,6 +155,11 @@ class ItemSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+
+class LikedItemSerializer(serializers.ModelSerializer):
+    model = LikedItem
+    fields = ['id', 'user', 'item']
 
 
 class ItemRequestSerializer(serializers.ModelSerializer):

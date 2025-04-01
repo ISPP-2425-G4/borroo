@@ -218,7 +218,7 @@ const Navbar = () => {
               )}
             </Menu>
 
-            <Tooltip title="Favoritos">
+            <Tooltip title="Favoritos" onClick={() => { navigate('/list_liked_items'); }}>
               <IconButton color="inherit">
                 <Badge badgeContent={0} color="error">
                   <FiHeart />
