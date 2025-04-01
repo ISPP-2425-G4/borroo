@@ -52,7 +52,7 @@ const ShowItemScreen = () => {
   }]);
   const [showRentalModal, setShowRentalModal] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [requestedDates, setRequestedDates] = useState([]);
+  {/*const [requestedDates, setRequestedDates] = useState([]);*/}
   const [bookedDates, setBookedDates] = useState([]);
   const [isOwner, setIsOwner] = useState(false); // Estado para verificar si el usuario es el propietario
   const [priceCategory, setPriceCategory]= useState(null)
@@ -199,28 +199,27 @@ const ShowItemScreen = () => {
         `${import.meta.env.VITE_API_BASE_URL}/rentas/full/item/${id}/`
       );
       const rents = rentResponse.data;
-
-      const requested = [];
+  
       const booked = [];
-      
+  
       rents.forEach((rent) => {
         const start = new Date(rent.start_date);
         const end = new Date(rent.end_date);
         const days = getDatesInRange(start, end);
-        
-        if (rent.rent_status === "requested") {
-          requested.push(...days);
-        } else if (rent.rent_status === "BOOKED") {
+  
+        const status = rent.rent_status.toLowerCase();
+  
+        if (["accepted", "booked", "picked_up"].includes(status)) {
           booked.push(...days);
         }
       });
-
-      setRequestedDates(requested);
+  
       setBookedDates(booked);
     } catch (error) {
       console.error("Error fetching availability:", error);
     }
   };
+  
   const getDatesInRange = (startDate, endDate) => {
     const dates = [];
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
@@ -765,7 +764,7 @@ const ShowItemScreen = () => {
               }
             }}
             minDate={new Date()}
-            disabledDates={[...requestedDates, ...bookedDates, ...unavailabilityPeriods.flatMap(period => {
+            disabledDates={[ ...bookedDates, ...unavailabilityPeriods.flatMap(period => {
               const start = new Date(period.start_date);
               const end = new Date(period.end_date);
               const range = getDatesInRange(start, end);
