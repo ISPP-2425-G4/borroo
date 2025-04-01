@@ -19,6 +19,7 @@ import CreateItemRequest from "./CreateItemRequest";
 import '../public/styles/App.css';
 import FAQ from './components/Faq';
 import AdminDashboard from "./AdminDashboard";
+import Messages from "./Messages";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
           <Route path="/list_item_requests" element={<ListItemRequests />} />
           <Route path="/create_item_request" element={<CreateItemRequest />} />
           <Route path="/dashboard" element={<AdminDashboard />} />
+          <Route path="/messages" element={<Messages />} />
 
         </Routes>
         <Footer />
