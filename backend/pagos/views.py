@@ -68,7 +68,6 @@ def confirm_rent_checkout(request, session_id):
             if rent_id and user_id:
                 try:
                     renta = Rent.objects.get(id=rent_id)
-                    renter = User.objects.get(id=user_id)
                     owner = renta.item.user # Obtener el propietario del item
                     total_price = Decimal(str(renta.total_price))
                     commission = Decimal(str(renta.commission))
@@ -87,13 +86,19 @@ def confirm_rent_checkout(request, session_id):
                         'user_id': user_id
                     })
                 except Rent.DoesNotExist:
-                    return JsonResponse({'error': 'Alquiler no encontrado'}, status=404)
+                    return JsonResponse({'error': 'Alquiler no encontrado'},
+                                        status=404)
                 except User.DoesNotExist:
-                    return JsonResponse({'error': 'Usuario no encontrado'}, status=404)
+                    return JsonResponse({'error': 'Usuario no encontrado'},
+                                        status=404)
                 except Exception as e:
-                    return JsonResponse({'error': f'Error al actualizar saldos: {str(e)}'}, status=400)
+                    return JsonResponse({
+                        'error': f'Error al actualizar saldos: {str(e)}'},
+                                        status=400)
             else:
-                return JsonResponse({'error': 'rent_id o user_id no encontrado en metadatos'}, status=400)
+                return JsonResponse({
+                    'error': 'rent_id o user_id no encontrado en metadatos'},
+                                    status=400)
         else:
             return JsonResponse({'status': 'unpaid'}, status=402)
 
