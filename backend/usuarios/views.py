@@ -658,7 +658,7 @@ class UpdateUserPerfilView(APIView):
     permission_classes = [IsAuthenticated]
 
     def put(self, request, *args, **kwargs):
-        user = request.user  # Ya obtenemos el usuario autenticado
+        user = request.user  # usuario autenticado
 
         serializer = UserSerializer(
             user, data=request.data, partial=True, context={'request': request}
@@ -666,11 +666,18 @@ class UpdateUserPerfilView(APIView):
         if serializer.is_valid():
             try:
                 serializer.save()
+                print("Perfil actualizado correctamente")
                 return Response({
                     "message": "Perfil actualizado correctamente",
                     "user": serializer.data
                 }, status=status.HTTP_200_OK)
             except Exception as e:
+                print(f"Error al actualizar perfil: {str(e)}")
                 return Response({
                     "error": f"No se pudo actualizar el perfil: {str(e)}"
                 }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            print("Errores de validación:", serializer.errors)
+            return Response({
+                "errors": serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)

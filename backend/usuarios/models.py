@@ -80,6 +80,15 @@ class User(AbstractUser):
         null=True,
         validators=[cif_validator]
     )
+    dni = models.CharField(
+        max_length=9,
+        unique=True,
+        null=True, blank=True,
+        validators=[RegexValidator(
+            regex=r'^\d{8}[A-Z]$',  # 8 dígitos seguidos de una letra mayúscula
+            message="El DNI debe tener el formato: 12345678A"
+        )]
+    )
     is_verified = models.BooleanField(default=False)
     pricing_plan = models.CharField(
         max_length=10,

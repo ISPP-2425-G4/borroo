@@ -1,4 +1,5 @@
 # flake8: noqa
+import string
 import django
 import os
 
@@ -29,6 +30,12 @@ def clear_database():
         exit()
 
 
+def generate_dni():
+    digits = ''.join(random.choices(string.digits, k=8))  # 8 dígitos
+    letter = random.choice(string.ascii_uppercase)  # Letra aleatoria
+    return digits + letter
+
+
 def create_users():
     usernames = ['User1', 'User2', 'User3', 'User4', 'User5']
     for username in usernames:
@@ -43,6 +50,7 @@ def create_users():
             city='Madrid',
             address=f'Calle {usernames.index(username)}',
             postal_code='28001',
+            dni= generate_dni(),
             is_verified=bool(random.getrandbits(1)),
             pricing_plan=random.choice(['free', 'premium']),
             is_admin=False
