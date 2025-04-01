@@ -60,7 +60,7 @@ const DraftItemsView = () => {
       navigate("/login");
     }
 
-  }, [user.id, obtenerUrlImagen, navigate]);
+  }, [navigate, obtenerUrlImagen, user]);
 
   useEffect(() => {
     fetchDraftItems();
