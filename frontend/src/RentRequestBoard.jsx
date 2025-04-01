@@ -232,7 +232,10 @@ const RentRequestBoard = () => {
                             {receivedRequests.length === 0 ? (
                                 <Typography>No has recibido solicitudes de alquiler.</Typography>
                             ) : (
-                                <RequestCardsContainer requests={receivedRequests} openConfirmModal={openConfirmModal} isOwner={true}/>
+                                <RequestCardsContainer 
+                                requests={receivedRequests} 
+                                openConfirmModal={openConfirmModal} 
+                                isOwner={true}/>
                             )}
                         </>
                     )}
