@@ -574,7 +574,11 @@ const CreateItemScreen = () => {
       if (response.status === 201) {
         setSubmitSuccess(true);
         setTimeout(() => {
+          if (isDraft) {
+            navigate("/drafts");
+          } else {
           navigate("/");
+          }
         }, 2000);
       } else {
         throw new Error("Error al crear el Item.");
