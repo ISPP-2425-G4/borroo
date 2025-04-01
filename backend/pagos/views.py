@@ -68,7 +68,7 @@ def confirm_rent_checkout(request, session_id):
             if rent_id and user_id:
                 try:
                     renta = Rent.objects.get(id=rent_id)
-                    owner = renta.item.user # Obtener el propietario del item
+                    owner = renta.item.user  # Obtener el propietario del item
                     total_price = Decimal(str(renta.total_price))
                     commission = Decimal(str(renta.commission))
 
