@@ -31,8 +31,15 @@ def clear_database():
 
 
 def generate_dni():
-    digits = ''.join(random.choices(string.digits, k=8))  # 8 dígitos
-    letter = random.choice(string.ascii_uppercase)  # Letra aleatoria
+    
+    digits = ""
+    for _ in range(8):
+        digits += str(random.randint(0, 9))  
+
+    # Elegir una letra aleatoria
+    letter = random.choice(string.ascii_uppercase) 
+
+    # Retornar el DNI completo
     return digits + letter
 
 
