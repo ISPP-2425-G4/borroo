@@ -144,15 +144,19 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
     obtenerProductos();
   }, [obtenerUrlImagen]);
 
+  const normalizarTexto = (texto) => 
+    texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  
   useEffect(() => {
     const filtrados = productos.filter((producto) => (
       (categoria === "" || producto.category_display === categoria) &&
       (subcategoria === "" || producto.subcategory_display === subcategoria) &&
       (producto.price >= rangoPrecio[0] && producto.price <= rangoPrecio[1]) &&
-      (terminoBusqueda === "" || producto.title.toLowerCase().includes(terminoBusqueda.toLowerCase()))
+      (terminoBusqueda === "" || normalizarTexto(producto.title).includes(normalizarTexto(terminoBusqueda)))
     ));
     setProductosFiltrados(filtrados);
   }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda]);
+  
 
   const hayFiltrosActivos = useMemo(() => 
     terminoBusqueda !== "" || categoria !== "" || subcategoria !== "" || rangoPrecio[0] > 0 || rangoPrecio[1] < 100,
