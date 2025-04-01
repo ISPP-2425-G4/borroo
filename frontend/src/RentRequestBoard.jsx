@@ -107,9 +107,13 @@ const RentRequestBoard = () => {
             );
             console.log(response.data);
     
-            // Eliminamos la solicitud de la lista tras responderla
+            
             setReceivedRequests((prevRequests) =>
-                prevRequests.filter((request) => request.id !== renta.id)
+                prevRequests.map((request) =>
+                    request.id === renta.id
+                        ? { ...request, rent_status: responseType, payment_status: "pending" }
+                        : request
+                )
             );
             setOpenModal(false);
         } catch (error) {
@@ -228,7 +232,7 @@ const RentRequestBoard = () => {
                             {receivedRequests.length === 0 ? (
                                 <Typography>No has recibido solicitudes de alquiler.</Typography>
                             ) : (
-                                <RequestCardsContainer requests={receivedRequests} openConfirmModal={openConfirmModal} />
+                                <RequestCardsContainer requests={receivedRequests} openConfirmModal={openConfirmModal} isOwner={true}/>
                             )}
                         </>
                     )}
