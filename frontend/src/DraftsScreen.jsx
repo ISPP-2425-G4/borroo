@@ -2,6 +2,7 @@ import Navbar from "./Navbar";
 import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useMemo } from "react";
 import {
   Container,
   Box,
@@ -16,7 +17,8 @@ import {
 const IMAGEN_PREDETERMINADA = "../public/default_image.png";
 
 const DraftItemsView = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  
+  const user = useMemo(() => JSON.parse(localStorage.getItem("user")), []);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
