@@ -165,12 +165,8 @@ class UserViewSet(viewsets.ModelViewSet):
             {'message': 'Plan actualizado a free.'},
             status=status.HTTP_200_OK)
 
-<<<<<<< HEAD
-    @action(detail=True, methods=['get'], permission_classes=[IsAuthenticated])
-=======
     @action(detail=True, methods=['get'],
             permission_classes=[IsAuthenticated])
->>>>>>> ae09de956b7c34c1a4767300e52ac93976e53244
     def get_saldo(self, request, pk=None):
         """Obtiene el saldo del usuario."""
         user = self.get_object()
