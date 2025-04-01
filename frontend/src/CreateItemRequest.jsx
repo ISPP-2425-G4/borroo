@@ -89,8 +89,11 @@ const StyledSelect = styled("select")(({  error }) => ({
 
 const SelectArrow = styled(Box)(() => ({
   position: "absolute",
-  right: "12px",
-  pointerEvents: "none",
+  right: "15px", // Ajusta la posición de la flecha
+  top: "50%",
+  transform: "translateY(-50%)", // Centra verticalmente la flecha
+  pointerEvents: "none", // Evita que la flecha bloquee clics
+  fontSize: "1rem",
   color: "#666",
 }));
 

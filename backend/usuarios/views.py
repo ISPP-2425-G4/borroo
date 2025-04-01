@@ -55,6 +55,11 @@ class UserViewSet(viewsets.ModelViewSet):
             # Guardamos el usuario con la contraseña encriptada
             user = serializer.save()
 
+            cif = serializer.validated_data.get("cif")
+            if cif is not None:
+                user.is_verified = True
+                user.save()
+
             # Generamos los tokens
             refresh = RefreshToken.for_user(user)
             return Response({
@@ -71,17 +76,17 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=["post"], permission_classes=[AllowAny])
     def login(self, request):
         """Login de usuario y generación de token JWT"""
-        username = request.data.get("username")
+        username_or_email = request.data.get("usernameOrEmail")
         password = request.data.get("password")
 
-        if not username or not password:
+        if not username_or_email or not password:
             return Response({"error": "Se requiere usuario y contraseña"},
                             status=status.HTTP_400_BAD_REQUEST)
 
         # Verificar si el usuario existe
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
+        user = User.objects.filter(username=username_or_email).first() or \
+            User.objects.filter(email=username_or_email).first()
+        if not user:
             return Response({"error": "Usuario no encontrado"},
                             status=status.HTTP_404_NOT_FOUND)
 
@@ -110,17 +115,24 @@ class UserViewSet(viewsets.ModelViewSet):
 
     #     return super().destroy(request, *args, **kwargs)
 
-    # def update(self, request, *args, **kwargs):
-    #     user = self.get_object()
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(
+            instance, data=request.data, partial=partial
+        )
 
-    #     if (
-    #         user.username != request.user.username
-    #         and not request.user.is_superuser
-    #     ):
-    #         raise PermissionDenied(
-    #             "No tienes permiso para modificar este usuario")
+        if serializer.is_valid():
+            updated_user = serializer.save()
 
-    #     return super().update(request, *args, **kwargs)
+            # Si el CIF se ha actualizado, actualizamos también el is_verified
+            if "cif" in serializer.validated_data:
+                cif = serializer.validated_data["cif"]
+                updated_user.is_verified = cif is not None
+                updated_user.save()
+            return Response(self.get_serializer(updated_user).data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['post'],
             permission_classes=[IsAuthenticated])
@@ -152,6 +164,12 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(
             {'message': 'Plan actualizado a free.'},
             status=status.HTTP_200_OK)
+    
+    @action(detail=True, methods=['get'], permission_classes=[IsAuthenticated])
+    def get_saldo(self, request, pk=None):
+        """Obtiene el saldo del usuario."""
+        user = self.get_object()
+        return Response({'saldo': user.saldo}, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])

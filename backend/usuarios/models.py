@@ -8,6 +8,11 @@ text_validator = RegexValidator(
     message="Este campo debe comenzar con una letra."
 )
 
+cif_validator = RegexValidator(
+    regex=r'^[A-HJ-NP-SUVW]\d{7}[0-9A-J]$',
+    message="CIF erroneo. Debe ser una letra, 7 numeros y un dígito/letra."
+)
+
 
 class PricingPlan(models.TextChoices):
     FREE = ('free', 'Gratis')
@@ -19,6 +24,7 @@ class User(AbstractUser):
     name = models.CharField(max_length=255, validators=[text_validator])
     surname = models.CharField(max_length=255, validators=[text_validator])
     username = models.CharField(max_length=255, unique=True)
+    saldo = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     password = models.CharField(max_length=255, validators=[
             RegexValidator(
                 regex=r'^(?=.*[A-Z])',  # Al menos una mayúscula
@@ -67,6 +73,12 @@ class User(AbstractUser):
                     formato 12345 o 12345-6789.'
             )
         ]
+    )
+    cif = models.CharField(
+        max_length=20,
+        blank=False,
+        null=True,
+        validators=[cif_validator]
     )
     is_verified = models.BooleanField(default=False)
     pricing_plan = models.CharField(
