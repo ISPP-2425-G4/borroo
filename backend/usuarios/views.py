@@ -164,7 +164,7 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(
             {'message': 'Plan actualizado a free.'},
             status=status.HTTP_200_OK)
-    
+
     @action(detail=True, methods=['get'], permission_classes=[IsAuthenticated])
     def get_saldo(self, request, pk=None):
         """Obtiene el saldo del usuario."""
@@ -651,3 +651,25 @@ class RentListView(APIView):
         rents = Rent.objects.all()
         serializer = RentSerializer(rents, many=True)
         return Response(serializer.data)
+
+
+class UpdateUserPerfilView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, *args, **kwargs):
+        user = request.user  # Ya obtenemos el usuario autenticado
+
+        serializer = UserSerializer(
+            user, data=request.data, partial=True, context={'request': request}
+        )
+        if serializer.is_valid():
+            try:
+                serializer.save()
+                return Response({
+                    "message": "Perfil actualizado correctamente",
+                    "user": serializer.data
+                }, status=status.HTTP_200_OK)
+            except Exception as e:
+                return Response({
+                    "error": f"No se pudo actualizar el perfil: {str(e)}"
+                }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
