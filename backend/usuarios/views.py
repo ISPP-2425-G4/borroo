@@ -55,6 +55,11 @@ class UserViewSet(viewsets.ModelViewSet):
             # Guardamos el usuario con la contraseña encriptada
             user = serializer.save()
 
+            cif = serializer.validated_data.get("cif")
+            if cif is not None:
+                user.is_verified = True
+                user.save()
+
             # Generamos los tokens
             refresh = RefreshToken.for_user(user)
             return Response({
@@ -110,17 +115,24 @@ class UserViewSet(viewsets.ModelViewSet):
 
     #     return super().destroy(request, *args, **kwargs)
 
-    # def update(self, request, *args, **kwargs):
-    #     user = self.get_object()
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(
+            instance, data=request.data, partial=partial
+        )
 
-    #     if (
-    #         user.username != request.user.username
-    #         and not request.user.is_superuser
-    #     ):
-    #         raise PermissionDenied(
-    #             "No tienes permiso para modificar este usuario")
+        if serializer.is_valid():
+            updated_user = serializer.save()
 
-    #     return super().update(request, *args, **kwargs)
+            # Si el CIF se ha actualizado, actualizamos también el is_verified
+            if "cif" in serializer.validated_data:
+                cif = serializer.validated_data["cif"]
+                updated_user.is_verified = cif is not None
+                updated_user.save()
+            return Response(self.get_serializer(updated_user).data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['post'],
             permission_classes=[IsAuthenticated])
