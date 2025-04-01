@@ -71,17 +71,17 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=["post"], permission_classes=[AllowAny])
     def login(self, request):
         """Login de usuario y generación de token JWT"""
-        username = request.data.get("username")
+        username_or_email = request.data.get("usernameOrEmail")
         password = request.data.get("password")
 
-        if not username or not password:
+        if not username_or_email or not password:
             return Response({"error": "Se requiere usuario y contraseña"},
                             status=status.HTTP_400_BAD_REQUEST)
 
         # Verificar si el usuario existe
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
+        user = User.objects.filter(username=username_or_email).first() or \
+            User.objects.filter(email=username_or_email).first()
+        if not user:
             return Response({"error": "Usuario no encontrado"},
                             status=status.HTTP_404_NOT_FOUND)
 
