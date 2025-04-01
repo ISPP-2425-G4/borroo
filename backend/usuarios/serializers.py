@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             'id', 'name', 'surname', 'username', 'password', 'email',
-            'phone_number', 'country', 'city', 'address', 'postal_code',
+            'phone_number', 'country', 'city', 'address', 'postal_code', 'cif',
             'is_verified', 'pricing_plan', 'owner_rating', 'renter_rating',
             'items', 'is_admin'
         ]
@@ -52,7 +52,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'name', 'surname', 'username', 'email', 'password'
+            'name', 'surname', 'username', 'email', 'password', 'cif'
         ]
 
     def validate_username(self, value):
@@ -75,3 +75,22 @@ class RegisterSerializer(serializers.ModelSerializer):
                     {field: "Debe comenzar con una letra."}
                 )
         return data
+
+    def validate_cif(self, value):
+        """Validar que el CIF sea válido o None, pero no cadena vacía."""
+        if value is None:
+            return value
+        if value == "":
+            raise serializers.ValidationError(
+                "El CIF no puede estar vacío."
+             )
+
+        pattern = r'^[A-HJ-NP-SUVW]\d{7}[0-9A-J]$'
+        if not re.match(
+            pattern, value
+        ):
+            raise serializers.ValidationError(
+                "El CIF no es válido. Debe comenzar con una"
+                "letra seguida de 7 dígitos y una letra o número final."
+            )
+        return value
