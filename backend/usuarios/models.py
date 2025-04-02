@@ -28,24 +28,26 @@ class User(AbstractUser):
     password = models.CharField(max_length=255, validators=[
             RegexValidator(
                 regex=r'^(?=.*[A-Z])',  # Al menos una mayúscula
-                message='La contraseña debe contener '
-                'al menos una letra mayúscula.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^(?=.*\d)',  # Al menos un número
-                message='La contraseña debe contener al menos un número.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])',
-                message='La contraseña debe contener '
-                'al menos un carácter especial.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^.{8,}$',  # Al menos 8 caracteres
-                message='La contraseña debe tener al menos 8 caracteres.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
         ],
-        help_text='La contraseña debe tener al menos 8 caracteres,'
+        help_text='La contraseña debe contener al menos 8 caracteres,'
         'una mayúscula, un número y un carácter especial.')
     email = models.CharField(max_length=255, unique=True,
                              validators=[

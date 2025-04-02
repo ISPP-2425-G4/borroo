@@ -140,16 +140,16 @@ const Signup = () => {
     });
 
     if (!/(?=.*[A-Z])/.test(formData.password)) {
-      errors.password = "La contraseña debe contener al menos una letra mayúscula.";
+      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, un número y un carácter especial.";
     }
     if (!/(?=.*[!@#$%^&*()_+\-=[\]{};:"\\|,.<>/?])/.test(formData.password)) {
-      errors.password = "La contraseña debe contener al menos un carácter especial.";
+      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, un número y un carácter especial.";
     }
     if (!/(?=.*\d)/.test(formData.password)) {
-      errors.password = "La contraseña debe contener al menos un número.";
+      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, un número y un carácter especial.";
     }
     if (formData.password.length < 8) {
-      errors.password = "La contraseña debe tener al menos 8 caracteres.";
+      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, un número y un carácter especial.";
     }
   
     const requiredFields = ["username", "name", "surname", "email", "password", "password2"];
