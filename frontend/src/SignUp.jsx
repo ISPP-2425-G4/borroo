@@ -221,12 +221,7 @@ const Signup = () => {
       console.log("Respuesta del servidor:", response);
   
       if (response.status === 201) {
-        const data = response.data;
-  
-        localStorage.setItem('access_token', data.access);
-        localStorage.setItem('refresh_token', data.refresh);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        navigate("/");
+        navigate("/login");
       } else {
         const data = response.data;
   
