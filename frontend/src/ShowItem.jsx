@@ -111,7 +111,7 @@ const ShowItemScreen = () => {
     }
   
     if (priceCategory === "day" && dateRange[0].startDate && dateRange[0].endDate) {
-      const days = Math.ceil((dateRange[0].endDate - dateRange[0].startDate) / (1000 * 60 * 60 * 24));
+      const days = Math.ceil((dateRange[0].endDate - dateRange[0].startDate + (1000 * 60 * 60 * 24)) / (1000 * 60 * 60 * 24));
       calculatedPrice = days * item.price;
     }
   
