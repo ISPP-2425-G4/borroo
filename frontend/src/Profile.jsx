@@ -40,9 +40,10 @@ const Profile = () => {
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const [userReview, setUserReview] = useState(null);
-  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const [currentUser] = useState(() => JSON.parse(localStorage.getItem("user")));
   const [editMode, setEditMode] = useState(false);
   const [draftItems, setDraftItems] = useState([]);
+  const [canReview, setCanReview] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -87,10 +88,7 @@ const Profile = () => {
       }
     };
 
-
     const fetchReviews = async () => {
-      if (currentUser.username === username) return;
-
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_BASE_URL}/usuarios/reviews/?username=${encodeURIComponent(username)}`
@@ -114,7 +112,30 @@ const Profile = () => {
     fetchProfile();
     fetchReviews();
 
-  }, [username, currentUser?.username]);
+  }, [username, currentUser]);
+
+  useEffect(() => {
+    const checkIfHasRented = async () => {
+      if (!currentUser?.username || !username || currentUser.username === username) return;
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/rentas/full/has-rented-from/`,
+          {
+            params: {
+              renter: currentUser.username,
+              owner: username,
+            },
+          }
+        );
+        setCanReview(response.data.has_rented);
+      } catch (error) {
+        console.error("Error verificando alquiler previo:", error);
+      }
+    };
+
+    checkIfHasRented();
+  }, [username, currentUser]);
+
 
   useEffect(() => {
     if (user) {
@@ -138,6 +159,7 @@ const Profile = () => {
     const nifPattern = /^[A-Z]\d{7}[A-Z0-9]$/;
     return dniPattern.test(dni) || nifPattern.test(dni);
   };
+
 
   const handleReviewSubmit = async () => {
     if (!rating) {
@@ -448,7 +470,7 @@ const Profile = () => {
             </Typography>
 
             <Typography variant="h5" fontWeight="bold" sx={{ mt: 3, mb: 1 }}>
-              Plan de Suscripción:
+              Plan de suscripción:
             </Typography>
             <Typography sx={{ fontSize: "1.1rem", display: "flex", alignItems: "center", justifyContent: "center", }}>
               {user.pricing_plan === "premium" ? (
@@ -471,9 +493,10 @@ const Profile = () => {
 
           {/* 📌 PRODUCTOS EN ALQUILER */}
           <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
-            Productos en alquiler de {user.name}
+            {currentUser.username === user.username
+              ? "Mis artículos en alquiler"
+              : `Productos en alquiler de ${user.name}`}
           </Typography>
-
           {items.length > 0 ? (
             <Grid container spacing={3} justifyContent="center">
               {items.map((item) => (
@@ -511,59 +534,67 @@ const Profile = () => {
             </Typography>
           )}
 
-          <Divider sx={{ my: 3 }} />
+          {currentUser.username === user.username && (
+            <>
+              <Divider sx={{ my: 3 }} />
 
-          <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
-            Artículos en borrador de {user.name}
-          </Typography>
+              <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
+                Mis artículos en borrador
+              </Typography>
 
-          {draftItems.length > 0 ? (
-            <Grid container spacing={3} justifyContent="center">
-              {draftItems.map((item) => (
-                <Grid item xs={12} sm={6} md={4} key={item.id}>
-                  <Link to={`/show-item/${item.id}`} style={{ textDecoration: "none" }}>
-                    <Card elevation={3}
-                      sx={{
-                        borderRadius: 3,
-                        border: "1px dashed #ccc",
-                        backgroundColor: "#fffde7",
-                        transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                        "&:hover": {
-                          transform: "scale(1.03)",
-                          boxShadow: "0px 6px 18px rgba(0,0,0,0.1)",
-                        },
-                      }}
-                    >
-                      <CardContent sx={{ textAlign: "center" }}>
-                        <Typography variant="h6" fontWeight="bold">
-                          {item.title}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary">
-                          {item.description}
-                        </Typography>
-                        <Typography variant="body2" sx={{ mt: 1, fontWeight: "bold", color: "#FF9800" }}>
-                          📝 Borrador - {item.price} € / {item.price_category_display}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Link>
+              {draftItems.length > 0 ? (
+                <Grid container spacing={3} justifyContent="center">
+                  {draftItems.map((item) => (
+                    <Grid item xs={12} sm={6} md={4} key={item.id}>
+                      <Link to={`/show-item/${item.id}`} style={{ textDecoration: "none" }}>
+                        <Card
+                          elevation={3}
+                          sx={{
+                            borderRadius: 3,
+                            border: "1px dashed #ccc",
+                            backgroundColor: "#fffde7",
+                            transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                            "&:hover": {
+                              transform: "scale(1.03)",
+                              boxShadow: "0px 6px 18px rgba(0,0,0,0.1)",
+                            },
+                          }}
+                        >
+                          <CardContent sx={{ textAlign: "center" }}>
+                            <Typography variant="h6" fontWeight="bold">
+                              {item.title}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary">
+                              {item.description}
+                            </Typography>
+                            <Typography variant="body2" sx={{ mt: 1, fontWeight: "bold", color: "#FF9800" }}>
+                              📝 Borrador - {item.price} € / {item.price_category_display}
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    </Grid>
+                  ))}
                 </Grid>
-              ))}
-            </Grid>
-          ) : (
-            <Typography variant="body2" color="textSecondary">
-              No tienes artículos en borrador.
-            </Typography>
+              ) : (
+                <Typography variant="body2" color="textSecondary">
+                  No tienes artículos en borrador.
+                </Typography>
+              )}
+            </>
           )}
 
-          {/* 📌 RESEÑAS (SOLO PARA OTROS PERFILES) */}
-          {currentUser.username !== user.username && (
+          {/* 📌 FORMULARIO PARA DEJAR RESEÑA (solo si es otro perfil y puede opinar) */}
+          {currentUser.username !== user.username && canReview && (
             <>
               <Divider sx={{ my: 3 }} />
               <Typography variant="h6">
                 {userReview ? "Editar tu valoración:" : "Deja una valoración:"}
               </Typography>
-              <Rating value={rating} onChange={(event, newValue) => setRating(newValue)} />
+              <Rating
+                value={rating}
+                onChange={(event, newValue) => setRating(newValue)}
+              />
               <TextField
                 fullWidth
                 multiline
@@ -573,13 +604,22 @@ const Profile = () => {
                 onChange={(e) => setReviewText(e.target.value)}
                 sx={{ mt: 2 }}
               />
-              <Button variant="contained" color="primary" onClick={handleReviewSubmit} sx={{ mt: 2, width: "100%" }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleReviewSubmit}
+                sx={{ mt: 2, width: "100%" }}
+              >
                 {userReview ? "Actualizar valoración" : "Enviar valoración"}
               </Button>
 
-              {/* 📌 SECCIÓN PARA MOSTRAR LA RESEÑA DEL USUARIO ACTUAL CON PAPELERA */}
               {userReview && (
-                <Box display="flex" alignItems="center" justifyContent="space-between" sx={{ mt: 2, p: 2, borderRadius: 2, bgcolor: "#f9f9f9" }}>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  sx={{ mt: 2, p: 2, borderRadius: 2, bgcolor: "#f9f9f9" }}
+                >
                   <Box>
                     <Typography variant="subtitle2">
                       <strong>{userReview.reviewer_username}:</strong> {userReview.comment}
@@ -591,24 +631,37 @@ const Profile = () => {
                   </IconButton>
                 </Box>
               )}
-
-              <Box sx={{ mt: 4, textAlign: "left" }}>
-                <Typography variant="h6" sx={{ mb: 2 }}>Reseñas de otros usuarios:</Typography>
-                {reviews.length > 0 ? (
-                  reviews.map((review, index) => (
-                    <Paper key={index} sx={{ p: 2, mb: 2, borderRadius: 2 }}>
-                      <Typography variant="subtitle2">
-                        <strong>{review.reviewer_username}:</strong> {review.comment}
-                      </Typography>
-                      <Rating value={review.rating} precision={0.5} readOnly />
-                    </Paper>
-                  ))
-                ) : (
-                  <Typography variant="body2" color="textSecondary">Aún no hay reseñas para este usuario.</Typography>
-                )}
-              </Box>
             </>
           )}
+
+          {/* 📌 RESEÑAS DE OTROS USUARIOS (SIEMPRE VISIBLE) */}
+          <Box sx={{ mt: 4, textAlign: "left" }}>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              {currentUser.username === user.username
+                ? "Mis reseñas recibidas:"
+                : "Reseñas de otros usuarios:"}
+            </Typography>
+            {reviews.length > 0 ? (
+              reviews.map((review, index) => (
+                <Paper key={index} sx={{ p: 2, mb: 2, borderRadius: 2 }}>
+                  <Typography variant="subtitle2">
+                    <strong>
+                      <Link to={`/perfil/${review.reviewer_username}`} style={{ textDecoration: "none", color: "#1976d2" }}>
+                        {review.reviewer_username}
+                      </Link>
+                    </strong>
+                    : {review.comment}
+                  </Typography>
+                  <Rating value={review.rating} precision={0.5} readOnly />
+                </Paper>
+              ))
+            ) : (
+              <Typography variant="body2" color="textSecondary">
+                Aún no hay reseñas para este usuario.
+              </Typography>
+            )}
+          </Box>
+
           {/* 📌 BOTONES DE ADMINISTRADOR */}
           {currentUser?.is_admin && currentUser.username !== user.username && (
             <>
