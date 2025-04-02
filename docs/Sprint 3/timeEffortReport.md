@@ -56,8 +56,8 @@
 2. [Sprint 1](#sprint-1-s1)
 
 3. [Sprint 2](#sprint-2-s2)
-4. 
-5. [Sprint 3](#sprint-3-s3)
+
+4. [Sprint 3](#sprint-3-s3)
 
 ## Devising a Project (#DP)
 
