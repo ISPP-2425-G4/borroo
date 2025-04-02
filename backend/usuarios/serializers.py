@@ -12,6 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'name', 'surname', 'username', 'password', 'email',
             'phone_number', 'country', 'city', 'address', 'postal_code', 'cif',
+            'dni',
             'is_verified', 'pricing_plan', 'owner_rating', 'renter_rating',
             'items', 'is_admin'
         ]
@@ -37,6 +38,15 @@ class UserSerializer(serializers.ModelSerializer):
                         {field: "Debe comenzar con una letra."})
             return data
 
+        def validate_dni(self, value):
+            """"Validar que el DNI sea valido"""
+            pattern = r'^[0-9]{8}[A-Za-z]$'
+            if not re.match(pattern, value):
+                serializers.ValidationError(
+                    "DNI no es valido. Debe tener 8 numeros y una letra"
+                )
+            return value
+
 
 class ReviewSerializer(serializers.ModelSerializer):
     reviewer_username = serializers.CharField(
@@ -52,7 +62,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'name', 'surname', 'username', 'email', 'password', 'cif'
+            'name', 'surname', 'username', 'email', 'password', 'cif', 'dni'
         ]
 
     def validate_username(self, value):
@@ -92,5 +102,21 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "El CIF no es válido. Debe comenzar con una"
                 "letra seguida de 7 dígitos y una letra o número final."
+            )
+        return value
+
+    def validate_dni(self, value):
+        """Validar que el DNI sea válido."""
+        if value is None:
+            return value
+        if value == "":
+            raise serializers.ValidationError("El DNI no puede estar vacío.")
+
+        # Validar que el DNI tenga el formato correcto (8 dígitos + 1 letra)
+        pattern = r'^\d{8}[A-Za-z]$'
+        if not re.match(pattern, value):
+            raise serializers.ValidationError(
+                "El DNI no es válido. Debe tener 8 dígitos seguidos de una"
+                "letra."
             )
         return value
