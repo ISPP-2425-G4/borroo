@@ -4113,6 +4113,58 @@
 
 ### **Fernández Mota, Francisco**
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="6">Trabajo</td>
+    <td>Gestión de tareas, organización y reparto</td>
+    <td>1 hora y 21 minutos</td>
+  </tr>
+  <tr>
+    <td>Logo en navbar y quitar carrito</td>
+    <td>22 minutos</td>
+  </tr>
+  <tr>
+    <td>Inicio de sesion con usuario o correo</td>
+    <td>33 minutos</td>
+  </tr>
+  <tr>
+    <td>Redirigir al guardar como borradores</td>
+    <td>8 minutos</td>
+  </tr>
+  <tr>
+    <td>Acceder a borradores sin estar loggeado</td>
+    <td>48 minutos</td>
+  </tr>
+  <tr>
+    <td>Frontend perfil de empresa</td>
+    <td>1 hora y 40 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="1">Píldoras teóricas</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td rowspan="2">Reuniones</td>
+    <td>Reunión 31/3/25</td>
+    <td> 2 horas y 2 minutos</td>
+  </tr>
+  <tr>
+    <td>Reunión 2/4/25</td>
+    <td>1 hora y 30 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="1">Clase</td>
+    <td>Clase 28/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
 ### **García Rodríguez, Javier**
 
 ### **González Ortiz, Miguel**
