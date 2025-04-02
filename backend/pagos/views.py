@@ -6,8 +6,10 @@ from django.views.decorators.csrf import csrf_exempt
 from rentas.models import Rent, PaymentStatus
 from usuarios.models import User
 import json
+import os
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+frontend_base_url = os.getenv("RECOVER_PASSWORD")
 
 
 @csrf_exempt
@@ -34,10 +36,10 @@ def create_rent_checkout(request):
                 }],
                 mode='payment',
                 success_url=(
-                    "http://localhost:5173/rental_requests?"
+                    f"{frontend_base_url}rental_requests?"
                     "session_id={CHECKOUT_SESSION_ID}"
                 ),
-                cancel_url="http://localhost:5173/rental_requests",
+                cancel_url=f"{frontend_base_url}rental_requests",
                 metadata={
                     'user_id': user.id,
                     'rent_id': rent.id
@@ -130,11 +132,11 @@ def create_subscription_checkout(request):
                 mode='payment',
                 success_url=(
                     (
-                        "http://localhost:5173/pricing-plan?"
+                        f"{frontend_base_url}pricing-plan?"
                         "session_id={CHECKOUT_SESSION_ID}"
                     )
                 ),
-                cancel_url="http://localhost:5173/pricing-plan",
+                cancel_url=f"{frontend_base_url}pricing-plan",
                 metadata={
                     'user_id': user.id
                 }

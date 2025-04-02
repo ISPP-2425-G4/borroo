@@ -113,7 +113,7 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
   useEffect(() => {
     const obtenerProductos = async () => {
       setCargando(true);
-      let nextUrl = `${import.meta.env.VITE_API_BASE_URL}/objetos/full`;
+      let nextUrl = `${import.meta.env.VITE_API_BASE_URL}/objetos/list_published_items`;
       let allResults = [];
   
       try {
