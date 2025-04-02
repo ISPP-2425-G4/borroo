@@ -76,6 +76,7 @@ def create_users():
         city='Madrid',
         address='Calle Admin',
         postal_code='28001',
+        dni='11223344Z',
         is_verified=True,
         pricing_plan='premium',
         is_admin=True
