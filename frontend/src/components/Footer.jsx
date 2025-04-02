@@ -21,10 +21,10 @@ const Footer = () => {
         <div className="footer-section">
           <h3>Legal</h3>
           <ul>
-            <li><a href="/privacy-policy" target="_blank" rel="noopener noreferrer">Política de Privacidad</a></li>
-            <li><a href="/terms-and-conditions" target="_blank" rel="noopener noreferrer">Términos de Servicio</a></li>
-            <li><a href="/sla" target="_blank" rel="noopener noreferrer">Acuerdo de Nivel de Servicio (SLA)</a></li>
-            <li><a href="/licenses" target="_blank" rel="noopener noreferrer">Información de Licencias</a></li>
+            <li><a href="/privacy-policy" >Política de Privacidad</a></li>
+            <li><a href="/terms-and-conditions" >Términos de Servicio</a></li>
+            <li><a href="/sla" >Acuerdo de Nivel de Servicio (SLA)</a></li>
+            <li><a href="/licenses" >Información de Licencias</a></li>
 
           </ul>
         </div>

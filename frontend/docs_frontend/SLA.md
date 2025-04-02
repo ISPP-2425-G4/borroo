@@ -1,3 +1,6 @@
+# Acuerdo de Nivel de Servicio
+**Última actualización:** *03/04/2025* 
+
 ## 1. Introducción
 Este Acuerdo de Nivel de Servicio (SLA) establece los términos y condiciones bajo los cuales **Borroo** ofrece su plataforma de alquiler de productos. El objetivo es garantizar la calidad, disponibilidad y soporte del servicio a sus usuarios.
 

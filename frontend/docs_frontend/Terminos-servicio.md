@@ -1,4 +1,5 @@
 # Términos y Condiciones de Uso de BORROO
+**Última actualización:** *03/04/2025* 
 
 ## 1. Aceptación de los Términos  
 Al acceder y utilizar la aplicación web **BORROO** (en adelante, "la Aplicación"), propiedad del **G4 de ISPP-2024/2025**, usted acepta cumplir con estos Términos y Condiciones de Uso. Si no está de acuerdo con alguna parte de estos Términos, no debe utilizar la Aplicación.  

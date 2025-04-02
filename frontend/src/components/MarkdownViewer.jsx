@@ -5,7 +5,7 @@ import { Box, Typography, Paper } from "@mui/material";
 import Navbar from "../Navbar";
 import PropTypes from "prop-types";
 
-const MarkdownViewer = ({ title, filePath }) => {
+const MarkdownViewer = ({ filePath }) => {
   const [contenido, setContenido] = useState("");
 
   useEffect(() => {
@@ -19,9 +19,6 @@ const MarkdownViewer = ({ title, filePath }) => {
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mt: 10, p: 2 }}>
       <Navbar />
       <Box sx={{ width: "100%", maxWidth: "1100px", margin: "0 auto" }}>
-        <Typography variant="h4" align="center" gutterBottom sx={{ fontWeight: "bold", color: "#333" }}>
-          {title}
-        </Typography>
         <Paper
           elevation={6}
           sx={{
@@ -42,7 +39,6 @@ const MarkdownViewer = ({ title, filePath }) => {
   );
 };
 MarkdownViewer.propTypes = {
-  title: PropTypes.string.isRequired,
   filePath: PropTypes.string.isRequired,
 };
 

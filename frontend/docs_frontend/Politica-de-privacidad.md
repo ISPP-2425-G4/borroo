@@ -1,3 +1,6 @@
+# Política de privacidad de Borroo
+**Última actualización:** *03/04/2025* 
+
 ## **1. Introducción**  
 
 El presente documento tiene como finalidad establecer los principios fundamentales y las medidas adoptadas por Borroo en materia de protección de datos personales, en conformidad con:  

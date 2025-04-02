@@ -1,3 +1,6 @@
+# Información de Licencias
+**Última actualización:** *03/04/2025* 
+
 ## 1. Introducción
 Este documento describe las herramientas utilizadas en el desarrollo de nuestro proyecto software con un enfoque en sus licencias, restricciones y posibles implicaciones legales.
 
