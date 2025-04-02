@@ -745,6 +745,10 @@ const toggleLike = async (productoId) => {
                       </MenuItem>
                     ))}
                   </Select>
+                  {categoria &&
+                <Typography variant="subtitle2" sx={{ mt: 2,mb: 1, fontWeight: 600 }}>
+                  Subcategoría
+                </Typography>}
                   {categoria === "Tecnología" && (
                   <Select
                     value={subcategoria}
