@@ -54,18 +54,29 @@ class UserViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             # Guardamos el usuario con la contraseña encriptada
             user = serializer.save()
-
+            # Generamos el token para verificar el email
+            user.verify_token = str(uuid.uuid4())
+            user.save()
             cif = serializer.validated_data.get("cif")
             if cif is not None:
                 user.is_verified = True
                 user.save()
 
             # Generamos los tokens
-            refresh = RefreshToken.for_user(user)
+            frontend_base_url = os.getenv("RECOVER_PASSWORD")
+            frontend_url = f"{frontend_base_url}verifyEmail"
+            verify_link = f"{frontend_url}?token={user.verify_token}"
+            send_mail(
+                "Verificación de correo",
+                f"Hola {user.name},"
+                f"Haz clic en el siguiente enlace para verificar tu correo: "
+                f"{verify_link}",
+                "no-reply@tuapp.com",
+                [user.email],
+                fail_silently=False,)
+
             return Response({
                 "user": UserSerializer(user).data,
-                "refresh": str(refresh),
-                "access": str(refresh.access_token),
             }, status=status.HTTP_201_CREATED)
 
         return Response({
@@ -94,6 +105,11 @@ class UserViewSet(viewsets.ModelViewSet):
         if not check_password(password, user.password):
             return Response({"error": "Credenciales incorrectas"},
                             status=status.HTTP_401_UNAUTHORIZED)
+
+        # Comprobar si la contraseña es correcta
+        if not user.verified_account:
+            return Response({"error": "Verifica tu correo"},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         # Generar tokens JWT
         refresh = RefreshToken.for_user(user)
@@ -287,6 +303,27 @@ class PasswordResetConfirmView(APIView):
         user.save()
 
         return Response({"message": "Contraseña actualizada correctamente"},
+                        status=status.HTTP_200_OK)
+
+
+class VerifyEmailView(APIView):
+    """Vista para confirmar el cambio de contraseña."""
+
+    def post(self, request, token):
+        user = User.objects.filter(verify_token=token).first()
+
+        if not user:
+            return Response({"error": "Token inválido"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        if user.verified_account is True:
+            return Response({"error": "Usuario ya verificado"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        user.verified_account = True
+        user.save()
+
+        return Response({"message": "Usuario Verificado correctamente"},
                         status=status.HTTP_200_OK)
 
 
