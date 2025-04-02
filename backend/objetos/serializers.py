@@ -59,7 +59,7 @@ class ItemSerializer(serializers.ModelSerializer):
             return round(
                 sum(review.rating for review in reviews) / reviews.count(), 2)
         return 0.0
-      
+
     def get_user_location(self, obj):
         return obj.user.city
 
