@@ -99,30 +99,33 @@ const RentRequestBoard = () => {
           }
       
           const response = await axios.put(
-            `${import.meta.env.VITE_API_BASE_URL}/rentas/full/${renta.id}/respond_request/`,
-            {
-              response: responseType,
-              rent: renta.id,
-              user_id: user.id
-            }
-          );
-          console.log(response.data);
-      
-          setOpenModal(false);
-      
-          if (responseType === "accepted") {
-            window.location.reload(); // 🔄 Solo recarga si fue aceptada
-          } else {
-            // Si fue rechazada, solo actualiza el estado local
-            setReceivedRequests((prevRequests) =>
-              prevRequests.filter((request) => request.id !== renta.id)
-            );
-          }
-      
-        } catch (error) {
-          console.error(`Error al procesar la solicitud:`, error.response?.data || error.message);
-        }
-      };
+      `${import.meta.env.VITE_API_BASE_URL}/rentas/full/${renta.id}/respond_request/`,
+      {
+        response: responseType,
+        rent: renta.id,
+        user_id: user.id
+      }
+    );
+
+    console.log(response.data);
+    setOpenModal(false);
+
+    if (responseType === "accepted") {
+      window.location.reload(); // Solo recarga si fue aceptada
+    } else {
+      // Si fue rechazada, actualiza estado local
+      setReceivedRequests((prevRequests) =>
+        prevRequests.map((request) =>
+          request.id === renta.id
+            ? { ...request, rent_status: responseType, payment_status: "pending" }
+            : request
+        )
+      );
+    }
+  } catch (error) {
+    console.error("Error al procesar la solicitud:", error.response?.data || error.message);
+  }
+};
 
     const openConfirmModal = (renta, responseType) => {
         setSelectedRequest(renta);
@@ -235,7 +238,10 @@ const RentRequestBoard = () => {
                             {receivedRequests.length === 0 ? (
                                 <Typography>No has recibido solicitudes de alquiler.</Typography>
                             ) : (
-                                <RequestCardsContainer requests={receivedRequests} openConfirmModal={openConfirmModal} />
+                                <RequestCardsContainer 
+                                requests={receivedRequests} 
+                                openConfirmModal={openConfirmModal} 
+                                isOwner={true}/>
                             )}
                         </>
                     )}

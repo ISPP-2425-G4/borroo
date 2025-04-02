@@ -53,7 +53,7 @@ const LinkText = styled(Typography)(({ theme }) => ({
 }));
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -62,8 +62,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsFormValid(username.trim() !== "" && password.trim() !== "");
-  }, [username, password]);
+    setIsFormValid(usernameOrEmail.trim() !== "" && password.trim() !== "");
+  }, [usernameOrEmail, password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,7 +73,7 @@ const Login = () => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/usuarios/login/`,
-        { username, password },
+        { usernameOrEmail, password },
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
@@ -118,10 +118,10 @@ const Login = () => {
             <StyledTextField
               variant="outlined"
               fullWidth
-              label="Usuario"
+              label="Usuario o Correo Electrónico"
               required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={usernameOrEmail}
+              onChange={(e) => setUsernameOrEmail(e.target.value)}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
