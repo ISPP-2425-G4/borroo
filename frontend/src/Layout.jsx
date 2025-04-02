@@ -182,7 +182,10 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
       );
     });
     setProductosFiltrados(filtrados);
-    setCurrentPage(1);
+
+    if (categoria || subcategoria || terminoBusqueda || mostrarSoloLiked) {
+      setCurrentPage(1);
+    }
   }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda, mostrarSoloLiked]);
 
 
@@ -275,6 +278,9 @@ const toggleLike = async (productoId) => {
             : producto
         )
       );
+
+      setCurrentPage((prevPage) => prevPage);
+
     } catch (error) {
       console.error("Error al cambiar el estado de like:", error);
     }
@@ -995,7 +1001,10 @@ const toggleLike = async (productoId) => {
                     <Chip
                       label={`Categoría: ${categoria}`}
                       size="small"
-                      onDelete={() => setCategoria("")}
+                      onDelete={() => {
+                        setCategoria("");
+                        setSubcategoria("");
+                      }}
                       sx={{ borderRadius: 1 }}
                     />
                   )}
