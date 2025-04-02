@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import Navbar from "./Navbar";
 import { Box, Button, Card, CardContent, Typography, Skeleton, Tab, Tabs } from "@mui/material";
-import Modal from "./Modal";
 import { useNavigate } from 'react-router-dom';
 import RequestCardsContainer from "./components/RequestCardsContainer";
+import ConfirmModal from "./components/ConfirmModal";
 
 const DEFAULT_IMAGE = "../public/default_image.png";
 
@@ -253,7 +253,7 @@ const RentRequestBoard = () => {
             )}
 
             {openModal && (
-                <Modal
+                <ConfirmModal
                     title="Confirmar solicitud"
                     message={`¿Estás seguro de que quieres ${responseType === "accepted" ? "aceptar" : "rechazar"} esta solicitud?`}
                     onCancel={closeModal}

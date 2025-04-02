@@ -33,8 +33,9 @@ import {
   ChevronRight as ChevronRightIcon 
 } from '@mui/icons-material';
 import Navbar from "./Navbar";
-import Modal from "./Modal";
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
+import SuccessModal from "./components/SuccessModal";
+import ConfirmModal from "./components/ConfirmModal";
 
 const ShowItemScreen = () => {
   const { id } = useParams();
@@ -848,7 +849,7 @@ const ShowItemScreen = () => {
           </Paper>
 
           {showRentalModal && (
-          <Modal
+          <ConfirmModal
           title="Confirmar Solicitud"
           message={`¿Quieres solicitar el objeto "${item.title}" del ${dateRange[0].startDate.toLocaleDateString()} al ${dateRange[0].endDate.toLocaleDateString()}?`}
           onCancel={() => setShowRentalModal(false)}
@@ -856,10 +857,13 @@ const ShowItemScreen = () => {
           />
           )}
           {showRequestPopup && (
-            <Modal
+            <SuccessModal
               title="Solicitud enviada"
-              message="Tu solicitud ha sido enviada correctamente. Puedes verla en la sección 'Mis solicitudes'."
-              onConfirm={() => setShowRequestPopup(false)} 
+              message="Tu solicitud ha sido enviada correctamente. Puedes verla en la sección 'Mis solicitudes' en el apartado de 'Solicitudes Enviadas'."
+              primaryLabel="Ir a Mis Solicitudes"
+              onPrimaryAction={() => navigate("/rental_requests")}
+              secondaryLabel="Volver al Menú Principal"
+              onSecondaryAction={() => navigate("/")}
             />
           )}
           </Container>
