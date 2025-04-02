@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Item, ItemImage, ItemRequest, UnavailablePeriod
+from usuarios.models import Review
 from utils.utils import upload_image_to_imgbb
 
 
@@ -36,6 +37,8 @@ class ItemSerializer(serializers.ModelSerializer):
     )
     unavailable_periods = UnavailablePeriodSerializer(
         many=True, required=False)
+    user_rating = serializers.SerializerMethodField()
+    user_location = serializers.SerializerMethodField()
 
     class Meta:
         model = Item
@@ -45,9 +48,20 @@ class ItemSerializer(serializers.ModelSerializer):
             'cancel_type_display', 'price_category',
             'price_category_display', 'price', 'images',
             'image_files', 'remaining_image_ids', 'user',
-            'draft_mode', 'unavailable_periods', 'featured'
+            'draft_mode', 'unavailable_periods', 'featured',
+            'user_rating', 'user_location'
         ]
         read_only_fields = ['user']
+
+    def get_user_rating(self, obj):
+        reviews = Review.objects.filter(reviewed_user=obj.user)
+        if reviews.exists():
+            return round(
+                sum(review.rating for review in reviews) / reviews.count(), 2)
+        return 0.0
+
+    def get_user_location(self, obj):
+        return obj.user.city
 
     def validate(self, data):
         """
