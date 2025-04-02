@@ -63,7 +63,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Pablo Espinosa Naranjo      |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
 | Jesús Fernández Rodríguez   |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
 | Francisco Fernández Mota    |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Javier García Rodríguez     |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
+| Javier García Rodríguez     |:blush:|:neutral_face:|:neutral_face:|:blush:|:neutral_face:|:worried:|         |         |         |         |         |         |         |          |
 | Miguel González Ortiz       |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
 | Álvaro Martín Muñoz         |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
 | Ignacio Naredo Bernardos    |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
