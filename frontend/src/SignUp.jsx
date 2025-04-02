@@ -183,6 +183,11 @@ const Signup = () => {
       if (isCompany) {
         requiredFields.push("cif");
       }
+
+      if (!/^[A-HJ-NP-SUVW]\d{7}[0-9A-J]$/.test(formData.cif) && isCompany) {
+        errors.cif = "El NIF no es válido. Debe comenzar con una letra seguida de 7 dígitos y una letra o número final.";
+      }
+
     } catch (error) {
       console.error("Error verificando el nombre de usuario:", error);
       setError("Error verificando el nombre de usuario");
