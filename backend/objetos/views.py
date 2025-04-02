@@ -432,21 +432,6 @@ class ListItemRequestsView(APIView):
                         status=status.HTTP_200_OK)
 
 
-class ListLikedItems(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, *args, **kwargs):
-        user = request.user
-
-        liked_items_ids = LikedItem.objects.filter(user=user).values_list(
-                                                        "item_id", flat=True)
-        liked_items = Item.objects.filter(id__in=liked_items_ids)
-
-        serializer = ItemSerializer(liked_items, many=True)
-        return Response({'results': serializer.data},
-                        status=status.HTTP_200_OK)
-
-
 class ToggleLike(APIView):
     permission_classes = [IsAuthenticated]
 

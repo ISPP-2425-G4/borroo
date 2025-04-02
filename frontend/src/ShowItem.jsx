@@ -578,8 +578,8 @@ const ShowItemScreen = () => {
                 <Typography 
                   variant="body2"
                   sx={{
-                    marginTop: 1,
-                    color: 'text.secondary',
+                    marginTop: 2,
+                    color: '#2563eb',
                     fontWeight: 'bold',
                     fontSize: '1rem',
                     display: 'flex',

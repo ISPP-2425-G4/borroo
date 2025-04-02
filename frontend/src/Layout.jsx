@@ -16,7 +16,9 @@ import {
   Divider,
   Button,
   FormControl,
-  alpha
+  alpha,
+  FormControlLabel,
+  Switch
 } from "@mui/material";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
@@ -55,6 +57,8 @@ const Layout = () => {
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [cargando, setCargando] = useState(true);
   const [featuredItems, setFeaturedItems] = useState([]);
+  const [mostrarSoloLiked, setMostrarSoloLiked] = useState(false);
+
 
 
   const manejarCambioBusqueda = (e) => setTerminoBusqueda(e.target.value);
@@ -84,7 +88,9 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
   const reiniciarFiltros = () => {
     setTerminoBusqueda("");
     setCategoria("");
-    setRangoPrecio([0, 100]);
+    setSubcategoria("");
+    setRangoPrecio([0, 99999]);
+    setMostrarSoloLiked(false);
   };
 
   const truncarDescripcion = useCallback((descripcion, longitud = 100) => {
@@ -164,18 +170,25 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
   }, [obtenerUrlImagen]);
 
   useEffect(() => {
-    const filtrados = productos.filter((producto) => (
-      (categoria === "" || producto.category_display === categoria) &&
-      (subcategoria === "" || producto.subcategory_display === subcategoria) &&
-      (producto.price >= rangoPrecio[0] && producto.price <= rangoPrecio[1]) &&
-      (terminoBusqueda === "" || producto.title.toLowerCase().includes(terminoBusqueda.toLowerCase()))
-    ));
+    const filtrados = productos.filter((producto) => {
+      const esLiked = mostrarSoloLiked ? producto.isLiked : true;
+  
+      return (
+        esLiked &&
+        (categoria === "" || producto.category_display === categoria) &&
+        (subcategoria === "" || producto.subcategory_display === subcategoria) &&
+        (producto.price >= rangoPrecio[0] && producto.price <= rangoPrecio[1]) &&
+        (terminoBusqueda === "" || producto.title.toLowerCase().includes(terminoBusqueda.toLowerCase()))
+      );
+    });
     setProductosFiltrados(filtrados);
-  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda]);
+    setCurrentPage(1);
+  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda, mostrarSoloLiked]);
+
 
   const hayFiltrosActivos = useMemo(() => 
-    terminoBusqueda !== "" || categoria !== "" || subcategoria !== "" || rangoPrecio[0] > 0 || rangoPrecio[1] < 100,
-  [terminoBusqueda, categoria, subcategoria, rangoPrecio]);
+    terminoBusqueda !== "" || categoria !== "" || subcategoria !== "" || rangoPrecio[0] > 0 || rangoPrecio[1] < 99999 || mostrarSoloLiked, 
+  [terminoBusqueda, categoria, subcategoria, rangoPrecio, mostrarSoloLiked]);
 
   const obtenerDetallesCategoria = (nombreCategoria) => {
     return CATEGORIAS[nombreCategoria] || { icono: "•", color: "#607d8b" };
@@ -244,7 +257,21 @@ const toggleLike = async (productoId) => {
       setProductos((prevProductos) =>
         prevProductos.map((producto) =>
           producto.id === productoId
-            ? { ...producto, isLiked: !producto.isLiked }  // Actualiza el estado de like del producto
+            ? { ...producto, 
+              isLiked: !producto.isLiked,
+              num_likes: producto.isLiked ? producto.num_likes - 1 : producto.num_likes + 1 
+            }
+            : producto
+        )
+      );
+
+      setFeaturedItems((prevProductos) =>
+        prevProductos.map((producto) =>
+          producto.id === productoId
+            ? { ...producto,
+              isLiked: !producto.isLiked,
+              num_likes: producto.isLiked ? producto.num_likes - 1 : producto.num_likes + 1 
+            }  
             : producto
         )
       );
@@ -517,6 +544,12 @@ const toggleLike = async (productoId) => {
                                       {truncarDescripcion(producto.description, 80)}
                                     </Typography>
                                   </Tooltip>
+                                  <Box display="flex" alignItems="center" gap={0.5}>
+                                    <FavoriteIcon fontSize="small" sx={{ color: 'red' }} />
+                                    <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                                      {producto.num_likes}
+                                    </Typography>
+                                  </Box>
                                 </CardContent>
                               </Card>
                             </Link>
@@ -910,6 +943,25 @@ const toggleLike = async (productoId) => {
                   />
 
                 </Box>
+                {accessToken &&
+                <Box sx={{ mt: 2 }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                    Favoritos
+                  </Typography>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={mostrarSoloLiked} 
+                        onChange={() => setMostrarSoloLiked(!mostrarSoloLiked)}
+                        name="mostrarSoloLiked"
+                        color="primary"
+                      />
+                    }
+                    label="Favoritos ❤️"
+                    labelPlacement="start"
+                  />
+                </Box>
+                }
               </Box>
             </Paper>
 
@@ -947,12 +999,29 @@ const toggleLike = async (productoId) => {
                       sx={{ borderRadius: 1 }}
                     />
                   )}
+                  {subcategoria && (
+                    <Chip
+                      label={`Subcategoría: ${subcategoria}`}
+                      size="small"
+                      onDelete={() => setSubcategoria("")}
+                      sx={{ borderRadius: 1 }}
+                    />
+                  )}
                   
-                  {(rangoPrecio[0] > 0 || rangoPrecio[1] < 100) && (
+                  {(rangoPrecio[0] > 0 || rangoPrecio[1] < 99999) && (
                     <Chip
                       label={`Precio: ${rangoPrecio[0]}€ - ${rangoPrecio[1]}€`}
                       size="small"
-                      onDelete={() => setRangoPrecio([0, 100])}
+                      onDelete={() => setRangoPrecio([0, 99999])}
+                      sx={{ borderRadius: 1 }}
+                    />
+                  )}
+  
+                  {mostrarSoloLiked && (
+                    <Chip
+                      label="Tus favoritos"
+                      size="small"
+                      onDelete={() => setMostrarSoloLiked(false)}
                       sx={{ borderRadius: 1 }}
                     />
                   )}
@@ -1240,6 +1309,12 @@ const toggleLike = async (productoId) => {
                                       {truncarDescripcion(producto.description, 80)}
                                     </Typography>
                                   </Tooltip>
+                                  <Box display="flex" alignItems="center" gap={0.5}>
+                                    <FavoriteIcon fontSize="small" sx={{ color: 'red' }} />
+                                    <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                                      {producto.num_likes}
+                                    </Typography>
+                                  </Box>
                                 </CardContent>
                               </Card>
                             </Link>

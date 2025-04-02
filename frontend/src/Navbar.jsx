@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiUser, FiHeart, FiShoppingCart, FiMenu } from "react-icons/fi";
+import { FiUser, FiShoppingCart, FiMenu } from "react-icons/fi";
 import ArticleIcon from '@mui/icons-material/Article';
 import {
   AppBar,
@@ -59,6 +59,7 @@ const Navbar = () => {
       setUser(null);
       handleLoginClose();
       navigate('/');
+      window.location.reload();
     }
   };
 
@@ -217,14 +218,6 @@ const Navbar = () => {
                 </>
               )}
             </Menu>
-
-            <Tooltip title="Favoritos" onClick={() => { navigate('/list_liked_items'); }}>
-              <IconButton color="inherit">
-                <Badge badgeContent={0} color="error">
-                  <FiHeart />
-                </Badge>
-              </IconButton>
-            </Tooltip>
 
             <Tooltip title="Borradores">
               <IconButton color="inherit" component={Link} to="/drafts">
