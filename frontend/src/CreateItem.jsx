@@ -92,8 +92,11 @@ const StyledSelect = styled("select")(({  error }) => ({
 
 const SelectArrow = styled(Box)(() => ({
   position: "absolute",
-  right: "12px",
-  pointerEvents: "none",
+  right: "15px", // Ajusta la posición de la flecha
+  top: "50%",
+  transform: "translateY(-50%)", // Centra verticalmente la flecha
+  pointerEvents: "none", // Evita que la flecha bloquee clics
+  fontSize: "1rem",
   color: "#666",
 }));
 
@@ -574,7 +577,11 @@ const CreateItemScreen = () => {
       if (response.status === 201) {
         setSubmitSuccess(true);
         setTimeout(() => {
+          if (isDraft) {
+            navigate("/drafts");
+          } else {
           navigate("/");
+          }
         }, 2000);
       } else {
         throw new Error("Error al crear el Item.");

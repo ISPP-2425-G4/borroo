@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import CreateItemView, CreateRentView, CreateUserView, UserListView
-from .views import ListItemsView, RentListView
+from .views import ListItemsView, RentListView, UpdateUserPerfilView
 from .views import PasswordResetRequestView, PasswordResetConfirmView
 from .views import ReviewCreateView, ReviewDeleteView, ReviewListView
 from .views import DeleteUserView, GetUserView, UpdateItemView
@@ -57,6 +57,7 @@ urlpatterns = [
          name='delete-rent'),
     path('adminCustome/items/', ListItemsView.as_view(), name='list-items'),
     path('adminCustome/rent/list/', RentListView.as_view(), name='rent-list'),
+    path('update/', UpdateUserPerfilView.as_view(), name='update-user'),
 
 
 ]

@@ -1,4 +1,5 @@
 # flake8: noqa
+import string
 import django
 import os
 
@@ -30,24 +31,39 @@ def clear_database():
 
 
 def create_users():
+    # Lista de DNIs escritos manualmente
+    dnis = [
+        "12345671A",
+        "23456782B",
+        "34567893C",
+        "45678904D",
+        "56789015E"
+    ]
+    
+    # Lista de usernames
     usernames = ['User1', 'User2', 'User3', 'User4', 'User5']
-    for username in usernames:
+    
+    for i in range(5):
         User.objects.create(
-            username=username,
-            name=f'{username} Name',
-            surname=f'{username} Surname',
-            email=f'{username.lower()}@example.com',
+            username=usernames[i],
+            name=f'{usernames[i]} Name',
+            surname=f'{usernames[i]} Surname',
+            email=f'{usernames[i].lower()}@example.com',
             password=make_password('Borroo_25'),
-            phone_number=f'+123456789{usernames.index(username)}',
+            phone_number=f'+123456789{i}',
             country='España',
             city='Madrid',
-            address=f'Calle {usernames.index(username)}',
+            address=f'Calle {i}',
             postal_code='28001',
+            dni=dnis[i],  # Asigna el DNI directamente de la lista
             is_verified=bool(random.getrandbits(1)),
             pricing_plan=random.choice(['free', 'premium']),
             is_admin=False
         )
+    
     print('Users created successfully!')
+
+
 
     superuser = User.objects.create(
         username='admin',

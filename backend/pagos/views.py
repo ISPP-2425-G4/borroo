@@ -1,3 +1,4 @@
+from decimal import Decimal
 import stripe
 from django.conf import settings
 from django.http import JsonResponse
@@ -66,21 +67,38 @@ def confirm_rent_checkout(request, session_id):
 
             if rent_id and user_id:
                 try:
-                    rent = Rent.objects.get(id=rent_id)
-                    rent.payment_status = PaymentStatus.PAID
-                    rent.save()
+                    renta = Rent.objects.get(id=rent_id)
+                    owner = renta.item.user  # Obtener el propietario del item
+                    total_price = Decimal(str(renta.total_price))
+                    commission = Decimal(str(renta.commission))
+
+                    # Actualizar saldo del owner
+                    owner.saldo += (total_price - commission)
+                    owner.save()
+
+                    # Marcar la renta como pagada
+                    renta.payment_status = PaymentStatus.PAID
+                    renta.save()
 
                     return JsonResponse({
                         'status': 'success',
-                        'rent_id': rent.id,
+                        'rent_id': renta.id,
                         'user_id': user_id
                     })
                 except Rent.DoesNotExist:
                     return JsonResponse({'error': 'Alquiler no encontrado'},
                                         status=404)
+                except User.DoesNotExist:
+                    return JsonResponse({'error': 'Usuario no encontrado'},
+                                        status=404)
+                except Exception as e:
+                    return JsonResponse({
+                        'error': f'Error al actualizar saldos: {str(e)}'},
+                        status=400)
             else:
                 return JsonResponse({
-                    'error': 'rent_id no encontrado en metadatos'}, status=400)
+                    'error': 'rent_id o user_id no encontrado en metadatos'},
+                    status=400)
         else:
             return JsonResponse({'status': 'unpaid'}, status=402)
 
