@@ -63,6 +63,7 @@ const ShowItemScreen = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [highlighting, setHighlighting] = useState(false);
+  const [showRequestPopup, setShowRequestPopup] = useState(false);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -330,8 +331,8 @@ const ShowItemScreen = () => {
       );
   
       if (response.status === 201) {
-        alert("Solicitud de alquiler enviada correctamente");
         setShowRentalModal(false);
+        setShowRequestPopup(true);
       } else {
         alert("Hubo un problema con la solicitud");
       }
@@ -853,6 +854,13 @@ const ShowItemScreen = () => {
           onCancel={() => setShowRentalModal(false)}
           onConfirm={handleRentalRequest}
           />
+          )}
+          {showRequestPopup && (
+            <Modal
+              title="Solicitud enviada"
+              message="Tu solicitud ha sido enviada correctamente. Puedes verla en la sección 'Mis solicitudes'."
+              onConfirm={() => setShowRequestPopup(false)} 
+            />
           )}
           </Container>
           </Box>
