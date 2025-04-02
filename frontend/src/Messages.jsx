@@ -16,7 +16,6 @@ const Messages = () => {
             try {
                 const user = JSON.parse(localStorage.getItem("user"));
                 if (!user || !user.id) {
-                    alert("Debes iniciar sesión.");
                     navigate("/login");
                     return;
                 }

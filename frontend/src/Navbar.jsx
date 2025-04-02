@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiUser, FiHeart, FiMenu } from "react-icons/fi";
+import { FiUser, FiHeart, FiMenu, FiMessageSquare } from "react-icons/fi";
 import ArticleIcon from '@mui/icons-material/Article';
 import {
   AppBar,
@@ -253,6 +253,14 @@ const Navbar = () => {
               <IconButton color="inherit">
                 <Badge badgeContent={0} color="error">
                   <FiHeart />
+                </Badge>
+              </IconButton>
+            </Tooltip>
+
+            <Tooltip title="Mensajes">
+              <IconButton color="inherit" component={Link} to="/messages">
+                <Badge badgeContent={0} color="error" >
+                  <FiMessageSquare />
                 </Badge>
               </IconButton>
             </Tooltip>
