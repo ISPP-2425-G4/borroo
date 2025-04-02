@@ -54,6 +54,7 @@ def create_users():
             country='España',
             city='Madrid',
             address=f'Calle {i}',
+            verified_account=True,
             postal_code='28001',
             dni=dnis[i],  # Asigna el DNI directamente de la lista
             is_verified=bool(random.getrandbits(1)),
