@@ -141,7 +141,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                         >
                             {request.item.title}
                         </a>
-                        {!isOwner && (
+                        {(
                             <Chip
                                 label={statusTranslations[request.rent_status] || request.rent_status} // Si no hay traducción, se muestra el estado tal cual
                                 size="small"
@@ -214,7 +214,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                     </Typography>
                     <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
                         {/* Si el estatus es 'aceptado' y el pago está pendiente, mostramos el botón de pago */}
-                        {request.rent_status === "accepted" && request.payment_status === "pending" && (
+                        {!isOwner && request.rent_status === "accepted" && request.payment_status === "pending" && (
                             <Button
                                 variant="contained"
                                 color="primary"

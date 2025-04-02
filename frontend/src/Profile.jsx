@@ -42,6 +42,7 @@ const Profile = () => {
   const [userReview, setUserReview] = useState(null);
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const [editMode, setEditMode] = useState(false);
+  const [draftItems, setDraftItems] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -52,6 +53,7 @@ const Profile = () => {
     address: "",
     postal_code: "",
     pricing_plan: "free",
+    dni: "",
   });
 
 
@@ -66,12 +68,25 @@ const Profile = () => {
         );
         setUser(response.data.user);
         setItems(response.data.objects);
+        await fetchDraftItems(response.data.user.id);
       } catch (error) {
         console.error("Error cargando el perfil:", error);
       } finally {
         setLoading(false);
       }
     };
+
+    const fetchDraftItems = async (userId) => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/objetos/list_draft_items/${userId}/`
+        );
+        setDraftItems(response.data.results);
+      } catch (error) {
+        console.error("Error cargando borradores:", error);
+      }
+    };
+
 
     const fetchReviews = async () => {
       if (currentUser.username === username) return;
@@ -113,10 +128,16 @@ const Profile = () => {
         address: user.address || "",
         postal_code: user.postal_code || "",
         pricing_plan: user.pricing_plan || "free",
+        dni: user.dni || "",
       });
     }
   }, [user]);
 
+  const validateDni = (dni) => {
+    const dniPattern = /^\d{8}[A-Z]$/;
+    const nifPattern = /^[A-Z]\d{7}[A-Z0-9]$/;
+    return dniPattern.test(dni) || nifPattern.test(dni);
+  };
 
   const handleReviewSubmit = async () => {
     if (!rating) {
@@ -218,6 +239,48 @@ const Profile = () => {
       return;
     }
 
+    const previousDni = user.dni;
+
+    if (formData.dni && !validateDni(formData.dni)) {
+      alert("El DNI/NIF no tiene un formato válido.");
+
+      setFormData((prev) => ({ ...prev, dni: previousDni }));
+      return;
+    }
+
+    try {
+      const response = await axios.put(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/update/`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      alert("Perfil actualizado correctamente.");
+      setUser(response.data.user);
+      setEditMode(false);
+    } catch (error) {
+      console.error("Error actualizando el perfil:", error?.response || error);
+      alert("No se pudo actualizar el perfil.");
+    }
+  };
+
+
+  const handleUpdateUserByAdmin = async () => {
+    const token = localStorage.getItem("access_token");
+    const previousDni = user.dni;
+
+    if (!token) return alert("No tienes una sesión activa. Inicia sesión nuevamente.");
+
+    if (formData.dni && !validateDni(formData.dni)) {
+      alert("El DNI/NIF no tiene un formato válido.");
+      setFormData((prev) => ({ ...prev, dni: previousDni }));
+      return;
+    }
+
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/users/update/${user.id}/`,
@@ -238,7 +301,6 @@ const Profile = () => {
     }
   };
 
-
   if (loading) return <Typography align="center">Cargando perfil...</Typography>;
   if (!user) return <Typography color="error">No se encontró el perfil.</Typography>;
 
@@ -252,12 +314,91 @@ const Profile = () => {
             <Avatar sx={{ width: 100, height: 100, mb: 2 }}>
               <PersonIcon sx={{ fontSize: 60 }} />
             </Avatar>
+
             <Typography variant="h4" fontWeight="bold">
               {user.name} {user.surname}
             </Typography>
+
             <Typography variant="body1" color="textSecondary">
               @{user.username}
             </Typography>
+
+            {currentUser.username === user.username && (
+              <>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  size="small"
+                  onClick={() => setEditMode(!editMode)}
+                  sx={{ mt: 1, textTransform: "none" }}
+                >
+                  {editMode ? "Cancelar edición" : "Editar perfil"}
+                </Button>
+
+                {editMode && (
+                  <Paper elevation={2} sx={{ mt: 3, p: 3, width: "100%", maxWidth: 600 }}>
+                    <Typography variant="h6" gutterBottom>
+                      Editar mi información
+                    </Typography>
+
+                    <Grid container spacing={2}>
+                      {[
+                        { name: "name", label: "Nombre" },
+                        { name: "surname", label: "Apellidos" },
+                        { name: "email", label: "Email" },
+                        { name: "phone_number", label: "Teléfono" },
+                        { name: "city", label: "Ciudad" },
+                        { name: "country", label: "País" },
+                        { name: "address", label: "Dirección" },
+                        { name: "postal_code", label: "Código Postal" },
+                      ].map((field) => (
+                        <Grid item xs={12} sm={6} key={field.name}>
+                          <TextField
+                            fullWidth
+                            label={field.label}
+                            name={field.name}
+                            value={formData[field.name]}
+                            onChange={handleInputChange}
+                          />
+                        </Grid>
+                      ))}
+
+                      {/* Campo DNI / NIF */}
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          fullWidth
+                          label="DNI / NIF"
+                          name="dni"
+                          value={formData.dni}
+                          onChange={handleInputChange}
+                        />
+                      </Grid>
+
+                      {/* Plan de suscripción */}
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          select
+                          label="Plan de Suscripción"
+                          name="pricing_plan"
+                          value={formData.pricing_plan}
+                          onChange={handleInputChange}
+                          fullWidth
+                        >
+                          <MenuItem value="free">🟢 Gratis</MenuItem>
+                          <MenuItem value="premium">🌟 Premium</MenuItem>
+                        </TextField>
+                      </Grid>
+                    </Grid>
+
+                    <Box sx={{ textAlign: "right", mt: 2 }}>
+                      <Button variant="contained" onClick={handleUpdateUser}>
+                        Guardar cambios
+                      </Button>
+                    </Box>
+                  </Paper>
+                )}
+              </>
+            )}
           </Box>
 
           <Divider sx={{ my: 3 }} />
@@ -281,6 +422,9 @@ const Profile = () => {
             <Typography sx={{ fontSize: "1.1rem", mb: 1 }}>
               <PhoneIcon sx={{ verticalAlign: "middle", fontSize: 24 }} />{" "}
               <strong>Teléfono:</strong> {user.phone_number}
+            </Typography>
+            <Typography sx={{ fontSize: "1.1rem", mb: 1 }}>
+              <strong>DNI / NIF:</strong> {user.dni || "No disponible"}
             </Typography>
 
             <Typography variant="h5" fontWeight="bold" sx={{ mt: 3, mb: 1 }}>
@@ -319,6 +463,7 @@ const Profile = () => {
                 </>
               )}
             </Typography>
+
           </Box>
 
 
@@ -363,6 +508,51 @@ const Profile = () => {
           ) : (
             <Typography variant="body2" color="textSecondary">
               Este usuario aún no ha publicado productos.
+            </Typography>
+          )}
+
+          <Divider sx={{ my: 3 }} />
+
+          <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
+            Artículos en borrador de {user.name}
+          </Typography>
+
+          {draftItems.length > 0 ? (
+            <Grid container spacing={3} justifyContent="center">
+              {draftItems.map((item) => (
+                <Grid item xs={12} sm={6} md={4} key={item.id}>
+                  <Link to={`/show-item/${item.id}`} style={{ textDecoration: "none" }}>
+                    <Card elevation={3}
+                      sx={{
+                        borderRadius: 3,
+                        border: "1px dashed #ccc",
+                        backgroundColor: "#fffde7",
+                        transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                        "&:hover": {
+                          transform: "scale(1.03)",
+                          boxShadow: "0px 6px 18px rgba(0,0,0,0.1)",
+                        },
+                      }}
+                    >
+                      <CardContent sx={{ textAlign: "center" }}>
+                        <Typography variant="h6" fontWeight="bold">
+                          {item.title}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary">
+                          {item.description}
+                        </Typography>
+                        <Typography variant="body2" sx={{ mt: 1, fontWeight: "bold", color: "#FF9800" }}>
+                          📝 Borrador - {item.price} € / {item.price_category_display}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </Grid>
+              ))}
+            </Grid>
+          ) : (
+            <Typography variant="body2" color="textSecondary">
+              No tienes artículos en borrador.
             </Typography>
           )}
 
@@ -447,7 +637,7 @@ const Profile = () => {
                   </Typography>
 
                   <Grid container spacing={2}>
-                    {["name", "surname", "email", "phone_number", "city", "country", "address", "postal_code"]
+                    {["name", "surname", "email", "phone_number", "city", "country", "address", "postal_code", "dni"]
                       .map((field) => (
                         <Grid item xs={12} sm={6} key={field}>
                           <TextField
@@ -475,7 +665,7 @@ const Profile = () => {
                     </Grid>
                   </Grid>
                   <Box sx={{ textAlign: "right", mt: 2 }}>
-                    <Button variant="contained" onClick={handleUpdateUser}>
+                    <Button variant="contained" onClick={handleUpdateUserByAdmin}>
                       Guardar cambios
                     </Button>
                   </Box>
@@ -484,7 +674,7 @@ const Profile = () => {
             </>
           )}
         </Paper>
-      </Container>
+      </Container >
     </>
   );
 };
