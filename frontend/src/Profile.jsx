@@ -271,22 +271,12 @@ const Profile = () => {
 
   const handleUpdateUserByAdmin = async () => {
     const token = localStorage.getItem("access_token");
-
-    if (!token) {
-      alert("No tienes una sesión activa. Inicia sesión nuevamente.");
-      return;
-    }
-
-    if (formData.dni && !validateDni(formData.dni)) {
-      alert("El DNI/NIF no tiene un formato válido.");
-      return;
-    }
-
     const previousDni = user.dni;
 
+    if (!token) return alert("No tienes una sesión activa. Inicia sesión nuevamente.");
+
     if (formData.dni && !validateDni(formData.dni)) {
       alert("El DNI/NIF no tiene un formato válido.");
-
       setFormData((prev) => ({ ...prev, dni: previousDni }));
       return;
     }
@@ -310,9 +300,6 @@ const Profile = () => {
       alert("No se pudo actualizar el usuario.");
     }
   };
-
-
-
 
   if (loading) return <Typography align="center">Cargando perfil...</Typography>;
   if (!user) return <Typography color="error">No se encontró el perfil.</Typography>;
