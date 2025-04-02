@@ -20,6 +20,13 @@ const RentRequestBoard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const tabParam = urlParams.get("tab");
+    
+        if (tabParam === "sent") {
+            setSelectedTab(1); // Cambia a la pestaña "Solicitudes Enviadas"
+        }
+        
         const enrichRequests = async (requests) => {
             return Promise.all(
                 requests.map(async (request) => {

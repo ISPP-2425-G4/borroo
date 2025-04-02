@@ -861,7 +861,7 @@ const ShowItemScreen = () => {
               title="Solicitud enviada"
               message="Tu solicitud ha sido enviada correctamente. Puedes verla en la sección 'Mis solicitudes' en el apartado de 'Solicitudes Enviadas'."
               primaryLabel="Ir a Mis Solicitudes"
-              onPrimaryAction={() => navigate("/rental_requests")}
+              onPrimaryAction={() => navigate("/rental_requests?tab=sent")}
               secondaryLabel="Volver al Menú Principal"
               onSecondaryAction={() => navigate("/")}
             />
