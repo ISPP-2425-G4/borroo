@@ -9,6 +9,7 @@ const Messages = () => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const navigate = useNavigate();
+    const currentUser = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
         const fetchConversations = async () => {
@@ -121,7 +122,7 @@ const Messages = () => {
             */
             const newMsg = {
                 id: messages.length + 1,
-                sender_id: 1, // Simulación de usuario autenticado
+                sender_id: currentUser.id, // Simulación de usuario autenticado
                 text: newMessage,
             };
     
@@ -133,15 +134,28 @@ const Messages = () => {
     };
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", height: "100vh", mt: 10 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", height: "100vh", mt: 10, bgcolor: "#f5f5f5" }}>
             <Navbar />
             <Box sx={{ display: "flex", flexGrow: 1, padding: 2 }}>
+                
                 {/* Lista de conversaciones */}
-                <Paper sx={{ width: 300, padding: 2, marginRight: 2, maxHeight: "70vh", overflowY: "auto" }}>
-                    <Typography variant="h6" sx={{ mb: 2 }}>Conversaciones</Typography>
+                <Paper sx={{ 
+                    width: 320, 
+                    padding: 2, 
+                    marginRight: 2,
+                    maxHeight: "70vh", 
+                    overflowY: "auto", 
+                    borderRadius: 3, 
+                    boxShadow: 3
+                }}>
+                    <Typography variant="h6" sx={{ mb: 2, textAlign: "center", fontWeight: "bold" }}>
+                        Conversaciones
+                    </Typography>
                     <List>
                         {conversations.length === 0 ? (
-                            <Typography variant="body2">No tienes conversaciones.</Typography>
+                            <Typography variant="body2" sx={{ textAlign: "center", color: "gray" }}>
+                                No tienes conversaciones.
+                            </Typography>
                         ) : (
                             conversations.map((conv) => (
                                 <ListItem 
@@ -149,6 +163,12 @@ const Messages = () => {
                                     button 
                                     selected={selectedConversation === conv.id}
                                     onClick={() => fetchMessages(conv.id)}
+                                    sx={{
+                                        borderRadius: 2,
+                                        mb: 1,
+                                        bgcolor: selectedConversation === conv.id ? "primary.light" : "transparent",
+                                        "&:hover": { bgcolor: "primary.light" }
+                                    }}
                                 >
                                     <ListItemText primary={conv.otherUserName} />
                                 </ListItem>
@@ -157,22 +177,36 @@ const Messages = () => {
                     </List>
                 </Paper>
 
-
                 {/* Chat */}
-                <Paper sx={{ flexGrow: 1, display: "flex", flexDirection: "column", padding: 2 }}>
+                <Paper sx={{ flexGrow: 1, display: "flex", flexDirection: "column", padding: 3, borderRadius: 3, boxShadow: 3 }}>
                     {selectedConversation ? (
                         <>
                             {/* Mensajes */}
-                            <Box sx={{ flexGrow: 1, overflowY: "auto", maxHeight: "60vh", padding: 2, border: "1px solid #ccc", borderRadius: 2 }}>
+                            <Box sx={{ 
+                                flexGrow: 1, 
+                                overflowY: "auto", 
+                                maxHeight: "60vh", 
+                                padding: 2, 
+                                borderRadius: 2, 
+                                backgroundColor: "#f0f0f0",
+                                display: "flex",
+                                flexDirection: "column",
+                            }}>
                                 {messages.map((msg) => (
                                     <Box 
                                         key={msg.id} 
                                         sx={{
-                                            textAlign: msg.sender_id === JSON.parse(localStorage.getItem("user")).id ? "right" : "left",
-                                            marginBottom: 1
+                                            alignSelf: msg.sender_id === currentUser.id ? "flex-end" : "flex-start",
+                                            mb: 1,
+                                            maxWidth: "70%"
                                         }}
                                     >
-                                        <Paper sx={{ display: "inline-block", padding: 1, bgcolor: msg.sender_id === JSON.parse(localStorage.getItem("user")).id ? "primary.light" : "grey.300" }}>
+                                        <Paper sx={{ 
+                                            padding: 1.5, 
+                                            borderRadius: 3, 
+                                            bgcolor: msg.sender_id === currentUser.id  ? "primary.main" : "grey.300", 
+                                            color: msg.sender_id === currentUser.id ? "white" : "black" 
+                                        }}>
                                             {msg.text}
                                         </Paper>
                                     </Box>
@@ -189,19 +223,32 @@ const Messages = () => {
                                     placeholder="Escribe un mensaje..." 
                                     value={newMessage} 
                                     onChange={(e) => setNewMessage(e.target.value)}
+                                    sx={{ bgcolor: "white", borderRadius: 2 }}
                                 />
                                 <Button 
                                     variant="contained" 
                                     color="primary" 
                                     onClick={handleSendMessage} 
-                                    sx={{ ml: 2 }}
+                                    sx={{ ml: 2, borderRadius: 2 }}
                                 >
                                     Enviar
                                 </Button>
                             </Box>
                         </>
                     ) : (
-                        <Typography variant="body1">Selecciona una conversación para ver los mensajes.</Typography>
+                        <Box sx={{ 
+                            flexGrow: 1, 
+                            display: "flex", 
+                            flexDirection: "column", 
+                            justifyContent: "center", 
+                            alignItems: "center",
+                            textAlign: "center"
+                        }}>
+                            <img src="/logo.png" alt="Logo" style={{ width: 120, marginBottom: 20 }} />
+                            <Typography variant="h5" color="textSecondary" sx={{ fontWeight: "bold" }}>
+                                Selecciona una conversación para ver los mensajes
+                            </Typography>
+                        </Box>
                     )}
                 </Paper>
             </Box>
