@@ -60,13 +60,13 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 |-----------------------------|----------|----------|----------|----------|---------|---------|---------|---------|---------|---------|---------|---------|---------|----------|
 | David Blanco Mora           |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
 | Pablo Díaz Ordóñez          |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Pablo Espinosa Naranjo      |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
+| Pablo Espinosa Naranjo      |          |          |          |          |       :blush:  |     :blush:    |  :blush       |         |         |         |         |         |         |          |
 | Jesús Fernández Rodríguez   |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
 | Francisco Fernández Mota    |          |          |          | :smiley: | :smiley: | :smiley: |         |         |         |         |         |         |         |          |
 | Javier García Rodríguez     |:blush:|:neutral_face:|:neutral_face:|:blush:|:neutral_face:|:worried:|         |         |         |         |         |         |         |          |
 | Miguel González Ortiz       |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
 | Álvaro Martín Muñoz         |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Ignacio Naredo Bernardos    |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
+| Ignacio Naredo Bernardos    |          |          |          |          |     :blush:    |  :blush:       |         |         |         |         |         |         |         |          |
 | Javier Nieto Vicioso        |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
 | Marco Padilla Gómez         |          |          |          |          |:smiley: |         |         |         |         |         |         |         |         |          |
 | Miguel Palomo García        |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
@@ -74,4 +74,4 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Alexander Picón Garrote     |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
 | Santiago Rosado Raya        |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
 | Julia Sánchez Márquez       |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Alejandro Sevillano Barea   |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
+| Alejandro Sevillano Barea   |          |          |          |          |         |     :blush:    |  :blush:      |         |         |         |         |         |         |         |          |
