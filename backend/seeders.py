@@ -70,7 +70,7 @@ def create_users():
         username='admin',
         name='Admin',
         surname='Admin',
-        email='admin@example.com',
+        email='borrooclockify@gmail.com',
         password=make_password('Admin_25'),
         phone_number='+1234567890',
         country='España',
@@ -78,6 +78,7 @@ def create_users():
         address='Calle Admin',
         postal_code='28001',
         dni='11223344Z',
+        verified_account=True,
         is_verified=True,
         pricing_plan='premium',
         is_admin=True
