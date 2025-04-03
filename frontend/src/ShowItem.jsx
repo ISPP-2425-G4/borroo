@@ -18,7 +18,12 @@ import {
   CircularProgress, 
   IconButton, 
   Stack, 
-  Chip, 
+  Chip,
+  DialogContentText, 
+  FormControl,
+  MenuItem,
+  Select,
+  InputLabel
 } from '@mui/material';
 
 import { 
@@ -36,6 +41,9 @@ import Navbar from "./Navbar";
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
 import SuccessModal from "./components/SuccessModal";
 import ConfirmModal from "./components/ConfirmModal";
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
+
+
 
 const ShowItemScreen = () => {
   const { id } = useParams();
@@ -65,8 +73,12 @@ const ShowItemScreen = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [highlighting, setHighlighting] = useState(false);
   const [showRequestPopup, setShowRequestPopup] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportCategory, setReportCategory] = useState("");
+  const [reportDescription, setReportDescription] = useState("");
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
+  console.log("currentUser", currentUser);
 
   useEffect(() => {
     const fetchItemData = async () => {
@@ -172,6 +184,56 @@ const ShowItemScreen = () => {
         setHighlighting(false);
     });
 };
+
+  const handleReportUser = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user || !user.id) {
+        alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
+        return;
+      }
+      if(!reportCategory || !reportDescription) {
+        alert("Por favor, completa todos los campos.");
+        return;
+      }
+      const reportData = {
+        reporter: currentUser.id,
+        reported_user: item.user,
+        category: reportCategory,
+        description: reportDescription,
+    } 
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/usuarios/reportes/`,
+      reportData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.status === 201) {
+      alert("¡Reporte enviado correctamente!");
+      setShowReportModal(false);
+      setReportCategory("");
+      setReportDescription("");
+    } 
+
+    if(response.status === 200){
+      alert("¡Reporte actualizado correctamente!");
+      setShowReportModal(false);
+      setReportCategory("");
+      setReportDescription("");
+    }
+    
+    else {
+      alert("Hubo un problema al enviar el reporte.");
+    }
+    
+  }catch (error) {
+      alert("Error al enviar el reporte:", error);
+      console.error("Error al enviar el reporte:", error);
+    }
+  };
 
 
   const loadItemImages = async (imageIds) => {
@@ -512,7 +574,8 @@ const ShowItemScreen = () => {
 
             <Box sx={{ flex: '1 1 auto', minWidth: 0 }}>
               <Card elevation={2} sx={{ mb: 3 }}>
-                <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <CardContent sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                   <PersonIcon fontSize="large" color="primary" />
                   <Box>
                   <Typography variant="caption" color="textSecondary">
@@ -554,6 +617,12 @@ const ShowItemScreen = () => {
                       />
                     )}
                   </Box>
+                  </Box>
+                  {!isOwner && (
+                    <Box sx={{ display: 'flex', gap: 1 }}>
+                      <Button color="error" onClick={() => setShowReportModal(true)}>Reportar</Button>
+                    </Box>
+                  )}
                 </CardContent>
               </Card>
 
@@ -866,9 +935,61 @@ const ShowItemScreen = () => {
               onSecondaryAction={() => navigate("/")}
             />
           )}
-          </Container>
-          </Box>
-          );
-          };
+            {showReportModal && (
+            <Box sx={{width: "100%", display: "flex", justifyContent: "center", alignContent: "center"}}>
+            <Dialog maxWidth="sm" fullWidth open={showReportModal} onClose={() => setShowReportModal(false)}>
+            <DialogTitle>Reportar usuario</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                ¿Cual es el motivo del reporte?
+              </DialogContentText>
+              <FormControl fullWidth sx={{ mt: 2 }}>
+                <InputLabel id="reportCategoryLabel">Motivo</InputLabel>
+                <Select
+                  labelId="reportCategoryLabel"
+                  value={reportCategory}
+                  onChange={(e) => setReportCategory(e.target.value)}
+                  label="Motivo"
+                >
+                  <MenuItem value="Mensaje de Odio">Mensaje de Odio</MenuItem>
+                  <MenuItem value="Información Engañosa">Información Engañosa</MenuItem>
+                  <MenuItem value="Se hace pasar por otra persona">Se hace pasar por otra persona</MenuItem>
+                  <MenuItem value="Otro">Otro</MenuItem>
+                </Select>
+              </FormControl>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="reportDescription"
+                label="Descripción"
+                type="text"
+                fullWidth
+                variant="outlined"
+                value={reportDescription}
+                onChange={(e) => setReportDescription(e.target.value)}
+                multiline
+                rows={4}
+              />
+
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setShowReportModal(false)} color="primary">
+                Cancelar
+              </Button>
+              <Button
+                onClick={handleReportUser}
+                color="error"
+                disabled={!reportCategory || !reportDescription}
+              >
+                Enviar reporte
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Box>
+        )}
+      </Container>
+    </Box>
+  );
+};
 
 export default ShowItemScreen;
