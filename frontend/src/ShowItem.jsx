@@ -437,9 +437,20 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
       
       <Container maxWidth="lg" sx={{ py: 4, mt: 8 }}>
         <Paper elevation={2} sx={{ p: 3, mb: 4 }}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            {item.title}
-          </Typography>
+        <Typography 
+  variant="h4" 
+  component="h1" 
+  gutterBottom
+  sx={{ 
+    wordBreak: 'break-word', 
+    overflowWrap: 'break-word',
+    maxWidth: '100%', 
+    whiteSpace: 'normal' 
+  }}
+>
+  {item.title}
+</Typography>
+
           {item.draft_mode && (
   <Box 
     sx={{ 
@@ -588,7 +599,18 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
                     <DescriptionIcon color="action" />
                     <Box>
                       <Typography variant="subtitle2">Descripción</Typography>
-                      <Typography variant="body2">{item.description}</Typography>
+                      <Typography 
+                        variant="body2" 
+                        sx={{ 
+                          wordBreak: 'break-word', 
+                          overflowWrap: 'break-word',
+                          whiteSpace: 'pre-wrap', 
+                          maxWidth: '100%' 
+                        }}
+                      >
+                        {item.description}
+                      </Typography>
+
                     </Box>
                   </Box>
                   
