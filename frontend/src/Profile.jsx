@@ -16,6 +16,11 @@ import {
   Rating,
   TextField,
   Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Chip,
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
@@ -29,6 +34,8 @@ import MoneyOffIcon from "@mui/icons-material/MoneyOff";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
+import ReportIcon from "@mui/icons-material/Report";
+import CloseIcon from "@mui/icons-material/Close";
 
 
 const Profile = () => {
@@ -44,6 +51,8 @@ const Profile = () => {
   const [editMode, setEditMode] = useState(false);
   const [draftItems, setDraftItems] = useState([]);
   const [canReview, setCanReview] = useState(false);
+  const [openReportsModal, setOpenReportsModal] = useState(false);
+  const [reports, setReports] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -113,6 +122,29 @@ const Profile = () => {
     fetchReviews();
 
   }, [username, currentUser]);
+
+  const handleCloseReportsModal = () => {
+    setOpenReportsModal(false);
+  };
+
+  const handleOpenReportsModal = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/reportes/`
+      );
+      if (response.status === 200) {
+        const data = response.data.results.filter(
+          (report) => report.reporter === currentUser.id)
+        setReports(data);
+        setOpenReportsModal(true);
+      }
+
+    } catch (error) {
+      console.error("Error cargando los reportes:", error);
+      alert("No se pudieron cargar los reportes.");
+    }
+  };
+
 
   useEffect(() => {
     const checkIfHasRented = async () => {
@@ -347,6 +379,15 @@ const Profile = () => {
 
             {currentUser.username === user.username && (
               <>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  size="small"
+                  onClick={() => handleOpenReportsModal()}
+                  sx={{ mt: 2, textTransform: "none" }}
+                >
+                  Ver mis reportes enviados
+                </Button>
                 <Button
                   variant="outlined"
                   color="primary"
@@ -727,6 +768,115 @@ const Profile = () => {
             </>
           )}
         </Paper>
+        <Dialog
+          open={openReportsModal}
+          onClose={handleCloseReportsModal}
+          fullWidth
+          maxWidth="md"
+          aria-labelledby="reports-dialog-title"
+        >
+          <DialogTitle id="reports-dialog-title" sx={{ fontWeight: 600, borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}>
+            Historial de Reportes
+          </DialogTitle>
+          <DialogContent dividers sx={{ py: 3 }}>
+            {reports.length > 0 ? (
+              reports.map((report, index) => (
+                <Paper
+                  key={index}
+                  elevation={2}
+                  sx={{ 
+                    p: 3, 
+                    mb: 2, 
+                    borderRadius: 2,
+                    backgroundColor: "#ffffff",
+                    border: "1px solid rgba(0, 0, 0, 0.08)",
+                    transition: "all 0.2s ease-in-out",
+                    "&:hover": {
+                      boxShadow: 3,
+                      transform: "translateY(-2px)"
+                    }
+                  }}
+                >
+                  <Box sx={{ mb: 1, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <Typography variant="h6" fontWeight={600} color="primary.main">
+                      Reporte #{index + 1}
+                    </Typography>
+                    <Chip 
+                      label={report.status} 
+                      size="small"
+                      color={
+                        report.status === "Resuelto" ? "success" :
+                        report.status === "En revisión" ? "warning" : "default"
+                      }
+                      sx={{ fontWeight: 500 }}
+                    />
+                  </Box>
+                  
+                  <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1 }}>
+                    Usuario reportado: {report.reported_user}
+                  </Typography>
+                  
+                  <Typography variant="body2" fontWeight={500} color="text.secondary" sx={{ mb: 1 }}>
+                    Categoría: {report.category}
+                  </Typography>
+                  
+                  <Box sx={{ 
+                    p: 2, 
+                    mt: 1, 
+                    mb: 2, 
+                    backgroundColor: "rgba(0, 0, 0, 0.02)", 
+                    borderRadius: 1,
+                    borderLeft: "4px solid #3f51b5"
+                  }}>
+                    <Typography variant="body1">
+                      {report.description}
+                    </Typography>
+                  </Box>
+                  
+                  <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Typography variant="caption" color="text.secondary">
+                      Enviado el {new Date(report.created_at).toLocaleDateString('es-ES', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </Typography>
+                  </Box>
+                </Paper>
+              ))
+            ) : (
+              <Box 
+                sx={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  py: 4
+                }}
+              >
+                <ReportIcon sx={{ fontSize: 60, color: 'text.disabled', mb: 2 }} />
+                <Typography variant="body1" color="text.secondary" align="center">
+                  No has enviado reportes hasta el momento.
+                </Typography>
+                <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>
+                  Cuando envíes un reporte, aparecerá en esta sección.
+                </Typography>
+              </Box>
+            )}
+          </DialogContent>
+          <DialogActions sx={{ px: 3, py: 2 }}>
+            <Button 
+              onClick={handleCloseReportsModal} 
+              variant="contained" 
+              color="primary"
+              startIcon={<CloseIcon />}
+            >
+              Cerrar
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Container >
     </>
   );
