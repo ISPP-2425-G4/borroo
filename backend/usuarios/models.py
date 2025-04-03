@@ -136,3 +136,38 @@ class Review(models.Model):
             f"{self.reviewer.username} → "
             f"{self.reviewed_user.username}: {self.rating}"
         )
+
+  
+class Report(models.Model):
+
+    CATEGORIES = [
+        ('Mensaje de Odio', 'Mensaje de Odio'),
+        ('Información Engañosa', 'Información Engañosa'),
+        ('Se hace pasar por otra persona', 'Se hace pasar por otra persona'),
+        ('Otro', 'Otro')
+    ]
+
+    STATUS = [
+        ('Pendiente', 'Pendiente'),
+        ('En revisión', 'En revisión'),
+        ('Resuelto', 'Resuelto')
+    ]
+
+    reporter = models.ForeignKey(User, on_delete=models.CASCADE,
+                                 related_name="reports_given", blank=False,
+                                 null=False)
+    reported_user = models.ForeignKey(User, on_delete=models.CASCADE,
+                                      related_name="reports_received",
+                                      blank=False, null=False)
+    description = models.TextField(blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    category = models.CharField(choices=CATEGORIES, max_length=255,
+                                blank=False, null=False)
+    status = models.CharField(choices=STATUS, max_length=255,
+                              default='Pendiente', blank=False, null=False)
+
+    def __str__(self):
+        return (
+            f"{self.reporter.username} → "
+            f"{self.reported_user.username}: {self.category}"
+        )
