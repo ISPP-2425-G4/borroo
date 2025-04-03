@@ -21,11 +21,10 @@ const Footer = () => {
         <div className="footer-section">
           <h3>Legal</h3>
           <ul>
-            <li><a href="/privacy-policy" >Política de Privacidad</a></li>
-            <li><a href="/terms-and-conditions" >Términos de Servicio</a></li>
-            <li><a href="/sla" >Acuerdo de Nivel de Servicio (SLA)</a></li>
-            <li><a href="/licenses" >Información de Licencias</a></li>
-
+            <li><a href="/privacy-policy">Política de Privacidad</a></li>
+            <li><a href="/terms-and-conditions">Términos de Servicio</a></li>
+            <li><a href="/sla">Acuerdo de Nivel de Servicio (SLA)</a></li>
+            <li><a href="/licenses">Información de Licencias</a></li>
           </ul>
         </div>
 
@@ -34,20 +33,16 @@ const Footer = () => {
           <h3>Contacto</h3>
           <p>Email: borroohelp@gmail.com</p>
         </div>
-
-        {/* Redes Sociales */}
-        <div className="footer-section">
-          <h3>Redes Sociales</h3>
-          <div className="social-links">
-            <a href="https://facebook.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
-            <a href="https://x.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaXTwitter /></a>
-            <a href="https://instagram.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
-            <a href="https://linkedin.com/company/BorrooApp" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
-            <a href="https://youtube.com/c/BorrooApp" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
-          </div>
-        </div>
-        
       </div>
+
+      {/* Redes Sociales */}
+        <div className="social-links">
+          <a href="https://facebook.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
+          <a href="https://x.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaXTwitter /></a>
+          <a href="https://instagram.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
+          <a href="https://linkedin.com/company/BorrooApp" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
+          <a href="https://youtube.com/c/BorrooApp" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
+        </div>
 
       {/* Footer Inferior */}
       <div className="footer-bottom">
