@@ -1,6 +1,6 @@
 runtime: python312
 
-service: backend-s2
+service: backend-s3
 
 entrypoint: gunicorn -b :$PORT borroo.wsgi
 
@@ -9,10 +9,10 @@ instance_class: F2
 env_variables:
   DJANGO_SETTINGS_MODULE: "borroo.settings"
   DB_ENGINE: "django.db.backends.mysql"
-  DB_NAME: "borroos2_yourselfno"
-  DB_USER: "borroos2_yourselfno"
-  DB_PASSWORD: "0a6e3d627b99f3d4defd584ad9fc74d54f14cace"
-  DB_HOST: "mtgf4.h.filess.io"
+  DB_NAME: "borroos3_commonsoil"
+  DB_USER: "borroos3_commonsoil"
+  DB_PASSWORD: "b7ae2730d3316a2a98426ad61acf65d08a2321d2"
+  DB_HOST: "6itmm.h.filess.io"
   DB_PORT: "61000"
 
 handlers:

@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import Navbar from "./Navbar";
 import { Box, Button, Card, CardContent, Typography, Skeleton, Tab, Tabs } from "@mui/material";
-import Modal from "./Modal";
 import { useNavigate } from 'react-router-dom';
 import RequestCardsContainer from "./components/RequestCardsContainer";
+import ConfirmModal from "./components/ConfirmModal";
 
 const DEFAULT_IMAGE = "../public/default_image.png";
 
@@ -20,6 +20,13 @@ const RentRequestBoard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const tabParam = urlParams.get("tab");
+    
+        if (tabParam === "sent") {
+            setSelectedTab(1); // Cambia a la pestaña "Solicitudes Enviadas"
+        }
+        
         const enrichRequests = async (requests) => {
             return Promise.all(
                 requests.map(async (request) => {
@@ -253,7 +260,7 @@ const RentRequestBoard = () => {
             )}
 
             {openModal && (
-                <Modal
+                <ConfirmModal
                     title="Confirmar solicitud"
                     message={`¿Estás seguro de que quieres ${responseType === "accepted" ? "aceptar" : "rechazar"} esta solicitud?`}
                     onCancel={closeModal}

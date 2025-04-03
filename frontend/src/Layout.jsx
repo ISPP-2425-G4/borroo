@@ -113,7 +113,7 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
   useEffect(() => {
     const obtenerProductos = async () => {
       setCargando(true);
-      let nextUrl = `${import.meta.env.VITE_API_BASE_URL}/objetos/full`;
+      let nextUrl = `${import.meta.env.VITE_API_BASE_URL}/objetos/list_published_items`;
       let allResults = [];
   
       try {
@@ -430,13 +430,13 @@ useEffect(() => {
                                   <Box sx={{ display: 'flex', mb: 1, alignItems: 'center', gap: 0.5 }}>
                                     <LocationOnOutlinedIcon sx={{ fontSize: '0.875rem', color: 'text.secondary' }} />
                                     <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.75rem' }}>
-                                      Madrid
+                                      <p>Ubicación: {producto.user_location || "No disponible"}</p>
                                     </Typography>
                                     
                                     <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
                                       <StarIcon sx={{ fontSize: '0.875rem', color: '#FFB400' }} />
                                       <Typography variant="body2" sx={{ fontWeight: 500, fontSize: '0.75rem', ml: 0.5 }}>
-                                        4.8
+                                      <p>Valoración: {producto.user_rating ? producto.user_rating.toFixed(1) : "No disponible"}</p>
                                       </Typography>
                                     </Box>
                                   </Box>
@@ -1153,13 +1153,13 @@ useEffect(() => {
                                 <Box sx={{ display: 'flex', mb: 1, alignItems: 'center', gap: 0.5 }}>
                                   <LocationOnOutlinedIcon sx={{ fontSize: '0.875rem', color: 'text.secondary' }} />
                                   <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.75rem' }}>
-                                    Madrid
+                                  <p>Ubicación: {producto.user_location || "No disponible"}</p>
                                   </Typography>
                                   
                                   <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
                                     <StarIcon sx={{ fontSize: '0.875rem', color: '#FFB400' }} />
                                     <Typography variant="body2" sx={{ fontWeight: 500, fontSize: '0.75rem', ml: 0.5 }}>
-                                      4.8
+                                    <p>Valoración: {producto.user_rating ? producto.user_rating.toFixed(1) : "No disponible"}</p>
                                     </Typography>
                                   </Box>
                                 </Box>
