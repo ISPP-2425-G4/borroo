@@ -65,6 +65,8 @@ const ShowItemScreen = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [highlighting, setHighlighting] = useState(false);
   const [showRequestPopup, setShowRequestPopup] = useState(false);
+  const [openImageModal, setOpenImageModal] = useState(false);
+const [modalImageIndex, setModalImageIndex] = useState(0);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -229,6 +231,23 @@ const ShowItemScreen = () => {
       dates.push(new Date(d));
     }
     return dates;
+  };
+
+  const handleImageClick = (index) => {
+    setModalImageIndex(index);
+    setOpenImageModal(true);
+  };
+  
+  const closeModal = () => {
+    setOpenImageModal(false);
+  };
+  
+  const nextModalImage = () => {
+    setModalImageIndex((prev) => (prev + 1) % imageURLs.length);
+  };
+  
+  const prevModalImage = () => {
+    setModalImageIndex((prev) => (prev - 1 + imageURLs.length) % imageURLs.length);
   };
 
   const handleDelete = async () => {
@@ -456,7 +475,7 @@ const ShowItemScreen = () => {
               {imageURLs.length > 0 ? (
                 <Paper elevation={3} sx={{ position: 'relative', overflow: 'hidden', borderRadius: 2 }}>
                   <Box sx={{ position: 'relative', paddingTop: '75%' }}>
-                    <Box 
+                  <Box 
                       component="img"
                       src={imageURLs[currentImageIndex]}
                       alt={`${item.title} - imagen ${currentImageIndex + 1}`}
@@ -467,8 +486,10 @@ const ShowItemScreen = () => {
                         width: '100%',
                         height: '100%',
                         objectFit: 'contain',
-                        backgroundColor: '#f5f5f5'
+                        backgroundColor: '#f5f5f5',
+                        cursor: 'pointer'
                       }}
+                      onClick={() => handleImageClick(currentImageIndex)}
                     />
                   </Box>
                   
@@ -867,6 +888,55 @@ const ShowItemScreen = () => {
             />
           )}
           </Container>
+          {openImageModal && (
+  <Box 
+    sx={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100vw',
+      height: '100vh',
+      backgroundColor: 'rgba(0,0,0,0.9)',
+      zIndex: 9999,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'column'
+    }}
+    onClick={closeModal}
+  >
+    <IconButton 
+      sx={{ position: 'absolute', top: 20, right: 20, color: 'white' }}
+      onClick={closeModal}
+    >
+      ✖️
+    </IconButton>
+
+    <IconButton 
+      sx={{ position: 'absolute', left: 20, color: 'white' }}
+      onClick={(e) => { e.stopPropagation(); prevModalImage(); }}
+    >
+      <ChevronLeftIcon fontSize="large" />
+    </IconButton>
+
+    <img 
+      src={imageURLs[modalImageIndex]} 
+      alt={`imagen ${modalImageIndex + 1}`} 
+      style={{ maxHeight: '80vh', maxWidth: '90vw', objectFit: 'contain' }}
+    />
+
+    <IconButton 
+      sx={{ position: 'absolute', right: 20, color: 'white' }}
+      onClick={(e) => { e.stopPropagation(); nextModalImage(); }}
+    >
+      <ChevronRightIcon fontSize="large" />
+    </IconButton>
+
+    <Typography variant="caption" sx={{ color: 'white', mt: 2 }}>
+      {modalImageIndex + 1} / {imageURLs.length}
+    </Typography>
+  </Box>
+)}
           </Box>
           );
           };
