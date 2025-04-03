@@ -137,7 +137,7 @@ class Review(models.Model):
             f"{self.reviewed_user.username}: {self.rating}"
         )
 
-  
+
 class Report(models.Model):
 
     CATEGORIES = [
