@@ -497,7 +497,7 @@ const UpdateItemScreen = () => {
               <>
                 {/* Categoría */}
                 <FormControl fullWidth required>
-                  <InputLabel id="category-label">Categoría</InputLabel>
+                  <InputLabel id="category-label" >Categoría</InputLabel>
                   <Select
                     labelId="category-label"
                     name="category"
@@ -508,6 +508,7 @@ const UpdateItemScreen = () => {
                         <CategoryIcon />
                       </InputAdornment>
                     }
+                    sx={{mt:1.5}}
                   >
                     <MenuItem value="" disabled>
                       Selecciona una categoría
@@ -533,6 +534,8 @@ const UpdateItemScreen = () => {
                         <CategoryIcon />
                       </InputAdornment>
                     }
+                    sx={{mt:1.5}}
+
                   >
                     <MenuItem value="" disabled>
                       Selecciona una subcategoría
@@ -546,8 +549,9 @@ const UpdateItemScreen = () => {
                 </FormControl>
   
                 {/* Política de Cancelación con Tooltip */}
-                <Box>
-                  <Box display="flex" alignItems="center" mb={1}>
+                <Box sx={{mb:12}}>
+                  <Box display="flex" alignItems="center" mb={1}
+                  >
                     <Typography variant="subtitle2">Política de Cancelación</Typography>
                     <Box ml={1}>
                       <CancelPolicyTooltip />
@@ -565,6 +569,8 @@ const UpdateItemScreen = () => {
                           <CancelIcon />
                         </InputAdornment>
                       }
+                      sx={{mt:1.5}}
+
                     >
                       <MenuItem value="" disabled>
                         Selecciona una política de cancelación
@@ -591,6 +597,8 @@ const UpdateItemScreen = () => {
                         <CategoryIcon />
                       </InputAdornment>
                     }
+                    sx={{mt:1.5}}
+
                   >
                     <MenuItem value="" disabled>
                       Selecciona una categoría de precio
