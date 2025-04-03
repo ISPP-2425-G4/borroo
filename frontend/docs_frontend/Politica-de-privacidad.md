@@ -146,3 +146,5 @@ En caso de una violación de seguridad, Borroo notificará a la Agencia Español
 ## **9. Contacto y Responsable de Protección de Datos**  
 
 Para cualquier consulta relacionada con la protección de datos personales, los usuarios pueden ponerse en contacto con nuestro equipo a través del siguiente correo electrónico: borroohelp@gmail.com  
+
+---

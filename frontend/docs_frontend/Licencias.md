@@ -1,4 +1,4 @@
-# Información de Licencias
+# Información de Licencias de BORROO
 **Última actualización:** *03/04/2025* 
 
 ## 1. Introducción
@@ -110,3 +110,5 @@ Al analizar los términos y condiciones de las herramientas utilizadas, se han i
 3.  El usuario es el único responsable de cualquier daño que pueda sufrir por el uso o la imposibilidad de uso de los Add-Ons.  
 4.  CAKE no será responsable, bajo ninguna circunstancia, por cualquier dato o contenido visualizado a través de los Servicios, incluyendo errores, omisiones, pérdidas o daños derivados del uso, acceso o denegación de acceso a dichos datos o contenido.  
 5.  La responsabilidad por contenido y datos es exclusiva del usuario.  
+
+---
