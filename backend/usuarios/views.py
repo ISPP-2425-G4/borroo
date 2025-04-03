@@ -730,9 +730,10 @@ class ReportViewSet(viewsets.ModelViewSet):
         data = request.data.copy()
 
         reporter = get_object_or_404(User,
-                                     username=data.get("reporter"))
+                                     id=data.get("reporter"))
+
         reported_user = get_object_or_404(
-            User, username=data.get("reported_username"))
+            User, id=data.get("reported_user"))
 
         if reporter == reported_user:
             return Response({"error": "No puedes reportarte a ti mismo."},
@@ -757,7 +758,7 @@ class ReportViewSet(viewsets.ModelViewSet):
                 reported_user=reported_user,
                 description=data.get("description"),
                 category=data.get("category"),
-                status=data.get("status")
+                status="Pendiente"
             )
             return Response({"message": "Reporte creado correctamente"},
                             status=status.HTTP_201_CREATED)
