@@ -287,3 +287,29 @@ class RentViewSet(viewsets.ModelViewSet):
             )
         serializer = RentSerializer(my_requests, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['get'], url_path='has-rented-from')
+    def has_rented_from(self, request):
+        renter_username = request.query_params.get("renter")
+        owner_username = request.query_params.get("owner")
+
+        if not renter_username or not owner_username:
+            return Response(
+                {"error":
+                    "Faltan parámetros: 'renter' y 'owner' son requeridos."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        has_rented = Rent.objects.filter(
+            renter__username=renter_username,
+            item__user__username=owner_username
+        ).filter(
+            Q(rent_status__in=[
+                RentStatus.BOOKED,
+                RentStatus.PICKED_UP,
+                RentStatus.RETURNED
+            ]) | Q(rent_status=RentStatus.ACCEPTED,
+                   payment_status=PaymentStatus.PAID)
+        ).exists()
+
+        return Response({"has_rented": has_rented})

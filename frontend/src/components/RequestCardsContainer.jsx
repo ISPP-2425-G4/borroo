@@ -67,7 +67,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
         if (!user || !rentId) return;
         setLoading(true);
         try {
-            const response = await axios.post(`http://localhost:8000/pagos/create-rent-checkout/`, {
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/pagos/create-rent-checkout/`, {
                 rent_id: rentId,
                 price: parseInt(precio*100),
                 user_id: user.id,

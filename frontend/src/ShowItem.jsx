@@ -36,8 +36,9 @@ import {
   Whatshot as WhatshotIcon
 } from '@mui/icons-material';
 import Navbar from "./Navbar";
-import Modal from "./Modal";
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
+import SuccessModal from "./components/SuccessModal";
+import ConfirmModal from "./components/ConfirmModal";
 
 const ShowItemScreen = () => {
   const { id } = useParams();
@@ -68,6 +69,7 @@ const ShowItemScreen = () => {
   const [highlighting, setHighlighting] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [numLikes, setNumLikes] = useState(0);
+  const [showRequestPopup, setShowRequestPopup] = useState(false);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const accessToken = localStorage.getItem("access_token");
@@ -156,7 +158,7 @@ const ShowItemScreen = () => {
     }
   
     if (priceCategory === "day" && dateRange[0].startDate && dateRange[0].endDate) {
-      const days = Math.ceil((dateRange[0].endDate - dateRange[0].startDate) / (1000 * 60 * 60 * 24));
+      const days = Math.ceil((dateRange[0].endDate - dateRange[0].startDate + (1000 * 60 * 60 * 24)) / (1000 * 60 * 60 * 24));
       calculatedPrice = days * item.price;
     }
   
@@ -375,8 +377,8 @@ const ShowItemScreen = () => {
       );
   
       if (response.status === 201) {
-        alert("Solicitud de alquiler enviada correctamente");
         setShowRentalModal(false);
+        setShowRequestPopup(true);
       } else {
         alert("Hubo un problema con la solicitud");
       }
@@ -929,12 +931,22 @@ const ShowItemScreen = () => {
           </Paper>
 
           {showRentalModal && (
-          <Modal
+          <ConfirmModal
           title="Confirmar Solicitud"
           message={`¿Quieres solicitar el objeto "${item.title}" del ${dateRange[0].startDate.toLocaleDateString()} al ${dateRange[0].endDate.toLocaleDateString()}?`}
           onCancel={() => setShowRentalModal(false)}
           onConfirm={handleRentalRequest}
           />
+          )}
+          {showRequestPopup && (
+            <SuccessModal
+              title="Solicitud enviada"
+              message="Tu solicitud ha sido enviada correctamente. Puedes verla en la sección 'Mis solicitudes' en el apartado de 'Solicitudes Enviadas'."
+              primaryLabel="Ir a Mis Solicitudes"
+              onPrimaryAction={() => navigate("/rental_requests?tab=sent")}
+              secondaryLabel="Volver al Menú Principal"
+              onSecondaryAction={() => navigate("/")}
+            />
           )}
           </Container>
           </Box>
