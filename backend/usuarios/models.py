@@ -80,7 +80,17 @@ class User(AbstractUser):
         null=True,
         validators=[cif_validator]
     )
+    dni = models.CharField(
+        max_length=9,
+        unique=True,
+        null=True, blank=True,
+        validators=[RegexValidator(
+            regex=r'^\d{8}[A-Z]$',  # 8 dígitos seguidos de una letra mayúscula
+            message="El DNI debe tener el formato: 12345678A"
+        )]
+    )
     is_verified = models.BooleanField(default=False)
+    verified_account = models.BooleanField(default=False)
     pricing_plan = models.CharField(
         max_length=10,
         choices=PricingPlan.choices,
@@ -92,6 +102,7 @@ class User(AbstractUser):
     renter_rating = models.FloatField(default=0.0)
     reset_token = models.CharField(max_length=255, blank=True, null=True)
     reset_token_expiration = models.DateTimeField(blank=True, null=True)
+    verify_token = models.CharField(max_length=255, blank=True, null=True)
     is_admin = models.BooleanField(default=False)
 
     REQUIRED_FIELDS = []

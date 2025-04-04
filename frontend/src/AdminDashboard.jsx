@@ -32,6 +32,7 @@ const UserList = ({ users, handleEditUser, handleDeleteUser, editUserData, setEd
                             <TableCell><strong>Username</strong></TableCell>
                             <TableCell><strong>Nombre</strong></TableCell>
                             <TableCell><strong>Apellidos</strong></TableCell>
+                            <TableCell><strong>DNI / NIF</strong></TableCell>
                             <TableCell><strong>Email</strong></TableCell>
                             <TableCell><strong>Teléfono</strong></TableCell>
                             <TableCell><strong>Ciudad</strong></TableCell>
@@ -52,6 +53,7 @@ const UserList = ({ users, handleEditUser, handleDeleteUser, editUserData, setEd
                                     <TableCell>{user.username}</TableCell>
                                     <TableCell>{user.name}</TableCell>
                                     <TableCell>{user.surname}</TableCell>
+                                    <TableCell>{user.dni}</TableCell>
                                     <TableCell>{user.email}</TableCell>
                                     <TableCell>{user.phone_number}</TableCell>
                                     <TableCell>{user.city}</TableCell>
@@ -80,7 +82,7 @@ const UserList = ({ users, handleEditUser, handleDeleteUser, editUserData, setEd
                     <DialogTitle>Editar Usuario</DialogTitle>
                     <DialogContent>
                         <Grid container spacing={2}>
-                            {["name", "surname", "email", "phone_number", "city", "country", "address", "postal_code"]
+                            {["name", "surname", "email", "phone_number", "city", "country", "address", "postal_code", "dni"]
                                 .map((field) => (
                                     <Grid item xs={12} sm={6} key={field}>
                                         <TextField
@@ -133,7 +135,8 @@ const AdminDashboard = () => {
         city: "",
         country: "",
         address: "",
-        postal_code: ""
+        postal_code: "",
+        dni: "",
     });
     const [users, setUsers] = useState([]);
     const [editUserData, setEditUserData] = useState(null);
@@ -148,8 +151,19 @@ const AdminDashboard = () => {
         }
     }, []);
 
+    const validateDni = (dni) => {
+        const dniPattern = /^\d{8}[A-Z]$/;
+        const nifPattern = /^[A-Z]\d{7}[A-Z0-9]$/;
+        return dniPattern.test(dni) || nifPattern.test(dni);
+    };
+
     const handleCreateUser = async () => {
         const token = localStorage.getItem("access_token");
+
+        if (formData.dni && !validateDni(formData.dni)) {
+            alert("El DNI/NIF no tiene un formato válido.");
+            return;
+        }
 
         try {
             await axios.post(
@@ -175,6 +189,7 @@ const AdminDashboard = () => {
                 country: "",
                 address: "",
                 postal_code: "",
+                dni: "",
             });
             fetchUsers();
         } catch (error) {
@@ -219,15 +234,28 @@ const AdminDashboard = () => {
     };
 
     const handleEditUser = (user) => {
-        setEditUserData({ ...user });
+        setEditUserData({ ...user, originalDni: user.dni });
     };
 
     const handleUpdateUser = async () => {
         const token = localStorage.getItem("access_token");
+
+        if (editUserData.dni && !validateDni(editUserData.dni)) {
+            alert("El DNI/NIF no tiene un formato válido.");
+            setEditUserData((prev) => ({
+                ...prev,
+                dni: prev.originalDni || "",
+            }));
+            return;
+        }
+
+        const dataToSend = { ...editUserData };
+        delete dataToSend.originalDni;
+
         try {
             await axios.put(
                 `${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/users/update/${editUserData.id}/`,
-                editUserData,
+                dataToSend,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -346,6 +374,7 @@ const AdminDashboard = () => {
                                 "country",
                                 "address",
                                 "postal_code",
+                                "dni",
                             ].map((field) => (
                                 <Grid item xs={12} sm={6} key={field}>
                                     <TextField

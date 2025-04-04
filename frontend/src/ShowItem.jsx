@@ -33,8 +33,9 @@ import {
   ChevronRight as ChevronRightIcon 
 } from '@mui/icons-material';
 import Navbar from "./Navbar";
-import Modal from "./Modal";
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
+import SuccessModal from "./components/SuccessModal";
+import ConfirmModal from "./components/ConfirmModal";
 
 const ShowItemScreen = () => {
   const { id } = useParams();
@@ -52,7 +53,7 @@ const ShowItemScreen = () => {
   }]);
   const [showRentalModal, setShowRentalModal] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [requestedDates, setRequestedDates] = useState([]);
+  {/*const [requestedDates, setRequestedDates] = useState([]);*/}
   const [bookedDates, setBookedDates] = useState([]);
   const [isOwner, setIsOwner] = useState(false); // Estado para verificar si el usuario es el propietario
   const [priceCategory, setPriceCategory]= useState(null)
@@ -63,6 +64,7 @@ const ShowItemScreen = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [highlighting, setHighlighting] = useState(false);
+  const [showRequestPopup, setShowRequestPopup] = useState(false);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -111,7 +113,7 @@ const ShowItemScreen = () => {
     }
   
     if (priceCategory === "day" && dateRange[0].startDate && dateRange[0].endDate) {
-      const days = Math.ceil((dateRange[0].endDate - dateRange[0].startDate) / (1000 * 60 * 60 * 24));
+      const days = Math.ceil((dateRange[0].endDate - dateRange[0].startDate + (1000 * 60 * 60 * 24)) / (1000 * 60 * 60 * 24));
       calculatedPrice = days * item.price;
     }
   
@@ -199,28 +201,27 @@ const ShowItemScreen = () => {
         `${import.meta.env.VITE_API_BASE_URL}/rentas/full/item/${id}/`
       );
       const rents = rentResponse.data;
-
-      const requested = [];
+  
       const booked = [];
-      
+  
       rents.forEach((rent) => {
         const start = new Date(rent.start_date);
         const end = new Date(rent.end_date);
         const days = getDatesInRange(start, end);
-        
-        if (rent.rent_status === "requested") {
-          requested.push(...days);
-        } else if (rent.rent_status === "BOOKED") {
+  
+        const status = rent.rent_status.toLowerCase();
+  
+        if (["accepted", "booked", "picked_up"].includes(status)) {
           booked.push(...days);
         }
       });
-
-      setRequestedDates(requested);
+  
       setBookedDates(booked);
     } catch (error) {
       console.error("Error fetching availability:", error);
     }
   };
+  
   const getDatesInRange = (startDate, endDate) => {
     const dates = [];
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
@@ -330,8 +331,8 @@ const ShowItemScreen = () => {
       );
   
       if (response.status === 201) {
-        alert("Solicitud de alquiler enviada correctamente");
         setShowRentalModal(false);
+        setShowRequestPopup(true);
       } else {
         alert("Hubo un problema con la solicitud");
       }
@@ -765,7 +766,7 @@ const ShowItemScreen = () => {
               }
             }}
             minDate={new Date()}
-            disabledDates={[...requestedDates, ...bookedDates, ...unavailabilityPeriods.flatMap(period => {
+            disabledDates={[ ...bookedDates, ...unavailabilityPeriods.flatMap(period => {
               const start = new Date(period.start_date);
               const end = new Date(period.end_date);
               const range = getDatesInRange(start, end);
@@ -847,12 +848,22 @@ const ShowItemScreen = () => {
           </Paper>
 
           {showRentalModal && (
-          <Modal
+          <ConfirmModal
           title="Confirmar Solicitud"
           message={`¿Quieres solicitar el objeto "${item.title}" del ${dateRange[0].startDate.toLocaleDateString()} al ${dateRange[0].endDate.toLocaleDateString()}?`}
           onCancel={() => setShowRentalModal(false)}
           onConfirm={handleRentalRequest}
           />
+          )}
+          {showRequestPopup && (
+            <SuccessModal
+              title="Solicitud enviada"
+              message="Tu solicitud ha sido enviada correctamente. Puedes verla en la sección 'Mis solicitudes' en el apartado de 'Solicitudes Enviadas'."
+              primaryLabel="Ir a Mis Solicitudes"
+              onPrimaryAction={() => navigate("/rental_requests?tab=sent")}
+              secondaryLabel="Volver al Menú Principal"
+              onSecondaryAction={() => navigate("/")}
+            />
           )}
           </Container>
           </Box>

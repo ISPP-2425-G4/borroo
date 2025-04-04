@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import Navbar from "./Navbar";
 import { Box, Button, Card, CardContent, Typography, Skeleton, Tab, Tabs } from "@mui/material";
-import Modal from "./Modal";
 import { useNavigate } from 'react-router-dom';
 import RequestCardsContainer from "./components/RequestCardsContainer";
+import ConfirmModal from "./components/ConfirmModal";
 
 const DEFAULT_IMAGE = "../public/default_image.png";
 
@@ -20,6 +20,13 @@ const RentRequestBoard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const tabParam = urlParams.get("tab");
+    
+        if (tabParam === "sent") {
+            setSelectedTab(1); // Cambia a la pestaña "Solicitudes Enviadas"
+        }
+        
         const enrichRequests = async (requests) => {
             return Promise.all(
                 requests.map(async (request) => {
@@ -92,34 +99,40 @@ const RentRequestBoard = () => {
 
     const handleResponse = async (renta, responseType) => {
         try {
-            const user = JSON.parse(localStorage.getItem("user"));
-            if (!user || !user.id) {
-                alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
-                return;
-            }
-            const response = await axios.put(
-                `${import.meta.env.VITE_API_BASE_URL}/rentas/full/${renta.id}/respond_request/`,
-                {
-                    response: responseType,
-                    rent: renta.id,
-                    user_id: user.id
-                }
-            );
-            console.log(response.data);
-    
-            
-            setReceivedRequests((prevRequests) =>
-                prevRequests.map((request) =>
-                    request.id === renta.id
-                        ? { ...request, rent_status: responseType, payment_status: "pending" }
-                        : request
-                )
-            );
-            setOpenModal(false);
-        } catch (error) {
-            console.error(`Error al procesar la solicitud:`, error.response?.data || error.message);
-        }
-    };
+          const user = JSON.parse(localStorage.getItem("user"));
+          if (!user || !user.id) {
+            alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
+            return;
+          }
+      
+          const response = await axios.put(
+      `${import.meta.env.VITE_API_BASE_URL}/rentas/full/${renta.id}/respond_request/`,
+      {
+        response: responseType,
+        rent: renta.id,
+        user_id: user.id
+      }
+    );
+
+    console.log(response.data);
+    setOpenModal(false);
+
+    if (responseType === "accepted") {
+      window.location.reload(); // Solo recarga si fue aceptada
+    } else {
+      // Si fue rechazada, actualiza estado local
+      setReceivedRequests((prevRequests) =>
+        prevRequests.map((request) =>
+          request.id === renta.id
+            ? { ...request, rent_status: responseType, payment_status: "pending" }
+            : request
+        )
+      );
+    }
+  } catch (error) {
+    console.error("Error al procesar la solicitud:", error.response?.data || error.message);
+  }
+};
 
     const openConfirmModal = (renta, responseType) => {
         setSelectedRequest(renta);
@@ -253,7 +266,7 @@ const RentRequestBoard = () => {
             )}
 
             {openModal && (
-                <Modal
+                <ConfirmModal
                     title="Confirmar solicitud"
                     message={`¿Estás seguro de que quieres ${responseType === "accepted" ? "aceptar" : "rechazar"} esta solicitud?`}
                     onCancel={closeModal}
