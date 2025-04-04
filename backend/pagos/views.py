@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view
 from rest_framework import serializers
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 from rentas.models import Rent, PaymentStatus
 from usuarios.models import User
 import json
@@ -190,8 +191,8 @@ def confirm_subscription_checkout(request, session_id):
         return JsonResponse({'error': str(e)}, status=400)
 
 
-@api_view(['POST'])  # nosonar: Método POST explícito
-# para operación de modificación
+@require_http_methods(["POST"])
+@api_view(['POST'])
 def set_renter_confirmation(request):
     try:
         data = request.data
@@ -277,8 +278,8 @@ def set_renter_confirmation(request):
         )
 
 
-@api_view(['POST'])  # nosonar: Método POST explícito
-# para operación de modificación
+@require_http_methods(["POST"])
+@api_view(['POST'])
 def process_pending_confirmations(request):
     """
     Procesa todas las rentas con estatus pagado y cuya confirmación por parte
