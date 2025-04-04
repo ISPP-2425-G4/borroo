@@ -21,6 +21,11 @@ import {
   DialogContent,
   DialogActions,
   Chip,
+  FormControl, 
+  InputLabel,
+  Select,
+  DialogContentText
+
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
@@ -53,6 +58,10 @@ const Profile = () => {
   const [canReview, setCanReview] = useState(false);
   const [openReportsModal, setOpenReportsModal] = useState(false);
   const [reports, setReports] = useState([]);
+  const [reportados, setReportados] = useState([]);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportCategory, setReportCategory] = useState("");
+  const [reportDescription, setReportDescription] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -67,6 +76,15 @@ const Profile = () => {
   });
 
 
+  useEffect(() => {
+    if(!reports) return;
+    reports.forEach(report => {
+      if(report.reported_user){
+        fetchReportados(report.reported_user);
+      }
+    });
+    console.log("Reportados:", reportados);
+  }, [reports]);
 
   useEffect(() => {
     if (!username) return;
@@ -122,6 +140,74 @@ const Profile = () => {
     fetchReviews();
 
   }, [username, currentUser]);
+
+  const handleReportUser = async () => {
+      try {
+        const activeUser = JSON.parse(localStorage.getItem("user"));
+        if (!activeUser || !activeUser.id) {
+          alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
+          return;
+        }
+        if(!reportCategory || !reportDescription) {
+          alert("Por favor, completa todos los campos.");
+          return;
+        }
+        const reportData = {
+          reporter: currentUser.id,
+          reported_user: user.id,
+          category: reportCategory,
+          description: reportDescription,
+      } 
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/reportes/`,
+        reportData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 201) {
+        alert("¡Reporte enviado correctamente!");
+        setShowReportModal(false);
+        setReportCategory("");
+        setReportDescription("");
+      } 
+  
+       else if(response.status === 200){
+        alert("¡Reporte actualizado correctamente!");
+        setShowReportModal(false);
+        setReportCategory("");
+        setReportDescription("");
+      }
+      
+      else {
+        alert("Hubo un problema al enviar el reporte.");
+      }
+      
+    }catch (error) {
+        alert("Error al enviar el reporte:", error);
+        console.error("Error al enviar el reporte:", error);
+      }
+    };
+  
+
+  const fetchReportados = async (reportadoId) => {
+      if(!reportadoId) return;
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${reportadoId}/`);
+        if (response.status == 200) {
+          const data = response.data;
+          setReportados((prev) => [...prev, data]);
+        }
+
+      } catch (error) {
+        console.error("Error fetching reportados:", error);
+        alert("Error al obtener los reportados.");
+      }finally{
+        console.log("Reportados:", reportados);
+      }
+    };
 
   const handleCloseReportsModal = () => {
     setOpenReportsModal(false);
@@ -377,7 +463,7 @@ const Profile = () => {
               @{user.username}
             </Typography>
 
-            {currentUser.username === user.username && (
+            {currentUser.username === user.username ? (
               <>
                 <Button
                   variant="outlined"
@@ -461,6 +547,16 @@ const Profile = () => {
                   </Paper>
                 )}
               </>
+            ) : (
+              <Button
+                variant="outlined"
+                color="secondary"
+                size="small"
+                onClick={() => setShowReportModal(true)}
+                sx={{ mt: 2, textTransform: "none" }}
+              >
+               Reportar
+              </Button>
             )}
           </Box>
 
@@ -813,7 +909,7 @@ const Profile = () => {
                   </Box>
                   
                   <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1 }}>
-                    Usuario reportado: {report.reported_user}
+                    Usuario reportado: {reportados.find(r => r.id === report.reported_user)?.surname   || "Desconocido"}
                   </Typography>
                   
                   <Typography variant="body2" fontWeight={500} color="text.secondary" sx={{ mb: 1 }}>
@@ -877,6 +973,58 @@ const Profile = () => {
             </Button>
           </DialogActions>
         </Dialog>
+        {showReportModal && (
+                    <Box sx={{width: "100%", display: "flex", justifyContent: "center", alignContent: "center"}}>
+                    <Dialog maxWidth="sm" fullWidth open={showReportModal} onClose={() => setShowReportModal(false)}>
+                    <DialogTitle>Reportar usuario</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        ¿Cual es el motivo del reporte?
+                      </DialogContentText>
+                      <FormControl fullWidth sx={{ mt: 2 }}>
+                        <InputLabel id="reportCategoryLabel">Motivo</InputLabel>
+                        <Select
+                          labelId="reportCategoryLabel"
+                          value={reportCategory}
+                          onChange={(e) => setReportCategory(e.target.value)}
+                          label="Motivo"
+                        >
+                          <MenuItem value="Mensaje de Odio">Mensaje de Odio</MenuItem>
+                          <MenuItem value="Información Engañosa">Información Engañosa</MenuItem>
+                          <MenuItem value="Se hace pasar por otra persona">Se hace pasar por otra persona</MenuItem>
+                          <MenuItem value="Otro">Otro</MenuItem>
+                        </Select>
+                      </FormControl>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="reportDescription"
+                        label="Descripción"
+                        type="text"
+                        fullWidth
+                        variant="outlined"
+                        value={reportDescription}
+                        onChange={(e) => setReportDescription(e.target.value)}
+                        multiline
+                        rows={4}
+                      />
+        
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={() => setShowReportModal(false)} color="primary">
+                        Cancelar
+                      </Button>
+                      <Button
+                        onClick={handleReportUser}
+                        color="error"
+                        disabled={!reportCategory || !reportDescription}
+                      >
+                        Enviar reporte
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </Box>
+                )}
       </Container >
     </>
   );
