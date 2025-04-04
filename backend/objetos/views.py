@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import ItemCategory, CancelType, PriceCategory, ItemSubcategory
+from .models import LikedItem
 from rest_framework.decorators import action
 from django.core.exceptions import ValidationError
 from django.utils.dateparse import parse_date
@@ -429,3 +430,49 @@ class ListItemRequestsView(APIView):
         serializer = ItemRequestSerializer(item_requests, many=True)
         return Response({'results': serializer.data},
                         status=status.HTTP_200_OK)
+
+
+class ToggleLike(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        item_id = kwargs.get('item_id')
+        try:
+            # Obtener el ítem
+            item = Item.objects.get(id=item_id)
+
+            # Buscar o crear el 'like' para el item y el usuario
+            liked_item, created = LikedItem.objects.get_or_create(
+                                        item=item, user=request.user)
+
+            if created:
+                item.num_likes += 1
+                message = "Objeto agregado a favoritos"
+            else:
+                liked_item.delete()
+                item.num_likes -= 1
+                message = "Objeto eliminado de favoritos"
+
+            item.save()
+
+            return Response({"message": message, "num_likes": item.num_likes},
+                            status=status.HTTP_200_OK)
+
+        except Item.DoesNotExist:
+            return Response({"error": "Item no encontrado"},
+                            status=status.HTTP_404_NOT_FOUND)
+
+
+class LikeStatus(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, item_id):
+        try:
+            item = Item.objects.get(id=item_id)
+            liked_item = LikedItem.objects.filter(
+                item=item, user=request.user).exists()
+            return Response({"is_liked": liked_item},
+                            status=status.HTTP_200_OK)
+        except Item.DoesNotExist:
+            return Response({"error": "Item no encontrado"},
+                            status=status.HTTP_404_NOT_FOUND)
