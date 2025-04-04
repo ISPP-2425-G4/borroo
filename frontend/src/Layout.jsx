@@ -185,7 +185,7 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
         (categoria === "" || producto.category_display === categoria) &&
         (subcategoria === "" || producto.subcategory_display === subcategoria) &&
         (producto.price >= rangoPrecio[0] && producto.price <= rangoPrecio[1]) &&
-        (terminoBusqueda === "" || producto.title.toLowerCase().includes(terminoBusqueda.toLowerCase()))
+        (terminoBusqueda === "" || normalizarTexto(producto.title).includes(normalizarTexto(terminoBusqueda)))
       );
     });
     setProductosFiltrados(filtrados);
