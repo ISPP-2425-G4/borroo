@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, CardMedia, Typography, Tooltip, CardActions, Chip, Alert, Snackbar } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Typography, Tooltip, CardActions, Chip } from "@mui/material";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import axios from "axios";
@@ -59,10 +59,6 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
             };
             checkPayment();
         }, [location.search, processedSessionId]);
-
-        const handleCloseNotification = () => {
-            setNotification({ ...notification, open: false });
-          };
 
 
     const handlePayment = async (rentId, precio) => {
