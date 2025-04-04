@@ -35,7 +35,10 @@ import {
   AttachMoney as MoneyIcon, 
   Person as PersonIcon, 
   ChevronLeft as ChevronLeftIcon, 
-  ChevronRight as ChevronRightIcon 
+  ChevronRight as ChevronRightIcon,
+  Favorite as FavoriteIcon, 
+  FavoriteBorder as FavoriteBorderIcon,
+  Whatshot as WhatshotIcon
 } from '@mui/icons-material';
 import Navbar from "./Navbar";
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
@@ -72,6 +75,8 @@ const ShowItemScreen = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [highlighting, setHighlighting] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [numLikes, setNumLikes] = useState(0);
   const [showRequestPopup, setShowRequestPopup] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
   const [reportCategory, setReportCategory] = useState("");
@@ -79,6 +84,7 @@ const ShowItemScreen = () => {
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
   console.log("currentUser", currentUser);
+  const accessToken = localStorage.getItem("access_token");
 
   useEffect(() => {
     const fetchItemData = async () => {
@@ -89,6 +95,7 @@ const ShowItemScreen = () => {
         const data = response.data;
         setItem(data);
         setUnavailabilityPeriods(data.unavailable_periods || []);
+        setNumLikes(data.num_likes || 0);
 
         if (data.user) {
           fetchUserName(data.user);
@@ -102,6 +109,18 @@ const ShowItemScreen = () => {
         if(data.price_category){
           setPriceCategory(data.price_category)
         } 
+
+        const accessToken = localStorage.getItem("access_token");
+        if (accessToken) {
+          const likedResponse = await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/objetos/like-status/${id}/`,
+            { headers: { Authorization: `Bearer ${accessToken}` } }
+          );
+          setIsLiked(likedResponse.data.is_liked || false);
+        } else {
+          setIsLiked(false);
+        }
+
       } catch (error) {
         console.error("Error fetching item:", error);
         setErrorMessage("No se pudo cargar el ítem");
@@ -113,6 +132,32 @@ const ShowItemScreen = () => {
     if (id) fetchItemData();
   }, [id]);
 
+
+  const toggleLike = async () => {
+    if (!item) return;
+  
+    const accessToken = localStorage.getItem("access_token");
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/objetos/like/${item.id}/`,
+        {},
+        {
+          headers: {
+            "Authorization": `Bearer ${accessToken}`,  // Incluir el token de autenticación en las cabeceras
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        setIsLiked(prevState => !prevState);
+        setNumLikes(response.data.num_likes); 
+      }
+    } catch (error) {
+      console.error("Error toggling like:", error);
+      alert("Hubo un error al cambiar el estado del like.");
+    }
+  };
   
   useEffect(() => {
     if (!item) return;
@@ -570,6 +615,43 @@ const ShowItemScreen = () => {
                   </Typography>
                 </Paper>
               )}
+              {accessToken &&
+                <Button sx={{ marginTop: 2 }}
+                  onClick={toggleLike}
+                  variant="outlined"
+                  color={isLiked ? 'error' : 'primary'}
+                  startIcon={isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                >
+                  {isLiked ? "Quitar de favoritos" : "Agregar a favoritos"}
+                </Button>
+                }
+                {numLikes > 1 && (
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      marginTop: 1,
+                      color: 'red',
+                      fontWeight: 'bold',
+                      fontSize: '1.1rem',
+                    }}
+                  >
+                  <WhatshotIcon sx={{ fontSize: 20, marginRight: 1 }} />
+                  ¡Este objeto es de mucho interes entre los usuarios!
+                  </Typography>
+                )}
+                <Typography 
+                  variant="body2"
+                  sx={{
+                    marginTop: 2,
+                    color: '#2563eb',
+                    fontWeight: 'bold',
+                    fontSize: '1rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <FavoriteIcon sx={{ fontSize: 18, marginRight: 1 }} /> El objeto esta guardado en favoritos por {numLikes} usuarios
+                </Typography>
             </Box>
 
             <Box sx={{ flex: '1 1 auto', minWidth: 0 }}>

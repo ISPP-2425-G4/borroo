@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiUser, FiHeart, FiMenu } from "react-icons/fi";
+import { FiUser, FiMenu } from "react-icons/fi";
 import ArticleIcon from '@mui/icons-material/Article';
 import {
   AppBar,
@@ -63,6 +63,7 @@ const Navbar = () => {
       setSaldo(null);
       handleLoginClose();
       navigate('/');
+      window.location.reload();
     }
   };
 
@@ -81,6 +82,7 @@ const Navbar = () => {
       console.error("Error al obtener el saldo del usuario:", error);
     }
   };
+
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -255,14 +257,6 @@ const Navbar = () => {
                 </>
               )}
             </Menu>
-
-            <Tooltip title="Favoritos">
-              <IconButton color="inherit">
-                <Badge badgeContent={0} color="error">
-                  <FiHeart />
-                </Badge>
-              </IconButton>
-            </Tooltip>
 
             <Tooltip title="Borradores">
               <IconButton color="inherit" component={Link} to="/drafts">
