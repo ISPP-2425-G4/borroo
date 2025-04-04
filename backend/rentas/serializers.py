@@ -27,7 +27,7 @@ class RentSerializer(serializers.ModelSerializer):
         if isinstance(end_date, str):
             end_date = datetime.fromisoformat(end_date)
 
-        if start_date and end_date and start_date >= end_date:
+        if start_date and end_date and start_date > end_date:
             raise serializers.ValidationError(
                 {"end_date": "La fecha de fin debe ser posterior '"
                     'a la fecha de inicio."'}
