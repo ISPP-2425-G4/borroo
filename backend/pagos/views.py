@@ -284,7 +284,7 @@ def process_pending_confirmations(request):
     """
     try:
         # Verificar el token
-        token = request.GET.get('token')
+        token = request.data.get('token')
         if token != SCHEDULER_TOKEN:
             return Response(
                 {"error": "Token inválido."},
