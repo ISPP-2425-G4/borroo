@@ -38,3 +38,39 @@ class ChatTests(TestCase):
         self.assertEqual(message.sender, self.user1)
         self.assertEqual(message.receiver, self.user2)
         self.assertEqual(message.content, "¡Hola!")
+
+    def test_unauthorized_user_cannot_send_message(self):
+        outsider = User.objects.create(username="intruso",
+                                       email="intru@test.com")
+        self.client.force_authenticate(user=outsider)
+
+        response = self.client.post(
+            f"/mensajes/chats/{self.chat.id}/send_message/",
+            {"content": "¿Qué pasa?"}, format="json"
+        )
+        self.assertEqual(response.status_code, 404)
+
+    def test_cannot_send_empty_message(self):
+        self.client.force_authenticate(user=self.user1)
+
+        response = self.client.post(
+            f"/mensajes/chats/{self.chat.id}/send_message/",
+            {"content": ""}, format="json"
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("error", response.data)
+
+    def test_message_saved_correctly(self):
+        self.client.force_authenticate(user=self.user1)
+        content = "Hola, ¿todo bien?"
+
+        self.client.post(
+            f"/mensajes/chats/{self.chat.id}/send_message/",
+            {"content": content}, format="json"
+        )
+
+        message = Message.objects.first()
+        self.assertEqual(message.sender, self.user1)
+        self.assertEqual(message.receiver, self.user2)
+        self.assertEqual(message.chat, self.chat)
+        self.assertEqual(message.content, content)
