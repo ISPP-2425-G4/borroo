@@ -221,7 +221,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                                 variant="contained"
                                 color="primary"
                                 size="small"
-                                onClick={() => handlePayment(request.id, request.item.price)}
+                                onClick={() => handlePayment(request.id, request.total_price)}
                                 disabled={loading} 
                             >
                                 Pagar
