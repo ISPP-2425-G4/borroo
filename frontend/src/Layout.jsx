@@ -32,6 +32,7 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import StarIcon from '@mui/icons-material/Star';
 // import AdSenseComponent from "./components/AdSense";
 import AdSenseMock from "./components/AdSenseMock";
+import PersonIcon from '@mui/icons-material/Person';
 
 const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -1254,24 +1255,24 @@ const toggleLike = async (productoId) => {
                                   "&:last-child": { pb: 3 }
                                 }}
                               >
-                                <Typography 
-                                  variant="h6" 
-                                  sx={{ 
-                                    fontWeight: 600,
-                                    mb: 1,
-                                    fontSize: '1rem',
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
-                                    display: '-webkit-box',
-                                    WebkitLineClamp: 2,
-                                    WebkitBoxOrient: 'vertical',
-                                    lineHeight: 1.3,
-                                    height: '2.6em'
-                                  }}
-                                >
-                                  {producto.title}
-                                </Typography>
-                                
+                                  <Typography 
+                                    variant="h6" 
+                                    sx={{ 
+                                      fontWeight: 600,
+                                      mb: 1,
+                                      fontSize: '1rem',
+                                      overflow: "hidden",
+                                      textOverflow: "ellipsis",
+                                      display: '-webkit-box',
+                                      WebkitLineClamp: 2,
+                                      WebkitBoxOrient: 'vertical',
+                                      lineHeight: 1.3,
+                                      height: '2.6em',
+                                      minWidth: 0,
+                                    }}
+                                  >
+                                    {producto.title}
+                                  </Typography>
                                 <Box sx={{ 
                                   display: "flex", 
                                   justifyContent: "space-between", 
@@ -1336,12 +1337,59 @@ const toggleLike = async (productoId) => {
                                     {truncarDescripcion(producto.description, 80)}
                                   </Typography>
                                 </Tooltip>
-                                  <Box display="flex" alignItems="center" gap={0.5}>
-                                    <FavoriteIcon fontSize="small" sx={{ color: 'red' }} />
+                                <Link to={`/perfil/${producto.user_username}`} style={{ textDecoration: 'none' }}>
+                                    <Box 
+                                    sx={{ 
+                                      display: 'flex', 
+                                      alignItems: 'center',
+                                      '&:hover': {
+                                          cursor: 'pointer',
+                                        },
+                                     }}>
+                                      <IconButton
+                                        sx={{
+                                          bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                          '&:hover': {
+                                            bgcolor: 'white',
+                                          },
+                                          zIndex: 1,
+                                          marginRight: 1,
+                                        }}
+                                      >
+                                        <PersonIcon fontSize="small" sx={{ color: 'blue' }} />
+                                      </IconButton>
+                                      <Typography 
+                                        sx={{
+                                          bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                          '&:hover': {
+                                            bgcolor: 'white',
+                                            textDecoration: 'underline',
+                                          },
+                                          zIndex: 1,
+                                        }}
+                                      >
+                                        {producto.user_name} {producto.user_surname}
+                                      </Typography>
+                                    </Box>
+                                  </Link>
+                                <Box display="flex" alignItems="center" gap={0.5}>
+                                  <IconButton
+                                          sx={{
+                                            bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                            '&:hover': {
+                                              bgcolor: 'white',
+                                            },
+                                            zIndex: 1,
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                          }}
+                                        >
+                                    <FavoriteIcon fontSize="small" sx={{ color: 'red', marginRight: 0.5 }} />
                                     <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
                                       {producto.num_likes}
                                     </Typography>
-                                  </Box>
+                                  </IconButton>
+                                </Box>
                               </CardContent>
                             </Card>
                           </Link>
