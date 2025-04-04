@@ -88,7 +88,39 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
         } catch (error) {
             setNotification({ open: true, message: "Ha ocurrido un error al procesar el pago" +  error, severity: "error" });
         }
-    }
+    };
+    const handleConfirmRental = async (rentId) => {
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/pagos/set-renter-confirmation/`, {
+                rent_id: rentId,
+                user_id: user.id,
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+    
+            if (response.data.status === "success") {
+                setNotification({
+                    open: true,
+                    message: "¡Gracias por confirmar el alquiler!",
+                    severity: "success",
+                });
+    
+                // Recargar la página después de un breve retraso
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000); // Espera 2 segundos antes de recargar
+            }
+        } catch (error) {
+            console.error(error);
+            setNotification({
+                open: true,
+                message: "Error al confirmar el alquiler.",
+                severity: "error",
+            });
+        }
+    };
 
 
     
@@ -153,7 +185,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                                     color: request.rent_status === "cancelled" ? "white" : "inherit",
                                 }}
                             />
-                            )}
+                        )}
                     </Typography>
                     {isOwner && (
                         <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
@@ -188,8 +220,6 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                                     }}
                                 >
                                     {request.renter.name} {request.renter.surname}
-                                    {/* TODO añadir en el modelo de la renta el campo owner para poder serializarlo
-                                    y poner "solicitado a", de momento se deja así */}
                                 </a>
                             </Tooltip>
                         </Typography>
@@ -214,6 +244,35 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                             minute: '2-digit'
                         })}
                     </Typography>
+
+                    {/* Pregunta si el alquiler ha ido bien si la fecha de fin ya pasó */}
+                {new Date(request.end_date) < new Date() &&
+                    ((user.id === request.renter.id && !request.paid_pending_confirmation?.is_confirmed_by_renter) || 
+                    (user.id === request.item.user && !request.paid_pending_confirmation?.is_confirmed_by_owner)) && (
+                        <Box sx={{ mt: 2 }}>
+                            <Typography variant="body2" sx={{ mb: 1 }}>
+                                ¿El alquiler ha ido bien?
+                            </Typography>
+                            <Box sx={{ display: "flex", gap: 2 }}>
+                                <Button
+                                    variant="contained"
+                                    color="success"
+                                    size="small"
+                                    onClick={() => handleConfirmRental(request.id)} // Llama a la función con el ID de la renta
+                                >
+                                    ✅
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="error"
+                                    size="small"
+                                >
+                                    ❌
+                                </Button>
+                            </Box>
+                        </Box>
+                    )}
+
                     <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
                         {/* Si el estatus es 'aceptado' y el pago está pendiente, mostramos el botón de pago */}
                         {!isOwner && request.rent_status === "accepted" && request.payment_status === "pending" && (
@@ -243,18 +302,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                         >
                             Rechazar
                         </Button> }
-                             <Snackbar 
-                                    open={notification.open} 
-                                    autoHideDuration={6000} 
-                                    onClose={handleCloseNotification}
-                                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                                  >
-                                    <Alert onClose={handleCloseNotification} severity={notification.severity} sx={{ width: '100%' }}>
-                                      {notification.message}
-                                    </Alert>
-                                  </Snackbar>
                     </Box>
-
                 </CardContent>
             </Card>
         ))}
