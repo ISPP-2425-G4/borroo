@@ -30,7 +30,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 
-
 const Profile = () => {
   const { username } = useParams();
   const [user, setUser] = useState(null);
@@ -40,7 +39,13 @@ const Profile = () => {
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const [userReview, setUserReview] = useState(null);
-  const [currentUser] = useState(() => JSON.parse(localStorage.getItem("user")));
+  const [currentUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("user")) || null;
+    } catch {
+      return null;
+    }
+  });
   const [editMode, setEditMode] = useState(false);
   const [draftItems, setDraftItems] = useState([]);
   const [canReview, setCanReview] = useState(false);
@@ -56,8 +61,6 @@ const Profile = () => {
     pricing_plan: "free",
     dni: "",
   });
-
-
 
   useEffect(() => {
     if (!username) return;
@@ -95,14 +98,16 @@ const Profile = () => {
         );
         setReviews(response.data);
 
-        const existingReview = response.data.find(
-          (review) => review.reviewer_username === currentUser.username
-        );
+        if (currentUser) {
+          const existingReview = response.data.find(
+            (review) => review.reviewer_username === currentUser.username
+          );
 
-        if (existingReview) {
-          setUserReview(existingReview);
-          setReviewText(existingReview.comment);
-          setRating(existingReview.rating);
+          if (existingReview) {
+            setUserReview(existingReview);
+            setReviewText(existingReview.comment);
+            setRating(existingReview.rating);
+          }
         }
       } catch (error) {
         console.error("Error cargando las reseñas:", error);
@@ -111,7 +116,6 @@ const Profile = () => {
 
     fetchProfile();
     fetchReviews();
-
   }, [username, currentUser]);
 
   useEffect(() => {
@@ -135,6 +139,7 @@ const Profile = () => {
 
     checkIfHasRented();
   }, [username, currentUser]);
+
 
 
   useEffect(() => {
@@ -345,7 +350,7 @@ const Profile = () => {
               @{user.username}
             </Typography>
 
-            {currentUser.username === user.username && (
+            {currentUser?.username === user.username && (
               <>
                 <Button
                   variant="outlined"
@@ -493,7 +498,7 @@ const Profile = () => {
 
           {/* 📌 PRODUCTOS EN ALQUILER */}
           <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
-            {currentUser.username === user.username
+            {currentUser?.username === user.username
               ? "Mis artículos en alquiler"
               : `Productos en alquiler de ${user.name}`}
           </Typography>
@@ -534,7 +539,7 @@ const Profile = () => {
             </Typography>
           )}
 
-          {currentUser.username === user.username && (
+          {currentUser?.username === user.username && (
             <>
               <Divider sx={{ my: 3 }} />
 
@@ -585,7 +590,7 @@ const Profile = () => {
           )}
 
           {/* 📌 FORMULARIO PARA DEJAR RESEÑA (solo si es otro perfil y puede opinar) */}
-          {currentUser.username !== user.username && canReview && (
+          {currentUser?.username !== user.username && canReview && (
             <>
               <Divider sx={{ my: 3 }} />
               <Typography variant="h6">
@@ -637,7 +642,7 @@ const Profile = () => {
           {/* 📌 RESEÑAS DE OTROS USUARIOS (SIEMPRE VISIBLE) */}
           <Box sx={{ mt: 4, textAlign: "left" }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
-              {currentUser.username === user.username
+              {currentUser?.username === user.username
                 ? "Mis reseñas recibidas:"
                 : "Reseñas de otros usuarios:"}
             </Typography>
@@ -663,7 +668,7 @@ const Profile = () => {
           </Box>
 
           {/* 📌 BOTONES DE ADMINISTRADOR */}
-          {currentUser?.is_admin && currentUser.username !== user.username && (
+          {currentUser?.is_admin && currentUser?.username !== user.username && (
             <>
               <Box sx={{ mt: 3, display: "flex", justifyContent: "center", gap: 2 }}>
                 <Button
