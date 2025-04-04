@@ -1,12 +1,17 @@
 from decimal import Decimal
 import stripe
 from django.conf import settings
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework import serializers
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rentas.models import Rent, PaymentStatus
 from usuarios.models import User
 import json
 import os
+from pagos.models import PaidPendingConfirmation
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 frontend_base_url = os.getenv("RECOVER_PASSWORD")
@@ -70,13 +75,13 @@ def confirm_rent_checkout(request, session_id):
             if rent_id and user_id:
                 try:
                     renta = Rent.objects.get(id=rent_id)
-                    owner = renta.item.user  # Obtener el propietario del item
-                    total_price = Decimal(str(renta.total_price))
-                    commission = Decimal(str(renta.commission))
 
-                    # Actualizar saldo del owner
-                    owner.saldo += (total_price - commission)
-                    owner.save()
+                    # Crear un registro de PaidPendingConfirmation
+                    PaidPendingConfirmation.objects.create(
+                        rent=renta,
+                        is_confirmed_by_owner=None,
+                        is_confirmed_by_renter=None
+                    )
 
                     # Marcar la renta como pagada
                     renta.payment_status = PaymentStatus.PAID
@@ -180,3 +185,120 @@ def confirm_subscription_checkout(request, session_id):
             return JsonResponse({'status': 'unpaid'}, status=402)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
+
+
+@api_view(['POST'])
+def set_renter_confirmation(request):
+    try:
+        data = request.data
+        rent_id = data.get('rent_id')
+        user_id = data.get('user_id')
+
+        # Obtener la renta
+        rent = Rent.objects.get(id=rent_id)
+
+        confirmation = (
+            PaidPendingConfirmation.objects.filter(rent=rent).first()
+        )
+
+        if not confirmation:
+            return Response(
+                {
+                    "error": (
+                        "No se encontró un registro de "
+                        "PaidPendingConfirmation para esta renta."
+                    )
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        # Verificar si el user_id corresponde al renter
+        if user_id == rent.renter.id:
+            # Establecer is_confirmed_by_renter a True
+            confirmation.is_confirmed_by_renter = True
+            confirmation.save()
+
+            # Procesar la confirmación del pago
+            process_payment_confirmation(confirmation)
+
+            return Response(
+                {
+                    "status": "success",
+                    "message": (
+                        "Confirmación registrada correctamente por el "
+                        "arrendatario."
+                    )
+                },
+                status=status.HTTP_200_OK
+            )
+
+        # Verificar si el user_id corresponde al propietario del ítem
+        elif user_id == rent.item.user.id:
+            # Establecer is_confirmed_by_owner a True
+            confirmation.is_confirmed_by_owner = True
+            confirmation.save()
+
+            return Response(
+                {
+                    "status": "success",
+                    "message": (
+                        "Confirmación registrada correctamente por el "
+                        "propietario."
+                    )
+                },
+                status=status.HTTP_200_OK
+            )
+
+        # Si el user_id no coincide con ninguno, lanzar una excepción
+        else:
+            return Response(
+                {
+                    "error": (
+                        "El usuario no tiene permisos para confirmar esta "
+                        "renta."
+                    )
+                },
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+    except Rent.DoesNotExist:
+        return Response(
+            {"error": "Renta no encontrada."},
+            status=status.HTTP_404_NOT_FOUND
+        )
+    except Exception as e:
+        return Response(
+            {"error": str(e)},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+
+def process_payment_confirmation(confirmation):
+    """
+    Procesa la confirmación del pago actualizando el saldo del propietario.
+    """
+    # Validar que is_confirmed_by_renter sea True
+    if not confirmation.is_confirmed_by_renter:
+        raise serializers.ValidationError(
+            "El pago no puede ser confirmado porque el arrendatario no lo ha "
+            "confirmado."
+        )
+
+    # Obtener el propietario del ítem a través de la trazabilidad
+    renta = confirmation.rent
+    owner = renta.item.user  # Obtener el propietario del ítem
+    total_price = Decimal(str(renta.total_price))
+    commission = Decimal(str(renta.commission))
+
+    # Actualizar saldo del propietario
+    owner.saldo += (total_price - commission)
+    owner.save()
+
+    return {
+        "status": "success",
+        "message": (
+            f"El saldo del propietario {owner.username} "
+            "ha sido actualizado."
+        ),
+        "new_balance": owner.saldo,
+    }

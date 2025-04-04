@@ -5,6 +5,7 @@ from .views import (
      confirm_rent_checkout,
      create_subscription_checkout,
      confirm_subscription_checkout,
+     set_renter_confirmation,
 )
 
 urlpatterns = [
@@ -14,5 +15,10 @@ urlpatterns = [
           name='confirmar_pago'),
      path('create-subscription-checkout/', create_subscription_checkout),
      path('confirm-subscription/<str:session_id>/',
-          confirm_subscription_checkout)
+          confirm_subscription_checkout),
+     path(
+         'set-renter-confirmation/',
+         set_renter_confirmation,
+         name='set_renter_confirmation',
+     ),
 ]
