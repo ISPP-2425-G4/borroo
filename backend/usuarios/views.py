@@ -546,15 +546,36 @@ class CreateItemView(APIView):
 
 
 class UpdateItemView(APIView):
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated] 
 
     def put(self, request, *args, **kwargs):
-        serializer = ItemSerializer(data=request.user)
-        if serializer.is_valid():
-            item = serializer.save(user=request.user)
-            return Response(ItemSerializer(item).data,
-                            status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # Recuperamos el objeto a actualizar
+        try:
+            item = self.get_object()  
+        except Item.DoesNotExist:
+            return Response({"detail": "Ítem no encontrado."},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        # Verificamos si el usuario es el propietario o un administrador
+        if item.user != request.user and not request.user.is_staff:
+            return Response(
+                {"detail": "No tienes permiso para actualizar este ítem."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Actualizamos los datos del ítem
+        data = request.data.copy()
+        data['user'] = request.user.id  
+
+        # Usamos el serializador para validar y guardar
+        serializer = self.get_serializer(item, data=data, partial=True)
+        serializer.is_valid(raise_exception=True)
+
+        self.handle_unavailable_periods(
+            serializer.save(), request.data.get("unavailable_periods", [])
+        )
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class DeleteItemView(APIView):
