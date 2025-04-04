@@ -159,6 +159,7 @@ const ShowItemScreen = () => {
     }
   };
 
+
   const toggleFeature = () => {
     if (!item) return;
     setHighlighting(true);
@@ -218,7 +219,7 @@ const ShowItemScreen = () => {
       setReportDescription("");
     } 
 
-    if(response.status === 200){
+     else if(response.status === 200){
       alert("¡Reporte actualizado correctamente!");
       setShowReportModal(false);
       setReportCategory("");
@@ -618,7 +619,7 @@ const ShowItemScreen = () => {
                     )}
                   </Box>
                   </Box>
-                  {!isOwner && (
+                  {!isOwner && isAuthenticated && (
                     <Box sx={{ display: 'flex', gap: 1 }}>
                       <Button color="error" onClick={() => setShowReportModal(true)}>Reportar</Button>
                     </Box>
