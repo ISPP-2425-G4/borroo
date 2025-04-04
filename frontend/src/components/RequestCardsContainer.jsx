@@ -41,7 +41,6 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                         }
                         , 5000);
                     }
-                    checkPayment();
 
                 } catch (error) {
                     console.error(error);   
