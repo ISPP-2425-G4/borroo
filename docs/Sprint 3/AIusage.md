@@ -75,14 +75,16 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 
 | ID   | Uso (Descripción)       | Nombre del Miembro | Fecha       | Enlace al Chat |
 |------|-------------------------|--------------------|------------|---------------|
+| 001  | Información sobre IA generativa para vídeos   | Javier García Rodríguez       | 03/04/2025 | [Ver chat](https://chatgpt.com/share/67ef3261-fa0c-8001-9856-d29d051e270e) |
+| 002  | Resolución de bugs en código  | Javier García Rodríguez       | 03/04/2025 | [Ver chat](https://chatgpt.com/share/67ef32e4-70fc-8001-8a36-78e209045a65) |
 
-
-
+https://chatgpt.com/share/67ef32e4-70fc-8001-8a36-78e209045a65
 ------------------------------------------------------------------
 
 | ID   | Tipo de prompt          | Útil (Sí/No) | Tiempo Ahorrado |
 |------|---------------------------|--------------|-----------------|
-
+| 001  | Solicitud de información     | Sí           | 40 min          |
+| 002  | Detección de bugs     | Sí           | 40 min          |
 
 ## 4. Alucinaciones de la IA
 
@@ -90,7 +92,7 @@ Para calcular el porcentaje de alucinaciones de las inteligencias artificiales u
 
 | Desarrollador | Usos | % Alucinaciones |
 |----|------|------------|
-
+| 1  |   6  | 16%  |
 
 ### Cálculo de las alucinaciones por IA
 
@@ -98,7 +100,8 @@ Para calcular el porcentaje de alucinaciones de las inteligencias artificiales u
 Para calcular el porcentaje de alucinaciones de las inteligencias artificiales usadas, se ha determinado por obtener el porcentaje medio de alucinaciones, calculando la media aritmética de los valores registrados en la columna "% Alucinaciones". La fórmula utilizada es:
 
 
-![Fórmula](https://cdn.discordapp.com/attachments/1354928711962464327/1354928723635339299/image.png?ex=67e71335&is=67e5c1b5&hm=e62e4c3f84b6f63367a68116be8e2997a86f469705446b7f7163bf73e65a59eb&)
+![Fórmula](../imagenes/formula.png)
+
 
 Donde:
 - Xi representa cada uno de los valores de porcentaje de alucinaciones.
