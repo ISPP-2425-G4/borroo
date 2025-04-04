@@ -301,7 +301,7 @@ const ShowItemScreen = () => {
       else if (priceCategory === "day" && dateRange[0].startDate && dateRange[0].endDate) {
         // Usar las fechas seleccionadas para alquiler por días
         startDateUTC = dayjs(dateRange[0].startDate).format("YYYY-MM-DD");
-        endDateUTC = dayjs(dateRange[0].endDate).format("YYYY-MM-DD");
+        endDateUTC = dayjs(dateRange[0].endDate).hour(23).minute(59).second(59).format("YYYY-MM-DDTHH:mm:ss");
       } 
       else if (priceCategory === "month" && selectedDay && selectedMonths) {
         // Construir fechas para alquiler por meses
