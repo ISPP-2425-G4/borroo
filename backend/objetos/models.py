@@ -33,7 +33,7 @@ class ItemSubcategory(models.TextChoices):
     PRINTERS_SCANNERS = ('printers_scanners', 'Impresoras y escáneres')
     DRONES = ('drones', 'Drones')
     PROJECTORS = ('projectors', 'Proyectores')
-    TECHNOLOGY__OTHERS = ('technology__others', 'Otros (Tecnología)')
+    TECHNOLOGY__OTHERS = ('technology_others', 'Otros (Tecnología)')
 
     # SPORTS
     CYCLING = ('cycling', 'Ciclismo')

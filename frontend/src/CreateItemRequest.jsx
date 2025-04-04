@@ -251,7 +251,7 @@ const CreateItemRequestView = () => {
         { value: "printers_scanners", label: "Impresoras y escáneres" },
         { value: "drones", label: "Drones" },
         { value: "projectors", label: "Proyectores" },
-        { value: "technology_others", label: "Otros" },
+        { value: "technology_others", label: "Otros (Tecnología)" },
         { value: "none", label: "Ninguno" },
 
       ];
