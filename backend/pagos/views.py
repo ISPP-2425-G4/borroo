@@ -190,7 +190,8 @@ def confirm_subscription_checkout(request, session_id):
         return JsonResponse({'error': str(e)}, status=400)
 
 
-@api_view(['POST'])
+@api_view(['POST'])  # nosonar: Método POST explícito
+# para operación de modificación
 def set_renter_confirmation(request):
     try:
         data = request.data
@@ -276,7 +277,8 @@ def set_renter_confirmation(request):
         )
 
 
-@api_view(['POST'])
+@api_view(['POST'])  # nosonar: Método POST explícito
+# para operación de modificación
 def process_pending_confirmations(request):
     """
     Procesa todas las rentas con estatus pagado y cuya confirmación por parte
