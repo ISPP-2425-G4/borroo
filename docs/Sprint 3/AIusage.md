@@ -78,7 +78,6 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 | 001  | Información sobre IA generativa para vídeos   | Javier García Rodríguez       | 03/04/2025 | [Ver chat](https://chatgpt.com/share/67ef3261-fa0c-8001-9856-d29d051e270e) |
 | 002  | Resolución de bugs en código  | Javier García Rodríguez       | 03/04/2025 | [Ver chat](https://chatgpt.com/share/67ef32e4-70fc-8001-8a36-78e209045a65) |
 
-https://chatgpt.com/share/67ef32e4-70fc-8001-8a36-78e209045a65
 ------------------------------------------------------------------
 
 | ID   | Tipo de prompt          | Útil (Sí/No) | Tiempo Ahorrado |
