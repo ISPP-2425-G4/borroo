@@ -20,6 +20,7 @@ import '../public/styles/App.css';
 import FAQ from './components/Faq';
 import AdminDashboard from "./AdminDashboard";
 import VerificarEmail from "./VerifyEmail";
+import AdminReportsDashboard from "./AdminReportsDashboard";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
           <Route path="/create_item_request" element={<CreateItemRequest />} />
           <Route path="/dashboard" element={<AdminDashboard />} />
           <Route path="/verifyEmail" element={<VerificarEmail />} />
+          <Route path="/reports-dashboard" element={<AdminReportsDashboard />} />
 
         </Routes>
         <Footer />
