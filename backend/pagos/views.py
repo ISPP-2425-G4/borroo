@@ -1,5 +1,7 @@
 from decimal import Decimal
 import stripe
+from datetime import timedelta
+from django.utils.timezone import now
 from django.conf import settings
 from rest_framework.response import Response
 from rest_framework import status
@@ -13,6 +15,7 @@ import json
 import os
 from pagos.models import PaidPendingConfirmation
 
+SCHEDULER_TOKEN = os.getenv("SCHEDULER_TOKEN")
 stripe.api_key = settings.STRIPE_SECRET_KEY
 frontend_base_url = os.getenv("RECOVER_PASSWORD")
 
@@ -266,6 +269,56 @@ def set_renter_confirmation(request):
             {"error": "Renta no encontrada."},
             status=status.HTTP_404_NOT_FOUND
         )
+    except Exception as e:
+        return Response(
+            {"error": str(e)},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+
+
+@api_view(['POST'])
+def process_pending_confirmations(request):
+    """
+    Procesa todas las rentas con estatus pagado y cuya confirmación por parte
+    del arrendatario sea nula, y hayan pasado más de dos días desde su fin.
+    """
+    try:
+        # Verificar el token
+        token = request.GET.get('token')
+        if token != SCHEDULER_TOKEN:
+            return Response(
+                {"error": "Token inválido."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        # Obtener la fecha límite (hace 2 días desde hoy)
+        two_days_ago = now() - timedelta(days=2)
+
+        # Filtrar las rentas con las condiciones especificadas
+        rents = Rent.objects.filter(
+            payment_status=PaymentStatus.PAID,
+            paid_pending_confirmation__is_confirmed_by_renter=None,
+            end_date__lte=two_days_ago
+        )
+
+        # Procesar cada renta
+        for rent in rents:
+            confirmation = rent.paid_pending_confirmation
+            if confirmation:
+                # Marcar is_confirmed_by_renter como True automáticamente
+                confirmation.is_confirmed_by_renter = True
+                confirmation.save()
+
+                # Llamar a la función process_payment_confirmation
+                process_payment_confirmation(confirmation)
+
+        return Response(
+            {
+                "status": "success",
+                "message": f"Se procesaron {rents.count()} rentas pendientes."
+            },
+            status=status.HTTP_200_OK
+        )
+
     except Exception as e:
         return Response(
             {"error": str(e)},

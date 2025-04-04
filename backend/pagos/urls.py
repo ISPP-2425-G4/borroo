@@ -6,6 +6,7 @@ from .views import (
      create_subscription_checkout,
      confirm_subscription_checkout,
      set_renter_confirmation,
+     process_pending_confirmations,
 )
 
 urlpatterns = [
@@ -20,5 +21,10 @@ urlpatterns = [
          'set-renter-confirmation/',
          set_renter_confirmation,
          name='set_renter_confirmation',
+     ),
+     path(
+         'process-pending-confirmations/',
+         process_pending_confirmations,
+         name='process_pending_confirmations',
      ),
 ]
