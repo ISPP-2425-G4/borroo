@@ -165,7 +165,9 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                             size="small"
                             sx={{
                                 ml: 2,
-                                backgroundColor: request.payment_status === "cancelled" ? "red" : request.payment_status === "paid" ? "green" : "default",
+                                backgroundColor: request.payment_status === "cancelled" ? "red" :
+                                    request.payment_status === "paid" ? "green" : 
+                                    request.payment_status === "pending" ? "#FCB454" : "default", // "#FCB454" es naranja
                                 color: request.payment_status === "cancelled"  || request.payment_status === "paid" ? "white" : "inherit",
                             }}
                         />
