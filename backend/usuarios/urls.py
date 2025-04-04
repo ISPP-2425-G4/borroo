@@ -8,6 +8,7 @@ from .views import DeleteUserView, GetUserView, UpdateItemView
 from .views import DeleteItemView, DeleteRentView, UpdateRentView
 from .views import check_username, check_email, UserProfileView, UserViewSet
 from .views import CreateSuperuserView, UpdateUserView, VerifyEmailView
+from .views import ReportViewSet
 
 from . import views
 
@@ -16,6 +17,7 @@ app_name = "app"
 # Configura el router
 router = DefaultRouter()
 router.register(r'full', UserViewSet, basename='user')
+router.register(r'reportes', ReportViewSet, )
 
 urlpatterns = [
     path('', include(router.urls)),
