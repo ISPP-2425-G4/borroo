@@ -190,7 +190,8 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
     });
     setProductosFiltrados(filtrados);
 
-    if (categoria || subcategoria || terminoBusqueda || mostrarSoloLiked) {
+    if (categoria || subcategoria || terminoBusqueda || mostrarSoloLiked || 
+      rangoPrecio[0] !== 0 || rangoPrecio[1] !== 99999) {
       setCurrentPage(1);
     }
   }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda, mostrarSoloLiked]);
