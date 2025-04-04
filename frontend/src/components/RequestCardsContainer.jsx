@@ -10,6 +10,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
 
     const user = JSON.parse(localStorage.getItem("user"));
     const [loading, setLoading] = useState(false);
+    const [processedSessionId, setProcessedSessionId] = useState(null); // Estado para rastrear el sessionId procesado
     const [notification, setNotification] =  useState({ open: false, message: "", severity: "success" });
     const statusTranslations = {
         requested: "Solicitada",
@@ -25,11 +26,12 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
         const checkPayment = async () => {
             const params = new URLSearchParams(location.search);
             const sessionId = params.get("session_id");
-            if(sessionId){
+            if(sessionId && sessionId !== processedSessionId){
                 try {
                     const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/pagos/confirm-rent/${sessionId}/`)
                     if(response.data.status === "success"){
                         window.history.replaceState({}, "", "/rental_requests");
+                        window.location.reload();
                         setNotification({
                           open: true,
                           message: "¡Pago completado con éxito!",
@@ -40,6 +42,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                           setNotification({ ...notification, open: false });
                         }
                         , 5000);
+                        setProcessedSessionId(sessionId);
                     }
 
                 } catch (error) {
@@ -50,12 +53,12 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                         severity: "error",
                     });
                     setTimeout(() => 
-                        setNotification(null),5000);
+                        setNotification({ ...notification, open: false }), 5000);
                     } 
                 }
             };
             checkPayment();
-        }, [location.search]);
+        }, [location.search, processedSessionId]);
 
         const handleCloseNotification = () => {
             setNotification({ ...notification, open: false });
