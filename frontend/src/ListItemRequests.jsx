@@ -20,6 +20,7 @@ import {
 import { Link } from "react-router-dom";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import axios from 'axios';
+import PersonIcon from '@mui/icons-material/Person';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import CloseIcon from '@mui/icons-material/Close';
@@ -702,6 +703,9 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                           >
                             <Box
                               sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
                                 backgroundColor: '#2563eb',
                                 color: 'white',
                                 padding: '12px 16px',
@@ -709,7 +713,28 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                                 fontSize: '1.1rem',
                               }}
                             >
-                              {producto.title}
+                              <span>{producto.title}</span>
+                              <Box
+                                component={Link} 
+                                to={`/perfil/${producto.user_username}`}
+                                sx={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: '6px',
+                                  border: '2px solid white',
+                                  borderRadius: '8px',
+                                  padding: '4px 8px',
+                                  textDecoration: 'none',
+                                  color: 'inherit',
+                                  transition: 'background-color 0.3s',
+                                  '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' },
+                                }}
+                              >
+                                <PersonIcon sx={{ fontSize: '1.2rem' }} />
+                                <span style={{ fontSize: '1rem', fontWeight: 'normal' }}>
+                                  {producto.user_name} {producto.user_surname}
+                                </span>
+                              </Box>
                             </Box>
                         
                             <CardContent sx={{ p: 2.5 }}>
