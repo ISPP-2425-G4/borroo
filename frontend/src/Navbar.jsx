@@ -237,7 +237,7 @@ const Navbar = () => {
                       <MenuItem onClick={() => { handleLoginClose(); navigate('/dashboard'); }}>
                         Dashboard
                       </MenuItem>
-                      <MenuItem onClick={() => { navigate('/admin'); }}>
+                      <MenuItem onClick={() => { navigate('/reports-dashboard'); }}>
                         Gestionar reportes
                       </MenuItem>
                     </>
