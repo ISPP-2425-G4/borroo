@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from objetos.serializers import ItemSerializer
-from .models import Review, User
+from .models import Review, User, Report
 import re
 
 
@@ -117,3 +117,10 @@ class RegisterSerializer(serializers.ModelSerializer):
                 "letra."
             )
         return value
+
+
+class ReportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Report
+        fields = ['id', 'reporter', 'reported_user', 'description',
+                  'created_at', 'category', 'status']
