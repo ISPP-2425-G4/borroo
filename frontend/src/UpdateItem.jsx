@@ -229,6 +229,18 @@ const UpdateItemScreen = () => {
       errors.description = "La descripción debe comenzar con una letra.";
     }
 
+    if(!formData.category) {
+      errors.category = "La categoría es obligatoria.";
+    } else if (!options.categories.map((opt) => opt.value).includes(formData.category)) {
+      errors.category = "Selecciona una categoría válida.";
+    }
+
+    if(!formData.subcategory) {
+      errors.subcategory = "La subcategoría es obligatoria.";
+    } else if (!filteredSubcategories.map((opt) => opt.value).includes(formData.subcategory)) {
+      errors.subcategory = "Selecciona una subcategoría válida.";
+    }
+
     if (!formData.price) {
       errors.price = "El precio es obligatorio.";
     } else if (isNaN(formData.price) || parseFloat(formData.price) <= 0) {

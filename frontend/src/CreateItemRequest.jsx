@@ -392,6 +392,12 @@ const CreateItemRequestView = () => {
       errors.category = "Selecciona una categoría válida.";
     }
 
+    if(!formData.subcategory) {
+      errors.subcategory = "La subcategoría es obligatoria.";
+    } else if (!filteredSubcategories.map((opt) => opt.value).includes(formData.subcategory)) {
+      errors.subcategory = "Selecciona una subcategoría válida.";
+    }
+
     if(!formData.cancel_type) {
       errors.cancel_type = "La política de cancelación es obligatoria.";
     } else if (!options.cancel_types.map((opt) => opt.value).includes(formData.cancel_type)) {
