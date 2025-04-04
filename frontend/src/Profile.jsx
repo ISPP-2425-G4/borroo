@@ -144,7 +144,7 @@ const Profile = () => {
   const handleReportUser = async () => {
       try {
         const activeUser = JSON.parse(localStorage.getItem("user"));
-        if (!activeUser || !activeUser.id) {
+        if (!activeUser ) {
           alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
           return;
         }

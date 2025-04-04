@@ -189,7 +189,7 @@ const ShowItemScreen = () => {
   const handleReportUser = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
-      if (!user || !user.id) {
+      if (!user) {
         alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
         return;
       }
