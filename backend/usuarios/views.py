@@ -537,21 +537,23 @@ class CreateItemView(APIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
 
     def post(self, request, *args, **kwargs):
-        serializer = ItemSerializer(data=request.data)
+        serializer = ItemSerializer(data=request.data, context={'request':
+                                                                request})
         if serializer.is_valid():
             item = serializer.save(user=request.user)
-            return Response(ItemSerializer(item).data,
+            return Response(ItemSerializer(item, context={'request': request})
+                            .data,
                             status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UpdateItemView(APIView):
-    permission_classes = [IsAuthenticated] 
+    permission_classes = [IsAuthenticated]
 
     def put(self, request, *args, **kwargs):
         # Recuperamos el objeto a actualizar
         try:
-            item = self.get_object()  
+            item = self.get_object()
         except Item.DoesNotExist:
             return Response({"detail": "Ítem no encontrado."},
                             status=status.HTTP_404_NOT_FOUND)
@@ -565,7 +567,7 @@ class UpdateItemView(APIView):
 
         # Actualizamos los datos del ítem
         data = request.data.copy()
-        data['user'] = request.user.id  
+        data['user'] = request.user.id
 
         # Usamos el serializador para validar y guardar
         serializer = self.get_serializer(item, data=data, partial=True)
