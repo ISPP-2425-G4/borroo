@@ -221,6 +221,12 @@ const Messages = () => {
                                     placeholder="Escribe un mensaje..." 
                                     value={newMessage} 
                                     onChange={(e) => setNewMessage(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter" && !e.shiftKey) {
+                                            e.preventDefault();
+                                            handleSendMessage();
+                                        }
+                                    }}
                                     sx={{ bgcolor: "white", borderRadius: 2 }}
                                 />
                                 <Button 
