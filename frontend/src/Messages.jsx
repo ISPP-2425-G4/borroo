@@ -28,42 +28,9 @@ const Messages = () => {
 
                 // Datos de prueba
                 const fakeConversations = [
-                    { id: 1, otherUserName: "Juan Pérez" },
-                    { id: 2, otherUserName: "María López" },
-                    { id: 3, otherUserName: "Carlos Rodríguez" },
-                    { id: 4, otherUserName: "Juan Pérez" },
-                    { id: 5, otherUserName: "María López" },
-                    { id: 6, otherUserName: "Carlos Rodríguez" },
-                    { id: 7, otherUserName: "Juan Pérez" },
-                    { id: 8, otherUserName: "María López" },
-                    { id: 9, otherUserName: "Carlos Rodríguez" },
-                    { id: 10, otherUserName: "Juan Pérez" },
-                    { id: 11, otherUserName: "María López" },
-                    { id: 12, otherUserName: "Carlos Rodríguez" },
-                    { id: 13, otherUserName: "Juan Pérez" },
-                    { id: 14, otherUserName: "María López" },
-                    { id: 15, otherUserName: "Carlos Rodríguez" },
-                    { id: 16, otherUserName: "Juan Pérez" },
-                    { id: 17, otherUserName: "María López" },
-                    { id: 18, otherUserName: "Carlos Rodríguez" },
-                    { id: 1, otherUserName: "Juan Pérez" },
-                    { id: 2, otherUserName: "María López" },
-                    { id: 3, otherUserName: "Carlos Rodríguez" },
-                    { id: 4, otherUserName: "Juan Pérez" },
-                    { id: 5, otherUserName: "María López" },
-                    { id: 6, otherUserName: "Carlos Rodríguez" },
-                    { id: 7, otherUserName: "Juan Pérez" },
-                    { id: 8, otherUserName: "María López" },
-                    { id: 9, otherUserName: "Carlos Rodríguez" },
-                    { id: 10, otherUserName: "Juan Pérez" },
-                    { id: 11, otherUserName: "María López" },
-                    { id: 12, otherUserName: "Carlos Rodríguez" },
-                    { id: 13, otherUserName: "Juan Pérez" },
-                    { id: 14, otherUserName: "María López" },
-                    { id: 15, otherUserName: "Carlos Rodríguez" },
-                    { id: 16, otherUserName: "Juan Pérez" },
-                    { id: 17, otherUserName: "María López" },
-                    { id: 18, otherUserName: "Carlos Rodríguez" },
+                    { id: 1, participants: [1, 2], created_at: "2025-04-04T10:00:00Z", otherUserName: "JuanPérez_04" },
+                    { id: 2, participants: [1, 3], created_at: "2025-04-03T12:30:00Z", otherUserName: "MaríaLpz" },
+                    { id: 3, participants: [1, 4], created_at: "2025-04-02T15:15:00Z", otherUserName: "CarlosRod" }
                 ];
                 setConversations(fakeConversations);
             } catch (error) {
@@ -78,26 +45,24 @@ const Messages = () => {
         try {
             /*
             setSelectedConversation(conversationId);
-            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/mensajes/${conversationId}/`);
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/conversations/${conversationId}/menssages/`);
             setMessages(response.data);
             */
             setSelectedConversation(conversationId);
-
-            const fakeMessages = {
-                1: [
-                    { id: 1, sender_id: 1, text: "Hola, ¿cómo estás?" },
-                    { id: 2, sender_id: 2, text: "Todo bien, ¿y tú?" },
-                ],
-                2: [
-                    { id: 3, sender_id: 1, text: "¿Tienes disponible el objeto?" },
-                    { id: 4, sender_id: 2, text: "Sí, lo puedes recoger mañana." },
-                ],
-                3: [
-                    { id: 5, sender_id: 1, text: "Gracias por el alquiler." },
-                    { id: 6, sender_id: 2, text: "De nada, cualquier cosa me avisas." },
-                ],
-            };
-    
+        const fakeMessages = {
+            1: [
+                { id: 1, conversation: 1, sender: 1, content: "Hola, ¿cómo estás?", timestamp: "2025-04-04T10:05:00Z", is_read: true },
+                { id: 2, conversation: 1, sender: 2, content: "Todo bien, ¿y tú?", timestamp: "2025-04-04T10:06:30Z", is_read: true }
+            ],
+            2: [
+                { id: 3, conversation: 2, sender: 1, content: "¿Tienes disponible el objeto?", timestamp: "2025-04-03T12:35:00Z", is_read: true },
+                { id: 4, conversation: 2, sender: 3, content: "Sí, lo puedes recoger mañana.", timestamp: "2025-04-03T12:40:00Z", is_read: false }
+            ],
+            3: [
+                { id: 5, conversation: 3, sender: 1, content: "Gracias por el alquiler.", timestamp: "2025-04-02T15:20:00Z", is_read: true },
+                { id: 6, conversation: 3, sender: 4, content: "De nada, cualquier cosa me avisas.", timestamp: "2025-04-02T15:22:00Z", is_read: false }
+            ]
+        };
             setMessages(fakeMessages[conversationId] || []);
         } catch (error) {
             console.error("Error al cargar mensajes:", error);
@@ -121,10 +86,13 @@ const Messages = () => {
             */
             const newMsg = {
                 id: messages.length + 1,
-                sender_id: currentUser.id, // Simulación de usuario autenticado
-                text: newMessage,
+                conversation: selectedConversation,
+                sender: currentUser.id,
+                content: newMessage,
+                timestamp: new Date().toISOString(),
+                is_read: false
             };
-    
+
             setMessages([...messages, newMsg]);
             setNewMessage("");
         } catch (error) {
@@ -195,7 +163,7 @@ const Messages = () => {
                                     <Box 
                                         key={msg.id} 
                                         sx={{
-                                            alignSelf: msg.sender_id === currentUser.id ? "flex-end" : "flex-start",
+                                            alignSelf: msg.sender === currentUser.id ? "flex-end" : "flex-start",
                                             mb: 1,
                                             maxWidth: "70%"
                                         }}
@@ -203,10 +171,19 @@ const Messages = () => {
                                         <Paper sx={{ 
                                             padding: 1.5, 
                                             borderRadius: 3, 
-                                            bgcolor: msg.sender_id === currentUser.id  ? "primary.main" : "grey.300", 
-                                            color: msg.sender_id === currentUser.id ? "white" : "black" 
+                                            bgcolor: msg.sender === currentUser.id ? "primary.main" : "grey.300", 
+                                            color: msg.sender === currentUser.id ? "white" : "black" 
                                         }}>
-                                            {msg.text}
+                                            <Typography variant="body2">{msg.content}</Typography>
+                                            <Typography 
+                                                variant="caption" 
+                                                sx={{ 
+                                                    display: "block", 
+                                                    textAlign: "right",
+                                                    mt: 0.5,
+                                                    color: msg.sender === currentUser.id ? "rgba(255, 255, 255, 0.69)" : "gray" }}>
+                                                {new Date(msg.timestamp).toLocaleString()} {msg.is_read ? "✔✔" : "✔"}
+                                            </Typography>
                                         </Paper>
                                     </Box>
                                 ))}
