@@ -31,7 +31,8 @@ def apply_penalty(rent):
 
 def apply_refund(cancel_type, days_diff):
     minimum_days = {
-        'flexible': [(1, Decimal("1.00")), (0, Decimal("0.80"))], # 1.00 = 100%
+        # 1.00 = 100%
+        'flexible': [(1, Decimal("1.00")), (0, Decimal("0.80"))],
         'medium': [(2, Decimal("1.00")), (1, Decimal("0.50"))],
         'strict': [(7, Decimal("0.50"))],
     }
