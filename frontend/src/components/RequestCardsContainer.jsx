@@ -21,6 +21,12 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
         rated: "Valorada",
         cancelled: "Cancelada",
     };
+    const paymentStatusTranslations = {
+        pending: "Pendiente",
+        processing: "Procesando",
+        cancelled: "Cancelado",
+        paid: "Pagado",
+    }
 
     useEffect(() => {
         const checkPayment = async () => {
@@ -194,6 +200,21 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                                     color: request.rent_status === "cancelled" ? "white" : "inherit",
                                 }}
                             />
+
+                            )}
+                        {(
+                            <Chip
+                            label={paymentStatusTranslations[request.payment_status] || request.payment_status} // Si no hay traducción, se muestra el estado tal cual
+                            size="small"
+                            sx={{
+                                ml: 2,
+                                backgroundColor: request.payment_status === "cancelled" ? "red" :
+                                    request.payment_status === "paid" ? "green" : 
+                                    request.payment_status === "pending" ? "#FCB454" : "default", // "#FCB454" es naranja
+                                color: request.payment_status === "cancelled"  || request.payment_status === "paid" ? "white" : "inherit",
+                            }}
+                        />
+
                         )}
                     </Typography>
                     {isOwner && (
