@@ -1,11 +1,7 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 from usuarios.models import User
-from objetos.models import Item
-from rentas.models import Rent
-from .models import Chat, Message
-from django.utils import timezone
-from decimal import Decimal
+from mensajes.models import Chat, Message
 
 
 class ChatTests(TestCase):
@@ -13,18 +9,10 @@ class ChatTests(TestCase):
         self.client = APIClient()
         self.user1 = User.objects.create(username="user1", email="u1@test.com")
         self.user2 = User.objects.create(username="user2", email="u2@test.com")
-        self.item = Item.objects.create(title="Objeto", price=Decimal("10.0"),
-                                        user=self.user2)
-        self.rent = Rent.objects.create(item=self.item, renter=self.user1,
-                                        start_date=timezone.now(),
-                                        end_date=timezone.now() +
-                                        timezone.timedelta(days=1))
-        self.chat = Chat.objects.create(rent=self.rent)
+        self.chat = Chat.objects.create(user1=self.user1, user2=self.user2)
         self.client.force_authenticate(user=self.user1)
 
     def test_send_message(self):
-        self.client.force_authenticate(user=self.user1)
-
         response = self.client.post(
             f"/mensajes/chats/{self.chat.id}/send_message/",
             {"content": "¡Hola!"},
@@ -48,11 +36,14 @@ class ChatTests(TestCase):
             f"/mensajes/chats/{self.chat.id}/send_message/",
             {"content": "¿Qué pasa?"}, format="json"
         )
+        self.assertIn("detail", response.data)
         self.assertEqual(response.status_code, 404)
+        self.assertEqual(
+            str(response.data["detail"]),
+            "No Chat matches the given query."
+        )
 
     def test_cannot_send_empty_message(self):
-        self.client.force_authenticate(user=self.user1)
-
         response = self.client.post(
             f"/mensajes/chats/{self.chat.id}/send_message/",
             {"content": ""}, format="json"
@@ -61,7 +52,6 @@ class ChatTests(TestCase):
         self.assertIn("error", response.data)
 
     def test_message_saved_correctly(self):
-        self.client.force_authenticate(user=self.user1)
         content = "Hola, ¿todo bien?"
 
         self.client.post(

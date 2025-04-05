@@ -12,11 +12,8 @@ class ChatViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return Chat.objects.filter(
-            rent__renter=user
-        ) | Chat.objects.filter(
-            rent__item__user=user
-        )
+        return Chat.objects.filter(user1=user) | Chat.objects.filter(
+            user2=user)
 
     @action(detail=True, methods=['post'])
     def send_message(self, request, pk=None):
@@ -28,10 +25,10 @@ class ChatViewSet(viewsets.ModelViewSet):
             return Response({"error": "El contenido no puede estar vacío"},
                             status=status.HTTP_400_BAD_REQUEST)
 
-        if sender == chat.rent.renter:
-            receiver = chat.rent.item.user
-        elif sender == chat.rent.item.user:
-            receiver = chat.rent.renter
+        if sender == chat.user1:
+            receiver = chat.user2
+        elif sender == chat.user2:
+            receiver = chat.user1
         else:
             error = "No tienes permiso para enviar mensajes en este chat"
             return Response({"error": error},
@@ -40,5 +37,6 @@ class ChatViewSet(viewsets.ModelViewSet):
         message = Message.objects.create(
             chat=chat, sender=sender, receiver=receiver, content=content
         )
-        return Response(MessageSerializer(message).data,
-                        status=status.HTTP_201_CREATED)
+
+        return Response(MessageSerializer(message).data, status=status.
+                        HTTP_201_CREATED)
