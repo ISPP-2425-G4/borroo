@@ -30,12 +30,12 @@ def apply_penalty(rent):
 
 
 def apply_refund(cancel_type, days_diff):
-    thresholds = {
-        'flexible': [(2, Decimal("1.00")), (1, Decimal("0.50"))],
-        'medium': [(7, Decimal("1.00")), (3, Decimal("0.50"))],
-        'strict': [(30, Decimal("1.00")), (14, Decimal("0.50"))],
+    minimum_days = {
+        'flexible': [(1, Decimal("1.00")), (0, Decimal("0.80"))], # 1.00 = 100%
+        'medium': [(2, Decimal("1.00")), (1, Decimal("0.50"))],
+        'strict': [(7, Decimal("0.50"))],
     }
-    for threshold, refund in thresholds.get(cancel_type, []):
+    for threshold, refund in minimum_days.get(cancel_type, []):
         if days_diff >= threshold:
             return refund
     return Decimal("0.00")
@@ -217,8 +217,8 @@ class RentViewSet(viewsets.ModelViewSet):
         is_owner = (user == rent.item.user)
 
         if rent.rent_status == RentStatus.CANCELLED:
-            raise PermissionDenied({"error": "El alquiler está cancelado y "
-                                    "no se puede modificar."})
+            raise PermissionDenied(
+                {"error": "Alquiler cancelado. No se puede modificar."})
 
         if (rent.rent_status == RentStatus.ACCEPTED
                 and rent.payment_status == PaymentStatus.PAID):
@@ -287,6 +287,7 @@ class RentViewSet(viewsets.ModelViewSet):
             rent.rent_status = RentStatus.CANCELLED
             rent.save()
             return Response({'status': 'Alquiler cancelado exitosamente'})
+        
         elif rent.rent_status == RentStatus.BOOKED:
             days_diff = (rent.start_date.date() - now.date()).days
             cancel_type = rent.item.cancel_type
@@ -298,6 +299,7 @@ class RentViewSet(viewsets.ModelViewSet):
                 'status': 'Alquiler cancelado exitosamente en estado BOOKED',
                 'refund_percentage': str(refund_percentage),
                 'refund_amount': str(refund_amount)})
+        
         else:
             raise Response(
                 {'error': 'No se puede cancelar un alquiler en este estado'})
