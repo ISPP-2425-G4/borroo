@@ -24,7 +24,8 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { styled } from "@mui/system";
-import { FiImage } from "react-icons/fi";
+import { FiImage ,FiTrash2} from "react-icons/fi";
+import EditIcon from '@mui/icons-material/Edit';
 
 const ImageUploadText = styled(Typography)(() => ({
     marginTop: "8px",
@@ -35,21 +36,6 @@ const ImageUploadText = styled(Typography)(() => ({
   const HiddenFileInput = styled("input")({
     display: "none",
   });
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length > 0) {
-      setImages((prevImages) => [...prevImages, ...files]);
-      
-    }
-};
-
-
-  
-
-
-const triggerFileSelect = () => {
-    document.getElementById('image-upload').click();
-  };
 
 const FileInputContainer = styled(Box)(() => ({
     width: "100%",
@@ -69,8 +55,25 @@ const FileInputContainer = styled(Box)(() => ({
       backgroundColor: "#f0f7ff",
     },
   }));
-
-
+  const RemoveButton = styled("button")(() => ({
+    position: "absolute",
+    top: "8px",
+    right: "8px",
+    background: "rgba(0, 0, 0, 0.5)",
+    color: "white",
+    border: "none",
+    borderRadius: "50%",
+    width: "30px",
+    height: "30px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    cursor: "pointer",
+    transition: "background 0.2s",
+    "&:hover": {
+      background: "rgba(0, 0, 0, 0.7)",
+    },
+  }));
 
 const categoryList = [
     { value: 'technology', label: 'Tecnología' },
@@ -175,11 +178,41 @@ const categoryOptions = {
     ],
 };
 
+const ImageGallery = styled(Box)(() => ({
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "16px",
+    marginTop: "16px",
+    marginBottom: "24px",
+  }));
+  
 
+  const ImageContainer = styled(Box)(() => ({
+    position: "relative",
+    width: "150px",
+    borderRadius: "8px",
+    overflow: "hidden",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+  }));
+
+  const PreviewImage = styled("img")(() => ({
+    width: "100%",
+    height: "120px",
+    objectFit: "cover",
+  }));
+
+ 
 
 const AdminItemDashboard = () => {
+    const handleImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        if (files.length > 0) {
+          setImages((prevImages) => [...prevImages, ...files]);
+          
+        }
+    };
     const [items, setItems] = useState([]);
-    const token = localStorage.getItem("access_token"); // Asegúrate de tener el token aquí
+    const token = localStorage.getItem("access_token");
 
     useEffect(() => {
         fetchItems();
@@ -209,6 +242,19 @@ const AdminItemDashboard = () => {
             alert("Error al eliminar ítem.");
         }
     };
+    const handleEditItem = async (itemId) => {
+        const confirm = window.confirm("Confirmar cambios");
+        if (!confirm) return;
+        try {
+            await axios.put(`${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/item/${itemId}/delete/`, {
+                
+            });
+            fetchItems();
+        } catch(error) {
+            alert("Error al editar el item");
+        } 
+    };
+    const [images, setImages] = useState([]);
    
     const [formData, setFormData] = useState({
         title: "",
@@ -220,8 +266,8 @@ const AdminItemDashboard = () => {
         price: "",
         
     });
-    const [images, setImages] = useState([]);
-    
+   
+    const [editItemData, setEditItemData] = useState(false)
     const [showCreateForm, setShowCreateForm] = useState(false)
 
     const handleInputChange = (e) => {
@@ -233,11 +279,14 @@ const AdminItemDashboard = () => {
         const newCategory = event.target.value;
         setFormData({ ...formData, category: newCategory, subcategory: "" });
     };
+    const triggerFileSelect = () => {
+        document.getElementById('image-upload').click();
+      };
+    
 
     const handleCreateItem = async () => {
         const form = new FormData();
         
-        // Añadir los datos del formulario (título, descripción, etc.)
         form.append("title", formData.title);
         form.append("description", formData.description);
         form.append("price", formData.price);
@@ -245,23 +294,24 @@ const AdminItemDashboard = () => {
         form.append("category", formData.category);
         form.append("subcategory", formData.subcategory);
         form.append("cancel_type", formData.cancel_type || "flexible");
-        form.append("draft_mode", false); // Por defecto
-        form.append("featured", false); // Por defecto
-    
-        // Añadir las imágenes al FormData
+        form.append("draft_mode", false);
+        form.append("featured", false); 
+        
+         
+       
         images.forEach((image, index) => {
             form.append("images", image);
         });
     
         try {
-            // Enviar la solicitud con el FormData
+           
             await axios.post(
                 `${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/item/create/`,
                 form,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        "Content-Type": "multipart/form-data", // Específico para enviar archivos
+                        "Content-Type": "multipart/form-data", 
                     },
                 }
             );
@@ -276,15 +326,12 @@ const AdminItemDashboard = () => {
                 subcategory: "",
                 cancel_type: ""
             });
-            setImages([]); // Limpiar las imágenes seleccionadas
-            fetchItems(); // Volver a cargar los ítems
+            fetchItems(); 
         } catch (error) {
             alert("Error al crear ítem.");
             console.error(error);
         }
     };
-    
-    
 
     return (
         <Box p={2}>
@@ -306,13 +353,56 @@ const AdminItemDashboard = () => {
                                     <IconButton onClick={() => handleDeleteItem(item.id)}>
                                         <DeleteIcon />
                                     </IconButton>
+                                    <IconButton  onClick={() => handleEditItem(item.id)}>
+                                        <EditIcon />
+                                    </IconButton>
                                 </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-                            <Dialog open={showCreateForm} onClose={() => setShowCreateForm(false)}>
+            {editItemData && (
+                    <Dialog open={true} onClose={() => setEditItemData(null)}>
+                        <DialogTitle>Editar Item</DialogTitle>
+                        <DialogContent>
+                        <Grid container spacing={2}>
+                            {[
+                            "title",
+                            "description",
+                            "price",
+                            "price_category",
+                            "category",
+                            "subcategory",
+                            "image",
+                            ].map((field) => (
+                            <Grid item xs={12} sm={6} key={field}>
+                                <TextField
+                                fullWidth
+                                label={
+                                    field.charAt(0).toUpperCase() +
+                                    field.slice(1).replace("_", " ")
+                                }
+                                value={editItemData[field] || ""}
+                                onChange={(e) =>
+                                    setEditItemData((prev) => ({
+                                    ...prev,
+                                    [field]: e.target.value,
+                                    }))
+                                }
+                                variant="outlined"
+                                />
+                            </Grid>
+                            ))}
+                        </Grid>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => setEditItemData(null)}> Cancelar</Button>
+                            <Button onClick={handleEditItem} variant="contained" color="primary">Guardar</Button>
+                        </DialogActions>
+                    </Dialog>
+                    )}
+         <Dialog open={showCreateForm} onClose={() => setShowCreateForm(false)}>
                     <DialogTitle>Crear Ítem</DialogTitle>
                     <DialogContent>
                         <TextField
