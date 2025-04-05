@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import { Box, Typography, List, ListItem, ListItemText, Paper, TextField, Button, Divider } from "@mui/material";
+import axios from "axios";
+import { Box, Typography, List, ListItem, ListItemText, Paper, TextField, Button, Divider, Avatar } from "@mui/material";
 
 const Messages = () => {
     const [conversations, setConversations] = useState([]);
     const [selectedConversation, setSelectedConversation] = useState(null);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
+    const [otherUser, setOtherUser] = useState(null);
     const navigate = useNavigate();
     const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -41,29 +43,36 @@ const Messages = () => {
         fetchConversations();
     }, [navigate]);
 
-    const fetchMessages = async (conversationId) => {
+    const fetchMessages = async (conversation) => {
         try {
             /*
             setSelectedConversation(conversationId);
             const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/conversations/${conversationId}/menssages/`);
             setMessages(response.data);
             */
-            setSelectedConversation(conversationId);
-        const fakeMessages = {
-            1: [
-                { id: 1, conversation: 1, sender: 1, content: "Hola, ¿cómo estás?", timestamp: "2025-04-04T10:05:00Z", is_read: true },
-                { id: 2, conversation: 1, sender: 2, content: "Todo bien, ¿y tú?", timestamp: "2025-04-04T10:06:30Z", is_read: true }
-            ],
-            2: [
-                { id: 3, conversation: 2, sender: 1, content: "¿Tienes disponible el objeto?", timestamp: "2025-04-03T12:35:00Z", is_read: true },
-                { id: 4, conversation: 2, sender: 3, content: "Sí, lo puedes recoger mañana.", timestamp: "2025-04-03T12:40:00Z", is_read: false }
-            ],
-            3: [
-                { id: 5, conversation: 3, sender: 1, content: "Gracias por el alquiler.", timestamp: "2025-04-02T15:20:00Z", is_read: true },
-                { id: 6, conversation: 3, sender: 4, content: "De nada, cualquier cosa me avisas.", timestamp: "2025-04-02T15:22:00Z", is_read: false }
-            ]
-        };
-            setMessages(fakeMessages[conversationId] || []);
+            setSelectedConversation(conversation);
+            const otherUserId = conversation.participants.find(id => id !== currentUser.id);
+
+            // Obtener datos del otro usuario
+            const userResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${otherUserId}/`);
+            setOtherUser(userResponse.data);
+
+            // Datos de prueba
+            const fakeMessages = {
+                1: [
+                    { id: 1, conversation: 1, sender: 1, content: "Hola, ¿cómo estás?", timestamp: "2025-04-04T10:05:00Z", is_read: true },
+                    { id: 2, conversation: 1, sender: 2, content: "Todo bien, ¿y tú?", timestamp: "2025-04-04T10:06:30Z", is_read: true }
+                ],
+                2: [
+                    { id: 3, conversation: 2, sender: 1, content: "¿Tienes disponible el objeto?", timestamp: "2025-04-03T12:35:00Z", is_read: true },
+                    { id: 4, conversation: 2, sender: 3, content: "Sí, lo puedes recoger mañana.", timestamp: "2025-04-03T12:40:00Z", is_read: false }
+                ],
+                3: [
+                    { id: 5, conversation: 3, sender: 1, content: "Gracias por el alquiler.", timestamp: "2025-04-02T15:20:00Z", is_read: true },
+                    { id: 6, conversation: 3, sender: 4, content: "De nada, cualquier cosa me avisas.", timestamp: "2025-04-02T15:22:00Z", is_read: false }
+                ]
+            };
+            setMessages(fakeMessages[conversation.id] || []);
         } catch (error) {
             console.error("Error al cargar mensajes:", error);
         }
@@ -86,7 +95,7 @@ const Messages = () => {
             */
             const newMsg = {
                 id: messages.length + 1,
-                conversation: selectedConversation,
+                conversation: selectedConversation.id,
                 sender: currentUser.id,
                 content: newMessage,
                 timestamp: new Date().toISOString(),
@@ -128,16 +137,16 @@ const Messages = () => {
                                 <ListItem 
                                     key={conv.id} 
                                     button 
-                                    selected={selectedConversation === conv.id}
-                                    onClick={() => fetchMessages(conv.id)}
+                                    selected={selectedConversation?.id === conv.id}
+                                    onClick={() => fetchMessages(conv)}
                                     sx={{
                                         borderRadius: 2,
                                         mb: 1,
-                                        bgcolor: selectedConversation === conv.id ? "primary.light" : "transparent",
+                                        bgcolor: selectedConversation?.id === conv.id ? "primary.light" : "transparent",
                                         "&:hover": { bgcolor: "primary.light" }
                                     }}
                                 >
-                                    <ListItemText primary={conv.otherUserName} />
+                                    <ListItemText primary={`${conv.otherUserName}`} />
                                 </ListItem>
                             ))
                         )}
@@ -148,6 +157,19 @@ const Messages = () => {
                 <Paper sx={{ flexGrow: 1, display: "flex", flexDirection: "column", padding: 3, borderRadius: 3, boxShadow: 3 }}>
                     {selectedConversation ? (
                         <>
+                            {/* Encabezado del chat con el otro usuario */}
+                            {otherUser && (
+                                <Box 
+                                    sx={{ display: "flex", alignItems: "center", mb: 2, padding: 2, bgcolor: "white", borderRadius: 2, boxShadow: 2,  cursor: "pointer" }}
+                                    onClick={() => navigate(`/perfil/${otherUser.username}`)}
+                                >
+                                    <Avatar src={otherUser.avatar} sx={{ width: 40, height: 40, mr: 2 }} />
+                                        <Typography variant="h6">
+                                                {otherUser.username}
+                                        </Typography>
+                                </Box>
+                            )}
+
                             {/* Mensajes */}
                             <Box sx={{ 
                                 flexGrow: 1, 
