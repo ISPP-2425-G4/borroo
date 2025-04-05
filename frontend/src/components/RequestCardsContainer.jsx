@@ -30,6 +30,19 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                 try {
                     const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/pagos/confirm-rent/${sessionId}/`)
                     if(response.data.status === "success"){
+                        const rentId = response.data.rent_id;
+
+                        await axios.put(
+                            `${import.meta.env.VITE_API_BASE_URL}/rentas/full/${rentId}/change_status/`,
+                            { response: "accepted" },
+                            { headers: 
+                                { 
+                                    "Content-Type": "application/json",
+                                    "Authorization": `Bearer ${localStorage.getItem("access_token")}`
+                                } 
+                            }
+                          );
+
                         window.history.replaceState({}, "", "/rental_requests");
                         window.location.reload();
                         setNotification({
