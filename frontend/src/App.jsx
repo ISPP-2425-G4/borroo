@@ -19,6 +19,10 @@ import CreateItemRequest from "./CreateItemRequest";
 import '../public/styles/App.css';
 import FAQ from './components/Faq';
 import AdminDashboard from "./AdminDashboard";
+import TermsAndConditions from "./documents/TermsAndConditions";
+import Sla from "./documents/Sla"
+import PrivacyPolicy from "./documents/PrivacyPolicy";
+import Licenses from "./documents/Licenses";
 import VerificarEmail from "./VerifyEmail";
 
 function App() {
@@ -47,6 +51,10 @@ function App() {
           <Route path="/list_item_requests" element={<ListItemRequests />} />
           <Route path="/create_item_request" element={<CreateItemRequest />} />
           <Route path="/dashboard" element={<AdminDashboard />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+          <Route path="/sla" element={<Sla/>}/>
+          <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
+          <Route path="/licenses" element={<Licenses/>}/>
           <Route path="/verifyEmail" element={<VerificarEmail />} />
 
         </Routes>

@@ -471,7 +471,7 @@ const Signup = () => {
                 }
                 label={
                   <Typography variant="body2">
-                    Acepto los <Link to="/terms">términos y condiciones</Link>.
+                    He leído y acepto los <Link to="/terms-and-conditions">términos y condiciones</Link>.
                   </Typography>
                 }
               />
