@@ -1,5 +1,6 @@
 from django.db import models
 from usuarios.models import User
+from django.core.exceptions import ValidationError
 
 
 class Chat(models.Model):
@@ -11,6 +12,18 @@ class Chat(models.Model):
 
     class Meta:
         unique_together = ('user1', 'user2')
+
+    def clean(self):
+        """Evitar duplicados y chats con uno mismo."""
+        if self.user1 == self.user2:
+            raise ValidationError("Un usuario no puede chatear consigo mismo.")
+        # Ordena siempre igual para evitar duplicados
+        if self.user1.id > self.user2.id:
+            self.user1, self.user2 = self.user2, self.user1
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Chat entre {self.user1.username} y {self.user2.username}"

@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'objetos',
     'rentas',
     'pagos',
-    'mensajes',
+    'chats',
     'django_extensions',
 ]
 
