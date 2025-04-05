@@ -56,7 +56,7 @@ class Rent(models.Model):
         if price_category == "hour":
             return duration.total_seconds() / 3600  # Horas
         elif price_category == "day":
-            return duration.days  # Días completos
+            return (duration.days + 1)  # Días completos
         elif price_category == "week":
             return duration.days / 7  # Semanas
         elif price_category == "month":
@@ -65,21 +65,15 @@ class Rent(models.Model):
             return duration.days / 365  # Años (aproximado)
         return 0
 
-    def calculate_base_price(self):
+    def calculate_total_price(self):
         """Calcula el precio base del alquiler."""
         rental_duration = self.calculate_rental_duration()
         rental_duration_decimal = Decimal(str(rental_duration))
-        return rental_duration_decimal * self.item.price  # Precio base
-
-    def calculate_total_price(self):
-        """Calcula total_price como precio base + 7.5% de incremento."""
-        base_price = self.calculate_base_price()
-        additional_fee = base_price * Decimal("0.075")  # 7.5% adicional
-        return round(base_price + additional_fee, 2)
+        return round(rental_duration_decimal * self.item.price, 2)
 
     def calculate_commission(self):
         """Calcula commission como el 15% de base_price."""
-        base_price = self.calculate_base_price()
+        base_price = self.calculate_total_price()
         return round(base_price * Decimal("0.15"), 2)
 
     def save(self, *args, **kwargs):
