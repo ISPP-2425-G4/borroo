@@ -288,7 +288,7 @@ class RentViewSet(viewsets.ModelViewSet):
             rent.rent_status = RentStatus.CANCELLED
             rent.save()
             return Response({'status': 'Alquiler cancelado exitosamente'})
-        
+
         elif rent.rent_status == RentStatus.BOOKED:
             days_diff = (rent.start_date.date() - now.date()).days
             cancel_type = rent.item.cancel_type
@@ -300,7 +300,7 @@ class RentViewSet(viewsets.ModelViewSet):
                 'status': 'Alquiler cancelado exitosamente en estado BOOKED',
                 'refund_percentage': str(refund_percentage),
                 'refund_amount': str(refund_amount)})
-        
+
         else:
             raise Response(
                 {'error': 'No se puede cancelar un alquiler en este estado'})
