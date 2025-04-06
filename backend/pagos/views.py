@@ -67,6 +67,52 @@ def create_rent_checkout(request):
 
 
 @csrf_exempt
+@require_http_methods(["POST"])
+def pay_with_balance(request):
+    try:
+        data = json.loads(request.body)
+        user_id = data.get("user_id")
+        rent_id = data.get("rent_id")
+        price = Decimal(data.get("price")) / 100
+
+        user = User.objects.get(id=user_id)
+        rent = Rent.objects.get(id=rent_id)
+
+        if user.saldo < price:
+            return JsonResponse({
+                "status": "error",
+                "error": "Saldo insuficiente para realizar el pago."
+            }, status=400)
+
+        # Deducir el saldo del usuario
+        user.saldo -= price
+        user.save()
+
+        # Marcar la renta como pagada
+        rent.payment_status = PaymentStatus.PAID
+        rent.save()
+
+        # Crear un registro de PaidPendingConfirmation
+        PaidPendingConfirmation.objects.create(
+            rent=rent,
+            is_confirmed_by_owner=None,
+            is_confirmed_by_renter=None
+        )
+
+        return JsonResponse({
+            "status": "success",
+            "message": "Pago realizado con saldo exitosamente."
+        })
+
+    except User.DoesNotExist:
+        return JsonResponse({"error": "Usuario no encontrado."}, status=404)
+    except Rent.DoesNotExist:
+        return JsonResponse({"error": "Renta no encontrada."}, status=404)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+
+@csrf_exempt
 def confirm_rent_checkout(request, session_id):
     try:
         session = stripe.checkout.Session.retrieve(session_id)
