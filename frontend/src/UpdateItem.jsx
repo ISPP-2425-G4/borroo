@@ -30,6 +30,7 @@ import {
 import Navbar from "./Navbar";
 import axios from 'axios';
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
+import SaveConfirmationDialog from "./components/SaveConfirmationDialog";
 import { DateRange } from "react-date-range";
 import { Delete } from "@mui/icons-material";
 
@@ -54,6 +55,7 @@ const UpdateItemScreen = () => {
   const [existingImages, setExistingImages] = useState([]);
   const [removedImages, setRemovedImages] = useState([]);
   const [filteredSubcategories, setFilteredSubcategories] = useState([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
 
   useEffect(() => {
@@ -288,10 +290,12 @@ const UpdateItemScreen = () => {
           withCredentials: true,
         }
       );
+      setDialogOpen(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
 
 
-      alert("¡Ítem actualizado exitosamente!");
-      navigate("/");
     } catch (error) {
       console.error("Error actualizando el ítem:", error);
       if (error.response) {
@@ -799,6 +803,7 @@ const UpdateItemScreen = () => {
           </Stack>
         </Box>
       </Paper>
+      <SaveConfirmationDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
     </Container>
   );
 };
