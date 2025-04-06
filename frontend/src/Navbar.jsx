@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiUser, FiHeart, FiShoppingCart, FiMenu } from "react-icons/fi";
+import { FiUser, FiMenu } from "react-icons/fi";
 import ArticleIcon from '@mui/icons-material/Article';
 import {
   AppBar,
@@ -29,6 +29,7 @@ const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [loginAnchorEl, setLoginAnchorEl] = useState(null);
+  const [saldo, setSaldo] = useState(null);
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -57,15 +58,39 @@ const Navbar = () => {
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       setUser(null);
+      setSaldo(null);
       handleLoginClose();
       navigate('/');
+      window.location.reload();
     }
   };
 
+  const obtenerSaldoUsuario = async (userId, accessToken) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${userId}/get_saldo/`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      setSaldo(response.data.saldo);
+    } catch (error) {
+      console.error("Error al obtener el saldo del usuario:", error);
+    }
+  };
+
+
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
+    const accessToken = localStorage.getItem('access_token');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+      if (accessToken) {
+        obtenerSaldoUsuario(parsedUser.id, accessToken);
+      }
     }
   }, []);
 
@@ -73,6 +98,7 @@ const Navbar = () => {
     { title: "Inicio", path: "/" },
     { title: "Poner en alquiler", path: "/create-item" },
     { title: "Plan de suscripción", path: "/pricing-plan" },
+    { title: "Anuncios", path: "/list_item_requests" },
     ...(user ? [{ title: "Mis solicitudes", path: "/rental_requests" }] : []),
   ];
 
@@ -87,20 +113,23 @@ const Navbar = () => {
     <AppBar position="fixed" sx={{ backgroundColor: "#2563eb" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ minHeight: "64px", justifyContent: "space-between" }}>
-          <Typography
-            variant="h6"
+          <Box
             component={Link}
             to="/"
             sx={{
+              display: "flex",
+              alignItems: "center",
               textDecoration: "none",
               color: "white",
-              fontWeight: "bold",
-              letterSpacing: "0.5px",
-              flexGrow: { xs: 1, md: 0 }
+              fontWeight: "bold"
             }}
           >
-            BORROO
-          </Typography>
+            <img src="/logo.png" alt="Logo" style={{ height: 40, marginRight: 8 }} />
+            <Typography variant="h6" sx={{ letterSpacing: "0.5px" }} fontWeight="bold">
+              BORROO
+            </Typography>
+          </Box>
+
 
           {isMobile && (
             <IconButton
@@ -114,8 +143,8 @@ const Navbar = () => {
             </IconButton>
           )}
 
-          <Box sx={{ 
-            display: { xs: 'none', md: 'flex' }, 
+          <Box sx={{
+            display: { xs: 'none', md: 'flex' },
             justifyContent: 'center',
             flexGrow: 1,
             gap: 4
@@ -140,33 +169,38 @@ const Navbar = () => {
             ))}
           </Box>
 
-          <Box sx={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: 1 
+          <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1
           }}>
             {user && (
               <Chip
-                avatar={user?.avatar ? 
-                  <Avatar src={user.avatar} alt={user.name} /> : 
+                avatar={user?.avatar ?
+                  <Avatar src={user.avatar} alt={user.name} /> :
                   <Avatar>{user.name.charAt(0)}</Avatar>
                 }
                 label={
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                     {user.name}
                     {user.pricing_plan === 'premium' && (
-                      <Box 
-                        component="img" 
-                        src="/premium.png" 
-                        alt="Premium" 
-                        sx={{ width: 16, height: 16 }} 
+                      <Box
+                        component="img"
+                        src="/premium.png"
+                        alt="Premium"
+                        sx={{ width: 16, height: 16 }}
                       />
+                    )}
+                    {saldo !== null && (
+                      <Typography variant="body2" sx={{ ml: 1 }}>
+                        Saldo: {parseFloat(saldo).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+                      </Typography>
                     )}
                   </Box>
                 }
                 variant="outlined"
-                sx={{ 
-                  color: 'white', 
+                sx={{
+                  color: 'white',
                   borderColor: 'rgba(255,255,255,0.3)',
                   display: { xs: 'none', sm: 'flex' }
                 }}
@@ -193,45 +227,34 @@ const Navbar = () => {
             >
               {user ? (
                 <>
-                <MenuItem onClick={() => { handleLoginClose(); navigate(`/perfil/${encodeURIComponent(user.username)}`); }}>
-                  Mi Perfil
-                </MenuItem>
-                <MenuItem onClick={handleLogout}>
-                  Cerrar sesión
-                </MenuItem>
+                  <MenuItem onClick={() => { handleLoginClose(); navigate(`/perfil/${encodeURIComponent(user.username)}`); }}>
+                    Mi Perfil
+                  </MenuItem>
+                  {user.is_admin && (
+                    <MenuItem onClick={() => { handleLoginClose(); navigate('/dashboard'); }}>
+                      Dashboard
+                    </MenuItem>
+                  )}
+                  <MenuItem onClick={handleLogout}>
+                    Cerrar sesión
+                  </MenuItem>
                 </>
               ) : (
                 <>
-                  <MenuItem onClick={() => {handleLoginClose(); navigate('/login');}}>
+                  <MenuItem onClick={() => { handleLoginClose(); navigate('/login'); }}>
                     Iniciar sesión
                   </MenuItem>
-                  <MenuItem onClick={() => {handleLoginClose(); navigate('/signup');}}>
+                  <MenuItem onClick={() => { handleLoginClose(); navigate('/signup'); }}>
                     Registrarse
                   </MenuItem>
                 </>
               )}
             </Menu>
 
-            <Tooltip title="Favoritos">
-              <IconButton color="inherit">
-                <Badge badgeContent={0} color="error">
-                  <FiHeart />
-                </Badge>
-              </IconButton>
-            </Tooltip>
-
             <Tooltip title="Borradores">
-            <IconButton color="inherit" component={Link} to="/drafts">
-              <Badge badgeContent={0} color="error">
-              <ArticleIcon />
-              </Badge>
-            </IconButton>
-          </Tooltip>
-
-            <Tooltip title="Carrito">
-              <IconButton color="inherit">
+              <IconButton color="inherit" component={Link} to="/drafts">
                 <Badge badgeContent={0} color="error">
-                  <FiShoppingCart />
+                  <ArticleIcon />
                 </Badge>
               </IconButton>
             </Tooltip>
@@ -258,11 +281,11 @@ const Navbar = () => {
                     <Typography variant="body2">
                       {user.name}
                       {user.pricing_plan === 'premium' && (
-                        <Box 
-                          component="img" 
-                          src="/premium.png" 
-                          alt="Premium" 
-                          sx={{ width: 14, height: 14, ml: 0.5, verticalAlign: 'middle' }} 
+                        <Box
+                          component="img"
+                          src="/premium.png"
+                          alt="Premium"
+                          sx={{ width: 14, height: 14, ml: 0.5, verticalAlign: 'middle' }}
                         />
                       )}
                     </Typography>
@@ -271,10 +294,10 @@ const Navbar = () => {
               </Box>
               <List>
                 {navItems.map((item) => (
-                  <ListItem 
-                    button 
-                    key={item.title} 
-                    component={Link} 
+                  <ListItem
+                    button
+                    key={item.title}
+                    component={Link}
                     to={item.path}
                     sx={{
                       '&:hover': {
@@ -287,9 +310,9 @@ const Navbar = () => {
                 ))}
                 {!user && (
                   <>
-                    <ListItem 
-                      button 
-                      component={Link} 
+                    <ListItem
+                      button
+                      component={Link}
                       to="/login"
                       sx={{
                         '&:hover': {
@@ -299,9 +322,9 @@ const Navbar = () => {
                     >
                       <ListItemText primary="Iniciar sesión" />
                     </ListItem>
-                    <ListItem 
-                      button 
-                      component={Link} 
+                    <ListItem
+                      button
+                      component={Link}
                       to="/signup"
                       sx={{
                         '&:hover': {
@@ -314,8 +337,8 @@ const Navbar = () => {
                   </>
                 )}
                 {user && (
-                  <ListItem 
-                    button 
+                  <ListItem
+                    button
                     onClick={handleLogout}
                     sx={{
                       '&:hover': {

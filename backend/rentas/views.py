@@ -79,19 +79,55 @@ class RentViewSet(viewsets.ModelViewSet):
         end_date = request.data.get('end_date')
 
         user_id = request.data.get('renter')
-        user = get_object_or_404(User, pk=user_id)
 
+        user = get_object_or_404(User, pk=user_id)
         item = get_object_or_404(Item, pk=item_id)
 
-        not_rent_yourself = user != item.user
+        # Verificar campos obligatorios
+        if not all([item_id, start_date, end_date, user_id]):
+            return Response(
+                {'error': 'Faltan campos obligatorios.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
+        not_rent_yourself = user != item.user
         is_authorized(condition=not_rent_yourself)
 
-        if Rent.objects.filter(item=item, start_date__lte=end_date,
-                               end_date__gte=start_date).exists():
+        # Bloquear si hay rentas en estado que implica que ya está reservado
+        conflicting_rents = Rent.objects.filter(
+            item=item,
+            start_date__lte=end_date,
+            end_date__gte=start_date,
+            rent_status__in=[
+                RentStatus.ACCEPTED,
+                RentStatus.BOOKED,
+                RentStatus.PICKED_UP
+            ]
+        )
+        if conflicting_rents.exists():
             return Response(
                 {'error': 'El objeto no está disponible en esas fechas'},
-                status=status.HTTP_400_BAD_REQUEST)
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Validar que no tenga una REQUESTED propia en fechas solapadas
+        already_requested = Rent.objects.filter(
+            item=item,
+            renter=user,
+            rent_status=RentStatus.REQUESTED,
+            start_date__lte=end_date,
+            end_date__gte=start_date
+        )
+        if already_requested.exists():
+            return Response(
+                {
+                    'error': (
+                        'Ya tienes una solicitud pendiente para este objeto '
+                        'en esas fechas'
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         serializer = RentSerializer(data=request.data)
         if serializer.is_valid():
@@ -102,8 +138,36 @@ class RentViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['put'])
     def respond_request(self, request, pk=None):
         rent_id = request.data.get('rent')
-        rent = get_object_or_404(Rent, pk=rent_id)
         response = request.data.get("response")
+        user_id = request.data.get('user_id')
+
+        if not user_id:
+            return Response(
+                {
+                    "error": "No se proporcionó el 'user_id' en el cuerpo de "
+                             "la solicitud."
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        rent = get_object_or_404(Rent, pk=rent_id)
+        user = get_object_or_404(User, pk=user_id)
+
+        # Validación de permisos
+        if user != rent.item.user:
+            return Response(
+                {"error": "No tienes permisos para realizar esta acción."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Solo si está en REQUESTED
+        if rent.rent_status != RentStatus.REQUESTED:
+            return Response(
+                {
+                    "error": "Solo puedes responder solicitudes en estado "
+                             "REQUESTED."
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         # is_owner = user == rent.item.user
         # is_authorized(condition=is_owner, authenticated=authenticated)
@@ -111,15 +175,35 @@ class RentViewSet(viewsets.ModelViewSet):
         if response == "accepted":
             rent.rent_status = RentStatus.ACCEPTED
             rent.save()
-            return Response({'status': 'Solicitud aceptada. '
-                            'El vendedor ha aceptado su solicitud.'})
+
+            # Cancelar otras solicitudes REQUESTED solapadas
+            overlapping_requests = Rent.objects.filter(
+                item=rent.item,
+                rent_status=RentStatus.REQUESTED,
+                start_date__lt=rent.end_date,
+                end_date__gt=rent.start_date
+            ).exclude(pk=rent.pk)
+
+            overlapping_requests.update(rent_status=RentStatus.CANCELLED)
+
+            return Response({
+                'status': (
+                    'Solicitud aceptada. Solicitudes solapadas canceladas.'
+                )
+            })
+
         elif response == "rejected":
             rent.rent_status = RentStatus.CANCELLED
             rent.save()
-            return Response({'status': 'Solicitud rechazada. '
-                            'El alquiler se ha cancelado.'})
+            return Response(
+                {'status': 'Solicitud rechazada. El alquiler se ha cancelado.'}
+            )
+
         else:
-            raise PermissionDenied({'error': 'No existe un response adecuado'})
+            return Response(
+                {'error': 'La respuesta debe ser "accepted" o "rejected".'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
     @action(detail=True, methods=['put'])
     def change_status(self, request, pk=None):
@@ -230,8 +314,7 @@ class RentViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'])
     def rental_requests(self, request):
         user_id = request.query_params.get("user")
-        rental_requests = Rent.objects.filter(item__user=user_id,
-                                              rent_status=RentStatus.REQUESTED)
+        rental_requests = Rent.objects.filter(item__user=user_id)
         serializer = RentSerializer(rental_requests, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -242,4 +325,50 @@ class RentViewSet(viewsets.ModelViewSet):
             Q(renter=user_id)
             )
         serializer = RentSerializer(my_requests, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['get'], url_path='has-rented-from')
+    def has_rented_from(self, request):
+        renter_username = request.query_params.get("renter")
+        owner_username = request.query_params.get("owner")
+
+        if not renter_username or not owner_username:
+            return Response(
+                {"error":
+                    "Faltan parámetros: 'renter' y 'owner' son requeridos."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        has_rented = Rent.objects.filter(
+            renter__username=renter_username,
+            item__user__username=owner_username,
+            paid_pending_confirmation__is_confirmed_by_renter=None
+        ).filter(
+            Q(rent_status__in=[
+                RentStatus.BOOKED,
+                RentStatus.PICKED_UP,
+                RentStatus.RETURNED
+            ]) | Q(rent_status=RentStatus.ACCEPTED,
+                   payment_status=PaymentStatus.PAID)
+        ).exists()
+
+        return Response({"has_rented": has_rented})
+
+    @action(detail=False, methods=['get'], url_path='closed-requests')
+    def closed_requests(self, request):
+        user_id = request.query_params.get("user")
+
+        if not user_id:
+            return Response(
+                {"error": "El parámetro 'user' es requerido."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        closed_rents = Rent.objects.filter(
+            Q(paid_pending_confirmation__is_confirmed_by_renter=True) & (
+                Q(item__user_id=user_id) | Q(renter_id=user_id)
+            )
+        )
+
+        serializer = RentSerializer(closed_rents, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

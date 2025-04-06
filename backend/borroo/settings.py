@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os
-from dotenv import load_dotenv  # type: ignore
+from dotenv import load_dotenv
 
 
 dotenv_file = ".env"
@@ -33,7 +33,8 @@ SECRET_KEY = ('django-insecure-lwit61b*3n^2z!*$&7p=7+jp&c%edbvcn0=!)zvj@'
 DEBUG = True
 
 ALLOWED_HOSTS = ['backend-dot-ispp-2425-g4.ew.r.appspot.com', 'localhost',
-                 'backend-s2-dot-ispp-2425-g4.ew.r.appspot.com', '127.0.0.1']
+                 'backend-s2-dot-ispp-2425-g4.ew.r.appspot.com',
+                 'backend-s3-dot-ispp-2425-g4.ew.r.appspot.com', '127.0.0.1']
 
 
 STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
@@ -54,6 +55,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'objetos',
     'rentas',
+    'pagos',
+    'django_extensions',
 ]
 
 REST_FRAMEWORK = {
@@ -71,7 +74,7 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
     'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,
+    'SIGNING_KEY': os.getenv('JWT_SECRET_KEY'),
     'VERIFYING_KEY': None,
     'AUTH_HEADER_TYPES': ('Bearer',),
     'USER_ID_FIELD': 'id',
@@ -93,6 +96,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "https://frontend-dot-ispp-2425-g4.ew.r.appspot.com",
     "https://frontend-s2-dot-ispp-2425-g4.ew.r.appspot.com",
+    "https://frontend-s3-dot-ispp-2425-g4.ew.r.appspot.com",
     "http://localhost:5173",
 ]
 
@@ -159,6 +163,8 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
+AUTH_USER_MODEL = 'usuarios.User'
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': (
@@ -195,7 +201,7 @@ TIME_ZONE = 'Europe/Madrid'  # O cualquier otra ciudad en CET
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/

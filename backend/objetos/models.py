@@ -1,8 +1,10 @@
+from decimal import Decimal
 from django.db import models
 
 from django.core.validators import MinValueValidator
 from django.core.validators import MaxValueValidator, DecimalValidator
 from django.core.exceptions import ValidationError
+from django.db.models import F
 
 
 class ItemCategory(models.TextChoices):
@@ -31,7 +33,7 @@ class ItemSubcategory(models.TextChoices):
     PRINTERS_SCANNERS = ('printers_scanners', 'Impresoras y escáneres')
     DRONES = ('drones', 'Drones')
     PROJECTORS = ('projectors', 'Proyectores')
-    TECHNOLOGY__OTHERS = ('technology__others', 'Otros (Tecnología)')
+    TECHNOLOGY__OTHERS = ('technology_others', 'Otros (Tecnología)')
 
     # SPORTS
     CYCLING = ('cycling', 'Ciclismo')
@@ -118,9 +120,7 @@ class CancelType(models.TextChoices):
 class PriceCategory(models.TextChoices):
     HOUR = ('hour', 'Hora')
     DAY = ('day', 'Día')
-    WEEK = ('week', 'Semana')
     MONTH = ('month', 'Mes')
-    YEAR = ('year', 'Año')
 
 
 class Item(models.Model):
@@ -155,6 +155,7 @@ class Item(models.Model):
                              on_delete=models.CASCADE)
     draft_mode = models.BooleanField(default=False)
     featured = models.BooleanField(default=False)
+    num_likes = models.IntegerField(default=0)
 
     def publish(self):
         if (
@@ -172,6 +173,38 @@ class Item(models.Model):
         self.draft_mode = False
         self.save()
 
+    def like(self, user):
+        liked, created = LikedItem.objects.get_or_create(user=user, item=self)
+        if created:
+            Item.objects.filter(id=self.id).update(
+                            num_likes=F('num_likes') + 1)
+        return created
+
+    def dislike(self, user):
+        deleted, _ = LikedItem.objects.filter(user=user, item=self).delete()
+        if deleted:
+            Item.objects.filter(id=self.id).update(
+                            num_likes=F('num_likes') - 1)
+        return bool(deleted)
+
+
+class LikedItem(models.Model):
+    id = models.AutoField(primary_key=True)
+    item = models.ForeignKey(
+        Item, related_name='liked_items', on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        'usuarios.User', related_name='liked_items', on_delete=models.CASCADE)
+
+
+class UnavailablePeriod(models.Model):
+    item = models.ForeignKey(
+        Item, related_name='unavailable_periods', on_delete=models.CASCADE)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+
+    class Meta:
+        unique_together = ('item', 'start_date', 'end_date')
+
 
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, related_name='images',
@@ -187,6 +220,10 @@ class ItemRequest(models.Model):
         max_length=50,
         choices=ItemCategory.choices
     )
+    subcategory = models.CharField(
+        max_length=50,
+        choices=ItemSubcategory.choices
+    )
     cancel_type = models.CharField(
         max_length=10,
         choices=CancelType.choices
@@ -196,8 +233,9 @@ class ItemRequest(models.Model):
         choices=PriceCategory.choices
     )
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[
-        MinValueValidator(0.01, message="El precio debe ser mayor a 0."),
-        MaxValueValidator(99999999.99,
+        MinValueValidator(Decimal("0.01"),
+                          message="El precio debe ser mayor a 0."),
+        MaxValueValidator(Decimal("99999999.99"),
                           message="El precio no puede ser mayor"
                           " a 99,999,999.99."),
         DecimalValidator(max_digits=10, decimal_places=2)
@@ -208,7 +246,6 @@ class ItemRequest(models.Model):
         on_delete=models.CASCADE
         )
     created_at = models.DateTimeField(auto_now_add=True)
-    approved = models.BooleanField(default=False)
 
     def approve(self):
         """Método para aprobar la solicitud y crear un Item"""
@@ -216,6 +253,7 @@ class ItemRequest(models.Model):
             title=self.title,
             description=self.description,
             category=self.category,
+            subcategory=self.subcategory,
             cancel_type=self.cancel_type,
             price_category=self.price_category,
             price=self.price,

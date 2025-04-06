@@ -1,20 +1,24 @@
 # flake8: noqa
-import os
+import string
 import django
+import os
+
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'borroo.settings')
 django.setup()
 
-import random
-from usuarios.models import User
-from objetos.models import Item, ItemImage, ItemSubcategory
-from rentas.models import Rent
-from decimal import Decimal
-from django.contrib.auth.hashers import make_password
 from datetime import datetime
+from django.contrib.auth.hashers import make_password
+from decimal import Decimal
+from rentas.models import Rent
+from objetos.models import Item, ItemImage, ItemSubcategory
+from usuarios.models import User
+import random
+
 
 def clear_database():
-    confirmation = input("¿Estás seguro de que deseas borrar todos los datos de la base de datos? (y/n): ")
+    confirmation = input(
+        "¿Estás seguro de que deseas borrar todos los datos de la base de datos? (y/n): ")
     if confirmation.lower() == 'y' or confirmation.lower() == 'yes':
         Rent.objects.all().delete()
         ItemImage.objects.all().delete()
@@ -25,41 +29,60 @@ def clear_database():
         print("Operación cancelada.")
         exit()
 
+
 def create_users():
+    # Lista de DNIs escritos manualmente
+    dnis = [
+        "12345671A",
+        "23456782B",
+        "34567893C",
+        "45678904D",
+        "56789015E"
+    ]
+    
+    # Lista de usernames
     usernames = ['User1', 'User2', 'User3', 'User4', 'User5']
-    for username in usernames:
+    
+    for i in range(5):
         User.objects.create(
-            username=username,
-            name=f'{username} Name',
-            surname=f'{username} Surname',
-            email=f'{username.lower()}@example.com',
+            username=usernames[i],
+            name=f'{usernames[i]} Name',
+            surname=f'{usernames[i]} Surname',
+            email=f'{usernames[i].lower()}@example.com',
             password=make_password('Borroo_25'),
-            phone_number=f'+123456789{usernames.index(username)}',
+            phone_number=f'+123456789{i}',
             country='España',
             city='Madrid',
-            address=f'Calle {usernames.index(username)}',
+            address=f'Calle {i}',
+            verified_account=True,
             postal_code='28001',
+            dni=dnis[i],  # Asigna el DNI directamente de la lista
             is_verified=bool(random.getrandbits(1)),
             pricing_plan=random.choice(['free', 'premium']),
-            is_admin = False
+            is_admin=False
         )
+    
     print('Users created successfully!')
+
+
 
     superuser = User.objects.create(
         username='admin',
         name='Admin',
         surname='Admin',
         email='admin@example.com',
-        password=make_password('Admin_25'),  
+        password=make_password('Admin_25'),
         phone_number='+1234567890',
         country='España',
         city='Madrid',
         address='Calle Admin',
         postal_code='28001',
+        dni='11223344Z',
         is_verified=True,
         pricing_plan='premium',
-        is_admin=True 
+        is_admin=True
     )
+
 
 def create_items():
     users = User.objects.all()
@@ -72,14 +95,15 @@ def create_items():
                                     'entertainment']),
             subcategory=ItemSubcategory.NONE,
             cancel_type=random.choice(['flexible', 'medium', 'strict']),
-            price_category=random.choice(['hour', 'day', 'week', 'month',
-                                          'year']),
+            price_category=random.choice(['hour', 'day', 'month']),
             price=Decimal(random.uniform(2, 30)),
             user=random.choice(users),
             draft_mode=False,
-            featured=False
+            featured=False,
+            num_likes=0
         )
     print('Items created successfully!')
+
 
 if __name__ == '__main__':
     clear_database()

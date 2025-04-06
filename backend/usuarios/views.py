@@ -28,6 +28,8 @@ import os
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
 from rest_framework.permissions import BasePermission, IsAuthenticated
+from usuarios.models import Report
+from usuarios.serializers import ReportSerializer
 
 
 def index(request):
@@ -54,13 +56,29 @@ class UserViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             # Guardamos el usuario con la contraseña encriptada
             user = serializer.save()
+            # Generamos el token para verificar el email
+            user.verify_token = str(uuid.uuid4())
+            user.save()
+            cif = serializer.validated_data.get("cif")
+            if cif is not None:
+                user.is_verified = True
+                user.save()
 
             # Generamos los tokens
-            refresh = RefreshToken.for_user(user)
+            frontend_base_url = os.getenv("RECOVER_PASSWORD")
+            frontend_url = f"{frontend_base_url}verifyEmail"
+            verify_link = f"{frontend_url}?token={user.verify_token}"
+            send_mail(
+                "Verificación de correo",
+                f"Hola {user.name},"
+                f"Haz clic en el siguiente enlace para verificar tu correo: "
+                f"{verify_link}",
+                "no-reply@tuapp.com",
+                [user.email],
+                fail_silently=False,)
+
             return Response({
                 "user": UserSerializer(user).data,
-                "refresh": str(refresh),
-                "access": str(refresh.access_token),
             }, status=status.HTTP_201_CREATED)
 
         return Response({
@@ -71,17 +89,17 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=["post"], permission_classes=[AllowAny])
     def login(self, request):
         """Login de usuario y generación de token JWT"""
-        username = request.data.get("username")
+        username_or_email = request.data.get("usernameOrEmail")
         password = request.data.get("password")
 
-        if not username or not password:
+        if not username_or_email or not password:
             return Response({"error": "Se requiere usuario y contraseña"},
                             status=status.HTTP_400_BAD_REQUEST)
 
         # Verificar si el usuario existe
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
+        user = User.objects.filter(username=username_or_email).first() or \
+            User.objects.filter(email=username_or_email).first()
+        if not user:
             return Response({"error": "Usuario no encontrado"},
                             status=status.HTTP_404_NOT_FOUND)
 
@@ -89,6 +107,11 @@ class UserViewSet(viewsets.ModelViewSet):
         if not check_password(password, user.password):
             return Response({"error": "Credenciales incorrectas"},
                             status=status.HTTP_401_UNAUTHORIZED)
+
+        # Comprobar si la contraseña es correcta
+        if not user.verified_account:
+            return Response({"error": "Verifica tu correo"},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         # Generar tokens JWT
         refresh = RefreshToken.for_user(user)
@@ -110,19 +133,27 @@ class UserViewSet(viewsets.ModelViewSet):
 
     #     return super().destroy(request, *args, **kwargs)
 
-    # def update(self, request, *args, **kwargs):
-    #     user = self.get_object()
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(
+            instance, data=request.data, partial=partial
+        )
 
-    #     if (
-    #         user.username != request.user.username
-    #         and not request.user.is_superuser
-    #     ):
-    #         raise PermissionDenied(
-    #             "No tienes permiso para modificar este usuario")
+        if serializer.is_valid():
+            updated_user = serializer.save()
 
-    #     return super().update(request, *args, **kwargs)
+            # Si el CIF se ha actualizado, actualizamos también el is_verified
+            if "cif" in serializer.validated_data:
+                cif = serializer.validated_data["cif"]
+                updated_user.is_verified = cif is not None
+                updated_user.save()
+            return Response(self.get_serializer(updated_user).data)
 
-    @action(detail=True, methods=['post'])
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['post'],
+            permission_classes=[IsAuthenticated])
     def upgrade_to_premium(self, request, pk=None):
         user = self.get_object()
         if user.pricing_plan != PricingPlan.FREE:
@@ -136,12 +167,13 @@ class UserViewSet(viewsets.ModelViewSet):
             {'message': 'Plan actualizado a premium.'},
             status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=['post'])
+    @action(detail=True, methods=['post'],
+            permission_classes=[IsAuthenticated])
     def downgrade_to_free(self, request, pk=None):
         user = self.get_object()
         if user.pricing_plan != PricingPlan.PREMIUM:
             return Response(
-                {'error': 'Solo los usuarios con plan premium'
+                {'error': 'Solo los usuarios con plan premium '
                  'pueden cambiar a free.'},
                 status=status.HTTP_400_BAD_REQUEST
             )
@@ -150,6 +182,13 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(
             {'message': 'Plan actualizado a free.'},
             status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['get'],
+            permission_classes=[IsAuthenticated])
+    def get_saldo(self, request, pk=None):
+        """Obtiene el saldo del usuario."""
+        user = self.get_object()
+        return Response({'saldo': user.saldo}, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
@@ -174,6 +213,7 @@ def check_email(request):
 
 class PasswordResetRequestView(APIView):
     """Vista para solicitar el restablecimiento de contraseña."""
+
     def post(self, request):
         email = request.data.get("email")
         user = User.objects.filter(email=email).first()
@@ -181,7 +221,7 @@ class PasswordResetRequestView(APIView):
         if not user:
             return Response({
                 "error": "No se encontró un usuario con ese email."},
-                            status=status.HTTP_404_NOT_FOUND)
+                status=status.HTTP_404_NOT_FOUND)
 
         # Generamos un token único
         user.reset_token = str(uuid.uuid4())
@@ -207,26 +247,29 @@ class PasswordResetRequestView(APIView):
 
 class PasswordResetConfirmView(APIView):
     """Vista para confirmar el cambio de contraseña."""
+
     def validate_password(self, password):
         """Aplica las validaciones de la contraseña definidas en el modelo."""
         validators = [
             RegexValidator(
                 regex=r'^(?=.*[A-Z])',
-                message='La contraseña debe contener'
-                'al menos una letra mayúscula.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^(?=.*\d)',
-                message='La contraseña debe contener al menos un número.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])',
-                message='La contraseña debe contener'
-                'al menos un carácter especial.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^.{8,}$',
-                message='La contraseña debe tener al menos 8 caracteres.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
         ]
 
@@ -248,7 +291,7 @@ class PasswordResetConfirmView(APIView):
         if not new_password:
             return Response({
                 "error": "Debes proporcionar una nueva contraseña"},
-                            status=status.HTTP_400_BAD_REQUEST)
+                status=status.HTTP_400_BAD_REQUEST)
 
         # Validar la contraseña con las reglas del modelo
         try:
@@ -264,6 +307,27 @@ class PasswordResetConfirmView(APIView):
         user.save()
 
         return Response({"message": "Contraseña actualizada correctamente"},
+                        status=status.HTTP_200_OK)
+
+
+class VerifyEmailView(APIView):
+    """Vista para confirmar el cambio de contraseña."""
+
+    def post(self, request, token):
+        user = User.objects.filter(verify_token=token).first()
+
+        if not user:
+            return Response({"error": "Token inválido"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        if user.verified_account is True:
+            return Response({"error": "Usuario ya verificado"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        user.verified_account = True
+        user.save()
+
+        return Response({"message": "Usuario Verificado correctamente"},
                         status=status.HTTP_200_OK)
 
 
@@ -337,7 +401,7 @@ class ReviewListView(APIView):
         if not username:
             return Response({
                 "error": "El parámetro 'username' es obligatorio"},
-                            status=status.HTTP_400_BAD_REQUEST)
+                status=status.HTTP_400_BAD_REQUEST)
 
         reviewed_user = get_object_or_404(User, username=username)
         reviews = Review.objects.filter(reviewed_user=reviewed_user)
@@ -415,7 +479,7 @@ class CreateSuperuserView(APIView):
 
 class IsAdminUser(BasePermission):
     def has_permission(self, request, view):
-        return request.user and request.user.is_superuser
+        return request.user and request.user.is_admin
 
 
 class UserListView(APIView):
@@ -477,11 +541,6 @@ class CreateItemView(APIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
 
     def post(self, request, *args, **kwargs):
-        if not IsAdminUser(request.user):
-            return Response({
-                "error": "No tienes permisos suficientes para crear un ítem."
-            }, status=status.HTTP_403_FORBIDDEN)
-
         serializer = ItemSerializer(data=request.data)
         if serializer.is_valid():
             item = serializer.save(user=request.user)
@@ -496,19 +555,16 @@ class UpdateItemView(APIView):
     def put(self, request, *args, **kwargs):
         try:
             item = Item.objects.get(id=kwargs['item_id'])
-
-            # Verificar si el usuario es admin o dueño del ítem
-            if not IsAdminUser(request.user) and item.user != request.user:
+            if not request.user.is_admin and item.user != request.user:
                 return Response({
-                    "error": "No tienes permisos suficientes para actualizar"
-                    "este ítem."
+                    "error": "No tienes permisos para actualizar este ítem."
                 }, status=status.HTTP_403_FORBIDDEN)
-
-            serializer = ItemSerializer(item, data=request.data, partial=True)
+            serializer = ItemSerializer(
+                item, data=request.data, partial=True,
+                context={'request': request})
             if serializer.is_valid():
                 item = serializer.save()
-                return Response(ItemSerializer(item).data,
-                                status=status.HTTP_200_OK)
+                return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
         except Item.DoesNotExist:
@@ -520,15 +576,14 @@ class UpdateItemView(APIView):
 class DeleteItemView(APIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
 
-    def delete(self, request, *args, **kwargs):
+    def delete(self, request, item_id):
         try:
-            item = Item.objects.get(id=kwargs['item_id'])
+            item = Item.objects.get(id=item_id)
 
             # Verificar si el usuario es admin o dueño del ítem
-            if not IsAdminUser(request.user) and item.user != request.user:
+            if not request.user.is_admin and item.user != request.user:
                 return Response({
-                    "error": "No tienes permisos suficientes para eliminar"
-                    "este ítem."
+                    "error": "No tienes permisos para eliminar este ítem."
                 }, status=status.HTTP_403_FORBIDDEN)
 
             item.delete()
@@ -545,7 +600,7 @@ class CreateRentView(APIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
 
     def post(self, request, *args, **kwargs):
-        if not IsAdminUser(request.user):
+        if not request.user.is_admin:
             return Response({
                 "error": "No tienes permisos suficientes para crear una renta."
             }, status=status.HTTP_403_FORBIDDEN)
@@ -564,21 +619,34 @@ class UpdateRentView(APIView):
     def put(self, request, *args, **kwargs):
         try:
             rent = Rent.objects.get(id=kwargs['rent_id'])
-
-            # Verificar si el usuario es admin o dueño de la renta
-            if not IsAdminUser(request.user) and rent.renter != request.user:
+            if not request.user.is_admin:
                 return Response({
-                    "error": "No tienes permisos suficientes para actualizar"
-                    "esta renta."
+                    "error": "No tienes permisos para actualizar esta renta."
                 }, status=status.HTTP_403_FORBIDDEN)
 
-            serializer = RentSerializer(rent, data=request.data, partial=True)
+            data = request.data.copy()
+            item_id = data.get("item")
+            if item_id:
+                try:
+                    data["item"] = Item.objects.get(id=item_id)
+                except Item.DoesNotExist:
+                    return Response({"error": "El ítem  no existe."},
+                                    status=404)
+            serializer = RentSerializer(
+                rent,
+                data=data,
+                partial=True,
+                context={"item_instance": rent.item}
+            )
+
             if serializer.is_valid():
-                rent = serializer.save()
-                return Response(RentSerializer(rent).data,
+                updated_rent = serializer.save()
+                return Response(RentSerializer(updated_rent).data,
                                 status=status.HTTP_200_OK)
+
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+
         except Rent.DoesNotExist:
             return Response({
                 "error": "La renta no existe."
@@ -593,7 +661,7 @@ class DeleteRentView(APIView):
             rent = Rent.objects.get(id=kwargs['rent_id'])
 
             # Verificar si el usuario es admin o dueño de la renta
-            if not IsAdminUser(request.user) and rent.renter != request.user:
+            if not request.user.is_admin:
                 return Response({
                     "error": "No tienes permisos suficientes para eliminar"
                     "esta renta."
@@ -607,3 +675,102 @@ class DeleteRentView(APIView):
             return Response({
                 "error": "La renta no existe."
             }, status=status.HTTP_404_NOT_FOUND)
+
+
+class ListItemsView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def get(self, request):
+        items = Item.objects.all()
+        serializer = ItemSerializer(items, many=True)
+        return Response(serializer.data)
+
+
+class RentListView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+
+    def get(self, request):
+        rents = Rent.objects.all()
+        serializer = RentSerializer(rents, many=True)
+        return Response(serializer.data)
+
+
+class UpdateUserPerfilView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, *args, **kwargs):
+        user = request.user  # usuario autenticado
+
+        serializer = UserSerializer(
+            user, data=request.data, partial=True, context={'request': request}
+        )
+        if serializer.is_valid():
+            try:
+                serializer.save()
+                print("Perfil actualizado correctamente")
+                return Response({
+                    "message": "Perfil actualizado correctamente",
+                    "user": serializer.data
+                }, status=status.HTTP_200_OK)
+            except Exception as e:
+                print(f"Error al actualizar perfil: {str(e)}")
+                return Response({
+                    "error": f"No se pudo actualizar el perfil: {str(e)}"
+                }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            print("Errores de validación:", serializer.errors)
+            return Response({
+                "errors": serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ReportViewSet(viewsets.ModelViewSet):
+    queryset = Report.objects.all()
+    serializer_class = ReportSerializer
+
+    def create(self, request, *args, **kwargs):
+        data = request.data.copy()
+
+        reporter = get_object_or_404(User,
+                                     id=data.get("reporter"))
+
+        reported_user = get_object_or_404(
+            User, id=data.get("reported_user"))
+
+        if reporter == reported_user:
+            return Response({"error": "No puedes reportarte a ti mismo."},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        existing_report = Report.objects.filter(
+            reporter=reporter, reported_user=reported_user).first()
+
+        if existing_report:
+            existing_report.description = data.get("description",
+                                                   existing_report.description)
+            existing_report.category = data.get("category",
+                                                existing_report.category)
+            existing_report.status = data.get("status",
+                                              existing_report.status)
+            existing_report.save()
+            return Response({"message": "Reporte actualizado correctamente"},
+                            status=status.HTTP_200_OK)
+        else:
+            Report.objects.create(
+                reporter=reporter,
+                reported_user=reported_user,
+                description=data.get("description"),
+                category=data.get("category"),
+                status="Pendiente"
+            )
+            return Response({"message": "Reporte creado correctamente"},
+                            status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        return Response({
+            "error": "No se puede actualizar el reporte."
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, *args, **kwargs):
+        return Response({
+            "error": "No se puede eliminar el reporte."
+        }, status=status.HTTP_400_BAD_REQUEST)

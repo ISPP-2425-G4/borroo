@@ -16,17 +16,24 @@ import {
   Divider,
   Button,
   FormControl,
-  alpha
+  alpha,
+  FormControlLabel,
+  Switch
 } from "@mui/material";
-import { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import SearchIcon from '@mui/icons-material/Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import CloseIcon from '@mui/icons-material/Close';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import StarIcon from '@mui/icons-material/Star';
+// import AdSenseComponent from "./components/AdSense";
+import AdSenseMock from "./components/AdSenseMock";
+
+const currentUser = JSON.parse(localStorage.getItem("user"));
 
 const IMAGEN_PREDETERMINADA = "../public/default_image.png";
 
@@ -40,6 +47,10 @@ const CATEGORIAS = {
 };
 
 const Layout = () => {
+
+  const accessToken = localStorage.getItem("access_token");
+
+
   const [productos, setProductos] = useState([]);
   const [error, setError] = useState(null);
   const [terminoBusqueda, setTerminoBusqueda] = useState("");
@@ -50,6 +61,8 @@ const Layout = () => {
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [cargando, setCargando] = useState(true);
   const [featuredItems, setFeaturedItems] = useState([]);
+  const [mostrarSoloLiked, setMostrarSoloLiked] = useState(false);
+
 
 
   const manejarCambioBusqueda = (e) => setTerminoBusqueda(e.target.value);
@@ -79,7 +92,9 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
   const reiniciarFiltros = () => {
     setTerminoBusqueda("");
     setCategoria("");
-    setRangoPrecio([0, 100]);
+    setSubcategoria("");
+    setRangoPrecio([0, 99999]);
+    setMostrarSoloLiked(false);
   };
 
   const truncarDescripcion = useCallback((descripcion, longitud = 100) => {
@@ -109,7 +124,7 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
   useEffect(() => {
     const obtenerProductos = async () => {
       setCargando(true);
-      let nextUrl = `${import.meta.env.VITE_API_BASE_URL}/objetos/full`;
+      let nextUrl = `${import.meta.env.VITE_API_BASE_URL}/objetos/list_published_items`;
       let allResults = [];
   
       try {
@@ -123,16 +138,30 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
           nextUrl = respuesta.data.next; // avanza a la siguiente página
         }
   
-        const productosConImagenes = await Promise.all(
+        const productosConImagenesYLikeStatus = await Promise.all(
           allResults.map(async (producto) => {
             const urlImagen = producto.images && producto.images.length > 0
               ? await obtenerUrlImagen(producto.images[0])
               : IMAGEN_PREDETERMINADA;
-            return { ...producto, urlImagen };
+  
+            const accessToken = localStorage.getItem("access_token");
+            let isLiked = false;
+            if (accessToken) {
+              try {
+                const likedResponse = await axios.get(
+                  `${import.meta.env.VITE_API_BASE_URL}/objetos/like-status/${producto.id}/`,
+                  { headers: { Authorization: `Bearer ${accessToken}` } }
+                );
+                isLiked = likedResponse.data.is_liked || false;
+              } catch (error) {
+                console.error("Error al obtener el estado de like:", error);
+              }
+            }
+            return { ...producto, urlImagen, isLiked };
           })
         );
   
-        setProductos(productosConImagenes);
+        setProductos(productosConImagenesYLikeStatus);
       } catch (error) {
         console.error(error);
         setError("Error al cargar los productos.");
@@ -144,19 +173,33 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
     obtenerProductos();
   }, [obtenerUrlImagen]);
 
+  const normalizarTexto = (texto) => 
+    texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  
   useEffect(() => {
-    const filtrados = productos.filter((producto) => (
-      (categoria === "" || producto.category_display === categoria) &&
-      (subcategoria === "" || producto.subcategory_display === subcategoria) &&
-      (producto.price >= rangoPrecio[0] && producto.price <= rangoPrecio[1]) &&
-      (terminoBusqueda === "" || producto.title.toLowerCase().includes(terminoBusqueda.toLowerCase()))
-    ));
+    const filtrados = productos.filter((producto) => {
+      const esLiked = mostrarSoloLiked ? producto.isLiked : true;
+  
+      return (
+        esLiked &&
+        (categoria === "" || producto.category_display === categoria) &&
+        (subcategoria === "" || producto.subcategory_display === subcategoria) &&
+        (producto.price >= rangoPrecio[0] && producto.price <= rangoPrecio[1]) &&
+        (terminoBusqueda === "" || normalizarTexto(producto.title).includes(normalizarTexto(terminoBusqueda)))
+      );
+    });
     setProductosFiltrados(filtrados);
-  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda]);
+
+    if (categoria || subcategoria || terminoBusqueda || mostrarSoloLiked || 
+      rangoPrecio[0] !== 0 || rangoPrecio[1] !== 99999) {
+      setCurrentPage(1);
+    }
+  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda, mostrarSoloLiked]);
+
 
   const hayFiltrosActivos = useMemo(() => 
-    terminoBusqueda !== "" || categoria !== "" || subcategoria !== "" || rangoPrecio[0] > 0 || rangoPrecio[1] < 100,
-  [terminoBusqueda, categoria, subcategoria, rangoPrecio]);
+    terminoBusqueda !== "" || categoria !== "" || subcategoria !== "" || rangoPrecio[0] > 0 || rangoPrecio[1] < 99999 || mostrarSoloLiked, 
+  [terminoBusqueda, categoria, subcategoria, rangoPrecio, mostrarSoloLiked]);
 
   const obtenerDetallesCategoria = (nombreCategoria) => {
     return CATEGORIAS[nombreCategoria] || { icono: "•", color: "#607d8b" };
@@ -178,16 +221,30 @@ useEffect(() => {
         nextUrl = respuesta.data.next; // avanza a la siguiente página
       }
 
-      const productosConImagenes = await Promise.all(
+      const productosConImagenesYLikeStatus = await Promise.all(
         allResults.map(async (producto) => {
           const urlImagen = producto.images && producto.images.length > 0
             ? await obtenerUrlImagen(producto.images[0])
             : IMAGEN_PREDETERMINADA;
-          return { ...producto, urlImagen };
+
+          const accessToken = localStorage.getItem("access_token");
+          let isLiked = false;
+          if (accessToken) {
+            try {
+              const likedResponse = await axios.get(
+                `${import.meta.env.VITE_API_BASE_URL}/objetos/like-status/${producto.id}/`,
+                { headers: { Authorization: `Bearer ${accessToken}` } }
+              );
+              isLiked = likedResponse.data.is_liked || false;
+            } catch (error) {
+              console.error("Error al obtener el estado de like:", error);
+            }
+          }
+          return { ...producto, urlImagen, isLiked };
         })
       );
+      setFeaturedItems(productosConImagenesYLikeStatus);
 
-      setFeaturedItems(productosConImagenes);
     } catch (error) {
       console.error(error);
       setError("Error al cargar los productos.");
@@ -198,6 +255,45 @@ useEffect(() => {
 
   obtenerProductosDestacados();
 }, [obtenerUrlImagen]);
+
+const toggleLike = async (productoId) => {
+  const accessToken = localStorage.getItem("access_token");
+  if (accessToken) {
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/objetos/like/${productoId}/`,
+        {},
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+      setProductos((prevProductos) =>
+        prevProductos.map((producto) =>
+          producto.id === productoId
+            ? { ...producto, 
+              isLiked: !producto.isLiked,
+              num_likes: producto.isLiked ? producto.num_likes - 1 : producto.num_likes + 1 
+            }
+            : producto
+        )
+      );
+
+      setFeaturedItems((prevProductos) =>
+        prevProductos.map((producto) =>
+          producto.id === productoId
+            ? { ...producto,
+              isLiked: !producto.isLiked,
+              num_likes: producto.isLiked ? producto.num_likes - 1 : producto.num_likes + 1 
+            }  
+            : producto
+        )
+      );
+
+      setCurrentPage((prevPage) => prevPage);
+
+    } catch (error) {
+      console.error("Error al cambiar el estado de like:", error);
+    }
+  }
+};
 
   return (
     <Box sx={{ 
@@ -304,25 +400,33 @@ useEffect(() => {
                                     }} 
                                   />
                                   
-                                  <IconButton
-                                    aria-label="favorito"
-                                    sx={{
-                                      position: 'absolute',
-                                      top: 8,
-                                      right: 8,
-                                      bgcolor: 'rgba(255, 255, 255, 0.9)',
-                                      '&:hover': {
-                                        bgcolor: 'white',
-                                      },
-                                      zIndex: 1
-                                    }}
-                                    size="small"
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                    }}
-                                  >
-                                    <FavoriteBorderIcon fontSize="small" />
-                                  </IconButton>
+                                  {accessToken &&
+                                    <IconButton
+                                      aria-label="favorito"
+                                      sx={{
+                                        position: 'absolute',
+                                        top: 8,
+                                        right: 8,
+                                        bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                        '&:hover': {
+                                          bgcolor: 'white',
+                                        },
+                                        zIndex: 1
+                                      }}
+                                      size="small"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        e.preventDefault();
+                                        toggleLike(producto.id);
+                                      }}
+                                    >
+                                      {producto.isLiked ? (
+                                        <FavoriteIcon fontSize="small" sx={{ color: 'red' }} />
+                                      ) : (
+                                        <FavoriteBorderIcon fontSize="small" sx={{ color: 'red' }} />
+                                      )}
+                                    </IconButton>
+                                  }
                                   
                                   <Chip
                                     size="small"
@@ -422,13 +526,13 @@ useEffect(() => {
                                   <Box sx={{ display: 'flex', mb: 1, alignItems: 'center', gap: 0.5 }}>
                                     <LocationOnOutlinedIcon sx={{ fontSize: '0.875rem', color: 'text.secondary' }} />
                                     <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.75rem' }}>
-                                      Madrid
+                                      <p>Ubicación: {producto.user_location || "No disponible"}</p>
                                     </Typography>
                                     
                                     <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
                                       <StarIcon sx={{ fontSize: '0.875rem', color: '#FFB400' }} />
                                       <Typography variant="body2" sx={{ fontWeight: 500, fontSize: '0.75rem', ml: 0.5 }}>
-                                        4.8
+                                      <p>Valoración: {producto.user_rating ? producto.user_rating.toFixed(1) : "No disponible"}</p>
                                       </Typography>
                                     </Box>
                                   </Box>
@@ -454,6 +558,12 @@ useEffect(() => {
                                       {truncarDescripcion(producto.description, 80)}
                                     </Typography>
                                   </Tooltip>
+                                  <Box display="flex" alignItems="center" gap={0.5}>
+                                    <FavoriteIcon fontSize="small" sx={{ color: 'red' }} />
+                                    <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                                      {producto.num_likes}
+                                    </Typography>
+                                  </Box>
                                 </CardContent>
                               </Card>
                             </Link>
@@ -643,6 +753,10 @@ useEffect(() => {
                       </MenuItem>
                     ))}
                   </Select>
+                  {categoria &&
+                <Typography variant="subtitle2" sx={{ mt: 2,mb: 1, fontWeight: 600 }}>
+                  Subcategoría
+                </Typography>}
                   {categoria === "Tecnología" && (
                   <Select
                     value={subcategoria}
@@ -847,6 +961,25 @@ useEffect(() => {
                   />
 
                 </Box>
+                {accessToken &&
+                <Box sx={{ mt: 2 }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                    Favoritos
+                  </Typography>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={mostrarSoloLiked} 
+                        onChange={() => setMostrarSoloLiked(!mostrarSoloLiked)}
+                        name="mostrarSoloLiked"
+                        color="primary"
+                      />
+                    }
+                    label="Favoritos ❤️"
+                    labelPlacement="start"
+                  />
+                </Box>
+                }
               </Box>
             </Paper>
 
@@ -880,16 +1013,36 @@ useEffect(() => {
                     <Chip
                       label={`Categoría: ${categoria}`}
                       size="small"
-                      onDelete={() => setCategoria("")}
+                      onDelete={() => {
+                        setCategoria("");
+                        setSubcategoria("");
+                      }}
+                      sx={{ borderRadius: 1 }}
+                    />
+                  )}
+                  {subcategoria && (
+                    <Chip
+                      label={`Subcategoría: ${subcategoria}`}
+                      size="small"
+                      onDelete={() => setSubcategoria("")}
                       sx={{ borderRadius: 1 }}
                     />
                   )}
                   
-                  {(rangoPrecio[0] > 0 || rangoPrecio[1] < 100) && (
+                  {(rangoPrecio[0] > 0 || rangoPrecio[1] < 99999) && (
                     <Chip
                       label={`Precio: ${rangoPrecio[0]}€ - ${rangoPrecio[1]}€`}
                       size="small"
-                      onDelete={() => setRangoPrecio([0, 100])}
+                      onDelete={() => setRangoPrecio([0, 99999])}
+                      sx={{ borderRadius: 1 }}
+                    />
+                  )}
+  
+                  {mostrarSoloLiked && (
+                    <Chip
+                      label="Tus favoritos"
+                      size="small"
+                      onDelete={() => setMostrarSoloLiked(false)}
                       sx={{ borderRadius: 1 }}
                     />
                   )}
@@ -951,76 +1104,82 @@ useEffect(() => {
                       flexWrap: 'wrap',
                       gap: { xs: 2, md: 3 },
                     }}>
-                      {currentItems.map((producto, indice) => {
-                        const { icono, color } = obtenerDetallesCategoria(producto.category_display);
-                        
-                        return (
-                          <Box
-                            key={indice}
-                            sx={{
-                              flex: { 
-                                xs: '1 0 100%',
-                                sm: '1 0 calc(50% - 16px)', 
-                                md: '1 0 calc(33.333% - 16px)', 
-                                lg: '1 0 calc(25% - 18px)' 
-                              },
-                              maxWidth: { 
-                                xs: '100%',
-                                sm: 'calc(50% - 16px)', 
-                                md: 'calc(33.333% - 16px)', 
-                                lg: 'calc(25% - 18px)' 
-                              }
+                    {currentItems.map((producto, indice) => {
+                    const { icono, color } = obtenerDetallesCategoria(producto.category_display);
+                    
+                    // Insertar el anuncio cada 4 productos (puedes cambiar el número según sea necesario)
+                    const mostrarAnuncio = (indice + 1) % 4 === 0 && currentUser?.pricing_plan !== "premium";
+
+                    return (
+                      <React.Fragment key={indice}>
+                        {/* Si debe mostrar el anuncio en este lugar, se inserta aquí */}
+                        {mostrarAnuncio && <AdSenseMock />}
+
+                        <Box
+                          sx={{
+                            flex: { 
+                              xs: '1 0 100%',
+                              sm: '1 0 calc(50% - 16px)', 
+                              md: '1 0 calc(33.333% - 16px)', 
+                              lg: '1 0 calc(25% - 18px)' 
+                            },
+                            maxWidth: { 
+                              xs: '100%',
+                              sm: 'calc(50% - 16px)', 
+                              md: 'calc(33.333% - 16px)', 
+                              lg: 'calc(25% - 18px)' 
+                            }
+                          }}
+                        >
+                          <Link 
+                            to={`/show-item/${producto.id}`}
+                            style={{ 
+                              textDecoration: 'none',
+                              display: 'block', 
+                              height: '100%' 
                             }}
                           >
-                            <Link 
-                              to={`/show-item/${producto.id}`}
-                              style={{ 
-                                textDecoration: 'none',
-                                display: 'block', 
-                                height: '100%' 
+                            <Card
+                              sx={{
+                                height: "100%",
+                                display: "flex",
+                                flexDirection: "column",
+                                borderRadius: 3,
+                                overflow: "hidden",
+                                boxShadow: '0px 2px 8px rgba(0,0,0,0.07)',
+                                transition: "all 0.3s ease",
+                                "&:hover": {
+                                  transform: "translateY(-8px)",
+                                  boxShadow: '0px 8px 24px rgba(0,0,0,0.15)',
+                                  "& .producto-imagen": {
+                                    transform: "scale(1.08)"
+                                  }
+                                }
                               }}
                             >
-                              <Card
-                                sx={{
-                                  height: "100%",
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  borderRadius: 3,
+                              <Box 
+                                sx={{ 
+                                  position: "relative",
+                                  pt: "75%", // Relación de aspecto 4:3
                                   overflow: "hidden",
-                                  boxShadow: '0px 2px 8px rgba(0,0,0,0.07)',
-                                  transition: "all 0.3s ease",
-                                  "&:hover": {
-                                    transform: "translateY(-8px)",
-                                    boxShadow: '0px 8px 24px rgba(0,0,0,0.15)',
-                                    "& .producto-imagen": {
-                                      transform: "scale(1.08)"
-                                    }
-                                  }
+                                  bgcolor: '#f5f5f5'
                                 }}
                               >
-                                <Box 
-                                  sx={{ 
-                                    position: "relative",
-                                    pt: "75%", // Relación de aspecto 4:3
-                                    overflow: "hidden",
-                                    bgcolor: '#f5f5f5'
-                                  }}
-                                >
-                                  <img 
-                                    className="producto-imagen"
-                                    src={producto.urlImagen} 
-                                    alt={producto.title}
-                                    style={{ 
-                                      position: "absolute",
-                                      top: 0,
-                                      left: 0,
-                                      width: "100%", 
-                                      height: "100%", 
-                                      objectFit: "cover",
-                                      transition: "transform 0.5s ease",
-                                    }} 
-                                  />
-                                  
+                                <img 
+                                  className="producto-imagen"
+                                  src={producto.urlImagen} 
+                                  alt={producto.title}
+                                  style={{ 
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    width: "100%", 
+                                    height: "100%", 
+                                    objectFit: "cover",
+                                    transition: "transform 0.5s ease",
+                                  }} 
+                                />
+                                {accessToken &&
                                   <IconButton
                                     aria-label="favorito"
                                     sx={{
@@ -1035,148 +1194,162 @@ useEffect(() => {
                                     }}
                                     size="small"
                                     onClick={(e) => {
+                                        e.stopPropagation();
                                       e.preventDefault();
+                                        toggleLike(producto.id);
                                     }}
                                   >
-                                    <FavoriteBorderIcon fontSize="small" />
+                                      {producto.isLiked ? (
+                                        <FavoriteIcon fontSize="small" sx={{ color: 'red' }} />
+                                      ) : (
+                                      <FavoriteBorderIcon fontSize="small" sx={{ color: 'red' }} />
+                                      )}
                                   </IconButton>
-                                  
-                                  <Chip
-                                    size="small"
-                                    label={producto.category_display}
-                                    sx={{
-                                      position: 'absolute',
-                                      bottom: 40,
-                                      left: 12,
-                                      borderRadius: '4px',
-                                      fontWeight: 500,
-                                      bgcolor: alpha(color, 0.9),
-                                      color: 'white',
-                                      px: 1,
-                                      py: 0.5,
-                                      fontSize: '0.75rem',
-                                      zIndex: 1
-                                    }}
-                                    icon={
-                                      <Box component="span" sx={{ color: 'white', mr: -0.5 }}>
-                                        {icono}
-                                      </Box>
-                                    }
-                                  />
-                                  <Chip
-                                    size="small"
-                                    label={producto.subcategory_display}
-                                    sx={{
-                                      position: 'absolute',
-                                      bottom: 12,
-                                      left: 12,
-                                      borderRadius: '4px',
-                                      fontWeight: 500,
-                                      bgcolor: alpha(color, 0.9),
-                                      color: 'white',
-                                      px: 1,
-                                      py: 0.5,
-                                      fontSize: '0.75rem',
-                                      zIndex: 1
-                                    }}
-                                  />
-                                </Box>
-                                
-                                <CardContent
+                                }
+                                <Chip
+                                  size="small"
+                                  label={producto.category_display}
                                   sx={{
-                                    flexGrow: 1,
-                                    p: 2.5,
-                                    "&:last-child": { pb: 3 }
+                                    position: 'absolute',
+                                    bottom: 40,
+                                    left: 12,
+                                    borderRadius: '4px',
+                                    fontWeight: 500,
+                                    bgcolor: alpha(color, 0.9),
+                                    color: 'white',
+                                    px: 1,
+                                    py: 0.5,
+                                    fontSize: '0.75rem',
+                                    zIndex: 1
+                                  }}
+                                  icon={
+                                    <Box component="span" sx={{ color: 'white', mr: -0.5 }}>
+                                      {icono}
+                                    </Box>
+                                  }
+                                />
+                                <Chip
+                                  size="small"
+                                  label={producto.subcategory_display}
+                                  sx={{
+                                    position: 'absolute',
+                                    bottom: 12,
+                                    left: 12,
+                                    borderRadius: '4px',
+                                    fontWeight: 500,
+                                    bgcolor: alpha(color, 0.9),
+                                    color: 'white',
+                                    px: 1,
+                                    py: 0.5,
+                                    fontSize: '0.75rem',
+                                    zIndex: 1
+                                  }}
+                                />
+                              </Box>
+                              
+                              <CardContent
+                                sx={{
+                                  flexGrow: 1,
+                                  p: 2.5,
+                                  "&:last-child": { pb: 3 }
+                                }}
+                              >
+                                <Typography 
+                                  variant="h6" 
+                                  sx={{ 
+                                    fontWeight: 600,
+                                    mb: 1,
+                                    fontSize: '1rem',
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    display: '-webkit-box',
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: 'vertical',
+                                    lineHeight: 1.3,
+                                    height: '2.6em'
                                   }}
                                 >
+                                  {producto.title}
+                                </Typography>
+                                
+                                <Box sx={{ 
+                                  display: "flex", 
+                                  justifyContent: "space-between", 
+                                  alignItems: "flex-end",
+                                  mb: 1.5
+                                }}>
                                   <Typography 
-                                    variant="h6" 
+                                    variant="h5" 
                                     sx={{ 
-                                      fontWeight: 600,
-                                      mb: 1,
-                                      fontSize: '1rem',
-                                      overflow: "hidden",
-                                      textOverflow: "ellipsis",
-                                      display: '-webkit-box',
-                                      WebkitLineClamp: 2,
-                                      WebkitBoxOrient: 'vertical',
-                                      lineHeight: 1.3,
-                                      height: '2.6em'
+                                      fontWeight: 700,
+                                      color: 'primary.dark',
+                                      fontSize: '1.25rem'
                                     }}
                                   >
-                                    {producto.title}
+                                    {producto.price}€
                                   </Typography>
                                   
-                                  <Box sx={{ 
-                                    display: "flex", 
-                                    justifyContent: "space-between", 
-                                    alignItems: "flex-end",
-                                    mb: 1.5
-                                  }}>
-                                    <Typography 
-                                      variant="h5" 
-                                      sx={{ 
-                                        fontWeight: 700,
-                                        color: 'primary.dark',
-                                        fontSize: '1.25rem'
-                                      }}
-                                    >
-                                      {producto.price}€
-                                    </Typography>
-                                    
-                                    <Typography 
-                                      variant="body2" 
-                                      sx={{ 
-                                        color: "text.secondary",
-                                        fontWeight: 500,
-                                        fontSize: '0.75rem'
-                                      }}
-                                    >
-                                      {producto.price_category_display}
-                                    </Typography>
-                                  </Box>
-                                  
-                                  <Box sx={{ display: 'flex', mb: 1, alignItems: 'center', gap: 0.5 }}>
-                                    <LocationOnOutlinedIcon sx={{ fontSize: '0.875rem', color: 'text.secondary' }} />
-                                    <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.75rem' }}>
-                                      Madrid
-                                    </Typography>
-                                    
-                                    <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
-                                      <StarIcon sx={{ fontSize: '0.875rem', color: '#FFB400' }} />
-                                      <Typography variant="body2" sx={{ fontWeight: 500, fontSize: '0.75rem', ml: 0.5 }}>
-                                        4.8
-                                      </Typography>
-                                    </Box>
-                                  </Box>
-                                  
-                                  <Tooltip
-                                    title={producto.description || "No hay descripción disponible"}
-                                    arrow
-                                    placement="top"
+                                  <Typography 
+                                    variant="body2" 
+                                    sx={{ 
+                                      color: "text.secondary",
+                                      fontWeight: 500,
+                                      fontSize: '0.75rem'
+                                    }}
                                   >
-                                    <Typography 
-                                      variant="body2" 
-                                      sx={{ 
-                                        color: "text.secondary",
-                                        fontSize: '0.8125rem',
-                                        lineHeight: 1.5,
-                                        height: "3em",
-                                        overflow: "hidden",
-                                        display: '-webkit-box',
-                                        WebkitLineClamp: 2,
-                                        WebkitBoxOrient: 'vertical'
-                                      }}
-                                    >
-                                      {truncarDescripcion(producto.description, 80)}
+                                    {producto.price_category_display}
+                                  </Typography>
+                                </Box>
+                                
+                                <Box sx={{ display: 'flex', mb: 1, alignItems: 'center', gap: 0.5 }}>
+                                  <LocationOnOutlinedIcon sx={{ fontSize: '0.875rem', color: 'text.secondary' }} />
+                                  <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.75rem' }}>
+                                  <p>Ubicación: {producto.user_location || "No disponible"}</p>
+                                  </Typography>
+                                  
+                                  <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center' }}>
+                                    <StarIcon sx={{ fontSize: '0.875rem', color: '#FFB400' }} />
+                                    <Typography variant="body2" sx={{ fontWeight: 500, fontSize: '0.75rem', ml: 0.5 }}>
+                                    <p>Valoración: {producto.user_rating ? producto.user_rating.toFixed(1) : "No disponible"}</p>
                                     </Typography>
-                                  </Tooltip>
-                                </CardContent>
-                              </Card>
-                            </Link>
-                          </Box>
-                        );
-                      })}
+                                  </Box>
+                                </Box>
+                                
+                                <Tooltip
+                                  title={producto.description || "No hay descripción disponible"}
+                                  arrow
+                                  placement="top"
+                                >
+                                  <Typography 
+                                    variant="body2" 
+                                    sx={{ 
+                                      color: "text.secondary",
+                                      fontSize: '0.8125rem',
+                                      lineHeight: 1.5,
+                                      height: "3em",
+                                      overflow: "hidden",
+                                      display: '-webkit-box',
+                                      WebkitLineClamp: 2,
+                                      WebkitBoxOrient: 'vertical'
+                                    }}
+                                  >
+                                    {truncarDescripcion(producto.description, 80)}
+                                  </Typography>
+                                </Tooltip>
+                                  <Box display="flex" alignItems="center" gap={0.5}>
+                                    <FavoriteIcon fontSize="small" sx={{ color: 'red' }} />
+                                    <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                                      {producto.num_likes}
+                                    </Typography>
+                                  </Box>
+                              </CardContent>
+                            </Card>
+                          </Link>
+                        </Box>
+                      </React.Fragment>
+                    );
+                  })}
+
                     </Box>
 
                   )}{totalPages > 1 && ( 

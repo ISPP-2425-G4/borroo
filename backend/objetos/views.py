@@ -1,16 +1,20 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, serializers
 
 from usuarios.models import User
-from .models import Item, ItemImage, ItemRequest
+from .models import Item, ItemImage, ItemRequest, UnavailablePeriod
 from .serializers import ItemRequestSerializer, ItemSerializer
 from .serializers import ItemImageSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import ItemCategory, CancelType, PriceCategory, ItemSubcategory
+from .models import LikedItem
 from rest_framework.decorators import action
 from django.core.exceptions import ValidationError
+from django.utils.dateparse import parse_date
+import json
+from rest_framework.permissions import IsAuthenticated
 
 
 class EnumChoicesView(APIView):
@@ -51,19 +55,164 @@ class ItemViewSet(viewsets.ModelViewSet):
     serializer_class = ItemSerializer
     permission_classes = [permissions.AllowAny]
 
+    def handle_unavailable_periods(self, item, unavailable_periods_data):
+        if not unavailable_periods_data:
+            return
+        if isinstance(unavailable_periods_data, str):
+            try:
+                unavailable_periods_data = json.loads(unavailable_periods_data)
+            except json.JSONDecodeError:
+                raise serializers.ValidationError("Formato inválido para "
+                                                  "unavailable_periods.")
+        if not isinstance(unavailable_periods_data, list):
+            raise serializers.ValidationError("Los periodos de "
+                                              "indisponibilidad deben ser "
+                                              "una lista.")
+        new_period_ids = set()
+        for p in unavailable_periods_data:
+            if p.get("id"):
+                new_period_ids.add(p["id"])
+        print(new_period_ids)
+        existing_periods = UnavailablePeriod.objects.filter(item=item)
+        for ep in existing_periods:
+            if ep.id not in new_period_ids:
+                ep.delete()
+        for period in unavailable_periods_data:
+            if not isinstance(period, dict):
+                raise serializers.ValidationError(
+                    "Cada periodo debe ser un diccionario con"
+                    " 'start_date' y 'end_date'."
+                )
+            start_date = parse_date(period.get("start_date"))
+            end_date = parse_date(period.get("end_date"))
+            if not (start_date and end_date and start_date < end_date):
+                raise serializers.ValidationError("Las fechas de "
+                                                  "indisponibilidad no son "
+                                                  "válidas.")
+            period_id = period.get("id")
+            if period_id:
+                # Actualizacion del periodo
+                try:
+                    up = UnavailablePeriod.objects.get(id=period_id, item=item)
+                    up.start_date = start_date
+                    up.end_date = end_date
+                    up.save()
+                except UnavailablePeriod.DoesNotExist:
+                    raise serializers.ValidationError(
+                        f"No existe el período con id={period_id} para este"
+                        " objeto."
+                    )
+            else:
+                # Crear nuevo periodo
+                if UnavailablePeriod.objects.filter(
+                        item=item,
+                        start_date=start_date, end_date=end_date).exists():
+                    raise serializers.ValidationError(
+                        f"El período con fecha de inicio {start_date} y "
+                        " fin {end_date} ya existe para este objeto."
+                    )
+                else:
+                    UnavailablePeriod.objects.create(item=item,
+                                                     start_date=start_date,
+                                                     end_date=end_date)
+
     def create(self, request, *args, **kwargs):
-        print("Request data:", request.data)
-        serializer = self.get_serializer(data=request.data)
-        if not serializer.is_valid():
-            print("Validation errors:", serializer.errors)
+
+        if not request.user.is_authenticated:
+            return Response(
+                {"detail": "Authentication credentials were not provided."},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        data = request.data.copy()
+        data['user'] = request.user.id
+
+        serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         print("Validated data:", serializer.validated_data)
-        item = serializer.save()
-        print("Created item:", item)
-
+        self.handle_unavailable_periods(
+            serializer.save(), request.data.get("unavailable_periods", []))
         headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED,
-                        headers=headers)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def update2(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(
+            instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        item = serializer.save()
+        self.handle_unavailable_periods(
+            item, request.data.get("unavailable_periods", []))
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def update(self, request, *args, **kwargs):
+        # Verificamos que el usuario esté autenticado
+        if not request.user.is_authenticated:
+            return Response(
+                {"detail": "Authentication credentials were not provided."},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        # Recuperamos el objeto a actualizar
+        try:
+            item = self.get_object()
+            print(item)
+        except Item.DoesNotExist:
+            return Response({"detail": "Ítem no encontrado."},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        # Verificamos que el usuario sea el propietario del ítem
+        if item.user != request.user:
+            return Response(
+                {"detail": "No tienes permiso para actualizar este ítem."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Actualizamos el objeto
+        data = request.data.copy()
+        data['user'] = request.user.id
+
+        # Usamos el serializer para validar y guardar
+        serializer = self.get_serializer(item, data=data, partial=True)
+
+        serializer.is_valid(raise_exception=True)
+        self.handle_unavailable_periods(
+                    serializer.save(), request.data.get(
+                        "unavailable_periods", []))
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def destroy(self, request, *args, **kwargs):
+        # Verificamos que el usuario esté autenticado
+        if not request.user.is_authenticated:
+            return Response(
+                {"detail": "Authentication credentials were not provided."},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        # Recuperamos el objeto a eliminar
+        try:
+            item = self.get_object()
+        except Item.DoesNotExist:
+            return Response({"detail": "Ítem no encontrado."},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        # Verificamos que el usuario sea el propietario del ítem
+        if item.user != request.user:
+            return Response(
+                {"detail": "No tienes permiso para eliminar este ítem."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Eliminamos el objeto
+        item.delete()
+
+        return Response(
+            {"detail": "Ítem eliminado exitosamente."},
+            status=status.HTTP_204_NO_CONTENT
+        )
 
     @action(detail=False, methods=['post'])
     def toggle_feature(self, request):
@@ -203,6 +352,7 @@ class ItemRequestView(APIView):
 
 
 class ItemRequestApprovalViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
 
     @action(detail=True, methods=['post'])
     def approve_request(self, request, pk=None):
@@ -272,3 +422,57 @@ class ListPublishedItemsView(APIView):
         serializer = ItemSerializer(items, many=True)
         return Response({'results': serializer.data},
                         status=status.HTTP_200_OK)
+
+
+class ListItemRequestsView(APIView):
+    def get(self, request, *args, **kwargs):
+        item_requests = ItemRequest.objects.all()
+        serializer = ItemRequestSerializer(item_requests, many=True)
+        return Response({'results': serializer.data},
+                        status=status.HTTP_200_OK)
+
+
+class ToggleLike(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        item_id = kwargs.get('item_id')
+        try:
+            # Obtener el ítem
+            item = Item.objects.get(id=item_id)
+
+            # Buscar o crear el 'like' para el item y el usuario
+            liked_item, created = LikedItem.objects.get_or_create(
+                                        item=item, user=request.user)
+
+            if created:
+                item.num_likes += 1
+                message = "Objeto agregado a favoritos"
+            else:
+                liked_item.delete()
+                item.num_likes -= 1
+                message = "Objeto eliminado de favoritos"
+
+            item.save()
+
+            return Response({"message": message, "num_likes": item.num_likes},
+                            status=status.HTTP_200_OK)
+
+        except Item.DoesNotExist:
+            return Response({"error": "Item no encontrado"},
+                            status=status.HTTP_404_NOT_FOUND)
+
+
+class LikeStatus(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, item_id):
+        try:
+            item = Item.objects.get(id=item_id)
+            liked_item = LikedItem.objects.filter(
+                item=item, user=request.user).exists()
+            return Response({"is_liked": liked_item},
+                            status=status.HTTP_200_OK)
+        except Item.DoesNotExist:
+            return Response({"error": "Item no encontrado"},
+                            status=status.HTTP_404_NOT_FOUND)

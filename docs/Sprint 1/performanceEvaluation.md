@@ -55,26 +55,26 @@
 
 **Date: 20/2/2025**  
 
-| Student | #DP1 | #S1 | #S2 | #S3 | #PPL | #WPL | Total | Weight |
-|---------|------|-----|-----|-----|------|------|--------------|---------|
-| Blanco Mora, David | 10 | 9,9 | | | | | | |
-| Díaz Ordóñez, Pablo | 10 | 10 | | | | | | |
-| Espinosa Naranjo, Pablo | 10 |10 | | | | | | | |
-| Fernandez Rodriguez, Jesus | 10 | 10| | | | | | |
-| Fernández Mota, Francisco | 10 | 10 | | | | | | |
-| García Rodríguez, Javier | 10 | 10| | | | | | |
-| Gonzalez Ortiz, Miguel | 10 | 10| | | | | | |
-| Martin Muñoz, Álvaro | 10 |10 | | | | | | |
-| Naredo Bernardos, Ignacio | 10 | | | | | | | |
-| Nieto Vicioso, Javier | 10 | 10 | | | | | | |
-| Padilla Gómez, Marco | 10 |10 | | | | | | |
-| Palomo García, Miguel | 10 | 10| | | | | | |
-| Periañez Franco, Luis Javier | 10 | 10| | | | | | |
-| Picón Garrote, Alexander | 10 |10 | | | | | | |
-| Rosado Raya, Santiago | 10 | 10  | | | | | | |
-| Sánchez Márquez, Julia | 10 | 10| | | | | | |
-| Sevillano Barea, Alejandro | 10 |10 | | | | | | |
-| Total | 170 |169,9 | | | | | | |
+| Student                      | #DP1 | #S1 | #S2 | #S3 | #PPL | #WPL | Total | Weight  |
+|------------------------------|------|-----|-----|-----|------|------|-------|---------|
+| Blanco Mora, David           |  10  | 9,9 |     |     |      |      |       |         |
+| Díaz Ordóñez, Pablo          |  10  | 10  |     |     |      |      |       |         |
+| Espinosa Naranjo, Pablo      |  10  | 10  |     |     |      |      |       |         |
+| Fernandez Rodriguez, Jesus   |  10  | 10  |     |     |      |      |       |         |
+| Fernández Mota, Francisco    |  10  | 10  |     |     |      |      |       |         |
+| García Rodríguez, Javier     |  10  | 10  |     |     |      |      |       |         |
+| Gonzalez Ortiz, Miguel       |  10  | 10  |     |     |      |      |       |         |
+| Martin Muñoz, Álvaro         |  10  | 10  |     |     |      |      |       |         |
+| Naredo Bernardos, Ignacio    |  10  | 10  |     |     |      |      |       |         |
+| Nieto Vicioso, Javier        |  10  | 10  |     |     |      |      |       |         |
+| Padilla Gómez, Marco         |  10  | 10  |     |     |      |      |       |         |
+| Palomo García, Miguel        |  10  | 10  |     |     |      |      |       |         |
+| Periañez Franco, Luis Javier |  10  | 10  |     |     |      |      |       |         |
+| Picón Garrote, Alexander     |  10  | 10  |     |     |      |      |       |         |
+| Rosado Raya, Santiago        |  10  | 10  |     |     |      |      |       |         |
+| Sánchez Márquez, Julia       |  10  | 10  |     |     |      |      |       |         |
+| Sevillano Barea, Alejandro   |  10  | 10  |     |     |      |      |       |         |
+| Total                        | 170  |169,9|     |     |      |      |       |         |
 
 
 # Individual Contribution Summary  

@@ -50,4 +50,4 @@ jobs:
       - name: Run Flake8 (reportar errores de estilo)
         run: |
           cd backend
-          flake8 .  # Detecta errores de estilo
+          flake8 . --exclude=*/migrations/ # Detecta errores de estilo

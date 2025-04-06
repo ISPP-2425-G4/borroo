@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { DateRange  } from "react-date-range";
-import DatePicker from "react-datepicker";
+import { DateRange, Calendar  } from "react-date-range";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import dayjs from "dayjs";
 import axios from 'axios';
 import { 
   Box, 
@@ -18,7 +18,12 @@ import {
   CircularProgress, 
   IconButton, 
   Stack, 
-  Chip, 
+  Chip,
+  DialogContentText, 
+  FormControl,
+  MenuItem,
+  Select,
+  InputLabel
 } from '@mui/material';
 
 import { 
@@ -30,16 +35,24 @@ import {
   AttachMoney as MoneyIcon, 
   Person as PersonIcon, 
   ChevronLeft as ChevronLeftIcon, 
-  ChevronRight as ChevronRightIcon 
+  ChevronRight as ChevronRightIcon,
+  Favorite as FavoriteIcon, 
+  FavoriteBorder as FavoriteBorderIcon,
+  Whatshot as WhatshotIcon
 } from '@mui/icons-material';
 import Navbar from "./Navbar";
-import Modal from "./Modal";
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
+import SuccessModal from "./components/SuccessModal";
+import ConfirmModal from "./components/ConfirmModal";
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
+
+
 
 const ShowItemScreen = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [item, setItem] = useState(null);
+  const [unavailabilityPeriods, setUnavailabilityPeriods] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
@@ -51,7 +64,7 @@ const ShowItemScreen = () => {
   }]);
   const [showRentalModal, setShowRentalModal] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [requestedDates, setRequestedDates] = useState([]);
+  {/*const [requestedDates, setRequestedDates] = useState([]);*/}
   const [bookedDates, setBookedDates] = useState([]);
   const [isOwner, setIsOwner] = useState(false); // Estado para verificar si el usuario es el propietario
   const [priceCategory, setPriceCategory]= useState(null)
@@ -62,7 +75,16 @@ const ShowItemScreen = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [highlighting, setHighlighting] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [numLikes, setNumLikes] = useState(0);
+  const [showRequestPopup, setShowRequestPopup] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportCategory, setReportCategory] = useState("");
+  const [reportDescription, setReportDescription] = useState("");
 
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  console.log("currentUser", currentUser);
+  const accessToken = localStorage.getItem("access_token");
 
   useEffect(() => {
     const fetchItemData = async () => {
@@ -72,6 +94,8 @@ const ShowItemScreen = () => {
         );
         const data = response.data;
         setItem(data);
+        setUnavailabilityPeriods(data.unavailable_periods || []);
+        setNumLikes(data.num_likes || 0);
 
         if (data.user) {
           fetchUserName(data.user);
@@ -85,6 +109,18 @@ const ShowItemScreen = () => {
         if(data.price_category){
           setPriceCategory(data.price_category)
         } 
+
+        const accessToken = localStorage.getItem("access_token");
+        if (accessToken) {
+          const likedResponse = await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/objetos/like-status/${id}/`,
+            { headers: { Authorization: `Bearer ${accessToken}` } }
+          );
+          setIsLiked(likedResponse.data.is_liked || false);
+        } else {
+          setIsLiked(false);
+        }
+
       } catch (error) {
         console.error("Error fetching item:", error);
         setErrorMessage("No se pudo cargar el ítem");
@@ -96,6 +132,32 @@ const ShowItemScreen = () => {
     if (id) fetchItemData();
   }, [id]);
 
+
+  const toggleLike = async () => {
+    if (!item) return;
+  
+    const accessToken = localStorage.getItem("access_token");
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/objetos/like/${item.id}/`,
+        {},
+        {
+          headers: {
+            "Authorization": `Bearer ${accessToken}`,  // Incluir el token de autenticación en las cabeceras
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        setIsLiked(prevState => !prevState);
+        setNumLikes(response.data.num_likes); 
+      }
+    } catch (error) {
+      console.error("Error toggling like:", error);
+      alert("Hubo un error al cambiar el estado del like.");
+    }
+  };
   
   useEffect(() => {
     if (!item) return;
@@ -108,7 +170,7 @@ const ShowItemScreen = () => {
     }
   
     if (priceCategory === "day" && dateRange[0].startDate && dateRange[0].endDate) {
-      const days = Math.ceil((dateRange[0].endDate - dateRange[0].startDate) / (1000 * 60 * 60 * 24));
+      const days = Math.ceil((dateRange[0].endDate - dateRange[0].startDate + (1000 * 60 * 60 * 24)) / (1000 * 60 * 60 * 24));
       calculatedPrice = days * item.price;
     }
   
@@ -120,7 +182,6 @@ const ShowItemScreen = () => {
   }, [priceCategory, selectedStartHour, selectedEndHour, dateRange, selectedDay, selectedMonths, item]);
   
   const checkOwnerStatus = (userId) => {
-    const currentUser = JSON.parse(localStorage.getItem("user"));
     setIsAuthenticated(!!currentUser);
     if (currentUser && currentUser.id === userId) {
       setIsOwner(true);
@@ -143,9 +204,11 @@ const ShowItemScreen = () => {
     }
   };
 
+
   const toggleFeature = () => {
     if (!item) return;
     setHighlighting(true);
+    
     axios.post(`${import.meta.env.VITE_API_BASE_URL}/objetos/full/toggle_feature/`, {
         item_id: item.id,
         user_id: item.user
@@ -155,11 +218,69 @@ const ShowItemScreen = () => {
     })
     .catch(error => {
         console.error('Error destacando el objeto:', error);
+        
+        // Mostrar errores del backend al usuario
+        if (error.response && error.response.data) {
+            alert(error.response.data.error || "Ocurrió un error inesperado.");
+        } else {
+            alert("Error de conexión con el servidor.");
+        }
     })
     .finally(() => {
         setHighlighting(false);
     });
 };
+
+  const handleReportUser = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) {
+        alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
+        return;
+      }
+      if(!reportCategory || !reportDescription) {
+        alert("Por favor, completa todos los campos.");
+        return;
+      }
+      const reportData = {
+        reporter: currentUser.id,
+        reported_user: item.user,
+        category: reportCategory,
+        description: reportDescription,
+    } 
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/usuarios/reportes/`,
+      reportData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.status === 201) {
+      alert("¡Reporte enviado correctamente!");
+      setShowReportModal(false);
+      setReportCategory("");
+      setReportDescription("");
+    } 
+
+     else if(response.status === 200){
+      alert("¡Reporte actualizado correctamente!");
+      setShowReportModal(false);
+      setReportCategory("");
+      setReportDescription("");
+    }
+    
+    else {
+      alert("Hubo un problema al enviar el reporte.");
+    }
+    
+  }catch (error) {
+      alert("Error al enviar el reporte:", error);
+      console.error("Error al enviar el reporte:", error);
+    }
+  };
+
 
   const loadItemImages = async (imageIds) => {
     try {
@@ -188,28 +309,27 @@ const ShowItemScreen = () => {
         `${import.meta.env.VITE_API_BASE_URL}/rentas/full/item/${id}/`
       );
       const rents = rentResponse.data;
-
-      const requested = [];
+  
       const booked = [];
-      
+  
       rents.forEach((rent) => {
         const start = new Date(rent.start_date);
         const end = new Date(rent.end_date);
         const days = getDatesInRange(start, end);
-        
-        if (rent.rent_status === "requested") {
-          requested.push(...days);
-        } else if (rent.rent_status === "BOOKED") {
+  
+        const status = rent.rent_status.toLowerCase();
+  
+        if (["accepted", "booked", "picked_up"].includes(status)) {
           booked.push(...days);
         }
       });
-
-      setRequestedDates(requested);
+  
       setBookedDates(booked);
     } catch (error) {
       console.error("Error fetching availability:", error);
     }
   };
+  
   const getDatesInRange = (startDate, endDate) => {
     const dates = [];
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
@@ -223,10 +343,14 @@ const ShowItemScreen = () => {
     if (!confirmDelete) return;
 
     try {
+      const token = localStorage.getItem("access_token")
       await axios.delete(
         `${import.meta.env.VITE_API_BASE_URL}/objetos/full/${id}/`,
         {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
 
@@ -237,6 +361,15 @@ const ShowItemScreen = () => {
       setErrorMessage("No se pudo eliminar el ítem");
     }
   };
+
+  const isDateUnavailable = (date) => {
+    return unavailabilityPeriods.some(period => {
+      const start = new Date(period.start_date); 
+      const end = new Date(period.end_date); 
+      return date >= start && date <= end;
+    });
+  };
+
   const handleRentalRequest = async () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -244,33 +377,45 @@ const ShowItemScreen = () => {
         alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
         return;
       }
+      if (
+        isDateUnavailable(dateRange[0].startDate) ||
+        isDateUnavailable(dateRange[0].endDate) ||
+        isDateUnavailable(selectedDay)
+      ) {
+        alert("No puedes solicitar alquiler en fechas no disponibles.");
+        return;
+      }
   
       let startDateUTC, endDateUTC;
   
       if (priceCategory === "hour" && selectedDay && selectedStartHour !== null && selectedEndHour !== null) {
-        // Construir fecha con hora para alquiler por horas
-        const start = new Date((selectedDay));
-        start.setHours(selectedStartHour+1, 0, 0, 0);
-  
-        const end = new Date((selectedDay));
-        end.setHours(selectedEndHour+1, 0, 0, 0);
-  
+        const start = dayjs(selectedDay)
+        .hour(selectedStartHour)
+        .minute(0)
+        .second(0)
+        .millisecond(0)
+        .format("YYYY-MM-DDTHH:mm:ss");
+        const end = dayjs(selectedDay)
+          .hour(selectedEndHour)
+          .minute(0)
+          .second(0)
+          .millisecond(0)
+          .format("YYYY-MM-DDTHH:mm:ss");
+      
         startDateUTC = start;
         endDateUTC = end;
       } 
       else if (priceCategory === "day" && dateRange[0].startDate && dateRange[0].endDate) {
         // Usar las fechas seleccionadas para alquiler por días
-        startDateUTC = new Date(convertToCET(dateRange[0].startDate));
-        endDateUTC = new Date(convertToCET(dateRange[0].endDate));
+        startDateUTC = dayjs(dateRange[0].startDate).format("YYYY-MM-DD");
+        endDateUTC = dayjs(dateRange[0].endDate).hour(23).minute(59).second(59).format("YYYY-MM-DDTHH:mm:ss");
       } 
       else if (priceCategory === "month" && selectedDay && selectedMonths) {
         // Construir fechas para alquiler por meses
-        const start = new Date(selectedDay);
-        const end = new Date(selectedDay);
-        end.setMonth(end.getMonth() + parseInt(selectedMonths));
-  
-        startDateUTC = convertToCET(start);
-        endDateUTC = convertToCET(end);
+        const start = dayjs(selectedDay);
+        const end = dayjs(selectedDay).add(selectedMonths, 'month');
+        startDateUTC = start.format("YYYY-MM-DD");
+        endDateUTC = end.format("YYYY-MM-DD");
       } 
       else {
         alert("Por favor, selecciona correctamente la fecha de inicio y fin.");
@@ -294,8 +439,8 @@ const ShowItemScreen = () => {
       );
   
       if (response.status === 201) {
-        alert("Solicitud de alquiler enviada correctamente");
         setShowRentalModal(false);
+        setShowRequestPopup(true);
       } else {
         alert("Hubo un problema con la solicitud");
       }
@@ -303,12 +448,6 @@ const ShowItemScreen = () => {
       console.error("Error al solicitar alquiler:", error);
       alert(error.response?.data?.error || "No se pudo realizar la solicitud");
     }
-  };
-  const convertToCET = (date) => {
-    const cetOffset = 2; // CET es UTC+1, pero ten en cuenta el horario de verano
-    const localDate = new Date(date);
-    localDate.setHours(localDate.getHours() + cetOffset);
-    return localDate.toISOString();
   };
 
   const navigateImages = (direction) => {
@@ -335,10 +474,24 @@ const ShowItemScreen = () => {
         alert("Hubo un problema al publicar el ítem.");
       }
     } catch (error) {
-      console.error("Error al publicar el ítem:", error);
-      alert("Error al publicar el ítem.");
+      console.error("Error publicando el ítem:", error);
+      console.log("Respuesta del backend:", error.response?.data);
+    
+      if (error.response?.data?.non_field_errors) {
+        setErrorMessage(error.response.data.non_field_errors[0]);
+      } else if (error.response?.data?.detail) {
+        setErrorMessage(error.response.data.detail);
+      } else if (error.response?.data?.error) {
+        setErrorMessage(error.response.data.error);
+      } else if (Array.isArray(error.response?.data) && error.response.data.length > 0) {
+        setErrorMessage(error.response.data[0]);
+      } else {
+        setErrorMessage("Ocurrió un error al intentar publicar el ítem.");
+      }
     }
+    
   };
+  
 
   if (loading) {
     return (
@@ -462,11 +615,49 @@ const ShowItemScreen = () => {
                   </Typography>
                 </Paper>
               )}
+              {accessToken &&
+                <Button sx={{ marginTop: 2 }}
+                  onClick={toggleLike}
+                  variant="outlined"
+                  color={isLiked ? 'error' : 'primary'}
+                  startIcon={isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                >
+                  {isLiked ? "Quitar de favoritos" : "Agregar a favoritos"}
+                </Button>
+                }
+                {numLikes > 1 && (
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      marginTop: 1,
+                      color: 'red',
+                      fontWeight: 'bold',
+                      fontSize: '1.1rem',
+                    }}
+                  >
+                  <WhatshotIcon sx={{ fontSize: 20, marginRight: 1 }} />
+                  ¡Este objeto es de mucho interes entre los usuarios!
+                  </Typography>
+                )}
+                <Typography 
+                  variant="body2"
+                  sx={{
+                    marginTop: 2,
+                    color: '#2563eb',
+                    fontWeight: 'bold',
+                    fontSize: '1rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <FavoriteIcon sx={{ fontSize: 18, marginRight: 1 }} /> El objeto esta guardado en favoritos por {numLikes} usuarios
+                </Typography>
             </Box>
 
             <Box sx={{ flex: '1 1 auto', minWidth: 0 }}>
               <Card elevation={2} sx={{ mb: 3 }}>
-                <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <CardContent sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                   <PersonIcon fontSize="large" color="primary" />
                   <Box>
                   <Typography variant="caption" color="textSecondary">
@@ -508,6 +699,12 @@ const ShowItemScreen = () => {
                       />
                     )}
                   </Box>
+                  </Box>
+                  {!isOwner && isAuthenticated && (
+                    <Box sx={{ display: 'flex', gap: 1 }}>
+                      <Button color="error" onClick={() => setShowReportModal(true)}>Reportar</Button>
+                    </Box>
+                  )}
                 </CardContent>
               </Card>
 
@@ -586,26 +783,30 @@ const ShowItemScreen = () => {
                     >
                       Eliminar
                     </Button>
-                    <Button 
-                      variant="outlined" 
-                      onClick={toggleFeature} 
-                      disabled={highlighting}
-                      sx={{
+
+                    {/* Solo mostrar si el usuario NO es "free" */}
+                    {currentUser.pricing_plan !== "free" && (
+                      <Button 
+                        variant="outlined" 
+                        onClick={toggleFeature} 
+                        disabled={highlighting}
+                        sx={{
                           color: '#b8860b', // Dorado oscuro para el texto
                           borderColor: '#b8860b', // Dorado oscuro para el borde
                           '&:hover': {
-                              backgroundColor: '#daa520', // Un dorado más fuerte en hover
-                              borderColor: '#ffd700', // Amarillo dorado
-                              color: 'white', // Para mejor contraste
+                            backgroundColor: '#daa520', // Un dorado más fuerte en hover
+                            borderColor: '#ffd700', // Amarillo dorado
+                            color: 'white', // Para mejor contraste
                           },
                           '&:disabled': {
-                              color: '#a97c00', // Un dorado más opaco si está deshabilitado
-                              borderColor: '#a97c00',
+                            color: '#a97c00', // Un dorado más opaco si está deshabilitado
+                            borderColor: '#a97c00',
                           }
-                      }}
-                  >
-                      {item.featured ? 'Quitar destacado' : 'Destacar objeto'}
-                  </Button>
+                        }}
+                      >
+                        {item.featured ? 'Quitar destacado' : 'Destacar objeto'}
+                      </Button>
+                    )}
                   </Box>
                 )}
               </Paper>
@@ -635,20 +836,24 @@ const ShowItemScreen = () => {
         {priceCategory === "hour" && (
           <div> 
             {/* Selector de día */}
-            <label>Selecciona un día:</label>
-            <DatePicker
-              selected={selectedDay}
+            <Typography>Selecciona un día:</Typography>
+            <Calendar
+              date={selectedDay}
               onChange={(date) => setSelectedDay(date)}
-              minDate={new Date()} // Evita fechas pasadas
-              excludeDates={[...requestedDates, ...bookedDates]} // Bloquea días ocupados
-              dateFormat="yyyy/MM/dd"
-              inline // Muestra el calendario directamente
+              minDate={new Date()} 
+              disabledDates={[...unavailabilityPeriods.flatMap(period => {
+                const start = new Date(period.start_date);
+                const end = new Date(period.end_date);
+                const range = getDatesInRange(start, end);
+  
+                return range;
+              })]}
             />
 
             {/* Selector de hora de inicio */}
-            <label>Selecciona la hora de inicio:</label>
+            <Typography>Selecciona la hora de inicio:</Typography>
             <select
-              value={selectedStartHour}
+              value={selectedStartHour || ""}
               onChange={(e) => {
                 const startHour = parseInt(e.target.value);
                 setSelectedStartHour(startHour);
@@ -663,9 +868,9 @@ const ShowItemScreen = () => {
             </select>
 
             {/* Selector de hora de fin */}
-            <label>Selecciona la hora de fin:</label>
+            <Typography>Selecciona la hora de fin:</Typography>
             <select
-              value={selectedEndHour}
+              value={selectedEndHour || ""}
               onChange={(e) => setSelectedEndHour(parseInt(e.target.value))}
               disabled={selectedStartHour === null} // Deshabilita si no hay hora inicio
             >
@@ -676,16 +881,35 @@ const ShowItemScreen = () => {
                 </option>
               ))}
             </select>
+            {selectedDay && selectedStartHour !== null && selectedEndHour !== null && (
+            <Box 
+              sx={{ 
+                marginTop: 2, 
+                padding: 2, 
+                border: "1px solid #ccc", 
+                borderRadius: 4, 
+                backgroundColor: "#f9f9f9" 
+              }}
+            >
+              <Typography variant="h6">Resumen de selección:</Typography>
+              <Typography><strong>Día:</strong> {selectedDay.toLocaleDateString()}</Typography>
+              <Typography><strong>Horas:</strong> {`${selectedStartHour}:00 - ${selectedEndHour}:00`}</Typography>
+            </Box>
+            )}
           </div>
         )}
 
         {priceCategory === "day" && (
           <DateRange
-            ranges={dateRange}
+            ranges={ isOwner || !isAuthenticated ? [] : dateRange}
             onChange={(ranges) => {
+              if (!isOwner || isAuthenticated) { setDateRange([ranges.selection]); }
               const start = ranges.selection.startDate;
               const end = ranges.selection.endDate;
-
+              if (isDateUnavailable(start) || isDateUnavailable(end)) {
+                alert("Las fechas seleccionadas no están disponibles.");
+                return;
+              }
               // Si el usuario selecciona el mismo día como inicio y fin, establecerlo correctamente
               if (start.toDateString() === end.toDateString()) {
                 setDateRange([{ startDate: start, endDate: start, key: "selection" }]);
@@ -694,20 +918,31 @@ const ShowItemScreen = () => {
               }
             }}
             minDate={new Date()}
-            disabledDates={[...requestedDates, ...bookedDates]}
+            disabledDates={[ ...bookedDates, ...unavailabilityPeriods.flatMap(period => {
+              const start = new Date(period.start_date);
+              const end = new Date(period.end_date);
+              const range = getDatesInRange(start, end);
+
+              return range;
+            })]}
           />
         )}
 
         {priceCategory === "month" && (
-          <div>
-            <label>Selecciona la fecha de inicio:</label>
-            <DatePicker
-              selected={selectedDay}
+            <div> 
+            {/* Selector de día */}
+            <Typography>Selecciona un día:</Typography>
+            <Calendar
+              date={selectedDay}
               onChange={(date) => setSelectedDay(date)}
-              minDate={new Date()} // Evita fechas pasadas
-              excludeDates={[...requestedDates, ...bookedDates]} // Bloquea días ocupados
-              dateFormat="yyyy/MM/dd"
-              inline // Muestra el calendario directamente
+              minDate={new Date()} 
+              disabledDates={[...unavailabilityPeriods.flatMap(period => {
+                const start = new Date(period.start_date);
+                const end = new Date(period.end_date);
+                const range = getDatesInRange(start, end);
+  
+                return range;
+              })]}
             />
 
             <label>Selecciona la cantidad de meses:</label>
@@ -765,16 +1000,78 @@ const ShowItemScreen = () => {
           </Paper>
 
           {showRentalModal && (
-          <Modal
+          <ConfirmModal
           title="Confirmar Solicitud"
           message={`¿Quieres solicitar el objeto "${item.title}" del ${dateRange[0].startDate.toLocaleDateString()} al ${dateRange[0].endDate.toLocaleDateString()}?`}
           onCancel={() => setShowRentalModal(false)}
           onConfirm={handleRentalRequest}
           />
           )}
-          </Container>
-          </Box>
-          );
-          };
+          {showRequestPopup && (
+            <SuccessModal
+              title="Solicitud enviada"
+              message="Tu solicitud ha sido enviada correctamente. Puedes verla en la sección 'Mis solicitudes' en el apartado de 'Solicitudes Enviadas'."
+              primaryLabel="Ir a Mis Solicitudes"
+              onPrimaryAction={() => navigate("/rental_requests?tab=sent")}
+              secondaryLabel="Volver al Menú Principal"
+              onSecondaryAction={() => navigate("/")}
+            />
+          )}
+            {showReportModal && (
+            <Box sx={{width: "100%", display: "flex", justifyContent: "center", alignContent: "center"}}>
+            <Dialog maxWidth="sm" fullWidth open={showReportModal} onClose={() => setShowReportModal(false)}>
+            <DialogTitle>Reportar usuario</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                ¿Cual es el motivo del reporte?
+              </DialogContentText>
+              <FormControl fullWidth sx={{ mt: 2 }}>
+                <InputLabel id="reportCategoryLabel">Motivo</InputLabel>
+                <Select
+                  labelId="reportCategoryLabel"
+                  value={reportCategory}
+                  onChange={(e) => setReportCategory(e.target.value)}
+                  label="Motivo"
+                >
+                  <MenuItem value="Mensaje de Odio">Mensaje de Odio</MenuItem>
+                  <MenuItem value="Información Engañosa">Información Engañosa</MenuItem>
+                  <MenuItem value="Se hace pasar por otra persona">Se hace pasar por otra persona</MenuItem>
+                  <MenuItem value="Otro">Otro</MenuItem>
+                </Select>
+              </FormControl>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="reportDescription"
+                label="Descripción"
+                type="text"
+                fullWidth
+                variant="outlined"
+                value={reportDescription}
+                onChange={(e) => setReportDescription(e.target.value)}
+                multiline
+                rows={4}
+              />
+
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setShowReportModal(false)} color="primary">
+                Cancelar
+              </Button>
+              <Button
+                onClick={handleReportUser}
+                color="error"
+                disabled={!reportCategory || !reportDescription}
+              >
+                Enviar reporte
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Box>
+        )}
+      </Container>
+    </Box>
+  );
+};
 
 export default ShowItemScreen;
