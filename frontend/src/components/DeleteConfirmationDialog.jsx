@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import PropTypes from 'prop-types';
 import {
     Dialog,
@@ -6,8 +6,7 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
-    Button,
-    IconButton
+    Button
   } from '@mui/material';
 import { Delete as DeleteIcon } from '@mui/icons-material'
 
