@@ -26,9 +26,7 @@ import {
   InputLabel
 } from '@mui/material';
 
-import { 
-  Delete as DeleteIcon, 
-  Edit as EditIcon, 
+import {  
   Description as DescriptionIcon, 
   Category as CategoryIcon, 
   Cancel as CancelIcon, 

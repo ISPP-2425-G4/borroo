@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Dialog,
@@ -8,7 +7,6 @@ import {
   DialogTitle,
   Button
 } from '@mui/material';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const PublishConfirmationDialog = ({ open, onClose }) => {
   return (
