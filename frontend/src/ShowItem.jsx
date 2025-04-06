@@ -44,6 +44,9 @@ import Navbar from "./Navbar";
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
 import SuccessModal from "./components/SuccessModal";
 import ConfirmModal from "./components/ConfirmModal";
+import DeleteConfirmationDialog from "./components/DeleteConfirmationDialog";
+import EditConfirmationDialog from "./components/EditConfirmationDialog";
+import PublishConfirmationDialog from "./components/PublishConfirmationDialog";
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
 
 
@@ -81,6 +84,7 @@ const ShowItemScreen = () => {
   const [showReportModal, setShowReportModal] = useState(false);
   const [reportCategory, setReportCategory] = useState("");
   const [reportDescription, setReportDescription] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
   console.log("currentUser", currentUser);
@@ -339,9 +343,6 @@ const ShowItemScreen = () => {
   };
 
   const handleDelete = async () => {
-    const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar este ítem?");
-    if (!confirmDelete) return;
-
     try {
       const token = localStorage.getItem("access_token")
       await axios.delete(
@@ -353,8 +354,6 @@ const ShowItemScreen = () => {
           },
         }
       );
-
-      alert("Ítem eliminado correctamente");
       navigate("/");
     } catch (error) {
       console.error("Error deleting item:", error);
@@ -468,7 +467,7 @@ const ShowItemScreen = () => {
       );
   
       if (response.status === 200) {
-        alert("¡El ítem se ha publicado correctamente!");
+        setDialogOpen(true);  // Agrega aquí para mostrar el diálogo
         navigate(0); // Refresca la página
       } else {
         alert("Hubo un problema al publicar el ítem.");
@@ -549,6 +548,7 @@ const ShowItemScreen = () => {
     >
       Publicar
     </Button>
+    <PublishConfirmationDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
   </Box>
 )}
 
@@ -768,21 +768,8 @@ const ShowItemScreen = () => {
                 
                 {isOwner && (
                   <Box sx={{ mt: 3, display: 'flex', gap: 2 }}>
-                    <Button 
-                      variant="outlined" 
-                      startIcon={<EditIcon />} 
-                      onClick={() => navigate(`/update-item/${id}`)}
-                    >
-                      Editar
-                    </Button>
-                    <Button 
-                      variant="outlined" 
-                      color="error" 
-                      startIcon={<DeleteIcon />} 
-                      onClick={handleDelete}
-                    >
-                      Eliminar
-                    </Button>
+                    <EditConfirmationDialog onConfirm={() => navigate(`/update-item/${id}`)} />
+                    <DeleteConfirmationDialog onConfirm={handleDelete} />
 
                     {/* Solo mostrar si el usuario NO es "free" */}
                     {currentUser.pricing_plan !== "free" && (
