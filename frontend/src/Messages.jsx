@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { Box, Typography, List, ListItem, ListItemText, Paper, TextField, Button, Divider, Avatar } from "@mui/material";
+import { es } from "date-fns/locale";
+import { format } from "date-fns";
 
 const Messages = () => {
     const [conversations, setConversations] = useState([]);
@@ -83,6 +85,25 @@ const Messages = () => {
         }
     };
 
+    const formatDate = (timestamp) => {
+        if (!timestamp) return "";
+    
+        const now = new Date();
+        const messageDate = new Date(timestamp);
+        
+        const diffInDays = Math.floor((now - messageDate) / (1000 * 60 * 60 * 24));
+    
+        if (diffInDays === 0) {
+            return format(messageDate, "HH:mm", { locale: es });
+        } else if (diffInDays === 1) {
+            return "Ayer";
+        } else if (diffInDays === 2) {
+            return "Antes de ayer";
+        } else {
+            return format(messageDate, "dd/MM/yyyy", { locale: es });
+        }
+    };
+
     return (
         <Box sx={{ display: "flex", flexDirection: "column", height: "100vh", mt: 10, bgcolor: "#f5f5f5" }}>
             <Navbar />
@@ -117,10 +138,40 @@ const Messages = () => {
                                         borderRadius: 2,
                                         mb: 1,
                                         bgcolor: selectedConversation?.id === conv.id ? "primary.light" : "transparent",
-                                        "&:hover": { bgcolor: "primary.light" }
+                                        "&:hover": { bgcolor: "primary.light", color: "white" }
                                     }}
                                 >
-                                    <ListItemText primary={`${conv.otherUserName}`} />
+                                    <Avatar sx={{ mr: 2 }}>{conv.otherUserName.charAt(0).toUpperCase()}</Avatar>
+                                    <ListItemText 
+                                        primary={conv.otherUserName} 
+                                        secondary={
+                                            <>
+                                                <Typography variant="body2" sx={{ color: selectedConversation?.id === conv.id ? "white" : "gray" }}>
+                                                    {conv.lastMessage ? conv.lastMessage : "Sin mensajes"}
+                                                </Typography>
+                                                <Typography variant="caption" sx={{ color: selectedConversation?.id === conv.id ? "white" : "gray", fontWeight: "bold" }}>
+                                                    {formatDate(conv.lastMessageTimestamp)}
+                                                </Typography>
+                                            </>
+                                        }
+                                    />
+                                    {conv.unreadCount > 0 && (
+                                        <Box 
+                                            sx={{ 
+                                                bgcolor: "red", 
+                                                color: "white", 
+                                                borderRadius: "50%", 
+                                                width: 20, 
+                                                height: 20, 
+                                                display: "flex", 
+                                                alignItems: "center", 
+                                                justifyContent: "center",
+                                                fontSize: "0.8rem"
+                                            }}
+                                        >
+                                            {conv.unreadCount}
+                                        </Box>
+                                    )}
                                 </ListItem>
                             ))
                         )}
