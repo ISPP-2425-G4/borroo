@@ -3,7 +3,8 @@ from rest_framework.test import APIClient
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password
 from usuarios.models import User
-from objetos.models import ItemCategory, CancelType, ItemSubcategory, PriceCategory
+from objetos.models import ItemCategory, CancelType, ItemSubcategory
+from objetos.models import PriceCategory
 
 
 @pytest.mark.django_db
