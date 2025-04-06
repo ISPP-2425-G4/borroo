@@ -64,12 +64,10 @@ const AdminReportsDashboard = () => {
               `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${userId}`,
               { headers: { "Content-Type": "application/json" } }
             );
-            if (typeof userId === 'string' && /^[a-zA-Z0-9_-]+$/.test(userId)) {
-              userData[userId] = userResponse.data;
-            } else {
-            console.error(`ID de usuario no válido: ${userId}`);
-            throw new Error('ID de usuario no válido');
-          }
+              if (userResponse.data) {
+                userData[userId] = userResponse.data;
+              }
+            
           } catch (err) {
             console.error(`Error al obtener el usuario ${userId}:`, err);
           }
