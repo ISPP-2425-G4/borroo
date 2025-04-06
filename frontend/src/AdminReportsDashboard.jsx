@@ -22,7 +22,6 @@ const AdminReportsDashboard = () => {
   const [showFilterDialog, setShowFilterDialog] = useState(false);
   const [editingReportId, setEditingReportId] = useState(null);
   
-  // Filter states
   const [statusFilter, setStatusFilter] = useState('all');
   const [startDateFilter, setStartDateFilter] = useState('');
   const [endDateFilter, setEndDateFilter] = useState('');
@@ -44,7 +43,7 @@ const AdminReportsDashboard = () => {
       );
 
       if (response.status !== 200) {
-        throw new Error("Error fetching reports");
+        throw new Error("Error al obtener los reportes.");
       }
 
       const fetchedReports = response.data.results;
@@ -67,7 +66,7 @@ const AdminReportsDashboard = () => {
             );
             userData[userId] = userResponse.data;
           } catch (err) {
-            console.error(`Failed to fetch user ${userId}:`, err);
+            console.error(`Error al obtener el usuario ${userId}:`, err);
           }
         })
       );
@@ -75,7 +74,7 @@ const AdminReportsDashboard = () => {
       setReportData(userData);
     } catch (err) {
       setError(err.message);
-      console.error("Error in report fetching:", err);
+      console.error("Error al buscar los reportes:", err);
     } finally {
       setLoading(false);
     }
@@ -84,14 +83,12 @@ const AdminReportsDashboard = () => {
   const applyFilters = () => {
     let result = [...reports];
 
-    // Apply status filter
     if (statusFilter !== 'all') {
       result = result.filter(report => 
         report.status.toLowerCase() === statusFilter.toLowerCase()
       );
     }
 
-    // Apply date filters
     if (startDateFilter) {
       const startDate = new Date(startDateFilter);
       startDate.setHours(0, 0, 0, 0);
@@ -144,8 +141,8 @@ const AdminReportsDashboard = () => {
         setShowDialog(false);
       }
     } catch (error) {
-      console.error("Error updating report status:", error);
-      setError("Failed to update report status. Please try again.");
+      console.error("Error al actualizar el estado del reporte:", error);
+      setError("Error al actualizar el estado del reporte.");
     }
   };
 
@@ -185,7 +182,6 @@ const AdminReportsDashboard = () => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  // Format date for displaying in filter chip
   const formatFilterDate = (dateString) => {
     if (!dateString) return '';
     return new Date(dateString).toLocaleDateString();
@@ -218,7 +214,6 @@ const AdminReportsDashboard = () => {
             Revisión y gestión de reportes de usuarios
           </Typography>
 
-          {/* Active filters display */}
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
             {statusFilter !== 'all' && (
               <Chip 
@@ -270,7 +265,7 @@ const AdminReportsDashboard = () => {
             </Alert>
           ) : filteredReports.length === 0 ? (
             <Alert severity="info" sx={{ mb: 4 }}>
-              {reports.length === 0 ? 'There are no reports to display.' : 'No reports match the current filters.'}
+              {reports.length === 0 ? 'No hay reportes que mostrar' : 'No se encontraron reportes que coincidan con los filtros aplicados'}
             </Alert>
           ) : (
             filteredReports.map((report) => {
@@ -369,7 +364,6 @@ const AdminReportsDashboard = () => {
         </Paper>
       </Container>
 
-      {/* Status Update Dialog */}
       <Dialog
         maxWidth="sm"
         fullWidth
@@ -470,7 +464,6 @@ const AdminReportsDashboard = () => {
         </DialogActions>
       </Dialog>
 
-      {/* Filter Dialog */}
       <Dialog
         maxWidth="sm"
         fullWidth
@@ -508,8 +501,7 @@ const AdminReportsDashboard = () => {
         </DialogTitle>
         
         <DialogContent sx={{  mt:4 }}>
-  <Stack spacing={4}>
-    {/* Sección de filtro por estado */}
+  <Stack spacing={4} mt={1} mb={1}>
     <FormControl fullWidth variant="outlined">
     <InputLabel id="filter-status-label">Estado</InputLabel>
 
@@ -519,6 +511,7 @@ const AdminReportsDashboard = () => {
         value={statusFilter}
         onChange={(e) => setStatusFilter(e.target.value)}
         label="Estado"
+        size="medium"
       >
         <MenuItem value="all">
           <Typography variant="body1" sx={{ fontWeight: 500 }}>Todos los Estados</Typography>
@@ -576,7 +569,6 @@ const AdminReportsDashboard = () => {
       </Select>
     </FormControl>
     
-    {/* Sección de rango de fechas */}
     <Box sx={{ backgroundColor: '#f5f5f5', p: 2, borderRadius: 1 }}>
       <Typography 
         variant="subtitle1" 
@@ -635,7 +627,6 @@ const AdminReportsDashboard = () => {
       </Box>
     </Box>
     
-    {/* Botones de acción */}
     <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 2 }}>
       <Button 
         variant="outlined" 
@@ -650,7 +641,7 @@ const AdminReportsDashboard = () => {
       <Button 
         variant="contained" 
         color="primary"
-        onClick={() => {/* Función para aplicar filtros */}}
+        onClick={() =>setShowFilterDialog(false)}
       >
         Aplicar Filtros
       </Button>
