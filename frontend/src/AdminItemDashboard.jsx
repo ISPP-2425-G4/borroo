@@ -226,7 +226,7 @@ const AdminItemDashboard = () => {
             });
             setItems(response.data);
         } catch (error) {
-            alert("Error al obtener ítems.", error);
+            alert("Error al obtener ítems.");
         }
     };
 
@@ -300,8 +300,8 @@ const AdminItemDashboard = () => {
         
          
        
-        images.forEach((image) => {
-            form.append("images", image);
+        images.forEach((image, index) => {
+            form.append("image_files", image);
         });
     
         try {
@@ -500,9 +500,9 @@ const AdminItemDashboard = () => {
                                                             {images.map((image, index) => (
                                                               <ImageContainer key={index}>
                                                                 <PreviewImage src={URL.createObjectURL(image)} alt={`Preview ${index + 1}`} />
-                                                                <RemoveButton onClick={() => handleRemoveImage(index)}>
+                                                                {/* <RemoveButton onClick={() => handleRemoveImage(index)}>
                                                                   <FiTrash2 size={16} />
-                                                                </RemoveButton>
+                                                                </RemoveButton> */}
                                                               </ImageContainer>
                                                             ))}
                                                           </ImageGallery>
