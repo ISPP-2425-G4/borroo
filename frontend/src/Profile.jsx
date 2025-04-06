@@ -384,41 +384,6 @@ const Profile = () => {
   };
 
 
-  const handleUpdateImage = async () => {
-    if (!image) return;
-    
-    const token = localStorage.getItem("access_token");
-    
-    if (!token) {
-      alert("No tienes una sesión activa. Inicia sesión nuevamente.");
-      return;
-    }
-    
-    const formData = new FormData();
-    formData.append("image", image);
-    try {
-      const response = await axios.put(
-        `${import.meta.env.VITE_API_BASE_URL}/usuarios/update-image/`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      
-      alert("Imagen actualizada correctamente.");
-      setUser(prevUser => ({
-        ...prevUser,
-        image: response.data.image_url || response.data.image,
-      }));
-      setImage(null);
-    } catch (error) {
-      console.error("Error actualizando la imagen:", error?.response || error);
-      alert("No se pudo actualizar la imagen de perfil.");
-    }
-  };
 
   const handleUpdateUser = async () => {
     const token = localStorage.getItem("access_token");
@@ -438,19 +403,20 @@ const Profile = () => {
     }
 
     try {
+      if (image) {
+        formData.user_image = image;
+      }
       const response = await axios.put(
         `${import.meta.env.VITE_API_BASE_URL}/usuarios/update/`,
         formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       );
 
-      if (image) {
-        handleUpdateImage();
-      }
 
       alert("Perfil actualizado correctamente.");
       setUser(response.data.user);
@@ -475,19 +441,20 @@ const Profile = () => {
     }
 
     try {
+      if (image) {
+        formData.user_image = image;
+      }
       const response = await axios.put(
         `${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/users/update/${user.id}/`,
         formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       );
 
-      if (image) {
-        handleUpdateImage();
-      }
 
       alert("Usuario actualizado correctamente.");
       setUser(response.data);
@@ -527,7 +494,7 @@ const Profile = () => {
               }}
             >
             <Avatar sx={{ width: 100, height: 100}}
-              src = {imagePreview || (user.image ? `${import.meta.env.VITE_API_BASE_URL}${user.image}` : "")}
+              src = {imagePreview || (user.image ? user.image : "")}
             >
               {!image && !user.image && <PersonIcon sx={{ fontSize: 60 }} />}
             </Avatar>

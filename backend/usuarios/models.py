@@ -106,7 +106,7 @@ class User(AbstractUser):
     reset_token_expiration = models.DateTimeField(blank=True, null=True)
     verify_token = models.CharField(max_length=255, blank=True, null=True)
     is_admin = models.BooleanField(default=False)
-    image = models.ImageField(blank=True, null=True)
+    image = models.URLField(blank=True, null=True)
 
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'username'
