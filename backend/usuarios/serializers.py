@@ -14,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
             'phone_number', 'country', 'city', 'address', 'postal_code', 'cif',
             'dni',
             'is_verified', 'pricing_plan', 'owner_rating', 'renter_rating',
-            'items', 'is_admin'
+            'items', 'is_admin', 'image',
         ]
         read_only_fields = ['id', 'owner_rating', 'renter_rating', 'items',
                             'is_admin']

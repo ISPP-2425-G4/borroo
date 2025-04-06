@@ -41,6 +41,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import ReportIcon from "@mui/icons-material/Report";
 import CloseIcon from "@mui/icons-material/Close";
+import EditIcon from "@mui/icons-material/Edit";
 
 const Profile = () => {
   const { username } = useParams();
@@ -78,7 +79,10 @@ const Profile = () => {
     postal_code: "",
     pricing_plan: "free",
     dni: "",
+    image: null,
   });
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
 
   useEffect(() => {
@@ -278,7 +282,7 @@ const Profile = () => {
         dni: user.dni || "",
       });
     }
-  }, [user]);
+  }, [user, image]);
 
   const validateDni = (dni) => {
     const dniPattern = /^\d{8}[A-Z]$/;
@@ -379,6 +383,43 @@ const Profile = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+
+  const handleUpdateImage = async () => {
+    if (!image) return;
+    
+    const token = localStorage.getItem("access_token");
+    
+    if (!token) {
+      alert("No tienes una sesión activa. Inicia sesión nuevamente.");
+      return;
+    }
+    
+    const formData = new FormData();
+    formData.append("image", image);
+    try {
+      const response = await axios.put(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/update-image/`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      
+      alert("Imagen actualizada correctamente.");
+      setUser(prevUser => ({
+        ...prevUser,
+        image: response.data.image_url || response.data.image,
+      }));
+      setImage(null);
+    } catch (error) {
+      console.error("Error actualizando la imagen:", error?.response || error);
+      alert("No se pudo actualizar la imagen de perfil.");
+    }
+  };
+
   const handleUpdateUser = async () => {
     const token = localStorage.getItem("access_token");
 
@@ -406,6 +447,10 @@ const Profile = () => {
           },
         }
       );
+
+      if (image) {
+        handleUpdateImage();
+      }
 
       alert("Perfil actualizado correctamente.");
       setUser(response.data.user);
@@ -440,6 +485,10 @@ const Profile = () => {
         }
       );
 
+      if (image) {
+        handleUpdateImage();
+      }
+
       alert("Usuario actualizado correctamente.");
       setUser(response.data);
       setEditMode(false);
@@ -459,10 +508,61 @@ const Profile = () => {
         <Paper elevation={3} sx={{ p: 4, borderRadius: 3, textAlign: "center" }}>
           {/* 📌 AVATAR Y DATOS PRINCIPALES */}
           <Box display="flex" flexDirection="column" alignItems="center">
-            <Avatar sx={{ width: 100, height: 100, mb: 2 }}>
-              <PersonIcon sx={{ fontSize: 60 }} />
+            <Box
+              sx={{
+                position: 'relative',
+                display: 'inline-block',
+                width: 100,
+                height: 100,
+                mb: 2,
+                cursor: editMode ? 'pointer' : 'default',
+                '&:hover .edit-icon': {
+                  opacity: 1,
+                },
+              }}
+              onClick={() => {
+                if (editMode) {
+                  document.getElementById("imageInput").click();
+                }
+              }}
+            >
+            <Avatar sx={{ width: 100, height: 100}}
+              src = {imagePreview || (user.image ? `${import.meta.env.VITE_API_BASE_URL}${user.image}` : "")}
+            >
+              {!image && !user.image && <PersonIcon sx={{ fontSize: 60 }} />}
             </Avatar>
-
+            <input
+              type="file"
+              id="imageInput"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                if (file) {
+                  setImage(e.target.files[0])
+                  setImagePreview(URL.createObjectURL(file));
+                }
+              }}
+              style={{ display: "none" }}
+            />
+            {editMode && (
+              <EditIcon
+                className="edit-icon"
+                sx={{
+                  position: 'absolute',
+                  bottom: 4,
+                  right: 4,
+                  backgroundColor: 'white',
+                  borderRadius: '50%',
+                  padding: '2px',
+                  fontSize: 20,
+                  color: '#black',
+                  opacity: 0,
+                  transition: 'opacity 0.2s',
+                  boxShadow: 1,
+                }}
+              />
+            )}
+          </Box>
             <Typography variant="h4" fontWeight="bold">
               {user.name} {user.surname}
             </Typography>

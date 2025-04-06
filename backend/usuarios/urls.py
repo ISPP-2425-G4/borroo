@@ -62,6 +62,8 @@ urlpatterns = [
     path('adminCustome/items/', ListItemsView.as_view(), name='list-items'),
     path('adminCustome/rent/list/', RentListView.as_view(), name='rent-list'),
     path('update/', UpdateUserPerfilView.as_view(), name='update-user'),
+    path('update-image/', UpdateUserPerfilView.as_view(),
+         name='update-user-image'),
 
 
 ]
