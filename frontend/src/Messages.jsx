@@ -12,6 +12,7 @@ const Messages = () => {
     const [otherUser, setOtherUser] = useState(null);
     const navigate = useNavigate();
     const currentUser = JSON.parse(localStorage.getItem("user"));
+    const accessToken = localStorage.getItem("access_token");
 
     useEffect(() => {
         const fetchConversations = async () => {
@@ -21,58 +22,40 @@ const Messages = () => {
                     navigate("/login");
                     return;
                 }
-                /*
-                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/mensajes/conversaciones/`, {
-                    params: { user: user.id }
+                
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/chats/get_my_chats/`, {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
                 });
                 setConversations(response.data);
-                */
-
-                // Datos de prueba
-                const fakeConversations = [
-                    { id: 1, participants: [1, 2], created_at: "2025-04-04T10:00:00Z", otherUserName: "JuanPérez_04" },
-                    { id: 2, participants: [1, 3], created_at: "2025-04-03T12:30:00Z", otherUserName: "MaríaLpz" },
-                    { id: 3, participants: [1, 4], created_at: "2025-04-02T15:15:00Z", otherUserName: "CarlosRod" }
-                ];
-                setConversations(fakeConversations);
+                
             } catch (error) {
                 console.error("Error al obtener conversaciones:", error);
             }
         };
 
         fetchConversations();
-    }, [navigate]);
+    }, [navigate, accessToken]);
 
     const fetchMessages = async (conversation) => {
         try {
-            /*
-            setSelectedConversation(conversationId);
-            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/conversations/${conversationId}/menssages/`);
-            setMessages(response.data);
-            */
+            const response = await axios.get(
+                `${import.meta.env.VITE_API_BASE_URL}/chats/${conversation.id}/messages/`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            );
             setSelectedConversation(conversation);
-            const otherUserId = conversation.participants.find(id => id !== currentUser.id);
+            setMessages(response.data);
+            
+            const otherUserId = conversation.user1 === currentUser.id ? conversation.user2 : conversation.user1;
 
             // Obtener datos del otro usuario
             const userResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${otherUserId}/`);
             setOtherUser(userResponse.data);
-
-            // Datos de prueba
-            const fakeMessages = {
-                1: [
-                    { id: 1, conversation: 1, sender: 1, content: "Hola, ¿cómo estás?", timestamp: "2025-04-04T10:05:00Z", is_read: true },
-                    { id: 2, conversation: 1, sender: 2, content: "Todo bien, ¿y tú?", timestamp: "2025-04-04T10:06:30Z", is_read: true }
-                ],
-                2: [
-                    { id: 3, conversation: 2, sender: 1, content: "¿Tienes disponible el objeto?", timestamp: "2025-04-03T12:35:00Z", is_read: true },
-                    { id: 4, conversation: 2, sender: 3, content: "Sí, lo puedes recoger mañana.", timestamp: "2025-04-03T12:40:00Z", is_read: false }
-                ],
-                3: [
-                    { id: 5, conversation: 3, sender: 1, content: "Gracias por el alquiler.", timestamp: "2025-04-02T15:20:00Z", is_read: true },
-                    { id: 6, conversation: 3, sender: 4, content: "De nada, cualquier cosa me avisas.", timestamp: "2025-04-02T15:22:00Z", is_read: false }
-                ]
-            };
-            setMessages(fakeMessages[conversation.id] || []);
         } catch (error) {
             console.error("Error al cargar mensajes:", error);
         }
@@ -82,27 +65,18 @@ const Messages = () => {
         if (!newMessage.trim()) return;
 
         try {
-            /*
-            const user = JSON.parse(localStorage.getItem("user"));
-            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/mensajes/enviar/`, {
-                conversation_id: selectedConversation,
-                sender_id: user.id,
-                text: newMessage,
-            });
             
-
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_BASE_URL}/chats/${selectedConversation.id}/send_message/`,
+                { content: newMessage },
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            );
+            
             setMessages([...messages, response.data]);
-            */
-            const newMsg = {
-                id: messages.length + 1,
-                conversation: selectedConversation.id,
-                sender: currentUser.id,
-                content: newMessage,
-                timestamp: new Date().toISOString(),
-                is_read: false
-            };
-
-            setMessages([...messages, newMsg]);
             setNewMessage("");
         } catch (error) {
             console.error("Error al enviar mensaje:", error);
@@ -113,7 +87,7 @@ const Messages = () => {
         <Box sx={{ display: "flex", flexDirection: "column", height: "100vh", mt: 10, bgcolor: "#f5f5f5" }}>
             <Navbar />
             <Box sx={{ display: "flex", flexGrow: 1, padding: 2 }}>
-                
+
                 {/* Lista de conversaciones */}
                 <Paper sx={{ 
                     width: 320, 
