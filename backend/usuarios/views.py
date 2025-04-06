@@ -541,10 +541,12 @@ class CreateItemView(APIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
 
     def post(self, request, *args, **kwargs):
-        serializer = ItemSerializer(data=request.data)
+        serializer = ItemSerializer(data=request.data, context={'request':
+                                                                request})
         if serializer.is_valid():
             item = serializer.save(user=request.user)
-            return Response(ItemSerializer(item).data,
+            return Response(ItemSerializer(item, context={'request': request})
+                            .data,
                             status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
