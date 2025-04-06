@@ -1,7 +1,7 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 from usuarios.models import User
-from mensajes.models import Chat, Message
+from chats.models import Chat, Message
 
 
 class ChatTests(TestCase):
@@ -14,7 +14,7 @@ class ChatTests(TestCase):
 
     def test_send_message(self):
         response = self.client.post(
-            f"/mensajes/chats/{self.chat.id}/send_message/",
+            f"/chats/{self.chat.id}/send_message/",
             {"content": "¡Hola!"},
             format="json"
         )
@@ -33,7 +33,7 @@ class ChatTests(TestCase):
         self.client.force_authenticate(user=outsider)
 
         response = self.client.post(
-            f"/mensajes/chats/{self.chat.id}/send_message/",
+            f"/chats/{self.chat.id}/send_message/",
             {"content": "¿Qué pasa?"}, format="json"
         )
         self.assertIn("detail", response.data)
@@ -45,7 +45,7 @@ class ChatTests(TestCase):
 
     def test_cannot_send_empty_message(self):
         response = self.client.post(
-            f"/mensajes/chats/{self.chat.id}/send_message/",
+            f"/chats/{self.chat.id}/send_message/",
             {"content": ""}, format="json"
         )
         self.assertEqual(response.status_code, 400)
@@ -55,7 +55,7 @@ class ChatTests(TestCase):
         content = "Hola, ¿todo bien?"
 
         self.client.post(
-            f"/mensajes/chats/{self.chat.id}/send_message/",
+            f"/chats/{self.chat.id}/send_message/",
             {"content": content}, format="json"
         )
 
