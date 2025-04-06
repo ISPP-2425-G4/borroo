@@ -80,7 +80,8 @@ def create_users():
         dni='11223344Z',
         is_verified=True,
         pricing_plan='premium',
-        is_admin=True
+        is_admin=True,
+        verified_account=True,
     )
 
 
