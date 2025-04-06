@@ -25,7 +25,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { styled } from "@mui/system";
-import { FiImage ,FiTrash2} from "react-icons/fi";
+import { FiImage } from "react-icons/fi";
 import EditIcon from '@mui/icons-material/Edit';
 
 const ImageUploadText = styled(Typography)(() => ({
@@ -56,25 +56,25 @@ const FileInputContainer = styled(Box)(() => ({
       backgroundColor: "#f0f7ff",
     },
   }));
-  const RemoveButton = styled("button")(() => ({
-    position: "absolute",
-    top: "8px",
-    right: "8px",
-    background: "rgba(0, 0, 0, 0.5)",
-    color: "white",
-    border: "none",
-    borderRadius: "50%",
-    width: "30px",
-    height: "30px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-    transition: "background 0.2s",
-    "&:hover": {
-      background: "rgba(0, 0, 0, 0.7)",
-    },
-  }));
+//   const RemoveButton = styled("button")(() => ({
+//     position: "absolute",
+//     top: "8px",
+//     right: "8px",
+//     background: "rgba(0, 0, 0, 0.5)",
+//     color: "white",
+//     border: "none",
+//     borderRadius: "50%",
+//     width: "30px",
+//     height: "30px",
+//     display: "flex",
+//     alignItems: "center",
+//     justifyContent: "center",
+//     cursor: "pointer",
+//     transition: "background 0.2s",
+//     "&:hover": {
+//       background: "rgba(0, 0, 0, 0.7)",
+//     },
+//   }));
 
 const categoryList = [
     { value: 'technology', label: 'Tecnología' },
@@ -226,7 +226,7 @@ const AdminItemDashboard = () => {
             });
             setItems(response.data);
         } catch (error) {
-            alert("Error al obtener ítems.");
+            alert("Error al obtener ítems.", error);
         }
     };
 
@@ -300,7 +300,7 @@ const AdminItemDashboard = () => {
         
          
        
-        images.forEach((image, index) => {
+        images.forEach((image) => {
             form.append("image_files", image);
         });
     
