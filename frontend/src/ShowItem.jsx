@@ -183,7 +183,7 @@ const ShowItemScreen = () => {
   
   const checkOwnerStatus = (userId) => {
     setIsAuthenticated(!!currentUser);
-    if (currentUser && currentUser.id === userId) {
+    if  (currentUser && currentUser.id === userId) {
       setIsOwner(true);
     }
   };

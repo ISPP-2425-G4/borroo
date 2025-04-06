@@ -24,6 +24,7 @@ import Sla from "./documents/Sla"
 import PrivacyPolicy from "./documents/PrivacyPolicy";
 import Licenses from "./documents/Licenses";
 import VerificarEmail from "./VerifyEmail";
+import AdminReportsDashboard from "./AdminReportsDashboard";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
           <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
           <Route path="/licenses" element={<Licenses/>}/>
           <Route path="/verifyEmail" element={<VerificarEmail />} />
+          <Route path="/reports-dashboard" element={<AdminReportsDashboard />} />
 
         </Routes>
         <Footer />

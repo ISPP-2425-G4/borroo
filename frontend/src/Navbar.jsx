@@ -42,6 +42,8 @@ const Navbar = () => {
     setLoginAnchorEl(null);
   };
 
+  
+
   const handleLogout = async () => {
     try {
       await axios.post(
@@ -231,9 +233,14 @@ const Navbar = () => {
                     Mi Perfil
                   </MenuItem>
                   {user.is_admin && (
-                    <MenuItem onClick={() => { handleLoginClose(); navigate('/dashboard'); }}>
-                      Dashboard
-                    </MenuItem>
+                    <>
+                      <MenuItem onClick={() => { handleLoginClose(); navigate('/dashboard'); }}>
+                        Dashboard
+                      </MenuItem>
+                      <MenuItem onClick={() => { navigate('/reports-dashboard'); }}>
+                        Gestionar reportes
+                      </MenuItem>
+                    </>
                   )}
                   <MenuItem onClick={handleLogout}>
                     Cerrar sesión
