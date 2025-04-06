@@ -544,7 +544,8 @@ class CreateItemView(APIView):
         serializer = ItemSerializer(data=request.data, context={'request':
                                                                 request})
         if serializer.is_valid():
-            item = serializer.save(user=request.user)
+            # item = serializer.save(user=request.user)
+            item = serializer.save()
             return Response(ItemSerializer(item, context={'request': request})
                             .data,
                             status=status.HTTP_201_CREATED)
