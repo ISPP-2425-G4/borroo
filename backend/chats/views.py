@@ -71,6 +71,22 @@ class ChatViewSet(viewsets.ModelViewSet):
                           == user.id else chat["user2"])
             chat["otherUserName"] = User.objects.get(id=other_user).username
 
+            # Obtener los mensajes del chat
+            chat_instance = Chat.objects.get(id=chat["id"])
+            last_message = chat_instance.messages.last()
+            unread_count = chat_instance.messages.filter(
+                receiver=user, is_read=False
+            ).count()
+
+            # Añadir los datos adicionales al chat
+            chat["lastMessage"] = (
+                last_message.content if last_message else None
+            )
+            chat["lastMessageTimestamp"] = (
+                last_message.timestamp if last_message else None
+            )
+            chat["unreadCount"] = unread_count
+
         return Response(serialized_chats)
 
     @action(detail=True, methods=['get'], url_path='messages')
