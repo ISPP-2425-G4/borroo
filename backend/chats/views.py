@@ -16,8 +16,52 @@ class ChatViewSet(viewsets.ModelViewSet):
         return Chat.objects.filter(user1=user) | Chat.objects.filter(
             user2=user)
 
+    def create(self, request, *args, **kwargs):
+        chat_creator = request.user
+        other_user_id = request.data.get("otherUserId")  # ID del otro usuario
+
+        # Validar que `other_user` está en la petición
+        if not other_user_id:
+            return Response(
+                {"error": "Debes proporcionar un usuario para el chat"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Validar que `other_user` existe en la base de datos
+        try:
+            other_user = User.objects.get(id=other_user_id)
+        except User.DoesNotExist:
+            return Response(
+                {"error": "El usuario especificado no existe"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Evitar chats duplicados
+        existing_chat = Chat.objects.filter(
+            (Q(user1=chat_creator) & Q(user2=other_user)) |
+            (Q(user1=other_user) & Q(user2=chat_creator))
+        ).exists()
+
+        if existing_chat:
+            return Response(
+                {"error": "Ya tienes un chat con este usuario"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Evitar que alguien cree un chat consigo mismo
+        if chat_creator == other_user:
+            return Response(
+                {"error": "No puedes iniciar un chat contigo mismo"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Si pasa todas las validaciones, crear el chat
+        chat = Chat.objects.create(user1=chat_creator, user2=other_user)
+        return Response(ChatSerializer(chat).data,
+                        status=status.HTTP_201_CREATED)
+
     @action(detail=False, methods=['get'])
-    def get_chats(self, request):
+    def get_my_chats(self, request):
         user = request.user
         chats = Chat.objects.filter(Q(user1=user) | Q(user2=user)).distinct()
         serialized_chats = ChatSerializer(chats, many=True).data
@@ -28,6 +72,28 @@ class ChatViewSet(viewsets.ModelViewSet):
             chat["otherUserName"] = User.objects.get(id=other_user).username
 
         return Response(serialized_chats)
+
+    @action(detail=True, methods=['get'], url_path='messages')
+    def get_chat_messages(self, request, pk=None):
+        """Obtiene los mensajes de un chat
+        y marca como leídos los no leídos."""
+        chat = self.get_object()
+        user = request.user
+
+        # Verificar que el usuario pertenece al chat
+        if user != chat.user1 and user != chat.user2:
+            return Response({"error": "No tienes acceso a este chat"},
+                            status=status.HTTP_403_FORBIDDEN)
+
+        # Obtener los mensajes del chat
+        messages = chat.messages.all()
+
+        # Filtrar los mensajes no leídos del usuario actual
+        # y marcarlos como leídos
+        unread_messages = messages.filter(receiver=user, is_read=False)
+        unread_messages.update(is_read=True)
+
+        return Response(MessageSerializer(messages, many=True).data)
 
     @action(detail=True, methods=['post'])
     def send_message(self, request, pk=None):
