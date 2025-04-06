@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, CardMedia, Typography, Tooltip, CardActions, Chip, Alert, Snackbar } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Typography, Tooltip, CardActions, Chip } from "@mui/material";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import axios from "axios";
@@ -10,6 +10,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
 
     const user = JSON.parse(localStorage.getItem("user"));
     const [loading, setLoading] = useState(false);
+    const [processedSessionId, setProcessedSessionId] = useState(null); // Estado para rastrear el sessionId procesado
     const [notification, setNotification] =  useState({ open: false, message: "", severity: "success" });
     const statusTranslations = {
         requested: "Solicitada",
@@ -20,16 +21,23 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
         rated: "Valorada",
         cancelled: "Cancelada",
     };
+    const paymentStatusTranslations = {
+        pending: "Pendiente",
+        processing: "Procesando",
+        cancelled: "Cancelado",
+        paid: "Pagado",
+    }
 
     useEffect(() => {
         const checkPayment = async () => {
             const params = new URLSearchParams(location.search);
             const sessionId = params.get("session_id");
-            if(sessionId){
+            if(sessionId && sessionId !== processedSessionId){
                 try {
                     const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/pagos/confirm-rent/${sessionId}/`)
                     if(response.data.status === "success"){
                         window.history.replaceState({}, "", "/rental_requests");
+                        window.location.reload();
                         setNotification({
                           open: true,
                           message: "¡Pago completado con éxito!",
@@ -40,8 +48,8 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                           setNotification({ ...notification, open: false });
                         }
                         , 5000);
+                        setProcessedSessionId(sessionId);
                     }
-                    checkPayment();
 
                 } catch (error) {
                     console.error(error);   
@@ -51,16 +59,12 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                         severity: "error",
                     });
                     setTimeout(() => 
-                        setNotification(null),5000);
+                        setNotification({ ...notification, open: false }), 5000);
                     } 
                 }
             };
             checkPayment();
-        }, [location.search]);
-
-        const handleCloseNotification = () => {
-            setNotification({ ...notification, open: false });
-          };
+        }, [location.search, processedSessionId]);
 
 
     const handlePayment = async (rentId, precio) => {
@@ -86,7 +90,39 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
         } catch (error) {
             setNotification({ open: true, message: "Ha ocurrido un error al procesar el pago" +  error, severity: "error" });
         }
-    }
+    };
+    const handleConfirmRental = async (rentId) => {
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/pagos/set-renter-confirmation/`, {
+                rent_id: rentId,
+                user_id: user.id,
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+    
+            if (response.data.status === "success") {
+                setNotification({
+                    open: true,
+                    message: "¡Gracias por confirmar el alquiler!",
+                    severity: "success",
+                });
+    
+                // Recargar la página después de un breve retraso
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000); // Espera 2 segundos antes de recargar
+            }
+        } catch (error) {
+            console.error(error);
+            setNotification({
+                open: true,
+                message: "Error al confirmar el alquiler.",
+                severity: "error",
+            });
+        }
+    };
 
 
     
@@ -151,7 +187,22 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                                     color: request.rent_status === "cancelled" ? "white" : "inherit",
                                 }}
                             />
+
                             )}
+                        {(
+                            <Chip
+                            label={paymentStatusTranslations[request.payment_status] || request.payment_status} // Si no hay traducción, se muestra el estado tal cual
+                            size="small"
+                            sx={{
+                                ml: 2,
+                                backgroundColor: request.payment_status === "cancelled" ? "red" :
+                                    request.payment_status === "paid" ? "green" : 
+                                    request.payment_status === "pending" ? "#FCB454" : "default", // "#FCB454" es naranja
+                                color: request.payment_status === "cancelled"  || request.payment_status === "paid" ? "white" : "inherit",
+                            }}
+                        />
+
+                        )}
                     </Typography>
                     {isOwner && (
                         <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
@@ -186,8 +237,6 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                                     }}
                                 >
                                     {request.renter.name} {request.renter.surname}
-                                    {/* TODO añadir en el modelo de la renta el campo owner para poder serializarlo
-                                    y poner "solicitado a", de momento se deja así */}
                                 </a>
                             </Tooltip>
                         </Typography>
@@ -212,6 +261,35 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                             minute: '2-digit'
                         })}
                     </Typography>
+
+                    {/* Pregunta si el alquiler ha ido bien si la fecha de fin ya pasó */}
+                {new Date(request.end_date) < new Date() &&
+                    ((user.id === request.renter.id && !request.paid_pending_confirmation?.is_confirmed_by_renter) || 
+                    (user.id === request.item.user && !request.paid_pending_confirmation?.is_confirmed_by_owner)) && (
+                        <Box sx={{ mt: 2 }}>
+                            <Typography variant="body2" sx={{ mb: 1 }}>
+                                ¿El alquiler ha ido bien?
+                            </Typography>
+                            <Box sx={{ display: "flex", gap: 2 }}>
+                                <Button
+                                    variant="contained"
+                                    color="success"
+                                    size="small"
+                                    onClick={() => handleConfirmRental(request.id)} // Llama a la función con el ID de la renta
+                                >
+                                    ✅
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="error"
+                                    size="small"
+                                >
+                                    ❌
+                                </Button>
+                            </Box>
+                        </Box>
+                    )}
+
                     <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
                         {/* Si el estatus es 'aceptado' y el pago está pendiente, mostramos el botón de pago */}
                         {!isOwner && request.rent_status === "accepted" && request.payment_status === "pending" && (
@@ -219,7 +297,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                                 variant="contained"
                                 color="primary"
                                 size="small"
-                                onClick={() => handlePayment(request.id, request.item.price)}
+                                onClick={() => handlePayment(request.id, request.total_price)}
                                 disabled={loading} 
                             >
                                 Pagar
@@ -241,18 +319,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                         >
                             Rechazar
                         </Button> }
-                             <Snackbar 
-                                    open={notification.open} 
-                                    autoHideDuration={6000} 
-                                    onClose={handleCloseNotification}
-                                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-                                  >
-                                    <Alert onClose={handleCloseNotification} severity={notification.severity} sx={{ width: '100%' }}>
-                                      {notification.message}
-                                    </Alert>
-                                  </Snackbar>
                     </Box>
-
                 </CardContent>
             </Card>
         ))}

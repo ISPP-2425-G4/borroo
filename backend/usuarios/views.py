@@ -253,21 +253,23 @@ class PasswordResetConfirmView(APIView):
         validators = [
             RegexValidator(
                 regex=r'^(?=.*[A-Z])',
-                message='La contraseña debe contener'
-                'al menos una letra mayúscula.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^(?=.*\d)',
-                message='La contraseña debe contener al menos un número.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])',
-                message='La contraseña debe contener'
-                'al menos un carácter especial.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^.{8,}$',
-                message='La contraseña debe tener al menos 8 caracteres.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
         ]
 
