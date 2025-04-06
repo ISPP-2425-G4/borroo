@@ -246,6 +246,7 @@ class ItemRequest(models.Model):
         on_delete=models.CASCADE
         )
     created_at = models.DateTimeField(auto_now_add=True)
+    approved = models.BooleanField(default=False)
 
     def approve(self):
         """Método para aprobar la solicitud y crear un Item"""
