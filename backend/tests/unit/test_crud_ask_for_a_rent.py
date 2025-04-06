@@ -14,7 +14,7 @@ class TestCreateItemRequest:
     def user(self):
         return User.objects.create(
             username="testuser",
-            password=make_password("testpass"),
+            password=make_password("Borroo_25Test123"),
             email="testuser@example.com",
             name="Test",
             surname="User",
