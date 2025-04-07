@@ -71,7 +71,7 @@ class RentSerializer(serializers.ModelSerializer):
                             " el intervalo debe ser de 28 o 29 días."
                         })
 
-            elif price_category == "month":
+            else:
                 total_days = (end_date - start_date).days
                 if (total_days % 30 or total_days % 31):
                     raise serializers.ValidationError({
