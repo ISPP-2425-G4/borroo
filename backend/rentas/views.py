@@ -303,7 +303,7 @@ class RentViewSet(viewsets.ModelViewSet):
                     'status': 'Alquiler cancelado correctamente',
                     'refund_percentage': "1.00",
                     'refund_amount': str(refund_amount),
-                    'notification_message': 'El propietario ha cancelado el alquiler. Se le devolverá el 100% del importe.',
+                    'notification_message': 'El propietario ha cancelado el alquiler. Se le devolverá el 100% del importe.',  # noqa: FE501
                     'cancelled_by': 'owner'
                 })
 
@@ -322,7 +322,7 @@ class RentViewSet(viewsets.ModelViewSet):
                 refund_str = format(refund_amount_rounded, '.2f').replace('.',
                                                                           ',')
                 if refund_amount > Decimal("0.00"):
-                    message = f"Has cancelado el alquiler. Se te reembolsará {refund_str} € en los próximos 4-5 días laborales."
+                    message = f"Has cancelado el alquiler. Se te reembolsará {refund_str} € en los próximos 4-5 días laborales."  # noqa: FE501
                 else:
                     message = "Has cancelado el alquiler. No procede reembolso"
                 return Response({
