@@ -522,7 +522,7 @@ const Profile = () => {
                   borderRadius: '50%',
                   padding: '2px',
                   fontSize: 20,
-                  color: '#black',
+                  color: 'black',
                   opacity: 0,
                   transition: 'opacity 0.2s',
                   boxShadow: 1,
