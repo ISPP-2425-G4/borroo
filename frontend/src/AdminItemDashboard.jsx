@@ -20,7 +20,6 @@ import {
     MenuItem,
     DialogActions,
     Button,
-    Typography,
     Grid
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -269,7 +268,7 @@ const AdminItemDashboard = () => {
     });
    
     const [editItemData, setEditItemData] = useState(false)
-    const [showCreateForm, setShowCreateForm] = useState(false)
+    const [showCreateForm, setShowCreateForm] = useState()
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
