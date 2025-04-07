@@ -8,7 +8,7 @@ from rest_framework.exceptions import NotAuthenticated, PermissionDenied
 from rest_framework.exceptions import NotFound
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 from datetime import timedelta
 from django.contrib.auth.models import AnonymousUser
 from django.db.models import Q
@@ -275,14 +275,16 @@ class RentViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['put'])
     def cancel_rent(self, request, pk=None):
-        user = request.user if not isinstance(request.user, AnonymousUser) else None
+        user = request.user if not isinstance(
+            request.user, AnonymousUser) else None
         if not request.user.is_authenticated:
             raise NotAuthenticated({'error': 'Debes iniciar sesión.'})
 
         rent = get_object_or_404(Rent, pk=pk)
-        print(rent)
+
         if not (user == rent.renter or user == rent.item.user):
-            raise PermissionDenied({'error': 'No tienes permisos para cancelar este alquiler.'})
+            raise PermissionDenied({'error': 'No tienes permisos para '
+                                    'cancelar este alquiler.'})
 
         now = timezone.now()
 
@@ -292,16 +294,44 @@ class RentViewSet(viewsets.ModelViewSet):
             return Response({'status': 'Alquiler cancelado exitosamente'})
 
         elif rent.rent_status == RentStatus.BOOKED:
-            days_diff = (rent.start_date.date() - now.date()).days
-            cancel_type = rent.item.cancel_type
-            refund_percentage = apply_refund(cancel_type, days_diff)
-            refund_amount = Decimal(str(rent.total_price)) * refund_percentage
-            rent.rent_status = RentStatus.CANCELLED
-            rent.save()
-            return Response({
-                'status': 'Alquiler cancelado exitosamente en estado BOOKED',
-                'refund_percentage': str(refund_percentage),
-                'refund_amount': str(refund_amount)})
+
+            if user == rent.item.user:
+                refund_amount = Decimal(str(rent.total_price))
+                rent.rent_status = RentStatus.CANCELLED
+                rent.save()
+                return Response({
+                    'status': 'Alquiler cancelado correctamente',
+                    'refund_percentage': "1.00",
+                    'refund_amount': str(refund_amount),
+                    'notification_message': 'El propietario ha cancelado el alquiler. Se le devolverá el 100% del importe.',
+                    'cancelled_by': 'owner'
+                })
+
+            elif user == rent.renter:
+                days_diff = (rent.start_date.date() - now.date()).days
+                cancel_type = rent.item.cancel_type
+                refund_percentage = apply_refund(cancel_type, days_diff)
+                refund_amount = Decimal(
+                    str(rent.total_price)) * refund_percentage
+                refund_amount_rounded = refund_amount.quantize(
+                                         Decimal('0.01'),
+                                         rounding=ROUND_HALF_UP)
+                rent.rent_status = RentStatus.CANCELLED
+                rent.save()
+
+                refund_str = format(refund_amount_rounded, '.2f').replace('.',
+                                                                          ',')
+                if refund_amount > Decimal("0.00"):
+                    message = f"Has cancelado el alquiler. Se te reembolsará {refund_str} € en los próximos 4-5 días laborales."
+                else:
+                    message = "Has cancelado el alquiler. No procede reembolso"
+                return Response({
+                    'status': 'Alquiler cancelado exitosamente',
+                    'refund_percentage': str(refund_percentage),
+                    'refund_amount': str(refund_amount),
+                    'notification_message': message,
+                    'cancelled_by': 'renter'
+                })
 
         else:
             return Response(

@@ -155,7 +155,17 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
           );
           console.log("Solicitud cancelada:", response.data);
           setShowCancelModal(false);
-          // Actualizar el estado local si es necesario
+
+          setNotification({
+          open: true,
+          message: response.data.notification_message,
+          severity: "success"
+        });
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 2000); // Espera 2 segundos antes de recargar
+        
         } catch (error) {
           console.error("Error al cancelar la solicitud:", error.response?.data || error.message);
         }
@@ -401,6 +411,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                             Rechazar
                         </Button> }
                     </Box>
+                    {request.rent_status != "cancelled" && (
                     <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
                         {user.id === request.renter.id && (
                             <Button
@@ -431,7 +442,22 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                                 onConfirm={() => handleCancelRequest(request.id)}
                             />
                             )}
+
+                        <Snackbar
+                            open={notification.open}
+                            onClose={() => setNotification({ ...notification, open: false })}
+                            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                            >
+                            <Alert
+                                onClose={() => setNotification({ ...notification, open: false })}
+                                severity={notification.severity}
+                                sx={{ width: "100%", fontSize: "18px" }}
+                            >
+                                {notification.message}
+                            </Alert>
+                            </Snackbar>
                         </Box>
+                    )}
                     {/* Modal de opciones de pago */}
                     <Dialog open={openPaymentModal} onClose={handleClosePaymentModal}>
                         <DialogTitle>Elige un método de pago</DialogTitle>
