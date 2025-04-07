@@ -28,24 +28,26 @@ class User(AbstractUser):
     password = models.CharField(max_length=255, validators=[
             RegexValidator(
                 regex=r'^(?=.*[A-Z])',  # Al menos una mayúscula
-                message='La contraseña debe contener '
-                'al menos una letra mayúscula.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^(?=.*\d)',  # Al menos un número
-                message='La contraseña debe contener al menos un número.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])',
-                message='La contraseña debe contener '
-                'al menos un carácter especial.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^.{8,}$',  # Al menos 8 caracteres
-                message='La contraseña debe tener al menos 8 caracteres.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
         ],
-        help_text='La contraseña debe tener al menos 8 caracteres,'
+        help_text='La contraseña debe contener al menos 8 caracteres,'
         'una mayúscula, un número y un carácter especial.')
     email = models.CharField(max_length=255, unique=True,
                              validators=[
@@ -104,6 +106,10 @@ class User(AbstractUser):
     reset_token_expiration = models.DateTimeField(blank=True, null=True)
     verify_token = models.CharField(max_length=255, blank=True, null=True)
     is_admin = models.BooleanField(default=False)
+    stripe_customer_id = models.CharField(max_length=255,
+                                          null=True, blank=True)
+    stripe_subscription_id = models.CharField(max_length=255,
+                                              null=True, blank=True)
 
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'username'
@@ -135,4 +141,39 @@ class Review(models.Model):
         return (
             f"{self.reviewer.username} → "
             f"{self.reviewed_user.username}: {self.rating}"
+        )
+
+
+class Report(models.Model):
+
+    CATEGORIES = [
+        ('Mensaje de Odio', 'Mensaje de Odio'),
+        ('Información Engañosa', 'Información Engañosa'),
+        ('Se hace pasar por otra persona', 'Se hace pasar por otra persona'),
+        ('Otro', 'Otro')
+    ]
+
+    STATUS = [
+        ('Pendiente', 'Pendiente'),
+        ('En revisión', 'En revisión'),
+        ('Resuelto', 'Resuelto')
+    ]
+
+    reporter = models.ForeignKey(User, on_delete=models.CASCADE,
+                                 related_name="reports_given", blank=False,
+                                 null=False)
+    reported_user = models.ForeignKey(User, on_delete=models.CASCADE,
+                                      related_name="reports_received",
+                                      blank=False, null=False)
+    description = models.TextField(blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    category = models.CharField(choices=CATEGORIES, max_length=255,
+                                blank=False, null=False)
+    status = models.CharField(choices=STATUS, max_length=255,
+                              default='Pendiente', blank=False, null=False)
+
+    def __str__(self):
+        return (
+            f"{self.reporter.username} → "
+            f"{self.reported_user.username}: {self.category}"
         )

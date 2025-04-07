@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiUser, FiLock, FiMail, FiInfo } from "react-icons/fi";
+import { FiUser, FiLock, FiMail, FiInfo, FiBriefcase } from "react-icons/fi";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Checkbox, FormControlLabel } from "@mui/material"; 
 import axios from 'axios';
@@ -80,6 +80,7 @@ const Signup = () => {
     email: "",
     password: "",
     password2: "",
+    cif: "",
   });
   
   const [error, setError] = useState("");
@@ -90,17 +91,22 @@ const Signup = () => {
   const [showPassword2, setShowPassword2] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
   const navigate = useNavigate();
+  const [isCompany, setIsCompany] = useState(false);
   
   useEffect(() => {
-    const { username, name, surname, email, password, password2 } = formData;
+    const { username, name, surname, email, password, password2, cif } = formData;
     const fields = [username, name, surname, email, password, password2];
   
+    if (isCompany) {
+      fields.push(cif);
+    }
+
     const isValid =
       fields.every(field => typeof field === 'string' && field.trim() !== "") &&
       acceptTerms;
   
     setIsFormValid(isValid);
-  }, [formData, acceptTerms]);
+  }, [formData, acceptTerms, isCompany]);
   
 
   const handleChange = (e) => {
@@ -117,6 +123,11 @@ const Signup = () => {
 
     if(!acceptTerms) {
       setError("Debe aceptar los términos y condiciones.");
+      return;
+    }
+    
+    if (isCompany && !formData.cif.trim()) {
+      setError("El campo NIF es obligatorio para perfiles de empresa.");
       return;
     }
 
@@ -140,16 +151,16 @@ const Signup = () => {
     });
 
     if (!/(?=.*[A-Z])/.test(formData.password)) {
-      errors.password = "La contraseña debe contener al menos una letra mayúscula.";
+      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, un número y un carácter especial.";
     }
     if (!/(?=.*[!@#$%^&*()_+\-=[\]{};:"\\|,.<>/?])/.test(formData.password)) {
-      errors.password = "La contraseña debe contener al menos un carácter especial.";
+      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, un número y un carácter especial.";
     }
     if (!/(?=.*\d)/.test(formData.password)) {
-      errors.password = "La contraseña debe contener al menos un número.";
+      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, un número y un carácter especial.";
     }
     if (formData.password.length < 8) {
-      errors.password = "La contraseña debe tener al menos 8 caracteres.";
+      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, un número y un carácter especial.";
     }
   
     const requiredFields = ["username", "name", "surname", "email", "password", "password2"];
@@ -168,6 +179,15 @@ const Signup = () => {
       if (usernameCheckResponse.data.exists) {
         errors.username = "El nombre de usuario ya existe.";
       }
+
+      if (isCompany) {
+        requiredFields.push("cif");
+      }
+
+      if (!/^[A-HJ-NP-SUVW]\d{7}[0-9A-J]$/.test(formData.cif) && isCompany) {
+        errors.cif = "El NIF no es válido. Debe comenzar con una letra seguida de 7 dígitos y una letra o número final.";
+      }
+
     } catch (error) {
       console.error("Error verificando el nombre de usuario:", error);
       setError("Error verificando el nombre de usuario");
@@ -207,6 +227,8 @@ const Signup = () => {
       });
   
       submitFormData.append("password1", formData.password); 
+
+      submitFormData.append("cif", formData.cif);
   
       console.log("Datos enviados:", Object.fromEntries(submitFormData.entries()));
   
@@ -403,6 +425,43 @@ const Signup = () => {
             {formErrors.password2 && <FieldError>{formErrors.password2}</FieldError>}
 
             <FormControlLabel
+              control={
+                <Checkbox
+                  checked={isCompany}
+                  onChange={(e) => setIsCompany(e.target.checked)}
+                  color="primary"
+                />
+              }
+              label={
+                <Typography variant="body2">
+                  Perfil de empresa
+                </Typography>
+              }
+            />
+            {isCompany && (
+              <>
+                <StyledTextField
+                  variant="outlined"
+                  fullWidth
+                  label="NIF"
+                  name="cif"
+                  required
+                  value={formData.cif}
+                  onChange={handleChange}
+                  error={!!formErrors.cif}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <FiBriefcase />
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                {formErrors.cif && <FieldError>{formErrors.cif}</FieldError>}
+              </>
+            )}
+            
+            <FormControlLabel
                 control={
                   <Checkbox
                     checked={acceptTerms}
@@ -412,7 +471,7 @@ const Signup = () => {
                 }
                 label={
                   <Typography variant="body2">
-                    Acepto los <Link to="/terms">términos y condiciones</Link>.
+                    He leído y acepto los <Link to="/terms-and-conditions">términos y condiciones</Link>.
                   </Typography>
                 }
               />
