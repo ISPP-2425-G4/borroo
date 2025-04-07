@@ -4,7 +4,6 @@ import {
     Box,
     Button,
     TextField,
-    Typography,
     Grid,
     IconButton,
     Dialog,
@@ -49,7 +48,6 @@ const paymentStatusTranslation = {
 
 const AdminRentDashboard = () => {
     const [rents, setRents] = useState([]);
-    const [showCreateForm, setShowCreateForm] = useState(false);
     const [editRentData, setEditRentData] = useState(null);
     const [formData, setFormData] = useState({
         start_date: "",
@@ -150,7 +148,7 @@ const AdminRentDashboard = () => {
         <>
             <Navbar />
             <Box sx={{ p: 4 }}>
-                {showCreateForm && (
+                {(
                     <Box
                         sx={{
                             border: "1px solid #ccc",
