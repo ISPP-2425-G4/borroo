@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useCallback } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { Box, Typography, List, ListItem, ListItemText, Paper, TextField, Button, Divider, Avatar } from "@mui/material";
@@ -10,11 +10,56 @@ const Messages = () => {
     const [conversations, setConversations] = useState([]);
     const [selectedConversation, setSelectedConversation] = useState(null);
     const [messages, setMessages] = useState([]);
+    const { conversationId } = useParams();
     const [newMessage, setNewMessage] = useState("");
     const [otherUser, setOtherUser] = useState(null);
     const navigate = useNavigate();
     const currentUser = JSON.parse(localStorage.getItem("user"));
     const accessToken = localStorage.getItem("access_token");
+
+    const fetchMessages = useCallback(async (conversation) => {
+        try {
+            if (!conversation) return;
+            const response = await axios.get(
+                `${import.meta.env.VITE_API_BASE_URL}/chats/${conversation.id}/messages/`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                }
+            );
+            setSelectedConversation(conversation);
+            setMessages(response.data);
+
+            const otherUserId = conversation.user1 === currentUser.id ? conversation.user2 : conversation.user1;
+            const userResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${otherUserId}/`);
+            setOtherUser(userResponse.data);
+        } catch (error) {
+            console.error("Error al cargar mensajes:", error);
+        }
+    }, [accessToken, currentUser.id]); 
+
+    useEffect(() => {
+        const fetchSelectedChatMessages = async () => {
+            try {
+                if (!conversationId) return;
+                const response = await axios.get(
+                    `${import.meta.env.VITE_API_BASE_URL}/chats/${conversationId}/`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`,
+                        },
+                    }
+                );
+                setSelectedConversation(response.data);
+                fetchMessages(response.data);
+            } catch (error) {
+                console.error("Error al cargar mensajes:", error);
+            }
+        };
+
+        fetchSelectedChatMessages();
+    }, [conversationId, accessToken, fetchMessages]); 
 
     useEffect(() => {
         const fetchConversations = async () => {
@@ -40,28 +85,6 @@ const Messages = () => {
         fetchConversations();
     }, [navigate, accessToken]);
 
-    const fetchMessages = async (conversation) => {
-        try {
-            const response = await axios.get(
-                `${import.meta.env.VITE_API_BASE_URL}/chats/${conversation.id}/messages/`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                }
-            );
-            setSelectedConversation(conversation);
-            setMessages(response.data);
-            
-            const otherUserId = conversation.user1 === currentUser.id ? conversation.user2 : conversation.user1;
-
-            // Obtener datos del otro usuario
-            const userResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${otherUserId}/`);
-            setOtherUser(userResponse.data);
-        } catch (error) {
-            console.error("Error al cargar mensajes:", error);
-        }
-    };
 
     const handleSendMessage = async () => {
         if (!newMessage.trim()) return;

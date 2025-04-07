@@ -49,6 +49,7 @@ function App() {
           <Route path="/create_item_request" element={<CreateItemRequest />} />
           <Route path="/dashboard" element={<AdminDashboard />} />
           <Route path="/messages" element={<Messages />} />
+          <Route path="/messages/:conversationId" element={<Messages />} />
           <Route path="/verifyEmail" element={<VerificarEmail />} />
 
         </Routes>
