@@ -99,6 +99,7 @@ def create_items():
             cancel_type=random.choice(['flexible', 'medium', 'strict']),
             price_category=random.choice(['hour', 'day', 'month']),
             price=Decimal(random.uniform(2, 30)),
+            deposit=Decimal(random.uniform(30, 100)),
             user=random.choice(users),
             draft_mode=False,
             featured=False,
