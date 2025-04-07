@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Snackbar, Alert } from "@mui/material";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import {
@@ -59,6 +60,11 @@ const Profile = () => {
       return null;
     }
   });
+  const [notification, setNotification] = useState({
+    open: false,
+    message: "",
+    severity: "success", // Puede ser "success", "error", "warning", "info"
+  });
   const [editMode, setEditMode] = useState(false);
   const [draftItems, setDraftItems] = useState([]);
   const [canReview, setCanReview] = useState(false);
@@ -68,6 +74,9 @@ const Profile = () => {
   const [showReportModal, setShowReportModal] = useState(false);
   const [reportCategory, setReportCategory] = useState("");
   const [reportDescription, setReportDescription] = useState("");
+  const [showDniModal, setShowDniModal] = useState(false);
+  const [dniInput, setDniInput] = useState("");
+  const [formErrors, setFormErrors] = useState({});
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -179,21 +188,33 @@ const Profile = () => {
         }
       );
       if (response.status === 201) {
-        alert("¡Reporte enviado correctamente!");
+        setNotification({
+          open: true,
+          message: "¡Reporte enviado correctamente!",
+          severity: "success",
+        });
         setShowReportModal(false);
         setReportCategory("");
         setReportDescription("");
       } 
   
        else if(response.status === 200){
-        alert("¡Reporte actualizado correctamente!");
+        setNotification({
+          open: true,
+          message: "¡Reporte actualizado correctamente!",
+          severity: "success",
+        });
         setShowReportModal(false);
         setReportCategory("");
         setReportDescription("");
       }
       
       else {
-        alert("Hubo un problema al enviar el reporte.");
+        setNotification({
+          open: true,
+          message: "Hubo un problema al enviar el reporte.",
+          severity: "error",
+        });
       }
       
     }catch (error) {
@@ -344,10 +365,18 @@ const Profile = () => {
       setReviewText("");
       setRating(0);
 
-      alert("Reseña eliminada con éxito.");
+      setNotification({
+        open: true,
+        message: "Reseña eliminada con éxito.",
+        severity: "success",
+      });
     } catch (error) {
       console.error("Error eliminando la reseña:", error);
-      alert("No se pudo eliminar la reseña.");
+      setNotification({
+        open: true,
+        message: "No se pudo eliminar la reseña.",
+        severity: "error",
+      });
     }
   };
 
@@ -385,30 +414,28 @@ const Profile = () => {
 
 
 
-  const handleUpdateUser = async () => {
+  const handleUpdateUser = async (updatedFields = {}) => {
     const token = localStorage.getItem("access_token");
 
     if (!token) {
-      alert("No tienes una sesión activa. Inicia sesión nuevamente.");
+      setNotification({
+        open: true,
+        message: "No tienes una sesión activa. Inicia sesión nuevamente.",
+        severity: "error",
+      });
       return;
     }
 
-    const previousDni = user.dni;
+    const updatedData = { ...formData, ...updatedFields };
 
-    if (formData.dni && !validateDni(formData.dni)) {
-      alert("El DNI/NIF no tiene un formato válido.");
-
-      setFormData((prev) => ({ ...prev, dni: previousDni }));
-      return;
-    }
-
+    
     try {
       if (image) {
         formData.user_image = image;
       }
       const response = await axios.put(
         `${import.meta.env.VITE_API_BASE_URL}/usuarios/update/`,
-        formData,
+        updatedData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -418,12 +445,43 @@ const Profile = () => {
       );
 
 
-      alert("Perfil actualizado correctamente.");
+      setNotification({
+        open: true,
+        message: "Perfil actualizado correctamente.",
+        severity: "success",
+      });
       setUser(response.data.user);
       setEditMode(false);
+      setFormErrors({});
+      return response;
     } catch (error) {
       console.error("Error actualizando el perfil:", error?.response || error);
-      alert("No se pudo actualizar el perfil.");
+      // Manejar errores de validación del backend
+      if (error.response?.data) {
+        // Si el error viene con un mensaje específico para el DNI
+        if (error.response.data.dni) {
+          setFormErrors(prev => ({
+            ...prev,
+            dni: error.response.data.dni[0] // Mostrar el primer mensaje de error del DNI
+          }));
+          setNotification({
+            open: true,
+            message: error.response.data.dni[0],
+            severity: "error",
+          });
+        } 
+        // Si hay otros errores de validación
+        else if (error.response.data.errors) {
+          setFormErrors(error.response.data.errors);
+        }
+      } else {
+        setNotification({
+          open: true,
+          message: "No se pudo actualizar el perfil.",
+          severity: "error",
+        });
+      }
+      return null;
     }
   };
 
@@ -569,7 +627,6 @@ const Profile = () => {
                       {[
                         { name: "name", label: "Nombre" },
                         { name: "surname", label: "Apellidos" },
-                        { name: "email", label: "Email" },
                         { name: "phone_number", label: "Teléfono" },
                         { name: "city", label: "Ciudad" },
                         { name: "country", label: "País" },
@@ -583,35 +640,11 @@ const Profile = () => {
                             name={field.name}
                             value={formData[field.name]}
                             onChange={handleInputChange}
+                            error={!!formErrors[field.name]} // Muestra error si existe en formErrors
+                            helperText={formErrors[field.name] || ""} // Muestra el mensaje de error
                           />
                         </Grid>
                       ))}
-
-                      {/* Campo DNI / NIF */}
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          fullWidth
-                          label="DNI / NIF"
-                          name="dni"
-                          value={formData.dni}
-                          onChange={handleInputChange}
-                        />
-                      </Grid>
-
-                      {/* Plan de suscripción */}
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          select
-                          label="Plan de Suscripción"
-                          name="pricing_plan"
-                          value={formData.pricing_plan}
-                          onChange={handleInputChange}
-                          fullWidth
-                        >
-                          <MenuItem value="free">🟢 Gratis</MenuItem>
-                          <MenuItem value="premium">🌟 Premium</MenuItem>
-                        </TextField>
-                      </Grid>
                     </Grid>
 
                     <Box sx={{ textAlign: "right", mt: 2 }}>
@@ -623,6 +656,7 @@ const Profile = () => {
                 )}
               </>
             ) : (
+
               <Button
                 variant="outlined"
                 color="secondary"
@@ -646,20 +680,32 @@ const Profile = () => {
               borderRadius: 2,
             }}
           >
-            <Typography variant="h5" fontWeight="bold" sx={{ mb: 1 }}>
-              Información de contacto:
-            </Typography>
-            <Typography sx={{ fontSize: "1.1rem", mb: 1 }}>
-              <EmailIcon sx={{ verticalAlign: "middle", fontSize: 24 }} />{" "}
-              <strong>Email:</strong> {user.email}
-            </Typography>
-            <Typography sx={{ fontSize: "1.1rem", mb: 1 }}>
-              <PhoneIcon sx={{ verticalAlign: "middle", fontSize: 24 }} />{" "}
-              <strong>Teléfono:</strong> {user.phone_number}
-            </Typography>
-            <Typography sx={{ fontSize: "1.1rem", mb: 1 }}>
-              <strong>DNI / NIF:</strong> {user.dni || "No disponible"}
-            </Typography>
+            
+            {currentUser.username === user.username && (
+              <>
+              <Typography variant="h5" fontWeight="bold" sx={{ mb: 1 }}>
+                Información de contacto:
+              </Typography>
+              <Typography sx={{ fontSize: "1.1rem", mb: 1 }}>
+                <EmailIcon sx={{ verticalAlign: "middle", fontSize: 24 }} />{" "}
+                <strong>Email:</strong> {user.email}
+              </Typography>
+              <Typography sx={{ fontSize: "1.1rem", mb: 1 }}>
+                <PhoneIcon sx={{ verticalAlign: "middle", fontSize: 24 }} />{" "}
+                <strong>Teléfono:</strong> {user.phone_number}
+              </Typography>
+              <Typography sx={{ fontSize: "1.1rem", mb: 1 }}>
+                <HomeIcon sx={{ verticalAlign: "middle", fontSize: 24 }} />{" "}
+                <strong>Dirección:</strong> {user.address}
+              </Typography>
+              <Typography sx={{ fontSize: "1.1rem", mb: 1 }}>
+                <MarkunreadMailboxIcon sx={{ verticalAlign: "middle", fontSize: 24 }} />{" "}
+                <strong>Código Postal:</strong> {user.postal_code}
+              </Typography>
+              </>
+
+
+            )}
 
             <Typography variant="h5" fontWeight="bold" sx={{ mt: 3, mb: 1 }}>
               Ubicación:
@@ -671,14 +717,6 @@ const Profile = () => {
             <Typography sx={{ fontSize: "1.1rem", mb: 1 }}>
               <LocationCityIcon sx={{ verticalAlign: "middle", fontSize: 24 }} />{" "}
               <strong>Ciudad:</strong> {user.city}
-            </Typography>
-            <Typography sx={{ fontSize: "1.1rem", mb: 1 }}>
-              <HomeIcon sx={{ verticalAlign: "middle", fontSize: 24 }} />{" "}
-              <strong>Dirección:</strong> {user.address}
-            </Typography>
-            <Typography sx={{ fontSize: "1.1rem", mb: 1 }}>
-              <MarkunreadMailboxIcon sx={{ verticalAlign: "middle", fontSize: 24 }} />{" "}
-              <strong>Código Postal:</strong> {user.postal_code}
             </Typography>
 
             <Typography variant="h5" fontWeight="bold" sx={{ mt: 3, mb: 1 }}>
@@ -699,6 +737,95 @@ const Profile = () => {
             </Typography>
 
           </Box>
+
+          {currentUser.username === user.username && (
+            <Divider sx={{ my: 3 }} />
+          )}
+
+          {currentUser.username === user.username && (
+            <Box sx={{ mt: 3 }}>
+              <Typography variant="h6" fontWeight="bold" sx={{ mb: 1 }}>
+                ¿Estás identificado?
+              </Typography>
+              <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 2 }}>
+                {user.dni != null ? (
+                  <Chip label="Identificado" color="success" />
+                ) : (
+                  <>
+                    <Typography variant="body2" color="textSecondary">
+                      No estás identificado.
+                    </Typography>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={() => setShowDniModal(true)}
+                    >
+                      Identificarme
+                    </Button>
+                  </>
+                )}
+              </Box>
+            </Box>
+          )}
+
+          {/* Modal para ingresar el DNI */}
+          <Dialog
+            open={showDniModal}
+            onClose={() => setShowDniModal(false)}
+            maxWidth="sm"
+            fullWidth
+          >
+            <DialogTitle>Identifícate</DialogTitle>
+            <DialogContent>
+              <Typography variant="body2" sx={{ mb: 2 }}>
+                Ingresa tu DNI para verificar tu identidad.
+              </Typography>
+              <TextField
+                fullWidth
+                label="DNI / NIF"
+                value={dniInput}
+                onChange={(e) => setDniInput(e.target.value)}
+                variant="outlined"
+                error={!!formErrors.dni} // Mostrar error si existe
+                helperText={formErrors.dni || ""} // Mostrar mensaje de error
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setShowDniModal(false)} color="secondary">
+                Cancelar
+              </Button>
+              <Button
+                onClick={async () => {
+                  try {
+                    // Intentar actualizar el DNI
+                    const response = await handleUpdateUser({ dni: dniInput });
+
+                    // Verificar si la respuesta fue exitosa
+                    if (response && response.status === 200) {
+                      setShowDniModal(false); // Cerrar el modal solo si fue exitoso
+                      setNotification({
+                        open: true,
+                        message: "DNI actualizado correctamente.",
+                        severity: "success",
+                      });
+                    }
+                  } catch (error) {
+                    console.error("Error al actualizar el DNI:", error);
+
+                    // Mostrar notificación de error
+                    setNotification({
+                      open: true,
+                      message: "No se pudo actualizar el DNI.",
+                      severity: "error",
+                    });
+                  }
+                }}
+                color="primary"
+              >
+                Verificar
+              </Button>
+            </DialogActions>
+          </Dialog>
 
 
           <Divider sx={{ my: 3 }} />
@@ -1101,6 +1228,22 @@ const Profile = () => {
                 </Box>
                 )}
       </Container >
+      <Snackbar
+        open={notification.open}
+        onClose={() => setNotification({ ...notification, open: false })}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }} // Centrado en la parte superior
+      >
+        <Alert
+          onClose={() => setNotification({ ...notification, open: false })}
+          severity={notification.severity}
+          sx={{
+            width: "100%",
+            fontSize: "18px", // Tamaño de fuente más grande
+          }}
+        >
+          {notification.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

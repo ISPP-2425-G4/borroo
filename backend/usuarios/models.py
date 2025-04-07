@@ -89,7 +89,12 @@ class User(AbstractUser):
         validators=[RegexValidator(
             regex=r'^\d{8}[A-Z]$',  # 8 dígitos seguidos de una letra mayúscula
             message="El DNI debe tener el formato: 12345678A"
-        )]
+        )],
+        error_messages={
+            'unique': 'El DNI ya está registrado. '
+            'Por favor, utiliza uno diferente.',
+            'max_length': 'El DNI no puede tener más de 9 caracteres.'
+        }
     )
     is_verified = models.BooleanField(default=False)
     verified_account = models.BooleanField(default=False)
