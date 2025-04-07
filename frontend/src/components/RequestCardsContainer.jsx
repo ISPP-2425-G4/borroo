@@ -1,4 +1,6 @@
 import { Box, Button, Card, CardContent, CardMedia, Typography, Tooltip, CardActions, Chip } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { Snackbar, Alert } from "@mui/material";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import axios from "axios";
@@ -13,6 +15,8 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
     const [processedSessionId, setProcessedSessionId] = useState(null); // Estado para rastrear el sessionId procesado
     const [notification, setNotification] =  useState({ open: false, message: "", severity: "success" });
     const [showCancelModal, setShowCancelModal] = useState(false);
+    const [openPaymentModal, setOpenPaymentModal] = useState(false);
+    const [selectedRequest, setSelectedRequest] = useState(null);
     const statusTranslations = {
         requested: "Solicitada",
         accepted: "Aceptada",
@@ -157,7 +161,51 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
         }
       };
 
+    const handleOpenPaymentModal = (request) => {
+        setSelectedRequest(request);
+        setOpenPaymentModal(true);
+    };
 
+    const handleClosePaymentModal = () => {
+        setOpenPaymentModal(false);
+        setSelectedRequest(null);
+    };
+
+    const handlePaymentWithBalance = async (rentId, price) => {
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/pagos/pay-with-balance/`, {
+                rent_id: rentId,
+                user_id: user.id,
+                price: parseInt(price * 100),
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (response.data.status === "success") {
+                setNotification({
+                    open: true,
+                    message: "¡Pago realizado con saldo exitosamente!",
+                    severity: "success",
+                });
+                handleClosePaymentModal();
+                window.location.reload();
+            } else {
+                setNotification({
+                    open: true,
+                    message: response.data.error || "Error al procesar el pago con saldo.",
+                    severity: "error",
+                });
+            }
+        } catch (error) {
+            setNotification({
+                open: true,
+                message: error.response?.data?.error || "Error al procesar el pago con saldo.",
+                severity: "error",
+            });
+        }
+    };
     
     return (
         <Box
@@ -329,7 +377,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                                 variant="contained"
                                 color="primary"
                                 size="small"
-                                onClick={() => handlePayment(request.id, request.total_price)}
+                                onClick={() => handleOpenPaymentModal(request)}
                                 disabled={loading} 
                             >
                                 Pagar
@@ -374,6 +422,57 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                             Rechazar
                         </Button> }
                     </Box>
+                    {/* Modal de opciones de pago */}
+                    <Dialog open={openPaymentModal} onClose={handleClosePaymentModal}>
+                        <DialogTitle>Elige un método de pago</DialogTitle>
+                        <DialogContent>
+                            <Typography variant="body1">
+                                ¿Cómo deseas realizar el pago?
+                            </Typography>
+                            {selectedRequest && (
+                                <Typography variant="h6" sx={{ fontWeight: "bold", mb: -1, mt: 0, ml: 0 }}>
+                                    Precio: {selectedRequest.total_price} €
+                                </Typography>
+                            )}
+                        </DialogContent>
+                        <DialogActions>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={() => {
+                                    handlePayment(selectedRequest.id, selectedRequest.total_price);
+                                    handleClosePaymentModal();
+                                }}
+                            >
+                                Pagar con tarjeta
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                onClick={() => {
+                                    handlePaymentWithBalance(selectedRequest.id, selectedRequest.total_price);
+                                }}
+                            >
+                                Pagar con saldo
+                            </Button>
+                        </DialogActions>
+                        <Snackbar
+                            open={notification.open}
+                            onClose={() => setNotification({ ...notification, open: false })}
+                            anchorOrigin={{ vertical: "top", horizontal: "center" }} // Centrado en la parte superior
+                        >
+                            <Alert
+                                onClose={() => setNotification({ ...notification, open: false })}
+                                severity={notification.severity}
+                                sx={{
+                                    width: "100%",
+                                    fontSize: "18px", // Tamaño de fuente más grande
+                                }}
+                            >
+                                {notification.message}
+                            </Alert>
+                        </Snackbar>
+                    </Dialog>
                 </CardContent>
             </Card>
         ))}
