@@ -2,13 +2,24 @@ from datetime import datetime, timedelta
 from requests import Response
 from rest_framework import serializers
 from .models import Rent
+from pagos.models import PaidPendingConfirmation
 
 # Sirve para validar los datos que llegan del formulario y mapearlos al modelo
+
+
+class PaidPendingConfirmationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PaidPendingConfirmation
+        fields = ['is_confirmed_by_owner', 'is_confirmed_by_renter']
 
 
 class RentSerializer(serializers.ModelSerializer):
     renter_name = serializers.CharField(
         source='renter.username', read_only=True)
+
+    paid_pending_confirmation = PaidPendingConfirmationSerializer(
+        read_only=True
+    )
 
     class Meta:
         model = Rent
@@ -27,7 +38,7 @@ class RentSerializer(serializers.ModelSerializer):
         if isinstance(end_date, str):
             end_date = datetime.fromisoformat(end_date)
 
-        if start_date and end_date and start_date >= end_date:
+        if start_date and end_date and start_date > end_date:
             raise serializers.ValidationError(
                 {"end_date": "La fecha de fin debe ser posterior '"
                     'a la fecha de inicio."'}

@@ -96,7 +96,7 @@ const Login = () => {
       } else if (error.response && error.response.status === 401) {
         setError("El usuario no existe o los datos son incorrectos.");
       } else {
-        setError(error.message || "Error al conectar con el servidor");
+        setError(error.response.data.error || "Error al conectar con el servidor");
       }
     } finally {
       setLoading(false);

@@ -16,6 +16,16 @@ import {
   Rating,
   TextField,
   Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Chip,
+  FormControl, 
+  InputLabel,
+  Select,
+  DialogContentText
+
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
@@ -29,7 +39,8 @@ import MoneyOffIcon from "@mui/icons-material/MoneyOff";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
-
+import ReportIcon from "@mui/icons-material/Report";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Profile = () => {
   const { username } = useParams();
@@ -40,9 +51,22 @@ const Profile = () => {
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const [userReview, setUserReview] = useState(null);
-  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const [currentUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("user")) || null;
+    } catch {
+      return null;
+    }
+  });
   const [editMode, setEditMode] = useState(false);
   const [draftItems, setDraftItems] = useState([]);
+  const [canReview, setCanReview] = useState(false);
+  const [openReportsModal, setOpenReportsModal] = useState(false);
+  const [reports, setReports] = useState([]);
+  const [reportados, setReportados] = useState([]);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportCategory, setReportCategory] = useState("");
+  const [reportDescription, setReportDescription] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -56,6 +80,16 @@ const Profile = () => {
     dni: "",
   });
 
+
+  useEffect(() => {
+    if(!reports) return;
+    reports.forEach(report => {
+      if(report.reported_user){
+        fetchReportados(report.reported_user);
+      }
+    });
+    console.log("Reportados:", reportados);
+  }, [reports]);
 
 
   useEffect(() => {
@@ -87,24 +121,23 @@ const Profile = () => {
       }
     };
 
-
     const fetchReviews = async () => {
-      if (currentUser.username === username) return;
-
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_BASE_URL}/usuarios/reviews/?username=${encodeURIComponent(username)}`
         );
         setReviews(response.data);
 
-        const existingReview = response.data.find(
-          (review) => review.reviewer_username === currentUser.username
-        );
+        if (currentUser) {
+          const existingReview = response.data.find(
+            (review) => review.reviewer_username === currentUser.username
+          );
 
-        if (existingReview) {
-          setUserReview(existingReview);
-          setReviewText(existingReview.comment);
-          setRating(existingReview.rating);
+          if (existingReview) {
+            setUserReview(existingReview);
+            setReviewText(existingReview.comment);
+            setRating(existingReview.rating);
+          }
         }
       } catch (error) {
         console.error("Error cargando las reseñas:", error);
@@ -113,8 +146,122 @@ const Profile = () => {
 
     fetchProfile();
     fetchReviews();
+  }, [username, currentUser]);
 
-  }, [username, currentUser?.username]);
+  const handleReportUser = async () => {
+      try {
+        const activeUser = JSON.parse(localStorage.getItem("user"));
+        if (!activeUser ) {
+          alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
+          return;
+        }
+        if(!reportCategory || !reportDescription) {
+          alert("Por favor, completa todos los campos.");
+          return;
+        }
+        const reportData = {
+          reporter: currentUser.id,
+          reported_user: user.id,
+          category: reportCategory,
+          description: reportDescription,
+      } 
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/reportes/`,
+        reportData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 201) {
+        alert("¡Reporte enviado correctamente!");
+        setShowReportModal(false);
+        setReportCategory("");
+        setReportDescription("");
+      } 
+  
+       else if(response.status === 200){
+        alert("¡Reporte actualizado correctamente!");
+        setShowReportModal(false);
+        setReportCategory("");
+        setReportDescription("");
+      }
+      
+      else {
+        alert("Hubo un problema al enviar el reporte.");
+      }
+      
+    }catch (error) {
+        alert("Error al enviar el reporte:", error);
+        console.error("Error al enviar el reporte:", error);
+      }
+    };
+  
+
+  const fetchReportados = async (reportadoId) => {
+      if(!reportadoId) return;
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${reportadoId}/`);
+        if (response.status == 200) {
+          const data = response.data;
+          setReportados((prev) => [...prev, data]);
+        }
+
+      } catch (error) {
+        console.error("Error fetching reportados:", error);
+        alert("Error al obtener los reportados.");
+      }finally{
+        console.log("Reportados:", reportados);
+      }
+    };
+
+  const handleCloseReportsModal = () => {
+    setOpenReportsModal(false);
+  };
+
+  const handleOpenReportsModal = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/reportes/`
+      );
+      if (response.status === 200) {
+        const data = response.data.results.filter(
+          (report) => report.reporter === currentUser.id)
+        setReports(data);
+        setOpenReportsModal(true);
+      }
+
+    } catch (error) {
+      console.error("Error cargando los reportes:", error);
+      alert("No se pudieron cargar los reportes.");
+    }
+  };
+
+
+  useEffect(() => {
+    const checkIfHasRented = async () => {
+      if (!currentUser?.username || !username || currentUser.username === username) return;
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/rentas/full/has-rented-from/`,
+          {
+            params: {
+              renter: currentUser.username,
+              owner: username,
+            },
+          }
+        );
+        setCanReview(response.data.has_rented);
+      } catch (error) {
+        console.error("Error verificando alquiler previo:", error);
+      }
+    };
+
+    checkIfHasRented();
+  }, [username, currentUser]);
+
+
 
   useEffect(() => {
     if (user) {
@@ -138,6 +285,7 @@ const Profile = () => {
     const nifPattern = /^[A-Z]\d{7}[A-Z0-9]$/;
     return dniPattern.test(dni) || nifPattern.test(dni);
   };
+
 
   const handleReviewSubmit = async () => {
     if (!rating) {
@@ -322,9 +470,18 @@ const Profile = () => {
             <Typography variant="body1" color="textSecondary">
               @{user.username}
             </Typography>
+            {currentUser.username === user.username ? (
 
-            {currentUser.username === user.username && (
               <>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  size="small"
+                  onClick={() => handleOpenReportsModal()}
+                  sx={{ mt: 2, textTransform: "none" }}
+                >
+                  Ver mis reportes enviados
+                </Button>
                 <Button
                   variant="outlined"
                   color="primary"
@@ -398,6 +555,16 @@ const Profile = () => {
                   </Paper>
                 )}
               </>
+            ) : (
+              <Button
+                variant="outlined"
+                color="secondary"
+                size="small"
+                onClick={() => setShowReportModal(true)}
+                sx={{ mt: 2, textTransform: "none" }}
+              >
+               Reportar
+              </Button>
             )}
           </Box>
 
@@ -448,7 +615,7 @@ const Profile = () => {
             </Typography>
 
             <Typography variant="h5" fontWeight="bold" sx={{ mt: 3, mb: 1 }}>
-              Plan de Suscripción:
+              Plan de suscripción:
             </Typography>
             <Typography sx={{ fontSize: "1.1rem", display: "flex", alignItems: "center", justifyContent: "center", }}>
               {user.pricing_plan === "premium" ? (
@@ -471,9 +638,10 @@ const Profile = () => {
 
           {/* 📌 PRODUCTOS EN ALQUILER */}
           <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
-            Productos en alquiler de {user.name}
+            {currentUser?.username === user.username
+              ? "Mis artículos en alquiler"
+              : `Productos en alquiler de ${user.name}`}
           </Typography>
-
           {items.length > 0 ? (
             <Grid container spacing={3} justifyContent="center">
               {items.map((item) => (
@@ -511,59 +679,67 @@ const Profile = () => {
             </Typography>
           )}
 
-          <Divider sx={{ my: 3 }} />
+          {currentUser?.username === user.username && (
+            <>
+              <Divider sx={{ my: 3 }} />
 
-          <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
-            Artículos en borrador de {user.name}
-          </Typography>
+              <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
+                Mis artículos en borrador
+              </Typography>
 
-          {draftItems.length > 0 ? (
-            <Grid container spacing={3} justifyContent="center">
-              {draftItems.map((item) => (
-                <Grid item xs={12} sm={6} md={4} key={item.id}>
-                  <Link to={`/show-item/${item.id}`} style={{ textDecoration: "none" }}>
-                    <Card elevation={3}
-                      sx={{
-                        borderRadius: 3,
-                        border: "1px dashed #ccc",
-                        backgroundColor: "#fffde7",
-                        transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                        "&:hover": {
-                          transform: "scale(1.03)",
-                          boxShadow: "0px 6px 18px rgba(0,0,0,0.1)",
-                        },
-                      }}
-                    >
-                      <CardContent sx={{ textAlign: "center" }}>
-                        <Typography variant="h6" fontWeight="bold">
-                          {item.title}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary">
-                          {item.description}
-                        </Typography>
-                        <Typography variant="body2" sx={{ mt: 1, fontWeight: "bold", color: "#FF9800" }}>
-                          📝 Borrador - {item.price} € / {item.price_category_display}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Link>
+              {draftItems.length > 0 ? (
+                <Grid container spacing={3} justifyContent="center">
+                  {draftItems.map((item) => (
+                    <Grid item xs={12} sm={6} md={4} key={item.id}>
+                      <Link to={`/show-item/${item.id}`} style={{ textDecoration: "none" }}>
+                        <Card
+                          elevation={3}
+                          sx={{
+                            borderRadius: 3,
+                            border: "1px dashed #ccc",
+                            backgroundColor: "#fffde7",
+                            transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                            "&:hover": {
+                              transform: "scale(1.03)",
+                              boxShadow: "0px 6px 18px rgba(0,0,0,0.1)",
+                            },
+                          }}
+                        >
+                          <CardContent sx={{ textAlign: "center" }}>
+                            <Typography variant="h6" fontWeight="bold">
+                              {item.title}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary">
+                              {item.description}
+                            </Typography>
+                            <Typography variant="body2" sx={{ mt: 1, fontWeight: "bold", color: "#FF9800" }}>
+                              📝 Borrador - {item.price} € / {item.price_category_display}
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    </Grid>
+                  ))}
                 </Grid>
-              ))}
-            </Grid>
-          ) : (
-            <Typography variant="body2" color="textSecondary">
-              No tienes artículos en borrador.
-            </Typography>
+              ) : (
+                <Typography variant="body2" color="textSecondary">
+                  No tienes artículos en borrador.
+                </Typography>
+              )}
+            </>
           )}
 
-          {/* 📌 RESEÑAS (SOLO PARA OTROS PERFILES) */}
-          {currentUser.username !== user.username && (
+          {/* 📌 FORMULARIO PARA DEJAR RESEÑA (solo si es otro perfil y puede opinar) */}
+          {currentUser?.username !== user.username && canReview && (
             <>
               <Divider sx={{ my: 3 }} />
               <Typography variant="h6">
                 {userReview ? "Editar tu valoración:" : "Deja una valoración:"}
               </Typography>
-              <Rating value={rating} onChange={(event, newValue) => setRating(newValue)} />
+              <Rating
+                value={rating}
+                onChange={(event, newValue) => setRating(newValue)}
+              />
               <TextField
                 fullWidth
                 multiline
@@ -573,13 +749,22 @@ const Profile = () => {
                 onChange={(e) => setReviewText(e.target.value)}
                 sx={{ mt: 2 }}
               />
-              <Button variant="contained" color="primary" onClick={handleReviewSubmit} sx={{ mt: 2, width: "100%" }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleReviewSubmit}
+                sx={{ mt: 2, width: "100%" }}
+              >
                 {userReview ? "Actualizar valoración" : "Enviar valoración"}
               </Button>
 
-              {/* 📌 SECCIÓN PARA MOSTRAR LA RESEÑA DEL USUARIO ACTUAL CON PAPELERA */}
               {userReview && (
-                <Box display="flex" alignItems="center" justifyContent="space-between" sx={{ mt: 2, p: 2, borderRadius: 2, bgcolor: "#f9f9f9" }}>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
+                  sx={{ mt: 2, p: 2, borderRadius: 2, bgcolor: "#f9f9f9" }}
+                >
                   <Box>
                     <Typography variant="subtitle2">
                       <strong>{userReview.reviewer_username}:</strong> {userReview.comment}
@@ -591,26 +776,39 @@ const Profile = () => {
                   </IconButton>
                 </Box>
               )}
-
-              <Box sx={{ mt: 4, textAlign: "left" }}>
-                <Typography variant="h6" sx={{ mb: 2 }}>Reseñas de otros usuarios:</Typography>
-                {reviews.length > 0 ? (
-                  reviews.map((review, index) => (
-                    <Paper key={index} sx={{ p: 2, mb: 2, borderRadius: 2 }}>
-                      <Typography variant="subtitle2">
-                        <strong>{review.reviewer_username}:</strong> {review.comment}
-                      </Typography>
-                      <Rating value={review.rating} precision={0.5} readOnly />
-                    </Paper>
-                  ))
-                ) : (
-                  <Typography variant="body2" color="textSecondary">Aún no hay reseñas para este usuario.</Typography>
-                )}
-              </Box>
             </>
           )}
+
+          {/* 📌 RESEÑAS DE OTROS USUARIOS (SIEMPRE VISIBLE) */}
+          <Box sx={{ mt: 4, textAlign: "left" }}>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              {currentUser?.username === user.username
+                ? "Mis reseñas recibidas:"
+                : "Reseñas de otros usuarios:"}
+            </Typography>
+            {reviews.length > 0 ? (
+              reviews.map((review, index) => (
+                <Paper key={index} sx={{ p: 2, mb: 2, borderRadius: 2 }}>
+                  <Typography variant="subtitle2">
+                    <strong>
+                      <Link to={`/perfil/${review.reviewer_username}`} style={{ textDecoration: "none", color: "#1976d2" }}>
+                        {review.reviewer_username}
+                      </Link>
+                    </strong>
+                    : {review.comment}
+                  </Typography>
+                  <Rating value={review.rating} precision={0.5} readOnly />
+                </Paper>
+              ))
+            ) : (
+              <Typography variant="body2" color="textSecondary">
+                Aún no hay reseñas para este usuario.
+              </Typography>
+            )}
+          </Box>
+
           {/* 📌 BOTONES DE ADMINISTRADOR */}
-          {currentUser?.is_admin && currentUser.username !== user.username && (
+          {currentUser?.is_admin && currentUser?.username !== user.username && (
             <>
               <Box sx={{ mt: 3, display: "flex", justifyContent: "center", gap: 2 }}>
                 <Button
@@ -674,6 +872,167 @@ const Profile = () => {
             </>
           )}
         </Paper>
+        <Dialog
+          open={openReportsModal}
+          onClose={handleCloseReportsModal}
+          fullWidth
+          maxWidth="md"
+          aria-labelledby="reports-dialog-title"
+        >
+          <DialogTitle id="reports-dialog-title" sx={{ fontWeight: 600, borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}>
+            Historial de Reportes
+          </DialogTitle>
+          <DialogContent dividers sx={{ py: 3 }}>
+            {reports.length > 0 ? (
+              reports.map((report, index) => (
+                <Paper
+                  key={index}
+                  elevation={2}
+                  sx={{ 
+                    p: 3, 
+                    mb: 2, 
+                    borderRadius: 2,
+                    backgroundColor: "#ffffff",
+                    border: "1px solid rgba(0, 0, 0, 0.08)",
+                    transition: "all 0.2s ease-in-out",
+                    "&:hover": {
+                      boxShadow: 3,
+                      transform: "translateY(-2px)"
+                    }
+                  }}
+                >
+                  <Box sx={{ mb: 1, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <Typography variant="h6" fontWeight={600} color="primary.main">
+                      Reporte #{index + 1}
+                    </Typography>
+                    <Chip 
+                      label={report.status} 
+                      size="small"
+                      color={
+                        report.status === "Resuelto" ? "success" :
+                        report.status === "En revisión" ? "warning" : "default"
+                      }
+                      sx={{ fontWeight: 500 }}
+                    />
+                  </Box>
+                  
+                  <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1 }}>
+                    Usuario reportado: {reportados.find(r => r.id === report.reported_user)?.surname   || "Desconocido"}
+                  </Typography>
+                  
+                  <Typography variant="body2" fontWeight={500} color="text.secondary" sx={{ mb: 1 }}>
+                    Categoría: {report.category}
+                  </Typography>
+                  
+                  <Box sx={{ 
+                    p: 2, 
+                    mt: 1, 
+                    mb: 2, 
+                    backgroundColor: "rgba(0, 0, 0, 0.02)", 
+                    borderRadius: 1,
+                    borderLeft: "4px solid #3f51b5"
+                  }}>
+                    <Typography variant="body1">
+                      {report.description}
+                    </Typography>
+                  </Box>
+                  
+                  <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Typography variant="caption" color="text.secondary">
+                      Enviado el {new Date(report.created_at).toLocaleDateString('es-ES', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </Typography>
+                  </Box>
+                </Paper>
+              ))
+            ) : (
+              <Box 
+                sx={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  py: 4
+                }}
+              >
+                <ReportIcon sx={{ fontSize: 60, color: 'text.disabled', mb: 2 }} />
+                <Typography variant="body1" color="text.secondary" align="center">
+                  No has enviado reportes hasta el momento.
+                </Typography>
+                <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>
+                  Cuando envíes un reporte, aparecerá en esta sección.
+                </Typography>
+              </Box>
+            )}
+          </DialogContent>
+          <DialogActions sx={{ px: 3, py: 2 }}>
+            <Button 
+              onClick={handleCloseReportsModal} 
+              variant="contained" 
+              color="primary"
+              startIcon={<CloseIcon />}
+            >
+              Cerrar
+            </Button>
+          </DialogActions>
+        </Dialog>
+        {showReportModal && (
+                    <Box sx={{width: "100%", display: "flex", justifyContent: "center", alignContent: "center"}}>
+                    <Dialog maxWidth="sm" fullWidth open={showReportModal} onClose={() => setShowReportModal(false)}>
+                    <DialogTitle>Reportar usuario</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        ¿Cual es el motivo del reporte?
+                      </DialogContentText>
+                      <FormControl fullWidth sx={{ mt: 2 }}>
+                        <InputLabel id="reportCategoryLabel">Motivo</InputLabel>
+                        <Select
+                          labelId="reportCategoryLabel"
+                          value={reportCategory}
+                          onChange={(e) => setReportCategory(e.target.value)}
+                          label="Motivo"
+                        >
+                          <MenuItem value="Mensaje de Odio">Mensaje de Odio</MenuItem>
+                          <MenuItem value="Información Engañosa">Información Engañosa</MenuItem>
+                          <MenuItem value="Se hace pasar por otra persona">Se hace pasar por otra persona</MenuItem>
+                          <MenuItem value="Otro">Otro</MenuItem>
+                        </Select>
+                      </FormControl>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="reportDescription"
+                        label="Descripción"
+                        type="text"
+                        fullWidth
+                        variant="outlined"
+                        value={reportDescription}
+                        onChange={(e) => setReportDescription(e.target.value)}
+                        multiline
+                        rows={4}
+                      />
+        
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={() => setShowReportModal(false)} color="primary">
+                        Cancelar
+                      </Button>
+                      <Button
+                        onClick={handleReportUser}
+                        color="error"
+                        disabled={!reportCategory || !reportDescription}
+                      >
+                        Enviar reporte
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </Box>
+                )}
       </Container >
     </>
   );

@@ -28,6 +28,8 @@ import os
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
 from rest_framework.permissions import BasePermission, IsAuthenticated
+from usuarios.models import Report
+from usuarios.serializers import ReportSerializer
 
 
 def index(request):
@@ -54,18 +56,29 @@ class UserViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             # Guardamos el usuario con la contraseña encriptada
             user = serializer.save()
-
+            # Generamos el token para verificar el email
+            user.verify_token = str(uuid.uuid4())
+            user.save()
             cif = serializer.validated_data.get("cif")
             if cif is not None:
                 user.is_verified = True
                 user.save()
 
             # Generamos los tokens
-            refresh = RefreshToken.for_user(user)
+            frontend_base_url = os.getenv("RECOVER_PASSWORD")
+            frontend_url = f"{frontend_base_url}verifyEmail"
+            verify_link = f"{frontend_url}?token={user.verify_token}"
+            send_mail(
+                "Verificación de correo",
+                f"Hola {user.name},"
+                f"Haz clic en el siguiente enlace para verificar tu correo: "
+                f"{verify_link}",
+                "no-reply@tuapp.com",
+                [user.email],
+                fail_silently=False,)
+
             return Response({
                 "user": UserSerializer(user).data,
-                "refresh": str(refresh),
-                "access": str(refresh.access_token),
             }, status=status.HTTP_201_CREATED)
 
         return Response({
@@ -94,6 +107,11 @@ class UserViewSet(viewsets.ModelViewSet):
         if not check_password(password, user.password):
             return Response({"error": "Credenciales incorrectas"},
                             status=status.HTTP_401_UNAUTHORIZED)
+
+        # Comprobar si la contraseña es correcta
+        if not user.verified_account:
+            return Response({"error": "Verifica tu correo"},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         # Generar tokens JWT
         refresh = RefreshToken.for_user(user)
@@ -235,21 +253,23 @@ class PasswordResetConfirmView(APIView):
         validators = [
             RegexValidator(
                 regex=r'^(?=.*[A-Z])',
-                message='La contraseña debe contener'
-                'al menos una letra mayúscula.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^(?=.*\d)',
-                message='La contraseña debe contener al menos un número.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])',
-                message='La contraseña debe contener'
-                'al menos un carácter especial.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^.{8,}$',
-                message='La contraseña debe tener al menos 8 caracteres.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
         ]
 
@@ -287,6 +307,27 @@ class PasswordResetConfirmView(APIView):
         user.save()
 
         return Response({"message": "Contraseña actualizada correctamente"},
+                        status=status.HTTP_200_OK)
+
+
+class VerifyEmailView(APIView):
+    """Vista para confirmar el cambio de contraseña."""
+
+    def post(self, request, token):
+        user = User.objects.filter(verify_token=token).first()
+
+        if not user:
+            return Response({"error": "Token inválido"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        if user.verified_account is True:
+            return Response({"error": "Usuario ya verificado"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        user.verified_account = True
+        user.save()
+
+        return Response({"message": "Usuario Verificado correctamente"},
                         status=status.HTTP_200_OK)
 
 
@@ -500,36 +541,48 @@ class CreateItemView(APIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
 
     def post(self, request, *args, **kwargs):
-        serializer = ItemSerializer(data=request.data)
+        serializer = ItemSerializer(data=request.data, context={'request':
+                                                                request})
         if serializer.is_valid():
-            item = serializer.save(user=request.user)
-            return Response(ItemSerializer(item).data,
+            # item = serializer.save(user=request.user)
+            item = serializer.save()
+            return Response(ItemSerializer(item, context={'request': request})
+                            .data,
                             status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UpdateItemView(APIView):
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated]
 
     def put(self, request, *args, **kwargs):
+        # Recuperamos el objeto a actualizar
         try:
-            item = Item.objects.get(id=kwargs['item_id'])
-            if not request.user.is_admin and item.user != request.user:
-                return Response({
-                    "error": "No tienes permisos para actualizar este ítem."
-                }, status=status.HTTP_403_FORBIDDEN)
-            serializer = ItemSerializer(
-                item, data=request.data, partial=True,
-                context={'request': request})
-            if serializer.is_valid():
-                item = serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
+            item = self.get_object()
         except Item.DoesNotExist:
-            return Response({
-                "error": "El ítem no existe."
-            }, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail": "Ítem no encontrado."},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        # Verificamos si el usuario es el propietario o un administrador
+        if item.user != request.user and not request.user.is_staff:
+            return Response(
+                {"detail": "No tienes permiso para actualizar este ítem."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Actualizamos los datos del ítem
+        data = request.data.copy()
+        data['user'] = request.user.id
+
+        # Usamos el serializador para validar y guardar
+        serializer = self.get_serializer(item, data=data, partial=True)
+        serializer.is_valid(raise_exception=True)
+
+        self.handle_unavailable_periods(
+            serializer.save(), request.data.get("unavailable_periods", [])
+        )
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class DeleteItemView(APIView):
@@ -681,3 +734,82 @@ class UpdateUserPerfilView(APIView):
             return Response({
                 "errors": serializer.errors
             }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ReportViewSet(viewsets.ModelViewSet):
+    queryset = Report.objects.all()
+    serializer_class = ReportSerializer
+
+    def create(self, request, *args, **kwargs):
+        data = request.data.copy()
+
+        reporter = get_object_or_404(User,
+                                     id=data.get("reporter"))
+
+        reported_user = get_object_or_404(
+            User, id=data.get("reported_user"))
+
+        if reporter == reported_user:
+            return Response({"error": "No puedes reportarte a ti mismo."},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        existing_report = Report.objects.filter(
+            reporter=reporter, reported_user=reported_user).first()
+
+        if existing_report:
+            existing_report.description = data.get("description",
+                                                   existing_report.description)
+            existing_report.category = data.get("category",
+                                                existing_report.category)
+            existing_report.status = data.get("status",
+                                              existing_report.status)
+            existing_report.save()
+            return Response({"message": "Reporte actualizado correctamente"},
+                            status=status.HTTP_200_OK)
+        else:
+            Report.objects.create(
+                reporter=reporter,
+                reported_user=reported_user,
+                description=data.get("description"),
+                category=data.get("category"),
+                status="Pendiente"
+            )
+            return Response({"message": "Reporte creado correctamente"},
+                            status=status.HTTP_201_CREATED)
+
+    def partial_update(self, request, *args, **kwargs):
+        data = request.data
+        report = get_object_or_404(Report, id=kwargs['pk'])
+
+        user = get_object_or_404(User, id=data.get("userId"))
+        if not user.is_admin:
+            return Response({
+                "error": "No tienes permisos suficientes"
+                + " para actualizar el reporte."
+            }, status=status.HTTP_403_FORBIDDEN)
+
+        valid_statuses = ["Pendiente", "En revisión", "Resuelto"]
+        new_status = data.get("status")
+        if new_status not in valid_statuses:
+            return Response({
+                "error": f"El estado '{new_status}' no es válido."
+                + "Los estados permitidos son: {', '.join(valid_statuses)}."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        Report.objects.filter(id=report.id).update(
+            description=report.description,
+            category=report.category,
+            status=new_status,
+            created_at=report.created_at,
+            reporter=report.reporter,
+            reported_user=report.reported_user
+        )
+
+        return Response({"message": "Estado del reporte"
+                         + "actualizado correctamente"},
+                        status=status.HTTP_200_OK)
+
+    def destroy(self, request, *args, **kwargs):
+        return Response({
+            "error": "No se puede eliminar el reporte."
+        }, status=status.HTTP_400_BAD_REQUEST)
