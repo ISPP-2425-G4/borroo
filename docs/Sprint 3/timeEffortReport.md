@@ -4167,6 +4167,74 @@
 
 ### **García Rodríguez, Javier**
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="11">Trabajo</td>
+    <td>Integración parcial de sonarcloud y desarrollo de los borradores de algunos documentos comunes del S3</td>
+    <td>46 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión feedback usuarios pilotos asignatura S2 para aplicar en el S3</td>
+    <td>1 hora y 37 minutos</td>
+  </tr>
+  <tr>
+    <td>Trabajando en issues (364, 366)</td>
+    <td>2 horas y 36 minutos</td>
+  </tr>
+  <tr>
+    <td>Desarrollo del plan de pruebas (issue #393)</td>
+    <td>1 hora y 25 minutos</td>
+  </tr>
+  <tr>
+    <td>Actualización de leyes con respecto a recogida de datos - Documento de legislación (issue #345)</td>
+    <td>27 minutos</td>
+  </tr>
+  <tr>
+    <td>Configuración de sonarcloud</td>
+    <td>10 minutos</td>
+  </tr>
+  <tr>
+    <td>Preparación video anuncio</td>
+    <td>46 minutos</td>
+  </tr>
+  <tr>
+    <td>Refinamiento y preparación de la presentación TCO</td>
+    <td>1 hora y 55 minutos</td>
+  </tr>
+  <tr>
+    <td>Presentación</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldora teórica Session 08 y 09</td>
+    <td>45 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Reunión</td>
+    <td>Reunión representantes para redactar issues y más</td>
+    <td>2 horas y 2 minutos</td>
+  </tr>
+  <tr>
+    <td>Reunión representantes para planificar el anuncio de usuarios</td>
+    <td>1 hora y 32 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clase</td>
+    <td>Clase 28/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 4/4/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
+
 ### **González Ortiz, Miguel**
 
 ### **Martín Muñoz, Álvaro**
