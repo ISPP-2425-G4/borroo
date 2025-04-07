@@ -82,7 +82,7 @@ def create_users():
         verified_account=True,
         is_verified=True,
         pricing_plan='premium',
-        is_admin=True
+        is_admin=True,
     )
 
 
