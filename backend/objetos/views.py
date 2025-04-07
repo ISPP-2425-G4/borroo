@@ -13,6 +13,7 @@ from .models import LikedItem
 from rest_framework.decorators import action
 from django.core.exceptions import ValidationError
 from django.utils.dateparse import parse_date
+from decimal import Decimal, InvalidOperation
 import json
 from rest_framework.permissions import IsAuthenticated
 
@@ -292,6 +293,8 @@ class SearchItemsView(APIView):
     def get(self, request, *args, **kwargs):
         title = request.GET.get('title', None)
         category = request.GET.get('category', None)
+        min_price = request.GET.get('min_price')
+        max_price = request.GET.get('max_price')
 
         items = Item.objects.filter(draft_mode=False)  # Filtrar publicados
 
@@ -299,6 +302,17 @@ class SearchItemsView(APIView):
             items = items.filter(title__icontains=title)
         if category:
             items = items.filter(category=category)
+
+        try:
+            if min_price:
+                items = items.filter(price__gte=Decimal(min_price))
+            if max_price:
+                items = items.filter(price__lte=Decimal(max_price))
+        except (InvalidOperation, ValueError):
+            return Response(
+                {"error": "Precio inválido"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         results = list(items.values('id', 'title', 'category', 'price'))
 

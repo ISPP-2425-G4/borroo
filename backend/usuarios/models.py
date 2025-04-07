@@ -107,6 +107,10 @@ class User(AbstractUser):
     verify_token = models.CharField(max_length=255, blank=True, null=True)
     is_admin = models.BooleanField(default=False)
     image = models.URLField(blank=True, null=True)
+    stripe_customer_id = models.CharField(max_length=255,
+                                          null=True, blank=True)
+    stripe_subscription_id = models.CharField(max_length=255,
+                                              null=True, blank=True)
 
     REQUIRED_FIELDS = []
     USERNAME_FIELD = 'username'

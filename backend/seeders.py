@@ -10,10 +10,11 @@ django.setup()
 from datetime import datetime
 from django.contrib.auth.hashers import make_password
 from decimal import Decimal
-from rentas.models import Rent
+from rentas.models import PaymentStatus, Rent, RentStatus
 from objetos.models import Item, ItemImage, ItemSubcategory
 from usuarios.models import User
 import random
+from django.utils import timezone
 
 
 def clear_database():
@@ -70,7 +71,7 @@ def create_users():
         username='admin',
         name='Admin',
         surname='Admin',
-        email='admin@example.com',
+        email='borrooclockify@gmail.com',
         password=make_password('Admin_25'),
         phone_number='+1234567890',
         country='España',
@@ -78,6 +79,7 @@ def create_users():
         address='Calle Admin',
         postal_code='28001',
         dni='11223344Z',
+        verified_account=True,
         is_verified=True,
         pricing_plan='premium',
         is_admin=True,
@@ -106,8 +108,49 @@ def create_items():
     print('Items created successfully!')
 
 
+def create_rents():
+    item1 = Item.objects.first()
+    item2 = Item.objects.last()
+    renter1 = User.objects.first()
+    renter2 = User.objects.last()
+
+    Rent.objects.create(
+        item=item1,
+        renter=renter1,
+        start_date=timezone.now(),
+        end_date=timezone.now() + timezone.timedelta(days=7),
+        rent_status=RentStatus.ACCEPTED,
+        payment_status=PaymentStatus.PAID,
+        total_price=100.0,
+        commission=10.0
+    )
+
+    Rent.objects.create(
+        item=item2,
+        renter=renter2,
+        start_date=timezone.now() - timezone.timedelta(days=2),
+        end_date=timezone.now() + timezone.timedelta(days=5),
+        rent_status=RentStatus.REQUESTED,
+        payment_status=PaymentStatus.PENDING,
+        total_price=200.0,
+        commission=20.0
+    )
+
+    Rent.objects.create(
+        item=item1,
+        renter=renter2,
+        start_date=timezone.now() - timezone.timedelta(days=10),
+        end_date=timezone.now() - timezone.timedelta(days=3),
+        rent_status=RentStatus.CANCELLED,
+        payment_status=PaymentStatus.PAID,
+        total_price=150.0,
+        commission=15.0
+    )
+    print('Rent created successfully!')
+
 if __name__ == '__main__':
     clear_database()
     create_users()
     create_items()
+    create_rents()
     print('Seeders completed successfully!')
