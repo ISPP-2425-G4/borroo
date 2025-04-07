@@ -28,6 +28,8 @@ import os
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
 from rest_framework.permissions import BasePermission, IsAuthenticated
+from usuarios.models import Report
+from usuarios.serializers import ReportSerializer
 
 
 def index(request):
@@ -251,21 +253,23 @@ class PasswordResetConfirmView(APIView):
         validators = [
             RegexValidator(
                 regex=r'^(?=.*[A-Z])',
-                message='La contraseña debe contener'
-                'al menos una letra mayúscula.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^(?=.*\d)',
-                message='La contraseña debe contener al menos un número.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?])',
-                message='La contraseña debe contener'
-                'al menos un carácter especial.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
             RegexValidator(
                 regex=r'^.{8,}$',
-                message='La contraseña debe tener al menos 8 caracteres.'
+                message='La contraseña debe contener al menos 8 caracteres,'
+                'una mayúscula, un número y un carácter especial.'
             ),
         ]
 
@@ -537,36 +541,48 @@ class CreateItemView(APIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
 
     def post(self, request, *args, **kwargs):
-        serializer = ItemSerializer(data=request.data)
+        serializer = ItemSerializer(data=request.data, context={'request':
+                                                                request})
         if serializer.is_valid():
-            item = serializer.save(user=request.user)
-            return Response(ItemSerializer(item).data,
+            # item = serializer.save(user=request.user)
+            item = serializer.save()
+            return Response(ItemSerializer(item, context={'request': request})
+                            .data,
                             status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UpdateItemView(APIView):
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    permission_classes = [IsAuthenticated]
 
     def put(self, request, *args, **kwargs):
+        # Recuperamos el objeto a actualizar
         try:
-            item = Item.objects.get(id=kwargs['item_id'])
-            if not request.user.is_admin and item.user != request.user:
-                return Response({
-                    "error": "No tienes permisos para actualizar este ítem."
-                }, status=status.HTTP_403_FORBIDDEN)
-            serializer = ItemSerializer(
-                item, data=request.data, partial=True,
-                context={'request': request})
-            if serializer.is_valid():
-                item = serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            return Response(serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
+            item = self.get_object()
         except Item.DoesNotExist:
-            return Response({
-                "error": "El ítem no existe."
-            }, status=status.HTTP_404_NOT_FOUND)
+            return Response({"detail": "Ítem no encontrado."},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        # Verificamos si el usuario es el propietario o un administrador
+        if item.user != request.user and not request.user.is_staff:
+            return Response(
+                {"detail": "No tienes permiso para actualizar este ítem."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Actualizamos los datos del ítem
+        data = request.data.copy()
+        data['user'] = request.user.id
+
+        # Usamos el serializador para validar y guardar
+        serializer = self.get_serializer(item, data=data, partial=True)
+        serializer.is_valid(raise_exception=True)
+
+        self.handle_unavailable_periods(
+            serializer.save(), request.data.get("unavailable_periods", [])
+        )
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class DeleteItemView(APIView):
@@ -718,3 +734,82 @@ class UpdateUserPerfilView(APIView):
             return Response({
                 "errors": serializer.errors
             }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ReportViewSet(viewsets.ModelViewSet):
+    queryset = Report.objects.all()
+    serializer_class = ReportSerializer
+
+    def create(self, request, *args, **kwargs):
+        data = request.data.copy()
+
+        reporter = get_object_or_404(User,
+                                     id=data.get("reporter"))
+
+        reported_user = get_object_or_404(
+            User, id=data.get("reported_user"))
+
+        if reporter == reported_user:
+            return Response({"error": "No puedes reportarte a ti mismo."},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        existing_report = Report.objects.filter(
+            reporter=reporter, reported_user=reported_user).first()
+
+        if existing_report:
+            existing_report.description = data.get("description",
+                                                   existing_report.description)
+            existing_report.category = data.get("category",
+                                                existing_report.category)
+            existing_report.status = data.get("status",
+                                              existing_report.status)
+            existing_report.save()
+            return Response({"message": "Reporte actualizado correctamente"},
+                            status=status.HTTP_200_OK)
+        else:
+            Report.objects.create(
+                reporter=reporter,
+                reported_user=reported_user,
+                description=data.get("description"),
+                category=data.get("category"),
+                status="Pendiente"
+            )
+            return Response({"message": "Reporte creado correctamente"},
+                            status=status.HTTP_201_CREATED)
+
+    def partial_update(self, request, *args, **kwargs):
+        data = request.data
+        report = get_object_or_404(Report, id=kwargs['pk'])
+
+        user = get_object_or_404(User, id=data.get("userId"))
+        if not user.is_admin:
+            return Response({
+                "error": "No tienes permisos suficientes"
+                + " para actualizar el reporte."
+            }, status=status.HTTP_403_FORBIDDEN)
+
+        valid_statuses = ["Pendiente", "En revisión", "Resuelto"]
+        new_status = data.get("status")
+        if new_status not in valid_statuses:
+            return Response({
+                "error": f"El estado '{new_status}' no es válido."
+                + "Los estados permitidos son: {', '.join(valid_statuses)}."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        Report.objects.filter(id=report.id).update(
+            description=report.description,
+            category=report.category,
+            status=new_status,
+            created_at=report.created_at,
+            reporter=report.reporter,
+            reported_user=report.reported_user
+        )
+
+        return Response({"message": "Estado del reporte"
+                         + "actualizado correctamente"},
+                        status=status.HTTP_200_OK)
+
+    def destroy(self, request, *args, **kwargs):
+        return Response({
+            "error": "No se puede eliminar el reporte."
+        }, status=status.HTTP_400_BAD_REQUEST)

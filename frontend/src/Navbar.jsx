@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiUser, FiHeart, FiMenu } from "react-icons/fi";
+import { FiUser, FiMenu } from "react-icons/fi";
 import ArticleIcon from '@mui/icons-material/Article';
 import {
   AppBar,
@@ -42,6 +42,8 @@ const Navbar = () => {
     setLoginAnchorEl(null);
   };
 
+  
+
   const handleLogout = async () => {
     try {
       await axios.post(
@@ -61,6 +63,7 @@ const Navbar = () => {
       setSaldo(null);
       handleLoginClose();
       navigate('/');
+      window.location.reload();
     }
   };
 
@@ -79,6 +82,7 @@ const Navbar = () => {
       console.error("Error al obtener el saldo del usuario:", error);
     }
   };
+
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -230,9 +234,14 @@ const Navbar = () => {
                     Mi Perfil
                   </MenuItem>
                   {user.is_admin && (
-                    <MenuItem onClick={() => { handleLoginClose(); navigate('/dashboard'); }}>
-                      Dashboard
-                    </MenuItem>
+                    <>
+                      <MenuItem onClick={() => { handleLoginClose(); navigate('/dashboard'); }}>
+                        Dashboard
+                      </MenuItem>
+                      <MenuItem onClick={() => { navigate('/reports-dashboard'); }}>
+                        Gestionar reportes
+                      </MenuItem>
+                    </>
                   )}
                   <MenuItem onClick={handleLogout}>
                     Cerrar sesión
@@ -249,14 +258,6 @@ const Navbar = () => {
                 </>
               )}
             </Menu>
-
-            <Tooltip title="Favoritos">
-              <IconButton color="inherit">
-                <Badge badgeContent={0} color="error">
-                  <FiHeart />
-                </Badge>
-              </IconButton>
-            </Tooltip>
 
             <Tooltip title="Borradores">
               <IconButton color="inherit" component={Link} to="/drafts">
