@@ -819,6 +819,17 @@
     <td>1 hora y 30 minutos</td>
   </tr>
   </table>
+  <table>
+    <tr>
+    <td> Backend</td>
+    <td> Actualizar perfil usuario y campo dni </td>
+    <td> 2 horas y 53 minutos </td>
+      </tr>
+    <tr>
+      <td> Full stack </td>
+      <td> Admin </td>
+      <td> 12 horas y 8 minutos
+  </table>
 
 ### Nieto Vicioso, Javier
 
