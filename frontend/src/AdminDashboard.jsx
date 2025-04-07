@@ -273,10 +273,22 @@ const AdminDashboard = () => {
     return (
         <>
             <Navbar />
-            <Box sx={{ px: 4, py: 4 }} className="dashboard">
+            <Box sx={{ px: 4, py: 4, pt:10 }} className="dashboard">
+                <Box 
+                    component= "img"
+                    src= "/logo.png"
+                    alt="Logo de la App"
+                    sx={{
+                        display: "block",
+                        margin: "0 auto",
+                        maxWidth: 150,
+                        height: "auto",
+                        mb: 2,
+                    }}
+                    />
                 {/* TÍTULO PRINCIPAL */}
                 <Typography variant="h4" sx={{ fontWeight: "bold", mb: 3, textAlign: "center" }}>
-                    Panel de Administración de Usuarios
+                    Panel de Administración
                 </Typography>
 
                 {/* BOTONES PRINCIPALES */}
