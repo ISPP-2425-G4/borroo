@@ -21,10 +21,11 @@ import {
     DialogActions,
     Button,
     Typography,
+    Grid
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { styled } from "@mui/system";
-import { FiImage ,FiTrash2} from "react-icons/fi";
+import { FiImage } from "react-icons/fi";
 import EditIcon from '@mui/icons-material/Edit';
 
 const ImageUploadText = styled(Typography)(() => ({
@@ -55,25 +56,25 @@ const FileInputContainer = styled(Box)(() => ({
       backgroundColor: "#f0f7ff",
     },
   }));
-  const RemoveButton = styled("button")(() => ({
-    position: "absolute",
-    top: "8px",
-    right: "8px",
-    background: "rgba(0, 0, 0, 0.5)",
-    color: "white",
-    border: "none",
-    borderRadius: "50%",
-    width: "30px",
-    height: "30px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-    transition: "background 0.2s",
-    "&:hover": {
-      background: "rgba(0, 0, 0, 0.7)",
-    },
-  }));
+//   const RemoveButton = styled("button")(() => ({
+//     position: "absolute",
+//     top: "8px",
+//     right: "8px",
+//     background: "rgba(0, 0, 0, 0.5)",
+//     color: "white",
+//     border: "none",
+//     borderRadius: "50%",
+//     width: "30px",
+//     height: "30px",
+//     display: "flex",
+//     alignItems: "center",
+//     justifyContent: "center",
+//     cursor: "pointer",
+//     transition: "background 0.2s",
+//     "&:hover": {
+//       background: "rgba(0, 0, 0, 0.7)",
+//     },
+//   }));
 
 const categoryList = [
     { value: 'technology', label: 'Tecnología' },
@@ -225,7 +226,7 @@ const AdminItemDashboard = () => {
             });
             setItems(response.data);
         } catch (error) {
-            alert("Error al obtener ítems.");
+            alert("Error al obtener ítems.", error);
         }
     };
 
@@ -239,7 +240,7 @@ const AdminItemDashboard = () => {
             });
             fetchItems();
         } catch (error) {
-            alert("Error al eliminar ítem.");
+            alert("Error al eliminar ítem.", error);
         }
     };
     const handleEditItem = async (itemId) => {
@@ -251,7 +252,7 @@ const AdminItemDashboard = () => {
             });
             fetchItems();
         } catch(error) {
-            alert("Error al editar el item");
+            alert("Error al editar el item", error);
         } 
     };
     const [images, setImages] = useState([]);
@@ -299,8 +300,8 @@ const AdminItemDashboard = () => {
         
          
        
-        images.forEach((image, index) => {
-            form.append("images", image);
+        images.forEach((image) => {
+            form.append("image_files", image);
         });
     
         try {
@@ -499,9 +500,9 @@ const AdminItemDashboard = () => {
                                                             {images.map((image, index) => (
                                                               <ImageContainer key={index}>
                                                                 <PreviewImage src={URL.createObjectURL(image)} alt={`Preview ${index + 1}`} />
-                                                                <RemoveButton onClick={() => handleRemoveImage(index)}>
+                                                                {/* <RemoveButton onClick={() => handleRemoveImage(index)}>
                                                                   <FiTrash2 size={16} />
-                                                                </RemoveButton>
+                                                                </RemoveButton> */}
                                                               </ImageContainer>
                                                             ))}
                                                           </ImageGallery>

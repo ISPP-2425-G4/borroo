@@ -341,7 +341,8 @@ class RentViewSet(viewsets.ModelViewSet):
 
         has_rented = Rent.objects.filter(
             renter__username=renter_username,
-            item__user__username=owner_username
+            item__user__username=owner_username,
+            paid_pending_confirmation__is_confirmed_by_renter=None
         ).filter(
             Q(rent_status__in=[
                 RentStatus.BOOKED,
@@ -352,3 +353,22 @@ class RentViewSet(viewsets.ModelViewSet):
         ).exists()
 
         return Response({"has_rented": has_rented})
+
+    @action(detail=False, methods=['get'], url_path='closed-requests')
+    def closed_requests(self, request):
+        user_id = request.query_params.get("user")
+
+        if not user_id:
+            return Response(
+                {"error": "El parámetro 'user' es requerido."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        closed_rents = Rent.objects.filter(
+            Q(paid_pending_confirmation__is_confirmed_by_renter=True) & (
+                Q(item__user_id=user_id) | Q(renter_id=user_id)
+            )
+        )
+
+        serializer = RentSerializer(closed_rents, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

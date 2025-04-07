@@ -9,9 +9,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import ItemCategory, CancelType, PriceCategory, ItemSubcategory
+from .models import LikedItem
 from rest_framework.decorators import action
 from django.core.exceptions import ValidationError
 from django.utils.dateparse import parse_date
+from decimal import Decimal, InvalidOperation
 import json
 from rest_framework.permissions import IsAuthenticated
 
@@ -291,6 +293,8 @@ class SearchItemsView(APIView):
     def get(self, request, *args, **kwargs):
         title = request.GET.get('title', None)
         category = request.GET.get('category', None)
+        min_price = request.GET.get('min_price')
+        max_price = request.GET.get('max_price')
 
         items = Item.objects.filter(draft_mode=False)  # Filtrar publicados
 
@@ -298,6 +302,17 @@ class SearchItemsView(APIView):
             items = items.filter(title__icontains=title)
         if category:
             items = items.filter(category=category)
+
+        try:
+            if min_price:
+                items = items.filter(price__gte=Decimal(min_price))
+            if max_price:
+                items = items.filter(price__lte=Decimal(max_price))
+        except (InvalidOperation, ValueError):
+            return Response(
+                {"error": "Precio inválido"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         results = list(items.values('id', 'title', 'category', 'price'))
 
@@ -429,3 +444,49 @@ class ListItemRequestsView(APIView):
         serializer = ItemRequestSerializer(item_requests, many=True)
         return Response({'results': serializer.data},
                         status=status.HTTP_200_OK)
+
+
+class ToggleLike(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        item_id = kwargs.get('item_id')
+        try:
+            # Obtener el ítem
+            item = Item.objects.get(id=item_id)
+
+            # Buscar o crear el 'like' para el item y el usuario
+            liked_item, created = LikedItem.objects.get_or_create(
+                                        item=item, user=request.user)
+
+            if created:
+                item.num_likes += 1
+                message = "Objeto agregado a favoritos"
+            else:
+                liked_item.delete()
+                item.num_likes -= 1
+                message = "Objeto eliminado de favoritos"
+
+            item.save()
+
+            return Response({"message": message, "num_likes": item.num_likes},
+                            status=status.HTTP_200_OK)
+
+        except Item.DoesNotExist:
+            return Response({"error": "Item no encontrado"},
+                            status=status.HTTP_404_NOT_FOUND)
+
+
+class LikeStatus(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, item_id):
+        try:
+            item = Item.objects.get(id=item_id)
+            liked_item = LikedItem.objects.filter(
+                item=item, user=request.user).exists()
+            return Response({"is_liked": liked_item},
+                            status=status.HTTP_200_OK)
+        except Item.DoesNotExist:
+            return Response({"error": "Item no encontrado"},
+                            status=status.HTTP_404_NOT_FOUND)

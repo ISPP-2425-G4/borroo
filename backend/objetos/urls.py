@@ -6,6 +6,8 @@ from .views import ItemImageViewSet, EnumChoicesView, PublishItemView
 from .views import ListDraftItemsView, ListUserItemsView
 from .views import ListPublishedItemsView
 from .views import ListItemRequestsView
+from .views import ToggleLike
+from .views import LikeStatus
 
 router = DefaultRouter()
 router.register(r'full', ItemViewSet)
@@ -38,4 +40,9 @@ urlpatterns = [
          name='list_published_items'),
     path('list_item_requests/', ListItemRequestsView.as_view(),
          name='list_item_requests'),
+    path('like/<int:item_id>/', ToggleLike.as_view(),
+         name='toggle_like'),
+    path('like-status/<int:item_id>/',
+         LikeStatus.as_view(), name='like-status'),
+
 ]

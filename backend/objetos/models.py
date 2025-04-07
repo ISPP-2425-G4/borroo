@@ -4,6 +4,7 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.core.validators import MaxValueValidator, DecimalValidator
 from django.core.exceptions import ValidationError
+from django.db.models import F
 
 
 class ItemCategory(models.TextChoices):
@@ -32,7 +33,7 @@ class ItemSubcategory(models.TextChoices):
     PRINTERS_SCANNERS = ('printers_scanners', 'Impresoras y escáneres')
     DRONES = ('drones', 'Drones')
     PROJECTORS = ('projectors', 'Proyectores')
-    TECHNOLOGY__OTHERS = ('technology__others', 'Otros (Tecnología)')
+    TECHNOLOGY__OTHERS = ('technology_others', 'Otros (Tecnología)')
 
     # SPORTS
     CYCLING = ('cycling', 'Ciclismo')
@@ -154,6 +155,7 @@ class Item(models.Model):
                              on_delete=models.CASCADE)
     draft_mode = models.BooleanField(default=False)
     featured = models.BooleanField(default=False)
+    num_likes = models.IntegerField(default=0)
 
     def publish(self):
         if (
@@ -170,6 +172,28 @@ class Item(models.Model):
 
         self.draft_mode = False
         self.save()
+
+    def like(self, user):
+        liked, created = LikedItem.objects.get_or_create(user=user, item=self)
+        if created:
+            Item.objects.filter(id=self.id).update(
+                            num_likes=F('num_likes') + 1)
+        return created
+
+    def dislike(self, user):
+        deleted, _ = LikedItem.objects.filter(user=user, item=self).delete()
+        if deleted:
+            Item.objects.filter(id=self.id).update(
+                            num_likes=F('num_likes') - 1)
+        return bool(deleted)
+
+
+class LikedItem(models.Model):
+    id = models.AutoField(primary_key=True)
+    item = models.ForeignKey(
+        Item, related_name='liked_items', on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        'usuarios.User', related_name='liked_items', on_delete=models.CASCADE)
 
 
 class UnavailablePeriod(models.Model):
