@@ -281,8 +281,9 @@ class RentViewSet(viewsets.ModelViewSet):
             raise NotAuthenticated({'error': 'Debes iniciar sesión.'})
 
         rent = get_object_or_404(Rent, pk=pk)
+        owner = rent.item.user
 
-        if not (user == rent.renter or user == rent.item.user):
+        if not (user == rent.renter or user == owner):
             raise PermissionDenied({'error': 'No tienes permisos para '
                                     'cancelar este alquiler.'})
 
@@ -295,10 +296,13 @@ class RentViewSet(viewsets.ModelViewSet):
 
         elif rent.rent_status == RentStatus.BOOKED:
 
-            if user == rent.item.user:
+            if user == owner:
                 refund_amount = Decimal(str(rent.total_price))
                 rent.rent_status = RentStatus.CANCELLED
                 rent.save()
+
+                user.saldo += refund_amount
+
                 return Response({
                     'status': 'Alquiler cancelado correctamente',
                     'refund_percentage': "1.00",
@@ -322,6 +326,8 @@ class RentViewSet(viewsets.ModelViewSet):
                 refund_str = format(refund_amount_rounded, '.2f').replace('.',
                                                                           ',')
                 if refund_amount > Decimal("0.00"):
+                    user.saldo += refund_amount
+                    user.save()
                     message = f"Has cancelado el alquiler. Se te reembolsará {refund_str} € en los próximos 4-5 días laborales."  # noqa: E501
                 else:
                     message = "Has cancelado el alquiler. No procede reembolso"

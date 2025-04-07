@@ -130,7 +130,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                 // Recargar la página después de un breve retraso
                 setTimeout(() => {
                     window.location.reload();
-                }, 2000); // Espera 2 segundos antes de recargar
+                }, 1000); // Espera 1 segundos antes de recargar
             }
         } catch (error) {
             console.error(error);
@@ -165,7 +165,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
         setTimeout(() => {
             window.location.reload();
         }, 2000); // Espera 2 segundos antes de recargar
-        
+
         } catch (error) {
           console.error("Error al cancelar la solicitud:", error.response?.data || error.message);
         }
