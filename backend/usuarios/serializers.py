@@ -1,11 +1,13 @@
+from utils.utils import upload_image_to_imgbb
 from rest_framework import serializers
 from objetos.serializers import ItemSerializer
-from .models import Review, User
+from .models import Review, User, Report
 import re
 
 
 class UserSerializer(serializers.ModelSerializer):
     items = ItemSerializer(many=True, read_only=True)
+    user_image = serializers.ImageField(write_only=True, required=False)
 
     class Meta:
         model = User
@@ -14,10 +16,17 @@ class UserSerializer(serializers.ModelSerializer):
             'phone_number', 'country', 'city', 'address', 'postal_code', 'cif',
             'dni',
             'is_verified', 'pricing_plan', 'owner_rating', 'renter_rating',
-            'items', 'is_admin'
+            'items', 'is_admin', 'image', 'user_image',
         ]
         read_only_fields = ['id', 'owner_rating', 'renter_rating', 'items',
                             'is_admin']
+
+    def update(self, instance, validated_data):
+        """Sobrescribir el método update para manejar la imagen."""
+        user_image = validated_data.pop('user_image', None)
+        if user_image:
+            instance.image = upload_image_to_imgbb(user_image)
+        return super().update(instance, validated_data)
 
     def validate_username(self, value):
         if " " in value:
@@ -117,3 +126,10 @@ class RegisterSerializer(serializers.ModelSerializer):
                 "letra."
             )
         return value
+
+
+class ReportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Report
+        fields = ['id', 'reporter', 'reported_user', 'description',
+                  'created_at', 'category', 'status']

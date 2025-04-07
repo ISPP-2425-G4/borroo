@@ -16,6 +16,16 @@ import {
   Rating,
   TextField,
   Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Chip,
+  FormControl, 
+  InputLabel,
+  Select,
+  DialogContentText
+
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
@@ -30,7 +40,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
-
+import ReportIcon from "@mui/icons-material/Report";
+import CloseIcon from "@mui/icons-material/Close";
+import EditIcon from "@mui/icons-material/Edit";
 
 const Profile = () => {
   const { username } = useParams();
@@ -41,10 +53,22 @@ const Profile = () => {
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const [userReview, setUserReview] = useState(null);
-  const [currentUser] = useState(() => JSON.parse(localStorage.getItem("user")));
+  const [currentUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("user")) || null;
+    } catch {
+      return null;
+    }
+  });
   const [editMode, setEditMode] = useState(false);
   const [draftItems, setDraftItems] = useState([]);
   const [canReview, setCanReview] = useState(false);
+  const [openReportsModal, setOpenReportsModal] = useState(false);
+  const [reports, setReports] = useState([]);
+  const [reportados, setReportados] = useState([]);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportCategory, setReportCategory] = useState("");
+  const [reportDescription, setReportDescription] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -56,9 +80,22 @@ const Profile = () => {
     postal_code: "",
     pricing_plan: "free",
     dni: "",
+    image: null,
   });
   const navigate = useNavigate();
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
+
+  useEffect(() => {
+    if(!reports) return;
+    reports.forEach(report => {
+      if(report.reported_user){
+        fetchReportados(report.reported_user);
+      }
+    });
+    console.log("Reportados:", reportados);
+  }, [reports]);
 
 
   useEffect(() => {
@@ -97,14 +134,16 @@ const Profile = () => {
         );
         setReviews(response.data);
 
-        const existingReview = response.data.find(
-          (review) => review.reviewer_username === currentUser.username
-        );
+        if (currentUser) {
+          const existingReview = response.data.find(
+            (review) => review.reviewer_username === currentUser.username
+          );
 
-        if (existingReview) {
-          setUserReview(existingReview);
-          setReviewText(existingReview.comment);
-          setRating(existingReview.rating);
+          if (existingReview) {
+            setUserReview(existingReview);
+            setReviewText(existingReview.comment);
+            setRating(existingReview.rating);
+          }
         }
       } catch (error) {
         console.error("Error cargando las reseñas:", error);
@@ -113,8 +152,98 @@ const Profile = () => {
 
     fetchProfile();
     fetchReviews();
-
   }, [username, currentUser]);
+
+  const handleReportUser = async () => {
+      try {
+        const activeUser = JSON.parse(localStorage.getItem("user"));
+        if (!activeUser ) {
+          alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
+          return;
+        }
+        if(!reportCategory || !reportDescription) {
+          alert("Por favor, completa todos los campos.");
+          return;
+        }
+        const reportData = {
+          reporter: currentUser.id,
+          reported_user: user.id,
+          category: reportCategory,
+          description: reportDescription,
+      } 
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/reportes/`,
+        reportData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.status === 201) {
+        alert("¡Reporte enviado correctamente!");
+        setShowReportModal(false);
+        setReportCategory("");
+        setReportDescription("");
+      } 
+  
+       else if(response.status === 200){
+        alert("¡Reporte actualizado correctamente!");
+        setShowReportModal(false);
+        setReportCategory("");
+        setReportDescription("");
+      }
+      
+      else {
+        alert("Hubo un problema al enviar el reporte.");
+      }
+      
+    }catch (error) {
+        alert("Error al enviar el reporte:", error);
+        console.error("Error al enviar el reporte:", error);
+      }
+    };
+  
+
+  const fetchReportados = async (reportadoId) => {
+      if(!reportadoId) return;
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${reportadoId}/`);
+        if (response.status == 200) {
+          const data = response.data;
+          setReportados((prev) => [...prev, data]);
+        }
+
+      } catch (error) {
+        console.error("Error fetching reportados:", error);
+        alert("Error al obtener los reportados.");
+      }finally{
+        console.log("Reportados:", reportados);
+      }
+    };
+
+  const handleCloseReportsModal = () => {
+    setOpenReportsModal(false);
+  };
+
+  const handleOpenReportsModal = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/reportes/`
+      );
+      if (response.status === 200) {
+        const data = response.data.results.filter(
+          (report) => report.reporter === currentUser.id)
+        setReports(data);
+        setOpenReportsModal(true);
+      }
+
+    } catch (error) {
+      console.error("Error cargando los reportes:", error);
+      alert("No se pudieron cargar los reportes.");
+    }
+  };
+
 
   useEffect(() => {
     const checkIfHasRented = async () => {
@@ -139,6 +268,7 @@ const Profile = () => {
   }, [username, currentUser]);
 
 
+
   useEffect(() => {
     if (user) {
       setFormData({
@@ -154,7 +284,7 @@ const Profile = () => {
         dni: user.dni || "",
       });
     }
-  }, [user]);
+  }, [user, image]);
 
   const validateDni = (dni) => {
     const dniPattern = /^\d{8}[A-Z]$/;
@@ -298,6 +428,8 @@ const Profile = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+
+
   const handleUpdateUser = async () => {
     const token = localStorage.getItem("access_token");
 
@@ -316,15 +448,20 @@ const Profile = () => {
     }
 
     try {
+      if (image) {
+        formData.user_image = image;
+      }
       const response = await axios.put(
         `${import.meta.env.VITE_API_BASE_URL}/usuarios/update/`,
         formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       );
+
 
       alert("Perfil actualizado correctamente.");
       setUser(response.data.user);
@@ -349,15 +486,20 @@ const Profile = () => {
     }
 
     try {
+      if (image) {
+        formData.user_image = image;
+      }
       const response = await axios.put(
         `${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/users/update/${user.id}/`,
         formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       );
+
 
       alert("Usuario actualizado correctamente.");
       setUser(response.data);
@@ -378,10 +520,61 @@ const Profile = () => {
         <Paper elevation={3} sx={{ p: 4, borderRadius: 3, textAlign: "center" }}>
           {/* 📌 AVATAR Y DATOS PRINCIPALES */}
           <Box display="flex" flexDirection="column" alignItems="center">
-            <Avatar sx={{ width: 100, height: 100, mb: 2 }}>
-              <PersonIcon sx={{ fontSize: 60 }} />
+            <Box
+              sx={{
+                position: 'relative',
+                display: 'inline-block',
+                width: 100,
+                height: 100,
+                mb: 2,
+                cursor: editMode ? 'pointer' : 'default',
+                '&:hover .edit-icon': {
+                  opacity: 1,
+                },
+              }}
+              onClick={() => {
+                if (editMode) {
+                  document.getElementById("imageInput").click();
+                }
+              }}
+            >
+            <Avatar sx={{ width: 100, height: 100}}
+              src = {imagePreview || (user.image ? user.image : "")}
+            >
+              {!image && !user.image && <PersonIcon sx={{ fontSize: 60 }} />}
             </Avatar>
-
+            <input
+              type="file"
+              id="imageInput"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                if (file) {
+                  setImage(e.target.files[0])
+                  setImagePreview(URL.createObjectURL(file));
+                }
+              }}
+              style={{ display: "none" }}
+            />
+            {editMode && (
+              <EditIcon
+                className="edit-icon"
+                sx={{
+                  position: 'absolute',
+                  bottom: 4,
+                  right: 4,
+                  backgroundColor: 'white',
+                  borderRadius: '50%',
+                  padding: '2px',
+                  fontSize: 20,
+                  color: 'black',
+                  opacity: 0,
+                  transition: 'opacity 0.2s',
+                  boxShadow: 1,
+                }}
+              />
+            )}
+          </Box>
             <Typography variant="h4" fontWeight="bold">
               {user.name} {user.surname}
             </Typography>
@@ -396,9 +589,18 @@ const Profile = () => {
             <Typography variant="body1" color="textSecondary">
               @{user.username}
             </Typography>
+            {currentUser.username === user.username ? (
 
-            {currentUser.username === user.username && (
               <>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  size="small"
+                  onClick={() => handleOpenReportsModal()}
+                  sx={{ mt: 2, textTransform: "none" }}
+                >
+                  Ver mis reportes enviados
+                </Button>
                 <Button
                   variant="outlined"
                   color="primary"
@@ -472,6 +674,16 @@ const Profile = () => {
                   </Paper>
                 )}
               </>
+            ) : (
+              <Button
+                variant="outlined"
+                color="secondary"
+                size="small"
+                onClick={() => setShowReportModal(true)}
+                sx={{ mt: 2, textTransform: "none" }}
+              >
+               Reportar
+              </Button>
             )}
           </Box>
 
@@ -545,7 +757,7 @@ const Profile = () => {
 
           {/* 📌 PRODUCTOS EN ALQUILER */}
           <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
-            {currentUser.username === user.username
+            {currentUser?.username === user.username
               ? "Mis artículos en alquiler"
               : `Productos en alquiler de ${user.name}`}
           </Typography>
@@ -586,7 +798,7 @@ const Profile = () => {
             </Typography>
           )}
 
-          {currentUser.username === user.username && (
+          {currentUser?.username === user.username && (
             <>
               <Divider sx={{ my: 3 }} />
 
@@ -637,7 +849,7 @@ const Profile = () => {
           )}
 
           {/* 📌 FORMULARIO PARA DEJAR RESEÑA (solo si es otro perfil y puede opinar) */}
-          {currentUser.username !== user.username && canReview && (
+          {currentUser?.username !== user.username && canReview && (
             <>
               <Divider sx={{ my: 3 }} />
               <Typography variant="h6">
@@ -689,7 +901,7 @@ const Profile = () => {
           {/* 📌 RESEÑAS DE OTROS USUARIOS (SIEMPRE VISIBLE) */}
           <Box sx={{ mt: 4, textAlign: "left" }}>
             <Typography variant="h6" sx={{ mb: 2 }}>
-              {currentUser.username === user.username
+              {currentUser?.username === user.username
                 ? "Mis reseñas recibidas:"
                 : "Reseñas de otros usuarios:"}
             </Typography>
@@ -715,7 +927,7 @@ const Profile = () => {
           </Box>
 
           {/* 📌 BOTONES DE ADMINISTRADOR */}
-          {currentUser?.is_admin && currentUser.username !== user.username && (
+          {currentUser?.is_admin && currentUser?.username !== user.username && (
             <>
               <Box sx={{ mt: 3, display: "flex", justifyContent: "center", gap: 2 }}>
                 <Button
@@ -779,6 +991,167 @@ const Profile = () => {
             </>
           )}
         </Paper>
+        <Dialog
+          open={openReportsModal}
+          onClose={handleCloseReportsModal}
+          fullWidth
+          maxWidth="md"
+          aria-labelledby="reports-dialog-title"
+        >
+          <DialogTitle id="reports-dialog-title" sx={{ fontWeight: 600, borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}>
+            Historial de Reportes
+          </DialogTitle>
+          <DialogContent dividers sx={{ py: 3 }}>
+            {reports.length > 0 ? (
+              reports.map((report, index) => (
+                <Paper
+                  key={index}
+                  elevation={2}
+                  sx={{ 
+                    p: 3, 
+                    mb: 2, 
+                    borderRadius: 2,
+                    backgroundColor: "#ffffff",
+                    border: "1px solid rgba(0, 0, 0, 0.08)",
+                    transition: "all 0.2s ease-in-out",
+                    "&:hover": {
+                      boxShadow: 3,
+                      transform: "translateY(-2px)"
+                    }
+                  }}
+                >
+                  <Box sx={{ mb: 1, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <Typography variant="h6" fontWeight={600} color="primary.main">
+                      Reporte #{index + 1}
+                    </Typography>
+                    <Chip 
+                      label={report.status} 
+                      size="small"
+                      color={
+                        report.status === "Resuelto" ? "success" :
+                        report.status === "En revisión" ? "warning" : "default"
+                      }
+                      sx={{ fontWeight: 500 }}
+                    />
+                  </Box>
+                  
+                  <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1 }}>
+                    Usuario reportado: {reportados.find(r => r.id === report.reported_user)?.surname   || "Desconocido"}
+                  </Typography>
+                  
+                  <Typography variant="body2" fontWeight={500} color="text.secondary" sx={{ mb: 1 }}>
+                    Categoría: {report.category}
+                  </Typography>
+                  
+                  <Box sx={{ 
+                    p: 2, 
+                    mt: 1, 
+                    mb: 2, 
+                    backgroundColor: "rgba(0, 0, 0, 0.02)", 
+                    borderRadius: 1,
+                    borderLeft: "4px solid #3f51b5"
+                  }}>
+                    <Typography variant="body1">
+                      {report.description}
+                    </Typography>
+                  </Box>
+                  
+                  <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Typography variant="caption" color="text.secondary">
+                      Enviado el {new Date(report.created_at).toLocaleDateString('es-ES', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </Typography>
+                  </Box>
+                </Paper>
+              ))
+            ) : (
+              <Box 
+                sx={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  py: 4
+                }}
+              >
+                <ReportIcon sx={{ fontSize: 60, color: 'text.disabled', mb: 2 }} />
+                <Typography variant="body1" color="text.secondary" align="center">
+                  No has enviado reportes hasta el momento.
+                </Typography>
+                <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>
+                  Cuando envíes un reporte, aparecerá en esta sección.
+                </Typography>
+              </Box>
+            )}
+          </DialogContent>
+          <DialogActions sx={{ px: 3, py: 2 }}>
+            <Button 
+              onClick={handleCloseReportsModal} 
+              variant="contained" 
+              color="primary"
+              startIcon={<CloseIcon />}
+            >
+              Cerrar
+            </Button>
+          </DialogActions>
+        </Dialog>
+        {showReportModal && (
+                    <Box sx={{width: "100%", display: "flex", justifyContent: "center", alignContent: "center"}}>
+                    <Dialog maxWidth="sm" fullWidth open={showReportModal} onClose={() => setShowReportModal(false)}>
+                    <DialogTitle>Reportar usuario</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        ¿Cual es el motivo del reporte?
+                      </DialogContentText>
+                      <FormControl fullWidth sx={{ mt: 2 }}>
+                        <InputLabel id="reportCategoryLabel">Motivo</InputLabel>
+                        <Select
+                          labelId="reportCategoryLabel"
+                          value={reportCategory}
+                          onChange={(e) => setReportCategory(e.target.value)}
+                          label="Motivo"
+                        >
+                          <MenuItem value="Mensaje de Odio">Mensaje de Odio</MenuItem>
+                          <MenuItem value="Información Engañosa">Información Engañosa</MenuItem>
+                          <MenuItem value="Se hace pasar por otra persona">Se hace pasar por otra persona</MenuItem>
+                          <MenuItem value="Otro">Otro</MenuItem>
+                        </Select>
+                      </FormControl>
+                      <TextField
+                        autoFocus
+                        margin="dense"
+                        id="reportDescription"
+                        label="Descripción"
+                        type="text"
+                        fullWidth
+                        variant="outlined"
+                        value={reportDescription}
+                        onChange={(e) => setReportDescription(e.target.value)}
+                        multiline
+                        rows={4}
+                      />
+        
+                    </DialogContent>
+                    <DialogActions>
+                      <Button onClick={() => setShowReportModal(false)} color="primary">
+                        Cancelar
+                      </Button>
+                      <Button
+                        onClick={handleReportUser}
+                        color="error"
+                        disabled={!reportCategory || !reportDescription}
+                      >
+                        Enviar reporte
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </Box>
+                )}
       </Container >
     </>
   );

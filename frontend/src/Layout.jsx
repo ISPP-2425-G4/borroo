@@ -16,13 +16,16 @@ import {
   Divider,
   Button,
   FormControl,
-  alpha
+  alpha,
+  FormControlLabel,
+  Switch
 } from "@mui/material";
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import SearchIcon from '@mui/icons-material/Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import CloseIcon from '@mui/icons-material/Close';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
@@ -43,7 +46,12 @@ const CATEGORIAS = {
   "Entretenimiento": { icono: "🎮", color: "#9c27b0" }
 };
 
+
 const Layout = () => {
+
+  const accessToken = localStorage.getItem("access_token");
+
+
   const [productos, setProductos] = useState([]);
   const [error, setError] = useState(null);
   const [terminoBusqueda, setTerminoBusqueda] = useState("");
@@ -54,8 +62,25 @@ const Layout = () => {
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [cargando, setCargando] = useState(true);
   const [featuredItems, setFeaturedItems] = useState([]);
+  const [priceCategory, setPriceCategory] = useState("");
+  const [cancelType, setCancelType] = useState("");
+  const [rangoValoracion, setRangoValoracion] = useState([0, 5]);
+  const [mostrarSoloLiked, setMostrarSoloLiked] = useState(false);
 
 
+
+  const options = {
+    categories: Object.entries(CATEGORIAS).map(([key, val]) => [key, `${val.icono} ${key}`]),
+    subcategories: productos
+      .map(p => [p.subcategory, p.subcategory_display])
+      .filter((v, i, a) => v[0] && a.findIndex(t => t[0] === v[0]) === i),
+    cancel_types: productos
+      .map(p => [p.cancel_type, p.cancel_type_display])
+      .filter((v, i, a) => v[0] && a.findIndex(t => t[0] === v[0]) === i),
+    price_categories: productos
+      .map(p => [p.price_category, p.price_category_display])
+      .filter((v, i, a) => v[0] && a.findIndex(t => t[0] === v[0]) === i)
+  };
   const manejarCambioBusqueda = (e) => setTerminoBusqueda(e.target.value);
   const manejarCambioCategoria = (e) => { 
     setCategoria(e.target.value);
@@ -79,11 +104,15 @@ const indexOfLastItem = currentPage * itemsPerPage;
 const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 const currentItems = productosFiltrados.slice(indexOfFirstItem, indexOfLastItem);
 const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
-  
+
   const reiniciarFiltros = () => {
     setTerminoBusqueda("");
     setCategoria("");
-    setRangoPrecio([0, 100]);
+    setPriceCategory("");
+    setCancelType("");
+    setRangoValoracion([0, 5]);
+    setRangoPrecio([0, 99999]);
+    setMostrarSoloLiked(false);
   };
 
   const truncarDescripcion = useCallback((descripcion, longitud = 100) => {
@@ -127,16 +156,30 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
           nextUrl = respuesta.data.next; // avanza a la siguiente página
         }
   
-        const productosConImagenes = await Promise.all(
+        const productosConImagenesYLikeStatus = await Promise.all(
           allResults.map(async (producto) => {
             const urlImagen = producto.images && producto.images.length > 0
               ? await obtenerUrlImagen(producto.images[0])
               : IMAGEN_PREDETERMINADA;
-            return { ...producto, urlImagen };
+  
+            const accessToken = localStorage.getItem("access_token");
+            let isLiked = false;
+            if (accessToken) {
+              try {
+                const likedResponse = await axios.get(
+                  `${import.meta.env.VITE_API_BASE_URL}/objetos/like-status/${producto.id}/`,
+                  { headers: { Authorization: `Bearer ${accessToken}` } }
+                );
+                isLiked = likedResponse.data.is_liked || false;
+              } catch (error) {
+                console.error("Error al obtener el estado de like:", error);
+              }
+            }
+            return { ...producto, urlImagen, isLiked };
           })
         );
   
-        setProductos(productosConImagenes);
+        setProductos(productosConImagenesYLikeStatus);
       } catch (error) {
         console.error(error);
         setError("Error al cargar los productos.");
@@ -152,19 +195,33 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
     texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   
   useEffect(() => {
-    const filtrados = productos.filter((producto) => (
+    const filtrados = productos.filter((producto) => {
+      const esLiked = mostrarSoloLiked ? producto.isLiked : true;
+  
+      return (
+        esLiked &&
       (categoria === "" || producto.category_display === categoria) &&
       (subcategoria === "" || producto.subcategory_display === subcategoria) &&
+      (priceCategory === "" || producto.price_category === priceCategory) &&
       (producto.price >= rangoPrecio[0] && producto.price <= rangoPrecio[1]) &&
+      (cancelType === "" || producto.cancel_type === cancelType) &&
+      (producto.user_rating >= rangoValoracion[0] && producto.user_rating <= rangoValoracion[1]) &&
       (terminoBusqueda === "" || normalizarTexto(producto.title).includes(normalizarTexto(terminoBusqueda)))
-    ));
+      );
+    });
     setProductosFiltrados(filtrados);
-  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda]);
-  
+
+    if (categoria ||cancelType ||priceCategory || subcategoria || terminoBusqueda || mostrarSoloLiked || 
+      rangoPrecio[0] !== 0 || rangoPrecio[1] !== 99999 || rangoValoracion[0] !== 0 || rangoValoracion[1] !== 5) {
+      setCurrentPage(1);
+    }
+  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda,priceCategory,cancelType, rangoValoracion]);
+
 
   const hayFiltrosActivos = useMemo(() => 
-    terminoBusqueda !== "" || categoria !== "" || subcategoria !== "" || rangoPrecio[0] > 0 || rangoPrecio[1] < 100,
-  [terminoBusqueda, categoria, subcategoria, rangoPrecio]);
+    terminoBusqueda !== "" || categoria !== "" || subcategoria !== "" || priceCategory !== ""|| mostrarSoloLiked || cancelType!== ""||rangoPrecio[0] > 0 || rangoPrecio[1] < 100 || rangoValoracion[0] > 0 || rangoValoracion[1] < 5,
+    [terminoBusqueda, categoria, subcategoria, priceCategory,cancelType,rangoPrecio,rangoValoracion,mostrarSoloLiked]);
+
 
   const obtenerDetallesCategoria = (nombreCategoria) => {
     return CATEGORIAS[nombreCategoria] || { icono: "•", color: "#607d8b" };
@@ -186,16 +243,30 @@ useEffect(() => {
         nextUrl = respuesta.data.next; // avanza a la siguiente página
       }
 
-      const productosConImagenes = await Promise.all(
+      const productosConImagenesYLikeStatus = await Promise.all(
         allResults.map(async (producto) => {
           const urlImagen = producto.images && producto.images.length > 0
             ? await obtenerUrlImagen(producto.images[0])
             : IMAGEN_PREDETERMINADA;
-          return { ...producto, urlImagen };
+
+          const accessToken = localStorage.getItem("access_token");
+          let isLiked = false;
+          if (accessToken) {
+            try {
+              const likedResponse = await axios.get(
+                `${import.meta.env.VITE_API_BASE_URL}/objetos/like-status/${producto.id}/`,
+                { headers: { Authorization: `Bearer ${accessToken}` } }
+              );
+              isLiked = likedResponse.data.is_liked || false;
+            } catch (error) {
+              console.error("Error al obtener el estado de like:", error);
+            }
+          }
+          return { ...producto, urlImagen, isLiked };
         })
       );
+      setFeaturedItems(productosConImagenesYLikeStatus);
 
-      setFeaturedItems(productosConImagenes);
     } catch (error) {
       console.error(error);
       setError("Error al cargar los productos.");
@@ -206,6 +277,45 @@ useEffect(() => {
 
   obtenerProductosDestacados();
 }, [obtenerUrlImagen]);
+
+const toggleLike = async (productoId) => {
+  const accessToken = localStorage.getItem("access_token");
+  if (accessToken) {
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/objetos/like/${productoId}/`,
+        {},
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+      setProductos((prevProductos) =>
+        prevProductos.map((producto) =>
+          producto.id === productoId
+            ? { ...producto, 
+              isLiked: !producto.isLiked,
+              num_likes: producto.isLiked ? producto.num_likes - 1 : producto.num_likes + 1 
+            }
+            : producto
+        )
+      );
+
+      setFeaturedItems((prevProductos) =>
+        prevProductos.map((producto) =>
+          producto.id === productoId
+            ? { ...producto,
+              isLiked: !producto.isLiked,
+              num_likes: producto.isLiked ? producto.num_likes - 1 : producto.num_likes + 1 
+            }  
+            : producto
+        )
+      );
+
+      setCurrentPage((prevPage) => prevPage);
+
+    } catch (error) {
+      console.error("Error al cambiar el estado de like:", error);
+    }
+  }
+};
 
   return (
     <Box sx={{ 
@@ -234,8 +344,10 @@ useEffect(() => {
               fontSize: { xs: '1.5rem', sm: '2rem' }
             }}>
               Productos Destacados
+              
             </Typography>
             <div>
+              
                 {featuredItems.length > 0 ? (
                     <Box sx={{
                       display: 'flex',
@@ -312,25 +424,33 @@ useEffect(() => {
                                     }} 
                                   />
                                   
-                                  <IconButton
-                                    aria-label="favorito"
-                                    sx={{
-                                      position: 'absolute',
-                                      top: 8,
-                                      right: 8,
-                                      bgcolor: 'rgba(255, 255, 255, 0.9)',
-                                      '&:hover': {
-                                        bgcolor: 'white',
-                                      },
-                                      zIndex: 1
-                                    }}
-                                    size="small"
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                    }}
-                                  >
-                                    <FavoriteBorderIcon fontSize="small" />
-                                  </IconButton>
+                                  {accessToken &&
+                                    <IconButton
+                                      aria-label="favorito"
+                                      sx={{
+                                        position: 'absolute',
+                                        top: 8,
+                                        right: 8,
+                                        bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                        '&:hover': {
+                                          bgcolor: 'white',
+                                        },
+                                        zIndex: 1
+                                      }}
+                                      size="small"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        e.preventDefault();
+                                        toggleLike(producto.id);
+                                      }}
+                                    >
+                                      {producto.isLiked ? (
+                                        <FavoriteIcon fontSize="small" sx={{ color: 'red' }} />
+                                      ) : (
+                                        <FavoriteBorderIcon fontSize="small" sx={{ color: 'red' }} />
+                                      )}
+                                    </IconButton>
+                                  }
                                   
                                   <Chip
                                     size="small"
@@ -354,6 +474,7 @@ useEffect(() => {
                                       </Box>
                                     }
                                   />
+       
                                   <Chip
                                     size="small"
                                     label={producto.subcategory_display}
@@ -462,6 +583,12 @@ useEffect(() => {
                                       {truncarDescripcion(producto.description, 80)}
                                     </Typography>
                                   </Tooltip>
+                                  <Box display="flex" alignItems="center" gap={0.5}>
+                                    <FavoriteIcon fontSize="small" sx={{ color: 'red' }} />
+                                    <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                                      {producto.num_likes}
+                                    </Typography>
+                                  </Box>
                                 </CardContent>
                               </Card>
                             </Link>
@@ -633,6 +760,7 @@ useEffect(() => {
                       }
                     }}
                     MenuProps={{
+                      disableScrollLock: true,
                       PaperProps: {
                         sx: {
                           borderRadius: 2,
@@ -651,6 +779,10 @@ useEffect(() => {
                       </MenuItem>
                     ))}
                   </Select>
+                  {categoria &&
+                <Typography variant="subtitle2" sx={{ mt: 2,mb: 1, fontWeight: 600 }}>
+                  Subcategoría
+                </Typography>}
                   {categoria === "Tecnología" && (
                   <Select
                     value={subcategoria}
@@ -658,6 +790,17 @@ useEffect(() => {
                     displayEmpty
                     variant="outlined"
                     sx={{ minWidth: "250px" }}
+                    MenuProps={{
+                      disableScrollLock: true,
+                      PaperProps: {
+                        sx: {
+                          borderRadius: 2,
+                          mt: 0.5,
+                          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                        }
+                      }
+                    }}
+                  
                   >
                     <MenuItem value="">
                       <em>Seleccione una subcategoría</em>
@@ -811,6 +954,118 @@ useEffect(() => {
                   )}
                 </FormControl>
               </Box>
+              <Box sx={{ mt: 2 }}>
+  <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
+    Tipo de cancelación
+  </Typography>
+  <FormControl fullWidth size="small">
+    <Select
+      value={cancelType}
+      onChange={(e) => setCancelType(e.target.value)}
+      displayEmpty
+      variant="outlined"
+      sx={{
+        borderRadius: 1.5,
+        '& .MuiOutlinedInput-notchedOutline': {
+          borderColor: '#e0e0e0'
+        }
+      }}
+      MenuProps={{
+        disableScrollLock: true,
+        PaperProps: {
+          sx: {
+            borderRadius: 2,
+            mt: 0.5,
+            boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+          }
+        }
+      }}
+    >
+      <MenuItem value="">
+        <em>Todos los tipos</em>
+      </MenuItem>
+      {options.cancel_types.map(([value, label]) => (
+        <MenuItem key={value} value={value}>
+          {label}
+        </MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+</Box>
+<Box sx={{ mb: 3 }}>
+  <Box sx={{ 
+    display: 'flex', 
+    justifyContent: 'space-between', 
+    alignItems: 'center',
+    mb: 1
+  }}>
+    <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+      Valoración
+    </Typography>
+    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+      {rangoValoracion[0]} - {rangoValoracion[1]}
+    </Typography>
+  </Box>
+  <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+    <TextField
+      size="small"
+      label="Mín"
+      type="number"
+      value={rangoValoracion[0]}
+      onChange={(e) => setRangoValoracion([Math.max(0, parseFloat(e.target.value) || 0), rangoValoracion[1]])}
+      inputProps={{ min: 0, max: 5, step: 0.1 }}
+      sx={{ width: '45%' }}
+    />
+    <TextField
+      size="small"
+      label="Máx"
+      type="number"
+      value={rangoValoracion[1]}
+      onChange={(e) => setRangoValoracion([rangoValoracion[0], Math.min(5, parseFloat(e.target.value) || 5)])}
+      inputProps={{ min: 0, max: 5, step: 0.1 }}
+      sx={{ width: '45%' }}
+    />
+  </Box>
+</Box>
+
+              <Box sx={{ mt: 2 }}>
+                <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
+                  Tipo de precio
+                </Typography>
+                <FormControl fullWidth size="small">
+                  <Select
+                    value={priceCategory}
+                    onChange={(e) => setPriceCategory(e.target.value)}
+                    displayEmpty
+                    variant="outlined"
+                    sx={{
+                      borderRadius: 1.5,
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        borderColor: '#e0e0e0'
+                      }
+                    }}
+                    MenuProps={{
+                      disableScrollLock: true,
+                      PaperProps: {
+                        sx: {
+                          borderRadius: 2,
+                          mt: 0.5,
+                          boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+                        }
+                      }
+                    }}
+                  >
+                    <MenuItem value="">
+                      <em>Todos los tipos</em>
+                    </MenuItem>
+                    {options.price_categories.map(([value, label]) => (
+                      <MenuItem key={value} value={value}>
+                        {label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
 
               <Box sx={{ mb: 2 }}>
                 <Box sx={{ 
@@ -855,6 +1110,25 @@ useEffect(() => {
                   />
 
                 </Box>
+                {accessToken &&
+                <Box sx={{ mt: 2 }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                    Favoritos
+                  </Typography>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={mostrarSoloLiked} 
+                        onChange={() => setMostrarSoloLiked(!mostrarSoloLiked)}
+                        name="mostrarSoloLiked"
+                        color="primary"
+                      />
+                    }
+                    label="Favoritos ❤️"
+                    labelPlacement="start"
+                  />
+                </Box>
+                }
               </Box>
             </Paper>
 
@@ -888,16 +1162,36 @@ useEffect(() => {
                     <Chip
                       label={`Categoría: ${categoria}`}
                       size="small"
-                      onDelete={() => setCategoria("")}
+                      onDelete={() => {
+                        setCategoria("");
+                        setSubcategoria("");
+                      }}
+                      sx={{ borderRadius: 1 }}
+                    />
+                  )}
+                  {subcategoria && (
+                    <Chip
+                      label={`Subcategoría: ${subcategoria}`}
+                      size="small"
+                      onDelete={() => setSubcategoria("")}
                       sx={{ borderRadius: 1 }}
                     />
                   )}
                   
-                  {(rangoPrecio[0] > 0 || rangoPrecio[1] < 100) && (
+                  {(rangoPrecio[0] > 0 || rangoPrecio[1] < 99999) && (
                     <Chip
                       label={`Precio: ${rangoPrecio[0]}€ - ${rangoPrecio[1]}€`}
                       size="small"
-                      onDelete={() => setRangoPrecio([0, 100])}
+                      onDelete={() => setRangoPrecio([0, 99999])}
+                      sx={{ borderRadius: 1 }}
+                    />
+                  )}
+  
+                  {mostrarSoloLiked && (
+                    <Chip
+                      label="Tus favoritos"
+                      size="small"
+                      onDelete={() => setMostrarSoloLiked(false)}
                       sx={{ borderRadius: 1 }}
                     />
                   )}
@@ -1034,27 +1328,33 @@ useEffect(() => {
                                     transition: "transform 0.5s ease",
                                   }} 
                                 />
-                                
-                                <IconButton
-                                  aria-label="favorito"
-                                  sx={{
-                                    position: 'absolute',
-                                    top: 8,
-                                    right: 8,
-                                    bgcolor: 'rgba(255, 255, 255, 0.9)',
-                                    '&:hover': {
-                                      bgcolor: 'white',
-                                    },
-                                    zIndex: 1
-                                  }}
-                                  size="small"
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                  }}
-                                >
-                                  <FavoriteBorderIcon fontSize="small" />
-                                </IconButton>
-                                
+                                {accessToken &&
+                                  <IconButton
+                                    aria-label="favorito"
+                                    sx={{
+                                      position: 'absolute',
+                                      top: 8,
+                                      right: 8,
+                                      bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                      '&:hover': {
+                                        bgcolor: 'white',
+                                      },
+                                      zIndex: 1
+                                    }}
+                                    size="small"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                      e.preventDefault();
+                                        toggleLike(producto.id);
+                                    }}
+                                  >
+                                      {producto.isLiked ? (
+                                        <FavoriteIcon fontSize="small" sx={{ color: 'red' }} />
+                                      ) : (
+                                      <FavoriteBorderIcon fontSize="small" sx={{ color: 'red' }} />
+                                      )}
+                                  </IconButton>
+                                }
                                 <Chip
                                   size="small"
                                   label={producto.category_display}
@@ -1185,6 +1485,12 @@ useEffect(() => {
                                     {truncarDescripcion(producto.description, 80)}
                                   </Typography>
                                 </Tooltip>
+                                  <Box display="flex" alignItems="center" gap={0.5}>
+                                    <FavoriteIcon fontSize="small" sx={{ color: 'red' }} />
+                                    <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                                      {producto.num_likes}
+                                    </Typography>
+                                  </Box>
                               </CardContent>
                             </Card>
                           </Link>

@@ -42,6 +42,8 @@ const Navbar = () => {
     setLoginAnchorEl(null);
   };
 
+  
+
   const handleLogout = async () => {
     try {
       await axios.post(
@@ -61,6 +63,7 @@ const Navbar = () => {
       setSaldo(null);
       handleLoginClose();
       navigate('/');
+      window.location.reload();
     }
   };
 
@@ -79,6 +82,7 @@ const Navbar = () => {
       console.error("Error al obtener el saldo del usuario:", error);
     }
   };
+
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -222,6 +226,7 @@ const Navbar = () => {
                 vertical: "top",
                 horizontal: "right",
               }}
+              disableScrollLock={true} 
             >
               {user ? (
                 <>
@@ -229,9 +234,14 @@ const Navbar = () => {
                     Mi Perfil
                   </MenuItem>
                   {user.is_admin && (
-                    <MenuItem onClick={() => { handleLoginClose(); navigate('/dashboard'); }}>
-                      Dashboard
-                    </MenuItem>
+                    <>
+                      <MenuItem onClick={() => { handleLoginClose(); navigate('/dashboard'); }}>
+                        Dashboard
+                      </MenuItem>
+                      <MenuItem onClick={() => { navigate('/reports-dashboard'); }}>
+                        Gestionar reportes
+                      </MenuItem>
+                    </>
                   )}
                   <MenuItem onClick={handleLogout}>
                     Cerrar sesión

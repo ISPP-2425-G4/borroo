@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
+import PublishConfirmationDialog from "./components/PublishConfirmationDialog";
 import { Box, Stack, Typography, Alert, CircularProgress, Paper, Container } from "@mui/material";
 import { styled } from "@mui/system";
 
@@ -153,6 +154,7 @@ const CreateItemRequestView = () => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [fetchingOptions, setFetchingOptions] = useState(true);
   const [filteredSubcategories, setFilteredSubcategories] = useState([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
     const fetchEnums = async () => {
@@ -251,7 +253,7 @@ const CreateItemRequestView = () => {
         { value: "printers_scanners", label: "Impresoras y escáneres" },
         { value: "drones", label: "Drones" },
         { value: "projectors", label: "Proyectores" },
-        { value: "technology_others", label: "Otros" },
+        { value: "technology_others", label: "Otros (Tecnología)" },
         { value: "none", label: "Ninguno" },
 
       ];
@@ -441,6 +443,7 @@ const CreateItemRequestView = () => {
   
       if (response.status === 201) {
         setSubmitSuccess(true);
+        setDialogOpen(true);  // Agrega aquí para mostrar el diálogo
         setTimeout(() => {
           navigate("/list_item_requests");
         }, 2000);
@@ -635,6 +638,8 @@ const CreateItemRequestView = () => {
           )}
         </FormContainer>
       </Container>
+      {/* Aquí va el diálogo de confirmación de publicación */}
+      <PublishConfirmationDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
     </Box>
   );
 };

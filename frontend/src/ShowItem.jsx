@@ -18,24 +18,37 @@ import {
   CircularProgress, 
   IconButton, 
   Stack, 
-  Chip, 
+  Chip,
+  DialogContentText, 
+  FormControl,
+  MenuItem,
+  Select,
+  InputLabel,
+  Avatar
 } from '@mui/material';
 
-import { 
-  Delete as DeleteIcon, 
-  Edit as EditIcon, 
+import {  
   Description as DescriptionIcon, 
   Category as CategoryIcon, 
   Cancel as CancelIcon, 
   AttachMoney as MoneyIcon, 
   Person as PersonIcon, 
   ChevronLeft as ChevronLeftIcon, 
-  ChevronRight as ChevronRightIcon 
+  ChevronRight as ChevronRightIcon,
+  Favorite as FavoriteIcon, 
+  FavoriteBorder as FavoriteBorderIcon,
+  Whatshot as WhatshotIcon
 } from '@mui/icons-material';
 import Navbar from "./Navbar";
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
 import SuccessModal from "./components/SuccessModal";
 import ConfirmModal from "./components/ConfirmModal";
+import DeleteConfirmationDialog from "./components/DeleteConfirmationDialog";
+import EditConfirmationDialog from "./components/EditConfirmationDialog";
+import PublishConfirmationDialog from "./components/PublishConfirmationDialog";
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
+
+
 
 const ShowItemScreen = () => {
   const { id } = useParams();
@@ -64,9 +77,20 @@ const ShowItemScreen = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [highlighting, setHighlighting] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [numLikes, setNumLikes] = useState(0);
   const [showRequestPopup, setShowRequestPopup] = useState(false);
+  const [openImageModal, setOpenImageModal] = useState(false);
+  const [modalImageIndex, setModalImageIndex] = useState(0);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportCategory, setReportCategory] = useState("");
+  const [reportDescription, setReportDescription] = useState("");
+  const [userImage, setUserImage] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
+  console.log("currentUser", currentUser);
+  const accessToken = localStorage.getItem("access_token");
 
   useEffect(() => {
     const fetchItemData = async () => {
@@ -77,6 +101,7 @@ const ShowItemScreen = () => {
         const data = response.data;
         setItem(data);
         setUnavailabilityPeriods(data.unavailable_periods || []);
+        setNumLikes(data.num_likes || 0);
 
         if (data.user) {
           fetchUserName(data.user);
@@ -90,6 +115,18 @@ const ShowItemScreen = () => {
         if(data.price_category){
           setPriceCategory(data.price_category)
         } 
+
+        const accessToken = localStorage.getItem("access_token");
+        if (accessToken) {
+          const likedResponse = await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/objetos/like-status/${id}/`,
+            { headers: { Authorization: `Bearer ${accessToken}` } }
+          );
+          setIsLiked(likedResponse.data.is_liked || false);
+        } else {
+          setIsLiked(false);
+        }
+
       } catch (error) {
         console.error("Error fetching item:", error);
         setErrorMessage("No se pudo cargar el ítem");
@@ -101,6 +138,32 @@ const ShowItemScreen = () => {
     if (id) fetchItemData();
   }, [id]);
 
+
+  const toggleLike = async () => {
+    if (!item) return;
+  
+    const accessToken = localStorage.getItem("access_token");
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/objetos/like/${item.id}/`,
+        {},
+        {
+          headers: {
+            "Authorization": `Bearer ${accessToken}`,  // Incluir el token de autenticación en las cabeceras
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        setIsLiked(prevState => !prevState);
+        setNumLikes(response.data.num_likes); 
+      }
+    } catch (error) {
+      console.error("Error toggling like:", error);
+      alert("Hubo un error al cambiar el estado del like.");
+    }
+  };
   
   useEffect(() => {
     if (!item) return;
@@ -126,7 +189,7 @@ const ShowItemScreen = () => {
   
   const checkOwnerStatus = (userId) => {
     setIsAuthenticated(!!currentUser);
-    if (currentUser && currentUser.id === userId) {
+    if  (currentUser && currentUser.id === userId) {
       setIsOwner(true);
     }
   };
@@ -141,11 +204,15 @@ const ShowItemScreen = () => {
       );
       const userData = response.data;
       setUserName(userData.username);
+      if (userData.image) {
+        setUserImage(userData.image);
+      }
     } catch (error) {
       console.error("Error fetching user:", error);
       setUserName("Usuario desconocido");
     }
   };
+
 
   const toggleFeature = () => {
     if (!item) return;
@@ -172,6 +239,56 @@ const ShowItemScreen = () => {
         setHighlighting(false);
     });
 };
+
+  const handleReportUser = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) {
+        alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
+        return;
+      }
+      if(!reportCategory || !reportDescription) {
+        alert("Por favor, completa todos los campos.");
+        return;
+      }
+      const reportData = {
+        reporter: currentUser.id,
+        reported_user: item.user,
+        category: reportCategory,
+        description: reportDescription,
+    } 
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/usuarios/reportes/`,
+      reportData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.status === 201) {
+      alert("¡Reporte enviado correctamente!");
+      setShowReportModal(false);
+      setReportCategory("");
+      setReportDescription("");
+    } 
+
+     else if(response.status === 200){
+      alert("¡Reporte actualizado correctamente!");
+      setShowReportModal(false);
+      setReportCategory("");
+      setReportDescription("");
+    }
+    
+    else {
+      alert("Hubo un problema al enviar el reporte.");
+    }
+    
+  }catch (error) {
+      alert("Error al enviar el reporte:", error);
+      console.error("Error al enviar el reporte:", error);
+    }
+  };
 
 
   const loadItemImages = async (imageIds) => {
@@ -230,10 +347,24 @@ const ShowItemScreen = () => {
     return dates;
   };
 
-  const handleDelete = async () => {
-    const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar este ítem?");
-    if (!confirmDelete) return;
+  const handleImageClick = (index) => {
+    setModalImageIndex(index);
+    setOpenImageModal(true);
+  };
+  
+  const closeModal = () => {
+    setOpenImageModal(false);
+  };
+  
+  const nextModalImage = () => {
+    setModalImageIndex((prev) => (prev + 1) % imageURLs.length);
+  };
+  
+  const prevModalImage = () => {
+    setModalImageIndex((prev) => (prev - 1 + imageURLs.length) % imageURLs.length);
+  };
 
+  const handleDelete = async () => {
     try {
       const token = localStorage.getItem("access_token")
       await axios.delete(
@@ -245,8 +376,6 @@ const ShowItemScreen = () => {
           },
         }
       );
-
-      alert("Ítem eliminado correctamente");
       navigate("/");
     } catch (error) {
       console.error("Error deleting item:", error);
@@ -300,7 +429,7 @@ const ShowItemScreen = () => {
       else if (priceCategory === "day" && dateRange[0].startDate && dateRange[0].endDate) {
         // Usar las fechas seleccionadas para alquiler por días
         startDateUTC = dayjs(dateRange[0].startDate).format("YYYY-MM-DD");
-        endDateUTC = dayjs(dateRange[0].endDate).format("YYYY-MM-DD");
+        endDateUTC = dayjs(dateRange[0].endDate).hour(23).minute(59).second(59).format("YYYY-MM-DDTHH:mm:ss");
       } 
       else if (priceCategory === "month" && selectedDay && selectedMonths) {
         // Construir fechas para alquiler por meses
@@ -360,7 +489,7 @@ const ShowItemScreen = () => {
       );
   
       if (response.status === 200) {
-        alert("¡El ítem se ha publicado correctamente!");
+        setDialogOpen(true);  // Agrega aquí para mostrar el diálogo
         navigate(0); // Refresca la página
       } else {
         alert("Hubo un problema al publicar el ítem.");
@@ -417,9 +546,20 @@ const ShowItemScreen = () => {
       
       <Container maxWidth="lg" sx={{ py: 4, mt: 8 }}>
         <Paper elevation={2} sx={{ p: 3, mb: 4 }}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            {item.title}
-          </Typography>
+        <Typography 
+  variant="h4" 
+  component="h1" 
+  gutterBottom
+  sx={{ 
+    wordBreak: 'break-word', 
+    overflowWrap: 'break-word',
+    maxWidth: '100%', 
+    whiteSpace: 'normal' 
+  }}
+>
+  {item.title}
+</Typography>
+
           {item.draft_mode && (
   <Box 
     sx={{ 
@@ -441,6 +581,7 @@ const ShowItemScreen = () => {
     >
       Publicar
     </Button>
+    <PublishConfirmationDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
   </Box>
 )}
 
@@ -455,7 +596,7 @@ const ShowItemScreen = () => {
               {imageURLs.length > 0 ? (
                 <Paper elevation={3} sx={{ position: 'relative', overflow: 'hidden', borderRadius: 2 }}>
                   <Box sx={{ position: 'relative', paddingTop: '75%' }}>
-                    <Box 
+                  <Box 
                       component="img"
                       src={imageURLs[currentImageIndex]}
                       alt={`${item.title} - imagen ${currentImageIndex + 1}`}
@@ -466,8 +607,10 @@ const ShowItemScreen = () => {
                         width: '100%',
                         height: '100%',
                         objectFit: 'contain',
-                        backgroundColor: '#f5f5f5'
+                        backgroundColor: '#f5f5f5',
+                        cursor: 'pointer'
                       }}
+                      onClick={() => handleImageClick(currentImageIndex)}
                     />
                   </Box>
                   
@@ -507,12 +650,53 @@ const ShowItemScreen = () => {
                   </Typography>
                 </Paper>
               )}
+              {accessToken &&
+                <Button sx={{ marginTop: 2 }}
+                  onClick={toggleLike}
+                  variant="outlined"
+                  color={isLiked ? 'error' : 'primary'}
+                  startIcon={isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                >
+                  {isLiked ? "Quitar de favoritos" : "Agregar a favoritos"}
+                </Button>
+                }
+                {numLikes > 1 && (
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      marginTop: 1,
+                      color: 'red',
+                      fontWeight: 'bold',
+                      fontSize: '1.1rem',
+                    }}
+                  >
+                  <WhatshotIcon sx={{ fontSize: 20, marginRight: 1 }} />
+                  ¡Este objeto es de mucho interes entre los usuarios!
+                  </Typography>
+                )}
+                <Typography 
+                  variant="body2"
+                  sx={{
+                    marginTop: 2,
+                    color: '#2563eb',
+                    fontWeight: 'bold',
+                    fontSize: '1rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <FavoriteIcon sx={{ fontSize: 18, marginRight: 1 }} /> El objeto esta guardado en favoritos por {numLikes} usuarios
+                </Typography>
             </Box>
 
             <Box sx={{ flex: '1 1 auto', minWidth: 0 }}>
               <Card elevation={2} sx={{ mb: 3 }}>
-                <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <PersonIcon fontSize="large" color="primary" />
+                <CardContent sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <Avatar sx={{ width: 100, height: 100}}
+                    src = {userImage ? userImage : ""}
+                  >
+                  </Avatar>
                   <Box>
                   <Typography variant="caption" color="textSecondary">
                     Publicado por:
@@ -553,6 +737,12 @@ const ShowItemScreen = () => {
                       />
                     )}
                   </Box>
+                  </Box>
+                  {!isOwner && isAuthenticated && (
+                    <Box sx={{ display: 'flex', gap: 1 }}>
+                      <Button color="error" onClick={() => setShowReportModal(true)}>Reportar</Button>
+                    </Box>
+                  )}
                 </CardContent>
               </Card>
 
@@ -566,7 +756,18 @@ const ShowItemScreen = () => {
                     <DescriptionIcon color="action" />
                     <Box>
                       <Typography variant="subtitle2">Descripción</Typography>
-                      <Typography variant="body2">{item.description}</Typography>
+                      <Typography 
+                        variant="body2" 
+                        sx={{ 
+                          wordBreak: 'break-word', 
+                          overflowWrap: 'break-word',
+                          whiteSpace: 'pre-wrap', 
+                          maxWidth: '100%' 
+                        }}
+                      >
+                        {item.description}
+                      </Typography>
+
                     </Box>
                   </Box>
                   
@@ -616,21 +817,8 @@ const ShowItemScreen = () => {
                 
                 {isOwner && (
                   <Box sx={{ mt: 3, display: 'flex', gap: 2 }}>
-                    <Button 
-                      variant="outlined" 
-                      startIcon={<EditIcon />} 
-                      onClick={() => navigate(`/update-item/${id}`)}
-                    >
-                      Editar
-                    </Button>
-                    <Button 
-                      variant="outlined" 
-                      color="error" 
-                      startIcon={<DeleteIcon />} 
-                      onClick={handleDelete}
-                    >
-                      Eliminar
-                    </Button>
+                    <EditConfirmationDialog onConfirm={() => navigate(`/update-item/${id}`)} />
+                    <DeleteConfirmationDialog onConfirm={handleDelete} />
 
                     {/* Solo mostrar si el usuario NO es "free" */}
                     {currentUser.pricing_plan !== "free" && (
@@ -865,9 +1053,112 @@ const ShowItemScreen = () => {
               onSecondaryAction={() => navigate("/")}
             />
           )}
+
           </Container>
+          {openImageModal && (
+            <Box 
+              sx={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100vw',
+                height: '100vh',
+                backgroundColor: 'rgba(0,0,0,0.9)',
+                zIndex: 9999,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column'
+              }}
+              onClick={closeModal}
+            >
+              <IconButton 
+                sx={{ position: 'absolute', top: 20, right: 20, color: 'white' }}
+                onClick={closeModal}
+              >
+                ✖️
+              </IconButton>
+
+              <IconButton 
+                sx={{ position: 'absolute', left: 20, color: 'white' }}
+                onClick={(e) => { e.stopPropagation(); prevModalImage(); }}
+              >
+                <ChevronLeftIcon fontSize="large" />
+              </IconButton>
+
+              <img 
+                src={imageURLs[modalImageIndex]} 
+                alt={`imagen ${modalImageIndex + 1}`} 
+                style={{ maxHeight: '80vh', maxWidth: '90vw', objectFit: 'contain' }}
+              />
+
+              <IconButton 
+                sx={{ position: 'absolute', right: 20, color: 'white' }}
+                onClick={(e) => { e.stopPropagation(); nextModalImage(); }}
+              >
+                <ChevronRightIcon fontSize="large" />
+              </IconButton>
+
+              <Typography variant="caption" sx={{ color: 'white', mt: 2 }}>
+                {modalImageIndex + 1} / {imageURLs.length}
+              </Typography>
+            </Box>
+          )}
+          {showReportModal && (
+            <Box sx={{width: "100%", display: "flex", justifyContent: "center", alignContent: "center"}}>
+            <Dialog maxWidth="sm" fullWidth open={showReportModal} onClose={() => setShowReportModal(false)}>
+            <DialogTitle>Reportar usuario</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                ¿Cual es el motivo del reporte?
+              </DialogContentText>
+              <FormControl fullWidth sx={{ mt: 2 }}>
+                <InputLabel id="reportCategoryLabel">Motivo</InputLabel>
+                <Select
+                  labelId="reportCategoryLabel"
+                  value={reportCategory}
+                  onChange={(e) => setReportCategory(e.target.value)}
+                  label="Motivo"
+                >
+                  <MenuItem value="Mensaje de Odio">Mensaje de Odio</MenuItem>
+                  <MenuItem value="Información Engañosa">Información Engañosa</MenuItem>
+                  <MenuItem value="Se hace pasar por otra persona">Se hace pasar por otra persona</MenuItem>
+                  <MenuItem value="Otro">Otro</MenuItem>
+                </Select>
+              </FormControl>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="reportDescription"
+                label="Descripción"
+                type="text"
+                fullWidth
+                variant="outlined"
+                value={reportDescription}
+                onChange={(e) => setReportDescription(e.target.value)}
+                multiline
+                rows={4}
+              />
+
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setShowReportModal(false)} color="primary">
+                Cancelar
+              </Button>
+              <Button
+                onClick={handleReportUser}
+                color="error"
+                disabled={!reportCategory || !reportDescription}
+              >
+                Enviar reporte
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Box>
+        )}
           </Box>
           );
-          };
+         
+};
 
 export default ShowItemScreen;

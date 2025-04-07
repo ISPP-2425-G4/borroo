@@ -73,10 +73,13 @@ Asegúrate de tener instalados los siguientes componentes:
    mysql -u root -p
 
    DROP DATABASE IF EXISTS borroo;
+   DROP DATABASE IF EXISTS test_borroo;
    DROP USER IF EXISTS 'borroo'@'localhost';
    CREATE DATABASE borroo;
+   CREATE DATABASE test_borroo;
    CREATE USER 'borroo'@'localhost' IDENTIFIED BY 'Borroo2025';
    GRANT ALL PRIVILEGES ON borroo.* TO 'borroo'@'localhost';
+   GRANT ALL PRIVILEGES ON test_borroo.* TO 'borroo'@'localhost';
    FLUSH PRIVILEGES;
    EXIT;
    ```
@@ -113,23 +116,7 @@ Los tests deben crearse en la carpeta tests/unit (en el caso de ser tests unitar
 
 Para lanzarlos se deben seguir los siguientes pasos:
 
-
-1. Primero debe configurarse la base de datos para los tests:
-
-   ```sh
-   # Backend
-   mysql -u root -p
-
-   DROP DATABASE IF EXISTS test_borroo;
-   DROP USER IF EXISTS 'borroo'@'localhost';
-   CREATE DATABASE test_borroo;
-   CREATE USER 'borroo'@'localhost' IDENTIFIED BY 'Borroo2025';
-   GRANT ALL PRIVILEGES ON test_borroo.* TO 'borroo'@'localhost';
-   FLUSH PRIVILEGES;
-   EXIT;
-   ```
-
-2. Para lanzar todos los tests:
+1. Para lanzar todos los tests:
    ```sh
    # Backend
    cd backend
