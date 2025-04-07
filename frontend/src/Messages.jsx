@@ -14,9 +14,20 @@ const Messages = () => {
     const [newMessage, setNewMessage] = useState("");
     const [otherUser, setOtherUser] = useState(null);
     const navigate = useNavigate();
-    const currentUser = JSON.parse(localStorage.getItem("user"));
+    const [currentUser, setCurrentUser] = useState({});
     const accessToken = localStorage.getItem("access_token");
 
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        
+        if (!user || !user.id) {
+            navigate("/login");
+            return;
+        }
+        setCurrentUser(user);
+    }, [navigate]);
+
+    
     const fetchMessages = useCallback(async (conversation) => {
         try {
             if (!conversation) return;
@@ -51,7 +62,6 @@ const Messages = () => {
                         },
                     }
                 );
-                setSelectedConversation(response.data);
                 fetchMessages(response.data);
             } catch (error) {
                 console.error("Error al cargar mensajes:", error);
@@ -60,6 +70,16 @@ const Messages = () => {
 
         fetchSelectedChatMessages();
     }, [conversationId, accessToken, fetchMessages]); 
+
+    useEffect(() => {
+        if (!selectedConversation) return;
+    
+        const intervalId = setInterval(() => {
+            fetchMessages(selectedConversation);
+        }, 2000); 
+    
+        return () => clearInterval(intervalId);
+    }, [selectedConversation, fetchMessages]); 
 
     useEffect(() => {
         const fetchConversations = async () => {
@@ -83,6 +103,11 @@ const Messages = () => {
         };
 
         fetchConversations();
+        const intervalId = setInterval(() => {
+            fetchConversations();
+        }, 2000); // Actualiza cada 2 segundos
+
+        return () => clearInterval(intervalId);
     }, [navigate, accessToken]);
 
 
