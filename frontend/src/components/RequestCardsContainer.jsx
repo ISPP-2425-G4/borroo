@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect } from "react";
-
+import ConfirmModal from "./ConfirmModal";
 
 const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) => {
 
@@ -12,6 +12,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
     const [loading, setLoading] = useState(false);
     const [processedSessionId, setProcessedSessionId] = useState(null); // Estado para rastrear el sessionId procesado
     const [notification, setNotification] =  useState({ open: false, message: "", severity: "success" });
+    const [showCancelModal, setShowCancelModal] = useState(false);
     const statusTranslations = {
         requested: "Solicitada",
         accepted: "Aceptada",
@@ -136,6 +137,25 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
             });
         }
     };
+
+    const handleCancelRequest = async (rentId) => {
+        const token = localStorage.getItem("access_token");
+        console.log("Token:", token);
+        try {
+          const response = await axios.put(
+            `${import.meta.env.VITE_API_BASE_URL}/rentas/full/${rentId}/cancel_rent/`,
+            {},
+            { headers: { "Content-Type": "application/json" ,
+                        "Authorization": `Bearer ${token}`
+            } }
+          );
+          console.log("Solicitud cancelada:", response.data);
+          setShowCancelModal(false);
+          // Actualizar el estado local si es necesario
+        } catch (error) {
+          console.error("Error al cancelar la solicitud:", error.response?.data || error.message);
+        }
+      };
 
 
     
@@ -302,7 +322,6 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                             </Box>
                         </Box>
                     )}
-
                     <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
                         {/* Si el estatus es 'aceptado' y el pago está pendiente, mostramos el botón de pago */}
                         {!isOwner && request.rent_status === "accepted" && request.payment_status === "pending" && (
@@ -316,6 +335,28 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                                 Pagar
                             </Button>
                         )}
+                    <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
+                            <Button
+                                variant="contained"
+                                color="grey"
+                                size="small"
+                                onClick={() => setShowCancelModal(true)}
+                                disabled={loading} 
+                            >
+                                Cancelar
+                            </Button>
+
+                            {showCancelModal && (
+                            <ConfirmModal
+                                title="Confirmar Cancelación"
+                                message={`¿Estás seguro de que quieres cancelar el alquiler del objeto "${request.item.title}"?`}
+                                onCancel={() => setShowCancelModal(false)}
+                                onConfirm={() => handleCancelRequest(request.id)}
+                            />
+                            )}
+
+                        </Box>
+
                         { isOwner && request.rent_status === "requested" && (<Button
                             variant="contained"
                             color="success"

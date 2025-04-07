@@ -17,7 +17,7 @@ from django.db.models import Q
 def is_authorized(condition=True, authenticated=True):
     if not authenticated:
         raise NotAuthenticated(
-            {'error': 'Debes iniciar sesión.'}, status=401)
+            {'error': 'Debes iniciar sesión.'})
     elif not condition:
         raise PermissionDenied(
             {'error': 'No tienes permisos para realizar esta acción.'})
@@ -282,7 +282,7 @@ class RentViewSet(viewsets.ModelViewSet):
         rent = self.get_object()
         renter = rent.renter
         permission = renter == user
-        is_authorized(condition=permission, authenticated=authenticated)
+        is_authorized(condition=True, authenticated=authenticated)
 
         if rent.rent_status in [RentStatus.REQUESTED, RentStatus.ACCEPTED]:
             rent.rent_status = RentStatus.CANCELLED
