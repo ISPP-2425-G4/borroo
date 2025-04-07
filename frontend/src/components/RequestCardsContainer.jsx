@@ -383,27 +383,6 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                                 Pagar
                             </Button>
                         )}
-                    <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
-                            <Button
-                                variant="contained"
-                                color="grey"
-                                size="small"
-                                onClick={() => setShowCancelModal(true)}
-                                disabled={loading} 
-                            >
-                                Cancelar
-                            </Button>
-
-                            {showCancelModal && (
-                            <ConfirmModal
-                                title="Confirmar Cancelación"
-                                message={`¿Estás seguro de que quieres cancelar el alquiler del objeto "${request.item.title}"?`}
-                                onCancel={() => setShowCancelModal(false)}
-                                onConfirm={() => handleCancelRequest(request.id)}
-                            />
-                            )}
-
-                        </Box>
 
                         { isOwner && request.rent_status === "requested" && (<Button
                             variant="contained"
@@ -422,6 +401,37 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                             Rechazar
                         </Button> }
                     </Box>
+                    <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
+                        {user.id === request.renter.id && (
+                            <Button
+                                variant="contained"
+                                color="grey"
+                                size="small"
+                                onClick={() => setShowCancelModal(true)}
+                                disabled={loading} 
+                            >
+                                Cancelar
+                            </Button>)}
+                            { isOwner && request.rent_status != "requested" && (
+                            <Button
+                                variant="contained"
+                                color="grey"
+                                size="small"
+                                onClick={() => setShowCancelModal(true)}
+                                disabled={loading}
+                            >
+                                Cancelar
+                            </Button>
+                            )}
+                            {showCancelModal && (
+                            <ConfirmModal
+                                title="Confirmar Cancelación"
+                                message={`¿Estás seguro de que quieres cancelar el alquiler del objeto "${request.item.title}"?`}
+                                onCancel={() => setShowCancelModal(false)}
+                                onConfirm={() => handleCancelRequest(request.id)}
+                            />
+                            )}
+                        </Box>
                     {/* Modal de opciones de pago */}
                     <Dialog open={openPaymentModal} onClose={handleClosePaymentModal}>
                         <DialogTitle>Elige un método de pago</DialogTitle>

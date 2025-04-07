@@ -275,14 +275,16 @@ class RentViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['put'])
     def cancel_rent(self, request, pk=None):
-        # hay que cambiar user
-        user = request.user if not AnonymousUser else None
-        authenticated = request.user.is_authenticated
+        user = request.user if not isinstance(request.user, AnonymousUser) else None
+        if not request.user.is_authenticated:
+            raise NotAuthenticated({'error': 'Debes iniciar sesión.'})
+
+        rent = get_object_or_404(Rent, pk=pk)
+        print(rent)
+        if not (user == rent.renter or user == rent.item.user):
+            raise PermissionDenied({'error': 'No tienes permisos para cancelar este alquiler.'})
+
         now = timezone.now()
-        rent = self.get_object()
-        renter = rent.renter
-        permission = renter == user
-        is_authorized(condition=True, authenticated=authenticated)
 
         if rent.rent_status in [RentStatus.REQUESTED, RentStatus.ACCEPTED]:
             rent.rent_status = RentStatus.CANCELLED
@@ -302,8 +304,9 @@ class RentViewSet(viewsets.ModelViewSet):
                 'refund_amount': str(refund_amount)})
 
         else:
-            raise Response(
-                {'error': 'No se puede cancelar un alquiler en este estado'})
+            return Response(
+                {'error': 'No se puede cancelar un alquiler en este estado'},
+                status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, *args, **kwargs):
         rent = self.get_object()
