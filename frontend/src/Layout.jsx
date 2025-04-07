@@ -105,6 +105,8 @@ const onFilterChange = (filtros) => {
     setTerminoBusqueda("");
     setCategoria("");
     setRangoPrecio([0, 100]);
+    setPriceCategory("");
+    setCancelType("");
   };
 
   const truncarDescripcion = useCallback((descripcion, longitud = 100) => {
