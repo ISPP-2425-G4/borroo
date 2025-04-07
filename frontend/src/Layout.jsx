@@ -56,6 +56,7 @@ const Layout = () => {
   const [cargando, setCargando] = useState(true);
   const [featuredItems, setFeaturedItems] = useState([]);
   const [priceCategory, setPriceCategory] = useState("");
+  const [cancelType, setCancelType] = useState("");
 
 
   const options = {
@@ -177,10 +178,12 @@ const onFilterChange = (filtros) => {
       (subcategoria === "" || producto.subcategory_display === subcategoria) &&
       (priceCategory === "" || producto.price_category === priceCategory) &&
       (producto.price >= rangoPrecio[0] && producto.price <= rangoPrecio[1]) &&
+      (cancelType === "" || producto.cancel_type === cancelType) &&
       (terminoBusqueda === "" || normalizarTexto(producto.title).includes(normalizarTexto(terminoBusqueda)))
     ));
     setProductosFiltrados(filtrados);
-  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda,priceCategory]);
+    setCurrentPage(1);
+  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda,priceCategory,cancelType]);
   
 
   const hayFiltrosActivos = useMemo(() => 
@@ -377,15 +380,7 @@ useEffect(() => {
                                       </Box>
                                     }
                                   />
-                                  {priceCategory && (
-                                    <Chip
-                                      label={`Precio: ${options.price_categories.find(p => p[0] === priceCategory)?.[1] || priceCategory}`}
-                                      size="small"
-                                      onDelete={() => setPriceCategory("")}
-                                      sx={{ borderRadius: 1 }}
-                                    />
-                                  )}
-
+       
                                   <Chip
                                     size="small"
                                     label={producto.subcategory_display}
@@ -855,6 +850,45 @@ useEffect(() => {
                   )}
                 </FormControl>
               </Box>
+              <Box sx={{ mt: 2 }}>
+  <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
+    Tipo de cancelación
+  </Typography>
+  <FormControl fullWidth size="small">
+    <Select
+      value={cancelType}
+      onChange={(e) => setCancelType(e.target.value)}
+      displayEmpty
+      variant="outlined"
+      sx={{
+        borderRadius: 1.5,
+        '& .MuiOutlinedInput-notchedOutline': {
+          borderColor: '#e0e0e0'
+        }
+      }}
+      MenuProps={{
+        disableScrollLock: true,
+        PaperProps: {
+          sx: {
+            borderRadius: 2,
+            mt: 0.5,
+            boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+          }
+        }
+      }}
+    >
+      <MenuItem value="">
+        <em>Todos los tipos</em>
+      </MenuItem>
+      {options.cancel_types.map(([value, label]) => (
+        <MenuItem key={value} value={value}>
+          {label}
+        </MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+</Box>
+
               <Box sx={{ mt: 2 }}>
                 <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
                   Tipo de precio
