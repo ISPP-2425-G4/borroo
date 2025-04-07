@@ -66,7 +66,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Javier García Rodríguez     |:blush:|:neutral_face:|:neutral_face:|:blush:|:neutral_face:|:worried:|:neutral_face:|:blush:|:neutral_face:|:neutral_face:|         |         |         |          |
 | Miguel González Ortiz       |          |          |          |          |         | :smiley: | :blush: | :neutral_face: |         | :smiley: |         |         |         |          |
 | Álvaro Martín Muñoz         |      :blush:    |          |          |          |         |         |    :blush:     |  :blush:       |         |     :blush:    |         |         |         |          |
-| Ignacio Naredo Bernardos    |          |          |          |          |     :blush:    |  :blush:       |         |         |         |         |         |         |         |          |
+| Ignacio Naredo Bernardos    |          |          |          |          |     :blush:    |  :blush:       |    :blush            :blush:  |    :blush:|      :blush: |    :blush:     |         |         |          |
 | Javier Nieto Vicioso        |          |          |          |          | :blush: | :blush: | :blush: |         | :neutral_face: |         |         |         |         |          |
 | Marco Padilla Gómez         |          |          |          |          |:smiley: |         |         |         |         |         |         |         |         |          |
 | Miguel Palomo García        |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
