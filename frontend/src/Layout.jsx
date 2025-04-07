@@ -32,7 +32,6 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import StarIcon from '@mui/icons-material/Star';
 // import AdSenseComponent from "./components/AdSense";
 import AdSenseMock from "./components/AdSenseMock";
-import { set } from "date-fns";
 
 const currentUser = JSON.parse(localStorage.getItem("user"));
 
