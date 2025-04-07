@@ -211,10 +211,12 @@ Una vez recopilada toda la información, deberá analizarla, estructurarla y cla
 
 ## Tipo de sugerencia
 
-- **Bug/error técnico**: Fallos que impiden el funcionamiento correcto de una funcionalidad.
-- **Sugerencia técnica**: Propuestas que afectan al rendimiento, arquitectura o lógica del sistema.
-- **Mejora de estilo/diseño**: Cambios relacionados con la estética, la UX o la accesibilidad.
-- **Feedback funcional**: Comentarios relacionados con el flujo o lógica de uso de una funcionalidad.
+- **Bug**: Errores técnicos que impiden el correcto funcionamiento de la aplicación o sus funcionalidades.
+- **Técnica**: Propuestas que afectan al diseño lógico o técnico del sistema. Puede implicar cambios en la arquitectura o lógica de interacción.
+- **Estilo**: Sugerencias centradas en la apariencia visual, organización de los elementos, accesibilidad o experiencia de usuario.
+- **Funcional**: Comentarios relacionados con la lógica o el comportamiento esperado de las funcionalidades del sistema.
+- **Usabilidad**: Problemas o mejoras relacionadas con la forma en que el usuario interactúa con la aplicación, que pueden generar confusión o fricción.
+
 
 ## Naturaleza
 
