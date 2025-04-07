@@ -60,6 +60,35 @@ class ChatViewSet(viewsets.ModelViewSet):
         return Response(ChatSerializer(chat).data,
                         status=status.HTTP_201_CREATED)
 
+    @action(detail=False,
+            methods=['get'],
+            url_path='get_chat_with/(?P<user_id>[^/.]+)')
+    def get_chat_with(self, request, user_id=None):
+        """Obtiene el chat entre el usuario autenticado y otro usuario."""
+        user = request.user
+        # Validar si el otro usuario existe
+        try:
+            other_user = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return Response({"error": "El usuario no existe"},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        if user == other_user:
+            return Response({"error": "No tienes chats contigo mismo"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        # Buscar el chat existente
+        chat = Chat.objects.filter(
+            (Q(user1=user) & Q(user2=other_user)) |
+            (Q(user1=other_user) & Q(user2=user))
+        ).first()
+
+        if not chat:
+            return Response({"error": "No tienes un chat con este usuario"},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        return Response(ChatSerializer(chat).data, status=status.HTTP_200_OK)
+
     @action(detail=False, methods=['get'])
     def get_my_chats(self, request):
         user = request.user
