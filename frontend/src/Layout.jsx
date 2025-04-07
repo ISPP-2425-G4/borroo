@@ -46,6 +46,7 @@ const CATEGORIAS = {
   "Entretenimiento": { icono: "🎮", color: "#9c27b0" }
 };
 
+
 const Layout = () => {
 
   const accessToken = localStorage.getItem("access_token");
@@ -61,10 +62,25 @@ const Layout = () => {
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [cargando, setCargando] = useState(true);
   const [featuredItems, setFeaturedItems] = useState([]);
+  const [priceCategory, setPriceCategory] = useState("");
+  const [cancelType, setCancelType] = useState("");
+  const [rangoValoracion, setRangoValoracion] = useState([0, 5]);
   const [mostrarSoloLiked, setMostrarSoloLiked] = useState(false);
 
 
 
+  const options = {
+    categories: Object.entries(CATEGORIAS).map(([key, val]) => [key, `${val.icono} ${key}`]),
+    subcategories: productos
+      .map(p => [p.subcategory, p.subcategory_display])
+      .filter((v, i, a) => v[0] && a.findIndex(t => t[0] === v[0]) === i),
+    cancel_types: productos
+      .map(p => [p.cancel_type, p.cancel_type_display])
+      .filter((v, i, a) => v[0] && a.findIndex(t => t[0] === v[0]) === i),
+    price_categories: productos
+      .map(p => [p.price_category, p.price_category_display])
+      .filter((v, i, a) => v[0] && a.findIndex(t => t[0] === v[0]) === i)
+  };
   const manejarCambioBusqueda = (e) => setTerminoBusqueda(e.target.value);
   const manejarCambioCategoria = (e) => { 
     setCategoria(e.target.value);
@@ -88,11 +104,13 @@ const indexOfLastItem = currentPage * itemsPerPage;
 const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 const currentItems = productosFiltrados.slice(indexOfFirstItem, indexOfLastItem);
 const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
-  
+
   const reiniciarFiltros = () => {
     setTerminoBusqueda("");
     setCategoria("");
-    setSubcategoria("");
+    setPriceCategory("");
+    setCancelType("");
+    setRangoValoracion([0, 5]);
     setRangoPrecio([0, 99999]);
     setMostrarSoloLiked(false);
   };
@@ -182,24 +200,28 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
   
       return (
         esLiked &&
-        (categoria === "" || producto.category_display === categoria) &&
-        (subcategoria === "" || producto.subcategory_display === subcategoria) &&
-        (producto.price >= rangoPrecio[0] && producto.price <= rangoPrecio[1]) &&
-        (terminoBusqueda === "" || normalizarTexto(producto.title).includes(normalizarTexto(terminoBusqueda)))
+      (categoria === "" || producto.category_display === categoria) &&
+      (subcategoria === "" || producto.subcategory_display === subcategoria) &&
+      (priceCategory === "" || producto.price_category === priceCategory) &&
+      (producto.price >= rangoPrecio[0] && producto.price <= rangoPrecio[1]) &&
+      (cancelType === "" || producto.cancel_type === cancelType) &&
+      (producto.user_rating >= rangoValoracion[0] && producto.user_rating <= rangoValoracion[1]) &&
+      (terminoBusqueda === "" || normalizarTexto(producto.title).includes(normalizarTexto(terminoBusqueda)))
       );
     });
     setProductosFiltrados(filtrados);
 
-    if (categoria || subcategoria || terminoBusqueda || mostrarSoloLiked || 
-      rangoPrecio[0] !== 0 || rangoPrecio[1] !== 99999) {
+    if (categoria ||cancelType ||priceCategory || subcategoria || terminoBusqueda || mostrarSoloLiked || 
+      rangoPrecio[0] !== 0 || rangoPrecio[1] !== 99999 || rangoValoracion[0] !== 0 || rangoValoracion[1] !== 5) {
       setCurrentPage(1);
     }
-  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda, mostrarSoloLiked]);
+  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda,priceCategory,cancelType, rangoValoracion]);
 
 
   const hayFiltrosActivos = useMemo(() => 
-    terminoBusqueda !== "" || categoria !== "" || subcategoria !== "" || rangoPrecio[0] > 0 || rangoPrecio[1] < 99999 || mostrarSoloLiked, 
-  [terminoBusqueda, categoria, subcategoria, rangoPrecio, mostrarSoloLiked]);
+    terminoBusqueda !== "" || categoria !== "" || subcategoria !== "" || priceCategory !== ""|| mostrarSoloLiked || cancelType!== ""||rangoPrecio[0] > 0 || rangoPrecio[1] < 100 || rangoValoracion[0] > 0 || rangoValoracion[1] < 5,
+    [terminoBusqueda, categoria, subcategoria, priceCategory,cancelType,rangoPrecio,rangoValoracion,mostrarSoloLiked]);
+
 
   const obtenerDetallesCategoria = (nombreCategoria) => {
     return CATEGORIAS[nombreCategoria] || { icono: "•", color: "#607d8b" };
@@ -322,8 +344,10 @@ const toggleLike = async (productoId) => {
               fontSize: { xs: '1.5rem', sm: '2rem' }
             }}>
               Productos Destacados
+              
             </Typography>
             <div>
+              
                 {featuredItems.length > 0 ? (
                     <Box sx={{
                       display: 'flex',
@@ -450,6 +474,7 @@ const toggleLike = async (productoId) => {
                                       </Box>
                                     }
                                   />
+       
                                   <Chip
                                     size="small"
                                     label={producto.subcategory_display}
@@ -735,6 +760,7 @@ const toggleLike = async (productoId) => {
                       }
                     }}
                     MenuProps={{
+                      disableScrollLock: true,
                       PaperProps: {
                         sx: {
                           borderRadius: 2,
@@ -764,6 +790,17 @@ const toggleLike = async (productoId) => {
                     displayEmpty
                     variant="outlined"
                     sx={{ minWidth: "250px" }}
+                    MenuProps={{
+                      disableScrollLock: true,
+                      PaperProps: {
+                        sx: {
+                          borderRadius: 2,
+                          mt: 0.5,
+                          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                        }
+                      }
+                    }}
+                  
                   >
                     <MenuItem value="">
                       <em>Seleccione una subcategoría</em>
@@ -915,6 +952,118 @@ const toggleLike = async (productoId) => {
                     <MenuItem value="Otros (Entretenimiento)">🔧 Otros</MenuItem>
                   </Select>
                   )}
+                </FormControl>
+              </Box>
+              <Box sx={{ mt: 2 }}>
+  <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
+    Tipo de cancelación
+  </Typography>
+  <FormControl fullWidth size="small">
+    <Select
+      value={cancelType}
+      onChange={(e) => setCancelType(e.target.value)}
+      displayEmpty
+      variant="outlined"
+      sx={{
+        borderRadius: 1.5,
+        '& .MuiOutlinedInput-notchedOutline': {
+          borderColor: '#e0e0e0'
+        }
+      }}
+      MenuProps={{
+        disableScrollLock: true,
+        PaperProps: {
+          sx: {
+            borderRadius: 2,
+            mt: 0.5,
+            boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+          }
+        }
+      }}
+    >
+      <MenuItem value="">
+        <em>Todos los tipos</em>
+      </MenuItem>
+      {options.cancel_types.map(([value, label]) => (
+        <MenuItem key={value} value={value}>
+          {label}
+        </MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+</Box>
+<Box sx={{ mb: 3 }}>
+  <Box sx={{ 
+    display: 'flex', 
+    justifyContent: 'space-between', 
+    alignItems: 'center',
+    mb: 1
+  }}>
+    <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+      Valoración
+    </Typography>
+    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+      {rangoValoracion[0]} - {rangoValoracion[1]}
+    </Typography>
+  </Box>
+  <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+    <TextField
+      size="small"
+      label="Mín"
+      type="number"
+      value={rangoValoracion[0]}
+      onChange={(e) => setRangoValoracion([Math.max(0, parseFloat(e.target.value) || 0), rangoValoracion[1]])}
+      inputProps={{ min: 0, max: 5, step: 0.1 }}
+      sx={{ width: '45%' }}
+    />
+    <TextField
+      size="small"
+      label="Máx"
+      type="number"
+      value={rangoValoracion[1]}
+      onChange={(e) => setRangoValoracion([rangoValoracion[0], Math.min(5, parseFloat(e.target.value) || 5)])}
+      inputProps={{ min: 0, max: 5, step: 0.1 }}
+      sx={{ width: '45%' }}
+    />
+  </Box>
+</Box>
+
+              <Box sx={{ mt: 2 }}>
+                <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
+                  Tipo de precio
+                </Typography>
+                <FormControl fullWidth size="small">
+                  <Select
+                    value={priceCategory}
+                    onChange={(e) => setPriceCategory(e.target.value)}
+                    displayEmpty
+                    variant="outlined"
+                    sx={{
+                      borderRadius: 1.5,
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        borderColor: '#e0e0e0'
+                      }
+                    }}
+                    MenuProps={{
+                      disableScrollLock: true,
+                      PaperProps: {
+                        sx: {
+                          borderRadius: 2,
+                          mt: 0.5,
+                          boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+                        }
+                      }
+                    }}
+                  >
+                    <MenuItem value="">
+                      <em>Todos los tipos</em>
+                    </MenuItem>
+                    {options.price_categories.map(([value, label]) => (
+                      <MenuItem key={value} value={value}>
+                        {label}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 </FormControl>
               </Box>
 

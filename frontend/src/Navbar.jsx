@@ -226,6 +226,7 @@ const Navbar = () => {
                 vertical: "top",
                 horizontal: "right",
               }}
+              disableScrollLock={true} 
             >
               {user ? (
                 <>
