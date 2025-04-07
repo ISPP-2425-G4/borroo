@@ -11,6 +11,7 @@ import { styled } from "@mui/system";
 import { DateRange } from "react-date-range";
 import "react-datepicker/dist/react-datepicker.css";
 import PublishConfirmationDialog from "./components/PublishConfirmationDialog";
+import DepositToolTip from "./components/DepositToolTip";
 
 const FormContainer = styled(Paper)(() => ({
   padding: "2rem",
@@ -208,6 +209,7 @@ const CreateItemScreen = () => {
     cancel_type: "",
     price_category: "",
     price: "",
+    deposit:"",
   });
 
   const [images, setImages] = useState([]);
@@ -273,7 +275,7 @@ const CreateItemScreen = () => {
   }, [formData, images]);
 
   const validateForm = () => {
-    const { title, description, category, subcategory, cancel_type, price_category, price } = formData;
+    const { title, description, category, subcategory, cancel_type, price_category, price, deposit } = formData;
     const isValid =
       title.trim() !== "" &&
       description.trim() !== "" &&
@@ -282,6 +284,7 @@ const CreateItemScreen = () => {
       cancel_type.trim() !== "" &&
       price_category.trim() !== "" &&
       price.trim() !== "" &&
+      deposit.trim() !== "" &&
       !isNaN(price) &&
       parseFloat(price) > 0 &&
       images.length > 0;
@@ -292,7 +295,7 @@ const CreateItemScreen = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "price") {
+    if (name === "price" || name==="deposit") {
       // Permitir solo números y máximo dos decimales
       const regex = /^\d{0,8}(\.\d{0,2})?$/;
       if (!regex.test(value) && value !== "") {
@@ -518,6 +521,17 @@ const CreateItemScreen = () => {
     } else if (formData.price > 10000) {
       errors.price = "El precio no puede superar los $10,000.";
     }
+    if (!formData.deposit) {
+      errors.deposit = "El precio es obligatorio.";
+    } else if (isNaN(formData.deposit) || parseFloat(formData.deposit) <= 0) {
+      errors.deposit = "El precio debe ser un número mayor a 0.";
+    } else if (formData.deposit.includes(".") && formData.deposit.split(".")[1].length > 2) {
+      errors.deposit = "El precio solo puede tener hasta dos decimales.";
+    } else if (formData.deposit.length > 10) {
+      errors.deposit = "El precio no puede superar los 10 dígitos en total.";
+    } else if (formData.deposit > 10000) {
+      errors.deposit = "El precio no puede superar los $10,000.";
+    }
 
     if(!formData.category) {
       errors.category = "La categoría es obligatoria.";
@@ -551,7 +565,7 @@ const CreateItemScreen = () => {
 
     try {
       const formDataToSend = new FormData();
-      const allowedKeys = ["title", "description", "category", "subcategory", "cancel_type", "price_category", "price"];
+      const allowedKeys = ["title", "description", "category", "subcategory", "cancel_type", "price_category", "price", "deposit"];
       formDataToSend.append("draft_mode", isDraft ? "true" : "false");
       
       Object.keys(formData).forEach((key) => {
@@ -755,6 +769,27 @@ const CreateItemScreen = () => {
                 />
               </InputGroup>
               {fieldErrors.price && <ErrorMessage>{fieldErrors.price}</ErrorMessage>}
+
+              <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
+              <InputGroup>
+                <InputIcon>
+                  <FiDollarSign />
+                </InputIcon>
+                <StyledInput
+                  type="number"
+                  step="0.01"
+                  name="deposit"
+                  placeholder="Fianza"
+                  value={formData.deposit}
+                  onChange={handleChange}
+                  error={!!fieldErrors.deposit}
+                />
+              </InputGroup>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <DepositToolTip />
+                </Box>
+              </Stack>
+              {fieldErrors.deposit && <ErrorMessage>{fieldErrors.deposit}</ErrorMessage>}
 
               <FileInputContainer onClick={triggerFileSelect}>
                 <FiImage size={32} color="#4a90e2" />

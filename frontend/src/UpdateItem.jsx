@@ -33,6 +33,7 @@ import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
 import SaveConfirmationDialog from "./components/SaveConfirmationDialog";
 import { DateRange } from "react-date-range";
 import { Delete } from "@mui/icons-material";
+import DepositToolTip from "./components/DepositToolTip";
 
 
 const UpdateItemScreen = () => {
@@ -127,7 +128,7 @@ const UpdateItemScreen = () => {
   const validateForm = () => {
     if (!formData) return;
     
-    const { title, description, category, subcategory, cancel_type, price_category, price } = formData;
+    const { title, description, category, subcategory, cancel_type, price_category, price, deposit } = formData;
     const isValid =
       title?.trim() !== "" &&
       description?.trim() !== "" &&
@@ -136,6 +137,7 @@ const UpdateItemScreen = () => {
       cancel_type?.trim() !== "" &&
       price_category?.trim() !== "" &&
       price?.trim() !== "" &&
+      deposit?.trim() !== "" &&
       !isNaN(price) &&
       parseFloat(price) > 0;
     
@@ -149,7 +151,7 @@ const UpdateItemScreen = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "price") {
+    if (name === "price" || name=== "deposit") {
       // Permitir solo números y máximo dos decimales
       const regex = /^\d{0,8}(\.\d{0,2})?$/;
       if (!regex.test(value) && value !== "") {
@@ -209,7 +211,7 @@ const UpdateItemScreen = () => {
 
     const errors = {};
 
-    if (!formData.title || !formData.description || !formData.category || !formData.subcategory || !formData.cancel_type || !formData.price_category || !formData.price) {
+    if (!formData.title || !formData.description || !formData.category || !formData.subcategory || !formData.cancel_type || !formData.price_category || !formData.price || !formData.deposit) {
       setErrorMessage("Por favor, completa todos los campos.");
       setLoading(false);
       return;
@@ -239,6 +241,17 @@ const UpdateItemScreen = () => {
       errors.price = "El precio solo puede tener hasta dos decimales.";
     } else if (formData.price.length > 10) {
       errors.price = "El precio no puede superar los 10 dígitos en total.";
+    }
+    if (!formData.deposit) {
+      errors.deposit = "El precio es obligatorio.";
+    } else if (isNaN(formData.deposit) || parseFloat(formData.deposit) <= 0) {
+      errors.deposit = "El precio debe ser un número mayor a 0.";
+    } else if (formData.deposit.includes(".") && formData.deposit.split(".")[1].length > 2) {
+      errors.deposit = "El precio solo puede tener hasta dos decimales.";
+    } else if (formData.deposit.length > 10) {
+      errors.deposit = "El precio no puede superar los 10 dígitos en total.";
+    } else if (formData.deposit > 10000) {
+      errors.deposit = "El precio no puede superar los $10,000.";
     }
 
     if (Object.keys(errors).length > 0) {
@@ -627,6 +640,33 @@ const UpdateItemScreen = () => {
               onChange={handleChange}
               error={!!fieldErrors.price}
               helperText={fieldErrors.price}
+              fullWidth
+              required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <MoneyIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+             <Box display="flex" alignItems="center" mb={1}
+                  >
+                    <Typography variant="subtitle2">Política de Fianza</Typography>
+                    <Box ml={1}>
+                      <DepositToolTip />
+                    </Box>
+                  </Box>
+            {/* Deposit */}
+            <TextField
+              label="Fianza"
+              name="deposit"
+              type="number"
+              inputProps={{ step: "0.01" }}
+              value={formData.deposit || ""}
+              onChange={handleChange}
+              error={!!fieldErrors.deposit}
+              helperText={fieldErrors.deposit}
               fullWidth
               required
               InputProps={{
