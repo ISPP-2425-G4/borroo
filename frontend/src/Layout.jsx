@@ -29,6 +29,7 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import StarIcon from '@mui/icons-material/Star';
 // import AdSenseComponent from "./components/AdSense";
 import AdSenseMock from "./components/AdSenseMock";
+import { set } from "date-fns";
 
 const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -57,6 +58,8 @@ const Layout = () => {
   const [featuredItems, setFeaturedItems] = useState([]);
   const [priceCategory, setPriceCategory] = useState("");
   const [cancelType, setCancelType] = useState("");
+  const [rangoValoracion, setRangoValoracion] = useState([0, 5]);
+
 
 
   const options = {
@@ -94,19 +97,14 @@ const indexOfLastItem = currentPage * itemsPerPage;
 const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 const currentItems = productosFiltrados.slice(indexOfFirstItem, indexOfLastItem);
 const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
-const onFilterChange = (filtros) => {
-  setCategoria(filtros.category || "");
-  setSubcategoria(filtros.subcategory || "");
-  // Puedes agregar más filtros si decides integrarlos:
-  // setCancelType(filtros.cancel_type || "");
-  // setPriceCategory(filtros.price_category || "");
-};
+
   const reiniciarFiltros = () => {
     setTerminoBusqueda("");
     setCategoria("");
     setRangoPrecio([0, 100]);
     setPriceCategory("");
     setCancelType("");
+    setRangoValoracion([0, 5]);
   };
 
   const truncarDescripcion = useCallback((descripcion, longitud = 100) => {
@@ -181,16 +179,17 @@ const onFilterChange = (filtros) => {
       (priceCategory === "" || producto.price_category === priceCategory) &&
       (producto.price >= rangoPrecio[0] && producto.price <= rangoPrecio[1]) &&
       (cancelType === "" || producto.cancel_type === cancelType) &&
+      (producto.user_rating >= rangoValoracion[0] && producto.user_rating <= rangoValoracion[1]) &&
       (terminoBusqueda === "" || normalizarTexto(producto.title).includes(normalizarTexto(terminoBusqueda)))
     ));
     setProductosFiltrados(filtrados);
     setCurrentPage(1);
-  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda,priceCategory,cancelType]);
+  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda,priceCategory,cancelType, rangoValoracion]);
   
 
   const hayFiltrosActivos = useMemo(() => 
-    terminoBusqueda !== "" || categoria !== "" || subcategoria !== "" || rangoPrecio[0] > 0 || rangoPrecio[1] < 100,
-  [terminoBusqueda, categoria, subcategoria, rangoPrecio]);
+    terminoBusqueda !== "" || categoria !== "" || subcategoria !== "" || priceCategory !== ""|| cancelType!== ""||rangoPrecio[0] > 0 || rangoPrecio[1] < 100 || rangoValoracion[0] > 0 || rangoValoracion[1] < 5,
+    [terminoBusqueda, categoria, subcategoria, priceCategory,cancelType,rangoPrecio,rangoValoracion]);
 
   const obtenerDetallesCategoria = (nombreCategoria) => {
     return CATEGORIAS[nombreCategoria] || { icono: "•", color: "#607d8b" };
@@ -889,6 +888,41 @@ useEffect(() => {
       ))}
     </Select>
   </FormControl>
+</Box>
+<Box sx={{ mb: 3 }}>
+  <Box sx={{ 
+    display: 'flex', 
+    justifyContent: 'space-between', 
+    alignItems: 'center',
+    mb: 1
+  }}>
+    <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+      Valoración
+    </Typography>
+    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+      {rangoValoracion[0]} - {rangoValoracion[1]}
+    </Typography>
+  </Box>
+  <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+    <TextField
+      size="small"
+      label="Mín"
+      type="number"
+      value={rangoValoracion[0]}
+      onChange={(e) => setRangoValoracion([Math.max(0, parseFloat(e.target.value) || 0), rangoValoracion[1]])}
+      inputProps={{ min: 0, max: 5, step: 0.1 }}
+      sx={{ width: '45%' }}
+    />
+    <TextField
+      size="small"
+      label="Máx"
+      type="number"
+      value={rangoValoracion[1]}
+      onChange={(e) => setRangoValoracion([rangoValoracion[0], Math.min(5, parseFloat(e.target.value) || 5)])}
+      inputProps={{ min: 0, max: 5, step: 0.1 }}
+      sx={{ width: '45%' }}
+    />
+  </Box>
 </Box>
 
               <Box sx={{ mt: 2 }}>
