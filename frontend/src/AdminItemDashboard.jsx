@@ -246,13 +246,15 @@ const AdminItemDashboard = () => {
         const confirm = window.confirm("Confirmar cambios");
         if (!confirm) return;
         try {
-            await axios.put(`${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/item/${itemId}/delete/`, {
-                
+            await axios.put(`${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/item/${itemId}/update/`, {
+                headers: { Authorization: `Bearer ${token}` },
             });
+            fetchItems(); 
+        } catch (error) {
+            alert("Error al editar ítem.");
+            console.error(error);
+        }
             fetchItems();
-        } catch(error) {
-            alert("Error al editar el item", error);
-        } 
     };
     const [images, setImages] = useState([]);
    
@@ -372,37 +374,124 @@ const AdminItemDashboard = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-    
+       
             {/* Agrega el dialog para editar el ítem si editItemData está presente */}
-            {editItemData && (
-                <Dialog open={true} onClose={() => setEditItemData(null)}>
-                    <DialogTitle>Editar Item</DialogTitle>
+            <Dialog open={editItemData} onClose={() => setEditItemData(false)}>
+    <DialogTitle>Editar Ítem</DialogTitle>
                     <DialogContent>
-                        <Grid container spacing={2}>
-                            {["title", "description", "price", "price_category", "category", "subcategory", "image"].map((field) => (
-                                <Grid item xs={12} sm={6} key={field}>
-                                    <TextField
-                                        fullWidth
-                                        label={field.charAt(0).toUpperCase() + field.slice(1).replace("_", " ")}
-                                        value={editItemData[field] || ""}
-                                        onChange={(e) =>
-                                            setEditItemData((prev) => ({
-                                                ...prev,
-                                                [field]: e.target.value,
-                                            }))
-                                        }
-                                        variant="outlined"
-                                    />
-                                </Grid>
-                            ))}
-                        </Grid>
+                        <TextField
+                            fullWidth
+                            label="Título"
+                            name="title"
+                            value={editItemData.title}
+                            onChange={handleInputChange}
+                            margin="normal"
+                        />
+                        <TextField
+                            fullWidth
+                            label="Descripción"
+                            name="description"
+                            value={editItemData.description}
+                            onChange={handleInputChange}
+                            margin="normal"
+                        />
+                        <TextField
+                            fullWidth
+                            label="Precio"
+                            name="price"
+                            value={editItemData.price}
+                            onChange={handleInputChange}
+                            margin="normal"
+                        />
+                        <FormControl fullWidth margin="normal">
+                            <InputLabel>Precio Categoría</InputLabel>
+                            <Select
+                                name="price_category"
+                                value={editItemData.price_category}
+                                onChange={handleInputChange}
+                            >
+                                <MenuItem value="hour">Hora</MenuItem>
+                                <MenuItem value="day">Día</MenuItem>
+                                <MenuItem value="month">Mes</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        <FormControl fullWidth margin="normal">
+                            <InputLabel>Categoría</InputLabel>
+                            <Select
+                                name="category"
+                                value={editItemData.category}
+                                onChange={handleCategoryChange}
+                            >
+                                <MenuItem value="none" disabled>Selecciona una categoría</MenuItem>
+                                {categoryList.map((cat) => (
+                                    <MenuItem key={cat.value} value={cat.value}>
+                                        {cat.label}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+
+                        {editItemData.category !== "none" && (
+                            <FormControl fullWidth margin="normal">
+                                <InputLabel>Subcategoría</InputLabel>
+                                <Select
+                                    name="subcategory"
+                                    value={editItemData.subcategory}
+                                    onChange={handleInputChange}
+                                    label="Subcategoría"
+                                >
+                                    {categoryOptions[editItemData.category]?.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        )}
+
+                        <FileInputContainer onClick={triggerFileSelect}>
+                            <FiImage size={32} color="#4a90e2" />
+                            <ImageUploadText>
+                                Haz clic para seleccionar imágenes
+                            </ImageUploadText>
+                            <ImageUploadText variant="caption">
+                                (Para seleccionar múltiples archivos, mantén presionada la tecla Ctrl o Cmd)
+                            </ImageUploadText>
+                            <HiddenFileInput
+                                id="image-upload"
+                                type="file"
+                                multiple
+                                accept="image/*"
+                                onChange={handleImageChange}
+                            />
+                        </FileInputContainer>
+                        
+                        {editItemData.images && editItemData.images.length > 0 && (
+                            <Box>
+                                <Typography variant="subtitle2" sx={{ mb: 1, color: "#555" }}>
+                                    Imágenes seleccionadas ({editItemData.images.length})
+                                </Typography>
+                                <ImageGallery>
+                                    {editItemData.images.map((image, index) => (
+                                        <ImageContainer key={index}>
+                                            <PreviewImage src={URL.createObjectURL(image)} alt={`Preview ${index + 1}`} />
+                                        </ImageContainer>
+                                    ))}
+                                </ImageGallery>
+                            </Box>
+                        )}
+
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={() => setEditItemData(null)}>Cancelar</Button>
-                        <Button onClick={handleEditItem} variant="contained" color="primary">Guardar</Button>
+                        <Button onClick={() => setEditItemData(null)} color="primary">
+                            Cancelar
+                        </Button>
+                        <Button onClick={handleEditItem} color="primary">
+                            Guardar
+                        </Button>
                     </DialogActions>
                 </Dialog>
-            )}
       
          <Dialog open={showCreateForm} onClose={() => setShowCreateForm(false)}>
                     <DialogTitle>Crear Ítem</DialogTitle>

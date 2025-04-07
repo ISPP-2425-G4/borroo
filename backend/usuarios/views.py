@@ -553,7 +553,7 @@ class CreateItemView(APIView):
 
 
 class UpdateItemView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
     def put(self, request, *args, **kwargs):
         # Recuperamos el objeto a actualizar
