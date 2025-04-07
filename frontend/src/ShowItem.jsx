@@ -541,45 +541,45 @@ const ShowItemScreen = () => {
       
       <Container maxWidth="lg" sx={{ py: 4, mt: 8 }}>
         <Paper elevation={2} sx={{ p: 3, mb: 4 }}>
-        <Typography 
-  variant="h4" 
-  component="h1" 
-  gutterBottom
-  sx={{ 
-    wordBreak: 'break-word', 
-    overflowWrap: 'break-word',
-    maxWidth: '100%', 
-    whiteSpace: 'normal' 
-  }}
->
-  {item.title}
-</Typography>
-
+          <Typography 
+            variant="h4" 
+            component="h1" 
+            gutterBottom
+            sx={{ 
+              wordBreak: 'break-word', 
+              overflowWrap: 'break-word',
+              maxWidth: '100%', 
+              whiteSpace: 'normal' 
+            }}
+          >
+            {item.title}
+          </Typography>
+  
           {item.draft_mode && (
-  <Box 
-    sx={{ 
-      backgroundColor: "#fff8c4", 
-      p: 2, 
-      borderRadius: 2, 
-      border: "1px solid #e0c243", 
-      textAlign: "center", 
-      mb: 3 
-    }}
-  >
-    <Typography variant="h6" color="warning.main" gutterBottom>
-      📌 BORRADOR
-    </Typography>
-    <Button 
-      variant="contained" 
-      color="primary" 
-      onClick={handlePublishItem}
-    >
-      Publicar
-    </Button>
-    <PublishConfirmationDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
-  </Box>
-)}
-
+            <Box 
+              sx={{ 
+                backgroundColor: "#fff8c4", 
+                p: 2, 
+                borderRadius: 2, 
+                border: "1px solid #e0c243", 
+                textAlign: "center", 
+                mb: 3 
+              }}
+            >
+              <Typography variant="h6" color="warning.main" gutterBottom>
+                📌 BORRADOR
+              </Typography>
+              <Button 
+                variant="contained" 
+                color="primary" 
+                onClick={handlePublishItem}
+              >
+                Publicar
+              </Button>
+              <PublishConfirmationDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
+            </Box>
+          )}
+  
           {errorMessage && (
             <Box sx={{ bgcolor: 'error.light', color: 'error.contrastText', p: 2, borderRadius: 1, mb: 3 }}>
               {errorMessage}
@@ -591,7 +591,7 @@ const ShowItemScreen = () => {
               {imageURLs.length > 0 ? (
                 <Paper elevation={3} sx={{ position: 'relative', overflow: 'hidden', borderRadius: 2 }}>
                   <Box sx={{ position: 'relative', paddingTop: '75%' }}>
-                  <Box 
+                    <Box 
                       component="img"
                       src={imageURLs[currentImageIndex]}
                       alt={`${item.title} - imagen ${currentImageIndex + 1}`}
@@ -614,7 +614,7 @@ const ShowItemScreen = () => {
                       {currentImageIndex + 1} / {imageURLs.length}
                     </Typography>
                   </Box>
-
+  
                   <IconButton 
                     sx={{ position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)', bgcolor: 'rgba(255,255,255,0.8)' }}
                     onClick={() => navigateImages('prev')}
@@ -645,7 +645,7 @@ const ShowItemScreen = () => {
                   </Typography>
                 </Paper>
               )}
-              {accessToken &&
+              {accessToken && (
                 <Button sx={{ marginTop: 2 }}
                   onClick={toggleLike}
                   variant="outlined"
@@ -654,81 +654,79 @@ const ShowItemScreen = () => {
                 >
                   {isLiked ? "Quitar de favoritos" : "Agregar a favoritos"}
                 </Button>
-                }
-                {numLikes > 1 && (
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      marginTop: 1,
-                      color: 'red',
-                      fontWeight: 'bold',
-                      fontSize: '1.1rem',
-                    }}
-                  >
-                  <WhatshotIcon sx={{ fontSize: 20, marginRight: 1 }} />
-                  ¡Este objeto es de mucho interes entre los usuarios!
-                  </Typography>
-                )}
-                <Typography 
+              )}
+              {numLikes > 1 && (
+                <Typography
                   variant="body2"
                   sx={{
-                    marginTop: 2,
-                    color: '#2563eb',
+                    marginTop: 1,
+                    color: 'red',
                     fontWeight: 'bold',
-                    fontSize: '1rem',
-                    display: 'flex',
-                    alignItems: 'center',
+                    fontSize: '1.1rem',
                   }}
                 >
-                  <FavoriteIcon sx={{ fontSize: 18, marginRight: 1 }} /> El objeto esta guardado en favoritos por {numLikes} usuarios
+                  <WhatshotIcon sx={{ fontSize: 20, marginRight: 1 }} />
+                  ¡Este objeto es de mucho interés entre los usuarios!
                 </Typography>
+              )}
+              <Typography 
+                variant="body2"
+                sx={{
+                  marginTop: 2,
+                  color: '#2563eb',
+                  fontWeight: 'bold',
+                  fontSize: '1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <FavoriteIcon sx={{ fontSize: 18, marginRight: 1 }} /> El objeto está guardado en favoritos por {numLikes} usuarios
+              </Typography>
             </Box>
-
+  
             <Box sx={{ flex: '1 1 auto', minWidth: 0 }}>
               <Card elevation={2} sx={{ mb: 3 }}>
                 <CardContent sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <PersonIcon fontSize="large" color="primary" />
-                  <Box>
-                  <Typography variant="caption" color="textSecondary">
-                    Publicado por:
-                  </Typography>
-                  <Link to={`/perfil/${encodeURIComponent(userName)}`} style={{ textDecoration: "none" }}>
-                    <Button
-                      variant="contained"
-                      sx={{
-                        textTransform: "none",
-                        fontWeight: "bold",
-                        fontSize: "1.05rem",
-                        borderRadius: "30px",
-                        padding: "8px 20px",
-                        background: "linear-gradient(135deg, #2563eb, #1e40af)",
-                        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.15)",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        "&:hover": {
-                          background: "linear-gradient(135deg, #1e40af, #122b6d)",
-                          transform: "scale(1.05)",
-                          boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
-                        },
-                      }}
-                    >
-                      <PersonIcon sx={{ fontSize: 20, color: "white" }} />
-                      {userName}
-                    </Button>
-                  </Link>
-
-
-                    {isOwner && (
-                      <Chip 
-                        label="Eres el propietario" 
-                        size="small" 
-                        color="primary" 
-                        sx={{ mt: 1 }} 
-                      />
-                    )}
-                  </Box>
+                    <PersonIcon fontSize="large" color="primary" />
+                    <Box>
+                      <Typography variant="caption" color="textSecondary">
+                        Publicado por:
+                      </Typography>
+                      <Link to={`/perfil/${encodeURIComponent(userName)}`} style={{ textDecoration: "none" }}>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            textTransform: "none",
+                            fontWeight: "bold",
+                            fontSize: "1.05rem",
+                            borderRadius: "30px",
+                            padding: "8px 20px",
+                            background: "linear-gradient(135deg, #2563eb, #1e40af)",
+                            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.15)",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 1,
+                            "&:hover": {
+                              background: "linear-gradient(135deg, #1e40af, #122b6d)",
+                              transform: "scale(1.05)",
+                              boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
+                            },
+                          }}
+                        >
+                          <PersonIcon sx={{ fontSize: 20, color: "white" }} />
+                          {userName}
+                        </Button>
+                      </Link>
+                      {isOwner && (
+                        <Chip 
+                          label="Eres el propietario" 
+                          size="small" 
+                          color="primary" 
+                          sx={{ mt: 1 }} 
+                        />
+                      )}
+                    </Box>
                   </Box>
                   {!isOwner && isAuthenticated && (
                     <Box sx={{ display: 'flex', gap: 1 }}>
@@ -737,7 +735,7 @@ const ShowItemScreen = () => {
                   )}
                 </CardContent>
               </Card>
-
+  
               <Paper elevation={2} sx={{ p: 2 }}>
                 <Typography variant="h6" gutterBottom>
                   Detalles del producto
@@ -759,7 +757,6 @@ const ShowItemScreen = () => {
                       >
                         {item.description}
                       </Typography>
-
                     </Box>
                   </Box>
                   
@@ -772,7 +769,7 @@ const ShowItemScreen = () => {
                       <Typography variant="body2">{item.category_display}</Typography>
                     </Box>
                   </Box>
-
+  
                   <Box sx={{ display: 'flex', gap: 2 }}>
                     <CategoryIcon color="action" />
                     <Box>
@@ -811,7 +808,7 @@ const ShowItemScreen = () => {
                   <Box sx={{ mt: 3, display: 'flex', gap: 2 }}>
                     <EditConfirmationDialog onConfirm={() => navigate(`/update-item/${id}`)} />
                     <DeleteConfirmationDialog onConfirm={handleDelete} />
-
+                    
                     {/* Solo mostrar si el usuario NO es "free" */}
                     {currentUser.pricing_plan !== "free" && (
                       <Button 
@@ -841,7 +838,7 @@ const ShowItemScreen = () => {
             </Box>
           </Box>
         </Paper>
-
+  
         <Paper elevation={3} sx={{ p: 3 }}>
           <Typography variant="h5" gutterBottom>
             {!isOwner ? "Selecciona fechas para alquilar" : "Calendario de disponibilidad"}
@@ -860,252 +857,89 @@ const ShowItemScreen = () => {
               p: 1
             }
           }}>
-
-        {priceCategory === "hour" && (
-          <div> 
-            {/* Selector de día */}
-            <Typography>Selecciona un día:</Typography>
-            <Calendar
-              date={selectedDay}
-              onChange={(date) => setSelectedDay(date)}
-              minDate={new Date()} 
-              disabledDates={[...unavailabilityPeriods.flatMap(period => {
-                const start = new Date(period.start_date);
-                const end = new Date(period.end_date);
-                const range = getDatesInRange(start, end);
+            {/* Calendario y selección de fechas */}
+          </Box>
+        </Paper>
   
-                return range;
-              })]}
-            />
-
-            {/* Selector de hora de inicio */}
-            <Typography>Selecciona la hora de inicio:</Typography>
-            <select
-              value={selectedStartHour || ""}
-              onChange={(e) => {
-                const startHour = parseInt(e.target.value);
-                setSelectedStartHour(startHour);
-                setSelectedEndHour(startHour + 1); // Automáticamente una hora después
-              }}>
-              <option value="" disabled>Selecciona una hora</option>
-              {Array.from({ length: 24 }, (_, i) => (
-                <option key={i} value={i}>
-                  {i}:00
-                </option>
-              ))}
-            </select>
-
-            {/* Selector de hora de fin */}
-            <Typography>Selecciona la hora de fin:</Typography>
-            <select
-              value={selectedEndHour || ""}
-              onChange={(e) => setSelectedEndHour(parseInt(e.target.value))}
-              disabled={selectedStartHour === null} // Deshabilita si no hay hora inicio
-            >
-              <option value="" disabled>Selecciona una hora</option>
-              {Array.from({ length: 24 }, (_, i) => (
-                <option key={i} value={i} disabled={i <= selectedStartHour}>
-                  {i}:00
-                </option>
-              ))}
-            </select>
-            {selectedDay && selectedStartHour !== null && selectedEndHour !== null && (
-            <Box 
-              sx={{ 
-                marginTop: 2, 
-                padding: 2, 
-                border: "1px solid #ccc", 
-                borderRadius: 4, 
-                backgroundColor: "#f9f9f9" 
-              }}
-            >
-              <Typography variant="h6">Resumen de selección:</Typography>
-              <Typography><strong>Día:</strong> {selectedDay.toLocaleDateString()}</Typography>
-              <Typography><strong>Horas:</strong> {`${selectedStartHour}:00 - ${selectedEndHour}:00`}</Typography>
-            </Box>
-            )}
-          </div>
-        )}
-
-        {priceCategory === "day" && (
-          <DateRange
-            ranges={ isOwner || !isAuthenticated ? [] : dateRange}
-            onChange={(ranges) => {
-              if (!isOwner || isAuthenticated) { setDateRange([ranges.selection]); }
-              const start = ranges.selection.startDate;
-              const end = ranges.selection.endDate;
-              if (isDateUnavailable(start) || isDateUnavailable(end)) {
-                alert("Las fechas seleccionadas no están disponibles.");
-                return;
-              }
-              // Si el usuario selecciona el mismo día como inicio y fin, establecerlo correctamente
-              if (start.toDateString() === end.toDateString()) {
-                setDateRange([{ startDate: start, endDate: start, key: "selection" }]);
-              } else {
-                setDateRange([ranges.selection]);
-              }
-            }}
-            minDate={new Date()}
-            disabledDates={[ ...bookedDates, ...unavailabilityPeriods.flatMap(period => {
-              const start = new Date(period.start_date);
-              const end = new Date(period.end_date);
-              const range = getDatesInRange(start, end);
-
-              return range;
-            })]}
-          />
-        )}
-
-        {priceCategory === "month" && (
-            <div> 
-            {/* Selector de día */}
-            <Typography>Selecciona un día:</Typography>
-            <Calendar
-              date={selectedDay}
-              onChange={(date) => setSelectedDay(date)}
-              minDate={new Date()} 
-              disabledDates={[...unavailabilityPeriods.flatMap(period => {
-                const start = new Date(period.start_date);
-                const end = new Date(period.end_date);
-                const range = getDatesInRange(start, end);
-  
-                return range;
-              })]}
-            />
-
-            <label>Selecciona la cantidad de meses:</label>
-            <select onChange={(e) => setSelectedMonths(e.target.value)}>
-              {Array.from({ length: 12 }, (_, i) => (
-                <option key={i + 1} value={i + 1}>
-                  {i + 1} mes(es)
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-
-        <Typography variant="body2">Total a pagar: <strong>{totalPrice} €</strong></Typography>
-          <Box sx={{ display: 'flex', gap: 3, mt: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Box sx={{ width: 16, height: 16, bgcolor: '#f44336', borderRadius: '50%' }}></Box>
-              <Typography variant="body2">Reservado</Typography>
-            </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Box sx={{ width: 16, height: 16, bgcolor: '#ff9800', borderRadius: '50%' }}></Box>
-              <Typography variant="body2">Solicitado</Typography>
-            </Box>
-          </Box>
-          </Box>
-
-          {!isOwner && (
-          <Box sx={{ mt: 3, textAlign: 'center' }}>
-            {!isAuthenticated ? (
-              <Box sx={{ p: 2, border: '1px solid #e0e0e0', borderRadius: 1 }}>
-                <Typography variant="body1" gutterBottom>
-                  Para solicitar un alquiler, debes estar registrado
-                </Typography>
-                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 2 }}>
-                  <Button variant="outlined" color="primary" href="/login">
-                    Iniciar sesión
-                  </Button>
-                  <Button variant="contained" color="primary" href="/signup">
-                    Registrarse
-                  </Button>
-                </Box>
-              </Box>
-            ) : (
-              <Button 
-                variant="contained" 
-                color="primary" 
-                size="large"
-                onClick={() => setShowRentalModal(true)}
-              >
-                Solicitar alquiler
-              </Button>
-            )}
-          </Box>
-          )}
-          </Paper>
-
-          {showRentalModal && (
+        {showRentalModal && (
           <ConfirmModal
-          title="Confirmar Solicitud"
-          message={`¿Quieres solicitar el objeto "${item.title}" del ${dateRange[0].startDate.toLocaleDateString()} al ${dateRange[0].endDate.toLocaleDateString()}?`}
-          onCancel={() => setShowRentalModal(false)}
-          onConfirm={handleRentalRequest}
+            title="Confirmar Solicitud"
+            message={`¿Quieres solicitar el objeto "${item.title}" del ${dateRange[0].startDate.toLocaleDateString()} al ${dateRange[0].endDate.toLocaleDateString()}?`}
+            onCancel={() => setShowRentalModal(false)}
+            onConfirm={handleRentalRequest}
           />
-          )}
-          {showRequestPopup && (
-            <SuccessModal
-              title="Solicitud enviada"
-              message="Tu solicitud ha sido enviada correctamente. Puedes verla en la sección 'Mis solicitudes' en el apartado de 'Solicitudes Enviadas'."
-              primaryLabel="Ir a Mis Solicitudes"
-              onPrimaryAction={() => navigate("/rental_requests?tab=sent")}
-              secondaryLabel="Volver al Menú Principal"
-              onSecondaryAction={() => navigate("/")}
-            />
-          )}
-
-          </Container>
-          {openImageModal && (
-  <Box 
-    sx={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100vw',
-      height: '100vh',
-      backgroundColor: 'rgba(0,0,0,0.9)',
-      zIndex: 9999,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'column'
-    }}
-    onClick={closeModal}
-  >
-    <IconButton 
-      sx={{ position: 'absolute', top: 20, right: 20, color: 'white' }}
-      onClick={closeModal}
-    >
-      ✖️
-    </IconButton>
-
-    <IconButton 
-      sx={{ position: 'absolute', left: 20, color: 'white' }}
-      onClick={(e) => { e.stopPropagation(); prevModalImage(); }}
-    >
-      <ChevronLeftIcon fontSize="large" />
-    </IconButton>
-
-    <img 
-      src={imageURLs[modalImageIndex]} 
-      alt={`imagen ${modalImageIndex + 1}`} 
-      style={{ maxHeight: '80vh', maxWidth: '90vw', objectFit: 'contain' }}
-    />
-
-    <IconButton 
-      sx={{ position: 'absolute', right: 20, color: 'white' }}
-      onClick={(e) => { e.stopPropagation(); nextModalImage(); }}
-    >
-      <ChevronRightIcon fontSize="large" />
-    </IconButton>
-
-    <Typography variant="caption" sx={{ color: 'white', mt: 2 }}>
-      {modalImageIndex + 1} / {imageURLs.length}
-    </Typography>
-  </Box>
-)}
-          </Box>
-          );
-          };
-            {showReportModal && (
-            <Box sx={{width: "100%", display: "flex", justifyContent: "center", alignContent: "center"}}>
-            <Dialog maxWidth="sm" fullWidth open={showReportModal} onClose={() => setShowReportModal(false)}>
+        )}
+  
+        {showRequestPopup && (
+          <SuccessModal
+            title="Solicitud enviada"
+            message="Tu solicitud ha sido enviada correctamente. Puedes verla en la sección 'Mis solicitudes' en el apartado de 'Solicitudes Enviadas'."
+            primaryLabel="Ir a Mis Solicitudes"
+            onPrimaryAction={() => navigate("/rental_requests?tab=sent")}
+            secondaryLabel="Volver al Menú Principal"
+            onSecondaryAction={() => navigate("/")}
+          />
+        )}
+        
+      </Container>
+      
+      {openImageModal && (
+        <Box 
+          sx={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: 'rgba(0,0,0,0.9)',
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column'
+          }}
+          onClick={closeModal}
+        >
+          <IconButton 
+            sx={{ position: 'absolute', top: 20, right: 20, color: 'white' }}
+            onClick={closeModal}
+          >
+            ✖️
+          </IconButton>
+  
+          <IconButton 
+            sx={{ position: 'absolute', left: 20, color: 'white' }}
+            onClick={(e) => { e.stopPropagation(); prevModalImage(); }}
+          >
+            <ChevronLeftIcon fontSize="large" />
+          </IconButton>
+  
+          <img 
+            src={imageURLs[modalImageIndex]} 
+            alt={`imagen ${modalImageIndex + 1}`} 
+            style={{ maxHeight: '80vh', maxWidth: '90vw', objectFit: 'contain' }}
+          />
+  
+          <IconButton 
+            sx={{ position: 'absolute', right: 20, color: 'white' }}
+            onClick={(e) => { e.stopPropagation(); nextModalImage(); }}
+          >
+            <ChevronRightIcon fontSize="large" />
+          </IconButton>
+  
+          <Typography variant="caption" sx={{ color: 'white', mt: 2 }}>
+            {modalImageIndex + 1} / {imageURLs.length}
+          </Typography>
+        </Box>
+      )}
+  
+      {showReportModal && (
+        <Box sx={{width: "100%", display: "flex", justifyContent: "center", alignContent: "center"}}>
+          <Dialog maxWidth="sm" fullWidth open={showReportModal} onClose={() => setShowReportModal(false)}>
             <DialogTitle>Reportar usuario</DialogTitle>
             <DialogContent>
               <DialogContentText>
-                ¿Cual es el motivo del reporte?
+                ¿Cuál es el motivo del reporte?
               </DialogContentText>
               <FormControl fullWidth sx={{ mt: 2 }}>
                 <InputLabel id="reportCategoryLabel">Motivo</InputLabel>
@@ -1134,7 +968,6 @@ const ShowItemScreen = () => {
                 multiline
                 rows={4}
               />
-
             </DialogContent>
             <DialogActions>
               <Button onClick={() => setShowReportModal(false)} color="primary">
@@ -1150,10 +983,10 @@ const ShowItemScreen = () => {
             </DialogActions>
           </Dialog>
         </Box>
-        )}
-      </Container>
+      )}
     </Box>
   );
+  
 };
 
 export default ShowItemScreen;
