@@ -257,13 +257,14 @@ const Navbar = () => {
               </IconButton>
             </Tooltip>
 
-            <Tooltip title="Mensajes">
+            {user && (<Tooltip title="Mensajes">
               <IconButton color="inherit" component={Link} to="/messages">
                 <Badge badgeContent={0} color="error" >
                   <FiMessageSquare />
                 </Badge>
               </IconButton>
-            </Tooltip>
+            </Tooltip>)
+            }
 
             <Tooltip title="Borradores">
               <IconButton color="inherit" component={Link} to="/drafts">

@@ -95,7 +95,7 @@ const Messages = () => {
                         Authorization: `Bearer ${accessToken}`,
                     },
                 });
-                setConversations(response.data);
+                setConversations(response.data.sort((a, b) => new Date(b.lastMessageTimestamp) - new Date(a.lastMessageTimestamp)));
                 
             } catch (error) {
                 console.error("Error al obtener conversaciones:", error);
@@ -153,7 +153,7 @@ const Messages = () => {
     };
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", height: "100vh", mt: 10, bgcolor: "#f5f5f5" }}>
+        <Box sx={{ display: "flex", flexDirection: "column", height: "100vh", mt: 8, bgcolor: "#f5f5f5" }}>
             <Navbar />
             <Box sx={{ display: "flex", flexGrow: 1, padding: 2 }}>
 
@@ -162,7 +162,7 @@ const Messages = () => {
                     width: 320, 
                     padding: 2, 
                     marginRight: 2,
-                    maxHeight: "70vh", 
+                    maxHeight: "82vh", 
                     overflowY: "auto", 
                     borderRadius: 3, 
                     boxShadow: 3
@@ -176,7 +176,9 @@ const Messages = () => {
                                 No tienes conversaciones.
                             </Typography>
                         ) : (
-                            conversations.map((conv) => (
+                            conversations
+                            .filter((conv) => conv.lastMessage)
+                            .map((conv) => (
                                 <ListItem 
                                     key={conv.id} 
                                     button 
@@ -227,7 +229,7 @@ const Messages = () => {
                 </Paper>
 
                 {/* Chat */}
-                <Paper sx={{ flexGrow: 1, display: "flex", flexDirection: "column", padding: 3, borderRadius: 3, boxShadow: 3 }}>
+                <Paper sx={{ flexGrow: 1, display: "flex", flexDirection: "column", padding: 3, borderRadius: 3, boxShadow: 3, maxHeight: "80vh", }}>
                     {selectedConversation ? (
                         <>
                             {/* Encabezado del chat con el otro usuario */}

@@ -222,7 +222,7 @@ const Profile = () => {
       alert("No se pudo eliminar la reseña.");
     }
   };
-
+  
   const handleSendMessage = async () => {
     try {
       const accessToken = localStorage.getItem("access_token");
@@ -386,9 +386,12 @@ const Profile = () => {
               {user.name} {user.surname}
             </Typography>
             
+            {currentUser.id !== user.id &&
             <Button variant="contained" onClick={handleSendMessage}>
               Enviar mensaje
             </Button>
+            }
+
 
             <Typography variant="body1" color="textSecondary">
               @{user.username}
