@@ -130,6 +130,28 @@ input, select {
     width: 18px; /* 🔹 Ajuste del tamaño del icono */
     height: 18px;
   }
+  .recover-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente los elementos */
+    justify-content: center; /* Centra verticalmente los elementos */
+    min-height: 100vh; /* Asegura que ocupe al menos la altura completa de la ventana */
+    padding: 20px; /* Añade un poco de espacio alrededor del contenido */
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
+    text-align: center; /* Centra el texto dentro de los párrafos y títulos */
+    background-color: #f3f4f6; /* O el color de fondo que prefieras */
+    }
+
+    .recover-container h1 {
+        color: #2563eb; /* Color del título */
+        margin-bottom: 20px; /* Espacio debajo del título */
+    }
+
+    .recover-container p {
+        max-width: 600px; /* Limita el ancho del texto para mejor legibilidad */
+        margin-bottom: 15px; /* Espacio debajo de los párrafos */
+        line-height: 1.6; /* Mejora la legibilidad del texto */
+}
   
 
 /* Media query para pantallas pequeñas donde el formulario podría ser demasiado grande */
@@ -149,3 +171,4 @@ input, select {
         padding: 1.5rem;
     }
 }
+

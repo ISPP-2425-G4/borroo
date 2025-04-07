@@ -10,6 +10,7 @@ import { styled } from "@mui/system";
 //import DatePicker from 'react-datepicker';
 import { DateRange } from "react-date-range";
 import "react-datepicker/dist/react-datepicker.css";
+import PublishConfirmationDialog from "./components/PublishConfirmationDialog";
 
 const FormContainer = styled(Paper)(() => ({
   padding: "2rem",
@@ -233,6 +234,7 @@ const CreateItemScreen = () => {
   const [fetchingOptions, setFetchingOptions] = useState(true);
   const [isDraft, setIsDraft] = useState(false);
   const [filteredSubcategories, setFilteredSubcategories] = useState([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
     const fetchEnums = async () => {
@@ -332,7 +334,7 @@ const CreateItemScreen = () => {
         { value: "printers_scanners", label: "Impresoras y escáneres" },
         { value: "drones", label: "Drones" },
         { value: "projectors", label: "Proyectores" },
-        { value: "technology_others", label: "Otros" },
+        { value: "technology_others", label: "Otros (Tecnología)" },
         { value: "none", label: "Ninguno" },
 
       ];
@@ -576,6 +578,7 @@ const CreateItemScreen = () => {
   
       if (response.status === 201) {
         setSubmitSuccess(true);
+        setDialogOpen(true);  // Agrega aquí para mostrar el diálogo
         setTimeout(() => {
           if (isDraft) {
             navigate("/drafts");
@@ -882,6 +885,8 @@ const CreateItemScreen = () => {
         )}
         </FormContainer>
       </Container>
+      {/* Aquí va el diálogo de confirmación de publicación */}
+      <PublishConfirmationDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
   </Box>
   );
 };

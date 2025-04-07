@@ -18,24 +18,36 @@ import {
   CircularProgress, 
   IconButton, 
   Stack, 
-  Chip, 
+  Chip,
+  DialogContentText, 
+  FormControl,
+  MenuItem,
+  Select,
+  InputLabel
 } from '@mui/material';
 
-import { 
-  Delete as DeleteIcon, 
-  Edit as EditIcon, 
+import {  
   Description as DescriptionIcon, 
   Category as CategoryIcon, 
   Cancel as CancelIcon, 
   AttachMoney as MoneyIcon, 
   Person as PersonIcon, 
   ChevronLeft as ChevronLeftIcon, 
-  ChevronRight as ChevronRightIcon 
+  ChevronRight as ChevronRightIcon,
+  Favorite as FavoriteIcon, 
+  FavoriteBorder as FavoriteBorderIcon,
+  Whatshot as WhatshotIcon
 } from '@mui/icons-material';
 import Navbar from "./Navbar";
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
 import SuccessModal from "./components/SuccessModal";
 import ConfirmModal from "./components/ConfirmModal";
+import DeleteConfirmationDialog from "./components/DeleteConfirmationDialog";
+import EditConfirmationDialog from "./components/EditConfirmationDialog";
+import PublishConfirmationDialog from "./components/PublishConfirmationDialog";
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
+
+
 
 const ShowItemScreen = () => {
   const { id } = useParams();
@@ -53,7 +65,7 @@ const ShowItemScreen = () => {
   }]);
   const [showRentalModal, setShowRentalModal] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [requestedDates, setRequestedDates] = useState([]);
+  {/*const [requestedDates, setRequestedDates] = useState([]);*/}
   const [bookedDates, setBookedDates] = useState([]);
   const [isOwner, setIsOwner] = useState(false); // Estado para verificar si el usuario es el propietario
   const [priceCategory, setPriceCategory]= useState(null)
@@ -64,11 +76,19 @@ const ShowItemScreen = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [highlighting, setHighlighting] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [numLikes, setNumLikes] = useState(0);
   const [showRequestPopup, setShowRequestPopup] = useState(false);
   const [openImageModal, setOpenImageModal] = useState(false);
-const [modalImageIndex, setModalImageIndex] = useState(0);
+  const [modalImageIndex, setModalImageIndex] = useState(0);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportCategory, setReportCategory] = useState("");
+  const [reportDescription, setReportDescription] = useState("");
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
+  console.log("currentUser", currentUser);
+  const accessToken = localStorage.getItem("access_token");
 
   useEffect(() => {
     const fetchItemData = async () => {
@@ -79,6 +99,7 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
         const data = response.data;
         setItem(data);
         setUnavailabilityPeriods(data.unavailable_periods || []);
+        setNumLikes(data.num_likes || 0);
 
         if (data.user) {
           fetchUserName(data.user);
@@ -92,6 +113,18 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
         if(data.price_category){
           setPriceCategory(data.price_category)
         } 
+
+        const accessToken = localStorage.getItem("access_token");
+        if (accessToken) {
+          const likedResponse = await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/objetos/like-status/${id}/`,
+            { headers: { Authorization: `Bearer ${accessToken}` } }
+          );
+          setIsLiked(likedResponse.data.is_liked || false);
+        } else {
+          setIsLiked(false);
+        }
+
       } catch (error) {
         console.error("Error fetching item:", error);
         setErrorMessage("No se pudo cargar el ítem");
@@ -103,6 +136,32 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
     if (id) fetchItemData();
   }, [id]);
 
+
+  const toggleLike = async () => {
+    if (!item) return;
+  
+    const accessToken = localStorage.getItem("access_token");
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/objetos/like/${item.id}/`,
+        {},
+        {
+          headers: {
+            "Authorization": `Bearer ${accessToken}`,  // Incluir el token de autenticación en las cabeceras
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        setIsLiked(prevState => !prevState);
+        setNumLikes(response.data.num_likes); 
+      }
+    } catch (error) {
+      console.error("Error toggling like:", error);
+      alert("Hubo un error al cambiar el estado del like.");
+    }
+  };
   
   useEffect(() => {
     if (!item) return;
@@ -128,7 +187,7 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
   
   const checkOwnerStatus = (userId) => {
     setIsAuthenticated(!!currentUser);
-    if (currentUser && currentUser.id === userId) {
+    if  (currentUser && currentUser.id === userId) {
       setIsOwner(true);
     }
   };
@@ -148,6 +207,7 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
       setUserName("Usuario desconocido");
     }
   };
+
 
   const toggleFeature = () => {
     if (!item) return;
@@ -174,6 +234,56 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
         setHighlighting(false);
     });
 };
+
+  const handleReportUser = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (!user) {
+        alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
+        return;
+      }
+      if(!reportCategory || !reportDescription) {
+        alert("Por favor, completa todos los campos.");
+        return;
+      }
+      const reportData = {
+        reporter: currentUser.id,
+        reported_user: item.user,
+        category: reportCategory,
+        description: reportDescription,
+    } 
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_BASE_URL}/usuarios/reportes/`,
+      reportData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.status === 201) {
+      alert("¡Reporte enviado correctamente!");
+      setShowReportModal(false);
+      setReportCategory("");
+      setReportDescription("");
+    } 
+
+     else if(response.status === 200){
+      alert("¡Reporte actualizado correctamente!");
+      setShowReportModal(false);
+      setReportCategory("");
+      setReportDescription("");
+    }
+    
+    else {
+      alert("Hubo un problema al enviar el reporte.");
+    }
+    
+  }catch (error) {
+      alert("Error al enviar el reporte:", error);
+      console.error("Error al enviar el reporte:", error);
+    }
+  };
 
 
   const loadItemImages = async (imageIds) => {
@@ -203,28 +313,27 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
         `${import.meta.env.VITE_API_BASE_URL}/rentas/full/item/${id}/`
       );
       const rents = rentResponse.data;
-
-      const requested = [];
+  
       const booked = [];
-      
+  
       rents.forEach((rent) => {
         const start = new Date(rent.start_date);
         const end = new Date(rent.end_date);
         const days = getDatesInRange(start, end);
-        
-        if (rent.rent_status === "requested") {
-          requested.push(...days);
-        } else if (rent.rent_status === "BOOKED") {
+  
+        const status = rent.rent_status.toLowerCase();
+  
+        if (["accepted", "booked", "picked_up"].includes(status)) {
           booked.push(...days);
         }
       });
-
-      setRequestedDates(requested);
+  
       setBookedDates(booked);
     } catch (error) {
       console.error("Error fetching availability:", error);
     }
   };
+  
   const getDatesInRange = (startDate, endDate) => {
     const dates = [];
     for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
@@ -251,9 +360,6 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
   };
 
   const handleDelete = async () => {
-    const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar este ítem?");
-    if (!confirmDelete) return;
-
     try {
       const token = localStorage.getItem("access_token")
       await axios.delete(
@@ -265,8 +371,6 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
           },
         }
       );
-
-      alert("Ítem eliminado correctamente");
       navigate("/");
     } catch (error) {
       console.error("Error deleting item:", error);
@@ -320,7 +424,7 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
       else if (priceCategory === "day" && dateRange[0].startDate && dateRange[0].endDate) {
         // Usar las fechas seleccionadas para alquiler por días
         startDateUTC = dayjs(dateRange[0].startDate).format("YYYY-MM-DD");
-        endDateUTC = dayjs(dateRange[0].endDate).format("YYYY-MM-DD");
+        endDateUTC = dayjs(dateRange[0].endDate).hour(23).minute(59).second(59).format("YYYY-MM-DDTHH:mm:ss");
       } 
       else if (priceCategory === "month" && selectedDay && selectedMonths) {
         // Construir fechas para alquiler por meses
@@ -380,7 +484,7 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
       );
   
       if (response.status === 200) {
-        alert("¡El ítem se ha publicado correctamente!");
+        setDialogOpen(true);  // Agrega aquí para mostrar el diálogo
         navigate(0); // Refresca la página
       } else {
         alert("Hubo un problema al publicar el ítem.");
@@ -461,6 +565,7 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
     >
       Publicar
     </Button>
+    <PublishConfirmationDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
   </Box>
 )}
 
@@ -529,11 +634,49 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
                   </Typography>
                 </Paper>
               )}
+              {accessToken &&
+                <Button sx={{ marginTop: 2 }}
+                  onClick={toggleLike}
+                  variant="outlined"
+                  color={isLiked ? 'error' : 'primary'}
+                  startIcon={isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                >
+                  {isLiked ? "Quitar de favoritos" : "Agregar a favoritos"}
+                </Button>
+                }
+                {numLikes > 1 && (
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      marginTop: 1,
+                      color: 'red',
+                      fontWeight: 'bold',
+                      fontSize: '1.1rem',
+                    }}
+                  >
+                  <WhatshotIcon sx={{ fontSize: 20, marginRight: 1 }} />
+                  ¡Este objeto es de mucho interes entre los usuarios!
+                  </Typography>
+                )}
+                <Typography 
+                  variant="body2"
+                  sx={{
+                    marginTop: 2,
+                    color: '#2563eb',
+                    fontWeight: 'bold',
+                    fontSize: '1rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <FavoriteIcon sx={{ fontSize: 18, marginRight: 1 }} /> El objeto esta guardado en favoritos por {numLikes} usuarios
+                </Typography>
             </Box>
 
             <Box sx={{ flex: '1 1 auto', minWidth: 0 }}>
               <Card elevation={2} sx={{ mb: 3 }}>
-                <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <CardContent sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                   <PersonIcon fontSize="large" color="primary" />
                   <Box>
                   <Typography variant="caption" color="textSecondary">
@@ -575,6 +718,12 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
                       />
                     )}
                   </Box>
+                  </Box>
+                  {!isOwner && isAuthenticated && (
+                    <Box sx={{ display: 'flex', gap: 1 }}>
+                      <Button color="error" onClick={() => setShowReportModal(true)}>Reportar</Button>
+                    </Box>
+                  )}
                 </CardContent>
               </Card>
 
@@ -638,21 +787,8 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
                 
                 {isOwner && (
                   <Box sx={{ mt: 3, display: 'flex', gap: 2 }}>
-                    <Button 
-                      variant="outlined" 
-                      startIcon={<EditIcon />} 
-                      onClick={() => navigate(`/update-item/${id}`)}
-                    >
-                      Editar
-                    </Button>
-                    <Button 
-                      variant="outlined" 
-                      color="error" 
-                      startIcon={<DeleteIcon />} 
-                      onClick={handleDelete}
-                    >
-                      Eliminar
-                    </Button>
+                    <EditConfirmationDialog onConfirm={() => navigate(`/update-item/${id}`)} />
+                    <DeleteConfirmationDialog onConfirm={handleDelete} />
 
                     {/* Solo mostrar si el usuario NO es "free" */}
                     {currentUser.pricing_plan !== "free" && (
@@ -788,7 +924,7 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
               }
             }}
             minDate={new Date()}
-            disabledDates={[...requestedDates, ...bookedDates, ...unavailabilityPeriods.flatMap(period => {
+            disabledDates={[ ...bookedDates, ...unavailabilityPeriods.flatMap(period => {
               const start = new Date(period.start_date);
               const end = new Date(period.end_date);
               const range = getDatesInRange(start, end);
@@ -887,6 +1023,7 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
               onSecondaryAction={() => navigate("/")}
             />
           )}
+
           </Container>
           {openImageModal && (
   <Box 
@@ -940,5 +1077,61 @@ const [modalImageIndex, setModalImageIndex] = useState(0);
           </Box>
           );
           };
+            {showReportModal && (
+            <Box sx={{width: "100%", display: "flex", justifyContent: "center", alignContent: "center"}}>
+            <Dialog maxWidth="sm" fullWidth open={showReportModal} onClose={() => setShowReportModal(false)}>
+            <DialogTitle>Reportar usuario</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                ¿Cual es el motivo del reporte?
+              </DialogContentText>
+              <FormControl fullWidth sx={{ mt: 2 }}>
+                <InputLabel id="reportCategoryLabel">Motivo</InputLabel>
+                <Select
+                  labelId="reportCategoryLabel"
+                  value={reportCategory}
+                  onChange={(e) => setReportCategory(e.target.value)}
+                  label="Motivo"
+                >
+                  <MenuItem value="Mensaje de Odio">Mensaje de Odio</MenuItem>
+                  <MenuItem value="Información Engañosa">Información Engañosa</MenuItem>
+                  <MenuItem value="Se hace pasar por otra persona">Se hace pasar por otra persona</MenuItem>
+                  <MenuItem value="Otro">Otro</MenuItem>
+                </Select>
+              </FormControl>
+              <TextField
+                autoFocus
+                margin="dense"
+                id="reportDescription"
+                label="Descripción"
+                type="text"
+                fullWidth
+                variant="outlined"
+                value={reportDescription}
+                onChange={(e) => setReportDescription(e.target.value)}
+                multiline
+                rows={4}
+              />
+
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setShowReportModal(false)} color="primary">
+                Cancelar
+              </Button>
+              <Button
+                onClick={handleReportUser}
+                color="error"
+                disabled={!reportCategory || !reportDescription}
+              >
+                Enviar reporte
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Box>
+        )}
+      </Container>
+    </Box>
+  );
+};
 
 export default ShowItemScreen;
