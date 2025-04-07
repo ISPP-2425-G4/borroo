@@ -608,23 +608,6 @@ class DeleteItemView(APIView):
             }, status=status.HTTP_404_NOT_FOUND)
 
 
-class CreateRentView(APIView):
-    permission_classes = [IsAuthenticated, IsAdminUser]
-
-    def post(self, request, *args, **kwargs):
-        if not request.user.is_admin:
-            return Response({
-                "error": "No tienes permisos suficientes para crear una renta."
-            }, status=status.HTTP_403_FORBIDDEN)
-
-        serializer = RentSerializer(data=request.data)
-        if serializer.is_valid():
-            rent = serializer.save(renter=request.user)
-            return Response(RentSerializer(rent).data,
-                            status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 class UpdateRentView(APIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
 

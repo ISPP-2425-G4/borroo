@@ -273,10 +273,22 @@ const AdminDashboard = () => {
     return (
         <>
             <Navbar />
-            <Box sx={{ px: 4, py: 4 }} className="dashboard">
+            <Box sx={{ px: 4, py: 4, pt:10 }} className="dashboard">
+                <Box 
+                    component= "img"
+                    src= "/logo.png"
+                    alt="Logo de la App"
+                    sx={{
+                        display: "block",
+                        margin: "0 auto",
+                        maxWidth: 150,
+                        height: "auto",
+                        mb: 2,
+                    }}
+                    />
                 {/* TÍTULO PRINCIPAL */}
                 <Typography variant="h4" sx={{ fontWeight: "bold", mb: 3, textAlign: "center" }}>
-                    Panel de Administración de Usuarios
+                    Panel de Administración
                 </Typography>
 
                 {/* BOTONES PRINCIPALES */}
@@ -290,17 +302,6 @@ const AdminDashboard = () => {
                     }}
                 >
                     <Button
-                        variant="contained"
-                        onClick={() => {
-                            setShowCreate(true);
-                            setShowUsers(false);
-                            setShowItems(false);
-                            setShowRents(false);
-                        }}
-                    >
-                        Crear Usuario
-                    </Button>
-                    <Button
                         variant="outlined"
                         onClick={() => {
                             setShowCreate(false);
@@ -310,7 +311,7 @@ const AdminDashboard = () => {
                             fetchUsers();
                         }}
                     >
-                        Ver Usuarios
+                        GESTIÓN DE USUARIOS
                     </Button>
                     <Button
                         variant="outlined"
@@ -410,14 +411,27 @@ const AdminDashboard = () => {
 
                 {/* LISTA DE USUARIOS */}
                 {showUsers && (
-                    <UserList
-                        users={users}
-                        handleEditUser={handleEditUser}
-                        handleDeleteUser={handleDeleteUser}
-                        editUserData={editUserData}
-                        setEditUserData={setEditUserData}
-                        handleUpdateUser={handleUpdateUser}
-                    />
+                    <>
+                        <Box sx={{ textAlign: "center", mb: 2 }}>
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    setShowCreate(true);
+                                }}
+                            >
+                                Crear Usuario
+                            </Button>
+                        </Box>
+
+                        <UserList
+                            users={users}
+                            handleEditUser={handleEditUser}
+                            handleDeleteUser={handleDeleteUser}
+                            editUserData={editUserData}
+                            setEditUserData={setEditUserData}
+                            handleUpdateUser={handleUpdateUser}
+                        />
+                    </>
                 )}
                 {/* DASHBOARD DE ÍTEMS */}
                 {showItems && <AdminItemDashboard />}

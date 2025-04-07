@@ -202,7 +202,6 @@ const ImageGallery = styled(Box)(() => ({
     objectFit: "cover",
   }));
 
- 
 
 const AdminItemDashboard = () => {
     const handleImageChange = (e) => {
@@ -335,14 +334,24 @@ const AdminItemDashboard = () => {
     };
 
     return (
-        <Box p={2}>
-            <TableContainer component={Paper}>
+        <Box sx={{ maxWidth: 1000, mx: "auto", p: 2 }}>
+            <Box sx={{textAlign: "center", mb: 2 }}>
+                
+                <Button
+                    variant="contained"
+                    onClick={() => setShowCreateForm(true)} // Asume que tienes esta lógica
+                >
+                    Crear Ítem
+                </Button>
+            </Box>
+    
+            <TableContainer component={Paper} sx={{ borderRadius: 2, boxShadow: 3 }}>
                 <Table>
-                    <TableHead>
+                    <TableHead sx={{ bgcolor: "#f5f5f5" }}>
                         <TableRow>
-                            <TableCell>Título</TableCell>
-                            <TableCell>Descripción</TableCell>
-                            <TableCell>Acciones</TableCell>
+                            <TableCell><strong>Título</strong></TableCell>
+                            <TableCell><strong>Descripción</strong></TableCell>
+                            <TableCell><strong>Acciones</strong></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -352,10 +361,10 @@ const AdminItemDashboard = () => {
                                 <TableCell>{item.description}</TableCell>
                                 <TableCell>
                                     <IconButton onClick={() => handleDeleteItem(item.id)}>
-                                        <DeleteIcon />
+                                        <DeleteIcon color="error" />
                                     </IconButton>
-                                    <IconButton  onClick={() => handleEditItem(item.id)}>
-                                        <EditIcon />
+                                    <IconButton onClick={() => handleEditItem(item.id)}>
+                                        <EditIcon color="primary" />
                                     </IconButton>
                                 </TableCell>
                             </TableRow>
@@ -363,46 +372,38 @@ const AdminItemDashboard = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+    
+            {/* Agrega el dialog para editar el ítem si editItemData está presente */}
             {editItemData && (
-                    <Dialog open={true} onClose={() => setEditItemData(null)}>
-                        <DialogTitle>Editar Item</DialogTitle>
-                        <DialogContent>
+                <Dialog open={true} onClose={() => setEditItemData(null)}>
+                    <DialogTitle>Editar Item</DialogTitle>
+                    <DialogContent>
                         <Grid container spacing={2}>
-                            {[
-                            "title",
-                            "description",
-                            "price",
-                            "price_category",
-                            "category",
-                            "subcategory",
-                            "image",
-                            ].map((field) => (
-                            <Grid item xs={12} sm={6} key={field}>
-                                <TextField
-                                fullWidth
-                                label={
-                                    field.charAt(0).toUpperCase() +
-                                    field.slice(1).replace("_", " ")
-                                }
-                                value={editItemData[field] || ""}
-                                onChange={(e) =>
-                                    setEditItemData((prev) => ({
-                                    ...prev,
-                                    [field]: e.target.value,
-                                    }))
-                                }
-                                variant="outlined"
-                                />
-                            </Grid>
+                            {["title", "description", "price", "price_category", "category", "subcategory", "image"].map((field) => (
+                                <Grid item xs={12} sm={6} key={field}>
+                                    <TextField
+                                        fullWidth
+                                        label={field.charAt(0).toUpperCase() + field.slice(1).replace("_", " ")}
+                                        value={editItemData[field] || ""}
+                                        onChange={(e) =>
+                                            setEditItemData((prev) => ({
+                                                ...prev,
+                                                [field]: e.target.value,
+                                            }))
+                                        }
+                                        variant="outlined"
+                                    />
+                                </Grid>
                             ))}
                         </Grid>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={() => setEditItemData(null)}> Cancelar</Button>
-                            <Button onClick={handleEditItem} variant="contained" color="primary">Guardar</Button>
-                        </DialogActions>
-                    </Dialog>
-                    )}
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => setEditItemData(null)}>Cancelar</Button>
+                        <Button onClick={handleEditItem} variant="contained" color="primary">Guardar</Button>
+                    </DialogActions>
+                </Dialog>
+            )}
+      
          <Dialog open={showCreateForm} onClose={() => setShowCreateForm(false)}>
                     <DialogTitle>Crear Ítem</DialogTitle>
                     <DialogContent>
@@ -519,9 +520,6 @@ const AdminItemDashboard = () => {
                         </Button>
                     </DialogActions>
                 </Dialog>
-                <Button onClick={() => setShowCreateForm(true)} variant="contained">
-                            Crear ítem
-                        </Button>
         </Box>
     );
 };
