@@ -55,6 +55,8 @@ const Layout = () => {
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
   const [cargando, setCargando] = useState(true);
   const [featuredItems, setFeaturedItems] = useState([]);
+  const [priceCategory, setPriceCategory] = useState("");
+
 
   const options = {
     categories: Object.entries(CATEGORIAS).map(([key, val]) => [key, `${val.icono} ${key}`]),
@@ -173,11 +175,12 @@ const onFilterChange = (filtros) => {
     const filtrados = productos.filter((producto) => (
       (categoria === "" || producto.category_display === categoria) &&
       (subcategoria === "" || producto.subcategory_display === subcategoria) &&
+      (priceCategory === "" || producto.price_category === priceCategory) &&
       (producto.price >= rangoPrecio[0] && producto.price <= rangoPrecio[1]) &&
       (terminoBusqueda === "" || normalizarTexto(producto.title).includes(normalizarTexto(terminoBusqueda)))
     ));
     setProductosFiltrados(filtrados);
-  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda]);
+  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda,priceCategory]);
   
 
   const hayFiltrosActivos = useMemo(() => 
@@ -374,6 +377,15 @@ useEffect(() => {
                                       </Box>
                                     }
                                   />
+                                  {priceCategory && (
+                                    <Chip
+                                      label={`Precio: ${options.price_categories.find(p => p[0] === priceCategory)?.[1] || priceCategory}`}
+                                      size="small"
+                                      onDelete={() => setPriceCategory("")}
+                                      sx={{ borderRadius: 1 }}
+                                    />
+                                  )}
+
                                   <Chip
                                     size="small"
                                     label={producto.subcategory_display}
@@ -841,6 +853,44 @@ useEffect(() => {
                     <MenuItem value="Otros (Entretenimiento)">🔧 Otros</MenuItem>
                   </Select>
                   )}
+                </FormControl>
+              </Box>
+              <Box sx={{ mt: 2 }}>
+                <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 600 }}>
+                  Tipo de precio
+                </Typography>
+                <FormControl fullWidth size="small">
+                  <Select
+                    value={priceCategory}
+                    onChange={(e) => setPriceCategory(e.target.value)}
+                    displayEmpty
+                    variant="outlined"
+                    sx={{
+                      borderRadius: 1.5,
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        borderColor: '#e0e0e0'
+                      }
+                    }}
+                    MenuProps={{
+                      disableScrollLock: true,
+                      PaperProps: {
+                        sx: {
+                          borderRadius: 2,
+                          mt: 0.5,
+                          boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+                        }
+                      }
+                    }}
+                  >
+                    <MenuItem value="">
+                      <em>Todos los tipos</em>
+                    </MenuItem>
+                    {options.price_categories.map(([value, label]) => (
+                      <MenuItem key={value} value={value}>
+                        {label}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 </FormControl>
               </Box>
 
