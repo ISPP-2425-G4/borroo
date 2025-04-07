@@ -302,17 +302,6 @@ const AdminDashboard = () => {
                     }}
                 >
                     <Button
-                        variant="contained"
-                        onClick={() => {
-                            setShowCreate(true);
-                            setShowUsers(false);
-                            setShowItems(false);
-                            setShowRents(false);
-                        }}
-                    >
-                        Crear Usuario
-                    </Button>
-                    <Button
                         variant="outlined"
                         onClick={() => {
                             setShowCreate(false);
@@ -322,7 +311,7 @@ const AdminDashboard = () => {
                             fetchUsers();
                         }}
                     >
-                        Ver Usuarios
+                        GESTIÓN DE USUARIOS
                     </Button>
                     <Button
                         variant="outlined"
@@ -422,14 +411,27 @@ const AdminDashboard = () => {
 
                 {/* LISTA DE USUARIOS */}
                 {showUsers && (
-                    <UserList
-                        users={users}
-                        handleEditUser={handleEditUser}
-                        handleDeleteUser={handleDeleteUser}
-                        editUserData={editUserData}
-                        setEditUserData={setEditUserData}
-                        handleUpdateUser={handleUpdateUser}
-                    />
+                    <>
+                        <Box sx={{ textAlign: "center", mb: 2 }}>
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    setShowCreate(true);
+                                }}
+                            >
+                                Crear Usuario
+                            </Button>
+                        </Box>
+
+                        <UserList
+                            users={users}
+                            handleEditUser={handleEditUser}
+                            handleDeleteUser={handleDeleteUser}
+                            editUserData={editUserData}
+                            setEditUserData={setEditUserData}
+                            handleUpdateUser={handleUpdateUser}
+                        />
+                    </>
                 )}
                 {/* DASHBOARD DE ÍTEMS */}
                 {showItems && <AdminItemDashboard />}
