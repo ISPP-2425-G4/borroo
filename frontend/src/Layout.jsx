@@ -43,6 +43,7 @@ const CATEGORIAS = {
   "Entretenimiento": { icono: "🎮", color: "#9c27b0" }
 };
 
+
 const Layout = () => {
   const [productos, setProductos] = useState([]);
   const [error, setError] = useState(null);
@@ -55,7 +56,18 @@ const Layout = () => {
   const [cargando, setCargando] = useState(true);
   const [featuredItems, setFeaturedItems] = useState([]);
 
-
+  const options = {
+    categories: Object.entries(CATEGORIAS).map(([key, val]) => [key, `${val.icono} ${key}`]),
+    subcategories: productos
+      .map(p => [p.subcategory, p.subcategory_display])
+      .filter((v, i, a) => v[0] && a.findIndex(t => t[0] === v[0]) === i),
+    cancel_types: productos
+      .map(p => [p.cancel_type, p.cancel_type_display])
+      .filter((v, i, a) => v[0] && a.findIndex(t => t[0] === v[0]) === i),
+    price_categories: productos
+      .map(p => [p.price_category, p.price_category_display])
+      .filter((v, i, a) => v[0] && a.findIndex(t => t[0] === v[0]) === i)
+  };
   const manejarCambioBusqueda = (e) => setTerminoBusqueda(e.target.value);
   const manejarCambioCategoria = (e) => { 
     setCategoria(e.target.value);
@@ -79,7 +91,13 @@ const indexOfLastItem = currentPage * itemsPerPage;
 const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 const currentItems = productosFiltrados.slice(indexOfFirstItem, indexOfLastItem);
 const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
-  
+const onFilterChange = (filtros) => {
+  setCategoria(filtros.category || "");
+  setSubcategoria(filtros.subcategory || "");
+  // Puedes agregar más filtros si decides integrarlos:
+  // setCancelType(filtros.cancel_type || "");
+  // setPriceCategory(filtros.price_category || "");
+};
   const reiniciarFiltros = () => {
     setTerminoBusqueda("");
     setCategoria("");
@@ -234,8 +252,10 @@ useEffect(() => {
               fontSize: { xs: '1.5rem', sm: '2rem' }
             }}>
               Productos Destacados
+              
             </Typography>
             <div>
+              
                 {featuredItems.length > 0 ? (
                     <Box sx={{
                       display: 'flex',
@@ -633,6 +653,7 @@ useEffect(() => {
                       }
                     }}
                     MenuProps={{
+                      disableScrollLock: true,
                       PaperProps: {
                         sx: {
                           borderRadius: 2,
@@ -658,6 +679,17 @@ useEffect(() => {
                     displayEmpty
                     variant="outlined"
                     sx={{ minWidth: "250px" }}
+                    MenuProps={{
+                      disableScrollLock: true,
+                      PaperProps: {
+                        sx: {
+                          borderRadius: 2,
+                          mt: 0.5,
+                          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                        }
+                      }
+                    }}
+                  
                   >
                     <MenuItem value="">
                       <em>Seleccione una subcategoría</em>
