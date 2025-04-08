@@ -70,7 +70,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Javier Nieto Vicioso        |          |          |          |          | :blush: | :blush: | :blush: |         | :neutral_face: |         |         |         |         |          |
 | Marco Padilla Gómez         |          |          |          |          |:smiley: |         |         |         |         |         |         |         |         |          |
 | Miguel Palomo García        |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Luis Javier Periáñez Franco |          |          |          |          |   :neutral_face:      |     :neutral_face:    |    :neutral_face:     |         |         |         |         |         |         |          |
+| Luis Javier Periáñez Franco |          |          |          |          |   :neutral_face:      |     :neutral_face:    |    :neutral_face:     |  :neutral_face:        |         |         |         |    :worried:     |    :worried:     |          |
 | Alexander Picón Garrote     |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
 | Santiago Rosado Raya        |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
 | Julia Sánchez Márquez       |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
