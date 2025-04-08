@@ -151,6 +151,13 @@ class Item(models.Model):
                                   mayor a 99,999,999.99."),
             DecimalValidator(max_digits=10, decimal_places=2)
         ])
+    deposit = models.DecimalField(max_digits=10, decimal_places=2, validators=[
+            MinValueValidator(0.01, message="El precio debe ser mayor a 0."),
+            MaxValueValidator(99999999.99,
+                              message="El precio no puede ser \
+                                  mayor a 99,999,999.99."),
+            DecimalValidator(max_digits=10, decimal_places=2)
+        ])
     user = models.ForeignKey('usuarios.User', related_name='items',
                              on_delete=models.CASCADE)
     draft_mode = models.BooleanField(default=False)

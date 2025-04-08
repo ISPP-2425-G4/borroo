@@ -26,6 +26,7 @@ import PrivacyPolicy from "./documents/PrivacyPolicy";
 import Licenses from "./documents/Licenses";
 import VerificarEmail from "./VerifyEmail";
 import AdminReportsDashboard from "./AdminReportsDashboard";
+import Deposit from "./documents/Deposit";
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
           <Route path="/messages/:conversationId" element={<Messages />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
           <Route path="/sla" element={<Sla/>}/>
+          <Route path="/deposit" element={<Deposit/>}/>
           <Route path="/privacy-policy" element={<PrivacyPolicy/>}/>
           <Route path="/licenses" element={<Licenses/>}/>
           <Route path="/verifyEmail" element={<VerificarEmail />} />
