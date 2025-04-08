@@ -16,7 +16,7 @@ class Ticket(models.Model):
                              related_name="tickets")
     reporter = models.ForeignKey(User, on_delete=models.CASCADE,
                                  related_name="reported_incidents")
-    manager = models.ForeignKey(User, on_delete=models.CASCADE, 
+    manager = models.ForeignKey(User, on_delete=models.CASCADE,
                                 related_name="managed_tickets", null=True,
                                 blank=True)
     description = models.TextField()

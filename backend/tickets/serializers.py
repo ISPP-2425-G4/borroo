@@ -44,7 +44,7 @@ class TicketSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError(
                     {"rent": "Este campo es obligatorio."}
                     )
-        
+
         validated_data['reporter'] = self.context['request'].user
         ticket = super().create(validated_data)
 
