@@ -4258,6 +4258,66 @@
 
 ### **Picón Garrote, Alexander** 
 
+<<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="8">Trabajo</td>
+    <td>revisión de funcionalidades para implementación de nuevos test y creación de nuevas issues subgrupo1</td>
+    <td>29 minutos y 49 segundos</td>
+  </tr>
+  <tr>
+    <td>estilo pagina recuperar contraseña</td>
+    <td>26 minutos y 17 segundos</td>
+  </tr>
+  <tr>
+    <td>grabación de clips para anuncio</td>
+    <td>1 hora, 16 minutos y 9 segundos</td>
+  </tr>
+  <tr>
+    <td>bug tracking de solicitudes</td>
+    <td>47 minutos y 13 segundos</td>
+  </tr>
+  <tr>
+    <td>asignacion faltante de tareas y organizacion del s3</td>
+    <td>39 minutos y 48 segundos</td>
+  </tr>
+  <tr>
+    <td>implementacion actualizacion de saldo destinatario en pagos</td>
+    <td>1 hora, 31 minutos y 21 segundos</td>
+  </tr>
+  <tr>
+    <td>implementacion de saldo en usuarios</td>
+    <td>1 hora, 32 minutos y 52 segundos</td>
+  </tr>
+  <tr>
+    <td>Trabajo</td>
+    <td>asignacion de tareas s3</td>
+    <td>29 minutos y 21 segundos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clase</td>
+    <td>clase 04/04</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>clase 28/03</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Reunión</td>
+    <td>Reunión representantes para redactar issues y más</td>
+    <td>2 horas y 2 minutos</td>
+  </tr>
+  <tr>
+    <td>Reunión representantes para planificar el anuncio de usuarios</td>
+    <td>1 hora y 32 minutos</td>
+  </tr>
+</table>
+
 ### **Palomo García, Miguel**
 
 ### **Periañez Franco, Luis Javier**
