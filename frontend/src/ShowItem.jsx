@@ -48,6 +48,7 @@ import EditConfirmationDialog from "./components/EditConfirmationDialog";
 import PublishConfirmationDialog from "./components/PublishConfirmationDialog";
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
 import DepositToolTip from "./components/DepositToolTip";
+import StarRating from "./components/StarRating";
 
 
 
@@ -726,6 +727,11 @@ const ShowItemScreen = () => {
                       <PersonIcon sx={{ fontSize: 20, color: "white" }} />
                       {userName}
                     </Button>
+                    {item.user_rating !== undefined && (
+                        <Box sx={{ mt: 1 }}>
+                          <StarRating rating={item.user_rating} />
+                        </Box>
+                    )}
                   </Link>
 
 
