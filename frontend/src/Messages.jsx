@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import axios from "axios";
@@ -16,6 +16,31 @@ const Messages = () => {
     const navigate = useNavigate();
     const [currentUser, setCurrentUser] = useState({});
     const accessToken = localStorage.getItem("access_token");
+    const messageInputRef = useRef(null);
+
+    // Focus en el input de mensaje al cargar la página
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (!selectedConversation) return; 
+            if (document.activeElement !== messageInputRef.current) {
+                event.preventDefault();
+                messageInputRef.current?.focus();
+    
+                // Insertar la tecla en el input manualmente
+                setTimeout(() => {
+                    const input = messageInputRef.current;
+                    if (input) {
+                        input.value += event.key; // Agregar la tecla al input
+                        const eventInput = new Event("input", { bubbles: true });
+                        input.dispatchEvent(eventInput); // Disparar el evento input
+                    }
+                }, 0);
+            }
+        };
+    
+        document.addEventListener("keydown", handleKeyDown);
+        return () => document.removeEventListener("keydown", handleKeyDown);
+    }, [selectedConversation]);
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
@@ -288,6 +313,7 @@ const Messages = () => {
                                     placeholder="Escribe un mensaje..." 
                                     value={newMessage} 
                                     onChange={(e) => setNewMessage(e.target.value)}
+                                    inputRef={messageInputRef}
                                     onKeyDown={(e) => {
                                         if (e.key === "Enter" && !e.shiftKey) {
                                             e.preventDefault();
