@@ -40,10 +40,18 @@ class TicketViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_401_UNAUTHORIZED
             )
 
+        rent_id = self.kwargs.get('rentId')
+        if not rent_id:
+            return Response({'error': 'No se proporcionó rentId en la URL.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
         data = request.data.copy()
+        data['rent'] = rent_id
         # data['user'] = request.user.id
 
-        serializer = self.get_serializer(data=data)
+        serializer = self.get_serializer(
+            data=data, context={'request': request, 'rentId': rent_id}
+            )
         serializer.is_valid(raise_exception=True)
 
         serializer.save()
