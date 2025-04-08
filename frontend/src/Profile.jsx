@@ -55,7 +55,7 @@ const Profile = () => {
   const [userReview, setUserReview] = useState(null);
   const [currentUser] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem("user")) || null;
+      return JSON.parse(localStorage.getItem("user")) || {};
     } catch {
       return null;
     }
@@ -579,17 +579,19 @@ const Profile = () => {
               {user.name} {user.surname}
             </Typography>
             
-            {currentUser.id !== user.id &&
-            <Button variant="contained" onClick={handleSendMessage}>
-              Enviar mensaje
-            </Button>
-            }
 
 
             <Typography variant="body1" color="textSecondary">
               @{user.username}
             </Typography>
-            {currentUser.username === user.username ? (
+
+            {currentUser?.id && (currentUser?.id !== user.id) &&
+                  <Button variant="contained" onClick={handleSendMessage}>
+                    Enviar mensaje
+                  </Button>
+                }
+                
+            {currentUser?.username === user.username ? (
 
               <>
                 <Button

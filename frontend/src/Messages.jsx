@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import axios from "axios";
-import { Box, Typography, List, ListItem, ListItemText, Paper, TextField, Button, Divider, Avatar } from "@mui/material";
+import { Box, Typography, List, ListItem, ListItemText, Paper, TextField, Button, Divider, Avatar, Badge } from "@mui/material";
 import { es } from "date-fns/locale";
 import { format } from "date-fns";
 
@@ -12,7 +12,7 @@ const Messages = () => {
     const [messages, setMessages] = useState([]);
     const { conversationId } = useParams();
     const [newMessage, setNewMessage] = useState("");
-    const [otherUser, setOtherUser] = useState(null);
+    const [otherUser, setOtherUser] = useState({ username: "Cargando..." });
     const navigate = useNavigate();
     const [currentUser, setCurrentUser] = useState({});
     const accessToken = localStorage.getItem("access_token");
@@ -30,7 +30,7 @@ const Messages = () => {
     
     const fetchMessages = useCallback(async (conversation) => {
         try {
-            if (!conversation) return;
+            if (!conversation || !currentUser.id) return;
             const response = await axios.get(
                 `${import.meta.env.VITE_API_BASE_URL}/chats/${conversation.id}/messages/`,
                 {
@@ -39,17 +39,21 @@ const Messages = () => {
                     },
                 }
             );
-            setSelectedConversation(conversation);
-            setMessages(response.data);
-
             const otherUserId = conversation.user1 === currentUser.id ? conversation.user2 : conversation.user1;
             const userResponse = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${otherUserId}/`);
             setOtherUser(userResponse.data);
+            setMessages(response.data);
+
         } catch (error) {
             console.error("Error al cargar mensajes:", error);
         }
     }, [accessToken, currentUser.id]); 
 
+    const handleSelectConversation = useCallback((conversation) => {
+        setSelectedConversation(conversation);
+        fetchMessages(conversation);
+    }, [fetchMessages]);
+    
     useEffect(() => {
         const fetchSelectedChatMessages = async () => {
             try {
@@ -62,21 +66,21 @@ const Messages = () => {
                         },
                     }
                 );
-                fetchMessages(response.data);
+                handleSelectConversation(response.data);
             } catch (error) {
                 console.error("Error al cargar mensajes:", error);
             }
         };
 
         fetchSelectedChatMessages();
-    }, [conversationId, accessToken, fetchMessages]); 
+    }, [conversationId, accessToken, handleSelectConversation]); 
 
     useEffect(() => {
         if (!selectedConversation) return;
     
         const intervalId = setInterval(() => {
             fetchMessages(selectedConversation);
-        }, 2000); 
+        }, 2000); // Actualiza cada 2 segundos los mensajes
     
         return () => clearInterval(intervalId);
     }, [selectedConversation, fetchMessages]); 
@@ -183,7 +187,7 @@ const Messages = () => {
                                     key={conv.id} 
                                     button 
                                     selected={selectedConversation?.id === conv.id}
-                                    onClick={() => fetchMessages(conv)}
+                                    onClick={() => handleSelectConversation(conv)}
                                     sx={{
                                         borderRadius: 2,
                                         mb: 1,
@@ -205,23 +209,11 @@ const Messages = () => {
                                             </>
                                         }
                                     />
-                                    {conv.unreadCount > 0 && (
-                                        <Box 
-                                            sx={{ 
-                                                bgcolor: "red", 
-                                                color: "white", 
-                                                borderRadius: "50%", 
-                                                width: 20, 
-                                                height: 20, 
-                                                display: "flex", 
-                                                alignItems: "center", 
-                                                justifyContent: "center",
-                                                fontSize: "0.8rem"
-                                            }}
-                                        >
-                                            {conv.unreadCount}
-                                        </Box>
-                                    )}
+                                {conv.unreadCount > 0 && (
+                                    <Badge badgeContent={conv.unreadCount} sx={{ "& .MuiBadge-badge": { backgroundColor: "rgb(255, 45, 45)", color: "white" } }} >
+                                        <Typography sx={{ visibility: "hidden" }}></Typography>
+                                    </Badge>
+                                )}
                                 </ListItem>
                             ))
                         )}

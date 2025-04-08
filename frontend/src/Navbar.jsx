@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiMenu, FiMessageSquare } from "react-icons/fi";
 import ArticleIcon from '@mui/icons-material/Article';
@@ -33,6 +33,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
 
   const handleLoginClick = (event) => {
     setLoginAnchorEl(event.currentTarget);
@@ -83,6 +84,26 @@ const Navbar = () => {
     }
   };
 
+    // Función para obtener el número de mensajes no leídos
+    const getUnreadMessages = useCallback(async () => {
+        try {
+          const response = await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/chats/get_my_chats/`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+              },
+            }
+          );
+          const chats = response.data;
+          const totalUnread = chats.reduce((acc, chat) => acc + chat.unreadCount, 0);
+          setUnreadMessagesCount(totalUnread);
+        } catch (error) {
+          console.error("Error al obtener los mensajes no leídos:", error);
+        }
+    }, []);
+    
+
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -92,9 +113,19 @@ const Navbar = () => {
       setUser(parsedUser);
       if (accessToken) {
         obtenerSaldoUsuario(parsedUser.id, accessToken);
+        // Llamar a la función de obtener mensajes no leídos al cargar el componente
+        getUnreadMessages();
+
+        const interval = setInterval(() => {
+          getUnreadMessages();
+        }, 5000); // Cada 5 segundos
+  
+        // Limpiar el intervalo cuando el componente se desmonte
+        return () => clearInterval(interval);
+      
       }
     }
-  }, []);
+  }, [getUnreadMessages]);
 
   const navItems = [
     { title: "Inicio", path: "/" },
@@ -259,14 +290,15 @@ const Navbar = () => {
               )}
             </Menu>
 
-            {user && (<Tooltip title="Mensajes">
-              <IconButton color="inherit" component={Link} to="/messages">
-                <Badge badgeContent={0} color="error" >
-                  <FiMessageSquare />
-                </Badge>
-              </IconButton>
-            </Tooltip>)
-            }
+            {user && (
+              <Tooltip title="Mensajes">
+                <IconButton color="inherit" component={Link} to="/messages">
+                  <Badge badgeContent={unreadMessagesCount} color="error">
+                    <FiMessageSquare />
+                  </Badge>
+                </IconButton>
+              </Tooltip>
+            )}
 
             <Tooltip title="Borradores">
               <IconButton color="inherit" component={Link} to="/drafts">
