@@ -257,7 +257,7 @@ const Messages = () => {
                                     sx={{ display: "flex", alignItems: "center", mb: 2, padding: 2, bgcolor: "white", borderRadius: 2, boxShadow: 2,  cursor: "pointer" }}
                                     onClick={() => navigate(`/perfil/${otherUser.username}`)}
                                 >
-                                    <Avatar src={otherUser.avatar} sx={{ width: 40, height: 40, mr: 2 }} />
+                                    <Avatar src={otherUser.image} sx={{ width: 40, height: 40, mr: 2 }} />
                                         <Typography variant="h6">
                                                 {otherUser.username}
                                         </Typography>
