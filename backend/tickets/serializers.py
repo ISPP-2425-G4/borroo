@@ -36,8 +36,23 @@ class TicketSerializer(serializers.ModelSerializer):
                             'reporter', 'manager']
 
     def create(self, validated_data):
+        if "rent" not in validated_data:
+            rent_id = self.context.get('rentId')
+            if rent_id:
+                validated_data["rent"] = rent_id
+            else:
+                raise serializers.ValidationError(
+                    {"rent": "Este campo es obligatorio."}
+                    )
+        
         validated_data['reporter'] = self.context['request'].user
-        return super().create(validated_data)
+        ticket = super().create(validated_data)
+
+        images = self.context['request'].FILES.getlist('image_files')
+        for image_file in images:
+            TicketImage.objects.create(ticket=ticket, image=image_file)
+
+        return ticket
 
     def update(self, instance, validated_data):
         user = self.context['request'].user
