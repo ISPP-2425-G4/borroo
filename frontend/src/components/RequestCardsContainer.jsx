@@ -6,10 +6,11 @@ import { useState } from "react";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 
 const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) => {
-
+    const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem("user"));
     const [loading, setLoading] = useState(false);
     const [processedSessionId, setProcessedSessionId] = useState(null); // Estado para rastrear el sessionId procesado
@@ -173,6 +174,10 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
             });
         }
     };
+
+    const handleOpenIncidentForm = (rentId) => {
+        navigate(`/incidencias/nueva/${rentId}`);
+      };
     
     return (
         <Box
@@ -331,6 +336,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                                     variant="contained"
                                     color="error"
                                     size="small"
+                                    onClick={() => handleOpenIncidentForm(request.id)}
                                 >
                                     ❌
                                 </Button>
