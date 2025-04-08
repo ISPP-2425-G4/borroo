@@ -49,3 +49,9 @@ class TicketSerializer(serializers.ModelSerializer):
             validated_data.pop('closed_at', None)
 
         return super().update(instance, validated_data)
+
+    def validate(self, data):
+        if not self.context['request'].FILES.getlist('image_files'):
+            raise serializers.ValidationError(
+                {"image_files": "Por favor, selecciona al menos una imagen."})
+        return data
