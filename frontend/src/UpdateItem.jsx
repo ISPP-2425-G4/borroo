@@ -298,10 +298,31 @@ const UpdateItemScreen = () => {
 
     } catch (error) {
       console.error("Error actualizando el ítem:", error);
-      if (error.response) {
-        console.error("Detalles del error:", error.response.data);
-    }
-      setErrorMessage("Ocurrió un error al actualizar el ítem.");
+
+      if (error.response && error.response.data) {
+        const backendErrors = error.response.data;
+
+        if (typeof backendErrors === "object") {
+          if (backendErrors.image_files) {
+            setErrorMessage(backendErrors.image_files[0]);
+            return;
+          }
+
+          const fieldErrs = {};
+          Object.entries(backendErrors).forEach(([field, messages]) => {
+            fieldErrs[field] = messages[0];
+          });
+
+          setFieldErrors(fieldErrs);
+
+          const firstError = Object.values(fieldErrs)[0];
+          setErrorMessage(firstError || "Error al actualizar.");
+        } else {
+          setErrorMessage("Error inesperado del servidor.");
+        }
+      } else {
+        setErrorMessage("Error de conexión con el servidor.");
+      }
     } finally {
       setLoading(false);
     }
