@@ -22,7 +22,6 @@ const FormTitle = styled(Typography)(() => ({
 }));
 
 const NewTicketForm = () => {
-  // Obtenemos el id de la renta a partir de la URL
   const { rentId } = useParams();
   const navigate = useNavigate();
   const [description, setDescription] = useState("");
@@ -34,9 +33,9 @@ const NewTicketForm = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem("access_token");
-      const data = { rent: rentId, description };
+      const data = { description };
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/tickets/`,
+        `${import.meta.env.VITE_API_BASE_URL}/incidencias/nueva/${rentId}/`,
         data,
         {
           headers: {
@@ -45,7 +44,6 @@ const NewTicketForm = () => {
           },
         }
       );
-      // Una vez creada la incidencia, redirigimos al usuario a su sección de incidencias
       navigate("/mis-incidencias");
     } catch (error) {
       console.error("Error creando la incidencia:", error.response?.data || error.message);
