@@ -39,10 +39,10 @@ import MoneyOffIcon from "@mui/icons-material/MoneyOff";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
-import { useNavigate } from "react-router-dom";
 import ReportIcon from "@mui/icons-material/Report";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
+import SendMessageButton from "./components/SendMessageButton";
 
 const Profile = () => {
   const { username } = useParams();
@@ -82,7 +82,6 @@ const Profile = () => {
     dni: "",
     image: null,
   });
-  const navigate = useNavigate();
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
@@ -353,49 +352,6 @@ const Profile = () => {
     }
   };
   
-  const handleSendMessage = async () => {
-    try {
-      const accessToken = localStorage.getItem("access_token");
-      let conversationId;
-
-      try {
-        // Intentar obtener la conversación existente
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/chats/get_chat_with/${user.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-        console.log("Conversations data:", response.data);
-        conversationId = response.data.id;
-      } catch (error) {
-        if (error.response && error.response.status === 404) {
-          console.log("No existe una conversación previa, creando una nueva.");
-          // Crear una nueva conversación
-          const createResponse = await axios.post(
-            `${import.meta.env.VITE_API_BASE_URL}/chats/`,
-            { otherUserId: user.id },
-            {
-              headers: { Authorization: `Bearer ${accessToken}` },
-            }
-          );
-          conversationId = createResponse.data.id;
-        } else {
-          throw error; // Si el error no es 404, relanzarlo
-        }
-      }
-
-      // Redirigir a la página de mensajes con la conversación seleccionada
-      if (conversationId) {
-        navigate(`/messages/${conversationId}`);
-      }
-    } catch (error) {
-      console.error("Error al enviar mensaje:", error);
-    }
-  };
-  
   const handleDeleteUser = async () => {
     const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este usuario?");
     if (!confirmDelete) return;
@@ -586,9 +542,7 @@ const Profile = () => {
             </Typography>
 
             {currentUser?.id && (currentUser?.id !== user.id) &&
-                  <Button variant="contained" onClick={handleSendMessage}>
-                    Enviar mensaje
-                  </Button>
+                  <SendMessageButton userId={user.id} />
                 }
                 
             {currentUser?.username === user.username ? (
