@@ -1,4 +1,5 @@
 from .models import Ticket, TicketStatus
+from .serializers import TicketSerializer
 from rest_framework import status, filters, viewsets
 from rest_framework.response import Response
 from django.db.models import Q
@@ -59,7 +60,7 @@ class TicketViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         data = request.data.copy()
 
-        if data.get("status") in [TicketStatus.RESOLVED, 
+        if data.get("status") in [TicketStatus.RESOLVED,
                                   TicketStatus.CANCELLED]:
             data["closed_at"] = now()
         else:
