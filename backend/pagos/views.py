@@ -178,7 +178,7 @@ def create_subscription_checkout(request):
                     'price_data': {
                         'currency': currency,
                         'product_data': {
-                            'name': 'Subscripcion mensual',
+                            'name': 'Pago único por suscripción',
                         },
                         'unit_amount': amount,
                     },
@@ -215,7 +215,6 @@ def confirm_subscription_checkout(request, session_id):
             if user_id:
                 try:
                     user = User.objects.get(id=user_id)
-                    user.pricing_plan = "premium"
                     user.stripe_customer_id = session.customer
                     user.stripe_subscription_id = session.subscription
                     user.save()

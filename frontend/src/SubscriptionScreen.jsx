@@ -77,117 +77,122 @@ const SubscriptionScreen = () => {
       const params = new URLSearchParams(location.search);
       const sessionId = params.get("session_id");
       if (sessionId) {
-        try{
-          const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/pagos/confirm-subscription/${sessionId}/`)
-          if(response.data.status === "success"){
-              window.history.replaceState({}, "", "/pricing-plan");
-              setNotification({
-                open: true,
-                message: "¡Pago completado con éxito!",
-                severity: "success"
-              });
-
-              setTimeout(() => {
-                setNotification({ ...notification, open: false });
+        try {
+          const response = await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/pagos/confirm-subscription/${sessionId}/`
+          );
+          if (response.data.status === "success") {
+            // ✅ Quitar el session_id de la URL
+            window.history.replaceState({}, "", "/pricing-plan");
+    
+            // ✅ Llamar a backend para actualizar el plan del usuario
+            await axios.post(
+              `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${user.id}/upgrade_to_premium/`,
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
+                }
               }
-              , 5000);
-              setCurrentPlan('premium');
-
-            }
-            checkPlan();
-          }
-         catch (err) {
-            console.error("Error al confirmar el pago:", err);
+            );
+    
+            const updatedUser = { ...user, pricing_plan: 'premium' };
+            localStorage.setItem("user", JSON.stringify(updatedUser));
+            setCurrentPlan('premium');
+    
             setNotification({
               open: true,
-              message: "Hubo un error al confirmar el pago",
-              severity: "error"
-          });
-          setTimeout(() => 
-            setNotification(null), 5000);
+              message: "¡Pago completado y plan actualizado a Premium!",
+              severity: "success"
+            });
+    
+            setTimeout(() => {
+              setNotification({ ...notification, open: false });
+            }, 5000);
           }
+    
+        } catch (err) {
+          console.error("Error al confirmar el pago:", err);
+          setNotification({
+            open: true,
+            message: "Hubo un error al confirmar el pago",
+            severity: "error"
+          });
+          setTimeout(() => setNotification(null), 5000);
         }
-      };
+      }
+    };
+    
       checkPayment();
       
     }, [location.search]);
 
-  const handlePlanChange = async (targetPlan) => {
-    if (!user || currentPlan === targetPlan) return;
-    setLoading(true);
-    try {
-      if(targetPlan === 'premium') {
-      
-
-      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/pagos/create-subscription-checkout/`, {
-        price : 5,
-        currency : "eur",
-        user_id : user.id
-      },{
-        headers: {
-          // Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      
-        
-      });
-      console.log(response.data); 
-      console.log
-      const stripe = await loadStripe(`${import.meta.env.VITE_STRIPE_PUBLIC_KEY}`);
-      const { error } = await stripe.redirectToCheckout({sessionId: response.data.id });
-
-      if (error) {
-        throw new Error(error.message);
+    const handlePlanChange = async (targetPlan) => {
+      if (!user || currentPlan === targetPlan) return;
+      if (targetPlan !== 'premium') return; // ❌ Solo permitimos upgrade a Premium
+    
+      setLoading(true);
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/pagos/create-subscription-checkout/`,
+          {
+            price: 5,
+            currency: "eur",
+            user_id: user.id
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            }
+          }
+        );
+    
+        const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+        const { error } = await stripe.redirectToCheckout({ sessionId: response.data.id });
+    
+        if (error) {
+          throw new Error(error.message);
+        }
+    
+      } catch (err) {
+        console.error("Error al cambiar el plan:", err);
+        let errorMessage = "Hubo un error al cambiar el plan";
+        if (err.response?.data?.error) {
+          errorMessage = err.response.data.error;
+        } else if (err.message) {
+          errorMessage = err.message;
+        }
+    
+        setNotification({
+          open: true,
+          message: errorMessage,
+          severity: "error"
+        });
+    
+      } finally {
+        setLoading(false);
       }
-    } else {
-      const url = `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${user.id}/downgrade_to_free/`;
-
-      await axios.post(url, {}, {
-         headers: {
-           Authorization: `Bearer ${token}`,
-         },
-      });
-      const updatedUser = { ...user, pricing_plan: targetPlan };
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-      setCurrentPlan(targetPlan);
-
-      setNotification({
-        open: true,
-        message: `¡Plan actualizado a ${planLabels[targetPlan]}!`,
-        severity: "success"
-      });
-    }
-    } catch (err) {
-      console.error("Error al cambiar el plan:", err);
-      let errorMessage = "Hubo un error al cambiar el plan"
-      if(err.response?.data?.error){
-        errorMessage = err.response.data.error;
-      } else if(err.message){
-        errorMessage = err.message;
-      }
-
-      setNotification({
-        open: true,
-        message: errorMessage,
-        severity: "error"
-      });
-
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+    
 
   const checkPlan = async () => {
     if (!user) return;
     try {
       const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${user.id}/`);
-      const updatedUser = { ...user, pricing_plan: response.data.pricing_plan };
+      const updatedUser = {
+        ...user,
+        pricing_plan: response.data.pricing_plan,
+        subscription_start_date: response.data.subscription_start_date,
+        subscription_end_date: response.data.subscription_end_date,
+      };
       localStorage.setItem("user", JSON.stringify(updatedUser));
       setCurrentPlan(response.data.pricing_plan);
     } catch (err) {
       console.error("Error al obtener el plan actual:", err);
     }
   };
+  
 
   const handleCloseNotification = () => {
     setNotification({ ...notification, open: false });
@@ -208,6 +213,19 @@ const SubscriptionScreen = () => {
             justifyContent="center"
             alignItems="stretch"
           >
+            (
+              <Box textAlign="center" mt={2}>
+                <Typography variant="body1" color="text.secondary">
+                  <strong>Activo desde:</strong>{" "}
+                  {new Date(user.subscription_start_date).toLocaleDateString("es-ES")}
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                  <strong>Válido hasta:</strong>{" "}
+                  {new Date(user.subscription_end_date).toLocaleDateString("es-ES")}
+                </Typography>
+              </Box>
+            )
+
             <Box flex="1" maxWidth={{ xs: '100%', md: '500px' }}>
               <PlanCard active={currentPlan === 'free'}>
                 <CardHeader
@@ -249,18 +267,6 @@ const SubscriptionScreen = () => {
                   </List>
                 </CardContent>
                 <CardActions sx={{ justifyContent: "center", p: 3 }}>
-                  {token && currentPlan !== 'free' && (
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      size="large"
-                      onClick={() => handlePlanChange('free')}
-                      disabled={loading}
-                      fullWidth
-                    >
-                      {loading ? <CircularProgress size={24} /> : "Cambiar a Gratis"}
-                    </Button>
-                  )}
                   {currentPlan === 'free' && (
                     <Button
                       variant="contained"
