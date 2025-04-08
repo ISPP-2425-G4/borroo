@@ -41,7 +41,7 @@ class TicketViewSet(viewsets.ModelViewSet):
             )
 
         data = request.data.copy()
-        data['user'] = request.user.id
+        # data['user'] = request.user.id
 
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
