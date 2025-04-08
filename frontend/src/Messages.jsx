@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "./Navbar";
 import axios from "axios";
-import { Box, Typography, List, ListItem, ListItemText, Paper, TextField, Button, Divider, Avatar, Badge } from "@mui/material";
+import { Box, Typography, List, ListItem, ListItemText, Paper, TextField, Button, Divider, Avatar, Badge, Tooltip } from "@mui/material";
 import { es } from "date-fns/locale";
 import { format } from "date-fns";
 
@@ -225,9 +225,11 @@ const Messages = () => {
                                         primary={conv.otherUserName} 
                                         secondary={
                                             <>
-                                                <Typography variant="body2" sx={{ color: selectedConversation?.id === conv.id ? "white" : "gray" }}>
-                                                    {conv.lastMessage ? conv.lastMessage : "Sin mensajes"}
-                                                </Typography>
+                                                <Tooltip title={conv.lastMessage} arrow>
+                                                    <Typography variant="body2" sx={{ color: selectedConversation?.id === conv.id ? "white" : "gray", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                                                        {conv.lastMessage ? conv.lastMessage : "Sin mensajes"}
+                                                    </Typography>
+                                                </Tooltip>
                                                 <Typography variant="caption" sx={{ color: selectedConversation?.id === conv.id ? "white" : "gray", fontWeight: "bold" }}>
                                                     {formatDate(conv.lastMessageTimestamp)}
                                                 </Typography>
@@ -286,7 +288,9 @@ const Messages = () => {
                                             padding: 1.5, 
                                             borderRadius: 3, 
                                             bgcolor: msg.sender === currentUser.id ? "primary.main" : "grey.300", 
-                                            color: msg.sender === currentUser.id ? "white" : "black" 
+                                            color: msg.sender === currentUser.id ? "white" : "black", 
+                                            wordWrap: "break-word", 
+                                            whiteSpace: "normal"  
                                         }}>
                                             <Typography variant="body2">{msg.content}</Typography>
                                             <Typography 
