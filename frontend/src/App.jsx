@@ -27,6 +27,7 @@ import VerificarEmail from "./VerifyEmail";
 import AdminReportsDashboard from "./AdminReportsDashboard";
 import Deposit from "./documents/Deposit";
 import NewTicketForm from "./NewTicketForm";
+import ListTickets from "./ListTickets";
 
 function App() {
   return (
@@ -62,6 +63,7 @@ function App() {
           <Route path="/verifyEmail" element={<VerificarEmail />} />
           <Route path="/reports-dashboard" element={<AdminReportsDashboard />} />
           <Route path="/incidencias/nueva/:rentId" element={<NewTicketForm />} />
+          <Route path="/mis-incidencias" element={<ListTickets />} />
           <Route path="*" element={<div>Página no encontrada</div>} />
         </Routes>
         <Footer />
