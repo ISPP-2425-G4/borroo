@@ -540,7 +540,6 @@ Durante la primera semana del sprint 3, me encargué del desarrollo del backend 
 
 Durante la segunda semana del sprint, desarrollé en frontend una funcionalidad, la cual consistía en: accediendo a la vista del detalle de un objeto publicado para su alquiler, poder visualizar la valoración media, y las valoraciones publicadas acerca de ese usuario en formato de estrellas. Por último, me visualicé el contenido de las píldoras teóricas publicadas en enseñanza virtual.
 
-Durante
 
 ### **Díaz Ordóñez, Pablo**  
 

@@ -4116,6 +4116,57 @@
 
 ### **Blanco Mora, David** 
 
+<table>
+    <tr>
+        <th>Tarea</th>
+        <th>Detalles de la actividad</th>
+        <th>Tiempo</th>
+    </tr>
+    <tr>
+        <td rowspan="8">Trabajo</td>
+        <td>Backend chat y mensajería</td>
+        <td>3 horas 32 minutos</td>
+    </tr>
+    <tr>
+        <td>Modificación backend mensajería</td>
+        <td>1 hora 28 minutos</td>
+    </tr>
+    <tr>
+        <td>Websockets backend</td>
+        <td>1 hora 23 minutos</td>
+    </tr>
+    <tr>
+        <td>Tests mensajería</td>
+        <td>1 hora 40 minutos</td>
+    </tr>
+    <tr>
+        <td>Feature: valoraciones en vista de objeto</td>
+        <td>2 horas 11 minutos</td>
+    </tr>
+    <tr>
+        <td>Revisión: valoraciones en vista de objeto</td>
+        <td>2 horas 36 minutos</td>
+    </tr>
+    <tr>
+        <td>Píldoras teóricas</td>
+        <td>42 minutos</td>
+    </tr>
+    <tr>
+        <td>Rellenar time-effort y performance evaluation</td>
+        <td>30 minutos</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Clases</td>
+        <td>Clase 28/03</td>
+        <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+        <td>Clase 04/04</td>
+        <td>3 horas 50 minutos</td>
+    </tr>
+</table>
+
+
 ### **Díaz Ordóñez, Pablo** 
 
 <table border="1" cellspacing="0" cellpadding="5">
