@@ -13,8 +13,9 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import action
 from rest_framework.decorators import api_view, permission_classes
+import logging
 import uuid
-from django.utils.timezone import now
+from django.utils.timezone import now, timedelta
 from django.core.mail import send_mail
 from rest_framework.views import APIView
 from django.core.exceptions import ValidationError
@@ -39,6 +40,9 @@ def index(request):
 def get_message(request):
     now = datetime.datetime.now().strftime("%H:%M:%S")
     return JsonResponse({"message": f"Hola desde Django! Hora actual: {now}"})
+
+
+logger = logging.getLogger(__name__)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -113,6 +117,9 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response({"error": "Verifica tu correo"},
                             status=status.HTTP_400_BAD_REQUEST)
 
+        # Aquí se actualiza la suscripción si hace falta
+        user.update_subscription_status()
+
         # Generar tokens JWT
         refresh = RefreshToken.for_user(user)
         return Response({
@@ -152,36 +159,65 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(detail=True, methods=['post'],
-            permission_classes=[IsAuthenticated])
+    @action(
+        detail=True, methods=['post'], permission_classes=[IsAuthenticated])
     def upgrade_to_premium(self, request, pk=None):
         user = self.get_object()
-        if user.pricing_plan != PricingPlan.FREE:
-            return Response(
-                {'error': 'Solo los usuarios con plan free pueden '
-                 'actualizar a premium.'},
-                status=status.HTTP_400_BAD_REQUEST)
-        user.pricing_plan = PricingPlan.PREMIUM
-        user.save()
-        return Response(
-            {'message': 'Plan actualizado a premium.'},
-            status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=['post'],
-            permission_classes=[IsAuthenticated])
-    def downgrade_to_free(self, request, pk=None):
-        user = self.get_object()
-        if user.pricing_plan != PricingPlan.PREMIUM:
+        if user != request.user:
             return Response(
-                {'error': 'Solo los usuarios con plan premium '
-                 'pueden cambiar a free.'},
+                {'error':
+                 'No puedes modificar el plan de otro usuario.'},
+                status=status.HTTP_403_FORBIDDEN)
+
+        if user.pricing_plan != PricingPlan.FREE:
+            logger.warning(
+                f"Intento de upgrade fallido: {user.username} ya es premium.")
+            return Response(
+                {
+                    'error': (
+                        'Solo los usuarios con plan free '
+                        'pueden actualizar a premium.'
+                    )
+                },
                 status=status.HTTP_400_BAD_REQUEST
             )
-        user.pricing_plan = PricingPlan.FREE
+
+        try:
+            logger.info(f"Actualizando a premium: {user.username}")
+            user.pricing_plan = PricingPlan.PREMIUM
+            user.subscription_start_date = now()
+            user.subscription_end_date = now() + timedelta(days=30)
+            user.save()
+
+            return Response({
+                'message': 'Plan actualizado a Premium.',
+                'subscription_start_date': user.subscription_start_date,
+                'subscription_end_date': user.subscription_end_date
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            logger.error(f"Fallo al actualizar a premium: {str(e)}")
+            return Response({'error': f'Error actualizando el plan: {str(e)}'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    @action(detail=False, methods=["post"],
+            permission_classes=[IsAuthenticated])
+    def downgrade_to_free(self, request):
+        """Cancela la renovación automática del plan Premium del usuario."""
+        user = request.user
+
+        if user.pricing_plan != PricingPlan.PREMIUM:
+            return Response({"error": "No tienes un plan Premium activo."},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        user.is_subscription_active = False
         user.save()
-        return Response(
-            {'message': 'Plan actualizado a free.'},
-            status=status.HTTP_200_OK)
+        return Response({
+            "message":
+            "Has cancelado la renovación automática de tu suscripción.",
+            "subscription_end_date": user.subscription_end_date
+        }, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['get'],
             permission_classes=[IsAuthenticated])
