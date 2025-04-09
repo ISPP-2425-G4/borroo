@@ -309,15 +309,14 @@ const UpdateItemScreen = () => {
           }
 
           const allowedFields = ["title", "description", "price", "category", "subcategory", "cancel_type", "price_category"];
-          const fieldErrs = {};
-
-          Object.entries(backendErrors).forEach(([field, messages]) => {
+          const fieldErrs = Object.entries(backendErrors).reduce((acc, [field, messages]) => {
             if (allowedFields.includes(field)) {
-              fieldErrs[field] = messages[0];
+              acc[field] = messages[0];
             }
-          });
-
-          setFieldErrors(fieldErrs);
+            return acc;
+          }, {});
+  
+  setFieldErrors(fieldErrs);
 
           const firstError = Object.values(fieldErrs)[0];
           setErrorMessage(firstError || "Error al actualizar.");
