@@ -58,11 +58,6 @@ const SubscriptionScreen = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("access_token");
 
-  const planLabels = {
-    free: "Gratis",
-    premium: "Premium",
-  };
-
 
   useEffect(() => {
     if (user) {
