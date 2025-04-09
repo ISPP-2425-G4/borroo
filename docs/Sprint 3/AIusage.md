@@ -75,18 +75,19 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 
 | ID   | Uso (Descripción)       | Nombre del Miembro | Fecha       | Enlace al Chat |
 |------|-------------------------|--------------------|------------|---------------|
-| 001  | Información sobre IA generativa para vídeos   | Javier García Rodríguez       | 03/04/2025 | [Ver chat](https://chatgpt.com/share/67ef3261-fa0c-8001-9856-d29d051e270e) |
-| 002  | Resolución de bugs en código  | Javier García Rodríguez       | 03/04/2025 | [Ver chat](https://chatgpt.com/share/67ef32e4-70fc-8001-8a36-78e209045a65) |
-| 003  | Información sobre normativas legales  | Javier García Rodríguez       | 03/04/2025 | [Ver chat](https://chatgpt.com/share/67f65486-3fe4-8001-b98b-9900502e3a09) |
-| 004  | Documentación de política de daños  | Javier García Rodríguez       | 07/04/2025 | [Ver chat](https://chatgpt.com/share/67f653c5-82e0-8001-9315-bee2834e8dde) |
-| 005  | Ventanas de confirmacion frontend y error | Pablo Díaz Ordoñez       | 05/04/2025 | [Ver chat](https://chatgpt.com/share/67f6632b-25ec-8013-9f79-2be7b0d35b90) |
-| 006  | Cambiar mensaje commit ya subido | Pablo Díaz Ordoñez       | 06/04/2025 | [Ver chat](https://chatgpt.com/share/67f663b6-5784-8013-a9e5-e71c43a113f3) |
+| 001  | Información sobre IA generativa para vídeos   | Javier García Rodríguez    | 03/04/2025 | [Ver chat](https://chatgpt.com/share/67ef3261-fa0c-8001-9856-d29d051e270e) |
+| 002  | Resolución de bugs en código  | Javier García Rodríguez     | 03/04/2025 | [Ver chat](https://chatgpt.com/share/67ef32e4-70fc-8001-8a36-78e209045a65) |
+| 003  | Información sobre normativas legales  | Javier García Rodríguez     | 03/04/2025 | [Ver chat](https://chatgpt.com/share/67f65486-3fe4-8001-b98b-9900502e3a09) |
+| 004  | Documentación de política de daños  | Javier García Rodríguez   | 07/04/2025 | [Ver chat](https://chatgpt.com/share/67f653c5-82e0-8001-9315-bee2834e8dde) |
+| 005  | Ventanas de confirmacion frontend y error | Pablo Díaz Ordoñez   | 05/04/2025 | [Ver chat](https://chatgpt.com/share/67f6632b-25ec-8013-9f79-2be7b0d35b90) |
+| 006  | Cambiar mensaje commit ya subido | Pablo Díaz Ordoñez   | 06/04/2025 | [Ver chat](https://chatgpt.com/share/67f663b6-5784-8013-a9e5-e71c43a113f3) |
 | 007  | Hotfix de error en el reporte de un usuario | Álvaro Martín Muñoz      | 09/04/2025 | [Ver chat](https://chatgpt.com/share/67f663b6-5784-8013-a9e5-e71c43a113f3)|
 | 008  | Extracción de feedback no repetido de documentos de usuarios piloto | Santiago Rosado Raya      | 09/04/2025 | (no deja compartir chat) |
+| 009  | Generación de código para funcionalidad de chat de mensajería| Javier Nieto Vicioso  | 09/04/2025 | [Ver chat](https://chatgpt.com/share/67f69e49-3b30-800c-bb7b-6a95f5fb28bb) |
+| 010  | Explicación de errores | Javier Nieto Vicioso   | 09/04/2025 | [Ver chat](https://chatgpt.com/share/67f69e61-35c4-800c-8bb3-dc1c7a2dfbb0) |
+| 011  | Generación de documentación (gráficas) | Miguel Palomo García   | 09/04/2025 | [Ver chat](https://chatgpt.com/share/67f69c9e-e748-8002-8712-23fba77aabb3) |
 
 
-
-https://chatgpt.com/share/67f65486-3fe4-8001-b98b-9900502e3a09
 
 ------------------------------------------------------------------
 
@@ -100,6 +101,10 @@ https://chatgpt.com/share/67f65486-3fe4-8001-b98b-9900502e3a09
 | 006  | Resolución de un error     | Sí   | 5 min  |
 | 007  | Hotfix de error en el reporte de un usuario     | Sí   | 25 min  |
 | 008  | Documentación     | Sí   | 60 min  |
+| 009  | Generación de código | Sí   | 60 min  |
+| 010  | Resolución de errores     | Sí   | 10 min  |
+| 011  | Generación de documentación   | Sí   | 60 min  |
+
 
 
 
@@ -110,9 +115,22 @@ Para calcular el porcentaje de alucinaciones de las inteligencias artificiales u
 | Desarrollador | Usos | % Alucinaciones |
 |----|------|------------|
 | 1  |   6  | 12,5%  |
-| 2  |   18  | 16,6%  |
+| 2  |  18  | 16,6%  |
 | 3  |   5  | 20%  |
 | 4  |   8  | 12,5%  |
+| 5  |   2  | 50%  |
+| 6  |   5  | 20%  |
+| 7  |   6  | 33,3%  |
+| 8  |  10   | 20%  |
+| 9  |  13  | 30%  |
+| 10 |  16  | 25%  |
+| 11 |  20 | 25%  |
+| 12 |  25  | 20%  |
+| 13 |     | %  |
+| 14 |     | %  |
+| 15 |     | %  |
+| 16 |     | %  |
+| 17 |     | %  |
 
 
 ### Cálculo de las alucinaciones por IA
