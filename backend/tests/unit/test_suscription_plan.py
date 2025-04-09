@@ -18,14 +18,14 @@ def user():
         surname="User",
         email="testuser@example.com",
         password=make_password("Borroo_25"),
-        phone_number="+1234567890",  # Required
-        country="España",            # Required
-        city="Madrid",              # Required
-        address="Calle Test",       # Required
-        postal_code="28001",        # Required
-        dni="12345678A",            # Required - Adding DNI
+        phone_number="+1234567890",
+        country="España",
+        city="Madrid",
+        address="Calle Test",
+        postal_code="28001",
+        dni="12345678A",
         is_verified=True,
-        verified_account=True,      # Add this to ensure user is verified
+        verified_account=True,
         pricing_plan="free"
     )
 
@@ -43,7 +43,7 @@ def item_data(user, test_image):
         "user": user.id,
         "draft_mode": False,
         "images": [],
-        "image_files": [test_image]  # Añadimos la imagen de prueba aquí
+        "image_files": [test_image]
     }
 
 
@@ -75,8 +75,9 @@ class TestItemSerializer:
 
     def test_create_item_with_valid_data(self, user, item_data, mock_request):
         item_data["user"] = user.id
-        item_data["draft_mode"] = True  # Set to draft mode initially
-        serializer = ItemSerializer(data=item_data, context={'request': mock_request})
+        item_data["draft_mode"] = True
+        serializer = ItemSerializer(
+            data=item_data, context={'request': mock_request})
         assert serializer.is_valid(), serializer.errors
         item = serializer.save()
         assert item.title == item_data["title"]
@@ -147,8 +148,9 @@ class TestItemSerializer:
             )
 
         item_data["user"] = user.id
-        item_data["image_files"] = [test_image]  # Aseguramos que la imagen está presente
-        serializer = ItemSerializer(data=item_data, context={'request': mock_request})
+        item_data["image_files"] = [test_image]
+        serializer = ItemSerializer(
+            data=item_data, context={'request': mock_request})
         assert serializer.is_valid(), serializer.errors
         item = serializer.save()
 
@@ -172,8 +174,9 @@ class TestItemSerializer:
             )
 
         item_data["user"] = user.id
-        item_data["image_files"] = [test_image]  # Aseguramos que la imagen está presente
-        serializer = ItemSerializer(data=item_data, context={'request': mock_request})
+        item_data["image_files"] = [test_image]
+        serializer = ItemSerializer(
+            data=item_data, context={'request': mock_request})
         assert serializer.is_valid(), serializer.errors
         item = serializer.save()
 
