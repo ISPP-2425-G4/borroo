@@ -50,6 +50,7 @@ const ListItemRequestsView = () => {
   const manejarCambioCategoria = (e) => { 
     setCategoria(e.target.value);
     setSubcategoria("")
+    setRangoPrecio([0, 99999]);
   }
 
   const manejarCambioPrecio = (e, index) => {
@@ -73,7 +74,8 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
   const reiniciarFiltros = () => {
     setTerminoBusqueda("");
     setCategoria("");
-    setRangoPrecio([0, 100]);
+    setSubcategoria("");
+    setRangoPrecio([0, 99999]);
   };
 
   const obtenerUrlImagen = useCallback(async (imgId) => {
@@ -138,6 +140,12 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
       (terminoBusqueda === "" || producto.title.toLowerCase().includes(terminoBusqueda.toLowerCase()))
     ));
     setProductosFiltrados(filtrados);
+
+    if (categoria || subcategoria || terminoBusqueda || 
+      rangoPrecio[0] !== 0 || rangoPrecio[1] !== 99999) {
+      setCurrentPage(1);
+    }
+
   }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda]);
 
   const hayFiltrosActivos = useMemo(() => 
@@ -346,6 +354,10 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                       </MenuItem>
                     ))}
                   </Select>
+                  {categoria &&
+                   <Typography variant="subtitle2" sx={{ mt: 2,mb: 1, fontWeight: 600 }}>
+                     Subcategoría
+                   </Typography>}
                   {categoria === "Tecnología" && (
                   <Select
                     value={subcategoria}
@@ -583,16 +595,27 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                     <Chip
                       label={`Categoría: ${categoria}`}
                       size="small"
-                      onDelete={() => setCategoria("")}
+                      onDelete={() => {
+                        setCategoria("");
+                        setSubcategoria("");
+                      }}
                       sx={{ borderRadius: 1 }}
                     />
                   )}
                   
-                  {(rangoPrecio[0] > 0 || rangoPrecio[1] < 100) && (
+                  {subcategoria && (
+                     <Chip
+                       label={`Subcategoría: ${subcategoria}`}
+                       size="small"
+                       onDelete={() => setSubcategoria("")}
+                       sx={{ borderRadius: 1 }}
+                     />
+                   )}
+                   {(rangoPrecio[0] > 0 || rangoPrecio[1] < 99999) && (                    
                     <Chip
                       label={`Precio: ${rangoPrecio[0]}€ - ${rangoPrecio[1]}€`}
                       size="small"
-                      onDelete={() => setRangoPrecio([0, 100])}
+                      onDelete={() => setRangoPrecio([0, 99999])}
                       sx={{ borderRadius: 1 }}
                     />
                   )}
