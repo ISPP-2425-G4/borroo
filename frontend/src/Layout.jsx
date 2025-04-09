@@ -217,7 +217,7 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
       rangoPrecio[0] !== 0 || rangoPrecio[1] !== 99999 || rangoValoracion[0] !== 0 || rangoValoracion[1] !== 5) {
       setCurrentPage(1);
     }
-  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda,priceCategory,cancelType, rangoValoracion]);
+  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda,priceCategory,cancelType, rangoValoracion, mostrarSoloLiked]);
 
 
   const hayFiltrosActivos = useMemo(() => 
