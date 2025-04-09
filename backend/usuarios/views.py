@@ -53,11 +53,10 @@ class UserViewSet(viewsets.ModelViewSet):
         """Registro de usuario y generación de token JWT"""
         data = request.data.copy()
 
-        # Encriptar la contraseña antes de validar el serializer
-        data["password"] = make_password(data["password"])
-
         serializer = RegisterSerializer(data=data)
         if serializer.is_valid():
+            # Encriptar la contraseña antes de validar el serializer
+            data["password"] = make_password(data["password"])
             # Guardamos el usuario con la contraseña encriptada
             user = serializer.save()
             # Generamos el token para verificar el email
