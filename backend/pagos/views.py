@@ -217,7 +217,7 @@ def confirm_subscription_checkout(request, session_id):
 
                     # ✅ Solo guarda info de Stripe, NO cambiar el plan
                     user.stripe_customer_id = session.customer
-                    user.stripe_subscription_id = session.subscription  # Puede ser None
+                    user.stripe_subscription_id = session.subscription
                     user.save()
 
                     return JsonResponse({
@@ -229,7 +229,9 @@ def confirm_subscription_checkout(request, session_id):
                     return JsonResponse({'error': 'Usuario no encontrado'},
                                         status=404)
             else:
-                return JsonResponse({'error': 'user_id no encontrado en metadatos'},
+                return JsonResponse({
+                    'error':
+                    'user_id no encontrado en metadatos'},
                                     status=400)
         else:
             return JsonResponse({'status': 'unpaid'}, status=402)
