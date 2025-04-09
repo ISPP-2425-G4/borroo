@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import CreateItemView, CreateRentView, CreateUserView, UserListView
+from .views import CreateItemView, CreateUserView, UserListView
 from .views import ListItemsView, RentListView, UpdateUserPerfilView
 from .views import PasswordResetRequestView, PasswordResetConfirmView
 from .views import ReviewCreateView, ReviewDeleteView, ReviewListView
@@ -53,8 +53,6 @@ urlpatterns = [
          UpdateItemView.as_view(), name='update-item'),
     path('adminCustome/item/<int:item_id>/delete/', DeleteItemView.as_view(),
          name='delete-item'),
-    path('adminCustome/rent/create/', CreateRentView.as_view(),
-         name='create-rent'),
     path('adminCustome/rent/<int:rent_id>/update/', UpdateRentView.as_view(),
          name='update-rent'),
     path('adminCustome/rent/<int:rent_id>/delete/', DeleteRentView.as_view(),
@@ -62,6 +60,8 @@ urlpatterns = [
     path('adminCustome/items/', ListItemsView.as_view(), name='list-items'),
     path('adminCustome/rent/list/', RentListView.as_view(), name='rent-list'),
     path('update/', UpdateUserPerfilView.as_view(), name='update-user'),
+    path('update-image/', UpdateUserPerfilView.as_view(),
+         name='update-user-image'),
 
 
 ]

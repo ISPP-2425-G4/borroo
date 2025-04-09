@@ -1,3 +1,4 @@
+from decimal import Decimal
 import pytest
 from rest_framework.test import APIClient
 from django.urls import reverse
@@ -85,6 +86,7 @@ def items(user, item_definitions):
             cancel_type=CancelType.FLEXIBLE,
             price_category=PriceCategory.DAY,
             price=data["price"],
+            deposit=Decimal("20.00"),
             user=user
         )
         created.append(item)

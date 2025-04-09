@@ -44,6 +44,7 @@ Fecha: 25/03/2025
 | ---------- | ------- | ----------------------- | -------------------------- |
 | 25-03-2025 | v1.0    | Francisco Fernández Mota | Creación del documento     |
 | 26-03-2025 | v1.1    | Francisco Fernández Mota | Pequeñas modificaciones y políticas de cancelación |
+| 05-04-2025 | v1.2    | Francisco Fernández Mota | Pequeñas modificaciones en comisiones |
 
 ---
 
@@ -72,7 +73,7 @@ Se realizará mantenimiento planificado fuera del horario de mayor actividad y s
 Los usuarios de **Borroo** están sujetos a las siguientes tarifas:
 
 ### 4.1. Costos de Uso  
-- **Comisión por Alquiler:** 15% del total del alquiler, cobrado al arrendador y arrendatario (7.5% a cada uno).  
+- **Comisión por Alquiler:** 15% del total del alquiler, cobrado al arrendador.  
 
 ### 4.2. Planes de Suscripción  
 

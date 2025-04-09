@@ -70,13 +70,14 @@ class RentSerializer(serializers.ModelSerializer):
                             "start_date": "Para alquiler mensual en febrero,"
                             " el intervalo debe ser de 28 o 29 días."
                         })
-                else:
-                    if total_days not in (30, 31):
-                        raise serializers.ValidationError({
-                            "end_date": "Para alquiler mensual, "
-                            "el intervalo debe ser de 30 o 31 días según"
-                            "corresponda el mes"
-                        })
+
+            else:
+                total_days = (end_date - start_date).days
+                if (total_days % 30 or total_days % 31):
+                    raise serializers.ValidationError({
+                        "El alquiler debe ser por meses"
+                    })
+
         return data
 
     def create(self, validated_data):

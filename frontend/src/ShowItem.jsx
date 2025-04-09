@@ -23,7 +23,8 @@ import {
   FormControl,
   MenuItem,
   Select,
-  InputLabel
+  InputLabel,
+  Avatar
 } from '@mui/material';
 
 import {  
@@ -46,6 +47,7 @@ import DeleteConfirmationDialog from "./components/DeleteConfirmationDialog";
 import EditConfirmationDialog from "./components/EditConfirmationDialog";
 import PublishConfirmationDialog from "./components/PublishConfirmationDialog";
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
+import DepositToolTip from "./components/DepositToolTip";
 
 
 
@@ -84,6 +86,7 @@ const ShowItemScreen = () => {
   const [showReportModal, setShowReportModal] = useState(false);
   const [reportCategory, setReportCategory] = useState("");
   const [reportDescription, setReportDescription] = useState("");
+  const [userImage, setUserImage] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
@@ -202,6 +205,9 @@ const ShowItemScreen = () => {
       );
       const userData = response.data;
       setUserName(userData.username);
+      if (userData.image) {
+        setUserImage(userData.image);
+      }
     } catch (error) {
       console.error("Error fetching user:", error);
       setUserName("Usuario desconocido");
@@ -688,7 +694,10 @@ const ShowItemScreen = () => {
               <Card elevation={2} sx={{ mb: 3 }}>
                 <CardContent sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <PersonIcon fontSize="large" color="primary" />
+                  <Avatar sx={{ width: 100, height: 100}}
+                    src = {userImage ? userImage : ""}
+                  >
+                  </Avatar>
                   <Box>
                   <Typography variant="caption" color="textSecondary">
                     Publicado por:
@@ -804,6 +813,18 @@ const ShowItemScreen = () => {
                         {item.price} € / {item.price_category_display}
                       </Typography>
                     </Box>
+                  </Box>
+                  <Box sx={{ display: 'flex', gap: 2 }}>
+                    <MoneyIcon color="action" />
+                    <Box>
+                      <Typography variant="subtitle2">Fianza</Typography>
+                      <Typography variant="body1" color="primary" fontWeight="bold">
+                        {item.deposit} € 
+                      </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <DepositToolTip />
+                      </Box>
                   </Box>
                 </Stack>
                 
