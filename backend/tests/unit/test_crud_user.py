@@ -166,7 +166,7 @@ class TestUserEndpoints:
             "city": "Updated City",
             "address": "Updated Address",
             "postal_code": "67890",
-            "dni": "12345678A"
+            "_dni": "12345678A"
         }
 
         response = api_client.patch(url, data=updated_data)
