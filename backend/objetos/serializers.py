@@ -198,4 +198,4 @@ class ItemRequestSerializer(serializers.ModelSerializer):
             'category', 'category_display', 'subcategory',
             'subcategory_display', 'price', 'deposit', 'price_category',
             'cancel_type', 'cancel_type_display',
-            'price_category_display','deposit', 'user', 'approved']
+            'price_category_display', 'deposit', 'user', 'approved']
