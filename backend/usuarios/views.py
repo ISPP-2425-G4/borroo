@@ -159,18 +159,22 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
+    @action(detail=True, methods=['post'],
+     permission_classes=[IsAuthenticated])
     def upgrade_to_premium(self, request, pk=None):
         user = self.get_object()
 
         if user != request.user:
-            return Response({'error': 'No puedes modificar el plan de otro usuario.'},
+            return Response(
+                {'error': 'No puedes modificar el plan de otro usuario.'},
                             status=status.HTTP_403_FORBIDDEN)
 
         if user.pricing_plan != PricingPlan.FREE:
-            logger.warning(f"Intento de upgrade fallido: {user.username} ya es premium.")
+            logger.warning(
+                f"Intento de upgrade fallido: {user.username} ya es premium.")
             return Response(
-                {'error': 'Solo los usuarios con plan free pueden actualizar a premium.'},
+                {'error': 
+                'Solo los usuarios con plan free pueden actualizar a premium.'},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -191,7 +195,6 @@ class UserViewSet(viewsets.ModelViewSet):
             logger.error(f"Fallo al actualizar a premium: {str(e)}")
             return Response({'error': f'Error actualizando el plan: {str(e)}'},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
     @action(detail=False, methods=["post"],
             permission_classes=[IsAuthenticated])
