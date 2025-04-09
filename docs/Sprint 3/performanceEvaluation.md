@@ -536,6 +536,12 @@ Por ultimo, visualice las pildoras teoricas
 
 ### **Blanco Mora, David** 
 
+Durante la primera semana del sprint 3, me encargué del desarrollo del backend de una de las nuevas funcionalidades planificadas para este sprint, el chat entre usuarios de la app. Lo cual, supuso al principio un poco de confusión, ya que no me quedó claro en un principio si el chat tenia que estar asociado a una renta, o por lo contrario éste podía ser accedido a través de un perfil de usuario. Posteriormente, para asegurar su correcto funcionamiento, implementé una serie de tests para comprobar que las funciones esenciales de la funcionalidad, se ejecutaban según lo esperado.
+
+Durante la segunda semana del sprint, desarrollé en frontend una funcionalidad, la cual consistía en: accediendo a la vista del detalle de un objeto publicado para su alquiler, poder visualizar la valoración media, y las valoraciones publicadas acerca de ese usuario en formato de estrellas. Por último, me visualicé el contenido de las píldoras teóricas publicadas en enseñanza virtual.
+
+Durante
+
 ### **Díaz Ordóñez, Pablo**  
 
 Durante la primera semana del sprint 3, llevé a cabo el arreglo de la parte de los formularios correspondiente a la política de cancelación, cuyo desplegable no salía en la posición deseada. Luego, comencé a arreglar los filtros correspondientes a las subcategorías y limpiar todo, que no funcionaban correctamente. Esta tarea la tuve resuelta pero no la subí al repositorio tras comunicarme Pablo Espinosa que la resolvió antes en la realización de una tarea suya. Tras ello, arreglé el cálculo del precio en la solicitud de un alquiler, para que cogiera bien los días que se alquila y calcular bien el precio total. 
