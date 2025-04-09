@@ -192,7 +192,7 @@ const AdminDashboard = () => {
                 dni: "",
             });
 
-            setShowForm(false);
+            
             fetchUsers();
         } catch (error) {
             const errorMsg = error.response?.data?.error || "Error al crear usuario";
