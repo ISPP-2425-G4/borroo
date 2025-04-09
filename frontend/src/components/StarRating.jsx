@@ -1,5 +1,5 @@
-
 import PropTypes from 'prop-types';
+import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
 
 const StarRating = ({ rating, maxStars = 5 }) => {
   const fullStars = Math.floor(rating);
@@ -9,19 +9,16 @@ const StarRating = ({ rating, maxStars = 5 }) => {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
       {Array.from({ length: fullStars }, (_, i) => (
-        <span key={`full-${i}`} style={{ color: '#ffc107', fontSize: '20px' }}>★</span>
+        <FaStar key={`full-${i}`} color="#ffc107" size={20} />
       ))}
-      {hasHalfStar && (
-        <span style={{ color: '#ffc107', fontSize: '20px' }}>☆</span>
-      )}
+      {hasHalfStar && <FaStarHalfAlt color="#ffc107" size={20} />}
       {Array.from({ length: emptyStars }, (_, i) => (
-        <span key={`empty-${i}`} style={{ color: '#e4e5e9', fontSize: '20px' }}>★</span>
+        <FaRegStar key={`empty-${i}`} color="#e4e5e9" size={20} />
       ))}
       <span style={{ marginLeft: 6, fontSize: '14px', color: '#555' }}>({rating})</span>
     </div>
   );
 };
-
 
 StarRating.propTypes = {
   rating: PropTypes.number.isRequired,
