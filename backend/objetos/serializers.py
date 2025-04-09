@@ -40,6 +40,16 @@ class ItemSerializer(serializers.ModelSerializer):
     user_rating = serializers.SerializerMethodField()
     user_location = serializers.SerializerMethodField()
 
+    user_name = serializers.CharField(
+         source="user.name", read_only=True
+    )
+    user_surname = serializers.CharField(
+         source="user.surname", read_only=True
+    )
+    user_username = serializers.CharField(
+         source="user.username", read_only=True
+    )
+
     class Meta:
         model = Item
         fields = [
@@ -50,7 +60,7 @@ class ItemSerializer(serializers.ModelSerializer):
             'image_files', 'remaining_image_ids', 'user',
             'draft_mode', 'unavailable_periods', 'featured',
             'user_rating', 'user_location',
-            'num_likes'
+            'num_likes', 'user_name', 'user_surname', 'user_username'
         ]
         read_only_fields = ['user']
 
@@ -192,13 +202,13 @@ class ItemRequestSerializer(serializers.ModelSerializer):
     )
     user_name = serializers.CharField(
          source="user.name", read_only=True
-     )
+    )
     user_surname = serializers.CharField(
          source="user.surname", read_only=True
-     )
+    )
     user_username = serializers.CharField(
          source="user.username", read_only=True
-     )
+    )
 
     class Meta:
         model = ItemRequest
