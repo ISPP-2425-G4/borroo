@@ -137,7 +137,7 @@ const UpdateItemScreen = () => {
       price_category?.trim() !== "" &&
       price?.trim() !== "" &&
       !isNaN(price) &&
-      parseFloat(price) > 0;
+      parseFloat(price) > 0; 
     
     setIsFormValid(isValid);
   };
@@ -308,9 +308,13 @@ const UpdateItemScreen = () => {
             return;
           }
 
+          const allowedFields = ["title", "description", "price", "category", "subcategory", "cancel_type", "price_category"];
           const fieldErrs = {};
+
           Object.entries(backendErrors).forEach(([field, messages]) => {
-            fieldErrs[field] = messages[0];
+            if (allowedFields.includes(field)) {
+              fieldErrs[field] = messages[0];
+            }
           });
 
           setFieldErrors(fieldErrs);
