@@ -4145,7 +4145,7 @@
     </tr>
     <tr>
         <td>Revisión: valoraciones en vista de objeto</td>
-        <td>2 horas 36 minutos</td>
+        <td>21 minutos</td>
     </tr>
     <tr>
         <td>Píldoras teóricas</td>
