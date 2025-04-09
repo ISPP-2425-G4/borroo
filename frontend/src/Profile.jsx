@@ -1133,8 +1133,8 @@ const Profile = () => {
                   sx: { maxHeight: "70vh" }
                 }}
               >
-                <DialogTitle id="tickets-dialog-title">Mis Incidencias</DialogTitle>
-                <DialogContent dividers>
+                <DialogTitle id="tickets-dialog-title" sx={{ pb: 1 }}>Mis Incidencias</DialogTitle>
+                <DialogContent dividers sx={{ pt: 1 }}>
                   <ListTickets />
                 </DialogContent>
                 <DialogActions>

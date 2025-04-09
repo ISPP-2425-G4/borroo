@@ -233,9 +233,6 @@ const Navbar = () => {
                   <MenuItem onClick={() => { handleLoginClose(); navigate(`/perfil/${encodeURIComponent(user.username)}`); }}>
                     Mi Perfil
                   </MenuItem>
-                  <MenuItem onClick={() => { handleLoginClose(); navigate(`/mis-incidencias/`); }}>
-                    Mis incidencias
-                  </MenuItem>
                   {user.is_admin && (
                     <>
                       <MenuItem onClick={() => { handleLoginClose(); navigate('/dashboard'); }}>
@@ -244,8 +241,8 @@ const Navbar = () => {
                       <MenuItem onClick={() => { navigate('/reports-dashboard'); }}>
                         Gestionar reportes
                       </MenuItem>
-                      {/*<MenuItem onClick={() => { navigate('/reports-dashboard'); }}>
-                        Gestionar reportes
+                      {/*<MenuItem onClick={() => { navigate('/tickets-dashboard'); }}>
+                        Gestionar incidencias
                       </MenuItem>*/}
                     </>
                   )}
