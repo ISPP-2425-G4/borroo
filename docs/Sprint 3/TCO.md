@@ -41,6 +41,7 @@ Fecha: 28/03/2025
 | ---------- | ------- | --------------- | -------------------------- |
 | 03-04-2025 | v1.0    | Miguel Palomo García | Reestimaciones hechas respecto al S2 |
 | 07-04-2025 | v1.1    |Javier García Rodríguez | Traslado a markdown |
+| 09-04-2025 | v1.2    |Miguel Palomo García| Inversiones añadidas |
 
 ---
 
@@ -49,16 +50,22 @@ Fecha: 28/03/2025
 1. [TCO](#1-tco)  
     1.1 [Desglose de los Componentes del TCO](#11-desglose-de-los-componentes-del-tco)  
     1.2 [Cálculo del TCO para 3 Años](#12-cálculo-del-tco-para-3-años)  
+
 2. [Amortización (ROI)](#2-amortización-roi)  
     2.1 [Información sobre comisiones y suscripciones](#21-información-sobre-comisiones-y-suscripciones)  
-        - 2.1.1 [Comisiones de usuarios](#211-comisiones-de-usuarios)  
-        - 2.1.2 [Suscripciones de usuarios](#212-suscripciones-de-usuarios) 
+   &nbsp;&nbsp;&nbsp;&nbsp;2.1.1 [Comisiones de usuarios](#211-comisiones-de-usuarios)  
+   &nbsp;&nbsp;&nbsp;&nbsp;2.1.2 [Suscripciones de usuarios](#212-suscripciones-de-usuarios)  
     2.2 [Cálculo de amortización](#22-cálculo-de-amortización)  
-        - 2.2.1 [Costes y escenarios](#221-costes-y-escenarios) 
-        - 2.2.2 [Beneficio optimista y pesimista](#222-beneficio-optimista-y-pesimista)  
-        - 2.2.3 [Escenario esperado](#223-escenario-esperado)  
-    2.3 [Gráficos de evolución](#23-gráficos-de-evolución)
-    2.4 [Resumen final](#24-resumen-final)  
+   &nbsp;&nbsp;&nbsp;&nbsp;2.2.1 [Costes y escenarios](#221-costes-y-escenarios)  
+   &nbsp;&nbsp;&nbsp;&nbsp;2.2.2 [Beneficio optimista y pesimista](#222-beneficio-optimista-y-pesimista)  
+   &nbsp;&nbsp;&nbsp;&nbsp;2.2.3 [Escenario esperado](#223-escenario-esperado)  
+    2.3 [Gráficos de evolución](#23-gráficos-de-evolución)  
+    2.4 [Análisis de inversiones](#24-análisis-de-inversiones)
+   &nbsp;&nbsp;&nbsp;&nbsp;2.4.1 [Niveles de inversión](#241-niveles-de-inversión)     
+    2.5 [Resumen final](#25-resumen-final)
+
+    
+    
 
 
 
@@ -185,18 +192,54 @@ Aproximando una tasa de crecimiento mensual de los usuarios de un 12% en cada me
 
 ### 2.3 Gráficos de evolución
 
+
 - **Gráfico 1:** Crecimiento de usuarios y empresas
+
 ![](../imagenes/grafica-tco-3.jpg)  
 
-
 - **Gráfico 2:** Evolución de ingresos mensuales esperados respecto a costes  
+
 ![](../imagenes/grafica-tco-1.jpg)  
 
+
 - **Gráfico 3:**  Evolución de ingresos esperados, pesimista y optimista respecto a costes  
+
 ![](../imagenes/grafica-tco-2.jpg)  
 
 
-### 2.4 Resumen final
+---
+
+### 2.4 Análisis de inversiones
+
+Se detallan 4 niveles de inversión (Micro, Base, Intermedio y Premium), cada uno con su respectivo aporte en euros, porcentaje del objetivo total, modelo sugerido y estimaciones de retorno en plazos de 2 y 4 años.
+
+#### 2.4.1 Niveles de inversión
+
+##### Micro
+
+El nivel **Micro** implica un aporte de 5.000€, con un interés anual compuesto del 10%, resultando en un retorno estimado de 6.105 € en 2 años y 6.771 € en 4 años.
+
+##### Base
+
+El modelo **Base** ofrece un retorno mediante un esquema de revenue share.
+
+##### Intermedio
+
+El nivel **Intermedio** garantiza un retorno fijo del 150%.
+
+##### Premium
+
+Finalmente, el nivel **Premium** incluye participación accionaria (equity) con retornos variables que podrían alcanzar entre 65.000 y 130.000 € a 4 años. 
+
+---
+
+
+La tabla siguiente utiliza códigos de color (verde, amarillo, azul y rojo) para facilitar la identificación visual de cada nivel de inversión.
+
+![](../imagenes/grafica-inversores.png) 
+
+
+### 2.5 Resumen final
 
 - Tiempo de amortización base: 19 meses (1 año y 7 meses).
 - Tiempo de amortización optimista: 11 meses.
