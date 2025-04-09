@@ -17,6 +17,8 @@ class UserSerializer(serializers.ModelSerializer):
             'dni',
             'is_verified', 'pricing_plan', 'owner_rating', 'renter_rating',
             'items', 'is_admin', 'image', 'user_image',
+            "subscription_start_date", "subscription_end_date",
+            "is_subscription_active",
         ]
         read_only_fields = ['id', 'owner_rating', 'renter_rating', 'items',
                             'is_admin']

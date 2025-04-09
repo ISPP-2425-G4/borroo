@@ -32,7 +32,8 @@ def clear_database():
 
 
 def create_users():
-    # Lista de DNIs escritos manualmente
+    from django.utils.timezone import now, timedelta
+
     dnis = [
         "12345671A",
         "23456782B",
@@ -41,10 +42,19 @@ def create_users():
         "56789015E"
     ]
     
-    # Lista de usernames
     usernames = ['User1', 'User2', 'User3', 'User4', 'User5']
     
     for i in range(5):
+        pricing_plan = random.choice(['free', 'premium'])
+
+        # Fechas según el plan
+        if pricing_plan == 'premium':
+            start_date = now()
+            end_date = now() + timedelta(days=30)
+        else:
+            start_date = None
+            end_date = None
+
         User.objects.create(
             username=usernames[i],
             name=f'{usernames[i]} Name',
@@ -57,16 +67,17 @@ def create_users():
             address=f'Calle {i}',
             verified_account=True,
             postal_code='28001',
-            dni=dnis[i],  # Asigna el DNI directamente de la lista
+            dni=dnis[i],
             is_verified=bool(random.getrandbits(1)),
-            pricing_plan=random.choice(['free', 'premium']),
+            pricing_plan=pricing_plan,
+            subscription_start_date=start_date,
+            subscription_end_date=end_date,
             is_admin=False
         )
     
     print('Users created successfully!')
 
-
-
+    # Crear el superusuario siempre en premium
     superuser = User.objects.create(
         username='admin',
         name='Admin',
@@ -82,6 +93,8 @@ def create_users():
         verified_account=True,
         is_verified=True,
         pricing_plan='premium',
+        subscription_start_date=now(),
+        subscription_end_date=now() + timedelta(days=30),
         is_admin=True,
     )
 
@@ -99,6 +112,7 @@ def create_items():
             cancel_type=random.choice(['flexible', 'medium', 'strict']),
             price_category=random.choice(['hour', 'day', 'month']),
             price=Decimal(random.uniform(2, 30)),
+            deposit=Decimal(random.uniform(30, 100)),
             user=random.choice(users),
             draft_mode=False,
             featured=False,

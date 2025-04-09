@@ -11,6 +11,7 @@ import { styled } from "@mui/system";
 import { DateRange } from "react-date-range";
 import "react-datepicker/dist/react-datepicker.css";
 import PublishConfirmationDialog from "./components/PublishConfirmationDialog";
+import DepositToolTip from "./components/DepositToolTip";
 
 const FormContainer = styled(Paper)(() => ({
   padding: "2rem",
@@ -208,6 +209,7 @@ const CreateItemScreen = () => {
     cancel_type: "",
     price_category: "",
     price: "",
+    deposit:"",
   });
 
   const [images, setImages] = useState([]);
@@ -273,7 +275,7 @@ const CreateItemScreen = () => {
   }, [formData, images]);
 
   const validateForm = () => {
-    const { title, description, category, subcategory, cancel_type, price_category, price } = formData;
+    const { title, description, category, subcategory, cancel_type, price_category, price, deposit } = formData;
     const isValid =
       title.trim() !== "" &&
       description.trim() !== "" &&
@@ -282,6 +284,7 @@ const CreateItemScreen = () => {
       cancel_type.trim() !== "" &&
       price_category.trim() !== "" &&
       price.trim() !== "" &&
+      deposit.trim() !== "" &&
       !isNaN(price) &&
       parseFloat(price) > 0 &&
       images.length > 0;
@@ -292,7 +295,7 @@ const CreateItemScreen = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "price") {
+    if (name === "price" || name==="deposit") {
       // Permitir solo números y máximo dos decimales
       const regex = /^\d{0,8}(\.\d{0,2})?$/;
       if (!regex.test(value) && value !== "") {
@@ -312,118 +315,108 @@ const CreateItemScreen = () => {
     }
   };
 
+  const CATEGORY_SUBCATEGORIES = {
+    technology: [
+      { value: "computers", label: "Ordenadores" },
+      { value: "computer_accessories", label: "Accesorios de ordenador" },
+      { value: "smartphones", label: "Smartphones" },
+      { value: "tablets", label: "Tablets" },
+      { value: "cameras", label: "Cámaras" },
+      { value: "consoles", label: "Consolas" },
+      { value: "tv", label: "Televisores" },
+      { value: "monitors", label: "Monitores" },
+      { value: "smarthome", label: "Hogar inteligente" },
+      { value: "audio", label: "Audio" },
+      { value: "smartwatchs", label: "Smartwatches" },
+      { value: "printers_scanners", label: "Impresoras y escáneres" },
+      { value: "drones", label: "Drones" },
+      { value: "projectors", label: "Proyectores" },
+      { value: "technology_others", label: "Otros (Tecnología)" },
+      { value: "none", label: "Ninguno" },
+    ],
+    sports: [
+      { value: "cycling", label: "Ciclismo" },
+      { value: "gym", label: "Gimnasio" },
+      { value: "calisthenics", label: "Calistenia" },
+      { value: "running", label: "Running" },
+      { value: "ball_sports", label: "Deportes de pelota" },
+      { value: "racket_sports", label: "Deportes de raqueta" },
+      { value: "paddle_sports", label: "Deportes de remo" },
+      { value: "martial_arts", label: "Artes marciales" },
+      { value: "snow_sports", label: "Deportes de nieve" },
+      { value: "skateboarding", label: "Skate" },
+      { value: "beach_sports", label: "Deportes de playa" },
+      { value: "pool_sports", label: "Deportes de piscina" },
+      { value: "river_sports", label: "Deportes de río" },
+      { value: "mountain_sports", label: "Deportes de montaña" },
+      { value: "extreme_sports", label: "Deportes extremos" },
+      { value: "sports_others", label: "Otros (Deporte)" },
+      { value: "none", label: "Ninguno" },
+    ],
+    diy: [
+      { value: "electric_tools", label: "Herramientas eléctricas" },
+      { value: "manual_tools", label: "Herramientas manuales" },
+      { value: "machines", label: "Máquinas" },
+      { value: "electricity", label: "Electricidad" },
+      { value: "plumbing", label: "Fontanería" },
+      { value: "woodworking", label: "Carpintería" },
+      { value: "painting", label: "Pintura" },
+      { value: "gardening", label: "Jardinería" },
+      { value: "decoration", label: "Decoración" },
+      { value: "diy_others", label: "Otros (Bricolaje)" },
+      { value: "none", label: "Ninguno" },
+    ],
+    clothing: [
+      { value: "summer_clothing", label: "Ropa de verano" },
+      { value: "winter_clothing", label: "Ropa de invierno" },
+      { value: "mevent_clothing", label: "Ropa de evento para hombre" },
+      { value: "wevent_clothing", label: "Ropa de evento para mujer" },
+      { value: "sport_event_apparel", label: "Ropa de evento deportivo" },
+      { value: "mshoes", label: "Zapatos para hombre" },
+      { value: "wshoes", label: "Zapatos para mujer" },
+      { value: "suits", label: "Trajes" },
+      { value: "dresses", label: "Vestidos" },
+      { value: "jewelry", label: "Joyería" },
+      { value: "watches", label: "Relojes" },
+      { value: "bags", label: "Bolsos" },
+      { value: "sunglasses", label: "Gafas de sol" },
+      { value: "hats", label: "Sombreros" },
+      { value: "clothing_others", label: "Otros (Ropa)" },
+      { value: "none", label: "Ninguno" },
+    ],
+    furniture_and_logistics: [
+      { value: "home_furniture", label: "Muebles de hogar" },
+      { value: "home_appliances", label: "Electrodomésticos" },
+      { value: "event_equipment", label: "Equipamiento para eventos" },
+      { value: "kids_furniture", label: "Muebles para niños" },
+      { value: "office_furniture", label: "Muebles de oficina" },
+      { value: "kitchen", label: "Cocina" },
+      { value: "bathroom", label: "Baño" },
+      { value: "garden_furniture", label: "Muebles de jardín" },
+      { value: "decoration_ambience", label: "Decoración y ambiente" },
+      { value: "furniture_and_logistics_others", label: "Otros (Mobiliario y logística)" },
+      { value: "none", label: "Ninguno" },
+    ],
+    entertainment: [
+      { value: "videogames", label: "Videojuegos" },
+      { value: "board_games", label: "Juegos de mesa" },
+      { value: "books", label: "Libros" },
+      { value: "movies", label: "Películas" },
+      { value: "music", label: "Música" },
+      { value: "instruments", label: "Instrumentos" },
+      { value: "party", label: "Fiesta" },
+      { value: "camping", label: "Camping" },
+      { value: "travel", label: "Viaje" },
+      { value: "other_entertainment", label: "Otros (Entretenimiento)" },
+      { value: "none", label: "Ninguno" },
+    ],
+  };
+  
   const handleCategoryChange = (e) => {
     const selectedCategory = e.target.value;
     setFormData({ ...formData, category: selectedCategory, subcategory: "" });
   
-    let newSubcategories = [];
-  
-    if (selectedCategory === "technology") {
-      newSubcategories = [
-        { value: "computers", label: "Ordenadores" },
-        { value: "computer_accessories", label: "Accesorios de ordenador" },
-        { value: "smartphones", label: "Smartphones" },
-        { value: "tablets", label: "Tablets" },
-        { value: "cameras", label: "Cámaras" },
-        { value: "consoles", label: "Consolas" },
-        { value: "tv", label: "Televisores" },
-        { value: "monitors", label: "Monitores" },
-        { value: "smarthome", label: "Hogar inteligente" },
-        { value: "audio", label: "Audio" },
-        { value: "smartwatchs", label: "Smartwatches" },
-        { value: "printers_scanners", label: "Impresoras y escáneres" },
-        { value: "drones", label: "Drones" },
-        { value: "projectors", label: "Proyectores" },
-        { value: "technology_others", label: "Otros (Tecnología)" },
-        { value: "none", label: "Ninguno" },
-
-      ];
-    } else if (selectedCategory === "sports") {
-      newSubcategories = [
-        { value: "cycling", label: "Ciclismo" },
-        { value: "gym", label: "Gimnasio" },
-        { value: "calisthenics", label: "Calistenia" },
-        { value: "running", label: "Running" },
-        { value: "ball_sports", label: "Deportes de pelota" },
-        { value: "racket_sports", label: "Deportes de raqueta" },
-        { value: "paddle_sports", label: "Deportes de remo" },
-        { value: "martial_arts", label: "Artes marciales" },
-        { value: "snow_sports", label: "Deportes de nieve" },
-        { value: "skateboarding", label: "Skate" },
-        { value: "beach_sports", label: "Deportes de playa" },
-        { value: "pool_sports", label: "Deportes de piscina" },
-        { value: "river_sports", label: "Deportes de río" },
-        { value: "mountain_sports", label: "Deportes de montaña" },
-        { value: "extreme_sports", label: "Deportes extremos" },
-        { value: "sports_others", label: "Otros (Deporte)" },
-        { value: "none", label: "Ninguno" },
-
-      ];
-    } else if (selectedCategory === "diy") {
-      newSubcategories = [
-        { value: "electric_tools", label: "Herramientas eléctricas" },
-        { value: "manual_tools", label: "Herramientas manuales" },
-        { value: "machines", label: "Máquinas" },
-        { value: "electricity", label: "Electricidad" },
-        { value: "plumbing", label: "Fontanería" },
-        { value: "woodworking", label: "Carpintería" },
-        { value: "painting", label: "Pintura" },
-        { value: "gardening", label: "Jardinería" },
-        { value: "decoration", label: "Decoración" },
-        { value: "diy_others", label: "Otros (Bricolaje)" },
-        { value: "none", label: "Ninguno" },
-
-      ];
-    } else if (selectedCategory === "clothing") {
-      newSubcategories = [
-        { value: "summer_clothing", label: "Ropa de verano" },
-        { value: "winter_clothing", label: "Ropa de invierno" },
-        { value: "mevent_clothing", label: "Ropa de evento para hombre" },
-        { value: "wevent_clothing", label: "Ropa de evento para mujer" },
-        { value: "sport_event_apparel", label: "Ropa de evento deportivo" },
-        { value: "mshoes", label: "Zapatos para hombre" },
-        { value: "wshoes", label: "Zapatos para mujer" },
-        { value: "suits", label: "Trajes" },
-        { value: "dresses", label: "Vestidos" },
-        { value: "jewelry", label: "Joyería" },
-        { value: "watches", label: "Relojes" },
-        { value: "bags", label: "Bolsos" },
-        { value: "sunglasses", label: "Gafas de sol" },
-        { value: "hats", label: "Sombreros" },
-        { value: "clothing_others", label: "Otros (Ropa)" },
-        { value: "none", label: "Ninguno" },
-
-      ];
-    } else if (selectedCategory === "furniture_and_logistics") {
-      newSubcategories = [
-        { value: "home_furniture", label: "Muebles de hogar" },
-        { value: "home_appliances", label: "Electrodomésticos" },
-        { value: "event_equipment", label: "Equipamiento para eventos" },
-        { value: "kids_furniture", label: "Muebles para niños" },
-        { value: "office_furniture", label: "Muebles de oficina" },
-        { value: "kitchen", label: "Cocina" },
-        { value: "bathroom", label: "Baño" },
-        { value: "garden_furniture", label: "Muebles de jardín" },
-        { value: "decoration_ambience", label: "Decoración y ambiente" },
-        { value: "furniture_and_logistics_others", label: "Otros (Mobiliario y logística)" },
-        { value: "none", label: "Ninguno" },
-
-      ];
-    } else if (selectedCategory === "entertainment") {
-      newSubcategories = [
-        { value: "videogames", label: "Videojuegos" },
-        { value: "board_games", label: "Juegos de mesa" },
-        { value: "books", label: "Libros" },
-        { value: "movies", label: "Películas" },
-        { value: "music", label: "Música" },
-        { value: "instruments", label: "Instrumentos" },
-        { value: "party", label: "Fiesta" },
-        { value: "camping", label: "Camping" },
-        { value: "travel", label: "Viaje" },
-        { value: "other_entertainment", label: "Otros (Entretenimiento)" },
-        { value: "none", label: "Ninguno" },
-      ];
-    }
+    const newSubcategories = CATEGORY_SUBCATEGORIES[selectedCategory] || [];
     setFilteredSubcategories(newSubcategories);
   };
 
@@ -484,62 +477,63 @@ const CreateItemScreen = () => {
       setLoading(true);
     }
 
-    setErrorMessage("");
-    setFieldErrors({});
-    setShowErrorMessage(false);
-    setSubmitSuccess(false);
+setErrorMessage("");
+setFieldErrors({});
+setShowErrorMessage(false);
+setSubmitSuccess(false);
 
-    const errors = {};
-    
-    if(!formData.title) {
-      errors.title = "El título es obligatorio.";
-    } else if (formData.title.length > 255) {
-      errors.title = "El título no puede exceder los 255 caracteres.";
-    } else if (!/^[A-Za-z]/.test(formData.title)) {
-      errors.title = "El título debe comenzar con una letra.";
-    }
+const errors = {};
 
-    if (!formData.description) {
-      errors.description = "La descripción es obligatoria.";
-    } else if (formData.description.length > 1000) {
-      errors.description = "La descripción no puede exceder los 1000 caracteres.";
-    } else if (!/^[A-Za-z]/.test(formData.description)) {
-      errors.description = "La descripción debe comenzar con una letra.";
-    } 
-    
-    if (!formData.price) {
-      errors.price = "El precio es obligatorio.";
-    } else if (isNaN(formData.price) || parseFloat(formData.price) <= 0) {
-      errors.price = "El precio debe ser un número mayor a 0.";
-    } else if (formData.price.includes(".") && formData.price.split(".")[1].length > 2) {
-      errors.price = "El precio solo puede tener hasta dos decimales.";
-    } else if (formData.price.length > 10) {
-      errors.price = "El precio no puede superar los 10 dígitos en total.";
-    } else if (formData.price > 10000) {
-      errors.price = "El precio no puede superar los $10,000.";
-    }
+const validateTextField = (field, label, maxLength = 255) => {
+  const value = formData[field];
+  if (!value) {
+    errors[field] = `El ${label} es obligatorio.`;
+  } else if (value.length > maxLength) {
+    errors[field] = `El ${label} no puede exceder los ${maxLength} caracteres.`;
+  } else if (!/^[A-Za-z]/.test(value)) {
+    errors[field] = `El ${label} debe comenzar con una letra.`;
+  }
+};
 
-    if(!formData.category) {
-      errors.category = "La categoría es obligatoria.";
-    } else if (!options.categories.map((opt) => opt.value).includes(formData.category)) {
-      errors.category = "Selecciona una categoría válida.";
-    }
+const validatePriceField = (field, label) => {
+  const value = formData[field];
+  if (!value) {
+    errors[field] = `El ${label} es obligatorio.`;
+  } else if (isNaN(value) || parseFloat(value) <= 0) {
+    errors[field] = `El ${label} debe ser un número mayor a 0.`;
+  } else if (value.includes(".") && value.split(".")[1].length > 2) {
+    errors[field] = `El ${label} solo puede tener hasta dos decimales.`;
+  } else if (value.length > 10) {
+    errors[field] = `El ${label} no puede superar los 10 dígitos en total.`;
+  } else if (parseFloat(value) > 10000) {
+    errors[field] = `El ${label} no puede superar los $10,000.`;
+  }
+};
 
-    if(!formData.cancel_type) {
-      errors.cancel_type = "La política de cancelación es obligatoria.";
-    } else if (!options.cancel_types.map((opt) => opt.value).includes(formData.cancel_type)) {
-      errors.cancel_type = "Selecciona una política de cancelación válida.";
-    }
+const validateSelectField = (field, label, validOptions) => {
+  const value = formData[field];
+  if (!value) {
+    errors[field] = `La ${label} es obligatoria.`;
+  } else if (!validOptions.includes(value)) {
+    errors[field] = `Selecciona una ${label.toLowerCase()} válida.`;
+  }
+};
 
-    if(!formData.price_category) {
-      errors.price_category = "La categoría de precio es obligatoria.";
-    } else if (!options.price_categories.map((opt) => opt.value).includes(formData.price_category)) {
-      errors.price_category = "Selecciona una categoría de precio válida.";
-    }
+// Validaciones individuales
+validateTextField("title", "título", 255);
+validateTextField("description", "descripción", 1000);
 
-    if (images.length === 0) {
-      errors.image = "Por favor, selecciona al menos una imagen.";
-    }
+validatePriceField("price", "precio");
+validatePriceField("deposit", "precio");
+
+validateSelectField("category", "categoría", options.categories.map((opt) => opt.value));
+validateSelectField("cancel_type", "política de cancelación", options.cancel_types.map((opt) => opt.value));
+validateSelectField("price_category", "categoría de precio", options.price_categories.map((opt) => opt.value));
+
+if (images.length === 0) {
+  errors.image = "Por favor, selecciona al menos una imagen.";
+}
+
 
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
@@ -551,7 +545,7 @@ const CreateItemScreen = () => {
 
     try {
       const formDataToSend = new FormData();
-      const allowedKeys = ["title", "description", "category", "subcategory", "cancel_type", "price_category", "price"];
+      const allowedKeys = ["title", "description", "category", "subcategory", "cancel_type", "price_category", "price", "deposit"];
       formDataToSend.append("draft_mode", isDraft ? "true" : "false");
       
       Object.keys(formData).forEach((key) => {
@@ -755,6 +749,27 @@ const CreateItemScreen = () => {
                 />
               </InputGroup>
               {fieldErrors.price && <ErrorMessage>{fieldErrors.price}</ErrorMessage>}
+
+              <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
+              <InputGroup>
+                <InputIcon>
+                  <FiDollarSign />
+                </InputIcon>
+                <StyledInput
+                  type="number"
+                  step="0.01"
+                  name="deposit"
+                  placeholder="Fianza"
+                  value={formData.deposit}
+                  onChange={handleChange}
+                  error={!!fieldErrors.deposit}
+                />
+              </InputGroup>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <DepositToolTip />
+                </Box>
+              </Stack>
+              {fieldErrors.deposit && <ErrorMessage>{fieldErrors.deposit}</ErrorMessage>}
 
               <FileInputContainer onClick={triggerFileSelect}>
                 <FiImage size={32} color="#4a90e2" />

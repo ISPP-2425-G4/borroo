@@ -46,7 +46,7 @@ class ItemSerializer(serializers.ModelSerializer):
             'id', 'title', 'description', 'category', 'category_display',
             'subcategory', 'subcategory_display', 'cancel_type',
             'cancel_type_display', 'price_category',
-            'price_category_display', 'price', 'images',
+            'price_category_display', 'price', 'deposit', 'images',
             'image_files', 'remaining_image_ids', 'user',
             'draft_mode', 'unavailable_periods', 'featured',
             'user_rating', 'user_location',
@@ -147,6 +147,7 @@ class ItemSerializer(serializers.ModelSerializer):
         instance.price_category = validated_data.get('price_category',
                                                      instance.price_category)
         instance.price = validated_data.get('price', instance.price)
+        instance.deposit = validated_data.get('deposit', instance.deposit)
         image_files = validated_data.pop('image_files', None)
         remaining_image_ids = validated_data.pop('remaining_image_ids', [])
         unavailable_periods_data = validated_data.pop(
@@ -195,6 +196,6 @@ class ItemRequestSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'title', 'description',
             'category', 'category_display', 'subcategory',
-            'subcategory_display', 'price', 'price_category',
+            'subcategory_display', 'price', 'deposit', 'price_category',
             'cancel_type', 'cancel_type_display',
-            'price_category_display', 'user', 'approved']
+            'price_category_display', 'deposit', 'user', 'approved']

@@ -47,6 +47,7 @@ import DeleteConfirmationDialog from "./components/DeleteConfirmationDialog";
 import EditConfirmationDialog from "./components/EditConfirmationDialog";
 import PublishConfirmationDialog from "./components/PublishConfirmationDialog";
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
+import DepositToolTip from "./components/DepositToolTip";
 
 
 
@@ -812,6 +813,18 @@ const ShowItemScreen = () => {
                         {item.price} € / {item.price_category_display}
                       </Typography>
                     </Box>
+                  </Box>
+                  <Box sx={{ display: 'flex', gap: 2 }}>
+                    <MoneyIcon color="action" />
+                    <Box>
+                      <Typography variant="subtitle2">Fianza</Typography>
+                      <Typography variant="body1" color="primary" fontWeight="bold">
+                        {item.deposit} € 
+                      </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <DepositToolTip />
+                      </Box>
                   </Box>
                 </Stack>
                 
