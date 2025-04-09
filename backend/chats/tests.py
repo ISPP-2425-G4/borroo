@@ -7,8 +7,16 @@ from chats.models import Chat, Message
 class ChatTests(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user1 = User.objects.create_user(username="user1", email="u1@test.com", password="pass")
-        self.user2 = User.objects.create_user(username="user2", email="u2@test.com", password="pass")
+        self.user1 = User.objects.create_user(
+            username="user1",
+            email="u1@test.com",
+            password="pass"
+        )
+        self.user2 = User.objects.create_user(
+            username="user2",
+            email="u2@test.com",
+            password="pass"
+        )
         self.chat = Chat.objects.create(user1=self.user1, user2=self.user2)
         self.client.force_authenticate(user=self.user1)
 
@@ -28,7 +36,11 @@ class ChatTests(TestCase):
         self.assertEqual(message.content, "¡Hola!")
 
     def test_unauthorized_user_cannot_send_message(self):
-        outsider = User.objects.create_user(username="intruso", email="intru@test.com", password="pass")
+        outsider = User.objects.create_user(
+            username="intruso",
+            email="intru@test.com",
+            password="pass"
+        )
         self.client.force_authenticate(user=outsider)
 
         response = self.client.post(
@@ -86,7 +98,11 @@ class ChatTests(TestCase):
         self.assertGreaterEqual(len(response.data), 1)
 
     def test_get_chat_messages_forbidden_if_not_in_chat(self):
-        outsider = User.objects.create_user(username="outsider", email="out@test.com", password="pass")
+        outsider = User.objects.create_user(
+            username="outsider",
+            email="out@test.com",
+            password="pass"
+        )
         self.client.force_authenticate(user=outsider)
         response = self.client.get(f"/chats/{self.chat.id}/messages/")
         self.assertEqual(response.status_code, 404)
