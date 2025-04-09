@@ -234,6 +234,7 @@ const AdminItemDashboard = () => {
         formData.append("cancel_type", editItemData.cancel_type);
         formData.append("price_category", editItemData.price_category);
         formData.append("price", editItemData.price);
+        formData.append("deposit", editItemData.deposit);
     
         images.forEach((image) => {
             formData.append("image_files", image);
@@ -271,6 +272,7 @@ const AdminItemDashboard = () => {
         cancel_type: "",
         price_category: "",
         price: "",
+        deposit: "",
         
     });
    
@@ -301,6 +303,7 @@ const AdminItemDashboard = () => {
         form.append("category", formData.category);
         form.append("subcategory", formData.subcategory);
         form.append("cancel_type", formData.cancel_type || "flexible");
+        form.append("deposit", formData.deposit);
         form.append("draft_mode", false);
         form.append("featured", false); 
         
@@ -331,7 +334,8 @@ const AdminItemDashboard = () => {
                 price_category: "",
                 category: "none",
                 subcategory: "",
-                cancel_type: ""
+                cancel_type: "",
+                deposit: "",
             });
             fetchItems(); 
         } catch (error) {
@@ -408,6 +412,14 @@ const AdminItemDashboard = () => {
                             label="Precio"
                             name="price"
                             value={formData.price}
+                            onChange={handleInputChange}
+                            margin="normal"
+                        />
+                          <TextField
+                            fullWidth
+                            label="Fianza"
+                            name="deposit"
+                            value={formData.deposit}
                             onChange={handleInputChange}
                             margin="normal"
                         />
@@ -529,6 +541,14 @@ const AdminItemDashboard = () => {
                             label="Precio"
                             name="price"
                             value={formData.price}
+                            onChange={handleInputChange}
+                            margin="normal"
+                        />
+                         <TextField
+                            fullWidth
+                            label="Fianza"
+                            name="deposit"
+                            value={formData.deposit}
                             onChange={handleInputChange}
                             margin="normal"
                         />
