@@ -77,13 +77,19 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 |------|-------------------------|--------------------|------------|---------------|
 | 001  | Información sobre IA generativa para vídeos   | Javier García Rodríguez       | 03/04/2025 | [Ver chat](https://chatgpt.com/share/67ef3261-fa0c-8001-9856-d29d051e270e) |
 | 002  | Resolución de bugs en código  | Javier García Rodríguez       | 03/04/2025 | [Ver chat](https://chatgpt.com/share/67ef32e4-70fc-8001-8a36-78e209045a65) |
+| 003  | Información sobre normativas legales  | Javier García Rodríguez       | 03/04/2025 | [Ver chat](https://chatgpt.com/share/67f65486-3fe4-8001-b98b-9900502e3a09) |
+| 004  | Documentación de política de daños  | Javier García Rodríguez       | 07/04/2025 | [Ver chat](https://chatgpt.com/share/67f653c5-82e0-8001-9315-bee2834e8dde) |
+
+https://chatgpt.com/share/67f65486-3fe4-8001-b98b-9900502e3a09
 
 ------------------------------------------------------------------
 
 | ID   | Tipo de prompt          | Útil (Sí/No) | Tiempo Ahorrado |
 |------|---------------------------|--------------|-----------------|
-| 001  | Solicitud de información     | Sí           | 40 min          |
-| 002  | Detección de bugs     | Sí           | 40 min          |
+| 001  | Solicitud de información     | Sí  | 40 min  |
+| 002  | Detección de bugs     | Sí   | 40 min  |
+| 003  | Solicitud de información     | Sí   | 30 min  |
+| 004  | Generación de documentación     | Sí   | 30 min  |
 
 ## 4. Alucinaciones de la IA
 
@@ -91,7 +97,7 @@ Para calcular el porcentaje de alucinaciones de las inteligencias artificiales u
 
 | Desarrollador | Usos | % Alucinaciones |
 |----|------|------------|
-| 1  |   6  | 16%  |
+| 1  |   6  | 12,5%  |
 
 ### Cálculo de las alucinaciones por IA
 
