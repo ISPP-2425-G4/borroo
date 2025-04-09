@@ -191,6 +191,8 @@ const AdminDashboard = () => {
                 postal_code: "",
                 dni: "",
             });
+
+            setShowForm(false);
             fetchUsers();
         } catch (error) {
             const errorMsg = error.response?.data?.error || "Error al crear usuario";

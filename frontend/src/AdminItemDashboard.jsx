@@ -56,25 +56,6 @@ const FileInputContainer = styled(Box)(() => ({
       backgroundColor: "#f0f7ff",
     },
   }));
-//   const RemoveButton = styled("button")(() => ({
-//     position: "absolute",
-//     top: "8px",
-//     right: "8px",
-//     background: "rgba(0, 0, 0, 0.5)",
-//     color: "white",
-//     border: "none",
-//     borderRadius: "50%",
-//     width: "30px",
-//     height: "30px",
-//     display: "flex",
-//     alignItems: "center",
-//     justifyContent: "center",
-//     cursor: "pointer",
-//     transition: "background 0.2s",
-//     "&:hover": {
-//       background: "rgba(0, 0, 0, 0.7)",
-//     },
-//   }));
 
 const categoryList = [
     { value: 'technology', label: 'Tecnología' },
@@ -242,20 +223,45 @@ const AdminItemDashboard = () => {
             alert("Error al eliminar ítem.", error);
         }
     };
+   
     const handleEditItem = async (itemId) => {
-        const confirm = window.confirm("Confirmar cambios");
-        if (!confirm) return;
+        const formData = new FormData();
+    
+        
+        formData.append("title", editItemData.title);
+        formData.append("description", editItemData.description);
+        formData.append("category", editItemData.category);
+        formData.append("subcategory", editItemData.subcategory);
+        formData.append("cancel_type", editItemData.cancel_type);
+        formData.append("price_category", editItemData.price_category);
+        formData.append("price", editItemData.price);
+    
+        images.forEach((image) => {
+            formData.append("image_files", image);
+        });
+    
         try {
-            await axios.put(`${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/item/${itemId}/update/`, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            fetchItems(); 
+            await axios.put(
+                `${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/item/${itemId}/update/`,
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+            alert("Ítem editado correctamente.");
+            setEditItemData(null);
+            fetchItems();
         } catch (error) {
             alert("Error al editar ítem.");
-            console.error(error);
+            console.error(error.response?.data || error);
         }
-            fetchItems();
     };
+    
+    
+    
     const [images, setImages] = useState([]);
    
     const [formData, setFormData] = useState({
@@ -269,7 +275,7 @@ const AdminItemDashboard = () => {
         
     });
    
-    const [editItemData, setEditItemData] = useState(false)
+    const [editItemData, setEditItemData] = useState(null)
     const [showCreateForm, setShowCreateForm] = useState(false)
 
     const handleInputChange = (e) => {
@@ -341,7 +347,7 @@ const AdminItemDashboard = () => {
                 
                 <Button
                     variant="contained"
-                    onClick={() => setShowCreateForm(true)} // Asume que tienes esta lógica
+                    onClick={() => setShowCreateForm(true)} 
                 >
                     Crear Ítem
                 </Button>
@@ -365,7 +371,10 @@ const AdminItemDashboard = () => {
                                     <IconButton onClick={() => handleDeleteItem(item.id)}>
                                         <DeleteIcon color="error" />
                                     </IconButton>
-                                    <IconButton onClick={() => handleEditItem(item.id)}>
+                                    <IconButton onClick={() => {
+                                        setEditItemData(item)
+                                        setFormData(item)
+                                    }}>
                                         <EditIcon color="primary" />
                                     </IconButton>
                                 </TableCell>
@@ -375,15 +384,15 @@ const AdminItemDashboard = () => {
                 </Table>
             </TableContainer>
        
-            {/* Agrega el dialog para editar el ítem si editItemData está presente */}
-            <Dialog open={editItemData} onClose={() => setEditItemData(false)}>
+            
+            <Dialog open={editItemData} onClose={() => setEditItemData(null)}>
     <DialogTitle>Editar Ítem</DialogTitle>
                     <DialogContent>
                         <TextField
                             fullWidth
                             label="Título"
                             name="title"
-                            value={editItemData.title}
+                            value={formData.title}
                             onChange={handleInputChange}
                             margin="normal"
                         />
@@ -391,7 +400,7 @@ const AdminItemDashboard = () => {
                             fullWidth
                             label="Descripción"
                             name="description"
-                            value={editItemData.description}
+                            value={formData.description}
                             onChange={handleInputChange}
                             margin="normal"
                         />
@@ -399,7 +408,7 @@ const AdminItemDashboard = () => {
                             fullWidth
                             label="Precio"
                             name="price"
-                            value={editItemData.price}
+                            value={formData.price}
                             onChange={handleInputChange}
                             margin="normal"
                         />
@@ -407,7 +416,7 @@ const AdminItemDashboard = () => {
                             <InputLabel>Precio Categoría</InputLabel>
                             <Select
                                 name="price_category"
-                                value={editItemData.price_category}
+                                value={formData.price_category}
                                 onChange={handleInputChange}
                             >
                                 <MenuItem value="hour">Hora</MenuItem>
@@ -420,7 +429,7 @@ const AdminItemDashboard = () => {
                             <InputLabel>Categoría</InputLabel>
                             <Select
                                 name="category"
-                                value={editItemData.category}
+                                value={formData.category}
                                 onChange={handleCategoryChange}
                             >
                                 <MenuItem value="none" disabled>Selecciona una categoría</MenuItem>
@@ -432,16 +441,16 @@ const AdminItemDashboard = () => {
                             </Select>
                         </FormControl>
 
-                        {editItemData.category !== "none" && (
+                        {formData.category !== "none" && (
                             <FormControl fullWidth margin="normal">
                                 <InputLabel>Subcategoría</InputLabel>
                                 <Select
                                     name="subcategory"
-                                    value={editItemData.subcategory}
+                                    value={formData.subcategory}
                                     onChange={handleInputChange}
                                     label="Subcategoría"
                                 >
-                                    {categoryOptions[editItemData.category]?.map((option) => (
+                                    {categoryOptions[formData.category]?.map((option) => (
                                         <MenuItem key={option.value} value={option.value}>
                                             {option.label}
                                         </MenuItem>
@@ -467,29 +476,33 @@ const AdminItemDashboard = () => {
                             />
                         </FileInputContainer>
                         
-                        {editItemData.images && editItemData.images.length > 0 && (
-                            <Box>
-                                <Typography variant="subtitle2" sx={{ mb: 1, color: "#555" }}>
-                                    Imágenes seleccionadas ({editItemData.images.length})
-                                </Typography>
-                                <ImageGallery>
-                                    {editItemData.images.map((image, index) => (
-                                        <ImageContainer key={index}>
-                                            <PreviewImage src={URL.createObjectURL(image)} alt={`Preview ${index + 1}`} />
-                                        </ImageContainer>
+                        {images.length > 0 && (
+                                <Box>
+                                  <Typography variant="subtitle2" sx={{ mb: 1, color: "#555" }}>
+                                    Imágenes seleccionadas ({images.length})
+                                  </Typography>
+                                  <ImageGallery>
+                                    {images.map((image, index) => (
+                                      <ImageContainer key={index}>
+                                        <PreviewImage src={URL.createObjectURL(image)} alt={`Preview ${index + 1}`} />
+                                        {/* <RemoveButton onClick={() => handleRemoveImage(index)}>
+                                          <FiTrash2 size={16} />
+                                        </RemoveButton> */}
+                                      </ImageContainer>
                                     ))}
-                                </ImageGallery>
-                            </Box>
-                        )}
+                                  </ImageGallery>
+                                </Box>
+                              )}
+                
 
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={() => setEditItemData(null)} color="primary">
                             Cancelar
                         </Button>
-                        <Button onClick={handleEditItem} color="primary">
-                            Guardar
-                        </Button>
+                        <Button onClick={() => handleEditItem(editItemData.id)} color="primary">
+                                    Guardar
+                            </Button>
                     </DialogActions>
                 </Dialog>
       
