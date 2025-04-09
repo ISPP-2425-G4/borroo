@@ -109,6 +109,7 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
   const reiniciarFiltros = () => {
     setTerminoBusqueda("");
     setCategoria("");
+    setSubcategoria("");
     setPriceCategory("");
     setCancelType("");
     setRangoValoracion([0, 5]);
@@ -1243,6 +1244,33 @@ const toggleLike = async (productoId) => {
                       sx={{ borderRadius: 1 }}
                     />
                   )}
+                  {cancelType && (
+                  <Chip
+                  label={`Tipo de cancelación: ${options.cancel_types.find(([val]) => val === cancelType)?.[1] || cancelType}`}
+                  size="small"
+                    onDelete={() => setCancelType("")}
+                    sx={{ borderRadius: 1 }}
+                  />
+                )}
+
+                {(rangoValoracion[0] > 0 || rangoValoracion[1] < 5) && (
+                  <Chip
+                    label={`Valoración: ${rangoValoracion[0]} - ${rangoValoracion[1]}`}
+                    size="small"
+                    onDelete={() => setRangoValoracion([0, 5])}
+                    sx={{ borderRadius: 1 }}
+                  />
+                )}
+
+                {priceCategory && (
+                  <Chip
+                  label={`Tipo de precio: ${options.price_categories.find(([val]) => val === priceCategory)?.[1] || priceCategory}`}
+                  size="small"
+                    onDelete={() => setPriceCategory("")}
+                    sx={{ borderRadius: 1 }}
+                  />
+                )}
+
                 </Box>
               )}
 
