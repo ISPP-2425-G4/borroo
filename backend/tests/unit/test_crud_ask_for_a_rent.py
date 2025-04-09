@@ -1,3 +1,4 @@
+from decimal import Decimal
 import pytest
 from rest_framework.test import APIClient
 from django.urls import reverse
@@ -40,6 +41,7 @@ class TestCreateItemRequest:
             "cancel_type": CancelType.FLEXIBLE,
             "price_category": PriceCategory.DAY,
             "price": "10.00",
+            "deposit": "20.00",
             "user": user.id
         }
 
@@ -49,6 +51,29 @@ class TestCreateItemRequest:
         assert response.status_code == 201
         assert response.data["item_request"]["title"] == "Alquilar bicicleta"
         assert response.data["item_request"]["approved"] is False
+
+    def test_create_item_request_valid_deposit(self, user):
+        client = APIClient()
+        url = reverse("create_item_request")
+
+        data = {
+            "title": "Alquilar taladro",
+            "description": "Necesito un taladro para el fin de semana",
+            "category": ItemCategory.DIY,
+            "subcategory": ItemSubcategory.ELECTRIC_TOOLS,
+            "cancel_type": CancelType.FLEXIBLE,
+            "price_category": PriceCategory.DAY,
+            "price": "15.00",
+            "deposit": "50.00",
+            "user": user.id
+        }
+
+        response = client.post(url, data, format="json")
+        print(response.data)
+
+        assert response.status_code == 201
+        assert Decimal(response.data["item_request"]
+                       ["deposit"]) == Decimal("50.00")
 
     # ❌ CASOS NEGATIVOS
     def test_create_item_request_missing_title(self, user):
@@ -62,6 +87,7 @@ class TestCreateItemRequest:
             "cancel_type": CancelType.FLEXIBLE,
             "price_category": PriceCategory.DAY,
             "price": "20.00",
+            "deposit": "20.00",
             "user": user.id
         }
 
@@ -82,6 +108,7 @@ class TestCreateItemRequest:
             "cancel_type": CancelType.MEDIUM,
             "price_category": PriceCategory.DAY,
             "price": "-5.00",
+            "deposit": "20.00",
             "user": user.id
         }
 
@@ -102,6 +129,7 @@ class TestCreateItemRequest:
             "cancel_type": CancelType.STRICT,
             "price_category": PriceCategory.DAY,
             "price": "30.00",
+            "deposit": "20.00",
             "user": 9999
         }
 
@@ -122,6 +150,7 @@ class TestCreateItemRequest:
             "cancel_type": CancelType.MEDIUM,
             "price_category": PriceCategory.DAY,
             "price": "50.00",
+            "deposit": "20.00",
             "user": user.id
         }
 
@@ -143,6 +172,7 @@ class TestCreateItemRequest:
             "cancel_type": CancelType.STRICT,
             "price_category": PriceCategory.DAY,
             "price": "70.00",
+            "deposit": "20.00",
             "user": user.id
         }
 
@@ -164,6 +194,7 @@ class TestCreateItemRequest:
             "cancel_type": CancelType.FLEXIBLE,
             "price_category": PriceCategory.DAY,
             "price": "999999999",
+            "deposit": "20.00",
             "user": user.id
         }
 

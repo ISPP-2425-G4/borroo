@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiLock, FiMail, FiInfo, FiBriefcase } from "react-icons/fi";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { Checkbox, FormControlLabel } from "@mui/material"; 
+import { Checkbox, FormControlLabel, Alert, Snackbar } from "@mui/material"; 
 import axios from 'axios';
 import Navbar from "./Navbar";
 import { 
@@ -15,7 +15,6 @@ import {
   InputAdornment, 
   IconButton, 
   CircularProgress, 
-  Alert,
   styled
 } from "@mui/material";
 
@@ -92,6 +91,7 @@ const Signup = () => {
   const [acceptTerms, setAcceptTerms] = useState(false);
   const navigate = useNavigate();
   const [isCompany, setIsCompany] = useState(false);
+  const [notification, setNotification] =  useState({ open: false, message: "", severity: "success" });
   
   useEffect(() => {
     const { username, name, surname, email, password, password2, cif } = formData;
@@ -243,7 +243,16 @@ const Signup = () => {
       console.log("Respuesta del servidor:", response);
   
       if (response.status === 201) {
-        navigate("/login");
+        setNotification({
+          open: true,
+          message: "Se ha enviado una enlace para verificar el correo. Redirigiendo...",
+          severity: "success"
+        });
+        setTimeout(() => {
+          setNotification({ ...notification, open: false });
+          navigate("/login");
+        }
+        , 3000);
       } else {
         const data = response.data;
   
@@ -460,7 +469,22 @@ const Signup = () => {
                 {formErrors.cif && <FieldError>{formErrors.cif}</FieldError>}
               </>
             )}
-            
+            <Snackbar
+                open={notification.open}
+                onClose={() => setNotification({ ...notification, open: false })}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }} // Centrado en la parte superior
+            >
+                <Alert
+                    onClose={() => setNotification({ ...notification, open: false })}
+                    severity={notification.severity}
+                    sx={{
+                        width: "100%",
+                        fontSize: "18px", // Tamaño de fuente más grande
+                    }}
+                >
+                    {notification.message}
+                </Alert>
+            </Snackbar>
             <FormControlLabel
                 control={
                   <Checkbox

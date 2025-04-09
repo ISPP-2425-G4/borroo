@@ -119,11 +119,11 @@ class User(AbstractUser):
             self._dni = None
     is_verified = models.BooleanField(default=False)
     verified_account = models.BooleanField(default=False)
-    pricing_plan = models.CharField(
-        max_length=10,
-        choices=PricingPlan.choices,
-        default=PricingPlan.FREE
-    )
+    pricing_plan = models.CharField(max_length=10, choices=PricingPlan.choices,
+                                    default=PricingPlan.FREE)
+    subscription_start_date = models.DateTimeField(null=True, blank=True)
+    subscription_end_date = models.DateTimeField(null=True, blank=True)
+    is_subscription_active = models.BooleanField(default=False)
     # Atributo derivado que se necesita la entidad de reviews
     owner_rating = models.FloatField(default=0.0)
     # Atributo derivado que se necesita la entidad de reviews
@@ -159,6 +159,23 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    def update_subscription_status(self):
+        # Si es PREMIUM y ya ha caducado
+        if self.pricing_plan == PricingPlan.PREMIUM:
+            if (
+                self.subscription_end_date
+                and now() > self.subscription_end_date
+            ):
+                self.pricing_plan = PricingPlan.FREE
+                self.subscription_start_date = None
+                self.subscription_end_date = None
+                self.is_subscription_active = False  # 🔽 desactivar renovación
+                self.save()
+
+    def cancel_subscription(self):
+        self.is_subscription_active = False
+        self.save()
 
 
 class Review(models.Model):
