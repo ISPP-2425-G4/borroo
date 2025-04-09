@@ -6,6 +6,7 @@ import { useState } from "react";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect } from "react";
+import SendMessageButton from "./SendMessageButton";
 
 
 const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) => {
@@ -267,10 +268,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                                             </Typography>
                                         </CardContent>
                                         <CardActions sx={{ justifyContent: "flex-end" }}>
-                                            {/* Botón para enviar mensaje al usuario, TODO implementar el chat */}
-                                            <Button size="small" onClick={() => alert("Enviando mensaje...")}>
-                                                Enviar Mensaje
-                                            </Button>
+                                            <SendMessageButton userId={request.renter.id} />
                                         </CardActions>
                                     </Card>
                                 }
