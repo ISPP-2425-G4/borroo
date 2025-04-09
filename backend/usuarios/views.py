@@ -212,6 +212,9 @@ class UserViewSet(viewsets.ModelViewSet):
                             status=status.HTTP_400_BAD_REQUEST)
 
         user.is_subscription_active = False
+        # Quitar destacados de sus objetos
+        featured_items = Item.objects.filter(user=user, featured=True)
+        featured_items.update(featured=False)
         user.save()
         return Response({
             "message":

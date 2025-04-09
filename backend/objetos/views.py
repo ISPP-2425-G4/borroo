@@ -249,6 +249,16 @@ class ItemViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_403_FORBIDDEN
             )
 
+        # Validación: ¿es draft_mode?
+        if item.draft_mode:
+            return Response(
+                {
+                    "error": "No puedes destacar un objeto que está en modo "
+                             "borrador."
+                },
+                status=status.HTTP_403_FORBIDDEN
+            )
+
         # Si ya está destacado -> desmarcar
         if item.featured:
             item.featured = False
