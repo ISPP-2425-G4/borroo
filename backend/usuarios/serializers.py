@@ -25,6 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         """Sobrescribir el método update para manejar la imagen."""
+        print("Datos recibidos para actualizar:", validated_data)  # Debug
         user_image = validated_data.pop('user_image', None)
         if user_image:
             instance.image = upload_image_to_imgbb(user_image)
@@ -38,18 +39,31 @@ class UserSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, data):
+        if 'dni' in data and self.instance:
+            dni = data['dni']
+            if User.objects.filter(dni=dni).exclude(
+                id=self.instance.id
+            ).exists():
+                raise serializers.ValidationError({
+                    'dni': (
+                        "El DNI ya está registrado. Por favor, utiliza uno "
+                        "diferente."
+                    )
+                })
+
         fields_to_validate = ["name", "surname", "country", "city", "address"]
         for field in fields_to_validate:
-            if field in data and not re.match(r'^[A-Za-zÁÉÍÓÚáéíóúÑñ]',
-                                              data[field]):
-                raise serializers.ValidationError(
-                    {field: "Debe comenzar con una letra."}
-                )
+            if field in data and data[field]:
+                if not re.match(r'^[A-Za-zÁÉÍÓÚáéíóúÑñ]', data[field]):
+                    raise serializers.ValidationError(
+                        {field: "Debe comenzar con una letra."}
+                    )
         return data
 
     def validate_dni(self, value):
         pattern = r'^\d{8}[A-Za-z]$'
         if not re.match(pattern, value):
+            print(value)
             raise serializers.ValidationError(
                 "DNI no es válido. Debe tener 8 números seguidos de una letra."
             )

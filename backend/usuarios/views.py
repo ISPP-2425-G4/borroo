@@ -114,8 +114,15 @@ class UserViewSet(viewsets.ModelViewSet):
 
         # Comprobar si la contraseña es correcta
         if not user.verified_account:
-            return Response({"error": "Verifica tu correo"},
-                            status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {
+                    "error": (
+                        "El usuario no ha verificado su cuenta, "
+                        "revisa tu correo electrónico"
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
         # Aquí se actualiza la suscripción si hace falta
         user.update_subscription_status()

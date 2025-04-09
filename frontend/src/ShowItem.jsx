@@ -481,12 +481,15 @@ const ShowItemScreen = () => {
   };
   const handlePublishItem = async () => {
     try {
-      const user = JSON.parse(localStorage.getItem("user"));
   
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/objetos/publish_item/`,
-        { item_id: item.id, user_id: user.id },
-        { headers: { "Content-Type": "application/json" } }
+        { item_id: item.id},
+        { headers: { 
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}` 
+          } 
+        }
       );
   
       if (response.status === 200) {

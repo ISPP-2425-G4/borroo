@@ -80,6 +80,13 @@ class ItemSerializer(serializers.ModelSerializer):
         """
         user = self.context['request'].user
         draft_mode = data.get('draft_mode', False)
+        if not user.is_profile_completed() and not draft_mode:
+            raise serializers.ValidationError(
+                (
+                    "No puedes publicar un objeto sin completar tu perfil, "
+                    "revisa que tu perfil esté completo y estés identificado"
+                )
+            )
         image_files = self.initial_data.get('image_files')
         remaining_image_ids = data.get('remaining_image_ids', None)
         if remaining_image_ids:
@@ -119,18 +126,6 @@ class ItemSerializer(serializers.ModelSerializer):
         validated_data.pop('images', None)
         user = self.context['request'].user
         print(user)
-
-        # Restricción: No más de 10 ítems con draft_mode False
-        if Item.objects.filter(user=user, draft_mode=False).count() >= 10:
-            raise serializers.ValidationError(
-                "No puedes tener más de 10 ítems publicados con el plan Free."
-            )
-
-        # Restricción: No más de 15 ítems en total
-        if Item.objects.filter(user=user).count() >= 15:
-            raise serializers.ValidationError(
-                "No puedes tener más de 15 ítems en total con el plan Free."
-            )
 
         item = Item.objects.create(user=user, **validated_data)
 
@@ -219,3 +214,40 @@ class ItemRequestSerializer(serializers.ModelSerializer):
             'cancel_type', 'cancel_type_display',
             'price_category_display', 'user', 'user_name',
             'user_surname', 'user_username', 'approved']
+
+
+class PublishItemSerializer(serializers.Serializer):
+    item_id = serializers.IntegerField()
+
+    def validate(self, data):
+        # Validar que el ítem existe
+        item_id = data.get('item_id')
+        user = self.context['request'].user
+        if not user.is_profile_completed():
+            raise serializers.ValidationError(
+                (
+                    "No puedes publicar un objeto sin completar tu perfil, "
+                    "revisa que tu perfil esté completo y estés identificado"
+                )
+            )
+        item_count = Item.objects.filter(user=user, draft_mode=False).count()
+        if item_count >= 10:
+            raise serializers.ValidationError(
+                "No puedes tener más de 10 ítems publicados con el plan Free."
+            )
+        try:
+            item = Item.objects.get(id=item_id, user=user)
+        except Item.DoesNotExist:
+            raise serializers.ValidationError(
+                {"item_id": "Ítem no encontrado o no pertenece al usuario."}
+            )
+
+        # Validar que el ítem no esté ya publicado
+        if not item.draft_mode:
+            raise serializers.ValidationError(
+                {"item_id": "El ítem ya está publicado."}
+            )
+
+        # Agregar el ítem al contexto para usarlo en la vista
+        self.context['item'] = item
+        return data

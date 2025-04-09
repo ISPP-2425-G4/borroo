@@ -3,7 +3,11 @@ from rest_framework import viewsets, permissions, serializers
 
 from usuarios.models import User
 from .models import Item, ItemImage, ItemRequest, UnavailablePeriod
-from .serializers import ItemRequestSerializer, ItemSerializer
+from .serializers import (
+    ItemRequestSerializer,
+    ItemSerializer,
+    PublishItemSerializer,
+)
 from .serializers import ItemImageSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -11,7 +15,6 @@ from rest_framework import status
 from .models import ItemCategory, CancelType, PriceCategory, ItemSubcategory
 from .models import LikedItem
 from rest_framework.decorators import action
-from django.core.exceptions import ValidationError
 from django.utils.dateparse import parse_date
 from decimal import Decimal, InvalidOperation
 import json
@@ -129,7 +132,11 @@ class ItemViewSet(viewsets.ModelViewSet):
         data['user'] = request.user.id
 
         serializer = self.get_serializer(data=data)
-        serializer.is_valid(raise_exception=True)
+        try:
+            serializer.is_valid(raise_exception=True)
+        except serializers.ValidationError as e:
+            print("Errores de validación:", e.detail)
+            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
         print("Validated data:", serializer.validated_data)
         self.handle_unavailable_periods(
             serializer.save(), request.data.get("unavailable_periods", []))
@@ -389,27 +396,20 @@ class ItemRequestApprovalViewSet(viewsets.ViewSet):
 
 class PublishItemView(APIView):
     def post(self, request, *args, **kwargs):
-        item_id = request.data.get('item_id')
-        user_id = request.data.get('user_id')
-        user = get_object_or_404(User, id=user_id)
-        try:
-            item = Item.objects.get(id=item_id, user=user)
-            item.publish()
+        serializer = PublishItemSerializer(
+            data=request.data,
+            context={"request": request}
+        )
+        if serializer.is_valid():
+            # Obtener el ítem validado desde el contexto del serializer
+            item = serializer.context['item']
+            item.draft_mode = False  # Cambiar el estado del ítem a publicado
+            item.save()
             return Response(
                 {"message": "Ítem publicado con éxito"},
                 status=status.HTTP_200_OK,
             )
-
-        except Item.DoesNotExist:
-            return Response(
-                {"error": "Ítem no encontrado"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-        except ValidationError as e:
-            return Response(
-                {"error": str(e)},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ListDraftItemsView(APIView):
