@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
+import ListTickets from "./ListTickets";
 import {
   Container,
   Paper,
@@ -63,6 +64,7 @@ const Profile = () => {
   const [draftItems, setDraftItems] = useState([]);
   const [canReview, setCanReview] = useState(false);
   const [openReportsModal, setOpenReportsModal] = useState(false);
+  const [openTicketsModal, setOpenTicketsModal] = useState(false);
   const [reports, setReports] = useState([]);
   const [reportados, setReportados] = useState([]);
   const [showReportModal, setShowReportModal] = useState(false);
@@ -240,6 +242,15 @@ const Profile = () => {
       console.error("Error cargando los reportes:", error);
       alert("No se pudieron cargar los reportes.");
     }
+  };
+
+
+  const handleOpenTicketsModal = () => {
+    setOpenTicketsModal(true);
+  };
+
+  const handleCloseTicketsModal = () => {
+    setOpenTicketsModal(false);
   };
 
 
@@ -540,15 +551,7 @@ const Profile = () => {
             {currentUser.username === user.username ? (
 
               <>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  size="small"
-                  onClick={() => handleOpenReportsModal()}
-                  sx={{ mt: 2, textTransform: "none" }}
-                >
-                  Ver mis reportes enviados
-                </Button>
+
                 <Button
                   variant="outlined"
                   color="primary"
@@ -557,6 +560,26 @@ const Profile = () => {
                   sx={{ mt: 1, textTransform: "none" }}
                 >
                   {editMode ? "Cancelar edición" : "Editar perfil"}
+                </Button>
+
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  size="small"
+                  onClick={() => handleOpenReportsModal()}
+                  sx={{ mt: 1, textTransform: "none" }}
+                >
+                  Ver mis reportes a usuarios
+                </Button>
+
+                <Button
+                  variant="outlined"
+                  color="error"
+                  size="small"
+                  onClick={handleOpenTicketsModal}
+                  sx={{ mt: 1, textTransform: "none" }}
+                >
+                  Ver mis incidencias en alquileres
                 </Button>
 
                 {editMode && (
@@ -1100,6 +1123,26 @@ const Profile = () => {
                   </Dialog>
                 </Box>
                 )}
+              <Dialog
+                open={openTicketsModal}
+                onClose={handleCloseTicketsModal}
+                fullWidth
+                maxWidth="md"
+                aria-labelledby="tickets-dialog-title"
+                PaperProps={{
+                  sx: { maxHeight: "70vh" }
+                }}
+              >
+                <DialogTitle id="tickets-dialog-title">Mis Incidencias</DialogTitle>
+                <DialogContent dividers>
+                  <ListTickets />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleCloseTicketsModal} variant="contained" color="primary">
+                    Cerrar
+                  </Button>
+                </DialogActions>
+              </Dialog>
       </Container >
     </>
   );
