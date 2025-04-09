@@ -557,6 +557,8 @@ Durante la segunda semana, quedé en disposición de ayudar a otros compañeros 
 
 ### **García Rodríguez, Javier**
 
+Durante la primera semana, me encargué de integrar de forma parcial la herramienta **SonarQube** para poder medir ciertas métricas asociadas al código. Además, estuve desarrollando los borradores de los documentos comunes del S1,S2, y S3. (AIUsage, timeEffortReport, performanceEvaluation, etc). Estuve revisando el feedback recibido por los usuarios pilotos de la asignatura junto a Santiago Rosado Raya para poder generar un documento conjunto que se tomaría para poder generar nuevas issues para implementar funcionalidades, o corregir errores a mitad de sprint. Además, tuvimos una reunión de representantes para poder redactar todas las issues, resolver dudas, y más. Estuve trabajando en la issues 364 y 366, concretamente centradas en 2 incidencias, trackear solicitudes para mostrar el estado, e implemetar en la búsqueda la posibilidad de que fuese case sensitive.
+
 ### **González Ortiz, Miguel**
 
 ### **Martín Muñoz, Álvaro**
