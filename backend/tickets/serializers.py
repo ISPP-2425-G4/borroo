@@ -45,6 +45,12 @@ class TicketSerializer(serializers.ModelSerializer):
                     {"rent": "Este campo es obligatorio."}
                     )
 
+        user = self.context['request'].user
+        if Ticket.objects.filter(rent=validated_data["rent"],
+                                 reporter=user).exists():
+            raise serializers.ValidationError(
+                {"ticket": "Ya has reportado un incidente para esta renta."})
+
         validated_data['reporter'] = self.context['request'].user
         ticket = super().create(validated_data)
 

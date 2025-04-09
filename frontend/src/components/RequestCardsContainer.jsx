@@ -318,8 +318,8 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                     {/* Pregunta si el alquiler ha ido bien si la fecha de fin ya pasó */}
                 {new Date(request.end_date) < new Date() &&
                     !request.incident_reported &&
-                    ((user.id === request.renter.id && !request.paid_pending_confirmation?.is_confirmed_by_renter) || 
-                    (user.id === request.item.user && !request.paid_pending_confirmation?.is_confirmed_by_owner)) && (
+                    ((user.id === request.renter.id && !request.paid_pending_confirmation?.is_confirmed_by_renter && !request.renter_reported)  || 
+                    (user.id === request.item.user && !request.paid_pending_confirmation?.is_confirmed_by_owner && !request.owner_reported)) && (
                         <Box sx={{ mt: 2 }}>
                             <Typography variant="body2" sx={{ mb: 1 }}>
                                 ¿El alquiler ha ido bien?
