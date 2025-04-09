@@ -2,6 +2,7 @@ import pytest
 from django.urls import reverse
 from django.utils.timezone import now, timedelta
 from rest_framework.test import APIClient
+import stripe
 from rentas.models import Rent, RentStatus, PaymentStatus
 from pagos.models import PaidPendingConfirmation
 from usuarios.models import User
@@ -10,49 +11,56 @@ from objetos.models import ItemSubcategory
 from decimal import Decimal
 from unittest.mock import patch
 
+# ==================== FIXTURES GLOBALES ====================
+
+
+@pytest.fixture
+def owner():
+    return User.objects.create(username="owner", email="owner@test.com",
+                               saldo=Decimal("0"))
+
+
+@pytest.fixture
+def renter():
+    return User.objects.create(username="renter", email="renter@test.com",
+                               saldo=Decimal("0"))
+
+
+@pytest.fixture
+def item(owner):
+    return Item.objects.create(
+        title="Laptop",
+        description="Gaming",
+        category=ItemCategory.TECHNOLOGY,
+        subcategory=ItemSubcategory.COMPUTERS,
+        cancel_type=CancelType.FLEXIBLE,
+        price_category=PriceCategory.DAY,
+        price=100,
+        deposit=Decimal("20.00"),
+        user=owner,
+    )
+
+
+@pytest.fixture
+def rent(renter, item):
+    rent = Rent.objects.create(
+        item=item,
+        renter=renter,
+        start_date=now() - timedelta(days=4),
+        end_date=now() - timedelta(days=2),
+        rent_status=RentStatus.ACCEPTED,
+        total_price=200,
+        commission=20,
+        payment_status=PaymentStatus.PAID,
+    )
+    PaidPendingConfirmation.objects.create(rent=rent)
+    return rent
+
+# ==================== TESTS UNITARIOS ====================
+
 
 @pytest.mark.django_db
 class TestPayments:
-
-    @pytest.fixture
-    def owner(self):
-        return User.objects.create(username="owner", email="owner@test.com",
-                                   saldo=Decimal("0"))
-
-    @pytest.fixture
-    def renter(self):
-        return User.objects.create(username="renter", email="renter@test.com",
-                                   saldo=Decimal("0"))
-
-    @pytest.fixture
-    def item(self, owner):
-        return Item.objects.create(
-            title="Laptop",
-            description="Gaming",
-            category=ItemCategory.TECHNOLOGY,
-            subcategory=ItemSubcategory.COMPUTERS,
-            cancel_type=CancelType.FLEXIBLE,
-            price_category=PriceCategory.DAY,
-            price=100,
-            user=owner,
-        )
-
-    @pytest.fixture
-    def rent(self, renter, item):
-        rent = Rent.objects.create(
-            item=item,
-            renter=renter,
-            start_date=now() - timedelta(days=4),
-            end_date=now() - timedelta(days=2),
-            rent_status=RentStatus.ACCEPTED,
-            total_price=200,
-            commission=20,
-            payment_status=PaymentStatus.PAID,
-        )
-        PaidPendingConfirmation.objects.create(rent=rent)
-        return rent
-
-    # ✅ POSITIVOS
 
     def test_renter_confirms_payment(self, rent):
         client = APIClient()
@@ -157,8 +165,6 @@ class TestPayments:
         assert renter.pricing_plan == "premium"
         assert renter.stripe_customer_id == "cus_test"
 
-    # ❌ NEGATIVOS
-
     def test_user_without_permission_cannot_confirm(self, rent):
         client = APIClient()
         another_user = User.objects.create(username="hacker")
@@ -201,8 +207,6 @@ class TestPayments:
         assert response.status_code == 402
         assert response.json()["status"] == "unpaid"
 
-    # 💣 DESTRUCTIVOS
-
     @patch("stripe.checkout.Session.retrieve")
     def test_confirm_rent_checkout_invalid_metadata(self, mock_stripe):
         mock_stripe.return_value = type("Session", (), {
@@ -224,3 +228,34 @@ class TestPayments:
                                       args=["session_id"]))
         assert response.status_code == 400
         assert "Stripe error" in response.json()["error"]
+
+# ==================== TEST DE INTEGRACIÓN REAL CON STRIPE ====================
+
+
+@pytest.mark.django_db
+def test_real_stripe_checkout_session(renter, rent, settings):
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+
+    session = stripe.checkout.Session.create(
+        payment_method_types=["card"],
+        mode="payment",
+        line_items=[{
+            "price_data": {
+                "currency": "eur",
+                "product_data": {
+                    "name": rent.item.title,
+                },
+                "unit_amount": int(rent.total_price * 100),
+            },
+            "quantity": 1,
+        }],
+        metadata={
+            "rent_id": rent.id,
+            "user_id": renter.id,
+        },
+        success_url="https://example.com/success",
+        cancel_url="https://example.com/cancel",
+    )
+
+    assert session["id"].startswith("cs_test_")
+    print(f"\n👉 Abre esta URL para pagar manualmente: {session.url}")
