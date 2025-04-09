@@ -73,5 +73,5 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Luis Javier Periáñez Franco |          |          |          |          |   :neutral_face:      |     :neutral_face:    |    :neutral_face:     |  :neutral_face:        |         |         |         |    :worried:     |    :worried:     |          |
 | Alexander Picón Garrote     |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
 | Santiago Rosado Raya        |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Julia Sánchez Márquez       |          |          |          |          |         |:blush:  |         |:blush:  |:blush:  |         |:blush:     |:blush:  |         |          |
+| Julia Sánchez Márquez       |          |          |          |          |         |:blush:  |         |:blush:  |:blush:  |         |:blush:     |:blush:  | :blush: |          |
 | Alejandro Sevillano Barea   |          |          |          |          |         |     :blush:    |  :blush:      |         |         |         |         |         |         |         |          |
