@@ -39,9 +39,14 @@ class UserSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if 'dni' in data and self.instance:
             dni = data['dni']
-            if User.objects.filter(dni=dni).exclude(id=self.instance.id).exists():
+            if User.objects.filter(dni=dni).exclude(
+                id=self.instance.id
+            ).exists():
                 raise serializers.ValidationError({
-                    'dni': "El DNI ya está registrado. Por favor, utiliza uno diferente."
+                    'dni': (
+                        "El DNI ya está registrado. Por favor, utiliza uno "
+                        "diferente."
+                    )
                 })
 
         fields_to_validate = ["name", "surname", "country", "city", "address"]
