@@ -23,6 +23,7 @@ import axios from 'axios';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import CloseIcon from '@mui/icons-material/Close';
+import PersonIcon from '@mui/icons-material/Person';
 
 const IMAGEN_PREDETERMINADA = "../public/default_image.png";
 
@@ -50,6 +51,7 @@ const ListItemRequestsView = () => {
   const manejarCambioCategoria = (e) => { 
     setCategoria(e.target.value);
     setSubcategoria("")
+    setRangoPrecio([0, 99999]);
   }
 
   const manejarCambioPrecio = (e, index) => {
@@ -73,7 +75,8 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
   const reiniciarFiltros = () => {
     setTerminoBusqueda("");
     setCategoria("");
-    setRangoPrecio([0, 100]);
+    setSubcategoria("");
+    setRangoPrecio([0, 99999]);
   };
 
   const obtenerUrlImagen = useCallback(async (imgId) => {
@@ -138,6 +141,12 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
       (terminoBusqueda === "" || producto.title.toLowerCase().includes(terminoBusqueda.toLowerCase()))
     ));
     setProductosFiltrados(filtrados);
+
+    if (categoria || subcategoria || terminoBusqueda || 
+      rangoPrecio[0] !== 0 || rangoPrecio[1] !== 99999) {
+      setCurrentPage(1);
+    }
+
   }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda]);
 
   const hayFiltrosActivos = useMemo(() => 
@@ -346,6 +355,10 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                       </MenuItem>
                     ))}
                   </Select>
+                  {categoria &&
+                   <Typography variant="subtitle2" sx={{ mt: 2,mb: 1, fontWeight: 600 }}>
+                     Subcategoría
+                   </Typography>}
                   {categoria === "Tecnología" && (
                   <Select
                     value={subcategoria}
@@ -583,16 +596,27 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                     <Chip
                       label={`Categoría: ${categoria}`}
                       size="small"
-                      onDelete={() => setCategoria("")}
+                      onDelete={() => {
+                        setCategoria("");
+                        setSubcategoria("");
+                      }}
                       sx={{ borderRadius: 1 }}
                     />
                   )}
                   
-                  {(rangoPrecio[0] > 0 || rangoPrecio[1] < 100) && (
+                  {subcategoria && (
+                     <Chip
+                       label={`Subcategoría: ${subcategoria}`}
+                       size="small"
+                       onDelete={() => setSubcategoria("")}
+                       sx={{ borderRadius: 1 }}
+                     />
+                   )}
+                   {(rangoPrecio[0] > 0 || rangoPrecio[1] < 99999) && (                    
                     <Chip
                       label={`Precio: ${rangoPrecio[0]}€ - ${rangoPrecio[1]}€`}
                       size="small"
-                      onDelete={() => setRangoPrecio([0, 100])}
+                      onDelete={() => setRangoPrecio([0, 99999])}
                       sx={{ borderRadius: 1 }}
                     />
                   )}
@@ -679,8 +703,11 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                               mb: 2,
                             }}
                           >
-                            <Box
+                          <Box
                               sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
                                 backgroundColor: '#2563eb',
                                 color: 'white',
                                 padding: '12px 16px',
@@ -688,7 +715,28 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                                 fontSize: '1.1rem',
                               }}
                             >
-                              {producto.title}
+                              <span>{producto.title}</span>
+                               <Box
+                                 component={Link} 
+                                 to={`/perfil/${producto.user_username}`}
+                                 sx={{
+                                   display: 'flex',
+                                   alignItems: 'center',
+                                   gap: '6px',
+                                   border: '2px solid white',
+                                   borderRadius: '8px',
+                                   padding: '4px 8px',
+                                   textDecoration: 'none',
+                                   color: 'inherit',
+                                   transition: 'background-color 0.3s',
+                                   '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' },
+                                 }}
+                               >
+                                 <PersonIcon sx={{ fontSize: '1.2rem' }} />
+                                 <span style={{ fontSize: '1rem', fontWeight: 'normal' }}>
+                                   {producto.user_name} {producto.user_surname}
+                                 </span>
+                               </Box>
                             </Box>
                         
                             <CardContent sx={{ p: 2.5 }}>
