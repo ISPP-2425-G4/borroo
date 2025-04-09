@@ -301,7 +301,9 @@ class RentViewSet(viewsets.ModelViewSet):
                 rent.rent_status = RentStatus.CANCELLED
                 rent.save()
 
-                user.saldo += refund_amount
+                rent.renter.saldo += refund_amount
+                rent.renter.save()
+                print(f'User saldo: {user.saldo}')
 
                 return Response({
                     'status': 'Alquiler cancelado correctamente',
