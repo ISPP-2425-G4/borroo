@@ -62,7 +62,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Pablo Díaz Ordóñez          |          |          |          |          |    :blush:     |     :blush:    |         |     :blush:    |   :neutral_face:      |    :blush:     |         |     :blush:    |    :blush:     |          |
 | Pablo Espinosa Naranjo      |          |          |          |          |       :blush:  |     :blush:    |  :blush:       |         |         |         |         |         |         |          |
 | Jesús Fernández Rodríguez   |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Francisco Fernández Mota    |          |          |          | :smiley: | :smiley:| :smiley:|         |         |         | :blush: |         |         |         |          |
+| Francisco Fernández Mota    |          |          |          | :smiley: | :smiley:| :smiley:|         |         |         | :blush: |         | :smiley:|         |          |
 | Javier García Rodríguez     |:blush:|:neutral_face:|:neutral_face:|:blush:|:neutral_face:|:worried:|:neutral_face:|:blush:|:neutral_face:|:neutral_face:|:blush:|:neutral_face:|         |          |
 | Miguel González Ortiz       |          |          |          |          |         | :smiley: | :blush: | :neutral_face: |         | :smiley: |         |         |         |          |
 | Álvaro Martín Muñoz         |      :blush:    |          |          |          |         |         |    :blush:     |  :blush:       |         |     :blush:    |         |         |         |          |
