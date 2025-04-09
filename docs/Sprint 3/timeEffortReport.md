@@ -4253,6 +4253,137 @@
 ### **Naredo Bernardos, Ignacio**
 
 ### **Nieto Vicioso, Javier**
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="26">Código</td>
+      <td>#329 Frontend chat y mensajería: Últimos retoques del frontend del chat (09/04/2025)</td>
+      <td>36 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Refactorizando el botón de enviar mensaje y refactorizar lógica de envío en componentes (09/04/2025)</td>
+      <td>37 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Mejoras estéticas</td>
+      <td>35 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Mejorar la gestión de mensajes no leídos, optimizando la selección de conversaciones, añadiendo algunas validaciones y haciendo la pull request en modo draft (08/04/2025)</td>
+      <td>53 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Algunos ajustes de frontend, cómo mostrar el número de mensajes no leídos en el navbar (08/04/2025)</td>
+      <td>1 hora 5 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Mejoras estéticas y de funcionalidad y combinando develop con los cambios del backend con mi rama de frontend (07/04/2025)</td>
+      <td>37 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Mejoras estéticas y de funcionalidad (07/04/2025)</td>
+      <td>37 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Refrescando los mensajes y conversaciones cada ciertos segundos (poco eficiente de momento) (07/04/2025)</td>
+      <td>30 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Arreglando error de id del usuario actual cuando no estaba autenticado (07/04/2025)</td>
+      <td>21 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Implementando que un usuario pueda enviar a otro un mensaje a través de su perfil (07/04/2025)</td>
+      <td>1 hora 57 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Comprendiendo y probando cómo hacer para enviar un mensaje a un usuario sin chats entre ellos (06/04/2025)</td>
+      <td>29 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Añadiendo en frontend los nuevos campos de un chat (06/04/2025)</td>
+      <td>30 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Backend chat y mensajería: Probando en backend cómo llevar al frontend el último mensaje de un chat, su fecha y el número de mensajes sin leer (06/04/2025)</td>
+      <td>1 hora 5 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Actualizando el frontend con el nuevo backend (06/04/2025)</td>
+      <td>1 hora 9 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Backend chat y mensajería: Agregada funcionalidad para crear chats y obtener mensajes, incluyendo validaciones y marcado de mensajes leídos (06/04/2025)</td>
+      <td>1 hora 26 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Backend chat y mensajería: Mejorando validaciones, endpoints y pruebas en Postman (05/04/2025)</td>
+      <td>1 hora 29 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Añadidas las cabeceras de cada conversación y mejorados los datos de prueba (05/04/2025)</td>
+      <td>57 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Continuando con el prototipo hasta tener el backend (05/04/2025)</td>
+      <td>31 minutos</td>
+    </tr>
+    <tr>
+      <td>#340 Frontend añadir las politicas de privacidad etc en el footer y en el registro:: Mejorando la estética del footer (03/04/2025)</td>
+      <td>41 minutos</td>
+    </tr>
+    <tr>
+      <td>#340 Frontend añadir las politicas de privacidad etc en el footer y en el registro:: Probando cambios en el footer y mejorando los documentos subidos (03/04/2025)</td>
+      <td>24 minutos</td>
+    </tr>
+    <tr>
+      <td>#340 Frontend añadir las politicas de privacidad etc en el footer y en el registro:: Creadas las páginas de políticas y enlaces (02/04/2025)</td>
+      <td>38 minutos</td>
+    </tr>
+    <tr>
+      <td>#340 Frontend añadir las politicas de privacidad etc en el footer y en el registro:: Buscando la manera de incluir los documentos en la web (02/04/2025)</td>
+      <td>48 minutos</td>
+    </tr>
+    <tr>
+      <td>#370 Popup al solicitar un objeto: Creando un modal específico para los success y la PR</td>
+      <td>52 minutos</td>
+    </tr>
+     <tr>
+      <td>#370 Popup al solicitar un objeto: Creada la primera versión del pop up de las solicitudes</td>
+      <td>32 minutos</td>
+    </tr>
+     <tr>
+      <td>#329 Frontend chat y mensajería: Añadiendo en el navbar los mensajes y viendo cómo estructurar los datos de prueba para después hacer el backend</td>
+      <td>23 minutos</td>
+    </tr>
+     <tr>
+      <td>#329 Frontend chat y mensajeria: Empezando con el primer prototipo del chat de la app, sin conectar con backend</td>
+      <td>1 hora y 42 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="1">Documentación</td>
+      <td>#340 Frontend añadir las politicas de privacidad etc en el footer y en el registro: Mejorando documento de términos y condiciones y creando la PR (03/04/2025)</td>
+      <td>1 hora 5 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 04/04</td>
+      <td>3 horas 40 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 28/03</td>
+      <td>3 horas 40 minutos</td>
+    </tr>
+  </tbody>
+</table>
+
 
 ### **Padilla Gómez, Marco**
 
