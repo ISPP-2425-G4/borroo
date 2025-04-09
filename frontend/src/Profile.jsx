@@ -43,6 +43,7 @@ import MenuItem from "@mui/material/MenuItem";
 import ReportIcon from "@mui/icons-material/Report";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
+import SendMessageButton from "./components/SendMessageButton";
 
 const Profile = () => {
   const { username } = useParams();
@@ -55,7 +56,7 @@ const Profile = () => {
   const [userReview, setUserReview] = useState(null);
   const [currentUser] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem("user")) || null;
+      return JSON.parse(localStorage.getItem("user")) || {};
     } catch {
       return null;
     }
@@ -379,7 +380,7 @@ const Profile = () => {
       });
     }
   };
-
+  
   const handleDeleteUser = async () => {
     const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este usuario?");
     if (!confirmDelete) return;
@@ -591,6 +592,8 @@ const Profile = () => {
             <Typography variant="h4" fontWeight="bold">
               {user.name} {user.surname}
             </Typography>
+            
+
 
             <Typography variant="body1" color="textSecondary">
               @{user.username}
