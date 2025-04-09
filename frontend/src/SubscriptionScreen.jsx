@@ -76,16 +76,34 @@ const SubscriptionScreen = () => {
     const checkPayment = async () => {
       const params = new URLSearchParams(location.search);
       const sessionId = params.get("session_id");
-      if (sessionId) {
-        try {
-          const response = await axios.get(
-            `${import.meta.env.VITE_API_BASE_URL}/pagos/confirm-subscription/${sessionId}/`
-          );
-          if (response.data.status === "success") {
-            // ✅ Quitar el session_id de la URL
-            window.history.replaceState({}, "", "/pricing-plan");
     
-            // ✅ Llamar a backend para actualizar el plan del usuario
+      if (!sessionId) return;
+    
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/pagos/confirm-subscription/${sessionId}/`
+        );
+    
+        if (response.data.status === "success") {
+          // ✅ Limpia la URL del session_id
+          window.history.replaceState({}, "", "/pricing-plan");
+    
+          // 🔁 Actualiza el usuario desde el backend
+          const userResponse = await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${user.id}/`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+    
+          const updatedUser = userResponse.data;
+          localStorage.setItem("user", JSON.stringify(updatedUser));
+          setCurrentPlan(updatedUser.pricing_plan);
+    
+          // ✅ Solo si el usuario sigue siendo FREE, haz el upgrade
+          if (updatedUser.pricing_plan === "free") {
             await axios.post(
               `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${user.id}/upgrade_to_premium/`,
               {},
@@ -93,36 +111,38 @@ const SubscriptionScreen = () => {
                 headers: {
                   Authorization: `Bearer ${token}`,
                   "Content-Type": "application/json",
-                }
+                },
               }
             );
-    
-            const updatedUser = { ...user, pricing_plan: 'premium' };
-            localStorage.setItem("user", JSON.stringify(updatedUser));
-            setCurrentPlan('premium');
-    
-            setNotification({
-              open: true,
-              message: "¡Pago completado y plan actualizado a Premium!",
-              severity: "success"
-            });
-    
-            setTimeout(() => {
-              setNotification({ ...notification, open: false });
-            }, 5000);
           }
+        
+          // 🔁 Recarga la página para refrescar Navbar y demás
+
     
-        } catch (err) {
-          console.error("Error al confirmar el pago:", err);
           setNotification({
             open: true,
-            message: "Hubo un error al confirmar el pago",
-            severity: "error"
+            message: "¡Pago confirmado y suscripción gestionada!",
+            severity: "success",
           });
-          setTimeout(() => setNotification(null), 5000);
+    
+          setTimeout(() => {
+            setNotification({ ...notification, open: false });
+          }, 5000);
         }
+      } catch (err) {
+        console.error("Error al confirmar el pago:", err);
+        if (err.response) {
+          console.error("Mensaje del backend:", err.response.data);
+        }
+        setNotification({
+          open: true,
+          message: "Hubo un error al confirmar el pago.",
+          severity: "error",
+        });
       }
     };
+    
+    
     
       checkPayment();
       
@@ -201,7 +221,7 @@ const SubscriptionScreen = () => {
   return (
     <>
       <Navbar />
-      <Container maxWidth="lg" sx={{ mt: 8, mb: 8 }}>
+      <Container maxWidth="lg" sx={{ mt: 10, mb: 8 }}>
         <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
           <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ fontWeight: "bold", mb: 4 }}>
             Gestión de Suscripción
@@ -213,18 +233,7 @@ const SubscriptionScreen = () => {
             justifyContent="center"
             alignItems="stretch"
           >
-            (
-              <Box textAlign="center" mt={2}>
-                <Typography variant="body1" color="text.secondary">
-                  <strong>Activo desde:</strong>{" "}
-                  {new Date(user.subscription_start_date).toLocaleDateString("es-ES")}
-                </Typography>
-                <Typography variant="body1" color="text.secondary">
-                  <strong>Válido hasta:</strong>{" "}
-                  {new Date(user.subscription_end_date).toLocaleDateString("es-ES")}
-                </Typography>
-              </Box>
-            )
+
 
             <Box flex="1" maxWidth={{ xs: '100%', md: '500px' }}>
               <PlanCard active={currentPlan === 'free'}>
@@ -323,6 +332,18 @@ const SubscriptionScreen = () => {
                       <ListItemText primary="Sin límite de borradores" />
                     </ListItem>
                   </List>
+                  {currentPlan === 'premium' && user.subscription_start_date && user.subscription_end_date && (
+    <Box textAlign="center" mt={2}>
+      <Typography variant="body1" color="text.secondary">
+        <strong>Activo desde:</strong>{" "}
+        {new Date(user.subscription_start_date).toLocaleDateString("es-ES")}
+      </Typography>
+      <Typography variant="body1" color="text.secondary">
+        <strong>Válido hasta:</strong>{" "}
+        {new Date(user.subscription_end_date).toLocaleDateString("es-ES")}
+      </Typography>
+    </Box>
+  )}
                 </CardContent>
                 <CardActions sx={{ justifyContent: "center", p: 3 }}>
                   {token && currentPlan !== 'premium' && (
