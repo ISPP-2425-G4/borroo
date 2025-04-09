@@ -4258,7 +4258,7 @@
     <th>Tiempo</th>
   </tr>
   <tr>
-    <td rowspan="6">Trabajo</td>
+    <td rowspan="8">Trabajo</td>
     <td>Gestión de tareas, organización y reparto</td>
     <td>1 hora y 21 minutos</td>
   </tr>
@@ -4283,9 +4283,17 @@
     <td>1 hora y 40 minutos</td>
   </tr>
   <tr>
+    <td>Foto de perfil</td>
+    <td>2 horas y 18 minutos</td>
+  </tr>
+  <tr>
+    <td>Foto de perfil pair programming</td>
+    <td>1 hora y 2 minutos</td>
+  </tr>
+  <tr>
     <td rowspan="1">Píldoras teóricas</td>
-    <td></td>
-    <td></td>
+    <td>Session 08</td>
+    <td>12 minutos</td>
   </tr>
   <tr>
     <td rowspan="2">Reuniones</td>
@@ -4297,8 +4305,12 @@
     <td>1 hora y 30 minutos</td>
   </tr>
   <tr>
-    <td rowspan="1">Clase</td>
+    <td rowspan="2">Clase</td>
     <td>Clase 28/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 4/4/25</td>
     <td>3 horas y 50 minutos</td>
   </tr>
 </table>
