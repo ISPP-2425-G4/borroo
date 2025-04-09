@@ -564,6 +564,15 @@ Durante la segunda semana, quedé en disposición de ayudar a otros compañeros 
 ### **Naredo Bernardos, Ignacio**
 
 ### **Nieto Vicioso, Javier**
+Durante este sprint, mi principal aportación ha sido el desarrollo del chat de la aplicación. Inicialmente, solo contaba con hacer el frontend, pero debido a que el backend no avanzaba al ritmo esperado, tuve que encargarme de implementar gran parte de la lógica en el servidor.
+
+### Semana 1
+Durante la primera semana, me encargué de desarrollar el primer prototipo del chat de la aplicación, centrándome únicamente en el frontend sin conexión con el backend. Además, implementé un pop-up que se muestra cuando un usuario envía una solicitud de alquiler, informándole que puede acceder a sus solicitudes en el apartado "Mis solicitudes". Este pop-up incluye dos botones: uno para ir directamente a sus solicitudes enviadas y otro para volver al menú principal. También añadí las políticas de privacidad, SLA, términos y condiciones tanto en el footer como en el registro. Para esto, investigué diferentes opciones, como la posibilidad de mostrarlas en formato PDF, pero finalmente opté por utilizar un visor de Markdown que permite visualizar estos documentos almacenados en un contenedor específico. Los términos y condiciones los tuve que reformatear porque tenían muchas cláusulas abusivas en Claudette.
+
+A finales de la semana, el sábado, avancé en el desarrollo del backend del chat, ya que no estaba progresando al ritmo necesario y requería una base sólida para continuar con la integración. Implementé gran parte de los endpoints necesarios para la comunicación entre usuarios. El domingo, trabajé en la integración del frontend con el backend en local, dado que ambos se encontraban en ramas separadas.
+
+### Semana 2
+Durante la segunda semana, me dediqué principalmente a pulir la integración del frontend con el backend del chat, mejorando aspectos clave de la funcionalidad. Implementé el refresco automático de mensajes y conversaciones cada cierto tiempo, permitiendo una actualización en tiempo real. También añadí la opción de enviar mensajes a otro usuario directamente desde su perfil y un indicador en el navbar para mostrar los mensajes no leídos. Además, realicé una refactorización del código para optimizar su mantenimiento y mejorar la estructura del sistema de mensajería.
 
 ### **Padilla Gómez, Marco**
 
