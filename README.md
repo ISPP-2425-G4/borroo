@@ -86,6 +86,8 @@ Asegúrate de tener instalados los siguientes componentes:
 
 7. **Ejecutar migraciones en Django**
    ```sh
+   #Importante no subir los cambios en las migraciones
+   python reset_migrations.py  
    python manage.py makemigrations
    python manage.py migrate
    ```
