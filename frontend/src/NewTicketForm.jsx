@@ -159,11 +159,9 @@ const NewTicketForm = () => {
       const token = localStorage.getItem("access_token");
       const formData = new FormData();
       formData.append("description", description);
-      // (Opcional) Si tu backend necesita saber el rentId por POST:
-      // formData.append("rent", rentId);
 
       images.forEach((imageFile) => {
-        formData.append("image_files", imageFile); // "image_files" debe coincidir con tu backend
+        formData.append("image_files", imageFile);
       });
 
       await axios.post(
@@ -176,8 +174,8 @@ const NewTicketForm = () => {
           },
         }
       );
-
-      navigate("/mis-incidencias");
+      const currentUser = JSON.parse(localStorage.getItem("user"));
+      navigate(`/perfil/${currentUser.username}`);
     } catch (error) {
       console.error("Error creando la incidencia:", error.response?.data || error.message);
       setErrorMessage(error.response?.data?.error || "Error creando la incidencia.");
