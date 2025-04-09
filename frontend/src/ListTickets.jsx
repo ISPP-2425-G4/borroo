@@ -6,17 +6,31 @@ import {
   CardContent,
   CardMedia,
   Box,
+  Grid,
   CircularProgress,
   Alert,
 } from "@mui/material";
-import Grid from '@mui/material/Unstable_Grid2';
 import axios from "axios";
 import Navbar from "./Navbar";
+
+const IMAGEN_PREDETERMINADA = "../public/default_image.png";
 
 const ListTickets = () => {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const obtenerUrlImagen = useCallback(async (imgId) => {
+    try {
+      const respuesta = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/objetos/item-images/${imgId}/`
+      );
+      return respuesta.data.image;
+    } catch (error) {
+      console.error(`Error al cargar la imagen ${imgId}:`, error);
+      return IMAGEN_PREDETERMINADA;
+    }
+  }, []);
 
   useEffect(() => {
     const fetchTickets = async () => {
