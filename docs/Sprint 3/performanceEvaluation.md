@@ -538,6 +538,12 @@ Por ultimo, visualice las pildoras teoricas
 
 ### **Díaz Ordóñez, Pablo**  
 
+Durante la primera semana del sprint 3, llevé a cabo el arreglo de la parte de los formularios correspondiente a la política de cancelación, cuyo desplegable no salía en la posición deseada. Luego, comencé a arreglar los filtros correspondientes a las subcategorías y limpiar todo, que no funcionaban correctamente. Esta tarea la tuve resuelta pero no la subí al repositorio tras comunicarme Pablo Espinosa que la resolvió antes en la realización de una tarea suya. Tras ello, arreglé el cálculo del precio en la solicitud de un alquiler, para que cogiera bien los días que se alquila y calcular bien el precio total. 
+
+Siguiendo en la primera semana, añadí que las valoraciones y ubicación que se muestra en la caja de cada objeto en la página principal, sean la media de las valoraciones que ha obtenido el usuario propietario de ese objeto y la ubicación que tiene en su perfil. Por último, llevé a cabo la mejora de las ventanas de confirmación, entre las que están las ventanas de crear un item, publicarlo, editar su información, borrarlo, publicar un anuncio; además de resolver un error en el modelo de objetos para poder comprobar en su totalidad el correcto funcionamiento de las ventanas tras realizar las operaciones en cuestión.
+
+Durante la segunda semana, quedé en disposición de ayudar a otros compañeros con sus tareas, tras finalizar las mías. Además, visualicé las píldoras teóricas 08 y 09 y rellené mi parte del time effort y performance evaluation (presente documento). También añadí entradas en el reporte de la IA.
+
 ### **Espinosa Naranjo, Pablo**
 
 ### **Fernández Rodríguez, Jesús**
