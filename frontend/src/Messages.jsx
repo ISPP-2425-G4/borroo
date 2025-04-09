@@ -45,7 +45,7 @@ const Messages = () => {
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
         
-        if (!user || !user.id) {
+        if (!user?.id) {
             navigate("/login");
             return;
         }
@@ -113,12 +113,6 @@ const Messages = () => {
     useEffect(() => {
         const fetchConversations = async () => {
             try {
-                const user = JSON.parse(localStorage.getItem("user"));
-                if (!user || !user.id) {
-                    navigate("/login");
-                    return;
-                }
-                
                 const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/chats/get_my_chats/`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
