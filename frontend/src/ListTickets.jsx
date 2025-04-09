@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
+import ReportIcon from "@mui/icons-material/Report";
 import {
   Container,
   Typography,
@@ -11,7 +12,6 @@ import {
   Alert,
 } from "@mui/material";
 import axios from "axios";
-import Navbar from "./Navbar";
 
 const IMAGEN_PREDETERMINADA = "../public/default_image.png";
 
@@ -94,7 +94,6 @@ const ListTickets = () => {
         bgcolor: "#f9fafb",
       }}
     >
-      <Navbar />
       <Container 
         maxWidth={false} 
         sx={{ 
@@ -116,16 +115,6 @@ const ListTickets = () => {
               mb: 3,
             }}
           >
-            <Typography
-              variant="h4"
-              sx={{
-                fontWeight: 700,
-                color: "text.primary",
-                fontSize: { xs: "1.5rem", sm: "2rem" },
-              }}
-            >
-              Mis Incidencias
-            </Typography>
           </Box>
   
           {errorMessage && (
@@ -135,11 +124,25 @@ const ListTickets = () => {
           )}
   
           {tickets.length === 0 ? (
-            <Typography variant="body1">
-              No tienes incidencias registradas.
-            </Typography>
+              <Box 
+              sx={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                py: 4
+              }}
+            >
+              <ReportIcon sx={{ fontSize: 60, color: 'text.disabled', mb: 2 }} />
+              <Typography variant="body1" color="text.secondary" align="center">
+                No has enviado reportes hasta el momento.
+              </Typography>
+              <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>
+                Cuando envíes un reporte, aparecerá en esta sección.
+              </Typography>
+            </Box>
           ) : (
-
+            
             <Grid container spacing={3}>
               {tickets.map((ticket) => (
                 <Grid item xs={12} md={6} key={ticket.id}>
