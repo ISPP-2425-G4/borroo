@@ -62,8 +62,10 @@ class TestUserEndpoints:
         response = client.get(url)
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
-    def test_actualizacion_usuario_sin_actualizacion(self, api_client, create_user):
-        """Test que verifica que un usuario no autenticado no puede actualizar datos"""
+    def test_actualizacion_usuario_sin_actualizacion(
+            self, api_client, create_user):
+        """Test que verifica que un usuario
+        no autenticado no puede actualizar datos"""
         updated_data = {
             "name": "Updated Name",
             "surname": "Updated Surname",
@@ -80,8 +82,9 @@ class TestUserEndpoints:
         response = api_client.put(url, data=updated_data)
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
-    def test_actualizacion_usuario_sin_autenticacion(self, client, create_user):
-        """Test que verifica que un usuario no autenticado no puede actualizar datos"""
+    def test_actualizacion_usuario_sin_autenticacion(
+            self, client, create_user):
+        """Test que verifica un usuario no autenticado no puede actualizar"""
         client = Client()
         updated_data = {
             "name": "Updated Name",
@@ -97,35 +100,39 @@ class TestUserEndpoints:
             "pricing_plan": "premium"
         }
         url = reverse('app:user-detail', args=[create_user.id])
-        response = client.put(url, data=updated_data, content_type='application/json')
+        response = client.put(
+            url, data=updated_data, content_type='application/json')
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
         create_user.refresh_from_db()
         assert create_user.name == "Test User"  # Verifica que no se actualizó
 
     def test_actualizacion_usuario_otro_usuario(self, api_client, create_user):
-        """Test que verifica que un usuario no puede actualizar datos de otro usuario"""
+        """Test que verifica un usuario no
+        puede actualizar datos de otro usuario"""
         # Crear otro usuario
         other_user = User.objects.create(
             username="otheruser",
             password=make_password("otherpassword"),
             email="other@test.com"
         )
-        
+
         # Autenticar como el otro usuario
         api_client.force_authenticate(user=other_user)
-        
+
         updated_data = {
             "name": "Updated Name",
             "surname": "Updated Surname",
             "username": "updateduser",
         }
-        
+
         url = reverse('app:user-detail', args=[create_user.id])
         response = api_client.put(url, data=updated_data)
         assert response.status_code == status.HTTP_403_FORBIDDEN
 
-    def test_eliminacion_usuario_sin_autenticacion(self, api_client, create_user):
-        """Test que verifica que un usuario no autenticado no puede eliminar usuarios"""
+    def test_eliminacion_usuario_sin_autenticacion(
+            self, api_client, create_user):
+        """Test que verifica que un usuario
+        no autenticado no puede eliminar usuarios"""
         url = reverse('app:user-detail', args=[create_user.id])
         response = api_client.delete(url)
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
@@ -138,7 +145,7 @@ class TestUserEndpoints:
             password=make_password("otherpassword"),
             email="other@test.com"
         )
-        
+
         api_client.force_authenticate(user=other_user)
         url = reverse('app:user-detail', args=[create_user.id])
         response = api_client.delete(url)
