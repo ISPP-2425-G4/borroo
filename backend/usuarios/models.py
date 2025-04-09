@@ -1,7 +1,15 @@
+import re
 from django.db import models
 from django.core.validators import EmailValidator, RegexValidator
+from django.forms import ValidationError
 from django.utils.timezone import now
 from django.contrib.auth.models import AbstractUser
+import os
+from cryptography.fernet import Fernet
+
+
+FERNET_KEY = os.getenv("FERNET_KEY")
+FERNET = Fernet(FERNET_KEY.encode())
 
 text_validator = RegexValidator(
     regex=r'^[A-Za-zÁÉÍÓÚáéíóúÑñ].*',
@@ -82,20 +90,33 @@ class User(AbstractUser):
         null=True,
         validators=[cif_validator]
     )
-    dni = models.CharField(
-        max_length=9,
+    _dni = models.CharField(
+        db_column='dni',
+        max_length=255,  # Aumentamos porque cifrado es más largo
         unique=True,
-        null=True, blank=True,
-        validators=[RegexValidator(
-            regex=r'^\d{8}[A-Z]$',  # 8 dígitos seguidos de una letra mayúscula
-            message="El DNI debe tener el formato: 12345678A"
-        )],
-        error_messages={
-            'unique': 'El DNI ya está registrado. '
-            'Por favor, utiliza uno diferente.',
-            'max_length': 'El DNI no puede tener más de 9 caracteres.'
-        }
+        null=True,
+        blank=True
     )
+
+    @property
+    def dni(self):
+        if self._dni:
+            try:
+                return FERNET.decrypt(self._dni.encode()).decode()
+            except Exception:
+                return None  # O lanzar error si quieres detectar corrupción
+        return None
+
+    @dni.setter
+    def dni(self, value):
+        if value:
+            if not re.match(r'^\d{8}[A-Z]$', value):
+                raise ValidationError(
+                    "El DNI debe tener el formato: 12345678A"
+                )
+            self._dni = FERNET.encrypt(value.encode()).decode()
+        else:
+            self._dni = None
     is_verified = models.BooleanField(default=False)
     verified_account = models.BooleanField(default=False)
     pricing_plan = models.CharField(
@@ -126,6 +147,15 @@ class User(AbstractUser):
         if not self.reset_token_expiration:
             return False
         return (now() - self.reset_token_expiration).total_seconds() < 600
+
+    def is_profile_completed(self):
+        if (
+            not self.dni or not self.address or not self.postal_code or
+            not self.city or not self.country or not self.phone_number
+        ):
+            return False
+        else:
+            return True
 
     def __str__(self):
         return self.username
