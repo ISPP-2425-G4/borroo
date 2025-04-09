@@ -209,29 +209,31 @@ def confirm_subscription_checkout(request, session_id):
 
         if session.payment_status == 'paid':
             metadata = session.metadata
-            print("metadata", metadata)
             user_id = metadata.get('user_id')
 
             if user_id:
                 try:
                     user = User.objects.get(id=user_id)
+
+                    # ✅ Solo guarda info de Stripe, NO cambiar el plan
                     user.stripe_customer_id = session.customer
-                    user.stripe_subscription_id = session.subscription
+                    user.stripe_subscription_id = session.subscription  # Puede ser None
                     user.save()
 
                     return JsonResponse({
                         'status': 'success',
-                        'user_id': user.id,
-                        'plan': user.pricing_plan
+                        'user_id': user.id
                     })
+
                 except User.DoesNotExist:
                     return JsonResponse({'error': 'Usuario no encontrado'},
                                         status=404)
             else:
-                return JsonResponse({
-                    'error': 'user_id no encontrado en metadatos'}, status=400)
+                return JsonResponse({'error': 'user_id no encontrado en metadatos'},
+                                    status=400)
         else:
             return JsonResponse({'status': 'unpaid'}, status=402)
+
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=400)
 
