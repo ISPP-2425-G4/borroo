@@ -4116,7 +4116,83 @@
 
 ### **Blanco Mora, David** 
 
-### **Díaz Ordóñez, Pablo**  
+### **Díaz Ordóñez, Pablo** 
+
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="13"><b>Código y documentación</b></td>
+    <td>Arreglo frontend política de cancelación (01/04/2025)</td>
+    <td>41 minutos</td>
+  </tr>
+  <tr>
+    <td>BUG: Limpiar Todo no se actualiza hasta recargar la aplicación y filtro de subcategoria (en local, se subió por Pablo Espinosa, que lo resolvió a la par) (02/04/2025)</td>
+    <td>33 minutos</td>
+  </tr>
+  <tr>
+    <td>BUG: Arreglo de cálculo de precio en solicitud de alquiler (02/04/2025)</td>
+    <td>22 minutos</td>
+  </tr>
+  <tr>
+    <td>Las valoraciones de los usuarios visualmente en el catalogo #372 (Trabajo en local) (02/04/2025)</td>
+    <td>1 hora y 15 minutos</td>
+  </tr>
+  <tr>
+    <td>Las valoraciones de los usuarios visualmente en el catalogo #372 (Pasarlo a la rama, comprobar y probar funcionalidad) (02/04/2025)</td>
+    <td>35 minutos</td>
+  </tr>
+  <tr>
+    <td>Mejorar ventanas de confirmación (primera prueba en local) (05/04/2025)</td>
+    <td>51 minutos</td>
+  </tr>
+  <tr>
+    <td>Mejorar ventanas de confirmación (ventanas de delete y edit en show item y de publish en create item pero con un problema) (05/04/2025)</td>
+    <td>1 hora y 21 minutos</td>
+  </tr>
+  <tr>
+    <td>Mejorar ventanas de confirmación (ventanas de publish en create item corregida, y creada de los borradores,  de aceptar los cambios del edit, de  crear los anuncios) (06/04/2025)</td>
+    <td>1 hora y 12 minutos</td>
+  </tr>
+  <tr>
+    <td>Mejorar ventanas de confirmación (resolver error en modelo de objetos y comprobar que funciona ventana de anuncios) (06/04/2025)</td>
+    <td>17 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadir niko niko (commit mal nombrado y corregido) (06/04/2025)</td>
+    <td>7 minutos</td>
+  </tr>
+  <tr>
+    <td>Rellenar time effort (09/04/2025)</td>
+    <td>20 minutos</td>
+  </tr>
+  <tr>
+    <td>Rellenar performance evaluation (09/04/2025)</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>Rellenar reporte de la IA (09/04/2025)</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="1"><b>Píldoras teóricas</b></td>
+    <td>Píldoras teóricas 08 y 09 (08/04/2025)</td>
+    <td>44 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2"><b>Clases</b></td>
+    <td>Clase (28/03/2025)</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase (04/04/2025)</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+</table>
+
 
 ### **Espinosa Naranjo, Pablo**
 
