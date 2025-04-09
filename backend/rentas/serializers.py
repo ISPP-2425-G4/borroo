@@ -14,6 +14,7 @@ class PaidPendingConfirmationSerializer(serializers.ModelSerializer):
 
 
 class RentSerializer(serializers.ModelSerializer):
+    incident_reported = serializers.SerializerMethodField()
     renter_name = serializers.CharField(
         source='renter.username', read_only=True)
 
@@ -111,3 +112,6 @@ class RentSerializer(serializers.ModelSerializer):
             return Response({
                 "error": "Renta no encontrada."
             }, status=Response.HTTP_404_NOT_FOUND)
+
+    def get_incident_reported(self, obj):
+        return obj.tickets.exists()
