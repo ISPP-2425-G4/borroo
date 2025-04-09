@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
   Container,
   Typography,
@@ -23,7 +23,7 @@ const ListTickets = () => {
   const obtenerUrlImagen = useCallback(async (imgId) => {
     try {
       const respuesta = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/objetos/item-images/${imgId}/`
+        `${import.meta.env.VITE_API_BASE_URL}/incidencias/item-images/${imgId}/`
       );
       return respuesta.data.image;
     } catch (error) {
@@ -47,7 +47,16 @@ const ListTickets = () => {
         );
         console.log("Tickets response:", response.data);
         const ticketsData = response.data.results || response.data;
-        setTickets(ticketsData);
+        const enrichedTickets = await Promise.all(
+          ticketsData.map(async (ticket) => {
+            const urlImagen =
+              ticket.images && ticket.images.length > 0
+                ? await obtenerUrlImagen(ticket.images[0].id)
+                : IMAGEN_PREDETERMINADA;
+            return { ...ticket, urlImagen };
+          })
+        );
+        setTickets(enrichedTickets);
       } catch (error) {
         console.error("Error fetching tickets:", error);
         setErrorMessage(
@@ -59,7 +68,7 @@ const ListTickets = () => {
     };
   
     fetchTickets();
-  }, []);
+  }, [obtenerUrlImagen]);
 
   if (loading) {
     return (
@@ -77,71 +86,103 @@ const ListTickets = () => {
   }
 
   return (
-    <>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+        bgcolor: "#f9fafb",
+      }}
+    >
       <Navbar />
-      <Container sx={{ mt: 4 }}>
-        <Typography variant="h4" sx={{ mb: 3 }}>
-          Mis Incidencias
-        </Typography>
-        {errorMessage && (
-          <Alert severity="error" sx={{ mb: 3 }}>
-            {errorMessage}
-          </Alert>
-        )}
-        {tickets.length === 0 ? (
-          <Typography variant="body1">
-            No tienes incidencias registradas.
-          </Typography>
-        ) : (
-          <Grid item xs={12} sm={12} md={12}>
-            {tickets.map((ticket) => (
-              <Grid item xs={12} md={6} key={ticket.id}>
-                <Card>
-                  <CardContent>
-                    <Typography variant="h6">
-                      Incidencia #{ticket.id}
-                    </Typography>
-                    <Typography variant="body2" sx={{ mt: 1 }}>
-                      <strong>Descripción:</strong> {ticket.description}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 1 }}>
-                      Estado: {ticket.status_display}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary" sx={{ display: "block" }}>
-                      Creado: {new Date(ticket.created_at).toLocaleString()}
-                    </Typography>
-                    {ticket.images && ticket.images.length > 0 && (
-                      <Box 
-                      sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 2,
-                        p: 2,
-                        width: "100%",
-                        maxWidth: "800px",
-                        maxHeight: "75vh", 
-                        overflowY: "auto", 
-                      }}>
-                        {ticket.images.map((img) => (
-                        <CardMedia
-                            key={img.id}
-                            component="img"
-                            image={`${import.meta.env.VITE_API_BASE_URL}${img.image}`}
-                            alt={`Imagen de incidencia ${ticket.id}`}
-                            sx={{ width: 150, height: 150, objectFit: "cover" }}
-                        />
-                        ))}
-                      </Box>
+      <Container 
+        maxWidth={false} 
+        sx={{ 
+          flexGrow: 1,
+          py: { xs: 2, md: 4 }, 
+          px: { xs: 2, sm: 3, md: 4 },
+          mt: "48px",
+          overflow: "auto",
+          maxWidth: 1400,
+          mx: 'auto'
+        }}
+      >
+        <Box sx={{ width: "100%", mb: 4 }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 3,
+            }}
+          >
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 700,
+                color: "text.primary",
+                fontSize: { xs: "1.5rem", sm: "2rem" },
+              }}
+            >
+              Mis Incidencias
+            </Typography>
+          </Box>
+  
+          {errorMessage && (
+            <Alert severity="error" sx={{ mb: 3 }}>
+              {errorMessage}
+            </Alert>
+          )}
+  
+          {tickets.length === 0 ? (
+            <Typography variant="body1">
+              No tienes incidencias registradas.
+            </Typography>
+          ) : (
+
+            <Grid container spacing={3}>
+              {tickets.map((ticket) => (
+                <Grid item xs={12} md={6} key={ticket.id}>
+                  <Card sx={{ display: "flex" , mx: "auto", maxWidth: 600}}>
+                    {ticket.urlImagen && (
+                      <CardMedia
+                        component="img"
+                        image={ticket.urlImagen}
+                        alt={`Imagen de incidencia ${ticket.id}`}
+                        sx={{ width: 150, height: 150, objectFit: "cover" }}
+                      />
                     )}
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        )}
+                    <CardContent sx={{ flex: "1 0 auto" }}>
+                      <Typography variant="h6">
+                        Incidencia #{ticket.id}
+                      </Typography>
+                      <Typography variant="body2" sx={{ mt: 1 }}>
+                        {ticket.description}
+                      </Typography>
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        sx={{ display: "block", mt: 1 }}
+                      >
+                        Estado: {ticket.status_display}
+                      </Typography>
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        sx={{ display: "block" }}
+                      >
+                        Creado: {new Date(ticket.created_at).toLocaleString()}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          )}
+        </Box>
       </Container>
-    </>
+    </Box>
   );
-};
+};  
 
 export default ListTickets;
