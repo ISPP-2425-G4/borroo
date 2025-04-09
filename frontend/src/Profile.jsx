@@ -595,7 +595,7 @@ const Profile = () => {
             <Typography variant="body1" color="textSecondary">
               @{user.username}
             </Typography>
-            {currentUser.username === user.username ? (
+            {currentUser?.username === user.username ? (
 
               <>
                 <Button
@@ -681,7 +681,7 @@ const Profile = () => {
             }}
           >
             
-            {currentUser.username === user.username && (
+            {currentUser?.username === user.username && (
               <>
               <Typography variant="h5" fontWeight="bold" sx={{ mb: 1 }}>
                 Información de contacto:
@@ -738,11 +738,11 @@ const Profile = () => {
 
           </Box>
 
-          {currentUser.username === user.username && (
+          {currentUser?.username === user.username && (
             <Divider sx={{ my: 3 }} />
           )}
 
-          {currentUser.username === user.username && (
+          {currentUser?.username === user.username && (
             <Box sx={{ mt: 3 }}>
               <Typography variant="h6" fontWeight="bold" sx={{ mb: 1 }}>
                 ¿Estás identificado?
