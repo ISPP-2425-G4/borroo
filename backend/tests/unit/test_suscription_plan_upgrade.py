@@ -21,6 +21,7 @@ class TestPricingPlanEndpoints:
             "address": "Test Address",
             "postal_code": "12345",
             "is_verified": True,
+            "verified_account": True,
             "pricing_plan": "free",
             "password": make_password("Password123!")
         }
@@ -38,6 +39,7 @@ class TestPricingPlanEndpoints:
             "address": "Test Address",
             "postal_code": "12345",
             "is_verified": True,
+            "verified_account": True,
             "pricing_plan": "premium",
             "password": make_password("Password123!")
         }
@@ -55,15 +57,15 @@ class TestPricingPlanEndpoints:
         return APIClient()
 
     @pytest.fixture
-    def authenticated_free_user_client(
-            self, auth_client, create_free_user):
-        # Usamos el endpoint de login para obtener el token
+    def authenticated_free_user_client(self, auth_client, create_free_user):
+        # Modificar para usar usernameOrEmail en lugar de username
         url = reverse('app:user-login')
         data = {
-            "username": "freeuser",
+            "usernameOrEmail": "freeuser",
             "password": "Password123!"
         }
         response = auth_client.post(url, data, format='json')
+        assert response.status_code == 200  # Verificar respuesta exitosa
         token = response.data["access"]
         auth_client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
         return auth_client
@@ -71,13 +73,14 @@ class TestPricingPlanEndpoints:
     @pytest.fixture
     def authenticated_premium_user_client(
             self, auth_client, create_premium_user):
-        # Usamos el endpoint de login para obtener el token
+        # Modificar para usar usernameOrEmail en lugar de username
         url = reverse('app:user-login')
         data = {
-            "username": "premiumuser",
+            "usernameOrEmail": "premiumuser",
             "password": "Password123!"
         }
         response = auth_client.post(url, data, format='json')
+        assert response.status_code == 200  # Verificar respuesta exitosa
         token = response.data["access"]
         auth_client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
         return auth_client
@@ -89,7 +92,7 @@ class TestPricingPlanEndpoints:
         response = authenticated_free_user_client.post(url)
 
         assert response.status_code == status.HTTP_200_OK
-        assert response.data["message"] == "Plan actualizado a premium."
+        assert response.data["message"] == "Plan actualizado a Premium."
 
         create_free_user.refresh_from_db()
         assert create_free_user.pricing_plan == "premium"
@@ -108,25 +111,25 @@ class TestPricingPlanEndpoints:
 
     def test_downgrade_to_free_success(
             self, authenticated_premium_user_client, create_premium_user):
-        url = reverse('app:user-downgrade-to-free',
-                      args=[create_premium_user.id])
+        url = reverse('app:user-downgrade-to-free')
         response = authenticated_premium_user_client.post(url)
 
         assert response.status_code == status.HTTP_200_OK
-        assert response.data["message"] == "Plan actualizado a free."
+        assert response.data["message"] == (
+            "Has cancelado la renovación automática de tu suscripción."
+        )
 
         create_premium_user.refresh_from_db()
-        assert create_premium_user.pricing_plan == "free"
+        assert not create_premium_user.is_subscription_active
 
     def test_downgrade_to_free_failure_already_free(
             self, authenticated_free_user_client, create_free_user):
-        url = reverse('app:user-downgrade-to-free', args=[create_free_user.id])
+        url = reverse('app:user-downgrade-to-free')
         response = authenticated_free_user_client.post(url)
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert "error" in response.data
-        create_free_user.refresh_from_db()
-        assert create_free_user.pricing_plan == "free"
+        assert response.data["error"] == "No tienes un plan Premium activo."
 
     def test_upgrade_unauthorized(self, auth_client, create_free_user):
         url = reverse('app:user-upgrade-to-premium',
@@ -136,8 +139,7 @@ class TestPricingPlanEndpoints:
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_downgrade_unauthorized(self, auth_client, create_premium_user):
-        url = reverse('app:user-downgrade-to-free',
-                      args=[create_premium_user.id])
+        url = reverse('app:user-downgrade-to-free')
         response = auth_client.post(url)
 
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
