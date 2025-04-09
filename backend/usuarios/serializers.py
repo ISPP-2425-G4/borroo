@@ -79,6 +79,30 @@ class RegisterSerializer(serializers.ModelSerializer):
             )
         return value
 
+    def validate_password(self, value):
+        """Validar que la contraseña cumpla con los requisitos."""
+        if len(value) < 8:
+            raise serializers.ValidationError(
+                "La contraseña debe tener al menos 8 caracteres"
+            )
+        if not any(c.isupper() for c in value):
+            raise serializers.ValidationError(
+                "La contraseña debe contener al menos una mayúscula"
+            )
+        if not any(c.islower() for c in value):
+            raise serializers.ValidationError(
+                "La contraseña debe contener al menos una minúscula"
+            )
+        if not any(c.isdigit() for c in value):
+            raise serializers.ValidationError(
+                "La contraseña debe contener al menos un número"
+            )
+        if not any(c in "!@#$%^&*()_+-=[]{}|;:,.<>?" for c in value):
+            raise serializers.ValidationError(
+                "La contraseña debe contener al menos un carácter especial"
+            )
+        return value
+
     def validate(self, data):
         """Validar que los campos comiencen con una letra
          y que las contraseñas coincidan."""
