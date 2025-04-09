@@ -61,7 +61,7 @@ Fecha: 28/03/2025
    &nbsp;&nbsp;&nbsp;&nbsp;2.2.3 [Escenario esperado](#223-escenario-esperado)  
     2.3 [Gráficos de evolución](#23-gráficos-de-evolución)  
     2.4 [Análisis de inversiones](#24-análisis-de-inversiones)
-   &nbsp;&nbsp;&nbsp;&nbsp;2.4.1 [Niveles de inversión](#241-niveles-de-inversión)     
+   &nbsp;&nbsp;&nbsp;&nbsp;2.4.1 [Niveles de inversion](#241-niveles-de-inversión)     
     2.5 [Resumen final](#25-resumen-final)
 
     
@@ -130,7 +130,8 @@ Los usuarios pagan una comisión del 15% sobre el precio de alquiler de los prod
 - 78% de los usuarios alquilan 1 vez al mes o menos.
 - 15,3% de los usuarios alquilan 2-3 veces al mes.
 - 7% de los usuarios alquilan más de 3 veces al mes.
-- 
+
+
 #### 2.1.2 Suscripciones de usuarios
 
 El 66% de los usuarios están dispuestos a pagar una suscripción de 5€ mensuales. 
@@ -236,7 +237,8 @@ Finalmente, el nivel **Premium** incluye participación accionaria (equity) con 
 
 La tabla siguiente utiliza códigos de color (verde, amarillo, azul y rojo) para facilitar la identificación visual de cada nivel de inversión.
 
-![](../imagenes/grafica-inversores.png) 
+![](../imagenes/grafica-inversores.jpg) 
+
 
 
 ### 2.5 Resumen final
