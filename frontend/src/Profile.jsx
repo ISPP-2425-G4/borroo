@@ -598,6 +598,10 @@ const Profile = () => {
             <Typography variant="body1" color="textSecondary">
               @{user.username}
             </Typography>
+            {currentUser?.id && (currentUser?.id !== user.id) &&
+                  <SendMessageButton userId={user.id} />
+                }
+            
             {currentUser?.username === user.username ? (
 
               <>
