@@ -135,24 +135,43 @@ class UserViewSet(viewsets.ModelViewSet):
             "access": str(refresh.access_token),
         }, status=status.HTTP_200_OK)
 
-    # def destroy(self, request, *args, **kwargs):
-    #     user = self.get_object()
+    def destroy(self, request, *args, **kwargs):
+        # First check if user is authenticated at all
+        if not request.user.is_authenticated:
+            return Response(
+                {"error": "Authentication credentials were not provided."},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
 
-    #     if (
-    #         user.username != request.user.username
-    #         and not request.user.is_superuser
-    #     ):
-    #         raise PermissionDenied(
-    #             "No tienes permiso para eliminar este usuario")
+        # Then check if user has permission to delete
+        instance = self.get_object()
+        if instance != request.user:
+            return Response(
+                {"error": "No tienes permiso para eliminar este usuario"},
+                status=status.HTTP_403_FORBIDDEN
+            )
 
-    #     return super().destroy(request, *args, **kwargs)
+        return super().destroy(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
+        self.permission_classes = [IsAuthenticated]
         serializer = self.get_serializer(
             instance, data=request.data, partial=partial
         )
+
+        if not request.user.is_authenticated:
+            return Response(
+                {"error": "Authentication credentials were not provided."},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        if instance != request.user:
+            return Response(
+                {"error": "No tienes permiso para modificar este usuario"},
+                status=status.HTTP_403_FORBIDDEN
+            )
 
         if serializer.is_valid():
             updated_user = serializer.save()
