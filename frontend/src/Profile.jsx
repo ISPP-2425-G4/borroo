@@ -779,7 +779,7 @@ const Profile = () => {
                 ¿Estás identificado?
               </Typography>
               <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 2 }}>
-                {user.dni != null ? (
+                {user.dni != null || user.is_verified ? (
                   <Chip label="Identificado" color="success" />
                 ) : (
                   <>
@@ -813,7 +813,7 @@ const Profile = () => {
               </Typography>
               <TextField
                 fullWidth
-                label="DNI / NIF"
+                label="DNI"
                 value={dniInput}
                 onChange={(e) => setDniInput(e.target.value)}
                 variant="outlined"
