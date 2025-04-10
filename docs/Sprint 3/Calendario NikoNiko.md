@@ -63,7 +63,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Pablo Espinosa Naranjo      |          |          |          | :worried:|:worried:| :blush: | :blush: | :blush: |         |         |         |         |:worried:|  :smiley:|
 | Jesús Fernández Rodríguez   |          |          |          |          |    :smiley:     |    :blush:     |     :blush:    |    :neutral_face:     |         |  :smiley:        |     :blush:      |          |    :blush:      |    :worried:      |
 | Francisco Fernández Mota    |          |          |          | :smiley: | :smiley:| :smiley:|         |         |         | :blush: |         | :smiley:|         |  :blush:   |
-| Javier García Rodríguez     |:blush:|:neutral_face:|:neutral_face:|:blush:|:neutral_face:|:worried:|:neutral_face:|:blush:|:neutral_face:|:neutral_face:|:blush:|:neutral_face:|         |          |
+| Javier García Rodríguez     |:blush:|:neutral_face:|:neutral_face:|:blush:|:neutral_face:|:worried:|:neutral_face:|:blush:|:neutral_face:|:neutral_face:|:blush:|:neutral_face:|:worried:|:worried:|
 | Miguel González Ortiz       |          |          |          |          |         | :smiley: | :blush: | :neutral_face: |         | :smiley: |         |         |         |          |
 | Álvaro Martín Muñoz         | :blush:  |          |          |      :blush:      |     :blush:      |         |    :blush:     |  :blush:       |         |     :blush:    |         |         |    :blush:     |     :blush:       |
 | Ignacio Naredo Bernardos    |          |          |          |          | :blush: | :blush: | :blush: |:blush:  |  :blush:|      :blush: |    :blush:     |  :smiley:       |    :smiley:     |          |
