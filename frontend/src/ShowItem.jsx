@@ -843,7 +843,7 @@ const ShowItemScreen = () => {
                     <DeleteConfirmationDialog onConfirm={handleDelete} />
 
                     {/* Solo mostrar si el usuario NO es "free" */}
-                    {currentUser.pricing_plan !== "free" && (
+                    {currentUser.pricing_plan !== "free" && !item.draft_mode && (
                       <Button 
                         variant="outlined" 
                         onClick={toggleFeature} 
