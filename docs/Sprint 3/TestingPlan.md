@@ -35,7 +35,7 @@ Miembros:
 | Fecha      | Versión | Realizada por   | Descripción de los cambios |
 | ---------- | ------- | --------------- | -------------------------- |
 | 02-04-2025 | v1.0    | Javier García Rodríguez | Creación del documento |
-| 10-04-2025 | v1.0    | Javier García Rodríguez | Nuevas entradas añadidas y ediciones realizadas |
+| 10-04-2025 | v1.1    | Javier García Rodríguez | Nuevas entradas añadidas y ediciones realizadas |
 
 ----------------
 
@@ -47,7 +47,6 @@ Se realizarán pruebas mostradas en las píldoras teóricas de la asignatura.
 
 ## 2. Tipos de Pruebas Implementadas
 - **Pruebas Unitarias:** Validación de componentes individuales.
-- **Pruebas de Integración:** Verificación de la interacción entre módulos.
 - **Pruebas End-to-End/Interfaz:** Verificación de la interfaz de usuario.
 - **Pruebas de Rendimiento:** Medición de velocidad, carga y estabilidad.
 
