@@ -63,16 +63,16 @@ Las pruebas desarrolladas están asociadas a las funcionalidades de la aplicaci�
 
 #### Escenarios contemplados:
 
-- Solicitud de alquiler: [Archivo test_crud_ask_for_a_rent.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_crud_ask_for_a_rent.py)
-- Operaciones CRUD asociadas a objetos: [Archivo test_crud_items.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_crud_items.py)
-- Operaciones CRUD asociadas a usuarios: [Archivo test_crud_user.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_crud_user.py)
-- Recuperación de contraseña: [Archivo test_recuperacion_contraseña.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_recuperacion_contrase%C3%B1a.py)
-- Búsqueda de objetos: [Archivo test_search_items.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_search_items.py)
-- Planes de suscripción: [Archivo test_suscription_plan.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_suscription_plan.py) y [archivo test_suscription_plan_upgrade.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_suscription_plan_upgrade.py)
-- Chats: [Archivo test_chats.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_chats.py)
-- Login y registro: [Archivo test_login.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_login.py) y [Archivo test_register.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_register.py)
-- Pagos: [Archivo test_payments.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_payments.py)
-- Rentas: [Archivo test_rentas.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_rentas.py)
+- Solicitud de alquiler: [Archivo test_crud_ask_for_a_rent.py](../../backend/tests/unit/test_crud_ask_for_a_rent.py)  
+- Operaciones CRUD asociadas a objetos: [Archivo test_crud_items.py](../../backend/tests/unit/test_crud_items.py)
+- Operaciones CRUD asociadas a usuarios: [Archivo test_crud_user.py](../../backend/tests/unit/test_crud_user.py)
+- Recuperación de contraseña: [Archivo test_recuperacion_contraseña.py](../../backend/tests/unit/test_recuperacion_contraseña.py)
+- Búsqueda de objetos: [Archivo test_search_items.py](../../backend/tests/unit/test_search_items.py)
+- Planes de suscripción: [Archivo test_suscription_plan.py](../../backend/tests/unit/test_suscription_plan.py) y [archivo test_suscription_plan_upgrade.py](../../backend/tests/unit/test_suscription_plan_upgrade.py)
+- Chats: [Archivo test_chats.py](../../backend/tests/unit/test_chats.py)
+- Login y registro: [Archivo test_login.py](../../backend/tests/unit/test_login.py) y [Archivo test_register.py](../../backend/tests/unit/test_register.py)
+- Pagos: [Archivo test_payments.py](../../backend/tests/unit/test_payments.py)
+- - Rentas: [Archivo test_rentas.py](../../backend/tests/unit/test_rentas.py)
 
 
 
@@ -84,7 +84,7 @@ Las pruebas desarrolladas están asociadas a las funcionalidades de la aplicaci�
 
 #### Escenarios contemplados:
 
-- Búsqueda de items: [Archivo test_search_items.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/e2e/test_search_items.py)
+- Búsqueda de items: [Archivo test_search_items.py](../../backend/tests/e2e/test_search_items.py)
 
 
 ### 3.3. Pruebas de Rendimiento
@@ -95,15 +95,14 @@ Ambas se realizarán en los archivos denominados `locustfile_XXX.py`, siendo XXX
 
 #### Escenarios contemplados:
 
-- Login: [Archivo locustfile_login.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/performance/locustfile_login.py)
-- Registro: [Archivo locustfile_register.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/performance/locustfile_register.py)
+- Login: [Archivo locustfile_login.py](../../backend/tests/performance/locustfile_login.py)
+- Registro: [Archivo locustfile_register.py](../../backend/tests/performance/locustfile_register.py)
 
 ## 4. Conclusiones
 
-A través de pytest, hemos podido generar un documento html en el que podemos medir el **coverage** cubierto actualmente en la aplicación. Concremtamente, este coverage llega a un valor de %.
+A través de pytest, hemos podido generar un documento html en el que podemos medir el **coverage** cubierto actualmente en la aplicación. Concremtamente, este coverage llega a un valor de 65%. Es un valor el cual se acerca al estimado, pero no es el esperado. Se ha replanificado para el PPL arreglar estos tests y poder aumentar este valor.
 
-Se adjunta el archivo html correspondiente en la carpeta de Sprint 3 en el que se puede visualizar el coverage, respectivamente.
-
+Se adjuntan 2 archivos HTML, correspondientes a los tests que han funcionado y cuáles no en la carpeta de Sprint 3. En uno se visualiza el porcentaje, y otro los tests que han pasado y cuáles no.
 
 ## 8. Anexos y Referencias
 
