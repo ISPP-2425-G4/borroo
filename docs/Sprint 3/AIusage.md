@@ -132,11 +132,11 @@ Para calcular el porcentaje de alucinaciones de las inteligencias artificiales u
 | 10 |  16  | 25%  |
 | 11 |  20 | 25%  |
 | 12 |  25  | 20%  |
-| 13 |     | %  |
-| 14 |     | %  |
-| 15 |     | %  |
-| 16 |     | %  |
-| 17 |     | %  |
+| 13 |   12  | 22%  |
+| 14 |   10  | 12%  |
+| 15 |   8  | 10%  |
+| 16 |   15  | 25%  |
+| 17 |   14  | 50%  |
 
 
 ### Cálculo de las alucinaciones por IA
