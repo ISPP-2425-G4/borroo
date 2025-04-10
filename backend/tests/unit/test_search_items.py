@@ -125,7 +125,7 @@ class TestSearchItemsView:
         url = reverse("search_item")
         response = client.get(url, {"min_price": 300})
         assert response.status_code == 200
-        assert len(response.data["results"]) == 2  # Laptop + Curso
+        assert len(response.data["results"]) == 2
 
     def test_search_by_max_price(self, items):
         client = APIClient()
