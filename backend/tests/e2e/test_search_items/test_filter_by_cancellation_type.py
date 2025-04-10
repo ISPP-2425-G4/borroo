@@ -5,7 +5,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.action_chains import ActionChains
 
 
 @pytest.fixture
@@ -20,7 +19,6 @@ def driver():
 @pytest.mark.e2e
 def test_e2e_filter_by_cancel_type(driver):
     wait = WebDriverWait(driver, 10)
-    actions = ActionChains(driver)
 
     driver.get("http://localhost:5173")
     time.sleep(2)
@@ -29,53 +27,32 @@ def test_e2e_filter_by_cancel_type(driver):
     time.sleep(1)
 
     cancel_select = wait.until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR,
-                                    "[data-testid='select-cancel-type']"))
+        EC.element_to_be_clickable((
+            By.CSS_SELECTOR,
+            "[data-testid='select-cancel-type']"
+        ))
     )
-    driver.execute_script(
-        (
-            "arguments[0].scrollIntoView({ "
-            "behavior: 'smooth', block: 'center' });"
-        ),
-        cancel_select
-    )
-    time.sleep(0.5)
     cancel_select.click()
+    time.sleep(1.5)
 
     flexible_option = wait.until(
-        EC.element_to_be_clickable(
-            (
-                By.CSS_SELECTOR,
-                "[data-testid='cancel-type-flexible']"
-            )
-        )
+        EC.element_to_be_clickable((
+            By.XPATH,
+            "//li[contains(text(), 'Flexible')]"
+        ))
     )
-
-    driver.execute_script(
-        (
-            "arguments[0].scrollIntoView({ "
-            "behavior: 'smooth', block: 'center' });"
-        ),
-        flexible_option
-    )
+    flexible_option.click()
     time.sleep(1)
-    actions.move_to_element(flexible_option).click().perform()
 
     driver.execute_script("window.scrollBy(0, 1200);")
     time.sleep(1)
 
     producto_con_cancelacion = wait.until(
-        EC.presence_of_element_located(
-            (
-                By.XPATH,
-                (
-                    "//*[contains(translate(text(), 'FLEXIBLE', 'flexible'), "
-                    "'flexible')]"
-                )
-            )
-        )
+        EC.visibility_of_element_located((
+            By.XPATH,
+            "//*[contains(translate(., 'FLEXIBLE', 'flexible'), 'flexible')]"
+        ))
     )
 
     assert "flexible" in producto_con_cancelacion.text.lower()
-
     time.sleep(2)

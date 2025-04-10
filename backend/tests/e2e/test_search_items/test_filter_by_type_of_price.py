@@ -26,37 +26,33 @@ def test_e2e_filter_by_price_type_mes(driver):
     time.sleep(2)
 
     price_type_select = wait.until(
-        EC.element_to_be_clickable(
-            (
-                By.CSS_SELECTOR,
-                "[data-testid='select-price-type']"
-            )
-        )
+        EC.element_to_be_clickable((
+            By.CSS_SELECTOR,
+            "[data-testid='select-price-type']"
+        ))
     )
 
     driver.execute_script(
-        (
-            "arguments[0].scrollIntoView({ "
-            "behavior: 'smooth', block: 'center' });"
-        ),
+        "arguments[0].scrollIntoView({ behavior: 'smooth', "
+        "block: 'center' });",
         price_type_select
     )
+
     time.sleep(1)
     price_type_select.click()
 
     wait.until(
-        EC.presence_of_element_located(
-            (By.CSS_SELECTOR, 'ul[role="listbox"]')
-        )
+        EC.presence_of_element_located((
+            By.CSS_SELECTOR,
+            'ul[role="listbox"]'
+        ))
     )
 
     mes_option = wait.until(
-        EC.element_to_be_clickable(
-            (
-                By.CSS_SELECTOR,
-                "[data-testid='price-type-month']"
-            )
-        )
+        EC.element_to_be_clickable((
+            By.CSS_SELECTOR,
+            "[data-testid='price-type-month']"
+        ))
     )
 
     driver.execute_script(
@@ -68,19 +64,13 @@ def test_e2e_filter_by_price_type_mes(driver):
     time.sleep(2)
 
     driver.execute_script(
-        (
-            "document.documentElement.scrollIntoView({ "
-            "behavior: 'smooth', block: 'start' });"
-        )
+        "document.documentElement.scrollIntoView({ "
+        "behavior: 'smooth', block: 'start' });"
     )
     time.sleep(1.5)
 
-    # Comprobar que al menos un producto contiene "Mes" como tipo de precio
-    productos = driver.find_elements(
-        By.CSS_SELECTOR,
-        ".MuiCardContent-root"
-    )
-    hay_mes = any("mes" in producto.text.lower() for producto in productos)
+    cards = driver.find_elements(By.CSS_SELECTOR, ".MuiCardContent-root")
+    hay_mes = any("mes" in card.text.lower() for card in cards)
     assert hay_mes, (
         "No se encontró ningún producto con tipo de precio 'Mes'"
     )

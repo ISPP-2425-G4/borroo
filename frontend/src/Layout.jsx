@@ -558,6 +558,7 @@ const Layout = () => {
                               </Typography>
 
                               <Typography
+                                data-testid="price-type-label"
                                 variant="body2"
                                 sx={{
                                   color: "text.secondary",
@@ -1028,6 +1029,7 @@ const Layout = () => {
                 </Typography>
                 <FormControl fullWidth size="small">
                   <Select
+                    data-testid="select-cancel-type"
                     value={cancelType}
                     onChange={(e) => setCancelType(e.target.value)}
                     displayEmpty
@@ -1053,7 +1055,7 @@ const Layout = () => {
                       <em>Todos los tipos</em>
                     </MenuItem>
                     {options.cancel_types.map(([value, label]) => (
-                      <MenuItem key={value} value={value}>
+                      <MenuItem key={value} value={value} data-testid={`cancel-type-${value}`}>
                         {label}
                       </MenuItem>
                     ))}
@@ -1102,6 +1104,7 @@ const Layout = () => {
                 </Typography>
                 <FormControl fullWidth size="small">
                   <Select
+                    data-testid="select-price-type"
                     value={priceCategory}
                     onChange={(e) => setPriceCategory(e.target.value)}
                     displayEmpty
@@ -1127,7 +1130,7 @@ const Layout = () => {
                       <em>Todos los tipos</em>
                     </MenuItem>
                     {options.price_categories.map(([value, label]) => (
-                      <MenuItem key={value} value={value}>
+                      <MenuItem key={value} value={value} data-testid={`price-type-${value}`}>
                         {label}
                       </MenuItem>
                     ))}
