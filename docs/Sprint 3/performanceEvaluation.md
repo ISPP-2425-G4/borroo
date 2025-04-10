@@ -561,6 +561,8 @@ Una vez fue implementado lo anterior observé que, tras varias adiciones de comp
 
 Tras esto, observe cierto error en una funcionalidad relacionada con los nuevos filtros añadidos, el cual yo había experimentado anteriormente con los filtros añadidos por mí. Me puse en contacto con mi compañero Luis Periañez, el cual era responsable de estos filtros añadidos, le comenté el problema, y le ayude inicialmente a solucionar el mismo.
 
+Tras finalizar, realicé junto a mi compañero Marco el desarrollo del documento "revision.md".
+
 Por último, visualice los videos de "Pildoras teoricas" correspondientes a este Sprint (Sesión 8 y sesión 9)
 
 ### **Fernández Rodríguez, Jesús**
