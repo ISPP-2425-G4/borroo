@@ -336,7 +336,7 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 
 ![](capturasRevision/premium1.png)
 ![](capturasRevision/premium2.png)
-![](capturasRevision/premium2.png)
+![](capturasRevision/premium3.png)
 
 ### Caso 20: Destacar un objeto
 1. El usuario debe loggearse (Usuario con plan premium)
