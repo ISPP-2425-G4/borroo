@@ -150,8 +150,12 @@ const ListTickets = () => {
                     {ticket.urlImagen && (
                       <CardMedia
                         component="img"
-                        image={`${import.meta.env.VITE_API_BASE_URL}${ticket.images[0].image}`}
+                        image={ticket.urlImagen}
                         alt={`Imagen de incidencia ${ticket.id}`}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = IMAGEN_PREDETERMINADA;
+                        }}
                         sx={{ width: 150, height: 150, objectFit: "cover" }}
                       />
                     )}
