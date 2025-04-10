@@ -4387,7 +4387,7 @@
     <th>Tiempo</th>
   </tr>
   <tr>
-    <td rowspan="10">Trabajo</td>
+    <td rowspan="11">Trabajo</td>
     <td>Gestión de tareas, organización y reparto</td>
     <td>1 hora y 21 minutos</td>
   </tr>
@@ -4426,6 +4426,10 @@
   <tr>
     <td>Mejorar vista de solicitudes de objetos</td>
     <td>1 hora y 24 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglo DNI y NIF para cuenta de empresa</td>
+    <td>1 hora y 41 minutos</td>
   </tr>
   <tr>
     <td rowspan="2">Píldoras teóricas</td>
