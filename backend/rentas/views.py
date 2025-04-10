@@ -12,6 +12,9 @@ from decimal import ROUND_HALF_UP, Decimal
 from datetime import timedelta
 from django.contrib.auth.models import AnonymousUser
 from django.db.models import Q
+import os
+
+SCHEDULER_TOKEN = os.getenv("SCHEDULER_TOKEN")
 
 
 def is_authorized(condition=True, authenticated=True):
@@ -427,3 +430,28 @@ class RentViewSet(viewsets.ModelViewSet):
 
         serializer = RentSerializer(closed_rents, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['post'], url_path='cancel-expired-rents')
+    def cancel_expired_rents(self, request):
+        token = request.data.get('token')
+        if token != SCHEDULER_TOKEN:
+            return Response(
+                {"error": "Token inválido."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        current_time = timezone.now()
+
+        expired_rents = Rent.objects.filter(
+            start_date__lt=current_time,
+            rent_status=RentStatus.REQUESTED
+        )
+
+        updated_count = expired_rents.update(rent_status=RentStatus.CANCELLED)
+
+        return Response({
+            "message": (
+                f"Se han cancelado {updated_count} rentas expiradas en "
+                "estado REQUESTED."
+            )
+        }, status=status.HTTP_200_OK)
