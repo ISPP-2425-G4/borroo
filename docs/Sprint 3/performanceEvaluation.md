@@ -690,6 +690,6 @@ Debido a dependencias con otras tareas, como la creación de las pantallas de in
 
 Tuve algunos problemas con la subida y visualización de imágenes en el frontend, pero finalmente logré resolverlos revisando tareas similares de otros compañeros. Además, se cumplieron todas las métricas exigidas por Sonar y Codacy, evitando la duplicidad de código y mejorando métricas como "Reliability", entre otras.
 
-Puedes consultar el [tiempo invertido aquí](https://app.clockify.me/shared/67f7b812703cb37f108a0537).
+Puede consultar el [tiempo invertido aquí](https://app.clockify.me/shared/67f7e543d6e4ee46994e79ae).
 
 ### **Sevillano Barea, Alejandro**
