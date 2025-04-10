@@ -7,7 +7,7 @@ Sprint 3 – G4
 
 Repositorio: [https://github.com/ISPP-2425-G4/borroo](https://github.com/ISPP-2425-G4/borroo)
 
-02/04/2025
+10/04/2025
 
 Miembros:
 
