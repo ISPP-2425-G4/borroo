@@ -4848,6 +4848,43 @@
 </table>
 
 ### **Palomo García, Miguel**
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="8">Código</td>
+      <td>#368 Verificación de la existencia del correo (03/04/2025)</td>
+      <td>1 horas 14 minutos</td>
+    </tr>
+    <tr>
+      <td>Presentacion y anuncios (03/04/2025)</td>
+      <td>6 horas</td>
+    </tr>
+    <tr>
+      <td> #334 Informar por frontend al publicar y solicitar un objeto del programa contra daños, (fianza)(07/04/2025)</td>
+      <td>30 minutos</td>
+    </tr>
+    <tr>
+      <td>Presentacion y anuncios (10/04/2025)</td>
+      <td>7 horas</td>
+    </tr>
+        <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 04/04</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras Teóricas</td>
+      <td>1 hora</td>
+    </tr>
+     </tbody>
+</table>
 
 ### **Periañez Franco, Luis Javier**
 <table>

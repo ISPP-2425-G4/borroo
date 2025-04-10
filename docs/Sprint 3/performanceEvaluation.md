@@ -500,6 +500,8 @@ En la segunda semana, me centré en el desarrollo e implementación de la pasare
 Asimismo, continué con mi formación a través de las "píldoras teóricas". 
 ### **Palomo García, Miguel**
 
+
+
 ### **Periañez Franco, Luis Javier**
 Durante la primera semana, me dediqué a realizar la implementación de los planes de suscripción en el frontend, enfocándome especialmente en mejorar su estética y presentación visual para una mejor experiencia de usuario. Trabajé en el diseño de los distintos tipos de planes, sus precios y características, asegurando que la interfaz fuera clara, intuitiva y atractiva.
 
@@ -653,6 +655,12 @@ Durante la segunda semana, aunque fue mucho mas calmada que la segunda, dediqué
 Aparte, me ví los vídeos de las píldoras teóricas y actualice los términos y condiciones del servicio.
 
 ### **Palomo García, Miguel**
+#### Semana 1
+Durante la primera semana me encargué de hacer una primera asignación de las issues más importantes al equipo de trabajo y de la realización de verificación de correo a través de un mensaje al propio correo electronico.
+Edité el TCO para realizar una estimación mas realista de las ganancias, además de realizar el anuncio dedicado a usuario y con ello la propia edición y creación de la canción. Como responsable de la presentación completé la presentacion correctamente.
+
+#### Semana 2
+Durante la siguiente semana, estuve, junto a Javier García Rodríguez, editando el TCO, en el que se incluyó el coste asociado a los inversores, mencionado en la clase anterior. Estudié las diferentes formas de fianza que implementaban algunas plataformas y desarrolle los puntos a hablar en el documento de fianza dentro del customer agreement. Además implemente una función para que los usuarios puedan añadir su fianza personalizada al objeto. Como responsable de la presentación completé la presentacion correctamente.
 
 ### **Periañez Franco, Luis Javier**
 Durante estos días he continuado con el desarrollo de funcionalidades clave del frontend, centrado especialmente en la mejora de la experiencia de usuario. En primer lugar, llevé a cabo la visualización de perfiles en la plataforma, solucionando errores y adaptando el diseño para una mejor comprensión de la información por parte del usuario (3 horas). También dediqué tiempo a mejorar la estética de las imágenes en la vista de detalle de los objetos, asegurando que se muestren correctamente y con una disposición más intuitiva (2 horas).
