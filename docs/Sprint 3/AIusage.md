@@ -75,6 +75,23 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 
 | ID   | Uso (Descripción)       | Nombre del Miembro | Fecha       | Enlace al Chat |
 |------|-------------------------|--------------------|------------|---------------|
+| 001  | Información sobre IA generativa para vídeos   | Javier García Rodríguez    | 03/04/2025 | [Ver chat](https://chatgpt.com/share/67ef3261-fa0c-8001-9856-d29d051e270e) |
+| 002  | Resolución de bugs en código  | Javier García Rodríguez     | 03/04/2025 | [Ver chat](https://chatgpt.com/share/67ef32e4-70fc-8001-8a36-78e209045a65) |
+| 003  | Información sobre normativas legales  | Javier García Rodríguez     | 03/04/2025 | [Ver chat](https://chatgpt.com/share/67f65486-3fe4-8001-b98b-9900502e3a09) |
+| 004  | Documentación de política de daños  | Javier García Rodríguez   | 07/04/2025 | [Ver chat](https://chatgpt.com/share/67f653c5-82e0-8001-9315-bee2834e8dde) |
+| 005  | Ventanas de confirmacion frontend y error | Pablo Díaz Ordoñez   | 05/04/2025 | [Ver chat](https://chatgpt.com/share/67f6632b-25ec-8013-9f79-2be7b0d35b90) |
+| 006  | Cambiar mensaje commit ya subido | Pablo Díaz Ordoñez   | 06/04/2025 | [Ver chat](https://chatgpt.com/share/67f663b6-5784-8013-a9e5-e71c43a113f3) |
+| 007  | Hotfix de error en el reporte de un usuario | Álvaro Martín Muñoz      | 09/04/2025 | [Ver chat](https://chatgpt.com/share/67f663b6-5784-8013-a9e5-e71c43a113f3)|
+| 008  | Extracción de feedback no repetido de documentos de usuarios piloto | Santiago Rosado Raya      | 09/04/2025 | (no deja compartir chat) |
+| 009  | Generación de código para funcionalidad de chat de mensajería| Javier Nieto Vicioso  | 09/04/2025 | [Ver chat](https://chatgpt.com/share/67f69e49-3b30-800c-bb7b-6a95f5fb28bb) |
+| 010  | Explicación de errores | Javier Nieto Vicioso   | 09/04/2025 | [Ver chat](https://chatgpt.com/share/67f69e61-35c4-800c-8bb3-dc1c7a2dfbb0) |
+| 011  | Generación de documentación (gráficas) | Miguel Palomo García   | 09/04/2025 | [Ver chat](https://chatgpt.com/share/67f69c9e-e748-8002-8712-23fba77aabb3) |
+| 012  | Generación de código para funcionalidad de cancelación de planes | Luis Javier Periáñez Franco  | 07/04/2025 | (no deja compartir chat) |
+| 013  | Generación de código para funcionalidad de filtrados | Luis Javier Periáñez Franco  | 06/04/2025 | (no deja compartir chat) |
+| 014  | Generación de código para error visualización perfil | Luis Javier Periáñez Franco  | 03/04/2025 | (no deja compartir chat) |
+
+
+
 
 
 
@@ -82,6 +99,19 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 
 | ID   | Tipo de prompt          | Útil (Sí/No) | Tiempo Ahorrado |
 |------|---------------------------|--------------|-----------------|
+| 001  | Solicitud de información     | Sí  | 40 min  |
+| 002  | Detección de bugs     | Sí   | 40 min  |
+| 003  | Solicitud de información     | Sí   | 30 min  |
+| 004  | Generación de documentación     | Sí   | 30 min  |
+| 005  | Ayuda para generar código    | Sí   | 20 min  |
+| 006  | Resolución de un error     | Sí   | 5 min  |
+| 007  | Hotfix de error en el reporte de un usuario     | Sí   | 25 min  |
+| 008  | Documentación     | Sí   | 60 min  |
+| 009  | Generación de código | Sí   | 60 min  |
+| 010  | Resolución de errores     | Sí   | 10 min  |
+| 011  | Generación de documentación   | Sí   | 60 min  |
+
+
 
 
 ## 4. Alucinaciones de la IA
@@ -90,6 +120,23 @@ Para calcular el porcentaje de alucinaciones de las inteligencias artificiales u
 
 | Desarrollador | Usos | % Alucinaciones |
 |----|------|------------|
+| 1  |   6  | 12,5%  |
+| 2  |  18  | 16,6%  |
+| 3  |   5  | 20%  |
+| 4  |   8  | 12,5%  |
+| 5  |   2  | 50%  |
+| 6  |   5  | 20%  |
+| 7  |   6  | 33,3%  |
+| 8  |  10   | 20%  |
+| 9  |  13  | 30%  |
+| 10 |  16  | 25%  |
+| 11 |  20 | 25%  |
+| 12 |  25  | 20%  |
+| 13 |   12  | 22%  |
+| 14 |   10  | 12%  |
+| 15 |   8  | 10%  |
+| 16 |   15  | 25%  |
+| 17 |   14  | 50%  |
 
 
 ### Cálculo de las alucinaciones por IA
@@ -98,7 +145,8 @@ Para calcular el porcentaje de alucinaciones de las inteligencias artificiales u
 Para calcular el porcentaje de alucinaciones de las inteligencias artificiales usadas, se ha determinado por obtener el porcentaje medio de alucinaciones, calculando la media aritmética de los valores registrados en la columna "% Alucinaciones". La fórmula utilizada es:
 
 
-![Fórmula](https://cdn.discordapp.com/attachments/1354928711962464327/1354928723635339299/image.png?ex=67e71335&is=67e5c1b5&hm=e62e4c3f84b6f63367a68116be8e2997a86f469705446b7f7163bf73e65a59eb&)
+![Fórmula](../imagenes/formula.png)
+
 
 Donde:
 - Xi representa cada uno de los valores de porcentaje de alucinaciones.
@@ -107,4 +155,18 @@ Donde:
 Aplicando la fórmula, el porcentaje medio de alucinaciones es:
 
 
+![Fórmula](../imagenes/calculo-s3.jpg)
+
 ### Conclusión
+
+El análisis muestra que el porcentaje medio de alucinaciones de la IA en este conjunto de datos es aproximadamente **23.82%**. Esto indica que aún hay margen de mejora para reducir las respuestas erróneas o inconsistentes generadas por el sistema.
+
+### Medidas para reducir las alucinaciones
+
+Para disminuir este porcentaje un poco más, se implementarán las siguientes estrategias:
+
+1. **Aplicación de la guía de ingeniería de prompts:** Se adoptarán las mejores prácticas de redacción de instrucciones para IA basadas en la guía [Prompting Guide](https://www.promptingguide.ai/es), optimizando la claridad y precisión de los prompts.
+2. **Revisión y refinamiento iterativo de prompts:** Se evaluarán las respuestas generadas y se ajustarán los prompts cuando sea necesario para obtener información más fiable.
+3. **Feedback y documentación de errores:** Se establecerá un sistema para registrar y analizar casos de alucinaciones recurrentes, con el fin de ajustar las estrategias de prompting.
+
+Estas medidas permitirán optimizar el uso de las IAs y reducir significativamente la aparición de alucinaciones en futuras interacciones.
