@@ -52,36 +52,48 @@ class UserViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         """Registro de usuario y generación de token JWT"""
         data = request.data.copy()
-
-        data["password"] = make_password(data["password"])
         serializer = RegisterSerializer(data=data)
+
         if serializer.is_valid():
-            # Guardamos el usuario con la contraseña encriptada
-            user = serializer.save()
-            # Generamos el token para verificar el email
-            user.verify_token = str(uuid.uuid4())
-            user.save()
-            cif = serializer.validated_data.get("cif")
-            if cif is not None:
-                user.is_verified = True
+            try:
+                # Solo encriptamos la contraseña después de validar
+                validated_data = serializer.validated_data
+                validated_data['password'] = make_password(
+                    validated_data['password']
+                )
+                user = serializer.save()
+
+                # Generamos el token para verificar el email
+                user.verify_token = str(uuid.uuid4())
                 user.save()
 
-            # Generamos los tokens
-            frontend_base_url = os.getenv("RECOVER_PASSWORD")
-            frontend_url = f"{frontend_base_url}verifyEmail"
-            verify_link = f"{frontend_url}?token={user.verify_token}"
-            send_mail(
-                "Verificación de correo",
-                f"Hola {user.name},"
-                f"Haz clic en el siguiente enlace para verificar tu correo: "
-                f"{verify_link}",
-                "no-reply@tuapp.com",
-                [user.email],
-                fail_silently=False,)
+                cif = serializer.validated_data.get("cif")
+                if cif is not None:
+                    user.is_verified = True
+                    user.save()
 
-            return Response({
-                "user": UserSerializer(user).data,
-            }, status=status.HTTP_201_CREATED)
+                # Enviar correo de verificación
+                frontend_base_url = os.getenv("RECOVER_PASSWORD")
+                frontend_url = f"{frontend_base_url}verifyEmail"
+                verify_link = f"{frontend_url}?token={user.verify_token}"
+                send_mail(
+                    "Verificación de correo",
+                    (
+                        f"Hola {user.name}, Haz clic en el siguiente enlace "
+                        f"para verificar tu correo: {verify_link}"
+                    ),
+                    "no-reply@tuapp.com",
+                    [user.email],
+                    fail_silently=False,
+                )
+
+                return Response({
+                    "user": UserSerializer(user).data,
+                }, status=status.HTTP_201_CREATED)
+            except Exception as e:
+                return Response({
+                    "error": f"Error al crear el usuario: {str(e)}",
+                }, status=status.HTTP_400_BAD_REQUEST)
 
         return Response({
             "error": "Error en la validación de datos",
