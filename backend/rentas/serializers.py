@@ -45,6 +45,11 @@ class RentSerializer(serializers.ModelSerializer):
                 {"end_date": "La fecha de fin debe ser posterior '"
                     'a la fecha de inicio."'}
             )
+        # Comprobar si la fecha actual es posterior a end_date
+        if end_date and datetime.now() > end_date:
+            raise serializers.ValidationError({
+                "end_date": "La fecha de fin no puede ser anterior a la fecha actual."
+            })
 
         if start_date and start_date.tzinfo is not None:
             start_date = start_date.replace(tzinfo=None)

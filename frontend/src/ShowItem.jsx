@@ -473,11 +473,24 @@ const ShowItemScreen = () => {
       setShowRentalModal(false);
   
       // Mostrar el mensaje de error como una alerta
-      if (error.response?.data?.error) {
-        alert(error.response.data.error);
-      } else {
-        alert("No se pudo realizar la solicitud");
+      console.log("Respuesta del backend:", error.response?.data);
+      const errorData = error.response?.data;
+
+// Manejar errores específicos de campos
+  let errorMessage = "No se pudo realizar la solicitud";
+  if (errorData) {
+    if (typeof errorData === "object") {
+      // Si hay errores específicos de campos, toma el primero
+      const fieldErrors = Object.values(errorData).flat();
+      if (fieldErrors.length > 0) {
+        errorMessage = fieldErrors[0]; // Toma el primer mensaje de error
       }
+    } else if (typeof errorData === "string") {
+      errorMessage = errorData; // Si el backend devuelve un string
+    }
+  }
+
+  alert(errorMessage);
     }
   };
 
