@@ -569,6 +569,25 @@ Por último, visualice los videos de "Pildoras teoricas" correspondientes a este
 
 ### **Fernández Rodríguez, Jesús**
 
+#### Semana 1
+
+Durante la primera semana, trabajé principalmente en el backend de la aplicación, enfocado en la lógica del sistema de pagos. Realicé diversas modificaciones para asegurar que el pago no se efectuara hasta después de la fecha del alquiler del objeto. Esta funcionalidad fue desarrollada en varias sesiones los días 3 y 4 de abril.
+
+Además, llevé a cabo una investigación para preparar el despliegue del Sprint 3, y participé activamente en el primer despliegue del sistema, realizado el 2 de abril. Estas tareas fueron clave para asegurar la estabilidad del entorno de producción antes de los lanzamientos posteriores.
+
+También comencé con el desarrollo full stack para la funcionalidad de anuncios publicitarios, integrando tanto el backend como el frontend.
+
+---
+
+#### Semana 2
+
+La segunda semana estuvo marcada por múltiples despliegues iterativos de la versión Sprint 3 (S3), incluyendo despliegues con Google Cloud SQL que no acabaron siendo satisfactorios y correcciones sobre la marcha. Estas actividades buscaron mejorar el rendimiento y solucionar problemas encontrados en producción.
+
+Trabajé en el cifrado del DNI y otros cambios dentro del perfil de usuario, mejorando así la seguridad y privacidad de los datos personales. Asimismo, corregí errores con hotfixes específicos, como el refresco de la información del usuario al hacer login.
+
+También añadí imágenes a los anuncios, completando la funcionalidad iniciada la semana anterior, y realicé sesiones de pair programming para mejorar la carga de imágenes de perfil. Finalmente, preparé la versión final del despliegue como parte del cierre de la semana.
+
+
 ### **Fernández Mota, Francisco**
 
 ### **García Rodríguez, Javier**
