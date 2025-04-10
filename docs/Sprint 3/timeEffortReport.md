@@ -4722,16 +4722,20 @@
 
 ### **Picón Garrote, Alexander** 
 
-<<table>
+<table>
   <tr>
     <th>Tarea</th>
     <th>Detalles de la actividad</th>
     <th>Tiempo</th>
   </tr>
   <tr>
-    <td rowspan="8">Trabajo</td>
+    <td rowspan="9">Trabajo</td>
     <td>revisión de funcionalidades para implementación de nuevos test y creación de nuevas issues subgrupo1</td>
     <td>29 minutos y 49 segundos</td>
+  </tr>
+  <tr>
+    <td>actualizar terminos y condiciones del servicio</td>
+    <td>22 minutos y 47 segundos</td>
   </tr>
   <tr>
     <td>estilo pagina recuperar contraseña</td>
