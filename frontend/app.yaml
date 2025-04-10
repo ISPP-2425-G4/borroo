@@ -1,7 +1,15 @@
 runtime: python312
-service: frontend-s2
+service: frontend-s3
 
 handlers:
+  # Handler para los documentos en public/docs_frontend
+  - url: /docs_frontend/(.*)
+    static_files: public/docs_frontend/\1
+    upload: public/docs_frontend/(.*)
+    secure: always
+    http_headers:
+      Cache-Control: "public, max-age=3600"  # Puedes ajustar el cache según necesites
+
   # Serve all static assets with caching (including nested paths)
   - url: /(.*\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|json))$
     static_files: dist/\1

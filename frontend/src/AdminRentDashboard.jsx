@@ -4,7 +4,6 @@ import {
     Box,
     Button,
     TextField,
-    Typography,
     Grid,
     IconButton,
     Dialog,
@@ -49,7 +48,6 @@ const paymentStatusTranslation = {
 
 const AdminRentDashboard = () => {
     const [rents, setRents] = useState([]);
-    const [showCreateForm, setShowCreateForm] = useState(false);
     const [editRentData, setEditRentData] = useState(null);
     const [formData, setFormData] = useState({
         start_date: "",
@@ -82,31 +80,6 @@ const AdminRentDashboard = () => {
     useEffect(() => {
         fetchRents();
     });
-
-    const handleCreateRent = async () => {
-        const token = localStorage.getItem("access_token");
-        try {
-            await axios.post(`${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/rent/create/`, formData, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            alert("Renta creada correctamente.");
-            setFormData({
-                start_date: "",
-                end_date: "",
-                item: "",
-                total_price: "",
-                commission: "",
-                rent_status: "requested",
-                payment_status: "pending",
-            });
-            setShowCreateForm(false);
-            fetchRents();
-        } catch (err) {
-            console.error(err);
-            alert("Error al crear la renta.");
-        }
-    };
-
     const handleDeleteRent = async (rentId) => {
         const confirm = window.confirm("¿Eliminar esta renta?");
         if (!confirm) return;
@@ -139,7 +112,7 @@ const AdminRentDashboard = () => {
             setEditRentData(null);
         } catch (err) {
             if (err.response && err.response.data) {
-                alert("Error al actualizar renta. Asegúrate de que la duración mínima sea de 1 mes (30 o 31 días).");
+                alert(`Error al actualizar renta: ${err.response.data.detail || 'La duración no es correcta'}`);
             }
         }
     };
@@ -175,17 +148,7 @@ const AdminRentDashboard = () => {
         <>
             <Navbar />
             <Box sx={{ p: 4 }}>
-                <Typography variant="h4" sx={{ mb: 3, textAlign: "center" }}>
-                    Gestión de Rentas (Admin)
-                </Typography>
-
-                <Box sx={{ display: "flex", gap: 2, justifyContent: "center", mb: 3 }}>
-                    <Button variant="outlined" onClick={fetchRents}>
-                        Refrescar Lista
-                    </Button>
-                </Box>
-
-                {showCreateForm && (
+                {(
                     <Box
                         sx={{
                             border: "1px solid #ccc",
@@ -197,85 +160,7 @@ const AdminRentDashboard = () => {
                             bgcolor: "#fafafa",
                         }}
                     >
-                        <Typography variant="h6" gutterBottom>
-                            Nueva Renta
-                        </Typography>
-                        <Grid container spacing={2}>
-                            {[
-                                { name: "start_date", label: "Fecha de inicio", type: "date" },
-                                { name: "end_date", label: "Fecha de fin", type: "date" },
-                                // { name: "item", label: "ID del Ítem", type: "number" },
-                                { name: "total_price", label: "Precio Total", type: "number" },
-                                { name: "commission", label: "Comisión", type: "number" },
-                            ].map(({ name, label, type }) => (
-                                <Grid item xs={12} key={name}>
-                                    <TextField
-                                        fullWidth
-                                        label={label}
-                                        name={name}
-                                        type={type}
-                                        value={formData[name]}
-                                        onChange={handleInputChange}
-                                    />
-                                </Grid>
-                            ))}
-
-                            {/* Estado de la renta */}
-                            <Grid item xs={12}>
-                                <FormControl fullWidth>
-                                    <InputLabel>Estado de la renta</InputLabel>
-                                    <Select
-                                        name="rent_status"
-                                        value={editRentData.rent_status}
-                                        label="Estado de la renta"
-                                        onChange={(e) =>
-                                            setFormData((prev) => ({ ...prev, rent_status: e.target.value }))
-                                        }
-                                    >
-                                        {[
-                                            "accepted",
-                                            "requested",
-                                            "booked",
-                                            "picked_up",
-                                            "returned",
-                                            "rated",
-                                            "cancelled",
-                                        ].map((status) => (
-                                            <MenuItem key={status} value={status}>
-                                                {status.replace("_", " ").toUpperCase()}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-
-                            {/* Estado del pago */}
-                            <Grid item xs={12}>
-                                <FormControl fullWidth>
-                                    <InputLabel>Estado del pago</InputLabel>
-                                    <Select
-                                        name="payment_status"
-                                        value={formData.payment_status}
-                                        label="Estado del pago"
-                                        onChange={(e) =>
-                                            setFormData((prev) => ({ ...prev, payment_status: e.target.value }))
-                                        }
-                                    >
-                                        {["pending", "processing", "cancelled", "paid"].map((status) => (
-                                            <MenuItem key={status} value={status}>
-                                                {status.toUpperCase()}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-
-                        <Box sx={{ textAlign: "right", mt: 2 }}>
-                            <Button onClick={handleCreateRent} variant="contained">
-                                Guardar
-                            </Button>
-                        </Box>
+                        
                     </Box>
                 )}
                 <TableContainer component={Paper}>
@@ -345,6 +230,15 @@ const AdminRentDashboard = () => {
                                             value={editRentData[name]}
                                             onChange={(e) => handleInputChange(e, true)}
                                             disabled={disabled || false}
+                                            InputLabelProps={{
+                                                shrink: true,  // Esto asegura que la etiqueta se mantenga fuera del campo
+                                            }}
+                                            sx={{
+                                                marginBottom: 2,  // Añadir margen inferior para espaciar los campos
+                                                "& input[type='date']": {
+                                                    padding: "10px 12px", // Ajuste de padding para mejorar la visibilidad
+                                                },
+                                            }}
                                         />
                                     </Grid>
                                 ))}

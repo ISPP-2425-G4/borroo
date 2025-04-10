@@ -2,13 +2,26 @@ from datetime import datetime, timedelta
 from requests import Response
 from rest_framework import serializers
 from .models import Rent
+from pagos.models import PaidPendingConfirmation
 
 # Sirve para validar los datos que llegan del formulario y mapearlos al modelo
 
 
+class PaidPendingConfirmationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PaidPendingConfirmation
+        fields = ['is_confirmed_by_owner', 'is_confirmed_by_renter']
+
+
 class RentSerializer(serializers.ModelSerializer):
+    renter_reported = serializers.SerializerMethodField()
+    owner_reported = serializers.SerializerMethodField()
     renter_name = serializers.CharField(
         source='renter.username', read_only=True)
+
+    paid_pending_confirmation = PaidPendingConfirmationSerializer(
+        read_only=True
+    )
 
     class Meta:
         model = Rent
@@ -27,11 +40,18 @@ class RentSerializer(serializers.ModelSerializer):
         if isinstance(end_date, str):
             end_date = datetime.fromisoformat(end_date)
 
-        if start_date and end_date and start_date >= end_date:
+        if start_date and end_date and start_date > end_date:
             raise serializers.ValidationError(
                 {"end_date": "La fecha de fin debe ser posterior '"
                     'a la fecha de inicio."'}
             )
+        # Comprobar si la fecha actual es posterior a end_date
+        if end_date and datetime.now() > end_date:
+            raise serializers.ValidationError({
+                "end_date": (
+                    "La fecha de fin no puede ser anterior a la fecha actual."
+                )
+            })
 
         if start_date and start_date.tzinfo is not None:
             start_date = start_date.replace(tzinfo=None)
@@ -59,13 +79,14 @@ class RentSerializer(serializers.ModelSerializer):
                             "start_date": "Para alquiler mensual en febrero,"
                             " el intervalo debe ser de 28 o 29 días."
                         })
-                else:
-                    if total_days not in (30, 31):
-                        raise serializers.ValidationError({
-                            "end_date": "Para alquiler mensual, "
-                            "el intervalo debe ser de 30 o 31 días según"
-                            "corresponda el mes"
-                        })
+
+            else:
+                total_days = (end_date - start_date).days
+                if (total_days % 30 or total_days % 31):
+                    raise serializers.ValidationError({
+                        "El alquiler debe ser por meses"
+                    })
+
         return data
 
     def create(self, validated_data):
@@ -99,3 +120,9 @@ class RentSerializer(serializers.ModelSerializer):
             return Response({
                 "error": "Renta no encontrada."
             }, status=Response.HTTP_404_NOT_FOUND)
+
+    def get_renter_reported(self, obj):
+        return obj.tickets.filter(reporter=obj.renter).exists()
+
+    def get_owner_reported(self, obj):
+        return obj.tickets.filter(reporter=obj.item.user).exists()

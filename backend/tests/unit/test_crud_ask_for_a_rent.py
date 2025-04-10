@@ -1,9 +1,11 @@
+from decimal import Decimal
 import pytest
 from rest_framework.test import APIClient
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password
 from usuarios.models import User
-from objetos.models import ItemCategory, CancelType, PriceCategory
+from objetos.models import ItemCategory, CancelType, ItemSubcategory
+from objetos.models import PriceCategory
 
 
 @pytest.mark.django_db
@@ -13,7 +15,7 @@ class TestCreateItemRequest:
     def user(self):
         return User.objects.create(
             username="testuser",
-            password=make_password("testpass"),
+            password=make_password("B0rr00_Test_!892"),
             email="testuser@example.com",
             name="Test",
             surname="User",
@@ -35,17 +37,43 @@ class TestCreateItemRequest:
             "title": "Alquilar bicicleta",
             "description": "Busco bici por 3 días",
             "category": ItemCategory.SPORTS,
+            "subcategory": ItemSubcategory.CYCLING,
             "cancel_type": CancelType.FLEXIBLE,
             "price_category": PriceCategory.DAY,
             "price": "10.00",
+            "deposit": "20.00",
             "user": user.id
         }
 
         response = client.post(url, data, format="json")
+        print(response.data)
 
         assert response.status_code == 201
         assert response.data["item_request"]["title"] == "Alquilar bicicleta"
         assert response.data["item_request"]["approved"] is False
+
+    def test_create_item_request_valid_deposit(self, user):
+        client = APIClient()
+        url = reverse("create_item_request")
+
+        data = {
+            "title": "Alquilar taladro",
+            "description": "Necesito un taladro para el fin de semana",
+            "category": ItemCategory.DIY,
+            "subcategory": ItemSubcategory.ELECTRIC_TOOLS,
+            "cancel_type": CancelType.FLEXIBLE,
+            "price_category": PriceCategory.DAY,
+            "price": "15.00",
+            "deposit": "50.00",
+            "user": user.id
+        }
+
+        response = client.post(url, data, format="json")
+        print(response.data)
+
+        assert response.status_code == 201
+        assert Decimal(response.data["item_request"]
+                       ["deposit"]) == Decimal("50.00")
 
     # ❌ CASOS NEGATIVOS
     def test_create_item_request_missing_title(self, user):
@@ -55,9 +83,11 @@ class TestCreateItemRequest:
         data = {
             "description": "Falta título",
             "category": ItemCategory.SPORTS,
+            "subcategory": ItemSubcategory.GYM,
             "cancel_type": CancelType.FLEXIBLE,
             "price_category": PriceCategory.DAY,
             "price": "20.00",
+            "deposit": "20.00",
             "user": user.id
         }
 
@@ -74,9 +104,11 @@ class TestCreateItemRequest:
             "title": "Objeto con precio negativo",
             "description": "Esto debería fallar",
             "category": ItemCategory.TECHNOLOGY,
+            "subcategory": ItemSubcategory.COMPUTERS,
             "cancel_type": CancelType.MEDIUM,
             "price_category": PriceCategory.DAY,
             "price": "-5.00",
+            "deposit": "20.00",
             "user": user.id
         }
 
@@ -93,9 +125,11 @@ class TestCreateItemRequest:
             "title": "Usuario no válido",
             "description": "Usuario que no existe",
             "category": ItemCategory.ENTERTAINMENT,
+            "subcategory": ItemSubcategory.BOARD_GAMES,
             "cancel_type": CancelType.STRICT,
             "price_category": PriceCategory.DAY,
             "price": "30.00",
+            "deposit": "20.00",
             "user": 9999
         }
 
@@ -112,13 +146,16 @@ class TestCreateItemRequest:
             "title": "<script>alert('XSS')</script>",
             "description": "Intento de inyección",
             "category": ItemCategory.DIY,
+            "subcategory": ItemSubcategory.MANUAL_TOOLS,
             "cancel_type": CancelType.MEDIUM,
             "price_category": PriceCategory.DAY,
             "price": "50.00",
+            "deposit": "20.00",
             "user": user.id
         }
 
         response = client.post(url, data, format="json")
+        print(response.data)
 
         assert response.status_code == 201
         assert "<script>" in response.data["item_request"]["title"]
@@ -131,13 +168,16 @@ class TestCreateItemRequest:
             "title": "'; DROP TABLE objetos_itemrequest; --",
             "description": "Intento SQL",
             "category": ItemCategory.CLOTHING,
+            "subcategory": ItemSubcategory.DRESSES,
             "cancel_type": CancelType.STRICT,
             "price_category": PriceCategory.DAY,
             "price": "70.00",
+            "deposit": "20.00",
             "user": user.id
         }
 
         response = client.post(url, data, format="json")
+        print(response.data)
 
         assert response.status_code == 201
         assert "DROP TABLE" in response.data["item_request"]["title"]
@@ -150,9 +190,11 @@ class TestCreateItemRequest:
             "title": "Precio extremo",
             "description": "Precio fuera de rango",
             "category": ItemCategory.FURNITURE_AND_LOGISTICS,
+            "subcategory": ItemSubcategory.HOME_FURNITURE,
             "cancel_type": CancelType.FLEXIBLE,
             "price_category": PriceCategory.DAY,
             "price": "999999999",
+            "deposit": "20.00",
             "user": user.id
         }
 

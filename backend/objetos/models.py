@@ -4,6 +4,7 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.core.validators import MaxValueValidator, DecimalValidator
 from django.core.exceptions import ValidationError
+from django.db.models import F
 
 
 class ItemCategory(models.TextChoices):
@@ -32,7 +33,7 @@ class ItemSubcategory(models.TextChoices):
     PRINTERS_SCANNERS = ('printers_scanners', 'Impresoras y escáneres')
     DRONES = ('drones', 'Drones')
     PROJECTORS = ('projectors', 'Proyectores')
-    TECHNOLOGY__OTHERS = ('technology__others', 'Otros (Tecnología)')
+    TECHNOLOGY__OTHERS = ('technology_others', 'Otros (Tecnología)')
 
     # SPORTS
     CYCLING = ('cycling', 'Ciclismo')
@@ -150,10 +151,18 @@ class Item(models.Model):
                                   mayor a 99,999,999.99."),
             DecimalValidator(max_digits=10, decimal_places=2)
         ])
+    deposit = models.DecimalField(max_digits=10, decimal_places=2, validators=[
+            MinValueValidator(0.01, message="El precio debe ser mayor a 0."),
+            MaxValueValidator(99999999.99,
+                              message="El precio no puede ser \
+                                  mayor a 99,999,999.99."),
+            DecimalValidator(max_digits=10, decimal_places=2)
+        ])
     user = models.ForeignKey('usuarios.User', related_name='items',
                              on_delete=models.CASCADE)
     draft_mode = models.BooleanField(default=False)
     featured = models.BooleanField(default=False)
+    num_likes = models.IntegerField(default=0)
 
     def publish(self):
         if (
@@ -168,8 +177,36 @@ class Item(models.Model):
                 "No puedes tener más de 10 ítems publicados con el plan Free."
             )
 
+        # 🚨 Restricción 2: debe tener al menos una imagen
+        if self.images.count() == 0:
+            raise ValidationError(
+                "Debes subir al menos una imagen para publicar el ítem."
+            )
+
         self.draft_mode = False
         self.save()
+
+    def like(self, user):
+        liked, created = LikedItem.objects.get_or_create(user=user, item=self)
+        if created:
+            Item.objects.filter(id=self.id).update(
+                            num_likes=F('num_likes') + 1)
+        return created
+
+    def dislike(self, user):
+        deleted, _ = LikedItem.objects.filter(user=user, item=self).delete()
+        if deleted:
+            Item.objects.filter(id=self.id).update(
+                            num_likes=F('num_likes') - 1)
+        return bool(deleted)
+
+
+class LikedItem(models.Model):
+    id = models.AutoField(primary_key=True)
+    item = models.ForeignKey(
+        Item, related_name='liked_items', on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        'usuarios.User', related_name='liked_items', on_delete=models.CASCADE)
 
 
 class UnavailablePeriod(models.Model):
@@ -223,6 +260,22 @@ class ItemRequest(models.Model):
         )
     created_at = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
+    deposit = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0.00,
+        validators=[
+            MinValueValidator(
+                Decimal("0.01"),
+                message="El precio debe ser mayor a 0."
+            ),
+            MaxValueValidator(
+                Decimal("99999999.99"),
+                message="El precio no puede ser mayor a 99,999,999.99."
+            ),
+            DecimalValidator(max_digits=10, decimal_places=2)
+        ]
+    )
 
     def approve(self):
         """Método para aprobar la solicitud y crear un Item"""
@@ -234,6 +287,7 @@ class ItemRequest(models.Model):
             cancel_type=self.cancel_type,
             price_category=self.price_category,
             price=self.price,
+            deposit=self.deposit,
             user=self.user,
             draft_mode=True
         )

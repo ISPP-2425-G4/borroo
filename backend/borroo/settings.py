@@ -13,7 +13,26 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os
-from dotenv import load_dotenv  # type: ignore
+from dotenv import load_dotenv
+import sys
+
+if 'test' in sys.argv:
+    # Para tests: canal en memoria (no requiere Redis)
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels.layers.InMemoryChannelLayer",
+        }
+    }
+else:
+    # Para desarrollo o producción: usa Redis
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {
+                "hosts": [("127.0.0.1", 6379)],
+            },
+        }
+    }
 
 
 dotenv_file = ".env"
@@ -33,7 +52,8 @@ SECRET_KEY = ('django-insecure-lwit61b*3n^2z!*$&7p=7+jp&c%edbvcn0=!)zvj@'
 DEBUG = True
 
 ALLOWED_HOSTS = ['backend-dot-ispp-2425-g4.ew.r.appspot.com', 'localhost',
-                 'backend-s2-dot-ispp-2425-g4.ew.r.appspot.com', '127.0.0.1']
+                 'backend-s2-dot-ispp-2425-g4.ew.r.appspot.com',
+                 'backend-s3-dot-ispp-2425-g4.ew.r.appspot.com', '127.0.0.1']
 
 
 STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
@@ -55,6 +75,8 @@ INSTALLED_APPS = [
     'objetos',
     'rentas',
     'pagos',
+    'chats',
+    'tickets',
     'django_extensions',
 ]
 
@@ -95,6 +117,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "https://frontend-dot-ispp-2425-g4.ew.r.appspot.com",
     "https://frontend-s2-dot-ispp-2425-g4.ew.r.appspot.com",
+    "https://frontend-s3-dot-ispp-2425-g4.ew.r.appspot.com",
     "http://localhost:5173",
 ]
 
@@ -143,6 +166,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'borroo.wsgi.application'
 
+ASGI_APPLICATION = "borroo.asgi.application"
+
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -155,6 +180,7 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
+        'CONN_MAX_AGE': 10,
     }
 }
 

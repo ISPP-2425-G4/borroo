@@ -8,16 +8,19 @@ from rest_framework.exceptions import NotAuthenticated, PermissionDenied
 from rest_framework.exceptions import NotFound
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 from datetime import timedelta
 from django.contrib.auth.models import AnonymousUser
 from django.db.models import Q
+import os
+
+SCHEDULER_TOKEN = os.getenv("SCHEDULER_TOKEN")
 
 
 def is_authorized(condition=True, authenticated=True):
     if not authenticated:
         raise NotAuthenticated(
-            {'error': 'Debes iniciar sesión.'}, status=401)
+            {'error': 'Debes iniciar sesión.'})
     elif not condition:
         raise PermissionDenied(
             {'error': 'No tienes permisos para realizar esta acción.'})
@@ -30,12 +33,13 @@ def apply_penalty(rent):
 
 
 def apply_refund(cancel_type, days_diff):
-    thresholds = {
-        'flexible': [(2, Decimal("1.00")), (1, Decimal("0.50"))],
-        'medium': [(7, Decimal("1.00")), (3, Decimal("0.50"))],
-        'strict': [(30, Decimal("1.00")), (14, Decimal("0.50"))],
+    minimum_days = {
+        # 1.00 = 100%
+        'flexible': [(1, Decimal("1.00")), (0, Decimal("0.80"))],
+        'medium': [(2, Decimal("1.00")), (1, Decimal("0.50"))],
+        'strict': [(7, Decimal("0.50"))],
     }
-    for threshold, refund in thresholds.get(cancel_type, []):
+    for threshold, refund in minimum_days.get(cancel_type, []):
         if days_diff >= threshold:
             return refund
     return Decimal("0.00")
@@ -79,23 +83,64 @@ class RentViewSet(viewsets.ModelViewSet):
         end_date = request.data.get('end_date')
 
         user_id = request.data.get('renter')
-        user = get_object_or_404(User, pk=user_id)
 
+        user = get_object_or_404(User, pk=user_id)
         item = get_object_or_404(Item, pk=item_id)
+
+        if not user.is_profile_completed():
+            return Response(
+                {
+                    "error": (
+                        "No puedes alquilar un objeto sin completar tu perfil,"
+                        " revisa que tu perfil esté completo y estés "
+                        "identificado"
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        # Verificar campos obligatorios
+        if not all([item_id, start_date, end_date, user_id]):
+            return Response(
+                {'error': 'Faltan campos obligatorios.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         not_rent_yourself = user != item.user
         is_authorized(condition=not_rent_yourself)
 
-        # Solo permitir si no hay ninguna renta activa
-        overlapping_rents = Rent.objects.filter(
+        # Bloquear si hay rentas en estado que implica que ya está reservado
+        conflicting_rents = Rent.objects.filter(
             item=item,
             start_date__lte=end_date,
-            end_date__gte=start_date
-        ).exclude(rent_status=RentStatus.CANCELLED)
-
-        if overlapping_rents.exists():
+            end_date__gte=start_date,
+            rent_status__in=[
+                RentStatus.ACCEPTED,
+                RentStatus.BOOKED,
+                RentStatus.PICKED_UP
+            ]
+        )
+        if conflicting_rents.exists():
             return Response(
                 {'error': 'El objeto no está disponible en esas fechas'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Validar que no tenga una REQUESTED propia en fechas solapadas
+        already_requested = Rent.objects.filter(
+            item=item,
+            renter=user,
+            rent_status=RentStatus.REQUESTED,
+            start_date__lte=end_date,
+            end_date__gte=start_date
+        )
+        if already_requested.exists():
+            return Response(
+                {
+                    'error': (
+                        'Ya tienes una solicitud pendiente para este objeto '
+                        'en esas fechas'
+                    )
+                },
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -108,7 +153,6 @@ class RentViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['put'])
     def respond_request(self, request, pk=None):
         rent_id = request.data.get('rent')
-        rent = get_object_or_404(Rent, pk=rent_id)
         response = request.data.get("response")
         user_id = request.data.get('user_id')
 
@@ -120,7 +164,7 @@ class RentViewSet(viewsets.ModelViewSet):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
-
+        rent = get_object_or_404(Rent, pk=rent_id)
         user = get_object_or_404(User, pk=user_id)
 
         # Validación de permisos
@@ -146,12 +190,22 @@ class RentViewSet(viewsets.ModelViewSet):
         if response == "accepted":
             rent.rent_status = RentStatus.ACCEPTED
             rent.save()
-            return Response(
-                {
-                    'status': 'Solicitud aceptada. '
-                              'El vendedor ha aceptado la solicitud.'
-                }
-            )
+
+            # Cancelar otras solicitudes REQUESTED solapadas
+            overlapping_requests = Rent.objects.filter(
+                item=rent.item,
+                rent_status=RentStatus.REQUESTED,
+                start_date__lt=rent.end_date,
+                end_date__gt=rent.start_date
+            ).exclude(pk=rent.pk)
+
+            overlapping_requests.update(rent_status=RentStatus.CANCELLED)
+
+            return Response({
+                'status': (
+                    'Solicitud aceptada. Solicitudes solapadas canceladas.'
+                )
+            })
 
         elif response == "rejected":
             rent.rent_status = RentStatus.CANCELLED
@@ -178,8 +232,8 @@ class RentViewSet(viewsets.ModelViewSet):
         is_owner = (user == rent.item.user)
 
         if rent.rent_status == RentStatus.CANCELLED:
-            raise PermissionDenied({"error": "El alquiler está cancelado y "
-                                    "no se puede modificar."})
+            raise PermissionDenied(
+                {"error": "Alquiler cancelado. No se puede modificar."})
 
         if (rent.rent_status == RentStatus.ACCEPTED
                 and rent.payment_status == PaymentStatus.PAID):
@@ -235,33 +289,76 @@ class RentViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['put'])
     def cancel_rent(self, request, pk=None):
-        # hay que cambiar user
-        user = request.user if not AnonymousUser else None
-        authenticated = request.user.is_authenticated
+        user = request.user if not isinstance(
+            request.user, AnonymousUser) else None
+        if not request.user.is_authenticated:
+            raise NotAuthenticated({'error': 'Debes iniciar sesión.'})
+
+        rent = get_object_or_404(Rent, pk=pk)
+        owner = rent.item.user
+
+        if not (user == rent.renter or user == owner):
+            raise PermissionDenied({'error': 'No tienes permisos para '
+                                    'cancelar este alquiler.'})
+
         now = timezone.now()
-        rent = self.get_object()
-        renter = rent.renter
-        permission = renter == user
-        is_authorized(condition=permission, authenticated=authenticated)
 
         if rent.rent_status in [RentStatus.REQUESTED, RentStatus.ACCEPTED]:
             rent.rent_status = RentStatus.CANCELLED
             rent.save()
             return Response({'status': 'Alquiler cancelado exitosamente'})
+
         elif rent.rent_status == RentStatus.BOOKED:
-            days_diff = (rent.start_date.date() - now.date()).days
-            cancel_type = rent.item.cancel_type
-            refund_percentage = apply_refund(cancel_type, days_diff)
-            refund_amount = Decimal(str(rent.total_price)) * refund_percentage
-            rent.rent_status = RentStatus.CANCELLED
-            rent.save()
-            return Response({
-                'status': 'Alquiler cancelado exitosamente en estado BOOKED',
-                'refund_percentage': str(refund_percentage),
-                'refund_amount': str(refund_amount)})
+
+            if user == owner:
+                refund_amount = Decimal(str(rent.total_price))
+                rent.rent_status = RentStatus.CANCELLED
+                rent.save()
+
+                rent.renter.saldo += refund_amount
+                rent.renter.save()
+                print(f'User saldo: {user.saldo}')
+
+                return Response({
+                    'status': 'Alquiler cancelado correctamente',
+                    'refund_percentage': "1.00",
+                    'refund_amount': str(refund_amount),
+                    'notification_message': 'El propietario ha cancelado el alquiler. Se le devolverá el 100% del importe.',  # noqa: E501
+                    'cancelled_by': 'owner'
+                })
+
+            elif user == rent.renter:
+                days_diff = (rent.start_date.date() - now.date()).days
+                cancel_type = rent.item.cancel_type
+                refund_percentage = apply_refund(cancel_type, days_diff)
+                refund_amount = Decimal(
+                    str(rent.total_price)) * refund_percentage
+                refund_amount_rounded = refund_amount.quantize(
+                                         Decimal('0.01'),
+                                         rounding=ROUND_HALF_UP)
+                rent.rent_status = RentStatus.CANCELLED
+                rent.save()
+
+                refund_str = format(refund_amount_rounded, '.2f').replace('.',
+                                                                          ',')
+                if refund_amount > Decimal("0.00"):
+                    user.saldo += refund_amount
+                    user.save()
+                    message = f"Has cancelado el alquiler. Se te reembolsará {refund_str} € en los próximos 4-5 días laborales."  # noqa: E501
+                else:
+                    message = "Has cancelado el alquiler. No procede reembolso"
+                return Response({
+                    'status': 'Alquiler cancelado exitosamente',
+                    'refund_percentage': str(refund_percentage),
+                    'refund_amount': str(refund_amount),
+                    'notification_message': message,
+                    'cancelled_by': 'renter'
+                })
+
         else:
-            raise Response(
-                {'error': 'No se puede cancelar un alquiler en este estado'})
+            return Response(
+                {'error': 'No se puede cancelar un alquiler en este estado'},
+                status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, *args, **kwargs):
         rent = self.get_object()
@@ -275,8 +372,7 @@ class RentViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'])
     def rental_requests(self, request):
         user_id = request.query_params.get("user")
-        rental_requests = Rent.objects.filter(item__user=user_id,
-                                              rent_status=RentStatus.REQUESTED)
+        rental_requests = Rent.objects.filter(item__user=user_id)
         serializer = RentSerializer(rental_requests, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -288,3 +384,74 @@ class RentViewSet(viewsets.ModelViewSet):
             )
         serializer = RentSerializer(my_requests, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['get'], url_path='has-rented-from')
+    def has_rented_from(self, request):
+        renter_username = request.query_params.get("renter")
+        owner_username = request.query_params.get("owner")
+
+        if not renter_username or not owner_username:
+            return Response(
+                {"error":
+                    "Faltan parámetros: 'renter' y 'owner' son requeridos."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        has_rented = Rent.objects.filter(
+            renter__username=renter_username,
+            item__user__username=owner_username,
+            paid_pending_confirmation__is_confirmed_by_renter=None
+        ).filter(
+            Q(rent_status__in=[
+                RentStatus.BOOKED,
+                RentStatus.PICKED_UP,
+                RentStatus.RETURNED
+            ]) | Q(rent_status=RentStatus.ACCEPTED,
+                   payment_status=PaymentStatus.PAID)
+        ).exists()
+
+        return Response({"has_rented": has_rented})
+
+    @action(detail=False, methods=['get'], url_path='closed-requests')
+    def closed_requests(self, request):
+        user_id = request.query_params.get("user")
+
+        if not user_id:
+            return Response(
+                {"error": "El parámetro 'user' es requerido."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        closed_rents = Rent.objects.filter(
+            Q(paid_pending_confirmation__is_confirmed_by_renter=True) & (
+                Q(item__user_id=user_id) | Q(renter_id=user_id)
+            )
+        )
+
+        serializer = RentSerializer(closed_rents, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['post'], url_path='cancel-expired-rents')
+    def cancel_expired_rents(self, request):
+        token = request.data.get('token')
+        if token != SCHEDULER_TOKEN:
+            return Response(
+                {"error": "Token inválido."},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        current_time = timezone.now()
+
+        expired_rents = Rent.objects.filter(
+            start_date__lt=current_time,
+            rent_status=RentStatus.REQUESTED
+        )
+
+        updated_count = expired_rents.update(rent_status=RentStatus.CANCELLED)
+
+        return Response({
+            "message": (
+                f"Se han cancelado {updated_count} rentas expiradas en "
+                "estado REQUESTED."
+            )
+        }, status=status.HTTP_200_OK)

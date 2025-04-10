@@ -32,6 +32,7 @@ const UserList = ({ users, handleEditUser, handleDeleteUser, editUserData, setEd
                             <TableCell><strong>Username</strong></TableCell>
                             <TableCell><strong>Nombre</strong></TableCell>
                             <TableCell><strong>Apellidos</strong></TableCell>
+                            <TableCell><strong>DNI / NIF</strong></TableCell>
                             <TableCell><strong>Email</strong></TableCell>
                             <TableCell><strong>Teléfono</strong></TableCell>
                             <TableCell><strong>Ciudad</strong></TableCell>
@@ -52,6 +53,7 @@ const UserList = ({ users, handleEditUser, handleDeleteUser, editUserData, setEd
                                     <TableCell>{user.username}</TableCell>
                                     <TableCell>{user.name}</TableCell>
                                     <TableCell>{user.surname}</TableCell>
+                                    <TableCell>{user.dni}</TableCell>
                                     <TableCell>{user.email}</TableCell>
                                     <TableCell>{user.phone_number}</TableCell>
                                     <TableCell>{user.city}</TableCell>
@@ -80,7 +82,7 @@ const UserList = ({ users, handleEditUser, handleDeleteUser, editUserData, setEd
                     <DialogTitle>Editar Usuario</DialogTitle>
                     <DialogContent>
                         <Grid container spacing={2}>
-                            {["name", "surname", "email", "phone_number", "city", "country", "address", "postal_code"]
+                            {["name", "surname", "email", "phone_number", "city", "country", "address", "postal_code", "dni"]
                                 .map((field) => (
                                     <Grid item xs={12} sm={6} key={field}>
                                         <TextField
@@ -133,7 +135,8 @@ const AdminDashboard = () => {
         city: "",
         country: "",
         address: "",
-        postal_code: ""
+        postal_code: "",
+        dni: "",
     });
     const [users, setUsers] = useState([]);
     const [editUserData, setEditUserData] = useState(null);
@@ -148,8 +151,19 @@ const AdminDashboard = () => {
         }
     }, []);
 
+    const validateDni = (dni) => {
+        const dniPattern = /^\d{8}[A-Z]$/;
+        const nifPattern = /^[A-Z]\d{7}[A-Z0-9]$/;
+        return dniPattern.test(dni) || nifPattern.test(dni);
+    };
+
     const handleCreateUser = async () => {
         const token = localStorage.getItem("access_token");
+
+        if (formData.dni && !validateDni(formData.dni)) {
+            alert("El DNI/NIF no tiene un formato válido.");
+            return;
+        }
 
         try {
             await axios.post(
@@ -175,7 +189,10 @@ const AdminDashboard = () => {
                 country: "",
                 address: "",
                 postal_code: "",
+                dni: "",
             });
+
+            
             fetchUsers();
         } catch (error) {
             const errorMsg = error.response?.data?.error || "Error al crear usuario";
@@ -219,15 +236,28 @@ const AdminDashboard = () => {
     };
 
     const handleEditUser = (user) => {
-        setEditUserData({ ...user });
+        setEditUserData({ ...user, originalDni: user.dni });
     };
 
     const handleUpdateUser = async () => {
         const token = localStorage.getItem("access_token");
+
+        if (editUserData.dni && !validateDni(editUserData.dni)) {
+            alert("El DNI/NIF no tiene un formato válido.");
+            setEditUserData((prev) => ({
+                ...prev,
+                dni: prev.originalDni || "",
+            }));
+            return;
+        }
+
+        const dataToSend = { ...editUserData };
+        delete dataToSend.originalDni;
+
         try {
             await axios.put(
                 `${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/users/update/${editUserData.id}/`,
-                editUserData,
+                dataToSend,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -245,10 +275,22 @@ const AdminDashboard = () => {
     return (
         <>
             <Navbar />
-            <Box sx={{ px: 4, py: 4 }} className="dashboard">
+            <Box sx={{ px: 4, py: 4, pt:10 }} className="dashboard">
+                <Box 
+                    component= "img"
+                    src= "/logo.png"
+                    alt="Logo de la App"
+                    sx={{
+                        display: "block",
+                        margin: "0 auto",
+                        maxWidth: 150,
+                        height: "auto",
+                        mb: 2,
+                    }}
+                    />
                 {/* TÍTULO PRINCIPAL */}
                 <Typography variant="h4" sx={{ fontWeight: "bold", mb: 3, textAlign: "center" }}>
-                    Panel de Administración de Usuarios
+                    Panel de Administración
                 </Typography>
 
                 {/* BOTONES PRINCIPALES */}
@@ -262,17 +304,6 @@ const AdminDashboard = () => {
                     }}
                 >
                     <Button
-                        variant="contained"
-                        onClick={() => {
-                            setShowCreate(true);
-                            setShowUsers(false);
-                            setShowItems(false);
-                            setShowRents(false);
-                        }}
-                    >
-                        Crear Usuario
-                    </Button>
-                    <Button
                         variant="outlined"
                         onClick={() => {
                             setShowCreate(false);
@@ -282,7 +313,7 @@ const AdminDashboard = () => {
                             fetchUsers();
                         }}
                     >
-                        Ver Usuarios
+                        GESTIÓN DE USUARIOS
                     </Button>
                     <Button
                         variant="outlined"
@@ -346,6 +377,7 @@ const AdminDashboard = () => {
                                 "country",
                                 "address",
                                 "postal_code",
+                                "dni",
                             ].map((field) => (
                                 <Grid item xs={12} sm={6} key={field}>
                                     <TextField
@@ -381,14 +413,27 @@ const AdminDashboard = () => {
 
                 {/* LISTA DE USUARIOS */}
                 {showUsers && (
-                    <UserList
-                        users={users}
-                        handleEditUser={handleEditUser}
-                        handleDeleteUser={handleDeleteUser}
-                        editUserData={editUserData}
-                        setEditUserData={setEditUserData}
-                        handleUpdateUser={handleUpdateUser}
-                    />
+                    <>
+                        <Box sx={{ textAlign: "center", mb: 2 }}>
+                            <Button
+                                variant="contained"
+                                onClick={() => {
+                                    setShowCreate(true);
+                                }}
+                            >
+                                Crear Usuario
+                            </Button>
+                        </Box>
+
+                        <UserList
+                            users={users}
+                            handleEditUser={handleEditUser}
+                            handleDeleteUser={handleDeleteUser}
+                            editUserData={editUserData}
+                            setEditUserData={setEditUserData}
+                            handleUpdateUser={handleUpdateUser}
+                        />
+                    </>
                 )}
                 {/* DASHBOARD DE ÍTEMS */}
                 {showItems && <AdminItemDashboard />}

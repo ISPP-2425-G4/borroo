@@ -9,6 +9,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 9999;
   }
   
   .modal-content {
@@ -52,4 +53,23 @@
   .confirm-btn:hover {
     background-color: #218838;
   }
+
+  .primary-btn {
+    background-color: #007bff; /* Azul */
+    color: white;
+  }
+  
+  .primary-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .secondary-btn {
+    background-color: #6c757d; /* Gris */
+    color: white;
+  }
+  
+  .secondary-btn:hover {
+    background-color: #5a6268;
+  }
+  
   

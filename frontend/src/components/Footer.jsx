@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="footer-section">
           <h3>Enlaces</h3>
           <ul>
-            <li><Link to="/">Landing Page</Link></li>
+            <li><Link to="https://sites.google.com/view/borroo?usp=sharing">Landing Page</Link></li>
             <li><a href="https://github.com/ISPP-2425-G4/borroo" target="_blank" rel="noopener noreferrer">Repositorio en GitHub</a></li>
             <li><Link to="/faq">Preguntas Frecuentes</Link></li>
           </ul>
@@ -19,10 +19,12 @@ const Footer = () => {
 
         {/* Enlaces legales */}
         <div className="footer-section">
-          <h3>Enlaces Legales</h3>
+          <h3>Legal</h3>
           <ul>
-            <li><a href="/politica-privacidad" target="_blank" rel="noopener noreferrer">Política de Privacidad</a></li>
-            <li><a href="/terminos-servicio" target="_blank" rel="noopener noreferrer">Términos de Servicio</a></li>
+            <li><a href="/privacy-policy">Política de Privacidad</a></li>
+            <li><a href="/terms-and-conditions">Términos de Servicio</a></li>
+            <li><a href="/sla">Acuerdo de Nivel de Servicio (SLA)</a></li>
+            <li><a href="/licenses">Información de Licencias</a></li>
           </ul>
         </div>
 
@@ -31,20 +33,16 @@ const Footer = () => {
           <h3>Contacto</h3>
           <p>Email: borroohelp@gmail.com</p>
         </div>
-
-        {/* Redes Sociales */}
-        <div className="footer-section">
-          <h3>Redes Sociales</h3>
-          <div className="social-links">
-            <a href="https://facebook.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
-            <a href="https://x.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaXTwitter /></a>
-            <a href="https://instagram.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
-            <a href="https://linkedin.com/company/BorrooApp" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
-            <a href="https://youtube.com/c/BorrooApp" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
-          </div>
-        </div>
-        
       </div>
+
+      {/* Redes Sociales */}
+        <div className="social-links">
+          <a href="https://facebook.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
+          <a href="https://x.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaXTwitter /></a>
+          <a href="https://instagram.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
+          <a href="https://linkedin.com/company/BorrooApp" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
+          <a href="https://youtube.com/c/BorrooApp" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
+        </div>
 
       {/* Footer Inferior */}
       <div className="footer-bottom">

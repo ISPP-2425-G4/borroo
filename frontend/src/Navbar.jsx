@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiUser, FiHeart, FiShoppingCart, FiMenu } from "react-icons/fi";
+import { FiUser, FiMenu, FiMessageSquare } from "react-icons/fi";
 import ArticleIcon from '@mui/icons-material/Article';
 import {
   AppBar,
@@ -29,9 +29,11 @@ const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [loginAnchorEl, setLoginAnchorEl] = useState(null);
+  const [saldo, setSaldo] = useState(null);
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [unreadMessagesCount, setUnreadMessagesCount] = useState(0);
 
   const handleLoginClick = (event) => {
     setLoginAnchorEl(event.currentTarget);
@@ -40,6 +42,8 @@ const Navbar = () => {
   const handleLoginClose = () => {
     setLoginAnchorEl(null);
   };
+
+  
 
   const handleLogout = async () => {
     try {
@@ -57,17 +61,71 @@ const Navbar = () => {
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       setUser(null);
+      setSaldo(null);
       handleLoginClose();
       navigate('/');
+      window.location.reload();
     }
   };
 
+  const obtenerSaldoUsuario = async (userId, accessToken) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${userId}/get_saldo/`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      setSaldo(response.data.saldo);
+    } catch (error) {
+      console.error("Error al obtener el saldo del usuario:", error);
+    }
+  };
+
+    // Función para obtener el número de mensajes no leídos
+    const getUnreadMessages = useCallback(async () => {
+        try {
+          const response = await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/chats/get_my_chats/`,
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+              },
+            }
+          );
+          const chats = response.data;
+          const totalUnread = chats.reduce((acc, chat) => acc + chat.unreadCount, 0);
+          setUnreadMessagesCount(totalUnread);
+        } catch (error) {
+          console.error("Error al obtener los mensajes no leídos:", error);
+        }
+    }, []);
+    
+
+
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
+    const accessToken = localStorage.getItem('access_token');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+      if (accessToken) {
+        obtenerSaldoUsuario(parsedUser.id, accessToken);
+        // Llamar a la función de obtener mensajes no leídos al cargar el componente
+        getUnreadMessages();
+
+        const interval = setInterval(() => {
+          getUnreadMessages();
+        }, 5000); // Cada 5 segundos
+  
+        // Limpiar el intervalo cuando el componente se desmonte
+        return () => clearInterval(interval);
+      
+      }
     }
-  }, []);
+  }, [getUnreadMessages]);
 
   const navItems = [
     { title: "Inicio", path: "/" },
@@ -88,20 +146,23 @@ const Navbar = () => {
     <AppBar position="fixed" sx={{ backgroundColor: "#2563eb" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ minHeight: "64px", justifyContent: "space-between" }}>
-          <Typography
-            variant="h6"
+          <Box
             component={Link}
             to="/"
             sx={{
+              display: "flex",
+              alignItems: "center",
               textDecoration: "none",
               color: "white",
-              fontWeight: "bold",
-              letterSpacing: "0.5px",
-              flexGrow: { xs: 1, md: 0 }
+              fontWeight: "bold"
             }}
           >
-            BORROO
-          </Typography>
+            <img src="/logo.png" alt="Logo" style={{ height: 40, marginRight: 8 }} />
+            <Typography variant="h6" sx={{ letterSpacing: "0.5px" }} fontWeight="bold">
+              BORROO
+            </Typography>
+          </Box>
+
 
           {isMobile && (
             <IconButton
@@ -163,6 +224,11 @@ const Navbar = () => {
                         sx={{ width: 16, height: 16 }}
                       />
                     )}
+                    {saldo !== null && (
+                      <Typography variant="body2" sx={{ ml: 1 }}>
+                        Saldo: {parseFloat(saldo).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+                      </Typography>
+                    )}
                   </Box>
                 }
                 variant="outlined"
@@ -191,16 +257,25 @@ const Navbar = () => {
                 vertical: "top",
                 horizontal: "right",
               }}
+              disableScrollLock={true} 
             >
               {user ? (
                 <>
                   <MenuItem onClick={() => { handleLoginClose(); navigate(`/perfil/${encodeURIComponent(user.username)}`); }}>
                     Mi Perfil
                   </MenuItem>
-                  {user.username === "admin" && (
-                    <MenuItem onClick={() => { handleLoginClose(); navigate('/dashboard'); }}>
-                      Dashboard
-                    </MenuItem>
+                  {user.is_admin && (
+                    <>
+                      <MenuItem onClick={() => { handleLoginClose(); navigate('/dashboard'); }}>
+                        Dashboard
+                      </MenuItem>
+                      <MenuItem onClick={() => { navigate('/reports-dashboard'); }}>
+                        Gestionar reportes
+                      </MenuItem>
+                      {/*<MenuItem onClick={() => { navigate('/tickets-dashboard'); }}>
+                        Gestionar incidencias
+                      </MenuItem>*/}
+                    </>
                   )}
                   <MenuItem onClick={handleLogout}>
                     Cerrar sesión
@@ -218,26 +293,20 @@ const Navbar = () => {
               )}
             </Menu>
 
-            <Tooltip title="Favoritos">
-              <IconButton color="inherit">
-                <Badge badgeContent={0} color="error">
-                  <FiHeart />
-                </Badge>
-              </IconButton>
-            </Tooltip>
+            {user && (
+              <Tooltip title="Mensajes">
+                <IconButton color="inherit" component={Link} to="/messages">
+                  <Badge badgeContent={unreadMessagesCount} color="error">
+                    <FiMessageSquare />
+                  </Badge>
+                </IconButton>
+              </Tooltip>
+            )}
 
             <Tooltip title="Borradores">
               <IconButton color="inherit" component={Link} to="/drafts">
                 <Badge badgeContent={0} color="error">
                   <ArticleIcon />
-                </Badge>
-              </IconButton>
-            </Tooltip>
-
-            <Tooltip title="Carrito">
-              <IconButton color="inherit">
-                <Badge badgeContent={0} color="error">
-                  <FiShoppingCart />
                 </Badge>
               </IconButton>
             </Tooltip>

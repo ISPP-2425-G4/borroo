@@ -58,11 +58,6 @@ const SubscriptionScreen = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("access_token");
 
-  const planLabels = {
-    free: "Gratis",
-    premium: "Premium",
-  };
-
 
   useEffect(() => {
     if (user) {
@@ -76,118 +71,143 @@ const SubscriptionScreen = () => {
     const checkPayment = async () => {
       const params = new URLSearchParams(location.search);
       const sessionId = params.get("session_id");
-      if (sessionId) {
-        try{
-          const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/pagos/confirm-subscription/${sessionId}/`)
-          if(response.data.status === "success"){
-              window.history.replaceState({}, "", "/pricing-plan");
-              setNotification({
-                open: true,
-                message: "¡Pago completado con éxito!",
-                severity: "success"
-              });
-
-              setTimeout(() => {
-                setNotification({ ...notification, open: false });
-              }
-              , 5000);
-              setCurrentPlan('premium');
-
+    
+      if (!sessionId) return;
+    
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/pagos/confirm-subscription/${sessionId}/`
+        );
+    
+        if (response.data.status === "success") {
+          // ✅ Limpia la URL del session_id
+          window.history.replaceState({}, "", "/pricing-plan");
+    
+          // 🔁 Actualiza el usuario desde el backend
+          const userResponse = await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${user.id}/`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }
-            checkPlan();
+          );
+    
+          const updatedUser = userResponse.data;
+          localStorage.setItem("user", JSON.stringify(updatedUser));
+          setCurrentPlan(updatedUser.pricing_plan);
+    
+          // ✅ Solo si el usuario sigue siendo FREE, haz el upgrade
+          if (updatedUser.pricing_plan === "free") {
+            await axios.post(
+              `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${user.id}/upgrade_to_premium/`,
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
+                },
+              }
+            );
           }
-         catch (err) {
-            console.error("Error al confirmar el pago:", err);
-            setNotification({
-              open: true,
-              message: "Hubo un error al confirmar el pago",
-              severity: "error"
+        
+          // 🔁 Recarga la página para refrescar Navbar y demás
+
+    
+          setNotification({
+            open: true,
+            message: "¡Pago confirmado y suscripción gestionada!",
+            severity: "success",
           });
-          setTimeout(() => 
-            setNotification(null), 5000);
-          }
+    
+          setTimeout(() => {
+            setNotification({ ...notification, open: false });
+          }, 5000);
         }
-      };
+      } catch (err) {
+        console.error("Error al confirmar el pago:", err);
+        if (err.response) {
+          console.error("Mensaje del backend:", err.response.data);
+        }
+        setNotification({
+          open: true,
+          message: "Hubo un error al confirmar el pago.",
+          severity: "error",
+        });
+      }
+    };
+    
+    
+    
       checkPayment();
       
     }, [location.search]);
 
-  const handlePlanChange = async (targetPlan) => {
-    if (!user || currentPlan === targetPlan) return;
-    setLoading(true);
-    try {
-      if(targetPlan === 'premium') {
-      
-
-      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/pagos/create-subscription-checkout/`, {
-        price : 5,
-        currency : "eur",
-        user_id : user.id
-      },{
-        headers: {
-          // Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      
-        
-      });
-      console.log(response.data); 
-      console.log
-      const stripe = await loadStripe(`${import.meta.env.VITE_STRIPE_PUBLIC_KEY}`);
-      const { error } = await stripe.redirectToCheckout({sessionId: response.data.id });
-
-      if (error) {
-        throw new Error(error.message);
+    const handlePlanChange = async (targetPlan) => {
+      if (!user || currentPlan === targetPlan) return;
+      if (targetPlan !== 'premium') return; // ❌ Solo permitimos upgrade a Premium
+    
+      setLoading(true);
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/pagos/create-subscription-checkout/`,
+          {
+            price: 5,
+            currency: "eur",
+            user_id: user.id
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            }
+          }
+        );
+    
+        const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+        const { error } = await stripe.redirectToCheckout({ sessionId: response.data.id });
+    
+        if (error) {
+          throw new Error(error.message);
+        }
+    
+      } catch (err) {
+        console.error("Error al cambiar el plan:", err);
+        let errorMessage = "Hubo un error al cambiar el plan";
+        if (err.response?.data?.error) {
+          errorMessage = err.response.data.error;
+        } else if (err.message) {
+          errorMessage = err.message;
+        }
+    
+        setNotification({
+          open: true,
+          message: errorMessage,
+          severity: "error"
+        });
+    
+      } finally {
+        setLoading(false);
       }
-    } else {
-      const url = `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${user.id}/downgrade_to_free/`;
-
-      await axios.post(url, {}, {
-         headers: {
-           Authorization: `Bearer ${token}`,
-         },
-      });
-      const updatedUser = { ...user, pricing_plan: targetPlan };
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-      setCurrentPlan(targetPlan);
-
-      setNotification({
-        open: true,
-        message: `¡Plan actualizado a ${planLabels[targetPlan]}!`,
-        severity: "success"
-      });
-    }
-    } catch (err) {
-      console.error("Error al cambiar el plan:", err);
-      let errorMessage = "Hubo un error al cambiar el plan"
-      if(err.response?.data?.error){
-        errorMessage = err.response.data.error;
-      } else if(err.message){
-        errorMessage = err.message;
-      }
-
-      setNotification({
-        open: true,
-        message: errorMessage,
-        severity: "error"
-      });
-
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+    
 
   const checkPlan = async () => {
     if (!user) return;
     try {
       const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${user.id}/`);
-      const updatedUser = { ...user, pricing_plan: response.data.pricing_plan };
+      const updatedUser = {
+        ...user,
+        pricing_plan: response.data.pricing_plan,
+        subscription_start_date: response.data.subscription_start_date,
+        subscription_end_date: response.data.subscription_end_date,
+      };
       localStorage.setItem("user", JSON.stringify(updatedUser));
       setCurrentPlan(response.data.pricing_plan);
     } catch (err) {
       console.error("Error al obtener el plan actual:", err);
     }
   };
+  
 
   const handleCloseNotification = () => {
     setNotification({ ...notification, open: false });
@@ -196,7 +216,7 @@ const SubscriptionScreen = () => {
   return (
     <>
       <Navbar />
-      <Container maxWidth="lg" sx={{ mt: 8, mb: 8 }}>
+      <Container maxWidth="lg" sx={{ mt: 10, mb: 8 }}>
         <Paper elevation={3} sx={{ p: 4, mb: 4 }}>
           <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ fontWeight: "bold", mb: 4 }}>
             Gestión de Suscripción
@@ -208,6 +228,8 @@ const SubscriptionScreen = () => {
             justifyContent="center"
             alignItems="stretch"
           >
+
+
             <Box flex="1" maxWidth={{ xs: '100%', md: '500px' }}>
               <PlanCard active={currentPlan === 'free'}>
                 <CardHeader
@@ -249,18 +271,6 @@ const SubscriptionScreen = () => {
                   </List>
                 </CardContent>
                 <CardActions sx={{ justifyContent: "center", p: 3 }}>
-                  {token && currentPlan !== 'free' && (
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      size="large"
-                      onClick={() => handlePlanChange('free')}
-                      disabled={loading}
-                      fullWidth
-                    >
-                      {loading ? <CircularProgress size={24} /> : "Cambiar a Gratis"}
-                    </Button>
-                  )}
                   {currentPlan === 'free' && (
                     <Button
                       variant="contained"
@@ -317,6 +327,18 @@ const SubscriptionScreen = () => {
                       <ListItemText primary="Sin límite de borradores" />
                     </ListItem>
                   </List>
+                  {currentPlan === 'premium' && user.subscription_start_date && user.subscription_end_date && (
+    <Box textAlign="center" mt={2}>
+      <Typography variant="body1" color="text.secondary">
+        <strong>Activo desde:</strong>{" "}
+        {new Date(user.subscription_start_date).toLocaleDateString("es-ES")}
+      </Typography>
+      <Typography variant="body1" color="text.secondary">
+        <strong>Válido hasta:</strong>{" "}
+        {new Date(user.subscription_end_date).toLocaleDateString("es-ES")}
+      </Typography>
+    </Box>
+  )}
                 </CardContent>
                 <CardActions sx={{ justifyContent: "center", p: 3 }}>
                   {token && currentPlan !== 'premium' && (

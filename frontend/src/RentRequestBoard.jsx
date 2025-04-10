@@ -3,15 +3,16 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import Navbar from "./Navbar";
 import { Box, Button, Card, CardContent, Typography, Skeleton, Tab, Tabs } from "@mui/material";
-import Modal from "./Modal";
 import { useNavigate } from 'react-router-dom';
 import RequestCardsContainer from "./components/RequestCardsContainer";
+import ConfirmModal from "./components/ConfirmModal";
 
 const DEFAULT_IMAGE = "../public/default_image.png";
 
 const RentRequestBoard = () => {
     const [receivedRequests, setReceivedRequests] = useState([]); // Solicitudes recibidas
     const [sentRequests, setSentRequests] = useState([]); // Solicitudes enviadas
+    const [closedRequests, setClosedRequests] = useState([]); // Solicitudes cerradas
     const [selectedRequest, setSelectedRequest] = useState(null);
     const [responseType, setResponseType] = useState(null);
     const [openModal, setOpenModal] = useState(false);
@@ -20,6 +21,13 @@ const RentRequestBoard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const tabParam = urlParams.get("tab");
+    
+        if (tabParam === "sent") {
+            setSelectedTab(1); // Cambia a la pestaña "Solicitudes Enviadas"
+        }
+        
         const enrichRequests = async (requests) => {
             return Promise.all(
                 requests.map(async (request) => {
@@ -42,35 +50,42 @@ const RentRequestBoard = () => {
                 const user = JSON.parse(localStorage.getItem("user"));
                 const urlParams = new URLSearchParams(window.location.search);
                 const queryUserId = urlParams.get("user");
-
+        
                 if (!user || !user.id) {
                     alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
                     navigate("/login");
                     return;
                 }
+        
                 // Validación de acceso a su propio tablón
                 if (queryUserId && parseInt(queryUserId) !== user.id) {
                     alert("No tienes permiso para ver este tablón.");
-                    navigate("/login"); 
+                    navigate("/login");
                     return;
                 }
-
-                // Peticiones para obtener solicitudes recibidas y enviadas
-                const [receivedResponse, sentResponse] = await Promise.all([
+        
+                // Peticiones para obtener solicitudes recibidas, enviadas y cerradas
+                const [receivedResponse, sentResponse, closedResponse] = await Promise.all([
                     axios.get(`${import.meta.env.VITE_API_BASE_URL}/rentas/full/rental_requests/`, { params: { user: user.id } }),
-                    axios.get(`${import.meta.env.VITE_API_BASE_URL}/rentas/full/my_requests/`, { params: { user: user.id } })
+                    axios.get(`${import.meta.env.VITE_API_BASE_URL}/rentas/full/my_requests/`, { params: { user: user.id } }),
+                    axios.get(`${import.meta.env.VITE_API_BASE_URL}/rentas/full/closed-requests/`, { params: { user: user.id } })
                 ]);
-
+        
                 // Procesamos las solicitudes recibidas
                 const receivedData = receivedResponse.data.results ?? receivedResponse.data;
                 const receivedEnriched = await enrichRequests(receivedData);
                 setReceivedRequests(receivedEnriched);
-
+        
                 // Procesamos las solicitudes enviadas
                 const sentData = sentResponse.data.results ?? sentResponse.data;
                 const sentEnriched = await enrichRequests(sentData);
                 setSentRequests(sentEnriched);
-
+        
+                // Procesamos las solicitudes cerradas
+                const closedData = closedResponse.data.results ?? closedResponse.data;
+                const closedEnriched = await enrichRequests(closedData);
+                setClosedRequests(closedEnriched);
+        
                 setLoading(false);
             } catch (error) {
                 console.error("Error al obtener solicitudes de alquiler:", error);
@@ -92,30 +107,40 @@ const RentRequestBoard = () => {
 
     const handleResponse = async (renta, responseType) => {
         try {
-            const user = JSON.parse(localStorage.getItem("user"));
-            if (!user || !user.id) {
-                alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
-                return;
-            }
-            const response = await axios.put(
-                `${import.meta.env.VITE_API_BASE_URL}/rentas/full/${renta.id}/respond_request/`,
-                {
-                    response: responseType,
-                    rent: renta.id,
-                    user_id: user.id
-                }
-            );
-            console.log(response.data);
-    
-            // Eliminamos la solicitud de la lista tras responderla
-            setReceivedRequests((prevRequests) =>
-                prevRequests.filter((request) => request.id !== renta.id)
-            );
-            setOpenModal(false);
-        } catch (error) {
-            console.error(`Error al procesar la solicitud:`, error.response?.data || error.message);
-        }
-    };
+          const user = JSON.parse(localStorage.getItem("user"));
+          if (!user || !user.id) {
+            alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
+            return;
+          }
+      
+          const response = await axios.put(
+      `${import.meta.env.VITE_API_BASE_URL}/rentas/full/${renta.id}/respond_request/`,
+      {
+        response: responseType,
+        rent: renta.id,
+        user_id: user.id
+      }
+    );
+
+    console.log(response.data);
+    setOpenModal(false);
+
+    if (responseType === "accepted") {
+      window.location.reload(); // Solo recarga si fue aceptada
+    } else {
+      // Si fue rechazada, actualiza estado local
+      setReceivedRequests((prevRequests) =>
+        prevRequests.map((request) =>
+          request.id === renta.id
+            ? { ...request, rent_status: responseType, payment_status: "pending" }
+            : request
+        )
+      );
+    }
+  } catch (error) {
+    console.error("Error al procesar la solicitud:", error.response?.data || error.message);
+  }
+};
 
     const openConfirmModal = (renta, responseType) => {
         setSelectedRequest(renta);
@@ -175,6 +200,7 @@ const RentRequestBoard = () => {
             <Tabs value={selectedTab} onChange={handleTabChange} aria-label="Solicitudes Tab" sx={{ mb: 3 }}>
                 <Tab label="Solicitudes Recibidas" />
                 <Tab label="Solicitudes Enviadas" />
+                <Tab label="Solicitudes Cerradas" />
             </Tabs>
 
             {loading ? (
@@ -228,7 +254,10 @@ const RentRequestBoard = () => {
                             {receivedRequests.length === 0 ? (
                                 <Typography>No has recibido solicitudes de alquiler.</Typography>
                             ) : (
-                                <RequestCardsContainer requests={receivedRequests} openConfirmModal={openConfirmModal} />
+                                <RequestCardsContainer 
+                                requests={receivedRequests} 
+                                openConfirmModal={openConfirmModal} 
+                                isOwner={true}/>
                             )}
                         </>
                     )}
@@ -242,11 +271,20 @@ const RentRequestBoard = () => {
                             )}
                         </>
                     )}
+                    {selectedTab === 2 && (
+                        <>
+                            {closedRequests.length === 0 ? (
+                                <Typography>No tienes solicitudes de alquiler cerradas.</Typography>
+                            ) : (
+                                <RequestCardsContainer requests={closedRequests} isOwner={true} />
+                            )}
+                        </>
+                    )}
                 </>
             )}
 
             {openModal && (
-                <Modal
+                <ConfirmModal
                     title="Confirmar solicitud"
                     message={`¿Estás seguro de que quieres ${responseType === "accepted" ? "aceptar" : "rechazar"} esta solicitud?`}
                     onCancel={closeModal}

@@ -3,15 +3,20 @@ from rest_framework import viewsets, permissions, serializers
 
 from usuarios.models import User
 from .models import Item, ItemImage, ItemRequest, UnavailablePeriod
-from .serializers import ItemRequestSerializer, ItemSerializer
+from .serializers import (
+    ItemRequestSerializer,
+    ItemSerializer,
+    PublishItemSerializer,
+)
 from .serializers import ItemImageSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import ItemCategory, CancelType, PriceCategory, ItemSubcategory
+from .models import LikedItem
 from rest_framework.decorators import action
-from django.core.exceptions import ValidationError
 from django.utils.dateparse import parse_date
+from decimal import Decimal, InvalidOperation
 import json
 from rest_framework.permissions import IsAuthenticated
 
@@ -127,7 +132,11 @@ class ItemViewSet(viewsets.ModelViewSet):
         data['user'] = request.user.id
 
         serializer = self.get_serializer(data=data)
-        serializer.is_valid(raise_exception=True)
+        try:
+            serializer.is_valid(raise_exception=True)
+        except serializers.ValidationError as e:
+            print("Errores de validación:", e.detail)
+            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
         print("Validated data:", serializer.validated_data)
         self.handle_unavailable_periods(
             serializer.save(), request.data.get("unavailable_periods", []))
@@ -247,6 +256,16 @@ class ItemViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_403_FORBIDDEN
             )
 
+        # Validación: ¿es draft_mode?
+        if item.draft_mode:
+            return Response(
+                {
+                    "error": "No puedes destacar un objeto que está en modo "
+                             "borrador."
+                },
+                status=status.HTTP_403_FORBIDDEN
+            )
+
         # Si ya está destacado -> desmarcar
         if item.featured:
             item.featured = False
@@ -291,6 +310,8 @@ class SearchItemsView(APIView):
     def get(self, request, *args, **kwargs):
         title = request.GET.get('title', None)
         category = request.GET.get('category', None)
+        min_price = request.GET.get('min_price')
+        max_price = request.GET.get('max_price')
 
         items = Item.objects.filter(draft_mode=False)  # Filtrar publicados
 
@@ -298,6 +319,17 @@ class SearchItemsView(APIView):
             items = items.filter(title__icontains=title)
         if category:
             items = items.filter(category=category)
+
+        try:
+            if min_price:
+                items = items.filter(price__gte=Decimal(min_price))
+            if max_price:
+                items = items.filter(price__lte=Decimal(max_price))
+        except (InvalidOperation, ValueError):
+            return Response(
+                {"error": "Precio inválido"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         results = list(items.values('id', 'title', 'category', 'price'))
 
@@ -374,27 +406,20 @@ class ItemRequestApprovalViewSet(viewsets.ViewSet):
 
 class PublishItemView(APIView):
     def post(self, request, *args, **kwargs):
-        item_id = request.data.get('item_id')
-        user_id = request.data.get('user_id')
-        user = get_object_or_404(User, id=user_id)
-        try:
-            item = Item.objects.get(id=item_id, user=user)
-            item.publish()
+        serializer = PublishItemSerializer(
+            data=request.data,
+            context={"request": request}
+        )
+        if serializer.is_valid():
+            # Obtener el ítem validado desde el contexto del serializer
+            item = serializer.context['item']
+            item.draft_mode = False  # Cambiar el estado del ítem a publicado
+            item.save()
             return Response(
                 {"message": "Ítem publicado con éxito"},
                 status=status.HTTP_200_OK,
             )
-
-        except Item.DoesNotExist:
-            return Response(
-                {"error": "Ítem no encontrado"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-        except ValidationError as e:
-            return Response(
-                {"error": str(e)},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ListDraftItemsView(APIView):
@@ -429,3 +454,49 @@ class ListItemRequestsView(APIView):
         serializer = ItemRequestSerializer(item_requests, many=True)
         return Response({'results': serializer.data},
                         status=status.HTTP_200_OK)
+
+
+class ToggleLike(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        item_id = kwargs.get('item_id')
+        try:
+            # Obtener el ítem
+            item = Item.objects.get(id=item_id)
+
+            # Buscar o crear el 'like' para el item y el usuario
+            liked_item, created = LikedItem.objects.get_or_create(
+                                        item=item, user=request.user)
+
+            if created:
+                item.num_likes += 1
+                message = "Objeto agregado a favoritos"
+            else:
+                liked_item.delete()
+                item.num_likes -= 1
+                message = "Objeto eliminado de favoritos"
+
+            item.save()
+
+            return Response({"message": message, "num_likes": item.num_likes},
+                            status=status.HTTP_200_OK)
+
+        except Item.DoesNotExist:
+            return Response({"error": "Item no encontrado"},
+                            status=status.HTTP_404_NOT_FOUND)
+
+
+class LikeStatus(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, item_id):
+        try:
+            item = Item.objects.get(id=item_id)
+            liked_item = LikedItem.objects.filter(
+                item=item, user=request.user).exists()
+            return Response({"is_liked": liked_item},
+                            status=status.HTTP_200_OK)
+        except Item.DoesNotExist:
+            return Response({"error": "Item no encontrado"},
+                            status=status.HTTP_404_NOT_FOUND)

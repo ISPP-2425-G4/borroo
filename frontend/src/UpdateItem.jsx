@@ -30,8 +30,10 @@ import {
 import Navbar from "./Navbar";
 import axios from 'axios';
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
+import SaveConfirmationDialog from "./components/SaveConfirmationDialog";
 import { DateRange } from "react-date-range";
 import { Delete } from "@mui/icons-material";
+import DepositToolTip from "./components/DepositToolTip";
 
 
 const UpdateItemScreen = () => {
@@ -54,6 +56,7 @@ const UpdateItemScreen = () => {
   const [existingImages, setExistingImages] = useState([]);
   const [removedImages, setRemovedImages] = useState([]);
   const [filteredSubcategories, setFilteredSubcategories] = useState([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
 
   useEffect(() => {
@@ -125,7 +128,7 @@ const UpdateItemScreen = () => {
   const validateForm = () => {
     if (!formData) return;
     
-    const { title, description, category, subcategory, cancel_type, price_category, price } = formData;
+    const { title, description, category, subcategory, cancel_type, price_category, price, deposit } = formData;
     const isValid =
       title?.trim() !== "" &&
       description?.trim() !== "" &&
@@ -134,8 +137,9 @@ const UpdateItemScreen = () => {
       cancel_type?.trim() !== "" &&
       price_category?.trim() !== "" &&
       price?.trim() !== "" &&
+      deposit?.trim() !== "" &&
       !isNaN(price) &&
-      parseFloat(price) > 0;
+      parseFloat(price) > 0; 
     
     setIsFormValid(isValid);
   };
@@ -147,7 +151,7 @@ const UpdateItemScreen = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "price") {
+    if (name === "price" || name=== "deposit") {
       // Permitir solo números y máximo dos decimales
       const regex = /^\d{0,8}(\.\d{0,2})?$/;
       if (!regex.test(value) && value !== "") {
@@ -207,7 +211,7 @@ const UpdateItemScreen = () => {
 
     const errors = {};
 
-    if (!formData.title || !formData.description || !formData.category || !formData.subcategory || !formData.cancel_type || !formData.price_category || !formData.price) {
+    if (!formData.title || !formData.description || !formData.category || !formData.subcategory || !formData.cancel_type || !formData.price_category || !formData.price || !formData.deposit) {
       setErrorMessage("Por favor, completa todos los campos.");
       setLoading(false);
       return;
@@ -237,6 +241,17 @@ const UpdateItemScreen = () => {
       errors.price = "El precio solo puede tener hasta dos decimales.";
     } else if (formData.price.length > 10) {
       errors.price = "El precio no puede superar los 10 dígitos en total.";
+    }
+    if (!formData.deposit) {
+      errors.deposit = "El precio es obligatorio.";
+    } else if (isNaN(formData.deposit) || parseFloat(formData.deposit) <= 0) {
+      errors.deposit = "El precio debe ser un número mayor a 0.";
+    } else if (formData.deposit.includes(".") && formData.deposit.split(".")[1].length > 2) {
+      errors.deposit = "El precio solo puede tener hasta dos decimales.";
+    } else if (formData.deposit.length > 10) {
+      errors.deposit = "El precio no puede superar los 10 dígitos en total.";
+    } else if (formData.deposit > 10000) {
+      errors.deposit = "El precio no puede superar los $10,000.";
     }
 
     if (Object.keys(errors).length > 0) {
@@ -288,16 +303,44 @@ const UpdateItemScreen = () => {
           withCredentials: true,
         }
       );
+      setDialogOpen(true);
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
 
 
-      alert("¡Ítem actualizado exitosamente!");
-      navigate("/");
     } catch (error) {
       console.error("Error actualizando el ítem:", error);
-      if (error.response) {
-        console.error("Detalles del error:", error.response.data);
-    }
-      setErrorMessage("Ocurrió un error al actualizar el ítem.");
+
+      if (error.response && error.response.data) {
+        const backendErrors = error.response.data;
+
+        if (typeof backendErrors === "object") {
+          if (backendErrors.image_files) {
+            setErrorMessage(backendErrors.image_files[0]);
+            return;
+          }
+
+          const allowedFields = ["title", "description", "price", "category", "subcategory", "cancel_type", "price_category"];
+
+          // Creamos un array de pares [campo, mensaje]
+          const fieldErrorEntries = Object.entries(backendErrors)
+            .filter(([field]) => allowedFields.includes(field))
+            .map(([field, messages]) => [field, messages[0]]);
+
+          // Convertimos a objeto de errores
+          const fieldErrs = Object.fromEntries(fieldErrorEntries);
+
+          setFieldErrors(fieldErrs);
+
+          const firstError = Object.values(fieldErrs)[0];
+          setErrorMessage(firstError || "Error al actualizar.");
+        } else {
+          setErrorMessage("Error inesperado del servidor.");
+        }
+      } else {
+        setErrorMessage("Error de conexión con el servidor.");
+      }
     } finally {
       setLoading(false);
     }
@@ -320,7 +363,7 @@ const UpdateItemScreen = () => {
         { value: "printers_scanners", label: "Impresoras y escáneres" },
         { value: "drones", label: "Drones" },
         { value: "projectors", label: "Proyectores" },
-        { value: "technology_others", label: "Otros" },
+        { value: "technology_others", label: "Otros (Tecnología)" },
         { value: "none", label: "Ninguno" },
       ],
       sports: [
@@ -497,7 +540,7 @@ const UpdateItemScreen = () => {
               <>
                 {/* Categoría */}
                 <FormControl fullWidth required>
-                  <InputLabel id="category-label">Categoría</InputLabel>
+                  <InputLabel id="category-label" >Categoría</InputLabel>
                   <Select
                     labelId="category-label"
                     name="category"
@@ -508,6 +551,7 @@ const UpdateItemScreen = () => {
                         <CategoryIcon />
                       </InputAdornment>
                     }
+                    sx={{mt:1.5}}
                   >
                     <MenuItem value="" disabled>
                       Selecciona una categoría
@@ -533,6 +577,8 @@ const UpdateItemScreen = () => {
                         <CategoryIcon />
                       </InputAdornment>
                     }
+                    sx={{mt:1.5}}
+
                   >
                     <MenuItem value="" disabled>
                       Selecciona una subcategoría
@@ -546,8 +592,9 @@ const UpdateItemScreen = () => {
                 </FormControl>
   
                 {/* Política de Cancelación con Tooltip */}
-                <Box>
-                  <Box display="flex" alignItems="center" mb={1}>
+                <Box sx={{mb:12}}>
+                  <Box display="flex" alignItems="center" mb={1}
+                  >
                     <Typography variant="subtitle2">Política de Cancelación</Typography>
                     <Box ml={1}>
                       <CancelPolicyTooltip />
@@ -565,6 +612,8 @@ const UpdateItemScreen = () => {
                           <CancelIcon />
                         </InputAdornment>
                       }
+                      sx={{mt:1.5}}
+
                     >
                       <MenuItem value="" disabled>
                         Selecciona una política de cancelación
@@ -591,6 +640,8 @@ const UpdateItemScreen = () => {
                         <CategoryIcon />
                       </InputAdornment>
                     }
+                    sx={{mt:1.5}}
+
                   >
                     <MenuItem value="" disabled>
                       Selecciona una categoría de precio
@@ -615,6 +666,33 @@ const UpdateItemScreen = () => {
               onChange={handleChange}
               error={!!fieldErrors.price}
               helperText={fieldErrors.price}
+              fullWidth
+              required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <MoneyIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+             <Box display="flex" alignItems="center" mb={1}
+                  >
+                    <Typography variant="subtitle2">Política de Fianza</Typography>
+                    <Box ml={1}>
+                      <DepositToolTip />
+                    </Box>
+                  </Box>
+            {/* Deposit */}
+            <TextField
+              label="Fianza"
+              name="deposit"
+              type="number"
+              inputProps={{ step: "0.01" }}
+              value={formData.deposit || ""}
+              onChange={handleChange}
+              error={!!fieldErrors.deposit}
+              helperText={fieldErrors.deposit}
               fullWidth
               required
               InputProps={{
@@ -791,6 +869,7 @@ const UpdateItemScreen = () => {
           </Stack>
         </Box>
       </Paper>
+      <SaveConfirmationDialog open={dialogOpen} onClose={() => setDialogOpen(false)} />
     </Container>
   );
 };
