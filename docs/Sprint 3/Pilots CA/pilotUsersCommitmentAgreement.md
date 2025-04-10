@@ -6,7 +6,7 @@
 
 ##  Commitment Agreement Usuarios Piloto Asignatura 
 
-### Sprint 2 – G4
+### Sprint 3 – G4
 **Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
 
 **Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
