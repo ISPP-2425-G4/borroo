@@ -4257,7 +4257,7 @@
   </thead>
   <tbody>
     <tr>
-      <td rowspan="6">Trabajo</td>
+      <td rowspan="7">Trabajo</td>
       <td>Fullstack likes</td>
       <td>8 horas 10 minutos</td>
     </tr>
@@ -4280,6 +4280,10 @@
     <tr>
       <td>Fixeo filtros añadidos y filtro favoritos</td>
       <td>35 minutos</td>
+    </tr>
+    <tr>
+        <td>Documento revisión</td>
+        <td>1 hora 36 minutos</td>
     </tr>
     <tr>
       <td rowspan="2">Clase</td>
@@ -4762,7 +4766,6 @@
     <td>1 hora, 32 minutos y 52 segundos</td>
   </tr>
   <tr>
-    <td>Trabajo</td>
     <td>asignacion de tareas s3</td>
     <td>29 minutos y 21 segundos</td>
   </tr>
@@ -4863,6 +4866,162 @@
 </table>
 
 ### **Rosado Raya, Santiago**
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="31">Trabajo</td>
+    <td>Revision PR #422</td>
+    <td>3 minutos</td>
+  </tr>
+  <tr>
+    <td>Análsis de feedback de usuarios piloto de la asignatura</td>
+    <td>5 minutos</td>
+  </tr>
+  <tr>
+    <td>Resolver conflicto issue #351</td>
+    <td>6 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #435</td>
+    <td>6 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #428</td>
+    <td>7 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #468</td>
+    <td>9 minutos</td>
+  </tr>
+  <tr>
+    <td>Trabajo issue #351</td>
+    <td>9 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #443</td>
+    <td>9 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadido uso IA en docu</td>
+    <td>10 minutos</td>
+  </tr>
+  <tr>
+    <td>Gestion feedback UP S3</td>
+    <td>10 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #440</td>
+    <td>10 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #471</td>
+    <td>11 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #438</td>
+    <td>11 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #386</td>
+    <td>13 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #404</td>
+    <td>16 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #464</td>
+    <td>18 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #445</td>
+    <td>18 minutos</td>
+  </tr>
+  <tr>
+    <td>Feedback UP externos unión</td>
+    <td>21 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #443</td>
+    <td>28 minutos</td>
+  </tr>
+  <tr>
+    <td>Trabajo issue #351</td>
+    <td>31 minutos</td>
+  </tr>
+    <tr>
+    <td>Revision PR #404 y #414</td>
+    <td>34 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #440</td>
+    <td>41 minutos</td>
+  </tr>
+  <tr>
+    <td>Feedback externo S3</td>
+    <td>43 minutos</td>
+  </tr>  <tr>
+    <td>Revision PR #365, #382, #380, #379 y #379</td>
+    <td>43 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PRs #395 #400 y #401</td>
+    <td>46 minutos</td>
+  </tr>
+  <tr>
+      <tr>
+    <td>Documento Feedback UP Mitad Sprint 3</td>
+    <td>52 minutos</td>
+  </tr>
+  <tr>
+    <td>Trabajo issue #351</td>
+    <td>57 minutos</td>
+  </tr>
+  <tr>
+    <td>Calificar UP S3 y meter time effort y niko niko</td>
+    <td>1 hora</td>
+  </tr>  
+  <tr>
+    <td>Gestion feedback UP S3</td>
+    <td>1 hora</td>
+  </tr>
+    <tr>
+    <td>Testeo de entidad renta y chat</td>
+    <td>1 hora 30 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clase</td>
+    <td>Clase 04/04/2025</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 28/03/2025</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+  <tr>
+  <tr>
+    <td rowspan="1">Feedback Externo</td>
+    <td>Feedback al G8</td>
+    <td>59 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="1">Reuniones</td>
+    <td>Como hacer informes de tests y arreglos de sonar</td>
+    <td>1 hora 11 minutos</td>
+  </tr>
+  <tr>
+    <td>Total</td>
+    <td colspan="2">24 horas</td>
+  </tr>
+  <tr>
+    <td>Enlace Clockify</td>
+    <td colspan="2"><a href="https://app.clockify.me/shared/67f7ddf4fd002c01921d1e10" target="_blank">Clockify</a></td>
+  </tr>
+</table>
 
 ### **Sánchez Márquez, Julia**
 

@@ -561,6 +561,8 @@ Una vez fue implementado lo anterior observé que, tras varias adiciones de comp
 
 Tras esto, observe cierto error en una funcionalidad relacionada con los nuevos filtros añadidos, el cual yo había experimentado anteriormente con los filtros añadidos por mí. Me puse en contacto con mi compañero Luis Periañez, el cual era responsable de estos filtros añadidos, le comenté el problema, y le ayude inicialmente a solucionar el mismo.
 
+Tras finalizar, realicé junto a mi compañero Marco el desarrollo del documento "revision.md".
+
 Por último, visualice los videos de "Pildoras teoricas" correspondientes a este Sprint (Sesión 8 y sesión 9)
 
 ### **Fernández Rodríguez, Jesús**
@@ -569,7 +571,10 @@ Por último, visualice los videos de "Pildoras teoricas" correspondientes a este
 
 ### **García Rodríguez, Javier**
 
-Durante la primera semana, me encargué de integrar de forma parcial la herramienta **SonarQube** para poder medir ciertas métricas asociadas al código. Además, estuve desarrollando los borradores de los documentos comunes del S1,S2, y S3. (AIUsage, timeEffortReport, performanceEvaluation, etc). Estuve revisando el feedback recibido por los usuarios pilotos de la asignatura junto a Santiago Rosado Raya para poder generar un documento conjunto que se tomaría para poder generar nuevas issues para implementar funcionalidades, o corregir errores a mitad de sprint. Además, tuvimos una reunión de representantes para poder redactar todas las issues, resolver dudas, y más. Estuve trabajando en la issues 364 y 366, concretamente centradas en 2 incidencias, trackear solicitudes para mostrar el estado, e implemetar en la búsqueda la posibilidad de que fuese case sensitive.
+Durante la primera semana, me encargué de integrar de forma parcial la herramienta **SonarQube** para poder medir ciertas métricas asociadas al código. Además, estuve desarrollando los borradores de los documentos comunes del S1,S2, y S3. (AIUsage, timeEffortReport, performanceEvaluation, etc). Estuve revisando el feedback recibido por los usuarios pilotos de la asignatura junto a Santiago Rosado Raya para poder generar un documento conjunto que se tomaría para poder generar nuevas issues para implementar funcionalidades, o corregir errores a mitad de sprint. Además, tuvimos una reunión de representantes para poder redactar todas las issues, resolver dudas, y más. Estuve trabajando en la issues 364 y 366, concretamente centradas en 2 incidencias, trackear solicitudes para mostrar el estado, e implemetar en la búsqueda la posibilidad de que fuese case sensitive. Estuve desarrollando el plan de pruebas que se solicitó para las semanas, generando un documento en markdown especificando los tipos de pruebas implementadas y los resultados obtenidos. Los representantes de subgrupos tuvimos una reunión para poder planificar el primer anuncio, dedicado a los clientes. Estuve preparando la presentación para la clase del día 4, respectivamente.
+
+Durante la siguiente semana, estuve, junto a Miguel Palomo García, editando el TCO, en el que se incluyó el coste asociado a los inversores, mencionado en la clase anterior. Estuve revisando las píldoras teóricas para la sesión 08 y 09. Además, editando el documento en el que se explica como se va a manejar la fianza solicitada en la aplicación, y los procedimientos correspondientes en función de incidencias ocurridas en el proceso. Estuve actualizando el documento del uso de la IA, añadiendo las nuevas entradas y el cálculo del nuevo porcentaje de alucinaciones correspondiente al S3. Tuve una reunión con Santiago Rosado Raya para poder valorar como generar los informes de testing para mostrar la cobertura del proyecto de las pruebas, y realizando cambios en SonarCloud para poder realizar un análisis correcto del proyecto.
+
 
 ### **González Ortiz, Miguel**
 
@@ -642,6 +647,22 @@ Aparte, me ví los vídeos de las píldoras teóricas y actualice los términos 
 ### **Periañez Franco, Luis Javier**
 
 ### **Rosado Raya, Santiago**
+
+### Semana 1
+Durante la primera semana de este Sprint he estado desempeñando tareas de QA, revisando pull requests y colaborando con otros miembros de mi subgrupo en la resolución de errores y problemas de desarrollo.
+
+Además, he estado implementando la nueva lógica de negocio, elaborando la documentación para los usuarios piloto, contactando con ellos y recopilando feedback.
+
+Por último, también participo como usuario piloto en el proyecto de otro grupo de la asignatura, dedicando parte de mi tiempo a contribuir a la mejora de su desarrollo.
+
+
+### Semana 2
+Durante esta segunda semana del Sprint he realizado varias tareas clave para el avance del proyecto. En primer lugar, analicé todo el feedback recopilado por parte de los usuarios piloto, clasificándolo y organizándolo dentro del documento correspondiente. Además, realicé mejoras en dicho documento, incorporando una nueva sección de clasificación del feedback.
+
+También he estado realizando pruebas sobre las entidades creadas por mi subgrupo, calificando a los usuarios piloto y desempeñando nuevamente el rol de QA, revisando pull requests y colaborando con mis compañeros para asegurar que todo el código que se mergea a develop sea óptimo.
+
+Por otro lado, he seguido participando como usuario piloto en el proyecto de otro grupo, proporcionando feedback útil para la mejora de su desarrollo. Finalmente, he asistido a reuniones con el Project Manager, donde se han tomado decisiones sobre cómo generar los informes de tests y cómo resolver los problemas que genera SonarQube con los archivos de testeo.
+
 
 ### **Sánchez Márquez, Julia**
 Durante este sprint, mi principal aportación ha sido el desarrollo de la funcionalidad para cancelar un alquiler, aplicando las políticas de cancelación correspondientes, así como la posibilidad de enviar una incidencia sobre un alquiler en caso de que el usuario lo desee. Aunque inicialmente se me asignó una tarea diferente, relacionada con una modificación de una funcionalidad del sprint 2, tras discutirlo con el equipo y consultar con los usuarios piloto, se decidió mantener la implementación actual, ya que la mayoría de los usuarios piloto se mostraron a favor de no realizar cambios. Esta tarea, que inicialmente tenía una estimación de alto esfuerzo, fue descartada y, en su lugar, se me asignaron dos tareas fullstack para aprovechar ese tiempo disponible. 
