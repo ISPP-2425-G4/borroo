@@ -400,6 +400,8 @@ const ShowItemScreen = () => {
         alert("No se encontró el usuario. Asegúrate de haber iniciado sesión.");
         return;
       }
+  
+      // Validaciones de fechas
       if (
         isDateUnavailable(dateRange[0].startDate) ||
         isDateUnavailable(dateRange[0].endDate) ||
@@ -411,36 +413,32 @@ const ShowItemScreen = () => {
   
       let startDateUTC, endDateUTC;
   
+      // Construcción de fechas según la categoría de precio
       if (priceCategory === "hour" && selectedDay && selectedStartHour !== null && selectedEndHour !== null) {
         const start = dayjs(selectedDay)
-        .hour(selectedStartHour)
-        .minute(0)
-        .second(0)
-        .millisecond(0)
-        .format("YYYY-MM-DDTHH:mm:ss");
+          .hour(selectedStartHour)
+          .minute(0)
+          .second(0)
+          .millisecond(0)
+          .format("YYYY-MM-DDTHH:mm:ss");
         const end = dayjs(selectedDay)
           .hour(selectedEndHour)
           .minute(0)
           .second(0)
           .millisecond(0)
           .format("YYYY-MM-DDTHH:mm:ss");
-      
+  
         startDateUTC = start;
         endDateUTC = end;
-      } 
-      else if (priceCategory === "day" && dateRange[0].startDate && dateRange[0].endDate) {
-        // Usar las fechas seleccionadas para alquiler por días
+      } else if (priceCategory === "day" && dateRange[0].startDate && dateRange[0].endDate) {
         startDateUTC = dayjs(dateRange[0].startDate).format("YYYY-MM-DD");
         endDateUTC = dayjs(dateRange[0].endDate).hour(23).minute(59).second(59).format("YYYY-MM-DDTHH:mm:ss");
-      } 
-      else if (priceCategory === "month" && selectedDay && selectedMonths) {
-        // Construir fechas para alquiler por meses
+      } else if (priceCategory === "month" && selectedDay && selectedMonths) {
         const start = dayjs(selectedDay);
-        const end = dayjs(selectedDay).add(selectedMonths, 'month');
+        const end = dayjs(selectedDay).add(selectedMonths, "month");
         startDateUTC = start.format("YYYY-MM-DD");
         endDateUTC = end.format("YYYY-MM-DD");
-      } 
-      else {
+      } else {
         alert("Por favor, selecciona correctamente la fecha de inicio y fin.");
         return;
       }
@@ -455,7 +453,8 @@ const ShowItemScreen = () => {
           renter: user.id,
         },
         {
-          headers: {  
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
           },
         }
@@ -469,7 +468,16 @@ const ShowItemScreen = () => {
       }
     } catch (error) {
       console.error("Error al solicitar alquiler:", error);
-      alert(error.response?.data?.error || "No se pudo realizar la solicitud");
+  
+      // Primero cerrar el modal de solicitud
+      setShowRentalModal(false);
+  
+      // Mostrar el mensaje de error como una alerta
+      if (error.response?.data?.error) {
+        alert(error.response.data.error);
+      } else {
+        alert("No se pudo realizar la solicitud");
+      }
     }
   };
 
@@ -482,19 +490,19 @@ const ShowItemScreen = () => {
   };
   const handlePublishItem = async () => {
     try {
-  
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/objetos/publish_item/`,
-        { item_id: item.id},
-        { headers: { 
+        { item_id: item.id },
+        {
+          headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}` 
-          } 
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
       );
   
       if (response.status === 200) {
-        setDialogOpen(true);  // Agrega aquí para mostrar el diálogo
+        setDialogOpen(true); // Agrega aquí para mostrar el diálogo
         navigate(0); // Refresca la página
       } else {
         alert("Hubo un problema al publicar el ítem.");
@@ -502,20 +510,30 @@ const ShowItemScreen = () => {
     } catch (error) {
       console.error("Error publicando el ítem:", error);
       console.log("Respuesta del backend:", error.response?.data);
-    
-      if (error.response?.data?.non_field_errors) {
+  
+      // Manejar el mensaje de error específico
+      if (
+        error.response?.data?.error ===
+        "No puedes alquilar un objeto sin completar tu perfil, revisa que tu perfil esté completo y estés identificado"
+      ) {
+        setErrorMessage(
+          "No puedes alquilar un objeto sin completar tu perfil. Revisa que tu perfil esté completo y estés identificado."
+        );
+      } else if (error.response?.data?.non_field_errors) {
         setErrorMessage(error.response.data.non_field_errors[0]);
       } else if (error.response?.data?.detail) {
         setErrorMessage(error.response.data.detail);
       } else if (error.response?.data?.error) {
         setErrorMessage(error.response.data.error);
-      } else if (Array.isArray(error.response?.data) && error.response.data.length > 0) {
+      } else if (
+        Array.isArray(error.response?.data) &&
+        error.response.data.length > 0
+      ) {
         setErrorMessage(error.response.data[0]);
       } else {
         setErrorMessage("Ocurrió un error al intentar publicar el ítem.");
       }
     }
-    
   };
   
 
