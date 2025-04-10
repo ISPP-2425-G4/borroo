@@ -643,6 +643,22 @@ Aparte, me ví los vídeos de las píldoras teóricas y actualice los términos 
 
 ### **Rosado Raya, Santiago**
 
+### Semana 1
+Durante la primera semana de este Sprint he estado desempeñando tareas de QA, revisando pull requests y colaborando con otros miembros de mi subgrupo en la resolución de errores y problemas de desarrollo.
+
+Además, he estado implementando la nueva lógica de negocio, elaborando la documentación para los usuarios piloto, contactando con ellos y recopilando feedback.
+
+Por último, también participo como usuario piloto en el proyecto de otro grupo de la asignatura, dedicando parte de mi tiempo a contribuir a la mejora de su desarrollo.
+
+
+### Semana 2
+Durante esta segunda semana del Sprint he realizado varias tareas clave para el avance del proyecto. En primer lugar, analicé todo el feedback recopilado por parte de los usuarios piloto, clasificándolo y organizándolo dentro del documento correspondiente. Además, realicé mejoras en dicho documento, incorporando una nueva sección de clasificación del feedback.
+
+También he estado realizando pruebas sobre las entidades creadas por mi subgrupo, calificando a los usuarios piloto y desempeñando nuevamente el rol de QA, revisando pull requests y colaborando con mis compañeros para asegurar que todo el código que se mergea a develop sea óptimo.
+
+Por otro lado, he seguido participando como usuario piloto en el proyecto de otro grupo, proporcionando feedback útil para la mejora de su desarrollo. Finalmente, he asistido a reuniones con el Project Manager, donde se han tomado decisiones sobre cómo generar los informes de tests y cómo resolver los problemas que genera SonarQube con los archivos de testeo.
+
+
 ### **Sánchez Márquez, Julia**
 Durante este sprint, mi principal aportación ha sido el desarrollo de la funcionalidad para cancelar un alquiler, aplicando las políticas de cancelación correspondientes, así como la posibilidad de enviar una incidencia sobre un alquiler en caso de que el usuario lo desee. Aunque inicialmente se me asignó una tarea diferente, relacionada con una modificación de una funcionalidad del sprint 2, tras discutirlo con el equipo y consultar con los usuarios piloto, se decidió mantener la implementación actual, ya que la mayoría de los usuarios piloto se mostraron a favor de no realizar cambios. Esta tarea, que inicialmente tenía una estimación de alto esfuerzo, fue descartada y, en su lugar, se me asignaron dos tareas fullstack para aprovechar ese tiempo disponible. 
 
