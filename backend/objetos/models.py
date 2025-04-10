@@ -254,14 +254,22 @@ class ItemRequest(models.Model):
         )
     created_at = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
-    deposit = models.DecimalField(max_digits=10, decimal_places=2, validators=[
-            MinValueValidator(Decimal("0.01"),
-                              message="El precio debe ser mayor a 0."),
-            MaxValueValidator(Decimal("99999999.99"),
-                              message="El precio no puede ser \
-                                  mayor a 99,999,999.99."),
+    deposit = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0.00,
+        validators=[
+            MinValueValidator(
+                Decimal("0.01"),
+                message="El precio debe ser mayor a 0."
+            ),
+            MaxValueValidator(
+                Decimal("99999999.99"),
+                message="El precio no puede ser mayor a 99,999,999.99."
+            ),
             DecimalValidator(max_digits=10, decimal_places=2)
-        ])
+        ]
+    )
 
     def approve(self):
         """Método para aprobar la solicitud y crear un Item"""
