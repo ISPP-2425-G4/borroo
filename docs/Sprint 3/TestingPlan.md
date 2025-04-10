@@ -104,6 +104,6 @@ A través de pytest, hemos podido generar un documento html en el que podemos me
 
 Se adjuntan 2 archivos HTML, correspondientes a los tests que han funcionado y cuáles no en la carpeta de Sprint 3. En uno se visualiza el porcentaje, y otro los tests que han pasado y cuáles no.
 
-## 8. Anexos y Referencias
+- Archivo con el número: [index.html](./Testing/index.html)
+- Archivo con el porcentaje: [coverage.html](./Testing/coverage.html)
 
-Intencionadamente en blanco.
