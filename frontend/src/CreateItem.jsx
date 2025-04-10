@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FiFileText, FiEdit, FiLayers, FiXCircle, FiDollarSign, FiTrash2, FiImage, FiUpload } from "react-icons/fi";
+import { FiFileText, FiEdit, FiLayers, FiXCircle, FiDollarSign, FiImage, FiUpload } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import PropTypes from 'prop-types';
@@ -13,10 +13,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import PublishConfirmationDialog from "./components/PublishConfirmationDialog";
 import DepositToolTip from "./components/DepositToolTip";
 import {
-  ImageGallery,
-  ImageContainer,
-  PreviewImage,
-  RemoveButton,
   FileInputContainer,
   HiddenFileInput,
   ImageUploadText,
@@ -25,6 +21,10 @@ import {
   ErrorMessage,
   SubmitButton,
 } from "./components/FormStyles";
+
+import {
+  ImagePreviewGallery
+} from "./components/ImagePreview";
 
 const InputGroup = styled(Box)(() => ({
   position: "relative",
@@ -689,21 +689,7 @@ if (images.length === 0) {
               {fieldErrors.image && <ErrorMessage>{fieldErrors.image}</ErrorMessage>}
 
               {images.length > 0 && (
-                <Box>
-                  <Typography variant="subtitle2" sx={{ mb: 1, color: "#555" }}>
-                    Imágenes seleccionadas ({images.length})
-                  </Typography>
-                  <ImageGallery>
-                    {images.map((image, index) => (
-                      <ImageContainer key={index}>
-                        <PreviewImage src={URL.createObjectURL(image)} alt={`Preview ${index + 1}`} />
-                        <RemoveButton onClick={() => handleRemoveImage(index)}>
-                          <FiTrash2 size={16} />
-                        </RemoveButton>
-                      </ImageContainer>
-                    ))}
-                  </ImageGallery>
-                </Box>
+                <ImagePreviewGallery images={images} onRemove={handleRemoveImage} />
               )}
 
               {/* Formulario para seleccionar los períodos de indisponibilidad con un solo calendario */}

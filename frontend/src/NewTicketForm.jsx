@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FiTrash2, FiImage } from "react-icons/fi";
+import { FiImage } from "react-icons/fi";
 import {
-  ImageGallery,
-  ImageContainer,
-  PreviewImage,
-  RemoveButton,
   FileInputContainer,
   HiddenFileInput,
   ImageUploadText,
@@ -13,6 +9,9 @@ import {
   FormTitle,
   ErrorMessage
 } from "./components/FormStyles";
+import {
+  ImagePreviewGallery
+} from "./components/ImagePreview"
 import axios from "axios";
 import {
   Box,
@@ -150,21 +149,7 @@ const NewTicketForm = () => {
           {fieldErrors.image && <ErrorMessage>{fieldErrors.image}</ErrorMessage>}
 
               {images.length > 0 && (
-                <Box>
-                  <Typography variant="subtitle2" sx={{ mb: 1, color: "#555" }}>
-                    Imágenes seleccionadas ({images.length})
-                  </Typography>
-                  <ImageGallery>
-                    {images.map((image, index) => (
-                      <ImageContainer key={index}>
-                        <PreviewImage src={URL.createObjectURL(image)} alt={`Preview ${index + 1}`} />
-                        <RemoveButton onClick={() => handleRemoveImage(index)}>
-                          <FiTrash2 size={16} />
-                        </RemoveButton>
-                      </ImageContainer>
-                    ))}
-                  </ImageGallery>
-                </Box>
+                <ImagePreviewGallery images={images} onRemove={handleRemoveImage} />
               )}
 
             <Button
