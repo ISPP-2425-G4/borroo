@@ -177,6 +177,12 @@ class Item(models.Model):
                 "No puedes tener más de 10 ítems publicados con el plan Free."
             )
 
+        # 🚨 Restricción 2: debe tener al menos una imagen
+        if self.images.count() == 0:
+            raise ValidationError(
+                "Debes subir al menos una imagen para publicar el ítem."
+            )
+
         self.draft_mode = False
         self.save()
 

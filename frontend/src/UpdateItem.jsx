@@ -139,7 +139,7 @@ const UpdateItemScreen = () => {
       price?.trim() !== "" &&
       deposit?.trim() !== "" &&
       !isNaN(price) &&
-      parseFloat(price) > 0;
+      parseFloat(price) > 0; 
     
     setIsFormValid(isValid);
   };
@@ -311,10 +311,36 @@ const UpdateItemScreen = () => {
 
     } catch (error) {
       console.error("Error actualizando el ítem:", error);
-      if (error.response) {
-        console.error("Detalles del error:", error.response.data);
-    }
-      setErrorMessage("Ocurrió un error al actualizar el ítem.");
+
+      if (error.response && error.response.data) {
+        const backendErrors = error.response.data;
+
+        if (typeof backendErrors === "object") {
+          if (backendErrors.image_files) {
+            setErrorMessage(backendErrors.image_files[0]);
+            return;
+          }
+
+          const allowedFields = ["title", "description", "price", "category", "subcategory", "cancel_type", "price_category"];
+
+          // Creamos un array de pares [campo, mensaje]
+          const fieldErrorEntries = Object.entries(backendErrors)
+            .filter(([field]) => allowedFields.includes(field))
+            .map(([field, messages]) => [field, messages[0]]);
+
+          // Convertimos a objeto de errores
+          const fieldErrs = Object.fromEntries(fieldErrorEntries);
+
+          setFieldErrors(fieldErrs);
+
+          const firstError = Object.values(fieldErrs)[0];
+          setErrorMessage(firstError || "Error al actualizar.");
+        } else {
+          setErrorMessage("Error inesperado del servidor.");
+        }
+      } else {
+        setErrorMessage("Error de conexión con el servidor.");
+      }
     } finally {
       setLoading(false);
     }
