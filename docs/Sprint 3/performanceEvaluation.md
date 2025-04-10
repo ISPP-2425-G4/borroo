@@ -693,3 +693,26 @@ Tuve algunos problemas con la subida y visualización de imágenes en el fronten
 Puede consultar el [tiempo invertido aquí](https://app.clockify.me/shared/67f7e543d6e4ee46994e79ae).
 
 ### **Sevillano Barea, Alejandro**
+
+### Semana 1
+
+Durante la primera semana, me centré en diversas tareas relacionadas tanto con el desarrollo del frontend como con la mejora de procesos del equipo. En primer lugar, trabajé activamente en la corrección de errores detectados en la funcionalidad de edición de perfil de admin. Aunque avancé en la resolución de varios bugs, finalmente fue Ignacio Naredo quien terminó de solucionarlos completamente.
+
+Además, diseñé e implementé un workflow de release acompañado de un sistema de changelog, con el objetivo de organizar de manera más clara las entregas y los cambios realizados durante el Sprint 3. Esta herramienta contribuirá a una mejor trazabilidad del desarrollo y a facilitar el seguimiento por parte del equipo.
+
+También desarrollé una mejora en la lógica del sistema de reseñas, restringiendo su uso únicamente a aquellos usuarios que hayan alquilado previamente un objeto del perfil visitado, reforzando así la coherencia y validez del sistema de valoraciones.
+
+Por último, participé en la grabación de un vídeo promocional que fue utilizado durante la presentación del proyecto del viernes 4 de abril.
+
+### Semana 2
+
+Durante la segunda semana, enfoqué mis esfuerzos principalmente en el desarrollo y mantenimiento de pruebas ya que soy el QA de mi subgrupo.
+
+Comencé corrigiendo una serie de tests unitarios que comenzaron a fallar debido a cambios recientes realizados en el archivo models.py del módulo de objetos. Una vez corregidos, desarrollé también el test unitario correspondiente a la funcionalidad de pagos, cubriendo los casos necesarios para asegurar su correcto funcionamiento.
+
+A continuación, implementé pruebas E2E utilizando Selenium para la funcionalidad de búsqueda de objetos (Search Items). Este trabajo representó un reto significativo, ya que me encontré con ciertas ineficiencias o carencias tanto en el backend como en el frontend. Dado que mi intención era evitar modificar el código principal para no comprometer la estabilidad de la aplicación, tuve que buscar soluciones alternativas, lo que aumentó el tiempo requerido. Además, por su complejidad, estas pruebas resultaron más exigentes que las pruebas unitarias convencionales.
+
+Una vez implementadas, resolví los conflictos que surgieron al hacer merge con la rama develop, especialmente aquellos relacionados con los tests de Selenium que había desarrollado.
+También llevé a cabo las pruebas unitarias correspondientes a la funcionalidad de reportes.
+Finalmente, revisé las píldoras teóricas 8 y 9, lo cual me permitió consolidar conocimientos clave que aplico en el desarrollo del proyecto.
+

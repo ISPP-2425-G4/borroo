@@ -5082,3 +5082,63 @@
 </table>
 
 ### **Sevillano Barea, Alejandro**
+
+<table>
+    <tr>
+        <th>Tarea</th>
+        <th>Detalles de la actividad</th>
+        <th>Tiempo</th>
+    </tr>
+    <tr>
+        <td rowspan="9">Trabajo</td>
+        <td>Grabacion de videos para anuncios</td>
+        <td>45 minutos</td>
+    </tr>
+    <tr>
+        <td>Test para funcionalidad de pagos</td>
+        <td>1 hora 47 minutos</td>
+    </tr>
+    <tr>
+        <td>Arreglo de tests del subgrupo 1</td>
+        <td>2 hora 7 minutos</td>
+    </tr>
+    <tr>
+        <td>Frontend de editar un perfil</td>
+        <td>1 hora 31 minutos</td>
+    </tr>
+    <tr>
+        <td>Pruebas unitarias para la funcionalidad de reportes</td>
+        <td>2 horas 16 minutos</td>
+    </tr>
+    <tr>
+        <td>Corregir que las reseñas a usuarios solo se puedan hacer si se alquila previamente un objeto del perfil visitado</td>
+        <td>1 horas 10 minutos</td>
+    </tr>
+    <tr>
+        <td>Workflow changelog</td>
+        <td>54 minutos</td>
+    </tr>
+    <tr>
+        <td>Haciendo test de selenium y locust para el test de Search Items</td>
+        <td>6 horas 28 minutos</td>
+    </tr>
+    <tr>
+        <td>Arreglando conflictos por mergear y arreglando los test de selenium para el test de Search Items</td>
+        <td>1 horas 28 minutos</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Clases</td>
+        <td>Clase 28-03-25</td>
+        <td>3 horas 40 minutos</td>
+    </tr>
+    <tr>
+        <td>Clase 04-04-25</td>
+        <td>3 horas 40 minutos</td>
+    </tr>
+    <tr>
+        <td>Píldoras teóricas</td>
+        <td>Píldoras</td>
+        <td>42 minutos</td>
+    </tr>
+</table>
+
