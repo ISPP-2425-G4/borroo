@@ -4389,6 +4389,78 @@
 
 ### **Martín Muñoz, Álvaro**
 
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+</tr>
+<tr>
+    <td rowspan="10">Trabajo</td>
+    <td>BUG: El formulario de update item se solapa</td>
+    <td>45 minutos, 26 segundos</td>
+</tr>
+<tr>
+    <td>Full Stack Sistema de reporte de usuarios</td>
+    <td>3 horas, 21 minutos</td>
+</tr>
+<tr>
+    <td>Full Stack Sistema de reporte de usuarios</td>
+    <td>1 hora, 20 minutos</td>
+</tr>
+<tr>
+    <td>Admin Full Stack obtener reportes</td>
+    <td>3 horas, 10 minutos, 38 segundos</td>
+</tr>
+<tr>
+    <td>Admin Full Stack obtener reportes</td>
+    <td>52 minutos, 40 segundos</td>
+</tr>
+<tr>
+    <td>Arreglo de errores de lint</td>
+    <td>36 minutos, 20 segundos</td>
+</tr>
+<tr>
+    <td>Arreglo imagen admin</td>
+    <td>1 hora, 39 minutos, 20 segundos</td>
+</tr>
+<tr>
+    <td>Documentación del sprint</td>
+    <td>15 minutos, 40 segundos</td>
+</tr>
+<tr>
+    <td>Time Report Effort</td>
+    <td>30 minutos</td>
+</tr>
+<tr>
+    <td>Performance Evaluation</td>
+    <td>15 minutos</td>
+</tr>
+<tr>
+    <td rowspan="2">Clase</td>
+    <td>28/03/2025</td>
+    <td>3 horas, 50 minutos</td>
+</tr>
+<tr>
+    <td>04/04/2025</td>
+    <td>3 horas, 50 minutos</td>
+</tr>
+<tr>
+    <td>Feedback Externo</td>
+    <td>Usuario Piloto de Go4Surprise</td>
+    <td>1 hora, 21 minutos</td>
+</tr>
+<tr>
+    <td rowspan="2">Píldora Teórica</td>
+    <td>Session 08</td>
+    <td>12 minutos, 2 segundos</td>
+</tr>
+<tr>
+    <td>Session 09</td>
+    <td>30 minutos, 1 segundo</td>
+</tr>
+</table>
+
 ### **Naredo Bernardos, Ignacio**
 <table border="1" cellspacing="0" cellpadding="5">
   <tr>
