@@ -101,6 +101,12 @@ class ChatTests(TestCase):
         response = self.client.get(f"/chats/{self.chat.id}/messages/")
         self.assertEqual(response.status_code, 404)
 
+    def test_get_my_chats_returns_data(self):
+        response = self.client.get("/chats/get_my_chats/")
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(response.data, list)
+        self.assertGreaterEqual(len(response.data), 1)
+
     def test_get_chat_with_user_success(self):
         response = self.client.get(f"/chats/get_chat_with/{self.user2.id}/")
         self.assertEqual(response.status_code, 200)
