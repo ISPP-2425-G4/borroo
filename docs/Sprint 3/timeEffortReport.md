@@ -777,47 +777,48 @@
       <td>Ver videos de píldoras</td>
       <td>2 horas y 24 minutos</td>
     </tr>
-    <table>
-  <tr>
-    <th>Tarea</th>
-    <th>Detalles de la actividad</th>
-    <th>Tiempo</th>
-  </tr>
-  <tr>
-    <td rowspan="3">Alquiler</td>
-    <td>Método solicitud alquiler</td>
-    <td>3 horas y 7 minutos</td>
-  </tr>
-  <tr>
-    <td>Método solicitar alquiler y sus validaciones</td>
-    <td>2 horas y 13 minutos</td>
-  </tr>
-  <tr>
-    <td>Ayuda frontend admin y solicitud</td>
-    <td>3 horas</td>
-  </tr>
-  <tr>
-    <td>Base de conocimiento</td>
-    <td>Base conocimiento común</td>
-    <td>36 minutos</td>
-  </tr>
-  <tr>
-    <td rowspan="4">Backend</td>
-    <td>Admin backend</td>
-    <td>3 horas y 16 minutos</td>
-  </tr>
-  <tr>
-    <td>Admin backend</td>
-    <td>2 horas y 6 minutos</td>
-  </tr>
-  <tr>
-    <td>Admin backend con token</td>
-    <td>2 horas y 30 minutos</td>
-  </tr>
-  <tr>
-    <td>Ayuda Fullstack categorías y filtro de precio</td>
-    <td>1 hora y 30 minutos</td>
-  </tr>
+  </table>
+  <table>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+    <tr>
+      <td rowspan="3">Alquiler</td>
+      <td>Método solicitud alquiler</td>
+      <td>3 horas y 7 minutos</td>
+    </tr>
+    <tr>
+      <td>Método solicitar alquiler y sus validaciones</td>
+      <td>2 horas y 13 minutos</td>
+    </tr>
+    <tr>
+      <td>Ayuda frontend admin y solicitud</td>
+      <td>3 horas</td>
+    </tr>
+    <tr>
+      <td>Base de conocimiento</td>
+      <td>Base conocimiento común</td>
+      <td>36 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="4">Backend</td>
+     <td>Admin backend</td>
+      <td>3 horas y 16 minutos</td>
+    </tr>
+    <tr>
+      <td>Admin backend</td>
+      <td>2 horas y 6 minutos</td>
+    </tr>
+    <tr>
+      <td>Admin backend con token</td>
+      <td>2 horas y 30 minutos</td>
+    </tr>
+    <tr>
+      <td>Ayuda Fullstack categorías y filtro de precio</td>
+      <td>1 hora y 30 minutos</td>
+    </tr>
   </table>
   <table>
     <tr>
@@ -2046,10 +2047,6 @@
     <td>21/02/2025</td>
     <td>3h50min</td>
   </tr>
-  <tr>
-    <td>7/03/2025</td>
-    <td>3h50min</td>
-  </tr>
 </table>
 
 ### Naredo Bernardos, Ignacio
@@ -4037,7 +4034,7 @@
       <td>20 minutos</td>
     </tr>
     <tr>
-      <td rowspan="3">Theory<br>Pills</td>
+      <td rowspan="3">Theory Pills</td>
       <td>Theory Pill S06</td>
       <td>20 minutos</td>
     </tr>
