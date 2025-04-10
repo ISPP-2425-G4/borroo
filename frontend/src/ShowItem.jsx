@@ -48,6 +48,7 @@ import EditConfirmationDialog from "./components/EditConfirmationDialog";
 import PublishConfirmationDialog from "./components/PublishConfirmationDialog";
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
 import DepositToolTip from "./components/DepositToolTip";
+import StarRating from "./components/StarRating";
 
 
 
@@ -481,12 +482,15 @@ const ShowItemScreen = () => {
   };
   const handlePublishItem = async () => {
     try {
-      const user = JSON.parse(localStorage.getItem("user"));
   
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/objetos/publish_item/`,
-        { item_id: item.id, user_id: user.id },
-        { headers: { "Content-Type": "application/json" } }
+        { item_id: item.id},
+        { headers: { 
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}` 
+          } 
+        }
       );
   
       if (response.status === 200) {
@@ -726,6 +730,11 @@ const ShowItemScreen = () => {
                       <PersonIcon sx={{ fontSize: 20, color: "white" }} />
                       {userName}
                     </Button>
+                    {item.user_rating !== undefined && (
+                        <Box sx={{ mt: 1 }}>
+                          <StarRating rating={item.user_rating} />
+                        </Box>
+                    )}
                   </Link>
 
 

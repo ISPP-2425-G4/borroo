@@ -13,8 +13,9 @@ from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import action
 from rest_framework.decorators import api_view, permission_classes
+import logging
 import uuid
-from django.utils.timezone import now
+from django.utils.timezone import now, timedelta
 from django.core.mail import send_mail
 from rest_framework.views import APIView
 from django.core.exceptions import ValidationError
@@ -41,6 +42,9 @@ def get_message(request):
     return JsonResponse({"message": f"Hola desde Django! Hora actual: {now}"})
 
 
+logger = logging.getLogger(__name__)
+
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -49,11 +53,10 @@ class UserViewSet(viewsets.ModelViewSet):
         """Registro de usuario y generación de token JWT"""
         data = request.data.copy()
 
-        # Encriptar la contraseña antes de validar el serializer
-        data["password"] = make_password(data["password"])
-
         serializer = RegisterSerializer(data=data)
         if serializer.is_valid():
+            # Encriptar la contraseña antes de validar el serializer
+            data["password"] = make_password(data["password"])
             # Guardamos el usuario con la contraseña encriptada
             user = serializer.save()
             # Generamos el token para verificar el email
@@ -110,8 +113,18 @@ class UserViewSet(viewsets.ModelViewSet):
 
         # Comprobar si la contraseña es correcta
         if not user.verified_account:
-            return Response({"error": "Verifica tu correo"},
-                            status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {
+                    "error": (
+                        "El usuario no ha verificado su cuenta, "
+                        "revisa tu correo electrónico"
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Aquí se actualiza la suscripción si hace falta
+        user.update_subscription_status()
 
         # Generar tokens JWT
         refresh = RefreshToken.for_user(user)
@@ -121,24 +134,43 @@ class UserViewSet(viewsets.ModelViewSet):
             "access": str(refresh.access_token),
         }, status=status.HTTP_200_OK)
 
-    # def destroy(self, request, *args, **kwargs):
-    #     user = self.get_object()
+    def destroy(self, request, *args, **kwargs):
+        # First check if user is authenticated at all
+        if not request.user.is_authenticated:
+            return Response(
+                {"error": "Authentication credentials were not provided."},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
 
-    #     if (
-    #         user.username != request.user.username
-    #         and not request.user.is_superuser
-    #     ):
-    #         raise PermissionDenied(
-    #             "No tienes permiso para eliminar este usuario")
+        # Then check if user has permission to delete
+        instance = self.get_object()
+        if instance != request.user:
+            return Response(
+                {"error": "No tienes permiso para eliminar este usuario"},
+                status=status.HTTP_403_FORBIDDEN
+            )
 
-    #     return super().destroy(request, *args, **kwargs)
+        return super().destroy(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
+        self.permission_classes = [IsAuthenticated]
         serializer = self.get_serializer(
             instance, data=request.data, partial=partial
         )
+
+        if not request.user.is_authenticated:
+            return Response(
+                {"error": "Authentication credentials were not provided."},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        if instance != request.user:
+            return Response(
+                {"error": "No tienes permiso para modificar este usuario"},
+                status=status.HTTP_403_FORBIDDEN
+            )
 
         if serializer.is_valid():
             updated_user = serializer.save()
@@ -152,36 +184,65 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(detail=True, methods=['post'],
-            permission_classes=[IsAuthenticated])
+    @action(
+        detail=True, methods=['post'], permission_classes=[IsAuthenticated])
     def upgrade_to_premium(self, request, pk=None):
         user = self.get_object()
-        if user.pricing_plan != PricingPlan.FREE:
-            return Response(
-                {'error': 'Solo los usuarios con plan free pueden '
-                 'actualizar a premium.'},
-                status=status.HTTP_400_BAD_REQUEST)
-        user.pricing_plan = PricingPlan.PREMIUM
-        user.save()
-        return Response(
-            {'message': 'Plan actualizado a premium.'},
-            status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=['post'],
-            permission_classes=[IsAuthenticated])
-    def downgrade_to_free(self, request, pk=None):
-        user = self.get_object()
-        if user.pricing_plan != PricingPlan.PREMIUM:
+        if user != request.user:
             return Response(
-                {'error': 'Solo los usuarios con plan premium '
-                 'pueden cambiar a free.'},
+                {'error':
+                 'No puedes modificar el plan de otro usuario.'},
+                status=status.HTTP_403_FORBIDDEN)
+
+        if user.pricing_plan != PricingPlan.FREE:
+            logger.warning(
+                f"Intento de upgrade fallido: {user.username} ya es premium.")
+            return Response(
+                {
+                    'error': (
+                        'Solo los usuarios con plan free '
+                        'pueden actualizar a premium.'
+                    )
+                },
                 status=status.HTTP_400_BAD_REQUEST
             )
-        user.pricing_plan = PricingPlan.FREE
+
+        try:
+            logger.info(f"Actualizando a premium: {user.username}")
+            user.pricing_plan = PricingPlan.PREMIUM
+            user.subscription_start_date = now()
+            user.subscription_end_date = now() + timedelta(days=30)
+            user.save()
+
+            return Response({
+                'message': 'Plan actualizado a Premium.',
+                'subscription_start_date': user.subscription_start_date,
+                'subscription_end_date': user.subscription_end_date
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            logger.error(f"Fallo al actualizar a premium: {str(e)}")
+            return Response({'error': f'Error actualizando el plan: {str(e)}'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    @action(detail=False, methods=["post"],
+            permission_classes=[IsAuthenticated])
+    def downgrade_to_free(self, request):
+        """Cancela la renovación automática del plan Premium del usuario."""
+        user = request.user
+
+        if user.pricing_plan != PricingPlan.PREMIUM:
+            return Response({"error": "No tienes un plan Premium activo."},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        user.is_subscription_active = False
         user.save()
-        return Response(
-            {'message': 'Plan actualizado a free.'},
-            status=status.HTTP_200_OK)
+        return Response({
+            "message":
+            "Has cancelado la renovación automática de tu suscripción.",
+            "subscription_end_date": user.subscription_end_date
+        }, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['get'],
             permission_classes=[IsAuthenticated])
@@ -553,36 +614,20 @@ class CreateItemView(APIView):
 
 
 class UpdateItemView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
-    def put(self, request, *args, **kwargs):
-        # Recuperamos el objeto a actualizar
-        try:
-            item = self.get_object()
-        except Item.DoesNotExist:
-            return Response({"detail": "Ítem no encontrado."},
-                            status=status.HTTP_404_NOT_FOUND)
+    def put(self, request, item_id, *args, **kwargs):
+        item = get_object_or_404(Item, id=item_id)
 
-        # Verificamos si el usuario es el propietario o un administrador
-        if item.user != request.user and not request.user.is_staff:
-            return Response(
-                {"detail": "No tienes permiso para actualizar este ítem."},
-                status=status.HTTP_403_FORBIDDEN
-            )
+        serializer = ItemSerializer(item, data=request.data,
+                                    context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(ItemSerializer(item, context={'request': request})
+                            .data,
+                            status=status.HTTP_201_CREATED)
 
-        # Actualizamos los datos del ítem
-        data = request.data.copy()
-        data['user'] = request.user.id
-
-        # Usamos el serializador para validar y guardar
-        serializer = self.get_serializer(item, data=data, partial=True)
-        serializer.is_valid(raise_exception=True)
-
-        self.handle_unavailable_periods(
-            serializer.save(), request.data.get("unavailable_periods", [])
-        )
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class DeleteItemView(APIView):

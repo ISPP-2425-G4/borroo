@@ -21,7 +21,6 @@ import {
     DialogActions,
     Button,
     Typography,
-    Grid
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { styled } from "@mui/system";
@@ -56,25 +55,6 @@ const FileInputContainer = styled(Box)(() => ({
       backgroundColor: "#f0f7ff",
     },
   }));
-//   const RemoveButton = styled("button")(() => ({
-//     position: "absolute",
-//     top: "8px",
-//     right: "8px",
-//     background: "rgba(0, 0, 0, 0.5)",
-//     color: "white",
-//     border: "none",
-//     borderRadius: "50%",
-//     width: "30px",
-//     height: "30px",
-//     display: "flex",
-//     alignItems: "center",
-//     justifyContent: "center",
-//     cursor: "pointer",
-//     transition: "background 0.2s",
-//     "&:hover": {
-//       background: "rgba(0, 0, 0, 0.7)",
-//     },
-//   }));
 
 const categoryList = [
     { value: 'technology', label: 'Tecnología' },
@@ -242,18 +222,46 @@ const AdminItemDashboard = () => {
             alert("Error al eliminar ítem.", error);
         }
     };
+   
     const handleEditItem = async (itemId) => {
-        const confirm = window.confirm("Confirmar cambios");
-        if (!confirm) return;
+        const formData = new FormData();
+    
+        
+        formData.append("title", editItemData.title);
+        formData.append("description", editItemData.description);
+        formData.append("category", editItemData.category);
+        formData.append("subcategory", editItemData.subcategory);
+        formData.append("cancel_type", editItemData.cancel_type);
+        formData.append("price_category", editItemData.price_category);
+        formData.append("price", editItemData.price);
+        formData.append("deposit", editItemData.deposit);
+    
+        images.forEach((image) => {
+            formData.append("image_files", image);
+        });
+    
         try {
-            await axios.put(`${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/item/${itemId}/delete/`, {
-                
-            });
+            await axios.put(
+                `${import.meta.env.VITE_API_BASE_URL}/usuarios/adminCustome/item/${itemId}/update/`,
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+            alert("Ítem editado correctamente.");
+            setEditItemData(null);
             fetchItems();
-        } catch(error) {
-            alert("Error al editar el item", error);
-        } 
+        } catch (error) {
+            alert("Error al editar ítem.");
+            console.error(error.response?.data || error);
+        }
     };
+    
+    
+    
     const [images, setImages] = useState([]);
    
     const [formData, setFormData] = useState({
@@ -264,10 +272,11 @@ const AdminItemDashboard = () => {
         cancel_type: "",
         price_category: "",
         price: "",
+        deposit: "",
         
     });
    
-    const [editItemData, setEditItemData] = useState(false)
+    const [editItemData, setEditItemData] = useState(null)
     const [showCreateForm, setShowCreateForm] = useState(false)
 
     const handleInputChange = (e) => {
@@ -294,6 +303,7 @@ const AdminItemDashboard = () => {
         form.append("category", formData.category);
         form.append("subcategory", formData.subcategory);
         form.append("cancel_type", formData.cancel_type || "flexible");
+        form.append("deposit", formData.deposit);
         form.append("draft_mode", false);
         form.append("featured", false); 
         
@@ -324,7 +334,8 @@ const AdminItemDashboard = () => {
                 price_category: "",
                 category: "none",
                 subcategory: "",
-                cancel_type: ""
+                cancel_type: "",
+                deposit: "",
             });
             fetchItems(); 
         } catch (error) {
@@ -339,7 +350,7 @@ const AdminItemDashboard = () => {
                 
                 <Button
                     variant="contained"
-                    onClick={() => setShowCreateForm(true)} // Asume que tienes esta lógica
+                    onClick={() => setShowCreateForm(true)} 
                 >
                     Crear Ítem
                 </Button>
@@ -363,7 +374,10 @@ const AdminItemDashboard = () => {
                                     <IconButton onClick={() => handleDeleteItem(item.id)}>
                                         <DeleteIcon color="error" />
                                     </IconButton>
-                                    <IconButton onClick={() => handleEditItem(item.id)}>
+                                    <IconButton onClick={() => {
+                                        setEditItemData(item)
+                                        setFormData(item)
+                                    }}>
                                         <EditIcon color="primary" />
                                     </IconButton>
                                 </TableCell>
@@ -372,37 +386,136 @@ const AdminItemDashboard = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-    
-            {/* Agrega el dialog para editar el ítem si editItemData está presente */}
-            {editItemData && (
-                <Dialog open={true} onClose={() => setEditItemData(null)}>
-                    <DialogTitle>Editar Item</DialogTitle>
+       
+            
+            <Dialog open={editItemData} onClose={() => setEditItemData(null)}>
+    <DialogTitle>Editar Ítem</DialogTitle>
                     <DialogContent>
-                        <Grid container spacing={2}>
-                            {["title", "description", "price", "price_category", "category", "subcategory", "image"].map((field) => (
-                                <Grid item xs={12} sm={6} key={field}>
-                                    <TextField
-                                        fullWidth
-                                        label={field.charAt(0).toUpperCase() + field.slice(1).replace("_", " ")}
-                                        value={editItemData[field] || ""}
-                                        onChange={(e) =>
-                                            setEditItemData((prev) => ({
-                                                ...prev,
-                                                [field]: e.target.value,
-                                            }))
-                                        }
-                                        variant="outlined"
-                                    />
-                                </Grid>
-                            ))}
-                        </Grid>
+                        <TextField
+                            fullWidth
+                            label="Título"
+                            name="title"
+                            value={formData.title}
+                            onChange={handleInputChange}
+                            margin="normal"
+                        />
+                        <TextField
+                            fullWidth
+                            label="Descripción"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleInputChange}
+                            margin="normal"
+                        />
+                        <TextField
+                            fullWidth
+                            label="Precio"
+                            name="price"
+                            value={formData.price}
+                            onChange={handleInputChange}
+                            margin="normal"
+                        />
+                          <TextField
+                            fullWidth
+                            label="Fianza"
+                            name="deposit"
+                            value={formData.deposit}
+                            onChange={handleInputChange}
+                            margin="normal"
+                        />
+                        <FormControl fullWidth margin="normal">
+                            <InputLabel>Precio Categoría</InputLabel>
+                            <Select
+                                name="price_category"
+                                value={formData.price_category}
+                                onChange={handleInputChange}
+                            >
+                                <MenuItem value="hour">Hora</MenuItem>
+                                <MenuItem value="day">Día</MenuItem>
+                                <MenuItem value="month">Mes</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        <FormControl fullWidth margin="normal">
+                            <InputLabel>Categoría</InputLabel>
+                            <Select
+                                name="category"
+                                value={formData.category}
+                                onChange={handleCategoryChange}
+                            >
+                                <MenuItem value="none" disabled>Selecciona una categoría</MenuItem>
+                                {categoryList.map((cat) => (
+                                    <MenuItem key={cat.value} value={cat.value}>
+                                        {cat.label}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+
+                        {formData.category !== "none" && (
+                            <FormControl fullWidth margin="normal">
+                                <InputLabel>Subcategoría</InputLabel>
+                                <Select
+                                    name="subcategory"
+                                    value={formData.subcategory}
+                                    onChange={handleInputChange}
+                                    label="Subcategoría"
+                                >
+                                    {categoryOptions[formData.category]?.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        )}
+
+                        <FileInputContainer onClick={triggerFileSelect}>
+                            <FiImage size={32} color="#4a90e2" />
+                            <ImageUploadText>
+                                Haz clic para seleccionar imágenes
+                            </ImageUploadText>
+                            <ImageUploadText variant="caption">
+                                (Para seleccionar múltiples archivos, mantén presionada la tecla Ctrl o Cmd)
+                            </ImageUploadText>
+                            <HiddenFileInput
+                                id="image-upload"
+                                type="file"
+                                multiple
+                                accept="image/*"
+                                onChange={handleImageChange}
+                            />
+                        </FileInputContainer>
+                        
+                        {images.length > 0 && (
+                                <Box>
+                                  <Typography variant="subtitle2" sx={{ mb: 1, color: "#555" }}>
+                                    Imágenes seleccionadas ({images.length})
+                                  </Typography>
+                                  <ImageGallery>
+                                    {images.map((image, index) => (
+                                      <ImageContainer key={index}>
+                                        <PreviewImage src={URL.createObjectURL(image)} alt={`Preview ${index + 1}`} />
+                                        {/* <RemoveButton onClick={() => handleRemoveImage(index)}>
+                                          <FiTrash2 size={16} />
+                                        </RemoveButton> */}
+                                      </ImageContainer>
+                                    ))}
+                                  </ImageGallery>
+                                </Box>
+                              )}
+                
+
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={() => setEditItemData(null)}>Cancelar</Button>
-                        <Button onClick={handleEditItem} variant="contained" color="primary">Guardar</Button>
+                        <Button onClick={() => setEditItemData(null)} color="primary">
+                            Cancelar
+                        </Button>
+                        <Button onClick={() => handleEditItem(editItemData.id)} color="primary">
+                                    Guardar
+                            </Button>
                     </DialogActions>
                 </Dialog>
-            )}
       
          <Dialog open={showCreateForm} onClose={() => setShowCreateForm(false)}>
                     <DialogTitle>Crear Ítem</DialogTitle>
@@ -428,6 +541,14 @@ const AdminItemDashboard = () => {
                             label="Precio"
                             name="price"
                             value={formData.price}
+                            onChange={handleInputChange}
+                            margin="normal"
+                        />
+                         <TextField
+                            fullWidth
+                            label="Fianza"
+                            name="deposit"
+                            value={formData.deposit}
                             onChange={handleInputChange}
                             margin="normal"
                         />

@@ -32,6 +32,7 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import StarIcon from '@mui/icons-material/Star';
 // import AdSenseComponent from "./components/AdSense";
 import AdSenseMock from "./components/AdSenseMock";
+import PersonIcon from '@mui/icons-material/Person';
 
 const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -108,6 +109,7 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
   const reiniciarFiltros = () => {
     setTerminoBusqueda("");
     setCategoria("");
+    setSubcategoria("");
     setPriceCategory("");
     setCancelType("");
     setRangoValoracion([0, 5]);
@@ -215,7 +217,7 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
       rangoPrecio[0] !== 0 || rangoPrecio[1] !== 99999 || rangoValoracion[0] !== 0 || rangoValoracion[1] !== 5) {
       setCurrentPage(1);
     }
-  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda,priceCategory,cancelType, rangoValoracion]);
+  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda,priceCategory,cancelType, rangoValoracion, mostrarSoloLiked]);
 
 
   const hayFiltrosActivos = useMemo(() => 
@@ -583,11 +585,58 @@ const toggleLike = async (productoId) => {
                                       {truncarDescripcion(producto.description, 80)}
                                     </Typography>
                                   </Tooltip>
-                                  <Box display="flex" alignItems="center" gap={0.5}>
-                                    <FavoriteIcon fontSize="small" sx={{ color: 'red' }} />
+                                  <Link to={`/perfil/${producto.user_username}`} style={{ textDecoration: 'none' }}>
+                                     <Box 
+                                     sx={{ 
+                                       display: 'flex', 
+                                       alignItems: 'center',
+                                       '&:hover': {
+                                           cursor: 'pointer',
+                                         },
+                                      }}>
+                                       <IconButton
+                                         sx={{
+                                           bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                           '&:hover': {
+                                             bgcolor: 'white',
+                                           },
+                                           zIndex: 1,
+                                           marginRight: 1,
+                                         }}
+                                       >
+                                         <PersonIcon fontSize="small" sx={{ color: 'blue' }} />
+                                       </IconButton>
+                                       <Typography 
+                                         sx={{
+                                           bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                           '&:hover': {
+                                             bgcolor: 'white',
+                                             textDecoration: 'underline',
+                                           },
+                                           zIndex: 1,
+                                         }}
+                                       >
+                                         {producto.user_name} {producto.user_surname}
+                                       </Typography>
+                                     </Box>
+                                   </Link>
+                                 <Box display="flex" alignItems="center" gap={0.5}>
+                                   <IconButton
+                                           sx={{
+                                             bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                             '&:hover': {
+                                               bgcolor: 'white',
+                                             },
+                                             zIndex: 1,
+                                             display: 'flex',
+                                             alignItems: 'center',
+                                           }}
+                                         >
+                                     <FavoriteIcon fontSize="small" sx={{ color: 'red', marginRight: 0.5 }} />
                                     <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
                                       {producto.num_likes}
                                     </Typography>
+                                    </IconButton>
                                   </Box>
                                 </CardContent>
                               </Card>
@@ -1195,6 +1244,33 @@ const toggleLike = async (productoId) => {
                       sx={{ borderRadius: 1 }}
                     />
                   )}
+                  {cancelType && (
+                  <Chip
+                  label={`Tipo de cancelación: ${options.cancel_types.find(([val]) => val === cancelType)?.[1] || cancelType}`}
+                  size="small"
+                    onDelete={() => setCancelType("")}
+                    sx={{ borderRadius: 1 }}
+                  />
+                )}
+
+                {(rangoValoracion[0] > 0 || rangoValoracion[1] < 5) && (
+                  <Chip
+                    label={`Valoración: ${rangoValoracion[0]} - ${rangoValoracion[1]}`}
+                    size="small"
+                    onDelete={() => setRangoValoracion([0, 5])}
+                    sx={{ borderRadius: 1 }}
+                  />
+                )}
+
+                {priceCategory && (
+                  <Chip
+                  label={`Tipo de precio: ${options.price_categories.find(([val]) => val === priceCategory)?.[1] || priceCategory}`}
+                  size="small"
+                    onDelete={() => setPriceCategory("")}
+                    sx={{ borderRadius: 1 }}
+                  />
+                )}
+
                 </Box>
               )}
 
@@ -1485,11 +1561,58 @@ const toggleLike = async (productoId) => {
                                     {truncarDescripcion(producto.description, 80)}
                                   </Typography>
                                 </Tooltip>
-                                  <Box display="flex" alignItems="center" gap={0.5}>
-                                    <FavoriteIcon fontSize="small" sx={{ color: 'red' }} />
+                                <Link to={`/perfil/${producto.user_username}`} style={{ textDecoration: 'none' }}>
+                                     <Box 
+                                     sx={{ 
+                                       display: 'flex', 
+                                       alignItems: 'center',
+                                       '&:hover': {
+                                           cursor: 'pointer',
+                                         },
+                                      }}>
+                                       <IconButton
+                                         sx={{
+                                           bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                           '&:hover': {
+                                             bgcolor: 'white',
+                                           },
+                                           zIndex: 1,
+                                           marginRight: 1,
+                                         }}
+                                       >
+                                         <PersonIcon fontSize="small" sx={{ color: 'blue' }} />
+                                       </IconButton>
+                                       <Typography 
+                                         sx={{
+                                           bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                           '&:hover': {
+                                             bgcolor: 'white',
+                                             textDecoration: 'underline',
+                                           },
+                                           zIndex: 1,
+                                         }}
+                                       >
+                                         {producto.user_name} {producto.user_surname}
+                                       </Typography>
+                                     </Box>
+                                   </Link>
+                                 <Box display="flex" alignItems="center" gap={0.5}>
+                                   <IconButton
+                                           sx={{
+                                             bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                             '&:hover': {
+                                               bgcolor: 'white',
+                                             },
+                                             zIndex: 1,
+                                             display: 'flex',
+                                             alignItems: 'center',
+                                           }}
+                                         >
+                                     <FavoriteIcon fontSize="small" sx={{ color: 'red', marginRight: 0.5 }} />
                                     <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
                                       {producto.num_likes}
                                     </Typography>
+                                    </IconButton>
                                   </Box>
                               </CardContent>
                             </Card>

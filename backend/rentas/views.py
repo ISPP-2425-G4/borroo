@@ -8,7 +8,7 @@ from rest_framework.exceptions import NotAuthenticated, PermissionDenied
 from rest_framework.exceptions import NotFound
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 from datetime import timedelta
 from django.contrib.auth.models import AnonymousUser
 from django.db.models import Q
@@ -17,7 +17,7 @@ from django.db.models import Q
 def is_authorized(condition=True, authenticated=True):
     if not authenticated:
         raise NotAuthenticated(
-            {'error': 'Debes iniciar sesión.'}, status=401)
+            {'error': 'Debes iniciar sesión.'})
     elif not condition:
         raise PermissionDenied(
             {'error': 'No tienes permisos para realizar esta acción.'})
@@ -30,12 +30,13 @@ def apply_penalty(rent):
 
 
 def apply_refund(cancel_type, days_diff):
-    thresholds = {
-        'flexible': [(2, Decimal("1.00")), (1, Decimal("0.50"))],
-        'medium': [(7, Decimal("1.00")), (3, Decimal("0.50"))],
-        'strict': [(30, Decimal("1.00")), (14, Decimal("0.50"))],
+    minimum_days = {
+        # 1.00 = 100%
+        'flexible': [(1, Decimal("1.00")), (0, Decimal("0.80"))],
+        'medium': [(2, Decimal("1.00")), (1, Decimal("0.50"))],
+        'strict': [(7, Decimal("0.50"))],
     }
-    for threshold, refund in thresholds.get(cancel_type, []):
+    for threshold, refund in minimum_days.get(cancel_type, []):
         if days_diff >= threshold:
             return refund
     return Decimal("0.00")
@@ -217,8 +218,8 @@ class RentViewSet(viewsets.ModelViewSet):
         is_owner = (user == rent.item.user)
 
         if rent.rent_status == RentStatus.CANCELLED:
-            raise PermissionDenied({"error": "El alquiler está cancelado y "
-                                    "no se puede modificar."})
+            raise PermissionDenied(
+                {"error": "Alquiler cancelado. No se puede modificar."})
 
         if (rent.rent_status == RentStatus.ACCEPTED
                 and rent.payment_status == PaymentStatus.PAID):
@@ -274,33 +275,76 @@ class RentViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['put'])
     def cancel_rent(self, request, pk=None):
-        # hay que cambiar user
-        user = request.user if not AnonymousUser else None
-        authenticated = request.user.is_authenticated
+        user = request.user if not isinstance(
+            request.user, AnonymousUser) else None
+        if not request.user.is_authenticated:
+            raise NotAuthenticated({'error': 'Debes iniciar sesión.'})
+
+        rent = get_object_or_404(Rent, pk=pk)
+        owner = rent.item.user
+
+        if not (user == rent.renter or user == owner):
+            raise PermissionDenied({'error': 'No tienes permisos para '
+                                    'cancelar este alquiler.'})
+
         now = timezone.now()
-        rent = self.get_object()
-        renter = rent.renter
-        permission = renter == user
-        is_authorized(condition=permission, authenticated=authenticated)
 
         if rent.rent_status in [RentStatus.REQUESTED, RentStatus.ACCEPTED]:
             rent.rent_status = RentStatus.CANCELLED
             rent.save()
             return Response({'status': 'Alquiler cancelado exitosamente'})
+
         elif rent.rent_status == RentStatus.BOOKED:
-            days_diff = (rent.start_date.date() - now.date()).days
-            cancel_type = rent.item.cancel_type
-            refund_percentage = apply_refund(cancel_type, days_diff)
-            refund_amount = Decimal(str(rent.total_price)) * refund_percentage
-            rent.rent_status = RentStatus.CANCELLED
-            rent.save()
-            return Response({
-                'status': 'Alquiler cancelado exitosamente en estado BOOKED',
-                'refund_percentage': str(refund_percentage),
-                'refund_amount': str(refund_amount)})
+
+            if user == owner:
+                refund_amount = Decimal(str(rent.total_price))
+                rent.rent_status = RentStatus.CANCELLED
+                rent.save()
+
+                rent.renter.saldo += refund_amount
+                rent.renter.save()
+                print(f'User saldo: {user.saldo}')
+
+                return Response({
+                    'status': 'Alquiler cancelado correctamente',
+                    'refund_percentage': "1.00",
+                    'refund_amount': str(refund_amount),
+                    'notification_message': 'El propietario ha cancelado el alquiler. Se le devolverá el 100% del importe.',  # noqa: E501
+                    'cancelled_by': 'owner'
+                })
+
+            elif user == rent.renter:
+                days_diff = (rent.start_date.date() - now.date()).days
+                cancel_type = rent.item.cancel_type
+                refund_percentage = apply_refund(cancel_type, days_diff)
+                refund_amount = Decimal(
+                    str(rent.total_price)) * refund_percentage
+                refund_amount_rounded = refund_amount.quantize(
+                                         Decimal('0.01'),
+                                         rounding=ROUND_HALF_UP)
+                rent.rent_status = RentStatus.CANCELLED
+                rent.save()
+
+                refund_str = format(refund_amount_rounded, '.2f').replace('.',
+                                                                          ',')
+                if refund_amount > Decimal("0.00"):
+                    user.saldo += refund_amount
+                    user.save()
+                    message = f"Has cancelado el alquiler. Se te reembolsará {refund_str} € en los próximos 4-5 días laborales."  # noqa: E501
+                else:
+                    message = "Has cancelado el alquiler. No procede reembolso"
+                return Response({
+                    'status': 'Alquiler cancelado exitosamente',
+                    'refund_percentage': str(refund_percentage),
+                    'refund_amount': str(refund_amount),
+                    'notification_message': message,
+                    'cancelled_by': 'renter'
+                })
+
         else:
-            raise Response(
-                {'error': 'No se puede cancelar un alquiler en este estado'})
+            return Response(
+                {'error': 'No se puede cancelar un alquiler en este estado'},
+                status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, *args, **kwargs):
         rent = self.get_object()
