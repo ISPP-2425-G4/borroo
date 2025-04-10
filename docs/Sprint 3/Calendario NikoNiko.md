@@ -58,20 +58,20 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 
 | Nombre                      | 28 marzo | 29 marzo | 30 marzo | 31 marzo | 1 abril | 2 abril | 3 abril | 4 abril | 5 abril | 6 abril | 7 abril | 8 abril | 9 abril | 10 abril |
 |-----------------------------|----------|----------|----------|----------|---------|---------|---------|---------|---------|---------|---------|---------|---------|----------|
-| David Blanco Mora           |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Pablo Díaz Ordóñez          |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Pablo Espinosa Naranjo      |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Jesús Fernández Rodríguez   |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Francisco Fernández Mota    |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Javier García Rodríguez     |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Miguel González Ortiz       |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Álvaro Martín Muñoz         |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Ignacio Naredo Bernardos    |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Javier Nieto Vicioso        |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Marco Padilla Gómez         |          |          |          |          |:smiley: |         |         |         |         |         |         |         |         |          |
-| Miguel Palomo García        |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Luis Javier Periáñez Franco |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Alexander Picón Garrote     |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Santiago Rosado Raya        |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Julia Sánchez Márquez       |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
-| Alejandro Sevillano Barea   |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
+| David Blanco Mora           |          |          |          |          |         |         |         | :smiley:| :smiley:|:neutral_face:|:neutral_face:|:blush:|:blush: |
+| Pablo Díaz Ordóñez          |          |          |          |          | :blush: | :blush: |         | :blush: |:neutral_face:| :blush: |    | :blush: | :blush: |          |
+| Pablo Espinosa Naranjo      |          |          |          | :worried:|:worried:| :blush: | :blush: | :blush: |         |         |         |         |:worried:|  :smiley:|
+| Jesús Fernández Rodríguez   |          |          |          |          |    :smiley:     |    :blush:     |     :blush:    |    :neutral_face:     |         |  :smiley:        |     :blush:      |          |    :blush:      |    :worried:      |
+| Francisco Fernández Mota    |          |          |          | :smiley: | :smiley:| :smiley:|         |         |         | :blush: |         | :smiley:|         |  :blush:   |
+| Javier García Rodríguez     |:blush:|:neutral_face:|:neutral_face:|:blush:|:neutral_face:|:worried:|:neutral_face:|:blush:|:neutral_face:|:neutral_face:|:blush:|:neutral_face:|:worried:|:worried:|
+| Miguel González Ortiz       |          |          |          |          |         | :smiley: | :blush: | :neutral_face: |         | :smiley: | :blush: | :blush: | :worried: | :neutral_face: |
+| Álvaro Martín Muñoz         | :blush:  |          |          |      :blush:      |     :blush:      |         |    :blush:     |  :blush:       |         |     :blush:    |         |         |    :blush:     |     :blush:       |
+| Ignacio Naredo Bernardos    |          |          |          |          | :blush: | :blush: | :blush: |:blush:  |  :blush:|      :blush: |    :blush:     |  :smiley:       |    :smiley:     |          |
+| Javier Nieto Vicioso        |          |          |          |          | :blush: | :blush: | :blush: |         | :neutral_face: | :blush: | :blush: | :blush: |         |          |
+| Marco Padilla Gómez         |          |          |          |          |:smiley: |:smiley: |         |         |         |         |:smiley: |:smiley: |:smiley: |          |
+| Miguel Palomo García        |          |          |          |    :blush:      |         |   :smiley:      |   :blush:      |   :blush:      |         |   :smiley:     | :blush:        |  :neutral_face:       |   :neutral_face:      |   :blush:       |
+| Luis Javier Periáñez Franco |          |          |          |          | :neutral_face:|:neutral_face:|:neutral_face:|:neutral_face:|         |         |         |:worried:| :worried: |          |
+| Alexander Picón Garrote     |          |          |          | :angry:         | :worried:        | :worried:        |         |         |         | :smiley:        |         | :blush:        | :blush:         | :blush:         |
+| Santiago Rosado Raya        |          |          |          | :blush:  | :blush: | :blush: |         |         | :blush: | :blush: | :blush: | :blush: | :smiley:| :blush:  |
+| Julia Sánchez Márquez       |          |          |          |          |         | :blush: |         | :blush: | :blush: |         | :blush: | :blush: | :blush: | :blush:  |
+| Alejandro Sevillano Barea   |          |          |          |          |         | :blush: | :blush: |         |         |   :blush:   |         |         |   :worried:      |  :smiley:       |          |
