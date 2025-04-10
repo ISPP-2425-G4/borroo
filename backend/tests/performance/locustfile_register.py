@@ -1,5 +1,5 @@
 from locust import HttpUser, task, between
-import random
+import secrets
 import string
 
 
@@ -8,7 +8,7 @@ class RegisterUser(HttpUser):
 
     def generate_random_user_data(self):
         """Genera datos aleatorios para el registro de usuario."""
-        random_string = ''.join(random.choices(string.ascii_lowercase, k=8))
+        random_string = ''.join(secrets.choices(string.ascii_lowercase, k=8))
         return {
             "name": f"Test{random_string}",
             "surname": f"User{random_string}",
