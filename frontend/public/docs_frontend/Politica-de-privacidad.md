@@ -1,5 +1,4 @@
-# Política de privacidad de Borroo
-**Última actualización:** *03/04/2025* 
+# **Política de Protección de Datos y Cumplimiento Normativo de Borroo**  
 
 ## **1. Introducción**  
 
@@ -74,12 +73,6 @@ Además, Borroo garantiza que todos los empleados y colaboradores con acceso a d
 
 En caso de que se produzca una violación de seguridad que afecte a datos personales, Borroo notificará a la Agencia Española de Protección de Datos en un plazo máximo de 72 horas, conforme a lo establecido en los artículos 33 y 34 del RGPD, e informará a los usuarios afectados si el incidente supone un alto riesgo para sus derechos y libertades.  
 
-### **Conclusión**  
-
-Estos principios son la base del compromiso de Borroo con la privacidad y la protección de datos. Cada uno de ellos no solo responde a una exigencia legal, sino que también refleja la voluntad de la empresa de fomentar un entorno digital seguro, transparente y respetuoso con los derechos de los usuarios. La correcta implementación de estas directrices permite a Borroo ofrecer un servicio confiable y en total conformidad con la normativa vigente.  
-
-
-En virtud del artículo 4.2 de la LOPDGDD, Borroo no será responsable de la inexactitud de los datos obtenidos de registros públicos cuando estos puedan ser rectificados o suprimidos sin dilación.  
 
 ## **4. Cumplimiento de la LSSI-CE**  
 
@@ -98,7 +91,7 @@ Borroo recopila y trata las siguientes categorías de datos personales:
 - **Datos de uso de la aplicación**: Registro de actividad e interacciones dentro de la plataforma.  
 - **Información de pagos**: Gestionada mediante plataformas seguras de pago electrónico.  
 
-### **Datos Sensibles**  
+### **5.1 Datos Sensibles**  
 De conformidad con el artículo 9 del RGPD y el artículo 9 de la LOPDGDD, Borroo no recopila ni trata datos sensibles, tales como:  
 
 - Origen étnico o racial.  
@@ -143,8 +136,33 @@ Borroo implementa las siguientes medidas técnicas y organizativas para garantiz
 
 En caso de una violación de seguridad, Borroo notificará a la Agencia Española de Protección de Datos en un plazo máximo de 72 horas, conforme a los artículos 33 y 34 del RGPD, así como a los usuarios afectados si la violación supone un riesgo elevado para sus derechos.  
 
-## **9. Contacto y Responsable de Protección de Datos**  
+## 9. Aplicación de la Ley de Servicios Digitales (DSA) y Gestión de Datos Personales Sensibles
+
+### 9.1. Cumplimiento de la Ley de Servicios Digitales (DSA)
+
+Borroo garantiza el cumplimiento de la Ley de Servicios Digitales (DSA, por sus siglas en inglés), Reglamento (UE) 2022/2065, que establece obligaciones para las plataformas en línea respecto a la moderación de contenidos, la transparencia en los algoritmos y la protección de los derechos fundamentales de los usuarios.
+
+En concreto, Borroo:
+
+- Proporciona mecanismos eficaces para que los usuarios reporten contenidos ilícitos.
+- Informa con claridad sobre las decisiones automatizadas que afecten al contenido generado por los usuarios.
+- Colabora con las autoridades competentes en la retirada de contenidos ilegales cuando sea necesario.
+- Publica informes de transparencia relativos a la moderación de contenidos y funcionamiento de sistemas automatizados.
+
+Estas medidas refuerzan la confianza de los usuarios y garantizan un entorno digital seguro y justo.
+
+### 9.2. Almacenamiento Seguro de Datos Personales como DNI, CIF o NIF
+
+El almacenamiento de datos personales sensibles como el DNI, CIF o NIF se realiza conforme a los principios de minimización, confidencialidad y limitación de acceso. Para ello, Borroo aplica las siguientes prácticas:
+
+- **Cifrado en reposo y en tránsito**: Los datos se almacenan cifrados mediante algoritmos seguros (como AES-256) y se transmiten a través de conexiones seguras (HTTPS/TLS).
+- **Control de acceso basado en roles**: Solo el personal autorizado puede acceder a esta información, siguiendo el principio de privilegio mínimo.
+- **Seudonimización**: Cuando es posible, los identificadores como el DNI se reemplazan por tokens irreversibles para evitar la exposición directa.
+- **Registro de accesos**: Se mantiene un log de las operaciones realizadas sobre estos datos para garantizar su trazabilidad y detectar accesos indebidos.
+- **Eliminación segura**: Al cumplirse el fin del tratamiento o tras la baja del usuario, los datos se eliminan aplicando técnicas de borrado seguro.
+
+Estas medidas garantizan el cumplimiento de la normativa vigente y refuerzan la privacidad de los usuarios frente a posibles brechas de seguridad o accesos no autorizados.
+
+## **10. Contacto y Responsable de Protección de Datos**  
 
 Para cualquier consulta relacionada con la protección de datos personales, los usuarios pueden ponerse en contacto con nuestro equipo a través del siguiente correo electrónico: borroohelp@gmail.com  
-
----
