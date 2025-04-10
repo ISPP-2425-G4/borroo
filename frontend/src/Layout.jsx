@@ -34,7 +34,7 @@ import StarIcon from '@mui/icons-material/Star';
 import AdSenseMock from "./components/AdSenseMock";
 import PersonIcon from '@mui/icons-material/Person';
 
-const currentUser = JSON.parse(localStorage.getItem("user"));
+
 
 const IMAGEN_PREDETERMINADA = "../public/default_image.png";
 
@@ -67,7 +67,24 @@ const Layout = () => {
   const [cancelType, setCancelType] = useState("");
   const [rangoValoracion, setRangoValoracion] = useState([0, 5]);
   const [mostrarSoloLiked, setMostrarSoloLiked] = useState(false);
+  const [currentUser, setCurrentUser] = useState(() => {
+    // Inicializa el estado con el valor almacenado en localStorage
+    return JSON.parse(localStorage.getItem("user"));
+  });
 
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      setCurrentUser(storedUser);
+    };
+
+    // Escucha cambios en localStorage
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
 
   const options = {
@@ -1338,6 +1355,7 @@ const toggleLike = async (productoId) => {
                     return (
                       <React.Fragment key={indice}>
                         {/* Si debe mostrar el anuncio en este lugar, se inserta aquí */}
+                        {console.log(currentUser?.pricing_plan)}
                         {mostrarAnuncio && <AdSenseMock />}
 
                         <Box
