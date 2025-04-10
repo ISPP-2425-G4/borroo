@@ -4257,7 +4257,7 @@
   </thead>
   <tbody>
     <tr>
-      <td rowspan="6">Trabajo</td>
+      <td rowspan="7">Trabajo</td>
       <td>Fullstack likes</td>
       <td>8 horas 10 minutos</td>
     </tr>
@@ -4280,6 +4280,10 @@
     <tr>
       <td>Fixeo filtros añadidos y filtro favoritos</td>
       <td>35 minutos</td>
+    </tr>
+    <tr>
+        <td>Documento revisión</td>
+        <td>1 hora 36 minutos</td>
     </tr>
     <tr>
       <td rowspan="2">Clase</td>
@@ -4788,6 +4792,61 @@
 ### **Palomo García, Miguel**
 
 ### **Periañez Franco, Luis Javier**
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+<th>Imagen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="8">Código</td>
+      <td>#344 Frontend arreglar visualización de un perfil (03/04/2025)</td>
+      <td>3 horas</td>
+      <td><img src="../imagenes/borrooLogo.png" alt="Imagen 1" width="100"></td>
+    </tr>
+    <tr>
+      <td>#347 Frontend estética imágenes de ver un objeto (03/04/2025)</td>
+      <td>2 horas</td>
+    </tr>
+    <tr>
+      <td>#377 Falta filtros más específicos (03/04/2025)</td>
+      <td>1 hora</td>
+    </tr>
+    <tr>
+      <td>#347 Resolución conflicto de rama (07/04/2025)</td>
+      <td>45 minutos</td>
+    </tr>
+    <tr>
+      <td>#377 Falta filtros más específicos (07/04/2025)</td>
+      <td>1 hora 57 minutos</td>
+    </tr>
+    <tr>
+      <td>#362 BUG: Rechazar posibilidad de cambiar de plan premium a gratis directamente (08/04/2025)</td>
+      <td>2 horas 15 minutos</td>
+    </tr>
+    <tr>
+      <td>#362 BUG: Rechazar posibilidad de cambiar de plan premium a gratis directamente (09/04/2025)</td>
+      <td>1 hora 30 minutos minutos</td>
+    </tr>
+    <tr>
+      <td>#458 Bug filtrado arriba (09/04/2025)</td>
+      <td>45 minutos</td>
+    </tr>
+        <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 04/04</td>
+      <td>3 horas 40 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras Teóricas</td>
+      <td>1 hora</td>
+    </tr>
+     </tbody>
+</table>
 
 ### **Rosado Raya, Santiago**
 <table>
