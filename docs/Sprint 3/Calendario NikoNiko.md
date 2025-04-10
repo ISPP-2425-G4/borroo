@@ -69,7 +69,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Ignacio Naredo Bernardos    |          |          |          |          | :blush: | :blush: | :blush: |:blush:  |  :blush:|      :blush: |    :blush:     |  :smiley:       |    :smiley:     |          |
 | Javier Nieto Vicioso        |          |          |          |          | :blush: | :blush: | :blush: |         | :neutral_face: | :blush: | :blush: | :blush: |         |          |
 | Marco Padilla Gómez         |          |          |          |          |:smiley: |:smiley: |         |         |         |         |:smiley: |:smiley: |:smiley: |          |
-| Miguel Palomo García        |          |          |          |          |         |         |         |         |         |         |         |         |         |          |
+| Miguel Palomo García        |          |          |          |    :blush:      |         |   :smiley:      |   :blush:      |   :blush:      |         |   :smiley:     | :blush:        |  :neutral_face:       |   :neutral_face:      |   :blush:       |
 | Luis Javier Periáñez Franco |          |          |          |          | :neutral_face:|:neutral_face:|:neutral_face:|:neutral_face:|         |         |         |:worried:| :worried: |          |
 | Alexander Picón Garrote     |          |          |          | :angry:         | :worried:        | :worried:        |         |         |         | :smiley:        |         | :blush:        | :blush:         | :blush:         |
 | Santiago Rosado Raya        |          |          |          | :blush:  | :blush: | :blush: |         |         | :blush: | :blush: | :blush: | :blush: | :smiley:| :blush:  |
