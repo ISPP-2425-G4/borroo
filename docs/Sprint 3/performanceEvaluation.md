@@ -562,6 +562,34 @@ Durante la primera semana, me encargué de integrar de forma parcial la herramie
 ### **González Ortiz, Miguel**
 
 ### **Martín Muñoz, Álvaro**
+<div align="justify">
+Informe de Actividades
+
+Primera semana:
+
+Durante la primera semana, me enfoqué en la resolución de bugs y en el inicio del desarrollo del sistema de reporte de usuarios. Comencé con la corrección de un bug en el formulario de actualización de items (45 minutos, 26 segundos), donde solucioné un problema de solapamiento que afectaba la experiencia del usuario.
+
+Además, inicié el trabajo en el desarrollo full stack del sistema de reporte de usuarios (3 horas, 21 minutos), implementando tanto el frontend como el backend para permitir a los usuarios reportar incidencias de manera eficiente.
+
+Para acabar la semana, asistí a la clase del 28/03/2025 (3 horas, 50 minutos).
+
+Segunda semana:
+
+En la segunda semana, continué con el desarrollo del sistema de reporte de usuarios y trabajé en funcionalidades administrativas. Dediqué tiempo adicional al desarrollo full stack del sistema de reporte de usuarios (1 hora, 20 minutos), refinando la interfaz y asegurando la correcta comunicación con el backend.
+
+Además, implementé la funcionalidad para que los administradores puedan obtener reportes en dos sesiones (3 horas, 10 minutos, 38 segundos y 52 minutos, 40 segundos), permitiendo una gestión eficiente de las incidencias reportadas.
+
+También resolví errores de lint (36 minutos, 20 segundos), mejorando la calidad del código y asegurando el cumplimiento de las mejores prácticas de programación. Asimismo, arreglé un problema con la imagen en la sección de administración (1 hora, 39 minutos, 20 segundos), garantizando una visualización correcta.
+
+Realicé una sesión de feedback externo con un usuario piloto de Go4Surprise (1 hora, 21 minutos), recopilando sugerencias para mejorar la aplicación.
+
+Además, trabajé en la documentación del sprint (15 minutos, 40 segundos), asegurando que todas las actividades y decisiones quedaran registradas adecuadamente.
+
+Para continuar mi aprendizaje, ví la Píldora Teórica - Session 08 (12 minutos, 2 segundos) y la Píldora Teórica - Session 09 (30 minutos, 1 segundo), profundizando en temas relevantes para el desarrollo del proyecto.
+
+Finalmente, participé en evaluaciones de desempeño, dedicando tiempo a Time Report Effort (30 minutos) y Performance Evaluation (15 minutos), y asistí a la clase del 04/04/2025 (3 horas, 50 minutos).
+
+</div>
 
 ### **Naredo Bernardos, Ignacio**
 
