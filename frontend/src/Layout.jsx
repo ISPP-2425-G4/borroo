@@ -32,8 +32,9 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import StarIcon from '@mui/icons-material/Star';
 // import AdSenseComponent from "./components/AdSense";
 import AdSenseMock from "./components/AdSenseMock";
+import PersonIcon from '@mui/icons-material/Person';
 
-const currentUser = JSON.parse(localStorage.getItem("user"));
+
 
 const IMAGEN_PREDETERMINADA = "../public/default_image.png";
 
@@ -66,7 +67,24 @@ const Layout = () => {
   const [cancelType, setCancelType] = useState("");
   const [rangoValoracion, setRangoValoracion] = useState([0, 5]);
   const [mostrarSoloLiked, setMostrarSoloLiked] = useState(false);
+  const [currentUser, setCurrentUser] = useState(() => {
+    // Inicializa el estado con el valor almacenado en localStorage
+    return JSON.parse(localStorage.getItem("user"));
+  });
 
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      setCurrentUser(storedUser);
+    };
+
+    // Escucha cambios en localStorage
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
 
 
   const options = {
@@ -92,10 +110,11 @@ const Layout = () => {
     if (isNaN(nuevoValor) || nuevoValor < 0) {
       nuevoValor = 0;
     }
-
-    const nuevoRango = [...rangoPrecio];
-    nuevoRango[index] = nuevoValor;
-    setRangoPrecio(nuevoRango);
+    if (index === 0) {
+      setRangoPrecio([nuevoValor, Math.max(nuevoValor, rangoPrecio[1])]);
+    } else {
+      setRangoPrecio([Math.min(nuevoValor, rangoPrecio[0]), nuevoValor]);
+    }
   };
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -107,6 +126,7 @@ const Layout = () => {
   const reiniciarFiltros = () => {
     setTerminoBusqueda("");
     setCategoria("");
+    setSubcategoria("");
     setPriceCategory("");
     setCancelType("");
     setRangoValoracion([0, 5]);
@@ -214,7 +234,7 @@ const Layout = () => {
       rangoPrecio[0] !== 0 || rangoPrecio[1] !== 99999 || rangoValoracion[0] !== 0 || rangoValoracion[1] !== 5) {
       setCurrentPage(1);
     }
-  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda, priceCategory, cancelType, rangoValoracion]);
+  }, [productos, categoria, subcategoria, rangoPrecio, terminoBusqueda, priceCategory, cancelType, rangoValoracion, mostrarSoloLiked]);
 
 
   const hayFiltrosActivos = useMemo(() =>
@@ -584,11 +604,58 @@ const Layout = () => {
                                 {truncarDescripcion(producto.description, 80)}
                               </Typography>
                             </Tooltip>
+                            <Link to={`/perfil/${producto.user_username}`} style={{ textDecoration: 'none' }}>
+                              <Box
+                                sx={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  '&:hover': {
+                                    cursor: 'pointer',
+                                  },
+                                }}>
+                                <IconButton
+                                  sx={{
+                                    bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                    '&:hover': {
+                                      bgcolor: 'white',
+                                    },
+                                    zIndex: 1,
+                                    marginRight: 1,
+                                  }}
+                                >
+                                  <PersonIcon fontSize="small" sx={{ color: 'blue' }} />
+                                </IconButton>
+                                <Typography
+                                  sx={{
+                                    bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                    '&:hover': {
+                                      bgcolor: 'white',
+                                      textDecoration: 'underline',
+                                    },
+                                    zIndex: 1,
+                                  }}
+                                >
+                                  {producto.user_name} {producto.user_surname}
+                                </Typography>
+                              </Box>
+                            </Link>
                             <Box display="flex" alignItems="center" gap={0.5}>
-                              <FavoriteIcon fontSize="small" sx={{ color: 'red' }} />
-                              <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                                {producto.num_likes}
-                              </Typography>
+                              <IconButton
+                                sx={{
+                                  bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                  '&:hover': {
+                                    bgcolor: 'white',
+                                  },
+                                  zIndex: 1,
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                }}
+                              >
+                                <FavoriteIcon fontSize="small" sx={{ color: 'red', marginRight: 0.5 }} />
+                                <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                                  {producto.num_likes}
+                                </Typography>
+                              </IconButton>
                             </Box>
                           </CardContent>
                         </Card>
@@ -961,7 +1028,6 @@ const Layout = () => {
                 </Typography>
                 <FormControl fullWidth size="small">
                   <Select
-                    data-testid="select-cancel-type"
                     value={cancelType}
                     onChange={(e) => setCancelType(e.target.value)}
                     displayEmpty
@@ -987,7 +1053,7 @@ const Layout = () => {
                       <em>Todos los tipos</em>
                     </MenuItem>
                     {options.cancel_types.map(([value, label]) => (
-                      <MenuItem key={value} value={value} data-testid={`cancel-type-${value}`}>
+                      <MenuItem key={value} value={value}>
                         {label}
                       </MenuItem>
                     ))}
@@ -1036,7 +1102,6 @@ const Layout = () => {
                 </Typography>
                 <FormControl fullWidth size="small">
                   <Select
-                    data-testid="select-price-type"
                     value={priceCategory}
                     onChange={(e) => setPriceCategory(e.target.value)}
                     displayEmpty
@@ -1062,7 +1127,7 @@ const Layout = () => {
                       <em>Todos los tipos</em>
                     </MenuItem>
                     {options.price_categories.map(([value, label]) => (
-                      <MenuItem key={value} value={value} data-testid={`price-type-${value}`}>
+                      <MenuItem key={value} value={value}>
                         {label}
                       </MenuItem>
                     ))}
@@ -1090,7 +1155,6 @@ const Layout = () => {
                   mt: 2
                 }}>
                   <TextField
-                    data-testid="input-price-min"
                     size="small"
                     label="Mín"
                     value={rangoPrecio[0]}
@@ -1102,7 +1166,6 @@ const Layout = () => {
                     sx={{ width: '45%' }}
                   />
                   <TextField
-                    data-testid="input-price-max"
                     size="small"
                     label="Máx"
                     value={rangoPrecio[1]}
@@ -1200,6 +1263,33 @@ const Layout = () => {
                       sx={{ borderRadius: 1 }}
                     />
                   )}
+                  {cancelType && (
+                    <Chip
+                      label={`Tipo de cancelación: ${options.cancel_types.find(([val]) => val === cancelType)?.[1] || cancelType}`}
+                      size="small"
+                      onDelete={() => setCancelType("")}
+                      sx={{ borderRadius: 1 }}
+                    />
+                  )}
+
+                  {(rangoValoracion[0] > 0 || rangoValoracion[1] < 5) && (
+                    <Chip
+                      label={`Valoración: ${rangoValoracion[0]} - ${rangoValoracion[1]}`}
+                      size="small"
+                      onDelete={() => setRangoValoracion([0, 5])}
+                      sx={{ borderRadius: 1 }}
+                    />
+                  )}
+
+                  {priceCategory && (
+                    <Chip
+                      label={`Tipo de precio: ${options.price_categories.find(([val]) => val === priceCategory)?.[1] || priceCategory}`}
+                      size="small"
+                      onDelete={() => setPriceCategory("")}
+                      sx={{ borderRadius: 1 }}
+                    />
+                  )}
+
                 </Box>
               )}
 
@@ -1267,6 +1357,7 @@ const Layout = () => {
                         return (
                           <React.Fragment key={indice}>
                             {/* Si debe mostrar el anuncio en este lugar, se inserta aquí */}
+                            {console.log(currentUser?.pricing_plan)}
                             {mostrarAnuncio && <AdSenseMock />}
 
                             <Box
@@ -1490,11 +1581,58 @@ const Layout = () => {
                                         {truncarDescripcion(producto.description, 80)}
                                       </Typography>
                                     </Tooltip>
+                                    <Link to={`/perfil/${producto.user_username}`} style={{ textDecoration: 'none' }}>
+                                      <Box
+                                        sx={{
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          '&:hover': {
+                                            cursor: 'pointer',
+                                          },
+                                        }}>
+                                        <IconButton
+                                          sx={{
+                                            bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                            '&:hover': {
+                                              bgcolor: 'white',
+                                            },
+                                            zIndex: 1,
+                                            marginRight: 1,
+                                          }}
+                                        >
+                                          <PersonIcon fontSize="small" sx={{ color: 'blue' }} />
+                                        </IconButton>
+                                        <Typography
+                                          sx={{
+                                            bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                            '&:hover': {
+                                              bgcolor: 'white',
+                                              textDecoration: 'underline',
+                                            },
+                                            zIndex: 1,
+                                          }}
+                                        >
+                                          {producto.user_name} {producto.user_surname}
+                                        </Typography>
+                                      </Box>
+                                    </Link>
                                     <Box display="flex" alignItems="center" gap={0.5}>
-                                      <FavoriteIcon fontSize="small" sx={{ color: 'red' }} />
-                                      <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                                        {producto.num_likes}
-                                      </Typography>
+                                      <IconButton
+                                        sx={{
+                                          bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                          '&:hover': {
+                                            bgcolor: 'white',
+                                          },
+                                          zIndex: 1,
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                        }}
+                                      >
+                                        <FavoriteIcon fontSize="small" sx={{ color: 'red', marginRight: 0.5 }} />
+                                        <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                                          {producto.num_likes}
+                                        </Typography>
+                                      </IconButton>
                                     </Box>
                                   </CardContent>
                                 </Card>

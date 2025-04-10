@@ -25,7 +25,7 @@ class MessageSerializer(serializers.ModelSerializer):
         model = Message
         fields = [
             'id', 'chat', 'sender', 'receiver', 'sender_username',
-            'receiver_username', 'content', 'timestamp'
+            'receiver_username', 'content', 'timestamp', 'is_read'
         ]
         read_only_fields = ['timestamp']
 

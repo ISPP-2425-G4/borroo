@@ -136,6 +136,7 @@ const CreateItemRequestView = () => {
     cancel_type: "",
     price_category: "",
     price: "",
+    deposit: "",
   });
 
   const [options, setOptions] = useState({
@@ -193,7 +194,7 @@ const CreateItemRequestView = () => {
   }, [formData]);
 
   const validateForm = () => {
-    const { title, description, category, subcategory, cancel_type,price_category, price } = formData;
+    const { title, description, category, subcategory, cancel_type,price_category, price, deposit } = formData;
     const isValid =
       title.trim() !== "" &&
       description.trim() !== "" &&
@@ -202,6 +203,7 @@ const CreateItemRequestView = () => {
       cancel_type.trim() !== "" &&
       price_category.trim() !== "" &&
       price.trim() !== "" &&
+      deposit.trim() !== "" &&
       !isNaN(price) &&
       parseFloat(price) > 0
     
@@ -211,7 +213,7 @@ const CreateItemRequestView = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name === "price") {
+    if (name === "price" || name === "deposit") {
       // Permitir solo números y máximo dos decimales
       const regex = /^\d{0,8}(\.\d{0,2})?$/;
       if (!regex.test(value) && value !== "") {
@@ -388,6 +390,18 @@ const CreateItemRequestView = () => {
       errors.price = "El precio no puede superar los $10,000.";
     }
 
+    if (!formData.deposit) {
+      errors.price = "El precio es obligatorio.";
+    } else if (isNaN(formData.deposit) || parseFloat(formData.price) <= 0) {
+      errors.price = "El precio debe ser un número mayor a 0.";
+    } else if (formData.deposit.includes(".") && formData.price.split(".")[1].length > 2) {
+      errors.price = "El precio solo puede tener hasta dos decimales.";
+    } else if (formData.deposit.length > 10) {
+      errors.price = "El precio no puede superar los 10 dígitos en total.";
+    } else if (formData.deposit > 10000) {
+      errors.price = "El precio no puede superar los $10,000.";
+    }
+
     if(!formData.category) {
       errors.category = "La categoría es obligatoria.";
     } else if (!options.categories.map((opt) => opt.value).includes(formData.category)) {
@@ -415,7 +429,7 @@ const CreateItemRequestView = () => {
 
     try {
       const formDataToSend = new FormData();
-      const allowedKeys = ["title", "description", "category", "subcategory", "cancel_type", "price_category", "price"];
+      const allowedKeys = ["title", "description", "category", "subcategory", "cancel_type", "price_category", "price", "deposit"];
       
       Object.keys(formData).forEach((key) => {
         if (allowedKeys.includes(key)) {
@@ -609,7 +623,23 @@ const CreateItemRequestView = () => {
                 />
               </InputGroup>
               {fieldErrors.price && <ErrorMessage>{fieldErrors.price}</ErrorMessage>}
- 
+
+              
+              <InputGroup>
+                <InputIcon>
+                  <FiDollarSign />
+                </InputIcon>
+                <StyledInput
+                  type="number"
+                  step="0.01"
+                  name="deposit"
+                  placeholder="Fianza"
+                  value={formData.deposit}
+                  onChange={handleChange}
+                  error={!!fieldErrors.price}
+                />
+              </InputGroup>
+              
 
               <SubmitButton 
                 type="submit" 

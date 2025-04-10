@@ -112,7 +112,7 @@ const AdminRentDashboard = () => {
             setEditRentData(null);
         } catch (err) {
             if (err.response && err.response.data) {
-                alert(`Error al actualizar renta: ${err.response.data.detail || 'Asegúrate de que la duración mínima sea de 1 mes (30 o 31 días).'}`);
+                alert(`Error al actualizar renta: ${err.response.data.detail || 'La duración no es correcta'}`);
             }
         }
     };
