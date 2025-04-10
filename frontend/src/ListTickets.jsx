@@ -135,10 +135,10 @@ const ListTickets = () => {
             >
               <ReportIcon sx={{ fontSize: 60, color: 'text.disabled', mb: 2 }} />
               <Typography variant="body1" color="text.secondary" align="center">
-                No has enviado reportes hasta el momento.
+                No has enviado incidencias hasta el momento.
               </Typography>
               <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>
-                Cuando envíes un reporte, aparecerá en esta sección.
+                Cuando envíes una incidencia, aparecerá en esta sección.
               </Typography>
             </Box>
           ) : (
