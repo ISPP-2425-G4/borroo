@@ -4723,6 +4723,67 @@
 
 
 ### **Padilla Gómez, Marco**
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="3">Código</td>
+    <td>Backend perfil de empresa</td>
+    <td>1 horas y 32 minutos</td>
+  </tr>
+  <tr>
+    <td>Bug actualizar foto de anuncio</td>
+    <td>1 hora y 57 minutos</td>
+  </tr>
+  <tr>
+    <td>Bug productos destacados</td>
+    <td>1 hora y 44 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="4">Documentación</td>
+    <td>Tomar feedback</td>
+    <td>1 hora y 57 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadir feedback a las bases de conocimiento</td>
+    <td>1 hora y 13 minutos</td>
+  </tr>
+  <tr>
+    <td>Realizacion del KBreport S3</td>
+    <td>21 minutos</td>
+  </tr>
+  <tr>
+    <td>Rellenar el timeEffort y el performance evaluation</td>
+    <td>26 minutos</td>
+  </tr>
+  <tr>
+    <td>Extras</td>
+    <td>Grabar anuncio</td>
+    <td>22 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Píldoras teóricas</td>
+    <td>Píldora 8</td>
+    <td>12 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldora 9</td>
+    <td>30 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 28/03</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 4/04</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
 
 ### **Picón Garrote, Alexander** 
 

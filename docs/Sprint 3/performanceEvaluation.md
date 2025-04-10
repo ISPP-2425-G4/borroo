@@ -613,21 +613,31 @@ Finalmente, participé en evaluaciones de desempeño, dedicando tiempo a Time Re
 ### **Nieto Vicioso, Javier**
 Durante este sprint, mi principal aportación ha sido el desarrollo del chat de la aplicación. Inicialmente, solo contaba con hacer el frontend, pero debido a que el backend no avanzaba al ritmo esperado, tuve que encargarme de implementar gran parte de la lógica en el servidor.
 
-### Semana 1
+#### Semana 1
 Durante la primera semana, me encargué de desarrollar el primer prototipo del chat de la aplicación, centrándome únicamente en el frontend sin conexión con el backend. Además, implementé un pop-up que se muestra cuando un usuario envía una solicitud de alquiler, informándole que puede acceder a sus solicitudes en el apartado "Mis solicitudes". Este pop-up incluye dos botones: uno para ir directamente a sus solicitudes enviadas y otro para volver al menú principal. También añadí las políticas de privacidad, SLA, términos y condiciones tanto en el footer como en el registro. Para esto, investigué diferentes opciones, como la posibilidad de mostrarlas en formato PDF, pero finalmente opté por utilizar un visor de Markdown que permite visualizar estos documentos almacenados en un contenedor específico. Los términos y condiciones los tuve que reformatear porque tenían muchas cláusulas abusivas en Claudette.
 
 A finales de la semana, el sábado, avancé en el desarrollo del backend del chat, ya que no estaba progresando al ritmo necesario y requería una base sólida para continuar con la integración. Implementé gran parte de los endpoints necesarios para la comunicación entre usuarios. El domingo, trabajé en la integración del frontend con el backend en local, dado que ambos se encontraban en ramas separadas.
 
-### Semana 2
+#### Semana 2
 Durante la segunda semana, me dediqué principalmente a pulir la integración del frontend con el backend del chat, mejorando aspectos clave de la funcionalidad. Implementé el refresco automático de mensajes y conversaciones cada cierto tiempo, permitiendo una actualización en tiempo real. También añadí la opción de enviar mensajes a otro usuario directamente desde su perfil y un indicador en el navbar para mostrar los mensajes no leídos. Además, realicé una refactorización del código para optimizar su mantenimiento y mejorar la estructura del sistema de mensajería.
 
 ### **Padilla Gómez, Marco**
+A lo largo de estas dos semanas he hecho las siguientes tareas:
+- Tome feedback en la clase del 28 de marzo y del 4 de abril.
+- Añadí el cif como modelo asi como sus validaciones a nivel de backend.
+- Grabe clips para el anuncio.
+- Arregle un bug que permitia publicar anuncios sin foto desde los borradores.
+- Añadi el feedback que teniamos que aportar a la base de conocimento grupal.
+- Arregle un bug que permitia destacar productos sin estar publicados y que cuando dejes de ser usuario premium tus objetos dejen de estar destacados.
+- Añadí el feedback de las semanas 8 y 9 tanto a nuestra base de conocimientos como a la grupal.
+- Actualice el KBreport.
+- Me vi las pildoras teoricas.
 
 ### **Picón Garrote, Alexander** 
 
 Durante este sprint, mi principal enfoque ha estado en diversas tareas cruciales para el avance del proyecto, abarcando desde la revisión y planificación de pruebas hasta la implementación de funcionalidades clave relacionadas con el sistema de pagos y la gestión de usuarios.
 
-### Semana 1
+#### Semana 1
 
 Durante esta semana, me encargué de la grabación de clips para el anuncio de usuarios, para asegurar la calidad del material promocional. Además, realicé un exhaustivo bug tracking de solicitudes, identificando y reportando problemas para su posterior resolución.
 
@@ -637,7 +647,7 @@ Un aspecto fundamental de mi trabajo durante esta semana fue la implementación 
 
 Adicionalmente, participé en dos sesiones de clase los días 28 de marzo y 4 de abril, cada una con una duración de 3 horas y 50 minutos.. También asistí a dos reuniones de representantes: una de 2 horas y 2 minutos dedicada a la redacción de issues y otros temas relevantes, y otra de 1 hora y 32 minutos centrada en la planificación del anuncio de usuarios.
 
-### Semana 2
+#### Semana 2
 Durante la segunda semana, aunque fue mucho mas calmada que la segunda, dediqué tiempo a la revisión de funcionalidades con el objetivo de identificar áreas para la implementación de nuevos tests. Como resultado de esta revisión, procedí a la creación de nuevas issues para el subgrupo 1, asegurando una cobertura de pruebas adecuada para las próximas etapas de desarrollo.
 
 Aparte, me ví los vídeos de las píldoras teóricas y actualice los términos y condiciones del servicio.
@@ -658,7 +668,7 @@ También detecté y resolví un bug relacionado con el filtrado en la vista prin
 Además de las tareas técnicas, asistí a clases relacionadas con el proyecto, incluyendo una sesión formativa completa el 4 de abril (3 horas y 40 minutos) y una píldora teórica el 7 de abril (1 hora), que me ayudaron a comprender mejor ciertos aspectos de diseño y validación del sistema.
 ### **Rosado Raya, Santiago**
 
-### Semana 1
+#### Semana 1
 Durante la primera semana de este Sprint he estado desempeñando tareas de QA, revisando pull requests y colaborando con otros miembros de mi subgrupo en la resolución de errores y problemas de desarrollo.
 
 Además, he estado implementando la nueva lógica de negocio, elaborando la documentación para los usuarios piloto, contactando con ellos y recopilando feedback.
@@ -666,7 +676,7 @@ Además, he estado implementando la nueva lógica de negocio, elaborando la docu
 Por último, también participo como usuario piloto en el proyecto de otro grupo de la asignatura, dedicando parte de mi tiempo a contribuir a la mejora de su desarrollo.
 
 
-### Semana 2
+#### Semana 2
 Durante esta segunda semana del Sprint he realizado varias tareas clave para el avance del proyecto. En primer lugar, analicé todo el feedback recopilado por parte de los usuarios piloto, clasificándolo y organizándolo dentro del documento correspondiente. Además, realicé mejoras en dicho documento, incorporando una nueva sección de clasificación del feedback.
 
 También he estado realizando pruebas sobre las entidades creadas por mi subgrupo, calificando a los usuarios piloto y desempeñando nuevamente el rol de QA, revisando pull requests y colaborando con mis compañeros para asegurar que todo el código que se mergea a develop sea óptimo.
@@ -677,11 +687,11 @@ Por otro lado, he seguido participando como usuario piloto en el proyecto de otr
 ### **Sánchez Márquez, Julia**
 Durante este sprint, mi principal aportación ha sido el desarrollo de la funcionalidad para cancelar un alquiler, aplicando las políticas de cancelación correspondientes, así como la posibilidad de enviar una incidencia sobre un alquiler en caso de que el usuario lo desee. Aunque inicialmente se me asignó una tarea diferente, relacionada con una modificación de una funcionalidad del sprint 2, tras discutirlo con el equipo y consultar con los usuarios piloto, se decidió mantener la implementación actual, ya que la mayoría de los usuarios piloto se mostraron a favor de no realizar cambios. Esta tarea, que inicialmente tenía una estimación de alto esfuerzo, fue descartada y, en su lugar, se me asignaron dos tareas fullstack para aprovechar ese tiempo disponible. 
 
-### Semana 1
+#### Semana 1
 Debido al solapamiento con otros proyectos relevantes de otras asignaturas, la primera semana no fue especialmente productiva. Pude encargarme de grabar el vídeo de anuncio de la aplicación y comenzar con el backend de la primera tarea fullstack (cancelación de alquileres). Me centré en la implementación de la lógica de las solicitudes y en las validaciones necesarias, como evitar la aplicación de políticas de cancelación si el pedido aún no había sido pagado. También corregí un error heredado del sprint anterior relacionado con las etiquetas de estado de los pedidos, que no se estaban actualizando correctamente.
 
 
-### Semana 2
+#### Semana 2
 En la segunda semana, dediqué muchas más horas para compensar la baja productividad de la anterior. Finalicé tanto el backend como el frontend de la funcionalidad de cancelación de pedidos: se implementó la modificación de estados de las rentas, la aplicación de políticas de cancelación según el contexto, validaciones específicas según el rol del usuario que solicitara la cancelación, y la integración de todo ello en la interfaz de manera intuitiva. Además, se implementó la actualización automática del saldo del usuario, de forma que si el arrendatario cancelaba el pedido, se le reembolsaba la cantidad correspondiente según las políticas aplicadas en su saldo.
 
 Durante los últimos días de la semana, desarrollé la funcionalidad de creación de incidencias. Para ello, se creó un nuevo modelo denominado "Tickets", vinculado a una renta. Este modelo almacena una descripción escrita por el usuario y permite adjuntar imágenes que respalden su reclamación. Tanto el arrendatario como el propietario pueden generar incidencias, pero solo una por cada usuario involucrado en la renta. Estas incidencias serán posteriormente revisadas y gestionadas por un administrador, quien se encargará de actualizar el estado del ticket según el progreso del caso.
@@ -694,7 +704,7 @@ Puede consultar el [tiempo invertido aquí](https://app.clockify.me/shared/67f7e
 
 ### **Sevillano Barea, Alejandro**
 
-### Semana 1
+#### Semana 1
 
 Durante la primera semana, me centré en diversas tareas relacionadas tanto con el desarrollo del frontend como con la mejora de procesos del equipo. En primer lugar, trabajé activamente en la corrección de errores detectados en la funcionalidad de edición de perfil de admin. Aunque avancé en la resolución de varios bugs, finalmente fue Ignacio Naredo quien terminó de solucionarlos completamente.
 
@@ -704,7 +714,7 @@ También desarrollé una mejora en la lógica del sistema de reseñas, restringi
 
 Por último, participé en la grabación de un vídeo promocional que fue utilizado durante la presentación del proyecto del viernes 4 de abril.
 
-### Semana 2
+#### Semana 2
 
 Durante la segunda semana, enfoqué mis esfuerzos principalmente en el desarrollo y mantenimiento de pruebas ya que soy el QA de mi subgrupo.
 
