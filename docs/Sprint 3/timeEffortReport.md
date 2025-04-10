@@ -4390,6 +4390,64 @@
 ### **Martín Muñoz, Álvaro**
 
 ### **Naredo Bernardos, Ignacio**
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Fecha</th>
+    <th>Detalles de la actividad</th>
+    <th>Duración</th>
+  </tr>
+  <tr>
+    <td><b>02/04/2025</b></td>
+    <td>Actualización del backend para el campo <b>DNI</b> en el usuario, incluyendo validaciones correspondientes.</td>
+    <td>2 horas 53 minutos</td>
+  </tr>
+  <tr>
+    <td><b>03/04/2025</b></td>
+    <td>Corrección de bugs en el panel de administrador.</td>
+    <td>1 hora 47 minutos</td>
+  </tr>
+  <tr>
+    <td><b>03/04/2025</b></td>
+    <td>Implementación de la funcionalidad para <b>crear ítems</b> desde el panel de administración.</td>
+    <td>1 hora 26 minutos</td>
+  </tr>
+  <tr>
+    <td><b>04/04/2025</b></td>
+    <td>Mejoras generales en el panel de administración, refactorización de componentes y correcciones visuales.</td>
+    <td>3 horas 49 minutos</td>
+  </tr>
+  <tr>
+    <td><b>07/04/2025</b></td>
+    <td>Comienzo de la mejora estética del panel de administrador.</td>
+    <td>46 minutos</td>
+  </tr>
+  <tr>
+    <td><b>07/04/2025</b></td>
+    <td>Continuación del trabajo en el panel de administración: diseño, integración y pruebas.</td>
+    <td>1 hora 38 minutos</td>
+  </tr>
+  <tr>
+    <td><b>07/04/2025</b></td>
+    <td>Trabajo adicional sobre el panel de administración, finalizando funcionalidades e interfaz.</td>
+    <td>2 horas 41 minutos</td>
+  </tr>
+  <tr>
+    <td><b>08/04/2025</b></td>
+    <td>Desarrollo y resolución de errores en el administrador (primera sesión del día).</td>
+    <td>1 hora 30 minutos</td>
+  </tr>
+  <tr>
+    <td><b>08/04/2025</b></td>
+    <td>Corrección de bugs persistentes en el administrador (segunda sesión del día).</td>
+    <td>1 hora 42 minutos</td>
+  </tr>
+  <tr>
+    <td><b>09/04/2025</b></td>
+    <td>Añadido el campo <b>FIANZA</b> al administrador, con pruebas y ajustes necesarios.</td>
+    <td>50 minutos</td>
+  </tr>
+</table>
+
 
 ### **Nieto Vicioso, Javier**
 <table>
