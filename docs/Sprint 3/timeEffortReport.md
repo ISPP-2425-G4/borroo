@@ -4532,6 +4532,111 @@
 
 ### **González Ortiz, Miguel**
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="21">Trabajo</td>
+    <td>Arreglando mensaje de error de la contraseña</td>
+    <td>1 hora y 1 minuto</td>
+  </tr>
+  <tr>
+    <td>Arreglando tests, actualizando README y eliminando archivos `.env`</td>
+    <td>2 horas y 52 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadiendo botón para pagar con saldo</td>
+    <td>1 hora y 59 minutos</td>
+  </tr>
+  <tr>
+    <td>Funcionalidad para verificarse con el DNI</td>
+    <td>1 hora y 30 minutos</td>
+  </tr>
+  <tr>
+    <td>Cambios en el perfil y validaciones añadidas</td>
+    <td>2 horas y 28 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglar testing</td>
+    <td>32 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisar PR #448</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>Test de login</td>
+    <td>46 minutos</td>
+  </tr>
+  <tr>
+    <td>Test de registro</td>
+    <td>1 hora y 35 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando tests de suscripciones</td>
+    <td>32 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando tests de límites de creación de objetos</td>
+    <td>1 hora y 3 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando tests de operaciones CRUD de usuario</td>
+    <td>25 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando tests de operaciones CRUD de ítems</td>
+    <td>45 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadiendo algunos casos positivos y negativos de tests de operaciones CRUD de usuario</td>
+    <td>23 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando funcionalidad de verificación DNI</td>
+    <td>1 hora y 8 minutos</td>
+  </tr>
+  <tr>
+    <td>Testing Locust de registro</td>
+    <td>32 minutos</td>
+  </tr>
+  <tr>
+    <td>Testing Locust de login</td>
+    <td>49 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando tests de registro</td>
+    <td>22 minutos</td>
+  </tr>
+  <tr>
+    <td>Creando base de datos Google Cloud</td>
+    <td>28 minutos</td>
+  </tr>
+  <tr>
+    <td>Configurando base de datos e intentando desplegar</td>
+    <td>1 hora y 58 minutos</td>
+  </tr>
+  <tr>
+    <td>Time effort y performance evaluation</td>
+    <td>32 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Clase</td>
+  </tr>
+  <tr>
+    <td>Clase 28/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 4/4/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
+
 ### **Martín Muñoz, Álvaro**
 
 <table border="1" cellspacing="0" cellpadding="5">

@@ -603,6 +603,24 @@ Durante la siguiente semana, estuve, junto a Miguel Palomo García, editando el 
 
 ### **González Ortiz, Miguel**
 
+<div align="justify">
+
+Primera semana:
+
+Durante la primera semana, me centré en corregir un error relacionado con el mensaje de error al introducir una contraseña incorrecta. Esta mejora permitió una retroalimentación más clara para los usuarios durante el proceso de autenticación, optimizando la experiencia general.
+
+Segunda semana:
+
+La segunda semana fue considerablemente más productiva, con múltiples tareas desarrolladas tanto en frontend como en backend. Comencé corrigiendo y ampliando la batería de tests, incluyendo casos positivos y negativos de operaciones CRUD sobre usuarios e ítems, así como los tests de registro, login, suscripciones y límites de creación de objetos.
+
+Implementé un botón para permitir pagos con saldo y desarrollé la funcionalidad de verificación con DNI, incluyendo validaciones y mejoras en el perfil del usuario. También corregí la funcionalidad de verificación con DNI y realicé una revisión del pull request #448.
+
+En cuanto a pruebas de rendimiento, ejecuté pruebas con Locust para los flujos de registro y login. Además, trabajé en la creación y configuración de una base de datos en Google Cloud, intentando su despliegue.
+
+Completé tareas de mantenimiento como la actualización del README, la eliminación de archivos .env, y la corrección de errores de testing. Finalmente, dediqué tiempo a tareas administrativas, incluyendo el registro en Time Report Effort y la cumplimentación de este Performance Evaluation.
+
+</div>
+
 ### **Martín Muñoz, Álvaro**
 <div align="justify">
 Informe de Actividades
