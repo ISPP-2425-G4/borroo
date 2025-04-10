@@ -56,8 +56,8 @@
 2. [Sprint 1](#sprint-1-s1)
 
 3. [Sprint 2](#sprint-2-s2)
-4. 
-5. [Sprint 3](#sprint-3-s3)
+
+4. [Sprint 3](#sprint-3-s3)
 
 ## Devising a Project (#DP)
 
@@ -777,47 +777,59 @@
       <td>Ver videos de píldoras</td>
       <td>2 horas y 24 minutos</td>
     </tr>
-    <table>
-  <tr>
-    <th>Tarea</th>
-    <th>Detalles de la actividad</th>
-    <th>Tiempo</th>
-  </tr>
-  <tr>
-    <td rowspan="3">Alquiler</td>
-    <td>Método solicitud alquiler</td>
-    <td>3 horas y 7 minutos</td>
-  </tr>
-  <tr>
-    <td>Método solicitar alquiler y sus validaciones</td>
-    <td>2 horas y 13 minutos</td>
-  </tr>
-  <tr>
-    <td>Ayuda frontend admin y solicitud</td>
-    <td>3 horas</td>
-  </tr>
-  <tr>
-    <td>Base de conocimiento</td>
-    <td>Base conocimiento común</td>
-    <td>36 minutos</td>
-  </tr>
-  <tr>
-    <td rowspan="4">Backend</td>
-    <td>Admin backend</td>
-    <td>3 horas y 16 minutos</td>
-  </tr>
-  <tr>
-    <td>Admin backend</td>
-    <td>2 horas y 6 minutos</td>
-  </tr>
-  <tr>
-    <td>Admin backend con token</td>
-    <td>2 horas y 30 minutos</td>
-  </tr>
-  <tr>
-    <td>Ayuda Fullstack categorías y filtro de precio</td>
-    <td>1 hora y 30 minutos</td>
-  </tr>
+  </table>
+  <table>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+    <tr>
+      <td rowspan="3">Alquiler</td>
+      <td>Método solicitud alquiler</td>
+      <td>3 horas y 7 minutos</td>
+    </tr>
+    <tr>
+      <td>Método solicitar alquiler y sus validaciones</td>
+      <td>2 horas y 13 minutos</td>
+    </tr>
+    <tr>
+      <td>Ayuda frontend admin y solicitud</td>
+      <td>3 horas</td>
+    </tr>
+    <tr>
+      <td>Base de conocimiento</td>
+      <td>Base conocimiento común</td>
+      <td>36 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="4">Backend</td>
+     <td>Admin backend</td>
+      <td>3 horas y 16 minutos</td>
+    </tr>
+    <tr>
+      <td>Admin backend</td>
+      <td>2 horas y 6 minutos</td>
+    </tr>
+    <tr>
+      <td>Admin backend con token</td>
+      <td>2 horas y 30 minutos</td>
+    </tr>
+    <tr>
+      <td>Ayuda Fullstack categorías y filtro de precio</td>
+      <td>1 hora y 30 minutos</td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+    <td> Backend</td>
+    <td> Actualizar perfil usuario y campo dni </td>
+    <td> 2 horas y 53 minutos </td>
+      </tr>
+    <tr>
+      <td> Full stack </td>
+      <td> Admin </td>
+      <td> 12 horas y 8 minutos
   </table>
 
 ### Nieto Vicioso, Javier
@@ -2035,10 +2047,6 @@
     <td>21/02/2025</td>
     <td>3h50min</td>
   </tr>
-  <tr>
-    <td>7/03/2025</td>
-    <td>3h50min</td>
-  </tr>
 </table>
 
 ### Naredo Bernardos, Ignacio
@@ -4088,7 +4096,7 @@
       <td>20 minutos</td>
     </tr>
     <tr>
-      <td rowspan="3">Theory<br>Pills</td>
+      <td rowspan="3">Theory Pills</td>
       <td>Theory Pill S06</td>
       <td>20 minutos</td>
     </tr>
@@ -4165,37 +4173,1348 @@
 
 ## Sprint 3 (#S3)
 
+### Resumen completo
+
+A continuación, se muestra la participación de cada miembro del grupo mediante gráficas obtenidas con informes de Clockify durante el Sprint 3.
+
+![1](../imagenes/timeEffortReport/miembros/1.jpg)
+![2](../imagenes/timeEffortReport/miembros/2.jpg)
+![3](../imagenes/timeEffortReport/miembros/3.jpg)
+![4](../imagenes/timeEffortReport/miembros/4.jpg)
+![5](../imagenes/timeEffortReport/miembros/5.jpg)
+![6](../imagenes/timeEffortReport/miembros/6.jpg)
+![7](../imagenes/timeEffortReport/miembros/7.jpg)
+![8](../imagenes/timeEffortReport/miembros/8.jpg)
+![9](../imagenes/timeEffortReport/miembros/9.jpg)
+![10](../imagenes/timeEffortReport/miembros/10.jpg)
+![11](../imagenes/timeEffortReport/miembros/11.jpg)
+![12](../imagenes/timeEffortReport/miembros/12.jpg)
+![13](../imagenes/timeEffortReport/miembros/13.jpg)
+![14](../imagenes/timeEffortReport/miembros/14.jpg)
+![15](../imagenes/timeEffortReport/miembros/15.jpg)
+![16](../imagenes/timeEffortReport/miembros/16.jpg)
+![17](../imagenes/timeEffortReport/miembros/17.jpg)
+![18](../imagenes/timeEffortReport/miembros/18.jpg)
+![19](../imagenes/timeEffortReport/miembros/19.jpg)
+![20](../imagenes/timeEffortReport/miembros/20.jpg)
+![21](../imagenes/timeEffortReport/miembros/21.jpg)
+![22](../imagenes/timeEffortReport/miembros/22.jpg)
+![23](../imagenes/timeEffortReport/miembros/23.jpg)
+![24](../imagenes/timeEffortReport/miembros/24.jpg)
+![25](../imagenes/timeEffortReport/miembros/25.jpg)
+
+### Resumen por subgrupos
+
+Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos de trabajo definidos.
+
+![26](../imagenes/timeEffortReport/subgrupos/1.jpg)
+
+
 ### **Blanco Mora, David** 
 
-### **Díaz Ordóñez, Pablo**  
+<table>
+    <tr>
+        <th>Tarea</th>
+        <th>Detalles de la actividad</th>
+        <th>Tiempo</th>
+    </tr>
+    <tr>
+        <td rowspan="8">Trabajo</td>
+        <td>Backend chat y mensajería</td>
+        <td>3 horas 32 minutos</td>
+    </tr>
+    <tr>
+        <td>Modificación backend mensajería</td>
+        <td>1 hora 28 minutos</td>
+    </tr>
+    <tr>
+        <td>Websockets backend</td>
+        <td>1 hora 23 minutos</td>
+    </tr>
+    <tr>
+        <td>Tests mensajería</td>
+        <td>1 hora 40 minutos</td>
+    </tr>
+    <tr>
+        <td>Feature: valoraciones en vista de objeto</td>
+        <td>2 horas 11 minutos</td>
+    </tr>
+    <tr>
+        <td>Revisión: valoraciones en vista de objeto</td>
+        <td>21 minutos</td>
+    </tr>
+    <tr>
+        <td>Píldoras teóricas</td>
+        <td>42 minutos</td>
+    </tr>
+    <tr>
+        <td>Rellenar time-effort y performance evaluation</td>
+        <td>30 minutos</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Clases</td>
+        <td>Clase 28/03</td>
+        <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+        <td>Clase 04/04</td>
+        <td>3 horas 50 minutos</td>
+    </tr>
+</table>
+
+
+### **Díaz Ordóñez, Pablo** 
+
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="13"><b>Código y documentación</b></td>
+    <td>Arreglo frontend política de cancelación (01/04/2025)</td>
+    <td>41 minutos</td>
+  </tr>
+  <tr>
+    <td>BUG: Limpiar Todo no se actualiza hasta recargar la aplicación y filtro de subcategoria (en local, se subió por Pablo Espinosa, que lo resolvió a la par) (02/04/2025)</td>
+    <td>33 minutos</td>
+  </tr>
+  <tr>
+    <td>BUG: Arreglo de cálculo de precio en solicitud de alquiler (02/04/2025)</td>
+    <td>22 minutos</td>
+  </tr>
+  <tr>
+    <td>Las valoraciones de los usuarios visualmente en el catalogo #372 (Trabajo en local) (02/04/2025)</td>
+    <td>1 hora y 15 minutos</td>
+  </tr>
+  <tr>
+    <td>Las valoraciones de los usuarios visualmente en el catalogo #372 (Pasarlo a la rama, comprobar y probar funcionalidad) (02/04/2025)</td>
+    <td>35 minutos</td>
+  </tr>
+  <tr>
+    <td>Mejorar ventanas de confirmación (primera prueba en local) (05/04/2025)</td>
+    <td>51 minutos</td>
+  </tr>
+  <tr>
+    <td>Mejorar ventanas de confirmación (ventanas de delete y edit en show item y de publish en create item pero con un problema) (05/04/2025)</td>
+    <td>1 hora y 21 minutos</td>
+  </tr>
+  <tr>
+    <td>Mejorar ventanas de confirmación (ventanas de publish en create item corregida, y creada de los borradores,  de aceptar los cambios del edit, de  crear los anuncios) (06/04/2025)</td>
+    <td>1 hora y 12 minutos</td>
+  </tr>
+  <tr>
+    <td>Mejorar ventanas de confirmación (resolver error en modelo de objetos y comprobar que funciona ventana de anuncios) (06/04/2025)</td>
+    <td>17 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadir niko niko (commit mal nombrado y corregido) (06/04/2025)</td>
+    <td>7 minutos</td>
+  </tr>
+  <tr>
+    <td>Rellenar time effort (09/04/2025)</td>
+    <td>20 minutos</td>
+  </tr>
+  <tr>
+    <td>Rellenar performance evaluation (09/04/2025)</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>Rellenar reporte de la IA (09/04/2025)</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="1"><b>Píldoras teóricas</b></td>
+    <td>Píldoras teóricas 08 y 09 (08/04/2025)</td>
+    <td>44 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2"><b>Clases</b></td>
+    <td>Clase (28/03/2025)</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase (04/04/2025)</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+</table>
+
 
 ### **Espinosa Naranjo, Pablo**
 
+<table border="1" cellspacing="0" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="7">Trabajo</td>
+      <td>Fullstack likes</td>
+      <td>8 horas 10 minutos</td>
+    </tr>
+    <tr>
+      <td>Bug subcategorias y correcciones de filtros</td>
+      <td>2 horas 27 minutos</td>
+    </tr>
+    <tr>
+      <td>Fixeo filtros de anuncios</td>
+      <td>1 hora 8 minutos</td>
+    </tr>
+    <tr>
+      <td>Botón perfil de usuario en vista de anuncio y objetos</td>
+      <td>1 hora 52 minutos</td>
+    </tr>
+    <tr>
+      <td>Fixeo atributo deposit en anuncios</td>
+      <td>1 hora 20 minutos</td>
+    </tr>
+    <tr>
+      <td>Fixeo filtros añadidos y filtro favoritos</td>
+      <td>35 minutos</td>
+    </tr>
+    <tr>
+        <td>Documento revisión</td>
+        <td>1 hora 36 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clase</td>
+      <td>Clase 28/03/25</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 04/04/25</td>
+      <td>2 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras teóricas</td>
+      <td>Sesión 8 y 9</td>
+      <td>42 minutos</td>
+    </tr>
+  </tbody>
+</table>
+
+
 ### **Fernández Rodríguez, Jesús**
+
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="15">Trabajo</td>
+    <td>Modificar el pago para que no se haga hasta después de la fecha del alquiler del objeto</td>
+    <td>6 horas y 4 minutos</td>
+  </tr>
+  <tr>
+    <td>Cambios en el perfil y cifrado DNI</td>
+    <td>3 horas y 42 minutos</td>
+  </tr>
+  <tr>
+    <td>Despliegue S3 v2 arreglando problemas encontrados</td>
+    <td>1 hora y 43 minutos</td>
+  </tr>
+  <tr>
+    <td>Despliegue S3 con Google CloudSQL</td>
+    <td>1 hora y 25 minutos</td>
+  </tr>
+  <tr>
+    <td>Despliegue v3 S3</td>
+    <td>1 hora y 24 minutos</td>
+  </tr>
+  <tr>
+    <td>Investigar migrar para despliegue S3</td>
+    <td>1 hora y 9 minutos</td>
+  </tr>
+  <tr>
+    <td>Despliegue S3 (inicial)</td>
+    <td>1 hora y 5 minutos</td>
+  </tr>
+  <tr>
+    <td>Pair programming imagen usuario</td>
+    <td>50 minutos</td>
+  </tr>
+  <tr>
+    <td>Time effort report</td>
+    <td>50 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadir anuncios con imágenes</td>
+    <td>49 minutos</td>
+  </tr>
+  <tr>
+    <td>Hotfix arreglo perfil</td>
+    <td>43 minutos</td>
+  </tr>
+  <tr>
+    <td>Migrar DB</td>
+    <td>34 minutos</td>
+  </tr>
+  <tr>
+    <td>Full stack de añadir los anuncios publicitarios</td>
+    <td>55 minutos</td>
+  </tr>
+  <tr>
+    <td>Fix: refrescar usuario al hacer login</td>
+    <td>20 minutos</td>
+  </tr>
+  <tr>
+    <td>Fix extra (registro)</td>
+    <td>3 segundos</td>
+  </tr>
+  <tr>
+    <td>Clase</td>
+    <td>Clase 28/03/2025</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
+
 
 ### **Fernández Mota, Francisco**
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="11">Trabajo</td>
+    <td>Gestión de tareas, organización y reparto</td>
+    <td>1 hora y 21 minutos</td>
+  </tr>
+  <tr>
+    <td>Logo en navbar y quitar carrito</td>
+    <td>22 minutos</td>
+  </tr>
+  <tr>
+    <td>Inicio de sesion con usuario o correo</td>
+    <td>33 minutos</td>
+  </tr>
+  <tr>
+    <td>Redirigir al guardar como borradores</td>
+    <td>8 minutos</td>
+  </tr>
+  <tr>
+    <td>Acceder a borradores sin estar loggeado</td>
+    <td>48 minutos</td>
+  </tr>
+  <tr>
+    <td>Frontend perfil de empresa</td>
+    <td>1 hora y 40 minutos</td>
+  </tr>
+  <tr>
+    <td>Foto de perfil</td>
+    <td>2 horas y 18 minutos</td>
+  </tr>
+  <tr>
+    <td>Foto de perfil pair programming</td>
+    <td>1 hora y 2 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglar bug foto de perfil</td>
+    <td>27 minutos</td>
+  </tr>
+  <tr>
+    <td>Mejorar vista de solicitudes de objetos</td>
+    <td>1 hora y 24 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglo DNI y NIF para cuenta de empresa</td>
+    <td>1 hora y 41 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Píldoras teóricas</td>
+    <td>Session 08</td>
+    <td>12 minutos</td>
+  </tr>
+  <tr>
+    <td>Session 09</td>
+    <td>30 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Reuniones</td>
+    <td>Reunión 31/3/25</td>
+    <td> 2 horas y 2 minutos</td>
+  </tr>
+  <tr>
+    <td>Reunión 2/4/25</td>
+    <td>1 hora y 30 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clase</td>
+    <td>Clase 28/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 4/4/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
 ### **García Rodríguez, Javier**
+
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="10">Trabajo</td>
+    <td>Integración parcial de sonarcloud y desarrollo de los borradores de algunos documentos comunes del S3</td>
+    <td>46 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión feedback usuarios pilotos asignatura S2 para aplicar en el S3</td>
+    <td>1 hora y 37 minutos</td>
+  </tr>
+  <tr>
+    <td>Trabajando en issues (364, 366)</td>
+    <td>2 horas y 36 minutos</td>
+  </tr>
+  <tr>
+    <td>Desarrollo del plan de pruebas (issue #393)</td>
+    <td>1 hora y 25 minutos</td>
+  </tr>
+  <tr>
+    <td>Actualización de leyes con respecto a recogida de datos - Documento de legislación (issue #345)</td>
+    <td>27 minutos</td>
+  </tr>
+  <tr>
+    <td>Configuración de sonarcloud</td>
+    <td>10 minutos</td>
+  </tr>
+  <tr>
+    <td>Preparación video anuncio</td>
+    <td>46 minutos</td>
+  </tr>
+  <tr>
+    <td>Refinamiento y preparación de la presentación TCO</td>
+    <td>1 hora y 55 minutos</td>
+  </tr>
+  <tr>
+    <td>Presentación</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldora teórica Session 08 y 09</td>
+    <td>45 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Reunión</td>
+    <td>Reunión representantes para redactar issues y más</td>
+    <td>2 horas y 2 minutos</td>
+  </tr>
+  <tr>
+    <td>Reunión representantes para planificar el anuncio de usuarios</td>
+    <td>1 hora y 32 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clase</td>
+    <td>Clase 28/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 4/4/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
 
 ### **González Ortiz, Miguel**
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="21">Trabajo</td>
+    <td>Arreglando mensaje de error de la contraseña</td>
+    <td>1 hora y 1 minuto</td>
+  </tr>
+  <tr>
+    <td>Arreglando tests, actualizando README y eliminando archivos `.env`</td>
+    <td>2 horas y 52 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadiendo botón para pagar con saldo</td>
+    <td>1 hora y 59 minutos</td>
+  </tr>
+  <tr>
+    <td>Funcionalidad para verificarse con el DNI</td>
+    <td>1 hora y 30 minutos</td>
+  </tr>
+  <tr>
+    <td>Cambios en el perfil y validaciones añadidas</td>
+    <td>2 horas y 28 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglar testing</td>
+    <td>32 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisar PR #448</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>Test de login</td>
+    <td>46 minutos</td>
+  </tr>
+  <tr>
+    <td>Test de registro</td>
+    <td>1 hora y 35 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando tests de suscripciones</td>
+    <td>32 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando tests de límites de creación de objetos</td>
+    <td>1 hora y 3 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando tests de operaciones CRUD de usuario</td>
+    <td>25 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando tests de operaciones CRUD de ítems</td>
+    <td>45 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadiendo algunos casos positivos y negativos de tests de operaciones CRUD de usuario</td>
+    <td>23 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando funcionalidad de verificación DNI</td>
+    <td>1 hora y 8 minutos</td>
+  </tr>
+  <tr>
+    <td>Testing Locust de registro</td>
+    <td>32 minutos</td>
+  </tr>
+  <tr>
+    <td>Testing Locust de login</td>
+    <td>49 minutos</td>
+  </tr>
+  <tr>
+    <td>Arreglando tests de registro</td>
+    <td>22 minutos</td>
+  </tr>
+  <tr>
+    <td>Creando base de datos Google Cloud</td>
+    <td>28 minutos</td>
+  </tr>
+  <tr>
+    <td>Configurando base de datos e intentando desplegar</td>
+    <td>1 hora y 58 minutos</td>
+  </tr>
+  <tr>
+    <td>Time effort y performance evaluation</td>
+    <td>32 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Clase</td>
+  </tr>
+  <tr>
+    <td>Clase 28/3/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 4/4/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
+
 ### **Martín Muñoz, Álvaro**
 
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+</tr>
+<tr>
+    <td rowspan="10">Trabajo</td>
+    <td>BUG: El formulario de update item se solapa</td>
+    <td>45 minutos, 26 segundos</td>
+</tr>
+<tr>
+    <td>Full Stack Sistema de reporte de usuarios</td>
+    <td>3 horas, 21 minutos</td>
+</tr>
+<tr>
+    <td>Full Stack Sistema de reporte de usuarios</td>
+    <td>1 hora, 20 minutos</td>
+</tr>
+<tr>
+    <td>Admin Full Stack obtener reportes</td>
+    <td>3 horas, 10 minutos, 38 segundos</td>
+</tr>
+<tr>
+    <td>Admin Full Stack obtener reportes</td>
+    <td>52 minutos, 40 segundos</td>
+</tr>
+<tr>
+    <td>Arreglo de errores de lint</td>
+    <td>36 minutos, 20 segundos</td>
+</tr>
+<tr>
+    <td>Arreglo imagen admin</td>
+    <td>1 hora, 39 minutos, 20 segundos</td>
+</tr>
+<tr>
+    <td>Documentación del sprint</td>
+    <td>15 minutos, 40 segundos</td>
+</tr>
+<tr>
+    <td>Time Report Effort</td>
+    <td>30 minutos</td>
+</tr>
+<tr>
+    <td>Performance Evaluation</td>
+    <td>15 minutos</td>
+</tr>
+<tr>
+    <td rowspan="2">Clase</td>
+    <td>28/03/2025</td>
+    <td>3 horas, 50 minutos</td>
+</tr>
+<tr>
+    <td>04/04/2025</td>
+    <td>3 horas, 50 minutos</td>
+</tr>
+<tr>
+    <td>Feedback Externo</td>
+    <td>Usuario Piloto de Go4Surprise</td>
+    <td>1 hora, 21 minutos</td>
+</tr>
+<tr>
+    <td rowspan="2">Píldora Teórica</td>
+    <td>Session 08</td>
+    <td>12 minutos, 2 segundos</td>
+</tr>
+<tr>
+    <td>Session 09</td>
+    <td>30 minutos, 1 segundo</td>
+</tr>
+</table>
+
 ### **Naredo Bernardos, Ignacio**
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Fecha</th>
+    <th>Detalles de la actividad</th>
+    <th>Duración</th>
+  </tr>
+  <tr>
+    <td><b>02/04/2025</b></td>
+    <td>Actualización del backend para el campo <b>DNI</b> en el usuario, incluyendo validaciones correspondientes.</td>
+    <td>2 horas 53 minutos</td>
+  </tr>
+  <tr>
+    <td><b>03/04/2025</b></td>
+    <td>Corrección de bugs en el panel de administrador.</td>
+    <td>1 hora 47 minutos</td>
+  </tr>
+  <tr>
+    <td><b>03/04/2025</b></td>
+    <td>Implementación de la funcionalidad para <b>crear ítems</b> desde el panel de administración.</td>
+    <td>1 hora 26 minutos</td>
+  </tr>
+  <tr>
+    <td><b>04/04/2025</b></td>
+    <td>Mejoras generales en el panel de administración, refactorización de componentes y correcciones visuales.</td>
+    <td>3 horas 49 minutos</td>
+  </tr>
+  <tr>
+    <td><b>07/04/2025</b></td>
+    <td>Comienzo de la mejora estética del panel de administrador.</td>
+    <td>46 minutos</td>
+  </tr>
+  <tr>
+    <td><b>07/04/2025</b></td>
+    <td>Continuación del trabajo en el panel de administración: diseño, integración y pruebas.</td>
+    <td>1 hora 38 minutos</td>
+  </tr>
+  <tr>
+    <td><b>07/04/2025</b></td>
+    <td>Trabajo adicional sobre el panel de administración, finalizando funcionalidades e interfaz.</td>
+    <td>2 horas 41 minutos</td>
+  </tr>
+  <tr>
+    <td><b>08/04/2025</b></td>
+    <td>Desarrollo y resolución de errores en el administrador (primera sesión del día).</td>
+    <td>1 hora 30 minutos</td>
+  </tr>
+  <tr>
+    <td><b>08/04/2025</b></td>
+    <td>Corrección de bugs persistentes en el administrador (segunda sesión del día).</td>
+    <td>1 hora 42 minutos</td>
+  </tr>
+  <tr>
+    <td><b>09/04/2025</b></td>
+    <td>Añadido el campo <b>FIANZA</b> al administrador, con pruebas y ajustes necesarios.</td>
+    <td>50 minutos</td>
+  </tr>
+</table>
+
 
 
 ### **Nieto Vicioso, Javier**
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="26">Código</td>
+      <td>#329 Frontend chat y mensajería: Últimos retoques del frontend del chat (09/04/2025)</td>
+      <td>36 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Refactorizando el botón de enviar mensaje y refactorizar lógica de envío en componentes (09/04/2025)</td>
+      <td>37 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Mejoras estéticas</td>
+      <td>35 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Mejorar la gestión de mensajes no leídos, optimizando la selección de conversaciones, añadiendo algunas validaciones y haciendo la pull request en modo draft (08/04/2025)</td>
+      <td>53 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Algunos ajustes de frontend, cómo mostrar el número de mensajes no leídos en el navbar (08/04/2025)</td>
+      <td>1 hora 5 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Mejoras estéticas y de funcionalidad y combinando develop con los cambios del backend con mi rama de frontend (07/04/2025)</td>
+      <td>37 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Mejoras estéticas y de funcionalidad (07/04/2025)</td>
+      <td>37 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Refrescando los mensajes y conversaciones cada ciertos segundos (poco eficiente de momento) (07/04/2025)</td>
+      <td>30 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Arreglando error de id del usuario actual cuando no estaba autenticado (07/04/2025)</td>
+      <td>21 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Implementando que un usuario pueda enviar a otro un mensaje a través de su perfil (07/04/2025)</td>
+      <td>1 hora 57 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Comprendiendo y probando cómo hacer para enviar un mensaje a un usuario sin chats entre ellos (06/04/2025)</td>
+      <td>29 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Añadiendo en frontend los nuevos campos de un chat (06/04/2025)</td>
+      <td>30 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Backend chat y mensajería: Probando en backend cómo llevar al frontend el último mensaje de un chat, su fecha y el número de mensajes sin leer (06/04/2025)</td>
+      <td>1 hora 5 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Actualizando el frontend con el nuevo backend (06/04/2025)</td>
+      <td>1 hora 9 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Backend chat y mensajería: Agregada funcionalidad para crear chats y obtener mensajes, incluyendo validaciones y marcado de mensajes leídos (06/04/2025)</td>
+      <td>1 hora 26 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Backend chat y mensajería: Mejorando validaciones, endpoints y pruebas en Postman (05/04/2025)</td>
+      <td>1 hora 29 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Añadidas las cabeceras de cada conversación y mejorados los datos de prueba (05/04/2025)</td>
+      <td>57 minutos</td>
+    </tr>
+    <tr>
+      <td>#329 Frontend chat y mensajería: Continuando con el prototipo hasta tener el backend (05/04/2025)</td>
+      <td>31 minutos</td>
+    </tr>
+    <tr>
+      <td>#340 Frontend añadir las politicas de privacidad etc en el footer y en el registro:: Mejorando la estética del footer (03/04/2025)</td>
+      <td>41 minutos</td>
+    </tr>
+    <tr>
+      <td>#340 Frontend añadir las politicas de privacidad etc en el footer y en el registro:: Probando cambios en el footer y mejorando los documentos subidos (03/04/2025)</td>
+      <td>24 minutos</td>
+    </tr>
+    <tr>
+      <td>#340 Frontend añadir las politicas de privacidad etc en el footer y en el registro:: Creadas las páginas de políticas y enlaces (02/04/2025)</td>
+      <td>38 minutos</td>
+    </tr>
+    <tr>
+      <td>#340 Frontend añadir las politicas de privacidad etc en el footer y en el registro:: Buscando la manera de incluir los documentos en la web (02/04/2025)</td>
+      <td>48 minutos</td>
+    </tr>
+    <tr>
+      <td>#370 Popup al solicitar un objeto: Creando un modal específico para los success y la PR</td>
+      <td>52 minutos</td>
+    </tr>
+     <tr>
+      <td>#370 Popup al solicitar un objeto: Creada la primera versión del pop up de las solicitudes</td>
+      <td>32 minutos</td>
+    </tr>
+     <tr>
+      <td>#329 Frontend chat y mensajería: Añadiendo en el navbar los mensajes y viendo cómo estructurar los datos de prueba para después hacer el backend</td>
+      <td>23 minutos</td>
+    </tr>
+     <tr>
+      <td>#329 Frontend chat y mensajeria: Empezando con el primer prototipo del chat de la app, sin conectar con backend</td>
+      <td>1 hora y 42 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="1">Documentación</td>
+      <td>#340 Frontend añadir las politicas de privacidad etc en el footer y en el registro: Mejorando documento de términos y condiciones y creando la PR (03/04/2025)</td>
+      <td>1 hora 5 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 04/04</td>
+      <td>3 horas 40 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 28/03</td>
+      <td>3 horas 40 minutos</td>
+    </tr>
+  </tbody>
+</table>
+
 
 ### **Padilla Gómez, Marco**
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="3">Código</td>
+    <td>Backend perfil de empresa</td>
+    <td>1 horas y 32 minutos</td>
+  </tr>
+  <tr>
+    <td>Bug actualizar foto de anuncio</td>
+    <td>1 hora y 57 minutos</td>
+  </tr>
+  <tr>
+    <td>Bug productos destacados</td>
+    <td>1 hora y 44 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="4">Documentación</td>
+    <td>Tomar feedback</td>
+    <td>1 hora y 57 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadir feedback a las bases de conocimiento</td>
+    <td>1 hora y 13 minutos</td>
+  </tr>
+  <tr>
+    <td>Realizacion del KBreport S3</td>
+    <td>21 minutos</td>
+  </tr>
+  <tr>
+    <td>Rellenar el timeEffort y el performance evaluation</td>
+    <td>26 minutos</td>
+  </tr>
+  <tr>
+    <td>Extras</td>
+    <td>Grabar anuncio</td>
+    <td>22 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Píldoras teóricas</td>
+    <td>Píldora 8</td>
+    <td>12 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldora 9</td>
+    <td>30 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 28/03</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 4/04</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
 
 ### **Picón Garrote, Alexander** 
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="9">Trabajo</td>
+    <td>revisión de funcionalidades para implementación de nuevos test y creación de nuevas issues subgrupo1</td>
+    <td>29 minutos y 49 segundos</td>
+  </tr>
+  <tr>
+    <td>actualizar terminos y condiciones del servicio</td>
+    <td>22 minutos y 47 segundos</td>
+  </tr>
+  <tr>
+    <td>estilo pagina recuperar contraseña</td>
+    <td>26 minutos y 17 segundos</td>
+  </tr>
+  <tr>
+    <td>grabación de clips para anuncio</td>
+    <td>1 hora, 16 minutos y 9 segundos</td>
+  </tr>
+  <tr>
+    <td>bug tracking de solicitudes</td>
+    <td>47 minutos y 13 segundos</td>
+  </tr>
+  <tr>
+    <td>asignacion faltante de tareas y organizacion del s3</td>
+    <td>39 minutos y 48 segundos</td>
+  </tr>
+  <tr>
+    <td>implementacion actualizacion de saldo destinatario en pagos</td>
+    <td>1 hora, 31 minutos y 21 segundos</td>
+  </tr>
+  <tr>
+    <td>implementacion de saldo en usuarios</td>
+    <td>1 hora, 32 minutos y 52 segundos</td>
+  </tr>
+  <tr>
+    <td>asignacion de tareas s3</td>
+    <td>29 minutos y 21 segundos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clase</td>
+    <td>clase 04/04</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>clase 28/03</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Reunión</td>
+    <td>Reunión representantes para redactar issues y más</td>
+    <td>2 horas y 2 minutos</td>
+  </tr>
+  <tr>
+    <td>Reunión representantes para planificar el anuncio de usuarios</td>
+    <td>1 hora y 32 minutos</td>
+  </tr>
+</table>
+
 ### **Palomo García, Miguel**
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="8">Código</td>
+      <td>#368 Verificación de la existencia del correo (03/04/2025)</td>
+      <td>1 horas 14 minutos</td>
+    </tr>
+    <tr>
+      <td>Presentacion y anuncios (03/04/2025)</td>
+      <td>6 horas</td>
+    </tr>
+    <tr>
+      <td> #334 Informar por frontend al publicar y solicitar un objeto del programa contra daños, (fianza)(07/04/2025)</td>
+      <td>30 minutos</td>
+    </tr>
+    <tr>
+      <td>Presentacion y anuncios (10/04/2025)</td>
+      <td>7 horas</td>
+    </tr>
+        <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 04/04</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras Teóricas</td>
+      <td>1 hora</td>
+    </tr>
+     </tbody>
+</table>
 
 ### **Periañez Franco, Luis Javier**
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="8">Código</td>
+      <td>#344 Frontend arreglar visualización de un perfil siendo anónimo(03/04/2025)</td>
+      <td>3 horas</td>
+    </tr>
+    <tr>
+      <td>#347 Frontend estética imágenes de ver un objeto (03/04/2025)</td>
+      <td>2 horas</td>
+    </tr>
+    <tr>
+      <td>#377 Falta filtros más específicos (03/04/2025)</td>
+      <td>1 hora</td>
+    </tr>
+    <tr>
+      <td>#347 Resolución conflicto de rama (07/04/2025)</td>
+      <td>42 minutos</td>
+    </tr>
+    <tr>
+      <td>#377 Falta filtros más específicos (07/04/2025)</td>
+      <td>1 hora 57 minutos</td>
+    </tr>
+    <tr>
+      <td>#362 BUG: Rechazar posibilidad de cambiar de plan premium a gratis directamente (08/04/2025)</td>
+      <td>2 horas 7 minutos</td>
+    </tr>
+    <tr>
+      <td>#362 BUG: Rechazar posibilidad de cambiar de plan premium a gratis directamente (09/04/2025)</td>
+      <td>1 hora 30 minutos minutos</td>
+    </tr>
+    <tr>
+      <td>#458 Bug filtrado arriba (09/04/2025)</td>
+      <td>35 minutos</td>
+    </tr>
+        <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 04/04</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras Teóricas</td>
+      <td>1 hora</td>
+    </tr>
+     </tbody>
+</table>
 
 ### **Rosado Raya, Santiago**
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="31">Trabajo</td>
+    <td>Revision PR #422</td>
+    <td>3 minutos</td>
+  </tr>
+  <tr>
+    <td>Análsis de feedback de usuarios piloto de la asignatura</td>
+    <td>5 minutos</td>
+  </tr>
+  <tr>
+    <td>Resolver conflicto issue #351</td>
+    <td>6 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #435</td>
+    <td>6 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #428</td>
+    <td>7 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #468</td>
+    <td>9 minutos</td>
+  </tr>
+  <tr>
+    <td>Trabajo issue #351</td>
+    <td>9 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #443</td>
+    <td>9 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadido uso IA en docu</td>
+    <td>10 minutos</td>
+  </tr>
+  <tr>
+    <td>Gestion feedback UP S3</td>
+    <td>10 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #440</td>
+    <td>10 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #471</td>
+    <td>11 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #438</td>
+    <td>11 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #386</td>
+    <td>13 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #404</td>
+    <td>16 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #464</td>
+    <td>18 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #445</td>
+    <td>18 minutos</td>
+  </tr>
+  <tr>
+    <td>Feedback UP externos unión</td>
+    <td>21 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #443</td>
+    <td>28 minutos</td>
+  </tr>
+  <tr>
+    <td>Trabajo issue #351</td>
+    <td>31 minutos</td>
+  </tr>
+    <tr>
+    <td>Revision PR #404 y #414</td>
+    <td>34 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PR #440</td>
+    <td>41 minutos</td>
+  </tr>
+  <tr>
+    <td>Feedback externo S3</td>
+    <td>43 minutos</td>
+  </tr>  <tr>
+    <td>Revision PR #365, #382, #380, #379 y #379</td>
+    <td>43 minutos</td>
+  </tr>
+  <tr>
+    <td>Revision PRs #395 #400 y #401</td>
+    <td>46 minutos</td>
+  </tr>
+  <tr>
+      <tr>
+    <td>Documento Feedback UP Mitad Sprint 3</td>
+    <td>52 minutos</td>
+  </tr>
+  <tr>
+    <td>Trabajo issue #351</td>
+    <td>57 minutos</td>
+  </tr>
+  <tr>
+    <td>Calificar UP S3 y meter time effort y niko niko</td>
+    <td>1 hora</td>
+  </tr>  
+  <tr>
+    <td>Gestion feedback UP S3</td>
+    <td>1 hora</td>
+  </tr>
+    <tr>
+    <td>Testeo de entidad renta y chat</td>
+    <td>1 hora 30 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clase</td>
+    <td>Clase 04/04/2025</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 28/03/2025</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+  <tr>
+  <tr>
+    <td rowspan="1">Feedback Externo</td>
+    <td>Feedback al G8</td>
+    <td>59 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="1">Reuniones</td>
+    <td>Como hacer informes de tests y arreglos de sonar</td>
+    <td>1 hora 11 minutos</td>
+  </tr>
+  <tr>
+    <td>Total</td>
+    <td colspan="2">24 horas</td>
+  </tr>
+  <tr>
+    <td>Enlace Clockify</td>
+    <td colspan="2"><a href="https://app.clockify.me/shared/67f7ddf4fd002c01921d1e10" target="_blank">Clockify</a></td>
+  </tr>
+</table>
 
 ### **Sánchez Márquez, Julia**
 
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="10">Trabajo</td>
+      <td>Modales y mensajes adaptados según rol y estado de la renta.</td>
+      <td>3 horas 10 minutos</td>
+    </tr>
+    <tr>
+      <td>Restricciones de creación de tickets, validaciones y correcciones de interfaz.</td>
+      <td>3 horas 6 minutos</td>
+    </tr>
+    <tr>
+      <td>Modelo Ticket, relaciones, endpoints y lógica para incidencias.</td>
+      <td>2 horas 31 minutos</td>
+    </tr>
+    <tr>
+      <td>Pantalla para enviar incidencias, adjuntar imágenes y consultar estado.</td>
+      <td>2 horas 25 minutos</td>
+    </tr>
+    <tr>
+      <td>Lógica de cancelación de alquileres con políticas según el estado.</td>
+      <td>1 horas 43 minutos</td>
+    </tr>
+    <tr>
+      <td>Corrección visual de los estados de la renta en la interfaz.</td>
+      <td>1 horas 34 minutos</td>
+    </tr>
+    <tr>
+      <td>Correcciones en la carga de imágenes y limpieza de código con lint y Sonar.</td>
+      <td>1 horas 24 minutos</td>
+    </tr>
+    <tr>
+      <td>Visualización del estado 'Pagado' en la interfaz de usuario.</td>
+      <td>40 minutos</td>
+    </tr>
+    <tr>
+      <td>Creación y grabación del vídeo de presentación de la app.</td>
+      <td>40 minutos</td>
+    </tr>
+    <tr>
+      <td>Ajuste automático del saldo tras una cancelación con reembolso.</td>
+      <td>27 minutos</td>
+    </tr>
+    <tr>
+    <td rowspan="2">Clase</td>
+    <td>Clase 04/04</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 28/03</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Theory Pills</td>
+    <td>S08</td>
+    <td>12 minutos</td>
+  </tr>
+  <tr>
+    <td>S09</td>
+    <td>30 minutos</td>
+  </tr>
+  </tbody>
+  <tr>
+    <td>Enlace Clockify</td>
+    <td colspan="2"><a href="https://app.clockify.me/shared/67f7e543d6e4ee46994e79ae" target="_blank">Clockify</a></td>
+  </tr>
+</table>
+
 ### **Sevillano Barea, Alejandro**
+
+<table>
+    <tr>
+        <th>Tarea</th>
+        <th>Detalles de la actividad</th>
+        <th>Tiempo</th>
+    </tr>
+    <tr>
+        <td rowspan="8">Trabajo</td>
+        <td>Grabacion de videos para anuncios</td>
+        <td>45 minutos</td>
+    </tr>
+    <tr>
+        <td>Test para funcionalidad de pagos</td>
+        <td>1 hora 47 minutos</td>
+    </tr>
+    <tr>
+        <td>Arreglo de tests del subgrupo 1</td>
+        <td>2 hora 7 minutos</td>
+    </tr>
+    <tr>
+        <td>Frontend de editar un perfil</td>
+        <td>1 hora 31 minutos</td>
+    </tr>
+    <tr>
+        <td>Corregir que las reseñas a usuarios solo se puedan hacer si se alquila previamente un objeto del perfil visitado</td>
+        <td>1 horas 10 minutos</td>
+    </tr>
+    <tr>
+        <td>Workflow changelog</td>
+        <td>54 minutos</td>
+    </tr>
+    <tr>
+        <td>Haciendo test de selenium y locust para el test de Search Items</td>
+        <td>6 horas 28 minutos</td>
+    </tr>
+    <tr>
+        <td>Arreglando conflictos por mergear y arreglando los test de selenium para el test de Search Items</td>
+        <td>2 horas 57 minutos</td>
+    </tr>
+    <tr>
+        <td rowspan="2">Clases</td>
+        <td>Clase 28-03-25</td>
+        <td>3 horas 40 minutos</td>
+    </tr>
+    <tr>
+        <td>Clase 04-04-25</td>
+        <td>3 horas 40 minutos</td>
+    </tr>
+    <tr>
+        <td>Píldoras teóricas</td>
+        <td>Píldoras</td>
+        <td>42 minutos</td>
+    </tr>
+</table>
+

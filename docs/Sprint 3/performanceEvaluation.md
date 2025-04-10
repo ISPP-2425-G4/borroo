@@ -86,13 +86,14 @@
 # Individual Contribution Summary  
 
 ## Tabla de contenidos
+
 1. [Devising a Project (#DP)](#devising-a-project-dp)
 
 2. [Sprint 1](#sprint-1-s1)
 
 3. [Sprint 2](#sprint-2-s2)
-4. 
-5. [Sprint 3](#sprint-3-s3)
+
+4. [Sprint 3](#sprint-3-s3)
 
 ## Devising a Project (#DP)
 
@@ -500,6 +501,8 @@ En la segunda semana, me centré en el desarrollo e implementación de la pasare
 Asimismo, continué con mi formación a través de las "píldoras teóricas". 
 ### **Palomo García, Miguel**
 
+
+
 ### **Periañez Franco, Luis Javier**
 Durante la primera semana, me dediqué a realizar la implementación de los planes de suscripción en el frontend, enfocándome especialmente en mejorar su estética y presentación visual para una mejor experiencia de usuario. Trabajé en el diseño de los distintos tipos de planes, sus precios y características, asegurando que la interfaz fuera clara, intuitiva y atractiva.
 
@@ -536,19 +539,118 @@ Por ultimo, visualice las pildoras teoricas
 
 ### **Blanco Mora, David** 
 
+Durante la primera semana del sprint 3, me encargué del desarrollo del backend de una de las nuevas funcionalidades planificadas para este sprint, el chat entre usuarios de la app. Lo cual, supuso al principio un poco de confusión, ya que no me quedó claro en un principio si el chat tenia que estar asociado a una renta, o por lo contrario éste podía ser accedido a través de un perfil de usuario. Posteriormente, para asegurar su correcto funcionamiento, implementé una serie de tests para comprobar que las funciones esenciales de la funcionalidad, se ejecutaban según lo esperado.
+
+Durante la segunda semana del sprint, desarrollé en frontend una funcionalidad, la cual consistía en: accediendo a la vista del detalle de un objeto publicado para su alquiler, poder visualizar la valoración media, y las valoraciones publicadas acerca de ese usuario en formato de estrellas. Por último, me visualicé el contenido de las píldoras teóricas publicadas en enseñanza virtual.
+
+
 ### **Díaz Ordóñez, Pablo**  
+
+Durante la primera semana del sprint 3, llevé a cabo el arreglo de la parte de los formularios correspondiente a la política de cancelación, cuyo desplegable no salía en la posición deseada. Luego, comencé a arreglar los filtros correspondientes a las subcategorías y limpiar todo, que no funcionaban correctamente. Esta tarea la tuve resuelta pero no la subí al repositorio tras comunicarme Pablo Espinosa que la resolvió antes en la realización de una tarea suya. Tras ello, arreglé el cálculo del precio en la solicitud de un alquiler, para que cogiera bien los días que se alquila y calcular bien el precio total. 
+
+Siguiendo en la primera semana, añadí que las valoraciones y ubicación que se muestra en la caja de cada objeto en la página principal, sean la media de las valoraciones que ha obtenido el usuario propietario de ese objeto y la ubicación que tiene en su perfil. Por último, llevé a cabo la mejora de las ventanas de confirmación, entre las que están las ventanas de crear un item, publicarlo, editar su información, borrarlo, publicar un anuncio; además de resolver un error en el modelo de objetos para poder comprobar en su totalidad el correcto funcionamiento de las ventanas tras realizar las operaciones en cuestión.
+
+Durante la segunda semana, quedé en disposición de ayudar a otros compañeros con sus tareas, tras finalizar las mías. Además, visualicé las píldoras teóricas 08 y 09 y rellené mi parte del time effort y performance evaluation (presente documento). También añadí entradas en el reporte de la IA.
 
 ### **Espinosa Naranjo, Pablo**
 
+Durante la primera semana del sprint 3, se me encomendó realizar el fullstack de "favoritos". Este fullstack consistía en que el usuario pudiese añadir objetos que hubiese en alquiler en favoritos, y que hubiese una pantalla para que el usuario pudiese ver sus favoritos. Comencé con la implementación en el backend, que conllevó el desarrollo de una nueva entidad que relacionaba a un usuario con un objeto, la modificación de la entidad "item" para contabilizar las veces que había sido añadido a favoritos un objeto, los cambios necesarios en los serializadores, urls... Tras esto, añadí en el frontend en las vista principal y en los detalles de un objeto funcionalidades para que el usuario pudiese añadir un objeto a favoritos, opcion que solo se muestra si este esta loggeado. Tambien añadí en ambas vistas que siempre sea visible el estado del item (Si ya ha sido añadido a favoritos o no), y un mensaje de que el objeto es popular entre los usuarios cuando supera X numero de favoritos. Por último, para que el usuario pudiese ver sus objetos marcados como favoritos, lo añadí a modo de filtro, añadiendole toda la lógica de filtrado implementada en otros sprints por mí.
+
+Tras esto, procedí a solucionar errores relacionados con los filtros de los cuales era consciente para pulir el proyecto. Estos estaban relacionados con el funcionamiento de los filtros al limpiarlos, concretamente con el de precio, el de subcategorias y el paginado. Una vez los realicé, fui consciente de que a mi compañero Pablo Diaz se le había asignado como tarea fixear el filtro de subcategorias, por lo que me puse en contacto con él para no causar ningún inconveniente. Ambos llegamos a la conclusión de que no había ningún problema, y tras darles a conocer lo ocurrido a los subjefes de nuestros subgrupos, me asignaron la tarea.
+
+En la segunda semana, me encargué de añadir la información del usuario (nombre y apellido) que publica un objeto o un anuncio en las pantallas correspondientes, buscando que estas fueran acorde al estilo de las propias paginas. Esto implicó cambios en los serializadores y en las propias vistas. 
+
+Una vez fue implementado lo anterior observé que, tras varias adiciones de compañeros, varias funcionalidades añadidas por mí habían sido "pisadas", por lo que comencé a investigar cual había sido el fallo con los conflictos, me puse en contacto con los compañeros responsables y corregí lo errores que habían acontecido. 
+
+Tras esto, observe cierto error en una funcionalidad relacionada con los nuevos filtros añadidos, el cual yo había experimentado anteriormente con los filtros añadidos por mí. Me puse en contacto con mi compañero Luis Periañez, el cual era responsable de estos filtros añadidos, le comenté el problema, y le ayude inicialmente a solucionar el mismo.
+
+Tras finalizar, realicé junto a mi compañero Marco el desarrollo del documento "revision.md".
+
+Por último, visualice los videos de "Pildoras teoricas" correspondientes a este Sprint (Sesión 8 y sesión 9)
+
 ### **Fernández Rodríguez, Jesús**
+
+#### Semana 1
+
+Durante la primera semana, trabajé principalmente en el backend de la aplicación, enfocado en la lógica del sistema de pagos. Realicé diversas modificaciones para asegurar que el pago no se efectuara hasta después de la fecha del alquiler del objeto. Esta funcionalidad fue desarrollada en varias sesiones los días 3 y 4 de abril.
+
+Además, llevé a cabo una investigación para preparar el despliegue del Sprint 3, y participé activamente en el primer despliegue del sistema, realizado el 2 de abril. Estas tareas fueron clave para asegurar la estabilidad del entorno de producción antes de los lanzamientos posteriores.
+
+También comencé con el desarrollo full stack para la funcionalidad de anuncios publicitarios, integrando tanto el backend como el frontend.
+
+---
+
+#### Semana 2
+
+La segunda semana estuvo marcada por múltiples despliegues iterativos de la versión Sprint 3 (S3), incluyendo despliegues con Google Cloud SQL que no acabaron siendo satisfactorios y correcciones sobre la marcha. Estas actividades buscaron mejorar el rendimiento y solucionar problemas encontrados en producción.
+
+Trabajé en el cifrado del DNI y otros cambios dentro del perfil de usuario, mejorando así la seguridad y privacidad de los datos personales. Asimismo, corregí errores con hotfixes específicos, como el refresco de la información del usuario al hacer login.
+
+También añadí imágenes a los anuncios, completando la funcionalidad iniciada la semana anterior, y realicé sesiones de pair programming para mejorar la carga de imágenes de perfil. Finalmente, preparé la versión final del despliegue como parte del cierre de la semana.
+
 
 ### **Fernández Mota, Francisco**
 
+A lo largo de la primera semana del tercer y último Sprint, además de reunirme junto al PM y los GMs para organizar el inicio de este, gestioné y repartí las tareas a realizar en mi subgrupo. También empecé corrigiendo algunos errores de la aplicación o pequeñas mejoras visuales como añadir el logo en el Navbar o quitar el carrito, ya que no era una funcionalidad de la aplicación. También implementé la posibilidad de iniciar sesión con el correo electrónico además de con el usuario. Cerrando la semana corregí algunos errores de validación y redirección relacionado con los borradores e implementé la posibilidad de registrarse como perfil de empresa y poder cambiar la foto de perfil.
+
+Durante la segunda semana, además de ver las píldoras teóricas, arreglé errores presentes en la aplicación como bugs con la foto de perfil o validar que el usuario tiene DNI o NIF en caso de ser un perfil de empresa. Por último mejoré la vista relacionada con las solicitudes de objetos (anuncios).
+
 ### **García Rodríguez, Javier**
+
+Durante la primera semana, me encargué de integrar de forma parcial la herramienta **SonarQube** para poder medir ciertas métricas asociadas al código. Además, estuve desarrollando los borradores de los documentos comunes del S1,S2, y S3. (AIUsage, timeEffortReport, performanceEvaluation, etc). Estuve revisando el feedback recibido por los usuarios pilotos de la asignatura junto a Santiago Rosado Raya para poder generar un documento conjunto que se tomaría para poder generar nuevas issues para implementar funcionalidades, o corregir errores a mitad de sprint. Además, tuvimos una reunión de representantes para poder redactar todas las issues, resolver dudas, y más. Estuve trabajando en la issues 364 y 366, concretamente centradas en 2 incidencias, trackear solicitudes para mostrar el estado, e implemetar en la búsqueda la posibilidad de que fuese case sensitive. Estuve desarrollando el plan de pruebas que se solicitó para las semanas, generando un documento en markdown especificando los tipos de pruebas implementadas y los resultados obtenidos. Los representantes de subgrupos tuvimos una reunión para poder planificar el primer anuncio, dedicado a los clientes. Estuve preparando la presentación para la clase del día 4, respectivamente.
+
+Durante la siguiente semana, estuve, junto a Miguel Palomo García, editando el TCO, en el que se incluyó el coste asociado a los inversores, mencionado en la clase anterior. Estuve revisando las píldoras teóricas para la sesión 08 y 09. Además, editando el documento en el que se explica como se va a manejar la fianza solicitada en la aplicación, y los procedimientos correspondientes en función de incidencias ocurridas en el proceso. Estuve actualizando el documento del uso de la IA, añadiendo las nuevas entradas y el cálculo del nuevo porcentaje de alucinaciones correspondiente al S3. Tuve una reunión con Santiago Rosado Raya para poder valorar como generar los informes de testing para mostrar la cobertura del proyecto de las pruebas, y realizando cambios en SonarCloud para poder realizar un análisis correcto del proyecto.
+
 
 ### **González Ortiz, Miguel**
 
+<div align="justify">
+
+Primera semana:
+
+Durante la primera semana, me centré en corregir un error relacionado con el mensaje de error al introducir una contraseña incorrecta. Esta mejora permitió una retroalimentación más clara para los usuarios durante el proceso de autenticación, optimizando la experiencia general.
+
+Segunda semana:
+
+La segunda semana fue considerablemente más productiva, con múltiples tareas desarrolladas tanto en frontend como en backend. Comencé corrigiendo y ampliando la batería de tests, incluyendo casos positivos y negativos de operaciones CRUD sobre usuarios e ítems, así como los tests de registro, login, suscripciones y límites de creación de objetos.
+
+Implementé un botón para permitir pagos con saldo y desarrollé la funcionalidad de verificación con DNI, incluyendo validaciones y mejoras en el perfil del usuario. También corregí la funcionalidad de verificación con DNI y realicé una revisión del pull request #448.
+
+En cuanto a pruebas de rendimiento, ejecuté pruebas con Locust para los flujos de registro y login. Además, trabajé en la creación y configuración de una base de datos en Google Cloud, intentando su despliegue.
+
+Completé tareas de mantenimiento como la actualización del README, la eliminación de archivos .env, y la corrección de errores de testing. Finalmente, dediqué tiempo a tareas administrativas, incluyendo el registro en Time Report Effort y la cumplimentación de este Performance Evaluation.
+
+</div>
+
 ### **Martín Muñoz, Álvaro**
+<div align="justify">
+Informe de Actividades
+
+Primera semana:
+
+Durante la primera semana, me enfoqué en la resolución de bugs y en el inicio del desarrollo del sistema de reporte de usuarios. Comencé con la corrección de un bug en el formulario de actualización de items (45 minutos, 26 segundos), donde solucioné un problema de solapamiento que afectaba la experiencia del usuario.
+
+Además, inicié el trabajo en el desarrollo full stack del sistema de reporte de usuarios (3 horas, 21 minutos), implementando tanto el frontend como el backend para permitir a los usuarios reportar incidencias de manera eficiente.
+
+Para acabar la semana, asistí a la clase del 28/03/2025 (3 horas, 50 minutos).
+
+Segunda semana:
+
+En la segunda semana, continué con el desarrollo del sistema de reporte de usuarios y trabajé en funcionalidades administrativas. Dediqué tiempo adicional al desarrollo full stack del sistema de reporte de usuarios (1 hora, 20 minutos), refinando la interfaz y asegurando la correcta comunicación con el backend.
+
+Además, implementé la funcionalidad para que los administradores puedan obtener reportes en dos sesiones (3 horas, 10 minutos, 38 segundos y 52 minutos, 40 segundos), permitiendo una gestión eficiente de las incidencias reportadas.
+
+También resolví errores de lint (36 minutos, 20 segundos), mejorando la calidad del código y asegurando el cumplimiento de las mejores prácticas de programación. Asimismo, arreglé un problema con la imagen en la sección de administración (1 hora, 39 minutos, 20 segundos), garantizando una visualización correcta.
+
+Realicé una sesión de feedback externo con un usuario piloto de Go4Surprise (1 hora, 21 minutos), recopilando sugerencias para mejorar la aplicación.
+
+Además, trabajé en la documentación del sprint (15 minutos, 40 segundos), asegurando que todas las actividades y decisiones quedaran registradas adecuadamente.
+
+Para continuar mi aprendizaje, ví la Píldora Teórica - Session 08 (12 minutos, 2 segundos) y la Píldora Teórica - Session 09 (30 minutos, 1 segundo), profundizando en temas relevantes para el desarrollo del proyecto.
+
+Finalmente, participé en evaluaciones de desempeño, dedicando tiempo a Time Report Effort (30 minutos) y Performance Evaluation (15 minutos), y asistí a la clase del 04/04/2025 (3 horas, 50 minutos).
+
+</div>
 
 ### **Naredo Bernardos, Ignacio**
 Durante la primera semana del sprint, me enfoqué en ampliar la funcionalidad del backend del módulo de usuarios, incorporando un nuevo campo: DNI. Para ello, implementé todas las validaciones necesarias, asegurándome de que el dato cumpliera con los formatos esperados y que no generara conflictos con la base de datos ni con las operaciones existentes del sistema. También realicé pruebas para verificar la correcta integración del campo en los distintos puntos donde se gestionan los datos del usuario.
@@ -559,17 +661,123 @@ Durante la tercera semana, los cambios en la estructura de los ítems exigieron 
 
 Finalmente, dediqué parte significativa de esta semana a la corrección de errores críticos que se encontraban en el dashboard de administración. Estos bugs afectaban funcionalidades clave, por lo que su resolución contribuyó notablemente a mejorar la estabilidad, usabilidad y rendimiento general de la herramienta de administración.
 ### **Nieto Vicioso, Javier**
+Durante este sprint, mi principal aportación ha sido el desarrollo del chat de la aplicación. Inicialmente, solo contaba con hacer el frontend, pero debido a que el backend no avanzaba al ritmo esperado, tuve que encargarme de implementar gran parte de la lógica en el servidor.
+
+#### Semana 1
+Durante la primera semana, me encargué de desarrollar el primer prototipo del chat de la aplicación, centrándome únicamente en el frontend sin conexión con el backend. Además, implementé un pop-up que se muestra cuando un usuario envía una solicitud de alquiler, informándole que puede acceder a sus solicitudes en el apartado "Mis solicitudes". Este pop-up incluye dos botones: uno para ir directamente a sus solicitudes enviadas y otro para volver al menú principal. También añadí las políticas de privacidad, SLA, términos y condiciones tanto en el footer como en el registro. Para esto, investigué diferentes opciones, como la posibilidad de mostrarlas en formato PDF, pero finalmente opté por utilizar un visor de Markdown que permite visualizar estos documentos almacenados en un contenedor específico. Los términos y condiciones los tuve que reformatear porque tenían muchas cláusulas abusivas en Claudette.
+
+A finales de la semana, el sábado, avancé en el desarrollo del backend del chat, ya que no estaba progresando al ritmo necesario y requería una base sólida para continuar con la integración. Implementé gran parte de los endpoints necesarios para la comunicación entre usuarios. El domingo, trabajé en la integración del frontend con el backend en local, dado que ambos se encontraban en ramas separadas.
+
+#### Semana 2
+Durante la segunda semana, me dediqué principalmente a pulir la integración del frontend con el backend del chat, mejorando aspectos clave de la funcionalidad. Implementé el refresco automático de mensajes y conversaciones cada cierto tiempo, permitiendo una actualización en tiempo real. También añadí la opción de enviar mensajes a otro usuario directamente desde su perfil y un indicador en el navbar para mostrar los mensajes no leídos. Además, realicé una refactorización del código para optimizar su mantenimiento y mejorar la estructura del sistema de mensajería.
 
 ### **Padilla Gómez, Marco**
+A lo largo de estas dos semanas he hecho las siguientes tareas:
+- Tome feedback en la clase del 28 de marzo y del 4 de abril.
+- Añadí el cif como modelo asi como sus validaciones a nivel de backend.
+- Grabe clips para el anuncio.
+- Arregle un bug que permitia publicar anuncios sin foto desde los borradores.
+- Añadi el feedback que teniamos que aportar a la base de conocimento grupal.
+- Arregle un bug que permitia destacar productos sin estar publicados y que cuando dejes de ser usuario premium tus objetos dejen de estar destacados.
+- Añadí el feedback de las semanas 8 y 9 tanto a nuestra base de conocimientos como a la grupal.
+- Actualice el KBreport.
+- Me vi las pildoras teoricas.
 
 ### **Picón Garrote, Alexander** 
 
+Durante este sprint, mi principal enfoque ha estado en diversas tareas cruciales para el avance del proyecto, abarcando desde la revisión y planificación de pruebas hasta la implementación de funcionalidades clave relacionadas con el sistema de pagos y la gestión de usuarios.
+
+#### Semana 1
+
+Durante esta semana, me encargué de la grabación de clips para el anuncio de usuarios, para asegurar la calidad del material promocional. Además, realicé un exhaustivo bug tracking de solicitudes, identificando y reportando problemas para su posterior resolución.
+
+En cuanto a la organización interna, llevé a cabo la asignación faltante de tareas y trabajé en la organización del S3, optimizando la gestión de recursos y la distribución de responsabilidades dentro del equipo.
+
+Un aspecto fundamental de mi trabajo durante esta semana fue la implementación de la actualización de saldo del destinatario en los pagos y la implementación del saldo en los usuarios. Estas tareas requirieron una comprensión profunda de la lógica del sistema de pagos y la gestión de cuentas de usuario, así como una implementación cuidadosa para garantizar la integridad de los datos. Finalmente, también realicé la asignación de tareas del S3, complementando la labor de organización de recursos.
+
+Adicionalmente, participé en dos sesiones de clase los días 28 de marzo y 4 de abril, cada una con una duración de 3 horas y 50 minutos.. También asistí a dos reuniones de representantes: una de 2 horas y 2 minutos dedicada a la redacción de issues y otros temas relevantes, y otra de 1 hora y 32 minutos centrada en la planificación del anuncio de usuarios.
+
+#### Semana 2
+Durante la segunda semana, aunque fue mucho mas calmada que la segunda, dediqué tiempo a la revisión de funcionalidades con el objetivo de identificar áreas para la implementación de nuevos tests. Como resultado de esta revisión, procedí a la creación de nuevas issues para el subgrupo 1, asegurando una cobertura de pruebas adecuada para las próximas etapas de desarrollo.
+
+Aparte, me ví los vídeos de las píldoras teóricas y actualice los términos y condiciones del servicio.
+
 ### **Palomo García, Miguel**
+#### Semana 1
+Durante la primera semana me encargué de hacer una primera asignación de las issues más importantes al equipo de trabajo y de la realización de verificación de correo a través de un mensaje al propio correo electronico.
+Edité el TCO para realizar una estimación mas realista de las ganancias, además de realizar el anuncio dedicado a usuario y con ello la propia edición y creación de la canción. Como responsable de la presentación completé la presentacion correctamente.
+
+#### Semana 2
+Durante la siguiente semana, estuve, junto a Javier García Rodríguez, editando el TCO, en el que se incluyó el coste asociado a los inversores, mencionado en la clase anterior. Estudié las diferentes formas de fianza que implementaban algunas plataformas y desarrolle los puntos a hablar en el documento de fianza dentro del customer agreement. Además implemente una función para que los usuarios puedan añadir su fianza personalizada al objeto. Como responsable de la presentación completé la presentacion correctamente.
 
 ### **Periañez Franco, Luis Javier**
+Durante estos días he continuado con el desarrollo de funcionalidades clave del frontend, centrado especialmente en la mejora de la experiencia de usuario. En primer lugar, llevé a cabo la visualización de perfiles en la plataforma, solucionando errores y adaptando el diseño para una mejor comprensión de la información por parte del usuario (3 horas). También dediqué tiempo a mejorar la estética de las imágenes en la vista de detalle de los objetos, asegurando que se muestren correctamente y con una disposición más intuitiva (2 horas).
 
+Por otro lado, estuve trabajando en los filtros avanzados del sistema, ya que inicialmente eran demasiado genéricos. Implementé una lógica más específica para que los usuarios pudieran encontrar lo que buscan de manera más precisa, tarea que supuso un esfuerzo repartido en varios días (1 hora el día 3 de abril y 1 hora y 57 minutos el día 7).
+
+Asimismo, colaboré con mi equipo en la resolución de un conflicto de ramas relacionado con cambios en el frontend (45 minutos), asegurando que no hubiera pérdida de funcionalidades al fusionar ramas.
+
+A nivel de backend y lógica de negocio, trabajé en el sistema de gestión de suscripciones premium, solucionando un bug que permitía cambiar directamente de premium a gratis, lo cual rompía el flujo esperado. Realicé dos sesiones de trabajo sobre este punto: una de 2 horas y 15 minutos y otra de 1 hora y 30 minutos.
+
+También detecté y resolví un bug relacionado con el filtrado en la vista principal de objetos (45 minutos), mejorando la precisión y coherencia de los resultados.
+
+Además de las tareas técnicas, asistí a clases relacionadas con el proyecto, incluyendo una sesión formativa completa el 4 de abril (3 horas y 40 minutos) y una píldora teórica el 7 de abril (1 hora), que me ayudaron a comprender mejor ciertos aspectos de diseño y validación del sistema.
 ### **Rosado Raya, Santiago**
 
+#### Semana 1
+Durante la primera semana de este Sprint he estado desempeñando tareas de QA, revisando pull requests y colaborando con otros miembros de mi subgrupo en la resolución de errores y problemas de desarrollo.
+
+Además, he estado implementando la nueva lógica de negocio, elaborando la documentación para los usuarios piloto, contactando con ellos y recopilando feedback.
+
+Por último, también participo como usuario piloto en el proyecto de otro grupo de la asignatura, dedicando parte de mi tiempo a contribuir a la mejora de su desarrollo.
+
+
+#### Semana 2
+Durante esta segunda semana del Sprint he realizado varias tareas clave para el avance del proyecto. En primer lugar, analicé todo el feedback recopilado por parte de los usuarios piloto, clasificándolo y organizándolo dentro del documento correspondiente. Además, realicé mejoras en dicho documento, incorporando una nueva sección de clasificación del feedback.
+
+También he estado realizando pruebas sobre las entidades creadas por mi subgrupo, calificando a los usuarios piloto y desempeñando nuevamente el rol de QA, revisando pull requests y colaborando con mis compañeros para asegurar que todo el código que se mergea a develop sea óptimo.
+
+Por otro lado, he seguido participando como usuario piloto en el proyecto de otro grupo, proporcionando feedback útil para la mejora de su desarrollo. Finalmente, he asistido a reuniones con el Project Manager, donde se han tomado decisiones sobre cómo generar los informes de tests y cómo resolver los problemas que genera SonarQube con los archivos de testeo.
+
+
 ### **Sánchez Márquez, Julia**
+Durante este sprint, mi principal aportación ha sido el desarrollo de la funcionalidad para cancelar un alquiler, aplicando las políticas de cancelación correspondientes, así como la posibilidad de enviar una incidencia sobre un alquiler en caso de que el usuario lo desee. Aunque inicialmente se me asignó una tarea diferente, relacionada con una modificación de una funcionalidad del sprint 2, tras discutirlo con el equipo y consultar con los usuarios piloto, se decidió mantener la implementación actual, ya que la mayoría de los usuarios piloto se mostraron a favor de no realizar cambios. Esta tarea, que inicialmente tenía una estimación de alto esfuerzo, fue descartada y, en su lugar, se me asignaron dos tareas fullstack para aprovechar ese tiempo disponible. 
+
+#### Semana 1
+Debido al solapamiento con otros proyectos relevantes de otras asignaturas, la primera semana no fue especialmente productiva. Pude encargarme de grabar el vídeo de anuncio de la aplicación y comenzar con el backend de la primera tarea fullstack (cancelación de alquileres). Me centré en la implementación de la lógica de las solicitudes y en las validaciones necesarias, como evitar la aplicación de políticas de cancelación si el pedido aún no había sido pagado. También corregí un error heredado del sprint anterior relacionado con las etiquetas de estado de los pedidos, que no se estaban actualizando correctamente.
+
+
+#### Semana 2
+En la segunda semana, dediqué muchas más horas para compensar la baja productividad de la anterior. Finalicé tanto el backend como el frontend de la funcionalidad de cancelación de pedidos: se implementó la modificación de estados de las rentas, la aplicación de políticas de cancelación según el contexto, validaciones específicas según el rol del usuario que solicitara la cancelación, y la integración de todo ello en la interfaz de manera intuitiva. Además, se implementó la actualización automática del saldo del usuario, de forma que si el arrendatario cancelaba el pedido, se le reembolsaba la cantidad correspondiente según las políticas aplicadas en su saldo.
+
+Durante los últimos días de la semana, desarrollé la funcionalidad de creación de incidencias. Para ello, se creó un nuevo modelo denominado "Tickets", vinculado a una renta. Este modelo almacena una descripción escrita por el usuario y permite adjuntar imágenes que respalden su reclamación. Tanto el arrendatario como el propietario pueden generar incidencias, pero solo una por cada usuario involucrado en la renta. Estas incidencias serán posteriormente revisadas y gestionadas por un administrador, quien se encargará de actualizar el estado del ticket según el progreso del caso.
+
+Debido a dependencias con otras tareas, como la creación de las pantallas de interfaz para el administrador, no fue posible desarrollar aún la parte correspondiente del frontend para gestionar los tickets. Esta parte se ha pospuesto para la próxima semana, ya que su implementación no implica un gran esfuerzo y puede resolverse rápidamente.
+
+Tuve algunos problemas con la subida y visualización de imágenes en el frontend, pero finalmente logré resolverlos revisando tareas similares de otros compañeros. Además, se cumplieron todas las métricas exigidas por Sonar y Codacy, evitando la duplicidad de código y mejorando métricas como "Reliability", entre otras.
+
+Puede consultar el [tiempo invertido aquí](https://app.clockify.me/shared/67f7e543d6e4ee46994e79ae).
 
 ### **Sevillano Barea, Alejandro**
+
+#### Semana 1
+
+Durante la primera semana, me centré en diversas tareas relacionadas tanto con el desarrollo del frontend como con la mejora de procesos del equipo. En primer lugar, trabajé activamente en la corrección de errores detectados en la funcionalidad de edición de perfil de admin. Aunque avancé en la resolución de varios bugs, finalmente fue Ignacio Naredo quien terminó de solucionarlos completamente.
+
+Además, diseñé e implementé un workflow de release acompañado de un sistema de changelog, con el objetivo de organizar de manera más clara las entregas y los cambios realizados durante el Sprint 3. Esta herramienta contribuirá a una mejor trazabilidad del desarrollo y a facilitar el seguimiento por parte del equipo.
+
+También desarrollé una mejora en la lógica del sistema de reseñas, restringiendo su uso únicamente a aquellos usuarios que hayan alquilado previamente un objeto del perfil visitado, reforzando así la coherencia y validez del sistema de valoraciones.
+
+Por último, participé en la grabación de un vídeo promocional que fue utilizado durante la presentación del proyecto del viernes 4 de abril.
+
+#### Semana 2
+
+Durante la segunda semana, enfoqué mis esfuerzos principalmente en el desarrollo y mantenimiento de pruebas ya que soy el QA de mi subgrupo.
+
+Comencé corrigiendo una serie de tests unitarios que comenzaron a fallar debido a cambios recientes realizados en el archivo models.py del módulo de objetos. Una vez corregidos, desarrollé también el test unitario correspondiente a la funcionalidad de pagos, cubriendo los casos necesarios para asegurar su correcto funcionamiento.
+
+A continuación, implementé pruebas E2E utilizando Selenium para la funcionalidad de búsqueda de objetos (Search Items). Este trabajo representó un reto significativo, ya que me encontré con ciertas ineficiencias o carencias tanto en el backend como en el frontend. Dado que mi intención era evitar modificar el código principal para no comprometer la estabilidad de la aplicación, tuve que buscar soluciones alternativas, lo que aumentó el tiempo requerido. Además, por su complejidad, estas pruebas resultaron más exigentes que las pruebas unitarias convencionales.
+
+Una vez implementadas, resolví los conflictos que surgieron al hacer merge con la rama develop, especialmente aquellos relacionados con los tests de Selenium que había desarrollado.
+Finalmente, revisé las píldoras teóricas 8 y 9, lo cual me permitió consolidar conocimientos clave que aplico en el desarrollo del proyecto.
+
