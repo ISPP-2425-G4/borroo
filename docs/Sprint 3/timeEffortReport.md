@@ -4392,7 +4392,7 @@
     <th>Tiempo</th>
   </tr>
   <tr>
-    <td rowspan="11">Trabajo</td>
+    <td rowspan="10">Trabajo</td>
     <td>Integración parcial de sonarcloud y desarrollo de los borradores de algunos documentos comunes del S3</td>
     <td>46 minutos</td>
   </tr>
