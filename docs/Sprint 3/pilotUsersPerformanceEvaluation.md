@@ -69,12 +69,12 @@ Los usuarios serán evaluados según los siguientes niveles de implicación:
 
 | Student                         | #S1  | #S2  | #S3  | #PPL | #WPL | **Total** |
 |---------------------------------|------|------|------|------|------|------------------|
-| Flores de Francisco, Daniel    | 8    |   8.5   |      |      |      |                 |
-| García Escudero, Ángel         | 9    |   9  |      |      |      |                 |
-| Olivencia Moreno, Pablo        | 9    |   6.5   |      |      |      |                 |
-| Rodríguez López, Josué         | 8.5  |   7.5   |      |      |      |               |
-| Youssafi Benichikh, Karim      | 10   |   10   |      |      |      |                |
-| **Total**                      | **44.5** | **41.5**  |  |  |  |  |
+| Flores de Francisco, Daniel    | 8    |   8.5   | 6.5 |      |      |                 |
+| García Escudero, Ángel         | 9    |   9  |  9  |      |      |                 |
+| Olivencia Moreno, Pablo        | 9    |   6.5   | 5.5 |      |      |                 |
+| Rodríguez López, Josué         | 8.5  |   7.5   |  8  |      |      |               |
+| Youssafi Benichikh, Karim      | 10   |   10   |  10  |      |      |                |
+| **Total**                      | **44.5** | **41.5**  | **39** |  |  |  |
 
 ---
 
@@ -118,20 +118,20 @@ Aquí se hará un resumen de el feedback que ha aportado cada usuario piloto y d
 
 ### **Sprint 3 (#S3)**
 
-- **Flores de Francisco, Daniel**:  
+- **Flores de Francisco, Daniel**:  El usuario no ha dedicado tanto tiempo como en Sprints anteriores al envío de feedback. No obstante, en el feedback proporcionado responde a todo lo solicitado y ofrece algunas observaciones interesantes, especialmente en lo que respecta a la parte estética, que valora positivamente. Sin embargo, la mayor parte de sus comentarios son algo superficiales y carecen de la profundidad observada en iteraciones anteriores. Ha entregado el feedback dentro del plazo establecido y ha completado el documento con toda la información requerida.
 
 
-- **García Escudero, Ángel**:  
+- **García Escudero, Ángel**:  El usuario ha dedicado una cantidad significativa de tiempo tanto a la prueba del sistema como a la redacción del feedback. Ha aportado observaciones detalladas sobre aspectos técnicos y sobre la lógica de negocio, incluyendo propuestas de mejora para hacer el sistema más intuitivo. Además, ha identificado algunos bugs relevantes y ha compartido ideas interesantes de funcionalidades. Finalmente, ha respondido a todos los requerimientos dentro del plazo establecido, mostrando un alto grado de implicación.
 
 
-- **Olivencia Moreno, Pablo**:  
+- **Olivencia Moreno, Pablo**:  El usuario ha realizado las pruebas mínimas exigidas y ha entregado el feedback dentro del plazo establecido. Si bien ha probado las funcionalidades requeridas, su análisis carece de profundidad. Se percibe que ha explorado el sistema de forma superficial, sin entrar en detalle ni aportar observaciones significativas. El feedback cumple con lo solicitado, pero no aporta valor adicional más allá de lo básico.
 
 
-- **Rodríguez López, Josué**:  
+- **Rodríguez López, Josué**:  El usuario ha dedicado tiempo tanto a la prueba del sistema como a la redacción del feedback. Ha respondido a todos los apartados propuestos y ha enviado el feedback dentro del plazo establecido. Sus aportaciones son en general útiles, con algunos apartados más desarrollados que otros. Se aprecia que ha probado el sistema con cierta profundidad y ha incluido ideas interesantes de mejora.
 
 
-- **Youssafi Benichikh, Karim**:  
-
+- **Youssafi Benichikh, Karim**:  El usuario ha dedicado un esfuerzo notable tanto a la prueba del sistema como a la redacción del feedback, y esto se refleja claramente en la calidad de sus aportaciones. Su feedback está bien estructurado, con ideas claras, organizadas y acompañadas de imágenes que facilitan enormemente la comprensión de los problemas por parte del equipo de desarrollo.
+Se evidencia que ha probado el sistema en profundidad, detectando múltiples bugs y proponiendo mejoras concretas, muchas de ellas ilustradas con ejemplos visuales. Como en ocasiones anteriores, demuestra un alto nivel de implicación y compromiso con el desarrollo del sistema. Ha respondido a todos los apartados de forma detallada, aportando ejemplos de mejoras y dentro del plazo establecido.
 
 
 ---
