@@ -419,7 +419,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                     </Box>
                     {request.rent_status != "cancelled" && (
                     <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
-                        {user.id === request.renter.id && (
+                        {user.id === request.renter.id && new Date(request.end_date) > new Date() && (
                             <Button
                                 variant="contained"
                                 color="grey"
@@ -429,7 +429,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                             >
                                 Cancelar
                             </Button>)}
-                            { isOwner && request.rent_status != "requested" && (
+                            { isOwner && request.rent_status != "requested" && new Date(request.end_date) > new Date() && (
                             <Button
                                 variant="contained"
                                 color="grey"
