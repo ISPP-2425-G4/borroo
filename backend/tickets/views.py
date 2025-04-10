@@ -4,6 +4,8 @@ from rest_framework import status, filters, viewsets
 from rest_framework.response import Response
 from django.db.models import Q
 from django.utils.timezone import now
+from rest_framework.views import APIView
+from .models import TicketImage
 
 
 # Create your views here.
@@ -84,14 +86,12 @@ class TicketViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def destroy(self, request, *args, **kwargs):
-        # Verificamos que el usuario esté autenticado
         if not request.user.is_authenticated:
             return Response(
                 {"detail": "Authentication credentials were not provided."},
                 status=status.HTTP_401_UNAUTHORIZED
             )
 
-        # Recuperamos el objeto a eliminar
         try:
             ticket = self.get_object()
         except Ticket.DoesNotExist:
@@ -103,11 +103,20 @@ class TicketViewSet(viewsets.ModelViewSet):
                 {"detail": "No tienes permiso para eliminar esta incidencia."},
                 status=status.HTTP_403_FORBIDDEN
             )
-
-        # Eliminamos el objeto
         ticket.delete()
 
         return Response(
             {"detail": "Incidencia eliminada exitosamente."},
             status=status.HTTP_204_NO_CONTENT
         )
+
+
+class TicketImageView(APIView):
+    def get(self, request, pk, format=None):
+        try:
+            ticket_image = TicketImage.objects.get(pk=pk)
+            return Response({"image": ticket_image.image},
+                            status=status.HTTP_200_OK)
+        except TicketImage.DoesNotExist:
+            return Response({"error": "Imagen no encontrada"},
+                            status=status.HTTP_404_NOT_FOUND)

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Ticket, TicketImage
 from rentas.models import Rent
+from utils.utils import upload_image_to_imgbb
 
 
 class TicketImageSerializer(serializers.ModelSerializer):
@@ -56,7 +57,8 @@ class TicketSerializer(serializers.ModelSerializer):
 
         images = self.context['request'].FILES.getlist('image_files')
         for image_file in images:
-            TicketImage.objects.create(ticket=ticket, image=image_file)
+            image_url = upload_image_to_imgbb(image_file)
+            TicketImage.objects.create(ticket=ticket, image=image_url)
 
         return ticket
 

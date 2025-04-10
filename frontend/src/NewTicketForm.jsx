@@ -160,8 +160,8 @@ const NewTicketForm = () => {
       const formData = new FormData();
       formData.append("description", description);
 
-      images.forEach((imageFile) => {
-        formData.append("image_files", imageFile);
+      images.forEach((image) => {
+        formData.append("image_files", image);
       });
 
       await axios.post(
