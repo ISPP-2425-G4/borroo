@@ -466,7 +466,7 @@ Para finalizar, asistí a las **clases del 14/03/2025 y 21/03/2025** (3 horas, 5
 
 Durante la primera semana del S2, trabajé en la realización del método de solicitud de alquiler y sus validaciones así como la ayuda a fullstack de categorias y filtros de precios. 
  
-Durante la segunda semana del S2, desarrollé el admin backend, luego desarrolle el admin backend con token y finalmente colaboré en la ayuda a mis compañeros a desarrollar el fullstack de admin y el frontend de solicitud de alquileres.
+Durante la segunda semana del S2, desarrollé el admin backend, luego desarrolle el admin backend con token y finalmente colaboré en la ayuda a mis compañeros a desarrollar el fullstack de admin y el frontend de solicitud de alquileres, encontramos serias dificultades debido a que al tener que integrar el administrador en nuestra grafica de manera independiente tuvimos que volver a crear todos los metodos CRUD de nuevo asi como las vistas.
 
 ### **Nieto Vicioso, Javier**
 ### Semana 1
@@ -551,7 +551,13 @@ Por ultimo, visualice las pildoras teoricas
 ### **Martín Muñoz, Álvaro**
 
 ### **Naredo Bernardos, Ignacio**
+Durante la primera semana del sprint, me enfoqué en ampliar la funcionalidad del backend del módulo de usuarios, incorporando un nuevo campo: DNI. Para ello, implementé todas las validaciones necesarias, asegurándome de que el dato cumpliera con los formatos esperados y que no generara conflictos con la base de datos ni con las operaciones existentes del sistema. También realicé pruebas para verificar la correcta integración del campo en los distintos puntos donde se gestionan los datos del usuario.
 
+En la segunda semana, el trabajo se centró en el panel de administración. Se abordaron y solucionaron varios bugs que afectaban la estabilidad y la experiencia de usuario del administrador. Además, añadí la funcionalidad para crear nuevos ítems desde el dashboard de administración, incluyendo su conexión con el backend, la validación de campos, y la correcta persistencia de los datos en la base de datos.
+
+Durante la tercera semana, los cambios en la estructura de los ítems exigieron una revisión profunda del administrador. Se añadieron nuevos campos a los ítems, por lo que fue necesario reconstruir gran parte del sistema de administración de ítems, tanto en el frontend como en el backend, asegurando la compatibilidad con los nuevos requerimientos. De forma paralela, también se realizaron ajustes similares en la gestión de usuarios para mantener la coherencia del sistema ante las actualizaciones recientes.
+
+Finalmente, dediqué parte significativa de esta semana a la corrección de errores críticos que se encontraban en el dashboard de administración. Estos bugs afectaban funcionalidades clave, por lo que su resolución contribuyó notablemente a mejorar la estabilidad, usabilidad y rendimiento general de la herramienta de administración.
 ### **Nieto Vicioso, Javier**
 
 ### **Padilla Gómez, Marco**

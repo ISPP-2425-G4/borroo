@@ -3426,6 +3426,68 @@
 </table>
 
 ### **Naredo Bernardos, Ignacio**
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Semana</th>
+    <th>Detalles de la actividad</th>
+    <th>Duración estimada</th>
+  </tr>
+  <tr>
+    <td><b>Semana 1</b></td>
+    <td>Se añadió el campo <b>DNI</b> al backend del módulo de usuarios, incluyendo todas las validaciones necesarias para asegurar el correcto formato y funcionamiento. Se realizaron pruebas para validar su integración.</td>
+    <td>~1 día</td>
+  </tr>
+  <tr>
+    <td><b>Semana 2</b></td>
+    <td>Se corrigieron diversos bugs en el panel de administración y se añadió la funcionalidad para <b>crear nuevos ítems</b> desde el dashboard de administrador, con validaciones y conexión al backend.</td>
+    <td>~2 días</td>
+  </tr>
+  <tr>
+    <td><b>Semana 3</b></td>
+    <td>Debido a la incorporación de nuevos campos, se reestructuró la administración de ítems en el panel. Se realizaron ajustes similares en el módulo de usuarios y se solucionaron múltiples bugs en el dashboard de admin.</td>
+    <td>~3 días</td>
+  </tr>
+  <tr>
+    <td><b>17/03/2025</b></td>
+    <td>Implementación del método para solicitar alquiler, incluyendo lógica inicial y conexión con la base de datos.</td>
+    <td>3 horas 7 minutos</td>
+  </tr>
+  <tr>
+    <td><b>18/03/2025</b></td>
+    <td>Documentación y base de conocimiento común para el equipo sobre funcionalidades compartidas del backend.</td>
+    <td>36 minutos</td>
+  </tr>
+  <tr>
+    <td><b>19/03/2025</b></td>
+    <td>Desarrollo de validaciones para la solicitud de alquiler, asegurando integridad y consistencia de datos.</td>
+    <td>2 horas 13 minutos</td>
+  </tr>
+  <tr>
+    <td><b>20/03/2025</b></td>
+    <td>Apoyo en el desarrollo fullstack de filtros por categoría y precio en el frontend y backend.</td>
+    <td>1 hora 30 minutos</td>
+  </tr>
+  <tr>
+    <td><b>24/03/2025</b></td>
+    <td>Mejoras en el backend de administración, ajustes relacionados con nuevos campos y corrección de errores.</td>
+    <td>3 horas 16 minutos</td>
+  </tr>
+  <tr>
+    <td><b>25/03/2025</b></td>
+    <td>Continuación del trabajo en el backend del administrador y resolución de conflictos. También se realizó una sesión de <i>píldoras teóricas</i>.</td>
+    <td>3 horas 35 minutos</td>
+  </tr>
+  <tr>
+    <td><b>26/03/2025</b></td>
+    <td>Implementación de autenticación con token en el backend de admin. Revisión general del sistema.</td>
+    <td>2 horas 30 minutos</td>
+  </tr>
+  <tr>
+    <td><b>27/03/2025</b></td>
+    <td>Revisión final del panel de administración, correcciones finales de errores, refactorización del código y limpieza general.</td>
+    <td>3 horas 10 minutos</td>
+  </tr>
+</table>
 
 ### **Nieto Vicioso, Javier**
 
@@ -4120,6 +4182,7 @@
 ### **Martín Muñoz, Álvaro**
 
 ### **Naredo Bernardos, Ignacio**
+
 
 ### **Nieto Vicioso, Javier**
 
