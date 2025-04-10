@@ -87,8 +87,8 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 | 010  | Explicación de errores | Javier Nieto Vicioso   | 09/04/2025 | [Ver chat](https://chatgpt.com/share/67f69e61-35c4-800c-8bb3-dc1c7a2dfbb0) |
 | 011  | Generación de documentación (gráficas) | Miguel Palomo García   | 09/04/2025 | [Ver chat](https://chatgpt.com/share/67f69c9e-e748-8002-8712-23fba77aabb3) |
 | 012  | Generación de código para funcionalidad de cancelación de planes | Luis Javier Periáñez Franco  | 07/04/2025 | (no deja compartir chat) |
-| 012  | Generación de código para funcionalidad de filtrados | Luis Javier Periáñez Franco  | 06/04/2025 | (no deja compartir chat) |
-| 013  | Generación de código para error visualización perfil | Luis Javier Periáñez Franco  | 03/04/2025 | (no deja compartir chat) |
+| 013  | Generación de código para funcionalidad de filtrados | Luis Javier Periáñez Franco  | 06/04/2025 | (no deja compartir chat) |
+| 014  | Generación de código para error visualización perfil | Luis Javier Periáñez Franco  | 03/04/2025 | (no deja compartir chat) |
 
 
 
