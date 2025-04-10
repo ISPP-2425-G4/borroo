@@ -460,4 +460,4 @@ URL y credenciales del “time tracking tool”: Desde clockify (en organizació
 
 Potential Requirements: Uso de internet para aplicacion desplegada, descrito en readme de git para aplicacion local 
 
-Enlace video demo: https://youtu.be/NuqLd7GuDRw
+Enlace video demo: [https://youtu.be/NuqLd7GuDRw](https://youtu.be/CCF9NbYcF8U)
