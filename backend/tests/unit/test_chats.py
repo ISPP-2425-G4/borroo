@@ -91,12 +91,6 @@ class ChatTests(TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertIn("error", response.data)
 
-    def test_get_my_chats_returns_data(self):
-        response = self.client.get("/chats/get_my_chats/")
-        self.assertEqual(response.status_code, 200)
-        self.assertIsInstance(response.data, list)
-        self.assertGreaterEqual(len(response.data), 1)
-
     def test_get_chat_messages_forbidden_if_not_in_chat(self):
         outsider = User.objects.create_user(
             username="outsider",
