@@ -4111,6 +4111,43 @@
 
 ## Sprint 3 (#S3)
 
+### Resumen completo
+
+A continuación, se muestra la participación de cada miembro del grupo mediante gráficas obtenidas con informes de Clockify durante el Sprint 3.
+
+![1](../imagenes/timeEffortReport/miembros/1.jpg)
+![2](../imagenes/timeEffortReport/miembros/2.jpg)
+![3](../imagenes/timeEffortReport/miembros/3.jpg)
+![4](../imagenes/timeEffortReport/miembros/4.jpg)
+![5](../imagenes/timeEffortReport/miembros/5.jpg)
+![6](../imagenes/timeEffortReport/miembros/6.jpg)
+![7](../imagenes/timeEffortReport/miembros/7.jpg)
+![8](../imagenes/timeEffortReport/miembros/8.jpg)
+![9](../imagenes/timeEffortReport/miembros/9.jpg)
+![10](../imagenes/timeEffortReport/miembros/10.jpg)
+![11](../imagenes/timeEffortReport/miembros/11.jpg)
+![12](../imagenes/timeEffortReport/miembros/12.jpg)
+![13](../imagenes/timeEffortReport/miembros/13.jpg)
+![14](../imagenes/timeEffortReport/miembros/14.jpg)
+![15](../imagenes/timeEffortReport/miembros/15.jpg)
+![16](../imagenes/timeEffortReport/miembros/16.jpg)
+![17](../imagenes/timeEffortReport/miembros/17.jpg)
+![18](../imagenes/timeEffortReport/miembros/18.jpg)
+![19](../imagenes/timeEffortReport/miembros/19.jpg)
+![20](../imagenes/timeEffortReport/miembros/20.jpg)
+![21](../imagenes/timeEffortReport/miembros/21.jpg)
+![22](../imagenes/timeEffortReport/miembros/22.jpg)
+![23](../imagenes/timeEffortReport/miembros/23.jpg)
+![24](../imagenes/timeEffortReport/miembros/24.jpg)
+![25](../imagenes/timeEffortReport/miembros/25.jpg)
+
+### Resumen por subgrupos
+
+Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos de trabajo definidos.
+
+![26](../imagenes/timeEffortReport/subgrupos/1.jpg)
+
+
 ### **Blanco Mora, David** 
 
 <table>
