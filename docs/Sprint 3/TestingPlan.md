@@ -7,7 +7,7 @@ Sprint 3 – G4
 
 Repositorio: [https://github.com/ISPP-2425-G4/borroo](https://github.com/ISPP-2425-G4/borroo)
 
-02/04/2025
+10/04/2025
 
 Miembros:
 
@@ -35,6 +35,7 @@ Miembros:
 | Fecha      | Versión | Realizada por   | Descripción de los cambios |
 | ---------- | ------- | --------------- | -------------------------- |
 | 02-04-2025 | v1.0    | Javier García Rodríguez | Creación del documento |
+| 10-04-2025 | v1.1    | Javier García Rodríguez | Nuevas entradas añadidas y ediciones realizadas |
 
 ----------------
 
@@ -46,7 +47,6 @@ Se realizarán pruebas mostradas en las píldoras teóricas de la asignatura.
 
 ## 2. Tipos de Pruebas Implementadas
 - **Pruebas Unitarias:** Validación de componentes individuales.
-- **Pruebas de Integración:** Verificación de la interacción entre módulos.
 - **Pruebas End-to-End/Interfaz:** Verificación de la interfaz de usuario.
 - **Pruebas de Rendimiento:** Medición de velocidad, carga y estabilidad.
 
@@ -54,7 +54,7 @@ Se realizarán pruebas mostradas en las píldoras teóricas de la asignatura.
 
 ### 3.1. Pruebas Unitarias
 
-Se ha incluido en el archivo **requirements.txt** la librería **pytest**, la cual incluye a  pytest-cov y pytest-django. El objetivo es obtener una cobertura superior al **70%**.
+Se ha incluido en el archivo **requirements.txt** la librería **pytest**, la cual incluye a  pytest-cov y pytest-django. El objetivo es obtener una cobertura igual o superior al **70%**.
 
 Estas pruebas contemplan 3 tipos de casos distintos, caso positivo, caso negativo y caso destructivo. 
 
@@ -62,43 +62,47 @@ Las pruebas desarrolladas están asociadas a las funcionalidades de la aplicaci�
 
 #### Escenarios contemplados:
 
-- Solicitud de alquiler: [Archivo test_crud_ask_for_a_rent.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_crud_ask_for_a_rent.py)
-- Operaciones CRUD asociadas a objetos: [Archivo test_crud_items.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_crud_items.py)
-- Operaciones CRUD asociadas a usuarios: [Archivo test_crud_user.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_crud_user.py)
-- Recuperación de contraseña: [Archivo test_recuperacion_contraseña.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_recuperacion_contrase%C3%B1a.py)
-- Búsqueda de objetos: [Archivo test_search_items.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_search_items.py)
-- Planes de suscripción: [Archivo test_suscription_plan.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_suscription_plan.py) y [archivo test_suscription_plan_upgrade.py](https://github.com/ISPP-2425-G4/borroo/blob/main/backend/tests/unit/test_suscription_plan_upgrade.py)
+- Solicitud de alquiler: [Archivo test_crud_ask_for_a_rent.py](../../backend/tests/unit/test_crud_ask_for_a_rent.py)  
+- Operaciones CRUD asociadas a objetos: [Archivo test_crud_items.py](../../backend/tests/unit/test_crud_items.py)
+- Operaciones CRUD asociadas a usuarios: [Archivo test_crud_user.py](../../backend/tests/unit/test_crud_user.py)
+- Recuperación de contraseña: [Archivo test_recuperacion_contraseña.py](../../backend/tests/unit/test_recuperacion_contraseña.py)
+- Búsqueda de objetos: [Archivo test_search_items.py](../../backend/tests/unit/test_search_items.py)
+- Planes de suscripción: [Archivo test_suscription_plan.py](../../backend/tests/unit/test_suscription_plan.py) y [archivo test_suscription_plan_upgrade.py](../../backend/tests/unit/test_suscription_plan_upgrade.py)
+- Chats: [Archivo test_chats.py](../../backend/tests/unit/test_chats.py)
+- Login y registro: [Archivo test_login.py](../../backend/tests/unit/test_login.py) y [Archivo test_register.py](../../backend/tests/unit/test_register.py)
+- Pagos: [Archivo test_payments.py](../../backend/tests/unit/test_payments.py)
+- - Rentas: [Archivo test_rentas.py](../../backend/tests/unit/test_rentas.py)
 
 
-### 3.2. Pruebas de Integración
 
-Se ha incluido en el archivo **requirements.txt** la librería **selenium**, la cual permite probar la interacción entre módulos y garantizar la consistencia y usabilidad de la aplicación.
-
-#### Escenarios contemplados:
-
-Intencionadamente en blanco.
-
-
-### 3.3. Pruebas End-to-End
+### 3.2. Pruebas End-to-End
 
 Se ha incluido en el archivo **requirements.txt** la librería **selenium**, la cual permite probar la interfaz de usuario con la aplicación al completo.
 
+Las pruebas desarrolladas están asociadas a las funcionalidades de la aplicación y módulos, respectivamente.
+
 #### Escenarios contemplados:
 
-Intencionadamente en blanco.
+- Búsqueda de items: [Archivo test_search_items.py](../../backend/tests/e2e/test_search_items.py)
 
 
-### 3.4. Pruebas de Rendimiento
+### 3.3. Pruebas de Rendimiento
 
 Se ha incluido en el archivo **requirements.txt** la librería **locust**, la cual permite realizar 2 tipos de pruebas, de carga y de estrés.
 
-Ambas se realizarán en los archivos denominados `locustfile.py`.
+Ambas se realizarán en los archivos denominados `locustfile_XXX.py`, siendo XXX la funcionalidad correspondiente.
 
 #### Escenarios contemplados:
 
-Intencionadamente en blanco.
+- Login: [Archivo locustfile_login.py](../../backend/tests/performance/locustfile_login.py)
+- Registro: [Archivo locustfile_register.py](../../backend/tests/performance/locustfile_register.py)
 
+## 4. Conclusiones
 
-## 8. Anexos y Referencias
+A través de pytest, hemos podido generar un documento html en el que podemos medir el **coverage** cubierto actualmente en la aplicación. Concremtamente, este coverage llega a un valor de 65%. Es un valor el cual se acerca al estimado, pero no es el esperado. Se ha replanificado para el PPL arreglar estos tests y poder aumentar este valor.
 
-Intencionadamente en blanco.
+Se adjuntan 2 archivos HTML, correspondientes a los tests que han funcionado y cuáles no en la carpeta de Sprint 3. En uno se visualiza el porcentaje, y otro los tests que han pasado y cuáles no.
+
+- Archivo con el número: [index.html](./Testing/index.html)
+- Archivo con el porcentaje: [coverage.html](./Testing/coverage.html)
+
