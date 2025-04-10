@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="footer-section">
           <h3>Enlaces</h3>
           <ul>
-            <li><Link to="/">Landing Page</Link></li>
+            <li><Link to="https://sites.google.com/view/borroo?usp=sharing">Landing Page</Link></li>
             <li><a href="https://github.com/ISPP-2425-G4/borroo" target="_blank" rel="noopener noreferrer">Repositorio en GitHub</a></li>
             <li><Link to="/faq">Preguntas Frecuentes</Link></li>
           </ul>
