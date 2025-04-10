@@ -4258,7 +4258,7 @@
     <th>Tiempo</th>
   </tr>
   <tr>
-    <td rowspan="8">Trabajo</td>
+    <td rowspan="10">Trabajo</td>
     <td>Gestión de tareas, organización y reparto</td>
     <td>1 hora y 21 minutos</td>
   </tr>
@@ -4291,9 +4291,21 @@
     <td>1 hora y 2 minutos</td>
   </tr>
   <tr>
-    <td rowspan="1">Píldoras teóricas</td>
+    <td>Arreglar bug foto de perfil</td>
+    <td>27 minutos</td>
+  </tr>
+  <tr>
+    <td>Mejorar vista de solicitudes de objetos</td>
+    <td>1 hora y 24 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Píldoras teóricas</td>
     <td>Session 08</td>
     <td>12 minutos</td>
+  </tr>
+  <tr>
+    <td>Session 09</td>
+    <td>30 minutos</td>
   </tr>
   <tr>
     <td rowspan="2">Reuniones</td>
