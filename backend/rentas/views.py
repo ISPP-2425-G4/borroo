@@ -84,6 +84,17 @@ class RentViewSet(viewsets.ModelViewSet):
         user = get_object_or_404(User, pk=user_id)
         item = get_object_or_404(Item, pk=item_id)
 
+        if not user.is_profile_completed():
+            return Response(
+                {
+                    "error": (
+                        "No puedes alquilar un objeto sin completar tu perfil,"
+                        " revisa que tu perfil esté completo y estés "
+                        "identificado"
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         # Verificar campos obligatorios
         if not all([item_id, start_date, end_date, user_id]):
             return Response(
