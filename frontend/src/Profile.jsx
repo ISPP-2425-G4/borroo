@@ -427,13 +427,14 @@ const Profile = () => {
       return;
     }
 
+    if (image) {
+      formData.user_image = image;
+    }
+
     const updatedData = { ...formData, ...updatedFields };
 
     
     try {
-      if (image) {
-        formData.user_image = image;
-      }
       const response = await axios.put(
         `${import.meta.env.VITE_API_BASE_URL}/usuarios/update/`,
         updatedData,
