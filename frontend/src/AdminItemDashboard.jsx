@@ -23,38 +23,16 @@ import {
     Typography,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { styled } from "@mui/system";
 import { FiImage } from "react-icons/fi";
 import EditIcon from '@mui/icons-material/Edit';
-
-const ImageUploadText = styled(Typography)(() => ({
-    marginTop: "8px",
-    color: "#666",
-    fontSize: "0.9rem",
-  }));
-
-  const HiddenFileInput = styled("input")({
-    display: "none",
-  });
-
-const FileInputContainer = styled(Box)(() => ({
-    width: "100%",
-    padding: "12px",
-    borderRadius: "8px",
-    border: "1px dashed #ddd",
-    backgroundColor: "#f9f9f9",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-    transition: "all 0.2s",
-    marginBottom: "1.5rem",
-    "&:hover": {
-      borderColor: "#4a90e2",
-      backgroundColor: "#f0f7ff",
-    },
-  }));
+import {
+  ImageGallery,
+  ImageContainer,
+  PreviewImage,
+  FileInputContainer,
+  HiddenFileInput,
+  ImageUploadText,
+} from "./components/FormStyles";
 
 const categoryList = [
     { value: 'technology', label: 'Tecnología' },
@@ -158,30 +136,6 @@ const categoryOptions = {
         { value: 'none', label: 'Ninguno' },
     ],
 };
-
-const ImageGallery = styled(Box)(() => ({
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "16px",
-    marginTop: "16px",
-    marginBottom: "24px",
-  }));
-  
-
-  const ImageContainer = styled(Box)(() => ({
-    position: "relative",
-    width: "150px",
-    borderRadius: "8px",
-    overflow: "hidden",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-  }));
-
-  const PreviewImage = styled("img")(() => ({
-    width: "100%",
-    height: "120px",
-    objectFit: "cover",
-  }));
-
 
 const AdminItemDashboard = () => {
     const handleImageChange = (e) => {

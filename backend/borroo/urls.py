@@ -42,6 +42,7 @@ urlpatterns = [
     path('rentas/', include('rentas.urls')),
     path('pagos/', include('pagos.urls')),
     path('chats/', include('chats.urls')),
+    path('incidencias/', include('tickets.urls')),
     path('admin/', admin.site.urls),
 ]
 

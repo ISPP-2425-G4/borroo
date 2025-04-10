@@ -6,12 +6,13 @@ import { useState } from "react";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import ConfirmModal from "./ConfirmModal";
 import SendMessageButton from "./SendMessageButton";
 
 
 const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) => {
-
+    const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem("user"));
     const [loading, setLoading] = useState(false);
     const [processedSessionId, setProcessedSessionId] = useState(null); // Estado para rastrear el sessionId procesado
@@ -218,6 +219,10 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
             });
         }
     };
+
+    const handleOpenIncidentForm = (rentId) => {
+        navigate(`/incidencias/nueva/${rentId}`);
+      };
     
     return (
         <Box
@@ -354,8 +359,9 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
 
                     {/* Pregunta si el alquiler ha ido bien si la fecha de fin ya pasó */}
                 {new Date(request.end_date) < new Date() &&
-                    ((user.id === request.renter.id && !request.paid_pending_confirmation?.is_confirmed_by_renter) || 
-                    (user.id === request.item.user && !request.paid_pending_confirmation?.is_confirmed_by_owner)) && (
+                    !request.incident_reported &&
+                    ((user.id === request.renter.id && !request.paid_pending_confirmation?.is_confirmed_by_renter && !request.renter_reported)  || 
+                    (user.id === request.item.user && !request.paid_pending_confirmation?.is_confirmed_by_owner && !request.owner_reported)) && (
                         <Box sx={{ mt: 2 }}>
                             <Typography variant="body2" sx={{ mb: 1 }}>
                                 ¿El alquiler ha ido bien?
@@ -373,6 +379,7 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                                     variant="contained"
                                     color="error"
                                     size="small"
+                                    onClick={() => handleOpenIncidentForm(request.id)}
                                 >
                                     ❌
                                 </Button>
