@@ -4257,7 +4257,7 @@
   </thead>
   <tbody>
     <tr>
-      <td rowspan="6">Trabajo</td>
+      <td rowspan="7">Trabajo</td>
       <td>Fullstack likes</td>
       <td>8 horas 10 minutos</td>
     </tr>
@@ -4280,6 +4280,10 @@
     <tr>
       <td>Fixeo filtros añadidos y filtro favoritos</td>
       <td>35 minutos</td>
+    </tr>
+    <tr>
+        <td>Documento revisión</td>
+        <td>1 hora 36 minutos</td>
     </tr>
     <tr>
       <td rowspan="2">Clase</td>
