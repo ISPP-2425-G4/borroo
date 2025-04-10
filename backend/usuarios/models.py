@@ -150,7 +150,8 @@ class User(AbstractUser):
 
     def is_profile_completed(self):
         if (
-            not self.dni or not self.address or not self.postal_code or
+            (not self.dni and not self.is_verified) or
+            not self.address or not self.postal_code or
             not self.city or not self.country or not self.phone_number
         ):
             return False
