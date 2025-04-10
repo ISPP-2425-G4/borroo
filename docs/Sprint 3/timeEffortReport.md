@@ -4302,6 +4302,82 @@
 
 ### **Fernández Rodríguez, Jesús**
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="15">Trabajo</td>
+    <td>Modificar el pago para que no se haga hasta después de la fecha del alquiler del objeto</td>
+    <td>6 horas y 4 minutos</td>
+  </tr>
+  <tr>
+    <td>Cambios en el perfil y cifrado DNI</td>
+    <td>3 horas y 42 minutos</td>
+  </tr>
+  <tr>
+    <td>Despliegue S3 v2 arreglando problemas encontrados</td>
+    <td>1 hora y 43 minutos</td>
+  </tr>
+  <tr>
+    <td>Despliegue S3 con Google CloudSQL</td>
+    <td>1 hora y 25 minutos</td>
+  </tr>
+  <tr>
+    <td>Despliegue v3 S3</td>
+    <td>1 hora y 24 minutos</td>
+  </tr>
+  <tr>
+    <td>Investigar migrar para despliegue S3</td>
+    <td>1 hora y 9 minutos</td>
+  </tr>
+  <tr>
+    <td>Despliegue S3 (inicial)</td>
+    <td>1 hora y 5 minutos</td>
+  </tr>
+  <tr>
+    <td>Pair programming imagen usuario</td>
+    <td>50 minutos</td>
+  </tr>
+  <tr>
+    <td>Time effort report</td>
+    <td>50 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadir anuncios con imágenes</td>
+    <td>49 minutos</td>
+  </tr>
+  <tr>
+    <td>Hotfix arreglo perfil</td>
+    <td>43 minutos</td>
+  </tr>
+  <tr>
+    <td>Migrar DB</td>
+    <td>34 minutos</td>
+  </tr>
+  <tr>
+    <td>Full stack de añadir los anuncios publicitarios</td>
+    <td>55 minutos</td>
+  </tr>
+  <tr>
+    <td>Fix: refrescar usuario al hacer login</td>
+    <td>20 minutos</td>
+  </tr>
+  <tr>
+    <td>Fix extra (registro)</td>
+    <td>3 segundos</td>
+  </tr>
+  <tr>
+    <td>Clase</td>
+    <td>Clase 28/03/2025</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
+
+
 ### **Fernández Mota, Francisco**
 
 <table>
