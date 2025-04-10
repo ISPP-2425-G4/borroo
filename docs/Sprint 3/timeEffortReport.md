@@ -4247,6 +4247,58 @@
 
 ### **Espinosa Naranjo, Pablo**
 
+<table border="1" cellspacing="0" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="6">Trabajo</td>
+      <td>Fullstack likes</td>
+      <td>8 horas 10 minutos</td>
+    </tr>
+    <tr>
+      <td>Bug subcategorias y correcciones de filtros</td>
+      <td>2 horas 27 minutos</td>
+    </tr>
+    <tr>
+      <td>Fixeo filtros de anuncios</td>
+      <td>1 hora 8 minutos</td>
+    </tr>
+    <tr>
+      <td>Botón perfil de usuario en vista de anuncio y objetos</td>
+      <td>1 hora 52 minutos</td>
+    </tr>
+    <tr>
+      <td>Fixeo atributo deposit en anuncios</td>
+      <td>1 hora 20 minutos</td>
+    </tr>
+    <tr>
+      <td>Fixeo filtros añadidos y filtro favoritos</td>
+      <td>35 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clase</td>
+      <td>Clase 28/03/25</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 04/04/25</td>
+      <td>2 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras teóricas</td>
+      <td>Sesión 8 y 9</td>
+      <td>42 minutos</td>
+    </tr>
+  </tbody>
+</table>
+
+
 ### **Fernández Rodríguez, Jesús**
 
 ### **Fernández Mota, Francisco**

@@ -615,5 +615,21 @@ Durante la segunda semana, me dediqué principalmente a pulir la integración de
 ### **Rosado Raya, Santiago**
 
 ### **Sánchez Márquez, Julia**
+Durante este sprint, mi principal aportación ha sido el desarrollo de la funcionalidad para cancelar un alquiler, aplicando las políticas de cancelación correspondientes, así como la posibilidad de enviar una incidencia sobre un alquiler en caso de que el usuario lo desee. Aunque inicialmente se me asignó una tarea diferente, relacionada con una modificación de una funcionalidad del sprint 2, tras discutirlo con el equipo y consultar con los usuarios piloto, se decidió mantener la implementación actual, ya que la mayoría de los usuarios piloto se mostraron a favor de no realizar cambios. Esta tarea, que inicialmente tenía una estimación de alto esfuerzo, fue descartada y, en su lugar, se me asignaron dos tareas fullstack para aprovechar ese tiempo disponible. 
+
+### Semana 1
+Debido al solapamiento con otros proyectos relevantes de otras asignaturas, la primera semana no fue especialmente productiva. Pude encargarme de grabar el vídeo de anuncio de la aplicación y comenzar con el backend de la primera tarea fullstack (cancelación de alquileres). Me centré en la implementación de la lógica de las solicitudes y en las validaciones necesarias, como evitar la aplicación de políticas de cancelación si el pedido aún no había sido pagado. También corregí un error heredado del sprint anterior relacionado con las etiquetas de estado de los pedidos, que no se estaban actualizando correctamente.
+
+
+### Semana 2
+En la segunda semana, dediqué muchas más horas para compensar la baja productividad de la anterior. Finalicé tanto el backend como el frontend de la funcionalidad de cancelación de pedidos: se implementó la modificación de estados de las rentas, la aplicación de políticas de cancelación según el contexto, validaciones específicas según el rol del usuario que solicitara la cancelación, y la integración de todo ello en la interfaz de manera intuitiva. Además, se implementó la actualización automática del saldo del usuario, de forma que si el arrendatario cancelaba el pedido, se le reembolsaba la cantidad correspondiente según las políticas aplicadas en su saldo.
+
+Durante los últimos días de la semana, desarrollé la funcionalidad de creación de incidencias. Para ello, se creó un nuevo modelo denominado "Tickets", vinculado a una renta. Este modelo almacena una descripción escrita por el usuario y permite adjuntar imágenes que respalden su reclamación. Tanto el arrendatario como el propietario pueden generar incidencias, pero solo una por cada usuario involucrado en la renta. Estas incidencias serán posteriormente revisadas y gestionadas por un administrador, quien se encargará de actualizar el estado del ticket según el progreso del caso.
+
+Debido a dependencias con otras tareas, como la creación de las pantallas de interfaz para el administrador, no fue posible desarrollar aún la parte correspondiente del frontend para gestionar los tickets. Esta parte se ha pospuesto para la próxima semana, ya que su implementación no implica un gran esfuerzo y puede resolverse rápidamente.
+
+Tuve algunos problemas con la subida y visualización de imágenes en el frontend, pero finalmente logré resolverlos revisando tareas similares de otros compañeros. Además, se cumplieron todas las métricas exigidas por Sonar y Codacy, evitando la duplicidad de código y mejorando métricas como "Reliability", entre otras.
+
+Puedes consultar el [tiempo invertido aquí](https://app.clockify.me/shared/67f7b812703cb37f108a0537).
 
 ### **Sevillano Barea, Alejandro**
