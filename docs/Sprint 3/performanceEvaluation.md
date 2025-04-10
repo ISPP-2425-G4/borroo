@@ -620,6 +620,23 @@ Durante la segunda semana, me dediqué principalmente a pulir la integración de
 
 ### **Picón Garrote, Alexander** 
 
+Durante este sprint, mi principal enfoque ha estado en diversas tareas cruciales para el avance del proyecto, abarcando desde la revisión y planificación de pruebas hasta la implementación de funcionalidades clave relacionadas con el sistema de pagos y la gestión de usuarios.
+
+### Semana 1
+
+Durante esta semana, me encargué de la grabación de clips para el anuncio de usuarios, para asegurar la calidad del material promocional. Además, realicé un exhaustivo bug tracking de solicitudes, identificando y reportando problemas para su posterior resolución.
+
+En cuanto a la organización interna, llevé a cabo la asignación faltante de tareas y trabajé en la organización del S3, optimizando la gestión de recursos y la distribución de responsabilidades dentro del equipo.
+
+Un aspecto fundamental de mi trabajo durante esta semana fue la implementación de la actualización de saldo del destinatario en los pagos y la implementación del saldo en los usuarios. Estas tareas requirieron una comprensión profunda de la lógica del sistema de pagos y la gestión de cuentas de usuario, así como una implementación cuidadosa para garantizar la integridad de los datos. Finalmente, también realicé la asignación de tareas del S3, complementando la labor de organización de recursos.
+
+Adicionalmente, participé en dos sesiones de clase los días 28 de marzo y 4 de abril, cada una con una duración de 3 horas y 50 minutos.. También asistí a dos reuniones de representantes: una de 2 horas y 2 minutos dedicada a la redacción de issues y otros temas relevantes, y otra de 1 hora y 32 minutos centrada en la planificación del anuncio de usuarios.
+
+### Semana 2
+Durante la segunda semana, aunque fue mucho mas calmada que la segunda, dediqué tiempo a la revisión de funcionalidades con el objetivo de identificar áreas para la implementación de nuevos tests. Como resultado de esta revisión, procedí a la creación de nuevas issues para el subgrupo 1, asegurando una cobertura de pruebas adecuada para las próximas etapas de desarrollo.
+
+Aparte, me ví los vídeos de las píldoras teóricas y actualice los términos y condiciones del servicio.
+
 ### **Palomo García, Miguel**
 
 ### **Periañez Franco, Luis Javier**
