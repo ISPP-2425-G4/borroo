@@ -5025,4 +5025,79 @@
 
 ### **Sánchez Márquez, Julia**
 
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="10">Trabajo</td>
+      <td>Modales y mensajes adaptados según rol y estado de la renta.</td>
+      <td>3 horas 10 minutos</td>
+    </tr>
+    <tr>
+      <td>Restricciones de creación de tickets, validaciones y correcciones de interfaz.</td>
+      <td>3 horas 6 minutos</td>
+    </tr>
+    <tr>
+      <td>Modelo Ticket, relaciones, endpoints y lógica para incidencias.</td>
+      <td>2 horas 31 minutos</td>
+    </tr>
+    <tr>
+      <td>Pantalla para enviar incidencias, adjuntar imágenes y consultar estado.</td>
+      <td>2 horas 25 minutos</td>
+    </tr>
+    <tr>
+      <td>Lógica de cancelación de alquileres con políticas según el estado.</td>
+      <td>1 horas 43 minutos</td>
+    </tr>
+    <tr>
+      <td>Corrección visual de los estados de la renta en la interfaz.</td>
+      <td>1 horas 34 minutos</td>
+    </tr>
+    <tr>
+      <td>Correcciones en la carga de imágenes y limpieza de código con lint y Sonar.</td>
+      <td>1 horas 24 minutos</td>
+    </tr>
+    <tr>
+      <td>Visualización del estado 'Pagado' en la interfaz de usuario.</td>
+      <td>40 minutos</td>
+    </tr>
+    <tr>
+      <td>Creación y grabación del vídeo de presentación de la app.</td>
+      <td>40 minutos</td>
+    </tr>
+    <tr>
+      <td>Ajuste automático del saldo tras una cancelación con reembolso.</td>
+      <td>27 minutos</td>
+    </tr>
+    <tr>
+    <td rowspan="2">Clase</td>
+    <td>Clase 04/04</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 28/03</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Theory Pills</td>
+    <td>S08</td>
+    <td>12 minutos</td>
+  </tr>
+  <tr>
+    <td>S09</td>
+    <td>30 minutos</td>
+  </tr>
+  </tbody>
+  <tr>
+    <td>Enlace Clockify</td>
+    <td colspan="2"><a href="https://app.clockify.me/shared/67f7e543d6e4ee46994e79ae" target="_blank">Clockify</a></td>
+  </tr>
+</table>
+
 ### **Sevillano Barea, Alejandro**
