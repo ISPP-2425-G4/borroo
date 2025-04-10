@@ -673,95 +673,129 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                       </Typography>
                     </Paper>
                   ) : (
-                    <Box sx={{
-                      display: 'column',
-                      flexWrap: 'wrap',
-                      gap: { xs: 2, md: 3 },
-                    }}>
-                      {currentItems.map((producto, indice) => {
-                        
-                        return (
-                          <Card
-                            key={indice}
-                            sx={{
-                              flex: {
-                                xs: '1 0 100%',
-                                sm: '1 0 calc(50% - 16px)',
-                                md: '1 0 calc(33.333% - 16px)',
-                                lg: '1 0 calc(25% - 18px)',
-                              },
-                              maxWidth: {
-                                xs: '100%',
-                                sm: '100%',
-                                md: '80%',
-                                lg: '70%',
-                              },
-                              border: "2px solid #1E40AF", 
-                              borderRadius: "10px", 
-                              overflow: "hidden",
-                              backgroundColor: "white",
-                              mb: 2,
-                            }}
-                          >
-                          <Box
+                    <Box
+                      sx={{
+                        display: "grid",
+                        gridTemplateColumns: {
+                          xs: "1fr", // Una tarjeta por fila en pantallas pequeñas
+                          sm: "1fr 1fr", // Dos tarjetas por fila en pantallas medianas
+                        },
+                        gap: 3, // Espaciado entre las tarjetas
+                      }}
+                    >
+                      {currentItems.map((producto, indice) => (
+                        <Card
+                          key={indice}
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            border: "1px solid #e0e0e0",
+                            borderRadius: "12px",
+                            overflow: "hidden",
+                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                            transition: "transform 0.3s, box-shadow 0.3s",
+                            "&:hover": {
+                              transform: "translateY(-5px)",
+                              boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
+                            },
+                          }}
+                        >
+                          <Box sx={{ flex: 1, p: 2 }}>
+                            <Box
                               sx={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                backgroundColor: '#2563eb',
-                                color: 'white',
-                                padding: '12px 16px',
-                                fontWeight: 'bold',
-                                fontSize: '1.1rem',
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                mb: 1,
                               }}
                             >
-                              <span>{producto.title}</span>
-                               <Box
-                                 component={Link} 
-                                 to={`/perfil/${producto.user_username}`}
-                                 sx={{
-                                   display: 'flex',
-                                   alignItems: 'center',
-                                   gap: '6px',
-                                   border: '2px solid white',
-                                   borderRadius: '8px',
-                                   padding: '4px 8px',
-                                   textDecoration: 'none',
-                                   color: 'inherit',
-                                   transition: 'background-color 0.3s',
-                                   '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.2)' },
-                                 }}
-                               >
-                                 <PersonIcon sx={{ fontSize: '1.2rem' }} />
-                                 <span style={{ fontSize: '1rem', fontWeight: 'normal' }}>
-                                   {producto.user_name} {producto.user_surname}
-                                 </span>
-                               </Box>
-                            </Box>
-                        
-                            <CardContent sx={{ p: 2.5 }}>
-                              <Typography variant="body1" sx={{ whiteSpace: "normal", wordBreak: "break-word" }}>
-                                {producto.description}
+                              <Typography
+                                variant="h6"
+                                sx={{
+                                  fontWeight: "bold",
+                                  fontSize: "1.2rem",
+                                  color: "#1E40AF",
+                                }}
+                              >
+                                {producto.title}
                               </Typography>
-                        
-                              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 2 }}>
-                                <Box sx={{ display: "flex", flexDirection: "column" }}>
-                                  <Typography variant="body2" fontWeight="bold">
-                                    {producto.category_display}
-                                  </Typography>
-                                  <Typography variant="body2" color="text.secondary">
-                                    {producto.subcategory_display}
-                                  </Typography>
-                                </Box>
-                                <Typography variant="caption" color="primary" fontWeight="bold">
-                                  {producto.price}€/{producto.price_category_display}
-
+                              <Box
+                                component={Link}
+                                to={`/perfil/${producto.user_username}`}
+                                sx={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "6px",
+                                  textDecoration: "none",
+                                  color: "inherit",
+                                  "&:hover": { textDecoration: "underline" },
+                                }}
+                              >
+                                <PersonIcon sx={{ fontSize: "1.2rem", color: "#2563eb" }} />
+                                <Typography variant="body2" sx={{ fontWeight: "normal" }}>
+                                  {producto.user_name} {producto.user_surname}
                                 </Typography>
                               </Box>
-                            </CardContent>
-                          </Card>
-                        );
-                      })}
+                            </Box>
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                color: "text.secondary",
+                                mb: 2,
+                                whiteSpace: "normal",
+                                wordBreak: "break-word",
+                              }}
+                            >
+                              {producto.description}
+                            </Typography>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                              }}
+                            >
+                              <Box>
+                                <Typography
+                                  variant="body2"
+                                  sx={{ fontWeight: "bold", color: "#1E40AF" }}
+                                >
+                                  {producto.category_display}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                  {producto.subcategory_display}
+                                </Typography>
+                              </Box>
+                              <Box>
+                                <Typography
+                                  variant="body1"
+                                  sx={{
+                                    fontWeight: "bold",
+                                    color: "#1E40AF",
+                                    fontSize: "1rem",
+                                    textAlign: "right",
+                                  }}
+                                >
+                                  {producto.price}€/{producto.price_category_display}
+                                </Typography>
+                                <Typography
+                                  variant="body2"
+                                  color="text.secondary"
+                                  textAlign="right">
+                                  Fianza: {producto.deposit}€
+                                </Typography>
+                                <Typography
+                                  variant="body2"
+                                  color="text.secondary"
+                                  textAlign="right">
+                                  Política de cancelación: {producto.cancel_type_display}
+                                </Typography>
+                              </Box>
+                            </Box>
+                          </Box>
+                        </Card>
+                      ))}
                     </Box>
                     
 
