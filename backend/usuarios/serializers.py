@@ -73,11 +73,19 @@ class UserSerializer(serializers.ModelSerializer):
         return data
 
     def validate_dni(self, value):
-        pattern = r'^\d{8}[A-Za-z]$'
+        """Validar que el DNI sea válido."""
+        if value is None:
+            return value
+        if value == "":
+            raise serializers.ValidationError("El DNI no puede estar vacío.")
+
+        pattern = r'^\d{8}[A-Z]$'  # Solo letras mayúsculas
         if not re.match(pattern, value):
-            print(value)
             raise serializers.ValidationError(
-                "DNI no es válido. Debe tener 8 números seguidos de una letra."
+                (
+                    "El DNI debe tener exactamente 8 números seguidos de una "
+                    "letra mayúscula."
+                )
             )
         return value
 
@@ -170,12 +178,13 @@ class RegisterSerializer(serializers.ModelSerializer):
         if value == "":
             raise serializers.ValidationError("El DNI no puede estar vacío.")
 
-        # Validar que el DNI tenga el formato correcto (8 dígitos + 1 letra)
-        pattern = r'^\d{8}[A-Za-z]$'
+        pattern = r'^\d{8}[A-Z]$'  # Solo letras mayúsculas
         if not re.match(pattern, value):
             raise serializers.ValidationError(
-                "El DNI no es válido. Debe tener 8 dígitos seguidos de una"
-                "letra."
+                (
+                    "El DNI debe tener exactamente 8 números seguidos de una "
+                    "letra mayúscula."
+                )
             )
         return value
 

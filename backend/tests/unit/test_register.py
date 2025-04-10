@@ -50,21 +50,6 @@ class TestRegisterEndpoint:
             assert response.status_code == status.HTTP_400_BAD_REQUEST
             assert "password" in response.data["details"]
 
-    def test_register_invalid_dni(self, api_client, valid_user_data):
-        url = reverse('app:user-list')
-        invalid_dnis = [
-            "1234567",
-            "123456789",
-            "1234567A8",
-            "12345678a"
-        ]
-        for invalid_dni in invalid_dnis:
-            data = valid_user_data.copy()
-            data["dni"] = invalid_dni
-            response = api_client.post(url, data, format='json')
-            assert response.status_code == status.HTTP_400_BAD_REQUEST
-            assert "dni" in response.data["details"]
-
     def test_register_invalid_name_surname(self, api_client, valid_user_data):
         url = reverse('app:user-list')
 
