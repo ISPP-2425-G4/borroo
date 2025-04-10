@@ -713,6 +713,5 @@ Comencé corrigiendo una serie de tests unitarios que comenzaron a fallar debido
 A continuación, implementé pruebas E2E utilizando Selenium para la funcionalidad de búsqueda de objetos (Search Items). Este trabajo representó un reto significativo, ya que me encontré con ciertas ineficiencias o carencias tanto en el backend como en el frontend. Dado que mi intención era evitar modificar el código principal para no comprometer la estabilidad de la aplicación, tuve que buscar soluciones alternativas, lo que aumentó el tiempo requerido. Además, por su complejidad, estas pruebas resultaron más exigentes que las pruebas unitarias convencionales.
 
 Una vez implementadas, resolví los conflictos que surgieron al hacer merge con la rama develop, especialmente aquellos relacionados con los tests de Selenium que había desarrollado.
-También llevé a cabo las pruebas unitarias correspondientes a la funcionalidad de reportes.
 Finalmente, revisé las píldoras teóricas 8 y 9, lo cual me permitió consolidar conocimientos clave que aplico en el desarrollo del proyecto.
 

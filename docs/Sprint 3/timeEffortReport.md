@@ -5090,7 +5090,7 @@
         <th>Tiempo</th>
     </tr>
     <tr>
-        <td rowspan="9">Trabajo</td>
+        <td rowspan="8">Trabajo</td>
         <td>Grabacion de videos para anuncios</td>
         <td>45 minutos</td>
     </tr>
@@ -5107,10 +5107,6 @@
         <td>1 hora 31 minutos</td>
     </tr>
     <tr>
-        <td>Pruebas unitarias para la funcionalidad de reportes</td>
-        <td>2 horas 16 minutos</td>
-    </tr>
-    <tr>
         <td>Corregir que las reseñas a usuarios solo se puedan hacer si se alquila previamente un objeto del perfil visitado</td>
         <td>1 horas 10 minutos</td>
     </tr>
@@ -5124,7 +5120,7 @@
     </tr>
     <tr>
         <td>Arreglando conflictos por mergear y arreglando los test de selenium para el test de Search Items</td>
-        <td>1 horas 28 minutos</td>
+        <td>2 horas 57 minutos</td>
     </tr>
     <tr>
         <td rowspan="2">Clases</td>
