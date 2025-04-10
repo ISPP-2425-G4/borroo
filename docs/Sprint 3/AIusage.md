@@ -155,4 +155,18 @@ Donde:
 Aplicando la fórmula, el porcentaje medio de alucinaciones es:
 
 
+![Fórmula](../imagenes/calculo-s3.jpg)
+
 ### Conclusión
+
+El análisis muestra que el porcentaje medio de alucinaciones de la IA en este conjunto de datos es aproximadamente **23.82%**. Esto indica que aún hay margen de mejora para reducir las respuestas erróneas o inconsistentes generadas por el sistema.
+
+### Medidas para reducir las alucinaciones
+
+Para disminuir este porcentaje un poco más, se implementarán las siguientes estrategias:
+
+1. **Aplicación de la guía de ingeniería de prompts:** Se adoptarán las mejores prácticas de redacción de instrucciones para IA basadas en la guía [Prompting Guide](https://www.promptingguide.ai/es), optimizando la claridad y precisión de los prompts.
+2. **Revisión y refinamiento iterativo de prompts:** Se evaluarán las respuestas generadas y se ajustarán los prompts cuando sea necesario para obtener información más fiable.
+3. **Feedback y documentación de errores:** Se establecerá un sistema para registrar y analizar casos de alucinaciones recurrentes, con el fin de ajustar las estrategias de prompting.
+
+Estas medidas permitirán optimizar el uso de las IAs y reducir significativamente la aparición de alucinaciones en futuras interacciones.
