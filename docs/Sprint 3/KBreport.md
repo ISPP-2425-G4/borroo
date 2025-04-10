@@ -6,12 +6,12 @@
 
 ## KB report
 
-### Sprint 2 – G4
+### Sprint 3 – G4
 **Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
 
 **Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
 
-**Fecha:** 26/03/2025
+**Fecha:** 10/04/2025
 
 
 </div>
@@ -42,36 +42,55 @@
 | 11-03-2025 | v1.0    | Marco Padilla Gómez | Creación del documento |
 | 13-03-2025 | v1.1    | Marco Padilla Gómez | Añadir histórico de modificaciones |
 | 26-03-2025 | v2.0    | Marco Padilla Gómez | Cambio de estructura del report |
+| 10-04-2025 | v3.0    | Marco Padilla Gómez | Actualizacion S3 |
 
 ## Tabla de contenidos
 
 ## Índice
  
 1. [Contenido añadido a la base de conocimiento común grupo 4](#contenido-añadido-a-la-base-de-conocimiento-común-grupo-4)  
-   1.1. [Sprint 1](#sprint-1)  
-   - [Feedback Semana 5](#feedback-semana-5)  
-     - [Feedback de otros grupos](#feedback-de-otros-grupos)  
-     - [Feedback relacionado con la presentación](#feedback-relacionado-con-la-presentación)  
-     - [Feedback relacionado con el desarrollo del proyecto](#feedback-relacionado-con-el-desarrollo-del-proyecto)  
-     - [Tareas que realizar durante esta semana](#tareas-que-realizar-durante-esta-semana)  
-   - [Feedback Semana 6](#feedback-semana-6)  
-     - [Feedback de otros grupos](#feedback-de-otros-grupos-1)  
-     - [Feedback relacionado con la presentación](#feedback-relacionado-con-la-presentación-1)  
-     - [Feedback relacionado con el desarrollo del proyecto](#feedback-relacionado-con-el-desarrollo-del-proyecto-1)  
-     - [Tareas que realizar durante esta semana](#tareas-que-realizar-durante-esta-semana-1)
+  1.1. [Sprint 1](#sprint-1)  
+  - [Feedback Semana 5](#feedback-semana-5)  
+    - [Feedback de otros grupos](#feedback-de-otros-grupos)  
+    - [Feedback relacionado con la presentación](#feedback-relacionado-con-la-presentación)  
+    - [Feedback relacionado con el desarrollo del proyecto](#feedback-relacionado-con-el-desarrollo-del-proyecto)  
+    - [Tareas que realizar durante esta semana](#tareas-que-realizar-durante-esta-semana)  
+  - [Feedback Semana 6](#feedback-semana-6)  
+    - [Feedback de otros grupos](#feedback-de-otros-grupos-1)  
+    - [Feedback relacionado con la presentación](#feedback-relacionado-con-la-presentación-1)  
+    - [Feedback relacionado con el desarrollo del proyecto](#feedback-relacionado-con-el-desarrollo-del-proyecto-1)  
+    - [Tareas que realizar durante esta semana](#tareas-que-realizar-durante-esta-semana-1)
 
-   1.2. [Sprint 2](#sprint-2)  
-   - [Feedback Semana 7](#feedback-semana-7)  
-     - [Feedback de otros grupos](#feedback-de-otros-grupos-2)  
-     - [Feedback relacionado con la presentación](#feedback-relacionado-con-la-presentación-2)  
-     - [Feedback relacionado con el desarrollo del proyecto](#feedback-relacionado-con-el-desarrollo-del-proyecto-2)  
-     - [Tareas que realizar durante esta semana](#tareas-que-realizar-durante-esta-semana-2) 
+  1.2. [Sprint 2](#sprint-2)  
+  - [Feedback Semana 7](#feedback-semana-7)  
+    - [Feedback de otros grupos](#feedback-de-otros-grupos-2)  
+    - [Feedback relacionado con la presentación](#feedback-relacionado-con-la-presentación-2)  
+    - [Feedback relacionado con el desarrollo del proyecto](#feedback-relacionado-con-el-desarrollo-del-proyecto-2)  
+    - [Tareas que realizar durante esta semana](#tareas-que-realizar-durante-esta-semana-2)
+  - [Feedback Semana 8](#feedback-semana-8)  
+    - [Feedback de otros grupos](#feedback-de-otros-grupos-3)  
+    - [Feedback relacionado con la presentación](#feedback-relacionado-con-la-presentación-3)  
+    - [Feedback relacionado con el desarrollo del proyecto](#feedback-relacionado-con-el-desarrollo-del-proyecto-3)  
+    - [Tareas que realizar durante esta semana](#tareas-que-realizar-durante-esta-semana-3)
+
+  1.3. [Sprint 3](#sprint-3) 
+  - [Feedback Semana 9](#feedback-semana-9)  
+    - [Feedback de otros grupos](#feedback-de-otros-grupos-4)  
+    - [Feedback relacionado con la presentación](#feedback-relacionado-con-la-presentación-4)  
+    - [Feedback relacionado con el desarrollo del proyecto](#feedback-relacionado-con-el-desarrollo-del-proyecto-4)  
+    - [Tareas que realizar durante esta semana](#tareas-que-realizar-durante-esta-semana-4) 
 
 2. [Contenido añadido a la base de conocimiento común general](#contenido-añadido-a-la-base-de-conocimiento-común-general)
 
     2.1. [Organización del equipo](#organización-del-equipo)
 
     2.2. [Costes](#costes)
+
+    2.3. [Killer Opener](#killer-opener)
+
+    2.4. [Usuarios Piloto](#usuarios-piloto)
+
+    2.5. [Demo del producto](#demo-del-producto)
 
 
 ## Contenido añadido a la base de conocimiento común grupo 4
@@ -259,9 +278,125 @@
     - Landing page y correo 
 
 
+#### Feedback Semana 8
+
+##### Feedback de otros grupos
+
+- Enfocar mejor el killer opener, para remarcar el problema que soluciona la aplicación.
+- Tranquilidad al presentar, no se llegan a escuchar cosas de la presentación.
+- Zoom a la demo, no se ve bien al fondo.
+- Dejar claro como se evalua el rendimiento.
+- Si se hace un storyboard para inversores que se enfoque a ellos.
+- Ensayar la presentación para evitar falta de tiempo para comprar cosas.
+- Killer opener demasiado dramático.
+- Unificar la tabla de costes con el número de usuarios previstos en cada hito.
+- ¿Qué beneficios tienen los trabajadores de la semana?
+- Dar mucha importancia a la información que se sca de los usuarios piloto.
+- No son 10 horas mínimas, son 10 horas exigidas.
+- Diferenciar la demo del anuncio.
+- Análisis de costes, puede cambiar dependiendo del feedback de los usuarios piloto.
+
+##### Feedback relacionado con la presentación
+
+- Cortar registros y formularios en la demo.
+- Buen inicio efectivo.
+- Falta de elevator pitch, buscar un eslogan o algo.
+- Animar la gráfica de costes para que siga al discurso.
+- Agilizar la demo, quitar comprobaciones inútiles.
+- Agregar cosas que tienen los competidores.
+- Añadir cantidad del feedback, no solo el porcentaje
+
+##### Feedback relacionado con el desarrollo del proyecto
+
+- Añadir muchos objetos a la aplicación.
+- Analizar el movimiento que hay en la aplicación.
+- Añadir la fianza lo antes posible
+
+
+##### Tareas que realizar durante esta semana:
+
+- Killer opener
+- Elevator pitch
+- Anuncios en video de un target de la app(no de inversion)
+- Customer agreement terminos y condiciones pricing sla
+- TCO capex opex, estimacion pesimista optimista
+- Equipo, roles
+- CA status, habeis cumplido el CA todos? En que medida?
+- Demo
+- Garantias de seguridad
+- Retrospective
+    - Problemas SOLUCION como esta funcionando esta solucion
+    - Lecciones aprendidas
+    - Resultado de analisis de software
+    - Reloj avance del proyecto
+    - Gestion de usuarios piloto considerando la pildora teorica
+    - Planificacion y replanificacion
+    - Aspectos de Seguridad, cuentas de correo validas, tarjetas de credito realistas, dni
+    - Planificacion para el S3
+    - Uso de la IA, ha habido una mejora del uso? Somos mas eficientes? Al ucinaciones
+    - EVITAR COSAS GENERICAS, COSAS ESPECIFICAS NO TRIVIALES DE NUESTRA APLICACIÓN
+    - Landing page y correo 
+
+
+### Sprint 3
+
+
+#### Feedback Semana 9
+
+##### Feedback de otros grupos
+
+- Esta guay que los killer opener de EventBride sigan una historia.
+- Musica muy alta en el anuncio, el anuncio de inversores, no llega a ser tanto para inversores.
+- No alargar tanto el Customer agreement o el SLA para que de tiempo al final de todo.
+- Mostrar el porcentaje de las bodas que pretenden abarcar, para ver como de realista es.
+- Explicar lo que ocurren en la demo.
+- Mostrar la evolucion de los problemas.
+- Cuidado con añadir demasiadas funcionalidades en el PPL que esta enfocado al marketing.
+- Añadir que usuarios estan usando la aplicación en la demo para que sea mas fácil distinguir quien la usa.
+- La tabla de costes que muestre el número de usuarios previstos en cada hito.
+- Demo con zoom.
+- Evitar anuncios raros que hacen referencias a temas sensibles(hitler).
+- No hay testing.
+- Ser más concretos en las medidas que se toman para ciertos problemas.
+- Evitar usar tecnicismos.
+- Especificad que feedback han dado los usuarios piloto y en que ha repercutido.
+- Cuidado con el copyright.
+- Laa trazabilidad en menos importante que el objetivo y el periodo.
+
+##### Feedback relacionado con la presentación
+
+- Evitar muletillas.
+- Fata un eslogan al final del killer opener.
+- Ha faltado la mejora de UX en la demo.
+- La falta de confianza se arregla con un seguro o una fianza.
+- Categorizar el feedback de los usuarios pilotos.
+
+##### Feedback relacionado con el desarrollo del proyecto
+
+- Intencionalmente en blanco.
+
+##### Tareas que realizar durante esta semana:
+
+-	Ver las pildoras teoricacas
+-	Killer opener y elvator pitch 
+-	Competidores
+-	Anuncio diferente(inversores o clientes)
+-	Customer agreement no se pone
+-	Tareas de marketing preeliminares, atraccion inical de clientes
+-	Añadir roles para el marketing
+-	Costes añadir roles nuevos y los gastos de marketing
+-	Equipo refinado
+-	DEMO 
+-	Retrospectiva S3 plan de pruebas
+-	Reloj de avance
+-	Plan gestion de usuarios pilotos
+-	Planificacion de cara al PPL
+-	IA
+-	Landing page
+
 ## Contenido añadido a la base de conocimiento común general
 
-Nos tocaba aportar a la base de conocimientos comun general la semana 4 y esto fue lo que añadimos
+Nos tocaba aportar a la base de conocimientos comun general la semana 4 y 8, esto fue lo que añadimos:
 
 ### Organización del equipo
 
@@ -278,3 +413,23 @@ Nos tocaba aportar a la base de conocimientos comun general la semana 4 y esto f
 - Incluir los costes operacionales.
 - Rendondear los numeros de costes. 
 - Decir claramente cual es la situación real frente a la esperada.
+
+#### Semana 8
+- Unificar en una sola tabla los costes y el número de usuarios previstos en diferentes hitos
+
+### Killer opener
+
+#### Semana 8
+- Evitar que el killer opener sea demasiado dramático.
+
+### Usuarios piloto
+
+#### Semana 8
+- Priorizar el feedback de los usuarios piloto e intentar sacar la maxima información posible.
+- Preveer que el feedback de los usuarios piloto ocasionará nuevas tareas a lo largo del desarrollo.
+
+### Demo del producto
+
+#### Semana 8
+- Tratar de diferenciar la demo del anuncio, una demo no es necesario que tenga planos fuera de la aplicación.
+- Evitar poner demos rellenado registros o formularios.
