@@ -157,13 +157,15 @@ class TestPayments:
         })
 
         client = APIClient()
-        response = client.get(reverse("confirm_subscription_checkout",
-                                      args=["session_id"]))
+        response = client.get(
+            reverse("confirm_subscription_checkout", args=["session_id"])
+        )
 
         assert response.status_code == 200
+
         renter.refresh_from_db()
-        assert renter.pricing_plan == "premium"
         assert renter.stripe_customer_id == "cus_test"
+        assert renter.stripe_subscription_id == "sub_test"
 
     def test_user_without_permission_cannot_confirm(self, rent):
         client = APIClient()
