@@ -65,7 +65,7 @@ Añada uno de los 5 siguientes emoticonos a la celda correspondiente de cada dí
 | Francisco Fernández Mota    |          |          |          | :smiley: | :smiley:| :smiley:|         |         |         | :blush: |         | :smiley:|         |          |
 | Javier García Rodríguez     |:blush:|:neutral_face:|:neutral_face:|:blush:|:neutral_face:|:worried:|:neutral_face:|:blush:|:neutral_face:|:neutral_face:|:blush:|:neutral_face:|         |          |
 | Miguel González Ortiz       |          |          |          |          |         | :smiley: | :blush: | :neutral_face: |         | :smiley: |         |         |         |          |
-| Álvaro Martín Muñoz         | :blush:  |          |          |          |         |         |    :blush:     |  :blush:       |         |     :blush:    |         |         |    :blush:     |          |
+| Álvaro Martín Muñoz         | :blush:  |          |          |      :blush:      |     :blush:      |         |    :blush:     |  :blush:       |         |     :blush:    |         |         |    :blush:     |     :blush:       |
 | Ignacio Naredo Bernardos    |          |          |          |          | :blush: | :blush: | :blush: |:blush:  |  :blush:|      :blush: |    :blush:     |  :smiley:       |    :smiley:     |          |
 | Javier Nieto Vicioso        |          |          |          |          | :blush: | :blush: | :blush: |         | :neutral_face: | :blush: | :blush: | :blush: |         |          |
 | Marco Padilla Gómez         |          |          |          |          |:smiley: |:smiley: |         |         |         |         |:smiley: |:smiley: |:smiley: |          |
