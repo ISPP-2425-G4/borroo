@@ -645,7 +645,17 @@ Aparte, me ví los vídeos de las píldoras teóricas y actualice los términos 
 ### **Palomo García, Miguel**
 
 ### **Periañez Franco, Luis Javier**
+Durante estos días he continuado con el desarrollo de funcionalidades clave del frontend, centrado especialmente en la mejora de la experiencia de usuario. En primer lugar, llevé a cabo la visualización de perfiles en la plataforma, solucionando errores y adaptando el diseño para una mejor comprensión de la información por parte del usuario (3 horas). También dediqué tiempo a mejorar la estética de las imágenes en la vista de detalle de los objetos, asegurando que se muestren correctamente y con una disposición más intuitiva (2 horas).
 
+Por otro lado, estuve trabajando en los filtros avanzados del sistema, ya que inicialmente eran demasiado genéricos. Implementé una lógica más específica para que los usuarios pudieran encontrar lo que buscan de manera más precisa, tarea que supuso un esfuerzo repartido en varios días (1 hora el día 3 de abril y 1 hora y 57 minutos el día 7).
+
+Asimismo, colaboré con mi equipo en la resolución de un conflicto de ramas relacionado con cambios en el frontend (45 minutos), asegurando que no hubiera pérdida de funcionalidades al fusionar ramas.
+
+A nivel de backend y lógica de negocio, trabajé en el sistema de gestión de suscripciones premium, solucionando un bug que permitía cambiar directamente de premium a gratis, lo cual rompía el flujo esperado. Realicé dos sesiones de trabajo sobre este punto: una de 2 horas y 15 minutos y otra de 1 hora y 30 minutos.
+
+También detecté y resolví un bug relacionado con el filtrado en la vista principal de objetos (45 minutos), mejorando la precisión y coherencia de los resultados.
+
+Además de las tareas técnicas, asistí a clases relacionadas con el proyecto, incluyendo una sesión formativa completa el 4 de abril (3 horas y 40 minutos) y una píldora teórica el 7 de abril (1 hora), que me ayudaron a comprender mejor ciertos aspectos de diseño y validación del sistema.
 ### **Rosado Raya, Santiago**
 
 ### Semana 1
