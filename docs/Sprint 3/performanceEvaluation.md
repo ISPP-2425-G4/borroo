@@ -551,6 +551,18 @@ Durante la segunda semana, quedé en disposición de ayudar a otros compañeros 
 
 ### **Espinosa Naranjo, Pablo**
 
+Durante la primera semana del sprint 3, se me encomendó realizar el fullstack de "favoritos". Este fullstack consistía en que el usuario pudiese añadir objetos que hubiese en alquiler en favoritos, y que hubiese una pantalla para que el usuario pudiese ver sus favoritos. Comencé con la implementación en el backend, que conllevó el desarrollo de una nueva entidad que relacionaba a un usuario con un objeto, la modificación de la entidad "item" para contabilizar las veces que había sido añadido a favoritos un objeto, los cambios necesarios en los serializadores, urls... Tras esto, añadí en el frontend en las vista principal y en los detalles de un objeto funcionalidades para que el usuario pudiese añadir un objeto a favoritos, opcion que solo se muestra si este esta loggeado. Tambien añadí en ambas vistas que siempre sea visible el estado del item (Si ya ha sido añadido a favoritos o no), y un mensaje de que el objeto es popular entre los usuarios cuando supera X numero de favoritos. Por último, para que el usuario pudiese ver sus objetos marcados como favoritos, lo añadí a modo de filtro, añadiendole toda la lógica de filtrado implementada en otros sprints por mí.
+
+Tras esto, procedí a solucionar errores relacionados con los filtros de los cuales era consciente para pulir el proyecto. Estos estaban relacionados con el funcionamiento de los filtros al limpiarlos, concretamente con el de precio, el de subcategorias y el paginado. Una vez los realicé, fui consciente de que a mi compañero Pablo Diaz se le había asignado como tarea fixear el filtro de subcategorias, por lo que me puse en contacto con él para no causar ningún inconveniente. Ambos llegamos a la conclusión de que no había ningún problema, y tras darles a conocer lo ocurrido a los subjefes de nuestros subgrupos, me asignaron la tarea.
+
+En la segunda semana, me encargué de añadir la información del usuario (nombre y apellido) que publica un objeto o un anuncio en las pantallas correspondientes, buscando que estas fueran acorde al estilo de las propias paginas. Esto implicó cambios en los serializadores y en las propias vistas. 
+
+Una vez fue implementado lo anterior observé que, tras varias adiciones de compañeros, varias funcionalidades añadidas por mí habían sido "pisadas", por lo que comencé a investigar cual había sido el fallo con los conflictos, me puse en contacto con los compañeros responsables y corregí lo errores que habían acontecido. 
+
+Tras esto, observe cierto error en una funcionalidad relacionada con los nuevos filtros añadidos, el cual yo había experimentado anteriormente con los filtros añadidos por mí. Me puse en contacto con mi compañero Luis Periañez, el cual era responsable de estos filtros añadidos, le comenté el problema, y le ayude inicialmente a solucionar el mismo.
+
+Por último, visualice los videos de "Pildoras teoricas" correspondientes a este Sprint (Sesión 8 y sesión 9)
+
 ### **Fernández Rodríguez, Jesús**
 
 ### **Fernández Mota, Francisco**
