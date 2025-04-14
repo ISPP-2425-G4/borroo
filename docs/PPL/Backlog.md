@@ -77,6 +77,35 @@ Unificar estilos en toda la aplicación para que sea reactiva, para ordenador y 
 Si el usuario tiene saldo en la aplicación, poder retirar este saldo mediante un pequeño formulario en el que indique el número de cuenta al que enviar el saldo restante.
 
 ---
+ 
+#### [CODIGO] Testing para pruebas de carga
+**Descripción:**  
+Pruebas con Locust asociadas a las siguientes funcionalidades: 
+
+- Recuperación de contraseña
+- Límites de objetos
+- Operaciones de suscripciones
+- Operaciones CRUD para ítems.
+
+---
+ 
+#### [CODIGO] Testing para pruebas unitarias
+**Descripción:**  
+Pruebas con Pytest asociadas a la solicitud de alquiler.
+
+---
+
+#### [CODIGO] Testing para pruebas E2E
+**Descripción:**  
+Pruebas con Selenium asociadas a todas las funcionalidades de la aplicación.
+
+---
+
+#### [CODIGO] Testing para pruebas de integración
+**Descripción:**  
+Pruebas con Selenium asociadas a todas las funcionalidades de la aplicación.
+
+---
 
 #### [MARKETING-INSTAGRAM] Posts de carruseles
 **Descripción:**  
