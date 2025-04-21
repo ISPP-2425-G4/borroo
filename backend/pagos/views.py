@@ -408,12 +408,13 @@ def process_payment_confirmation(confirmation):
         "new_balance": owner.saldo,
     }
 
+
 @csrf_exempt
 @require_http_methods(["POST"])
 def pay_subscrition_with_balance(request, user_id):
     try:
         data = json.loads(request.body)
-        amount = Decimal(data.get("amount", 5)) 
+        amount = Decimal(data.get("amount", 5))
 
         user = User.objects.get(pk=user_id)
 
