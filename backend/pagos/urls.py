@@ -8,6 +8,7 @@ from .views import (
      confirm_subscription_checkout,
      set_renter_confirmation,
      process_pending_confirmations,
+     pay_subscrition_with_balance
 )
 
 urlpatterns = [
@@ -35,4 +36,7 @@ urlpatterns = [
          process_pending_confirmations,
          name='process_pending_confirmations',
      ),
+     path('pay_with_saldo/<int:user_id>/',
+          pay_subscrition_with_balance)
+
 ]

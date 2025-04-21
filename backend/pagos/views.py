@@ -11,7 +11,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from rentas.models import Rent, PaymentStatus
-from usuarios.models import User
+from usuarios.models import User, PricingPlan
 import json
 import os
 from pagos.models import PaidPendingConfirmation
@@ -407,3 +407,39 @@ def process_payment_confirmation(confirmation):
         ),
         "new_balance": owner.saldo,
     }
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def pay_subscrition_with_balance(request, user_id):
+    try:
+        data = json.loads(request.body)
+        amount = Decimal(data.get("amount", 5))
+
+        user = User.objects.get(pk=user_id)
+
+        if user.saldo < amount:
+            return JsonResponse({
+                "status": "error",
+                "error": "Saldo insuficiente para realizar el pago."
+            }, status=400)
+
+        # Deducir el saldo del usuario
+        user.saldo -= amount
+        user.pricing_plan = PricingPlan.PREMIUM
+        user.subscription_start_date = now()
+        user.subscription_end_date = now() + timedelta(days=30)
+        user.save()
+        return JsonResponse({
+                "status": "success",
+                "message": "Suscripción pagada con saldo exitosamente.",
+                "new_balance": user.saldo,
+                "pricing_plan": user.pricing_plan,
+                "subscription_start_date": user.subscription_start_date,
+                "subscription_end_date": user.subscription_end_date,
+            })
+
+    except User.DoesNotExist:
+        return JsonResponse({"error": "Usuario no encontrado."}, status=404)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
