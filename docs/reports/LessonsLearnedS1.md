@@ -1,41 +1,134 @@
-# Informe de Lecciones Aprendidas - Entrega #S1
+<div align=center>
 
-**Fecha:** 21 de abril de 2025  
-**Equipo:** Borroo  
+# BORROO
+
+![](../imagenes/borrooLogo.png)  <!-- Meter un . mas en la ruta si el documento está dentro de otra carpeta para que detecte el logo-->
+
+## Informe de Lecciones Aprendidas - Entrega #S1
+
+### PPL – G4
+**Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)  
+**Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)  
+
+Fecha: 21/04/2025  
+
+</div>
+
+**Miembros:**  
+- David Blanco Mora  
+- Pablo Díaz Ordóñez  
+- Pablo Espinosa Naranjo  
+- Jesús Fernández Rodríguez  
+- Francisco Fernández Mota  
+- Javier García Rodríguez  
+- Miguel González Ortiz  
+- Álvaro Martín Muñoz  
+- Ignacio Naredo Bernardos  
+- Javier Nieto Vicioso  
+- Marco Padilla Gómez  
+- Miguel Palomo García  
+- Luis Javier Periáñez Franco  
+- Alexander Picón Garrote  
+- Santiago Rosado Raya  
+- Julia Sánchez Márquez  
+- Alejandro Sevillano Barea  
+
+---
+
+## **Histórico de modificaciones**
+
+| Fecha      | Versión | Realizada por   | Descripción de los cambios |
+| ---------- | ------- | --------------- | -------------------------- |
+| 21-04-2025 | v1.0    | Alexander Picón Garrote | Creación del documento y primera versión     |
+| 21-04-2025 | v1.1    | Javier García Rodríguez | Ampliación de información     |
+
+---
 
 
-## 1. Análisis Detallado de las Condiciones de Fallo
+## 1. Análisis detallado de las condiciones de fallo
 
 Durante la Entrega #S1 se identificaron varios problemas críticos que comprometieron la evaluación del trabajo por parte del revisor. El más grave fue un **error 500** que impedía el acceso a la aplicación desplegada, inutilizando completamente el sistema desde el punto de entrada.
 
-Además, se detectaron deficiencias graves en la documentación entregada:
+En la entrega del Sprint 1, se detectaron problemas graves que se encontraban declarados dentro del documento de las failure conditions.
 
-- El archivo `KBreport.md` no incluía contenido actualizado ni enlaces funcionales a la base de conocimiento.
-- El `Commitment Agreement` no contaba con todas las firmas del equipo.
-- El archivo `timeEffortReport.md` carecía de gráficas que ayudaran a entender el esfuerzo invertido.
-- El formulario de registro no contaba con validación de campos obligatorios, lo que constituía un fallo funcional crítico.
+Los problemas detallados son:
+
+- El primer problema y el principal constituía en un **error 500 en el software**. Este problema ocurre debido a un error tratando de desplegar el software correspondiente al Sprint 2. Se cometió un error mientras se investigaba la forma de migrar los datos de un desplegable al otro. Concretamente se borró la base de datos del Sprint 1 por error.
+
+- El documento **KBReport**, no contiene la información correspondiente que se añadía a la KB, respectivamente. Además, se mencionaban varios documentos, pero no se adjuntaron los enlaces ni el contenido de estos. Concretamente, los documentos eran:
+
+  - Actas de reunión de los días 9 y 10 de marzo
+  - pilotUsers
+  - performanceEvaluation
+  - timeEffortReport
+  - AIusage
+  - commitmentAgreement
+  - pilotUsersCommitmentAgreement
+  - pilotUsersPerformanceEvaluation
+  - revision
+
+La información proporcionada era escasa y resultaba pobre en contenido y análisis.
+
+- Las firmas del **CommitmentAgreement** no se encontraban en la carpeta correspondiente a la entrega del S1. No se adjuntó la información necesaria para que el profesor que evaluase la entrega supiese que el CommitmentAgreement que se firmó al inicio de la asignatura, contemplaba el período completo del desarrollo de la asignatura. Estos documentos se encontraban en una carpeta exterior, no dentro. Lo que se adjuntó fue el modelo base sin firmas, algo erróneo.
 
 
-## 2. Problemas Detectados y su Relación con las Condiciones de Fallo
-
-| Problema                                  | Detectado antes | Detectado después | Detectado por el revisor |
-|-------------------------------------------|------------------|--------------------|---------------------------|
-| Error 500 al desplegar la app             | ❌               | ✅                 | ✅                        |
-| `KBreport.md` incompleto                  | ⚠️               | ✅                 | ✅                        |
-| Falta de firmas en `Commitment Agreement` | ❌               | ✅                 | ✅                        |
-| Falta de gráficos en `timeEffortReport`   | ❌               | ✅                 | ✅                        |
-| Formulario sin validación                 | ❌               | ✅                 | ✅                        |
+- El documento **timeEffortReport**, a pesar de contener la información del tiempo invertido por cada miembro del grupo, no contenía gráficas que facilitasen la visualización de la información. Se abordó este tema durante varias semanas en las clases y en el feedback, y no se adjuntó.
 
 
-## 3. Organización del Equipo y Metodología
+- A la hora de completar el **formulario de registro**, este no contaba con las validaciones necesarias en los campos correspondientes. Además, tampoco se indicaba qué campos eran obligatorios y cuáles no. Solo aparecía uno una vez se rellenasen todos los campos.
 
-El equipo de Borroo está compuesto por 17 miembros, organizados en subgrupos según áreas funcionales bajo la metodología Scrum:
 
-- **Jefes de Proyecto (3):** Supervisión del proyecto y gestión de entregables.
-- **Equipo de Desarrollo:** Implementación del sistema (frontend y backend).
-- **Equipo de Documentación:** Redacción y actualización de entregables.
-- **Equipo de Pruebas:** Verificación funcional.
-- **Equipo de Despliegue:** Gestión del entorno productivo.
+## 2. Problemas detectados y su relación con las condiciones de fallo
+
+| Problema   | Detectado antes | Detectado después | Detectado por el revisor |
+|------------|-----------------|-------------------|--------------------------|
+| Error 500 al desplegar la app   |  ❌  |  ✅  |  ✅  |
+| **KBreport** incompleto        |  ⚠️  |  ✅  |  ✅  |
+| Falta de firmas en **CommitmentAgreement** |  ❌  |  ✅  |  ✅  |
+| Falta de gráficos en **timeEffortReport**   |  ❌  |  ✅  |  ✅  |
+| Formulario sin validación       |  ❌  |  ✅  |  ✅   |
+
+
+## 3. Metodología de desarrollo de software seguida y roles de todos los miembros del equipo
+
+El equipo de Borroo está compuesto por 17 miembros, organizados en subgrupos multidisciplinares según áreas funcionales para facilitar la especialización y eficiencia en cada etapa del proyecto.
+
+La organización del equipo es la siguiente:
+
+- Product Manager: Jefe del proyecto.
+- Jefes de subgrupo (3): Supervisión de los miembros de su grupo, coordinación con los otros 2 subgrupos y organización y gestión de tareas asignadas.
+- Equipo de Desarrollo: Encargado de la implementación del sistema, tanto en frontend como en backend.
+- Equipo de Documentación: Responsable de la redacción, actualización y control de los entregables documentales.
+- Equipo de Pruebas: Dedicado a la verificación funcional del sistema y reporte de incidencias.
+- Equipo de Despliegue: Enfocado en la preparación, ejecución y mantenimiento del entorno productivo.
+
+Aunque no se sigue una metodología ágil de forma estricta, se incorporan algunas prácticas inspiradas en enfoques ágiles, como entregas iterativas, reuniones de seguimiento y revisiones periódicas de avances.
+
+Detalladamente, cada miembro tenía un rol:
+
+- **Subgrupo 1**   
+  - Alexander Picón Garrote  
+  - Álvaro Martín Muñoz  
+  - Alejandro Sevillano Barea  
+  - Ignacio Naredo Bernardos  
+  - Pablo Espinosa Naranjo  
+  - Marco Padilla Gómez  
+
+- **Subgrupo 2**
+  - Francisco Fernández Mota  
+  - Santiago Rosado Raya  
+  - Julia Sánchez Márquez  
+  - Pablo Díaz Ordóñez  
+  - Javier Nieto Vicioso  
+  - David Blanco Mora  
+
+- **Subgrupo 3**
+  - Javier García Rodríguez  
+  - Jesús Fernández Rodríguez  
+  - Miguel González Ortiz  
+  - Miguel Palomo García  
+  - Luis Javier Periáñez Franco
+
 
 Sin embargo, durante la iteración correspondiente a la Entrega #S1, se detectaron múltiples problemas organizativos:
 
