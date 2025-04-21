@@ -185,7 +185,7 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
               color: 'text.primary',
               fontSize: { xs: '1.5rem', sm: '2rem' }
             }}>
-              Productos Solicitados
+              Tablón de Anuncios
             </Typography>
 
             <Button component={Link} to="/create_item_request" variant="contained" color="primary">
