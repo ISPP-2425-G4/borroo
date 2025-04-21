@@ -21,7 +21,7 @@ Además, se detectaron deficiencias graves en la documentación entregada:
 | Problema                                  | Detectado antes | Detectado después | Detectado por el revisor |
 |-------------------------------------------|------------------|--------------------|---------------------------|
 | Error 500 al desplegar la app             | ❌               | ✅                 | ✅                        |
-| `KBreport.md` incompleto                  | ⚠️ (sospecha)    | ✅                 | ✅                        |
+| `KBreport.md` incompleto                  | ⚠️               | ✅                 | ✅                        |
 | Falta de firmas en `Commitment Agreement` | ❌               | ✅                 | ✅                        |
 | Falta de gráficos en `timeEffortReport`   | ❌               | ✅                 | ✅                        |
 | Formulario sin validación                 | ❌               | ✅                 | ✅                        |
@@ -29,7 +29,7 @@ Además, se detectaron deficiencias graves en la documentación entregada:
 
 ## 3. Organización del Equipo y Metodología
 
-El equipo Borroo está compuesto por 17 miembros, organizados en subgrupos según áreas funcionales bajo la metodología Scrum:
+El equipo de Borroo está compuesto por 17 miembros, organizados en subgrupos según áreas funcionales bajo la metodología Scrum:
 
 - **Jefes de Proyecto (3):** Supervisión del proyecto y gestión de entregables.
 - **Equipo de Desarrollo:** Implementación del sistema (frontend y backend).
@@ -56,7 +56,7 @@ Sin embargo, durante la iteración correspondiente a la Entrega #S1, se detectar
 - **Responsables funcionales:** Jefes de proyecto.
 - **Mitigación técnica:** Backups automáticos y validaciones post-deploy.
 - **Mitigación en proceso:** Validación obligatoria tras cada despliegue.
-- **Estado:** ✅ *Resuelto*
+- **Estado:** *Resuelto*
 
 
 ### 4.2. `KBreport.md` incompleto
@@ -67,7 +67,7 @@ Sin embargo, durante la iteración correspondiente a la Entrega #S1, se detectar
 - **Responsables funcionales:** Coordinadores de subgrupo.
 - **Mitigación técnica:** Automatización con plantillas.
 - **Mitigación en proceso:** Validación cruzada.
-- **Estado:** 🟡 *En progreso*
+- **Estado:** *Resuelto*
 
 
 ### 4.3. Falta de firmas en `Commitment Agreement`
@@ -76,7 +76,7 @@ Sin embargo, durante la iteración correspondiente a la Entrega #S1, se detectar
 - **Origen en el proceso:** Descontrol en el seguimiento de documentos clave.
 - **Responsables:** Todo el equipo y especialmente los jefes de proyecto.
 - **Mitigación en proceso:** Checklist obligatoria de documentación.
-- **Estado:** ✅ *Resuelto*
+- **Estado:** *Resuelto*
 
 
 ### 4.4. Ausencia de gráficos en `timeEffortReport.md`
@@ -86,7 +86,7 @@ Sin embargo, durante la iteración correspondiente a la Entrega #S1, se detectar
 - **Responsables técnicos:** Subgrupo de documentación.
 - **Mitigación técnica:** Generadores automáticos de gráficas.
 - **Mitigación en proceso:** Revisión cruzada obligatoria.
-- **Estado:** ✅ *Resuelto*
+- **Estado:** *Resuelto*
 
 
 ### 4.5. Formulario sin validación
@@ -97,38 +97,37 @@ Sin embargo, durante la iteración correspondiente a la Entrega #S1, se detectar
 - **Responsables funcionales:** Equipo de QA y líderes técnicos.
 - **Mitigación técnica:** Pruebas unitarias y funcionales obligatorias.
 - **Mitigación en proceso:** QA como fase obligatoria.
-- **Estado:** ✅ *Resuelto*
+- **Estado:** *Resuelto*
 
 
 ## 5. Conclusiones y Lecciones Aprendidas
 
 Los errores evidencian carencias tanto técnicas como organizativas:
 
-- ❌ **Falta de planificación y seguimiento de issues**: Muchas issues fueron desarrolladas tarde y otras no se cerraron cuando fue debido.
-- ❌ **Carga de trabajo mal distribuida**: Algunos miembros asumieron un peso excesivo, mientras que otros participaron poco o nada.
-- ❌ **Falta de revisiones de Pull Requests**: Se hicieron merges sin revisión o sin pruebas funcionales.
-- ❌ **Descoordinación entre subgrupos**: El backend y frontend avanzaban en paralelo sin sincronización, afectando la integración.
-- ❌ **Poca comunicación interna**: Cambios importantes no se comunicaban correctamente y se enteraban tarde otros equipos.
-- ❌ **Ausencia de testing sistemático**: No se planificaron ni ejecutaron pruebas completas antes de la entrega.
-- ❌ **Gestión reactiva y no preventiva**: Muchos problemas se detectaron solo tras la revisión, no antes.
-- ❌ **Documentación entregada sin control de calidad**: Varios documentos no fueron revisados antes de enviarlos.
-- ❌ **Checklist inexistente o ignorada**: No hubo confirmación de requisitos antes del momento de entrega.
-- ❌ **Poca participación en retrospectivas**: No se interiorizó la mejora continua como parte del ciclo ágil.
+-  **Falta de planificación y seguimiento de issues**: Muchas issues fueron desarrolladas tarde y otras no se cerraron cuando fue debido.
+-  **Carga de trabajo mal distribuida**: Algunos miembros asumieron un peso excesivo, mientras que otros participaron poco.
+-  **Falta de revisiones de Pull Requests**: Se hicieron merges sin revisión o sin pruebas funcionales.
+-  **Descoordinación entre subgrupos**: El backend y frontend avanzaban en paralelo sin sincronización, afectando la integración.
+-  **Poca comunicación interna**: Cambios importantes no se comunicaban correctamente y se enteraban tarde otros equipos.
+-  **Ausencia de testing sistemático**: No se planificaron ni ejecutaron pruebas completas antes de la entrega.
+-  **Gestión reactiva y no preventiva**: Muchos problemas se detectaron solo tras la revisión, no antes.
+-  **Documentación entregada sin control de calidad**: Varios documentos no fueron revisados antes de enviarlos.
+-  **Checklist inexistente o ignorada**: No hubo confirmación de requisitos antes del momento de entrega.
+-  **Poca participación en retrospectivas**: No se interiorizó la mejora continua como parte del ciclo ágil.
 
----
 
 ## 6. Acciones Inmediatas
 
 Para las siguientes iteraciones, se implementarán los siguientes cambios estructurales:
 
-- ✅ **Checklists obligatorias para cada entrega** (con responsables designados).
-- ✅ **Revisión cruzada de documentación y código antes de entregar.**
-- ✅ **Backups y validación automática en el despliegue.**
-- ✅ **QA como fase integrada del flujo de desarrollo.**
-- ✅ **Automatización de gráficas e informes.**
-- ✅ **Asignación equitativa de tareas y seguimiento de carga real.**
-- ✅ **Canal de comunicación centralizado entre subgrupos.**
-- ✅ **Reuniones breves de coordinación inter-áreas.**
-- ✅ **Política estricta de revisiones en los PR.**
-- ✅ **Seguimiento riguroso de issues en GitHub.**
+-  **Checklists obligatorias para cada entrega** (con responsables designados).
+-  **Revisión cruzada de documentación y código antes de entregar.**
+-  **Backups y validación automática en el despliegue.**
+-  **QA como fase integrada del flujo de desarrollo.**
+-  **Automatización de gráficas e informes.**
+-  **Asignación equitativa de tareas y seguimiento de carga real.**
+-  **Canal de comunicación centralizado entre subgrupos.**
+-  **Reuniones breves de coordinación inter-áreas.**
+-  **Política estricta de revisiones en los PR.**
+-  **Seguimiento riguroso de issues en GitHub.**
 
