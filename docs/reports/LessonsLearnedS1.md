@@ -143,11 +143,11 @@ Sin embargo, durante la iteración correspondiente al Sprint 1, se detectaron m�
 
 ### 4.1. Error 500 (Servidor)
 
-- **Origen técnico:** Eliminación accidental de la base de datos durante tareas de mantenimiento sin respaldo.
+- **Origen técnico:** Eliminación accidental de la base de datos del despliegue al intentar migrar los datos hacia la base de datos del siguiente despliegue.
 - **Origen en el proceso:** Ausencia de pruebas tras el despliegue y falta de checklist final.
 - **Responsables técnicos:** Equipo de despliegue.
 - **Responsables funcionales:** Jefes de proyecto.
-- **Mitigación técnica:** Backups automáticos y validaciones post-deploy.
+- **Mitigación técnica:** Backups automáticos (generados automáticamente por filess.io) y validaciones post-deploy.
 - **Mitigación en proceso:** Validación obligatoria tras cada despliegue.
 - **Estado:** *Resuelto*
 
