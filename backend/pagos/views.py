@@ -444,6 +444,7 @@ def pay_subscrition_with_balance(request, user_id):
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
 
+
 @csrf_exempt
 @require_http_methods(["POST"])
 def withdraw_saldo(request, user_id):
@@ -457,19 +458,19 @@ def withdraw_saldo(request, user_id):
                 "status": "error",
                 "error": "Saldo insuficiente para realizar el retiro."
             }, status=400)
-        
+
         if amount <= 0:
             return JsonResponse({
                 "status": "error",
                 "error": "La cantidad a retirar debe ser mayor que cero."
             }, status=400)
-        
+
         if amount < 5:
             return JsonResponse({
                 "status": "error",
                 "error": "La cantidad mínima a retirar es 5€."
             }, status=400)
-        
+
         user.saldo -= amount
         user.save()
         return JsonResponse({
@@ -481,10 +482,3 @@ def withdraw_saldo(request, user_id):
         return JsonResponse({"error": "Usuario no encontrado."}, status=404)
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
-
-
-        
-
-
-
-       
