@@ -41,7 +41,7 @@ Fecha: 21/04/2025
 | ---------- | ------- | --------------- | -------------------------- |
 | 21-04-2025 | v1.0    | Alexander Picón Garrote | Creación del documento y primera versión     |
 | 21-04-2025 | v1.1    | Javier García Rodríguez | Ampliación de información     |
-
+| 22-04-2025 | v1.2    | Javier García Rodríguez | Desarrollo del punto 3 y ampliación del punto 4     |
 ---
 
 
@@ -91,55 +91,55 @@ La información proporcionada era escasa y resultaba pobre en contenido y análi
 
 ## 3. Metodología de desarrollo de software seguida y roles de todos los miembros del equipo
 
-El equipo de Borroo está compuesto por 17 miembros, organizados en subgrupos multidisciplinares según áreas funcionales para facilitar la especialización y eficiencia en cada etapa del proyecto.
+El equipo de Borroo está compuesto por 17 miembros, organizados en subgrupos multidisciplinares según áreas funcionales para facilitar el desarrollo y la eficiencia.
 
 La organización del equipo es la siguiente:
 
 - Product Manager: Jefe del proyecto.
 - Jefes de subgrupo (3): Supervisión de los miembros de su grupo, coordinación con los otros 2 subgrupos y organización y gestión de tareas asignadas.
-- Equipo de Desarrollo: Encargado de la implementación del sistema, tanto en frontend como en backend.
-- Equipo de Documentación: Responsable de la redacción, actualización y control de los entregables documentales.
-- Equipo de Pruebas: Dedicado a la verificación funcional del sistema y reporte de incidencias.
-- Equipo de Despliegue: Enfocado en la preparación, ejecución y mantenimiento del entorno productivo.
+- Equipo de desarrollo: Encargado de la implementación del sistema, tanto en frontend como en backend.
+- Equipo de documentación: Responsable de la redacción, actualización y control de los entregables documentales.
+- Equipo de pruebas y calidad: Dedicado a la verificación funcional del sistema y reporte de incidencias.
+- Equipo de despliegue: Enfocado en la preparación, ejecución y mantenimiento del entorno productivo.
 
 Aunque no se sigue una metodología ágil de forma estricta, se incorporan algunas prácticas inspiradas en enfoques ágiles, como entregas iterativas, reuniones de seguimiento y revisiones periódicas de avances.
 
 Detalladamente, cada miembro tenía un rol:
 
 - **Subgrupo 1**   
-  - Alexander Picón Garrote  
-  - Álvaro Martín Muñoz  
-  - Alejandro Sevillano Barea  
-  - Ignacio Naredo Bernardos  
-  - Pablo Espinosa Naranjo  
-  - Marco Padilla Gómez  
+  - Alexander Picón Garrote: Jefe del subgrupo 1. 
+  - Álvaro Martín Muñoz: Miembro del equipo de desarrollo en la parte de frontend.
+  - Alejandro Sevillano Barea: Miembro del equipo de pruebas y calidad
+  - Ignacio Naredo Bernardos: Miembro del equipo de desarrollo en la parte de backend, y miembro del equipo de documentación.
+  - Pablo Espinosa Naranjo: Miembro del equipo de desarrollo en la parte de frontend. 
+  - Marco Padilla Gómez: Miembro del equipo de desarrollo en la parte de backend, y miembro del equipo de documentación.
 
 - **Subgrupo 2**
-  - Francisco Fernández Mota  
-  - Santiago Rosado Raya  
-  - Julia Sánchez Márquez  
-  - Pablo Díaz Ordóñez  
-  - Javier Nieto Vicioso  
-  - David Blanco Mora  
+  - Francisco Fernández Mota: Jefe del subgrupo 2.
+  - Santiago Rosado Raya: Miembro del equipo de pruebas y calidad, miembro del equipo de documentación y encargado de la comunicación con los usuarios pilotos.
+  - Julia Sánchez Márquez: Miembro del equipo de desarrollo en la parte de backend.
+  - Pablo Díaz Ordóñez: Miembro del equipo de desarrollo en la parte de backend, y miembro del equipo de documentación.   
+  - Javier Nieto Vicioso: Miembro del equipo de desarrollo en la parte de backend y frontend, fullstack.
+  - David Blanco Mora: Miembro del equipo de desarrollo en la parte de backend. 
 
 - **Subgrupo 3**
-  - Javier García Rodríguez  
-  - Jesús Fernández Rodríguez  
-  - Miguel González Ortiz  
-  - Miguel Palomo García  
-  - Luis Javier Periáñez Franco
+  - Javier García Rodríguez: Product manager, y del subgrupo 3.  
+  - Jesús Fernández Rodríguez: Miembro del equipo de desarrollo en la parte de backend y frontend, fullstack, y miembro del equipo de despliegue.
+  - Miguel González Ortiz: Miembro del equipo de pruebas y calidad, miembro del equipo de desarrollo en la parte de backend, y miembro del equipo de despliegue.
+  - Miguel Palomo García: Miembro del equipo de desarrollo en la parte de backend y frontend, fullstack, y responsable de la realización de la presentación. 
+  - Luis Javier Periáñez Franco: Miembro del equipo de desarrollo en la parte de frontend.
 
 
-Sin embargo, durante la iteración correspondiente a la Entrega #S1, se detectaron múltiples problemas organizativos:
+Sin embargo, durante la iteración correspondiente al Sprint 1, se detectaron múltiples problemas:
 
 - **Escasa coordinación entre subgrupos.**
 - **Falta de liderazgo técnico claro.**
 - **Ausencia de revisiones cruzadas entre áreas.**
 - **Distribución de tareas desigual.**
-- **Mala gestión del backlog y los issues.**
+- **Mala gestión del backlog y las issues.**
 
 
-## 4. Análisis Detallado de los Problemas
+## 4. Análisis detallado de cada issue
 
 ### 4.1. Error 500 (Servidor)
 
@@ -151,28 +151,28 @@ Sin embargo, durante la iteración correspondiente a la Entrega #S1, se detectar
 - **Mitigación en proceso:** Validación obligatoria tras cada despliegue.
 - **Estado:** *Resuelto*
 
-
-### 4.2. `KBreport.md` incompleto
-
-- **Origen técnico:** Proceso manual y no sistematizado para actualizar la KB.
-- **Origen en el proceso:** Falta de revisión final y de pautas claras.
-- **Responsables técnicos:** Equipo de documentación.
-- **Responsables funcionales:** Coordinadores de subgrupo.
-- **Mitigación técnica:** Automatización con plantillas.
-- **Mitigación en proceso:** Validación cruzada.
-- **Estado:** *Resuelto*
+| Origen técnico | Origen en el proceso | Persona que generó la failure condition | Rol/Roles  | Responsables del problema | Rol/Roles | Mitigación a nivel técnico | Mitigación a nivel de proceso | Estado |
+|----------------|----------------------|-----------------------------------------|-----|------------------------|---------------------------|---------------------|------------------------|--------|
+|                |                      |                                         |     |                        |                           |                     |                        |        |
 
 
-### 4.3. Falta de firmas en `Commitment Agreement`
-
-- **Origen técnico:** No aplicable.
-- **Origen en el proceso:** Descontrol en el seguimiento de documentos clave.
-- **Responsables:** Todo el equipo y especialmente los jefes de proyecto.
-- **Mitigación en proceso:** Checklist obligatoria de documentación.
-- **Estado:** *Resuelto*
+### 4.2. KBreport incompleto
 
 
-### 4.4. Ausencia de gráficos en `timeEffortReport.md`
+| Origen técnico | Origen en el proceso | Persona que generó la failure condition | Rol/Roles  | Responsables del problema | Rol/Roles | Mitigación a nivel técnico | Mitigación a nivel de proceso | Estado |
+|----------------|----------------------|-----------------------------------------|-----|------------------------|---------------------------|---------------------|------------------------|--------|
+| El proceso de actualización de la base del conocimiento se realizaba de forma manual, sin el uso de herramientas o plantillas estandarizadas, lo que generaba escasez de información y poca coherencia.  |  No se establecieron pautas claras para la actualización de la KB ni se llevó a cabo una revisión final del contenido antes de su publicación, lo cual permitió que esa carencia de información  persistiese.  | Marco Padilla Gómez  | Miembro del equipo de documentación  | Alejandro Sevillano Barea y Alexander Picón Garrote | QA y Jefe de subgrupo | Desarrollo de una plantilla con la que se pudo ir trabajando y añadiendo la información de una manera más clara y ordenada | Revisión cruzada de las 2 personas responsables | Resuelto |
+
+
+
+### 4.3. Falta de firmas en el CommitmentAgreement
+
+
+| Origen técnico | Origen en el proceso | Persona que generó la failure condition | Rol/Roles  | Responsables del problema | Rol/Roles | Mitigación a nivel técnico | Mitigación a nivel de proceso | Estado |
+|----------------|----------------------|-----------------------------------------|-----|------------------------|---------------------------|---------------------|------------------------|--------|
+|No aplicable |Descontrol en el seguimiento y entrega de la documentación pedida para el entregable | El equipo al completo,y especialmente, el project manager (Javier García Rodríguez), encargado de entregar la documentación correspondiente en la enseñanza virtual | Intencionadamente en blanco  | Javier García Rodríguez | Project Manager | Implementación de una checklist obligatoria en el grupo con la documentación solicitada, e informar en la entrega que las firmas del CommitmentAgreement se encuentran en una carpeta exterior a la del entregable.  | A 3 días de la entrega, revisión periódica diariamente por todo el equipo de trabajo, por si algo ha cambiado. |Resuelto |
+
+### 4.4. Ausencia de gráficos en timeEffortReport
 
 - **Origen técnico:** Malinterpretación de requisitos.
 - **Origen en el proceso:** No se revisó antes de entregar.
@@ -181,6 +181,9 @@ Sin embargo, durante la iteración correspondiente a la Entrega #S1, se detectar
 - **Mitigación en proceso:** Revisión cruzada obligatoria.
 - **Estado:** *Resuelto*
 
+| Origen técnico | Origen en el proceso | Persona que generó la failure condition | Rol/Roles  | Responsables del problema | Rol/Roles | Mitigación a nivel técnico | Mitigación a nivel de proceso | Estado |
+|----------------|----------------------|-----------------------------------------|-----|------------------------|---------------------------|---------------------|------------------------|--------|
+|                |                      |                                         |     |                        |                           |                     |                        |        |
 
 ### 4.5. Formulario sin validación
 
@@ -191,6 +194,10 @@ Sin embargo, durante la iteración correspondiente a la Entrega #S1, se detectar
 - **Mitigación técnica:** Pruebas unitarias y funcionales obligatorias.
 - **Mitigación en proceso:** QA como fase obligatoria.
 - **Estado:** *Resuelto*
+
+| Origen técnico | Origen en el proceso | Persona que generó la failure condition | Rol | Responsables técnicos | Responsables funcionales | Mitigación técnica | Mitigación en proceso | Estado |
+|----------------|----------------------|-----------------------------------------|-----|------------------------|---------------------------|---------------------|------------------------|--------|
+|                |                      |                                         |     |                        |                           |                     |                        |        |
 
 
 ## 5. Conclusiones y Lecciones Aprendidas
