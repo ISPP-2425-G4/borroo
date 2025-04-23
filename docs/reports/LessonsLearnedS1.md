@@ -42,16 +42,111 @@ Fecha: 21/04/2025
 | 21-04-2025 | v1.0    | Alexander Picón Garrote | Creación del documento y primera versión     |
 | 21-04-2025 | v1.1    | Javier García Rodríguez | Ampliación de información     |
 | 22-04-2025 | v1.2    | Javier García Rodríguez | Desarrollo del punto 3 y ampliación del punto 4     |
+| 23-04-2025 | v1.3    | Javier García Rodríguez | Corrección de errores y ampliación de información en el punto 1 |
+
 ---
 
 
 ## 1. Análisis detallado de las condiciones de fallo
 
-Durante la Entrega #S1 se identificaron varios problemas críticos que comprometieron la evaluación del trabajo por parte del revisor. El más grave fue un **error 500** que impedía el acceso a la aplicación desplegada, inutilizando completamente el sistema desde el punto de entrada.
+En primer lugar, se va realizar un análisis detallado de todas las condiciones de fallo registradas en el documento que contemplaban un suspenso en el entregable.
 
-En la entrega del Sprint 1, se detectaron problemas graves que se encontraban declarados dentro del documento de las failure conditions.
+Las condiciones cumplidas se indicarán mediante este icono (✅), y las que no fueron cumplidas serán indicadas mediante este icono (❌).
 
-Los problemas detallados son:
+### Condiciones de fallo grupales
+
+T-1: No informar (al comienzo de una clase de evaluación) de que un miembro está ausente. ✅
+
+T-2: Tardar más del tiempo estipulado para la presentación (aunque sólo sean unos segundos). ✅
+
+T-3: Terminar la presentación antes del último minuto. ✅
+
+T-4: Tener una divergencia de la presentación real con respecto a la que formaba parte del entregable registrado en la plataforma EV.  ✅
+
+T-5: No respetar o no reaccionar al feedback dado en clase sin una justificación explícita explicada en la presentación. ❌
+  - Se reiteró en las clases el uso de gráficas en el documento de **timeEffortReport**, y no se añadieron.
+
+T-6: Omitir en la presentación alguno de los aspectos que se espera sean vistos tal y como fueron explicados en la discusión previa en clase. ✅
+
+T-7: Tener texto en las diapositivas que no sea legible por el presentador desde el fondo de la clase. ✅
+
+T-8: Presentar un documento como parte de un entregable sin una portada adecuada que debe incluir al menos:
+
+- Número del grupo de EV. ✅
+- Nombre del grupo. ✅
+- Nombre del entregable. ✅
+- Título descriptivo del documento. ✅
+- Nombre y apellidos de los miembros del equipo que han contribuido al documento, indicando el tipo de contribución realizada (redacción, revisión, etc.). Esta información debe coincidir con la(s) entrada(s) correspondiente(s) de Clockify. ✅
+
+T-9: Realizar una entrega incorrecta. Una entrega correcta debe:
+
+- Proporcionar la URL del repositorio de GitHub. ✅
+
+- Tener una carpeta independiente para cada entrega del proyecto. ✅
+
+- Incluir el archivo de la presentación (presentation.pdf). ✅ 
+
+- Incluir los siguientes archivos en una carpeta "docs" del repositorio de GitHub:
+  - Informe de contribuciones a la Base del Conocimiento o KB (KBreport.md), incluyendo, al menos:
+    - El enlace a la Base del Conocimiento compartida. ✅
+      - El contenido específico que el equipo ha añadido al KB, incluyendo, al menos, el feedback que ha recibido y las anotaciones sobre el feedback general. ❌
+        - El documento especifcaba contenidos que se habían añadido, pero de forma genérica. En ningun momento se menciona el feedback recibido, y anotaciones concretas sobre feedback general. 
+      - Las acciones de consolidación llevadas a cabo. Si no se ha llevado a cabo ninguna, especificarlo explícitamente. ❌
+        - No se especificó en ninguna parte que no se habían llevado a cabo acciones de consolidación.
+
+- Informe de usuarios piloto, al menos considerando la lista de usuarios piloto, el plan de gestión y comunicación, la gestión del feedback, etc (pilotUsers.md). ✅
+
+- Evaluación del desempeño individual (performaceEvaluation.md), siguiendo la plantilla proporcionada en EV. ✅
+
+- Informe de tiempo-esfuerzo de cada miembro y del grupo, incluyendo los gráficos pertinentes (timeEffortReport.md). ❌
+  - No se incluyeron los gráficos correspondientes.
+
+- Informe detallado del uso de la IA (AIusage.md). ✅
+
+- Commitment Agreement (commitmentAgreement.md). ⚠️
+  - El CommitmentAgreement sí se encontraba firmado. No obstante, el error fue indicar que los documentos firmados se encontraban en una carpeta exterior a esta, con todas las firmas. Además, había que indicar que las firmas que se realizaron a principio de la asignatura, contemplaban un acuerdo correspondiente a toda la duración de la asignatura.
+
+- Commitment Agreement de los usuarios piloto (pilotUsersCommitmentAgreement.md). ✅
+
+- Ficheros de evaluación del rendimiento de los usuarios piloto que evalúan y puntúan a los estudiantes del ISPP que actúan como usuarios piloto del grupo (pilotUsersPerformanceEvaluation.md). ✅
+
+- La guía o manual de usuario para que el proyecto pueda ser corregido (revision.md). Debe incluir:
+  - Un mapeo explícito de los casos de uso (UC) a interacciones en el software que deje claro cómo ejecutar los casos de uso core. 
+  - Datos necesarios para poder corregir la entrega, como: usuarios, contraseñas o ejemplos de entradas de datos, si éstos son muy complejos. En particular:
+    - La URL de la landing page.
+    - Credenciales de al menos dos usuarios clientes y un administrador. 
+    - La URL del despliegue. 
+    - La URL del repositorio de GitHub.
+    - La URL y las credenciales de acceso a la herramienta de registro de tiempo.
+  - Requisitos potenciales para usar el sistema (como tener que activar el acceso a la ubicación, por ejemplo). 
+  - Un enlace a la demo enseñada en clase, en formato mp4 e incluida en el repositorio de GitHub. 
+
+- Cualquier otro documento o vídeo que consideremos relevante debe estar en formato md, pdf, ppt, pptx o mp4.
+
+- Enseñar datos realistas en la demo del software. 
+
+- Incluir una etiqueta apropiada para la versión entregada del código y de la documentación. 
+
+- Hacer una release de GitHub enlazando la etiqueta apropiada. La release debe incluir un archivo zip con todo el contenido del repositorio.
+
+T-10: En todos los entregables que incluyan software, no se debe incurrir en ninguna de las siguientes condiciones de fallo:
+
+- Una interacción legal con su sistema resulta en un error HTTP percibido por el usuario.
+
+- Una interacción legal con tu sistema resulta en un pánico (crash/...) percibido por el usuario.
+
+- Una interacción legal con su sistema no tiene el comportamiento esperado.
+
+- No se detecta el envío de un formulario con datos obligatorios erróneos o ausentes (validación de formulario).
+
+- Un actor puede listar, editar o borrar datos que pertenecen a otro actor y que sólo el administrador debe gestionar.
+
+- El sistema no está desplegado en la nube o no está disponible en ningún momento del curso (hasta julio).
+
+- El despliegue del sistema se modifica/actualiza después de la fecha límite de entrega.
+
+
+Ahora, de forma detallada, se explican los problemas:
 
 - El primer problema y el principal constituía en un **error 500 en el software**. Este problema ocurre debido a un error tratando de desplegar el software correspondiente al Sprint 2. Se cometió un error mientras se investigaba la forma de migrar los datos de un desplegable al otro. Concretamente se borró la base de datos del Sprint 1 por error.
 
@@ -83,8 +178,8 @@ La información proporcionada era escasa y resultaba pobre en contenido y análi
 | Problema   | Detectado antes | Detectado después | Detectado por el revisor |
 |------------|-----------------|-------------------|--------------------------|
 | Error 500 al desplegar la app   |  ❌  |  ✅  |  ✅  |
-| **KBreport** incompleto        |  ⚠️  |  ✅  |  ✅  |
-| Falta de firmas en **CommitmentAgreement** |  ❌  |  ✅  |  ✅  |
+| **KBreport** incompleto        |  ❌  |  ✅  |  ✅  |
+| Falta de firmas en **CommitmentAgreement** |  ⚠️  |  ✅  |  ✅  |
 | Falta de gráficos en **timeEffortReport**   |  ❌  |  ✅  |  ✅  |
 | Formulario sin validación       |  ❌  |  ✅  |  ✅   |
 
@@ -143,17 +238,10 @@ Sin embargo, durante la iteración correspondiente al Sprint 1, se detectaron m�
 
 ### 4.1. Error 500 (Servidor)
 
-- **Origen técnico:** Eliminación accidental de la base de datos del despliegue al intentar migrar los datos hacia la base de datos del siguiente despliegue.
-- **Origen en el proceso:** Ausencia de pruebas tras el despliegue y falta de checklist final.
-- **Responsables técnicos:** Equipo de despliegue.
-- **Responsables funcionales:** Jefes de proyecto.
-- **Mitigación técnica:** Backups automáticos (generados automáticamente por filess.io) y validaciones post-deploy.
-- **Mitigación en proceso:** Validación obligatoria tras cada despliegue.
-- **Estado:** *Resuelto*
 
 | Origen técnico | Origen en el proceso | Persona que generó la failure condition | Rol/Roles  | Responsables del problema | Rol/Roles | Mitigación a nivel técnico | Mitigación a nivel de proceso | Estado |
 |----------------|----------------------|-----------------------------------------|-----|------------------------|---------------------------|---------------------|------------------------|--------|
-|                |                      |                                         |     |                        |                           |                     |                        |        |
+| Eliminación accidental de la base de datos del despliegue al intentar migrar los datos hacia la base de datos del siguiente despliegue. | Ausencia de pruebas tras el despliegue y falta de checklist final. | Jesús Fernández Rodríguez y Miguel González Ortiz| Equipo de despliegue | Alejandro Sevillano Barea, Santiago Rosado Raya, Miguel González Ortiz, Alexander Picón Garrote, Francisco Fernández Mota, y Javier García Rodríguez  | QAs, y jefes de subgrupos | Backups automáticos (generados automáticamente por filess.io) y validaciones post-deploy. | Validación obligatoria tras cada despliegue. | Resuelto |
 
 
 ### 4.2. KBreport incompleto
