@@ -42,7 +42,7 @@ Fecha: 21/04/2025
 | 21-04-2025 | v1.0    | Alexander Picón Garrote | Creación del documento y primera versión     |
 | 21-04-2025 | v1.1    | Javier García Rodríguez | Ampliación de información     |
 | 22-04-2025 | v1.2    | Javier García Rodríguez | Desarrollo del punto 3 y ampliación del punto 4     |
-| 23-04-2025 | v1.3    | Javier García Rodríguez | Corrección de errores y ampliación de información en el punto 1 |
+| 23-04-2025 | v1.3    | Javier García Rodríguez | Corrección de errores y ampliación de información en el punto 1 y 2 |
 
 ---
 
@@ -152,15 +152,15 @@ Ahora, de forma detallada, se explican los problemas:
 
 - El documento **KBReport**, no contiene la información correspondiente que se añadía a la KB, respectivamente. Además, se mencionaban varios documentos, pero no se adjuntaron los enlaces ni el contenido de estos. Concretamente, los documentos eran:
 
-  - Actas de reunión de los días 9 y 10 de marzo
-  - pilotUsers
-  - performanceEvaluation
-  - timeEffortReport
-  - AIusage
-  - commitmentAgreement
-  - pilotUsersCommitmentAgreement
-  - pilotUsersPerformanceEvaluation
-  - revision
+  - **Actas de reunión de los días 9 y 10 de marzo**
+  - **pilotUsers**
+  - **performanceEvaluation**
+  - **timeEffortReport**
+  - **AIusage**
+  - **commitmentAgreement**
+  - **pilotUsersCommitmentAgreement**
+  - **pilotUsersPerformanceEvaluation**
+  - **revision**
 
 La información proporcionada era escasa y resultaba pobre en contenido y análisis.
 
@@ -184,18 +184,35 @@ La información proporcionada era escasa y resultaba pobre en contenido y análi
 | Formulario sin validación       |  ❌  |  ✅  |  ✅   |
 
 
+Sin embargo, además de los problemas detectados que están relacionados con las condiciones de fallo, se detectaron más problemas que perjudicaron al desarrollo correcto y productivo del grupo:
+
+- **Escasa coordinación entre subgrupos.**
+  - Ciertas tareas asignadas a  miembros de distintos subgrupos implicaban el desarrollo de código en los mismos archivos. A priori esto no sería un error, no obstante, no se declaró esa dependencia entre tareas y el orden de prioridad entre ellas. Se generaron conflictos, los cuales a la hora de resolver, resultaba en ciertas ocasiones la eliminación de funcionalidades (de forma parcial) desarrolladas por algún miembro.
+
+- **Falta de liderazgo técnico claro.**
+  - Que una sola persona fuese la responsable de que el trabajo era correcto día al día fue un error clarísimo. Se debería haber delegado más tareas en los otros jefes de subgrupo para tener una mejor estructura y capacidad organizativa.
+
+- **Ausencia de revisiones cruzadas entre áreas.**
+  - Hubo ciertas tareas con las que algunos miembros correspondientes al equipo de gestión de calidad y revisores de tareas no desarrollaron su actividad de forma correcta, aceptando algunas pull requests sin revisarlas y comprobando toda la funcionalidad, al completo.
+
+- **Distribución de tareas desigual.**
+  - El proyecto se encuentra categorizado en muchos tipos de entidades y funcionalidades. Bien, las tareas se distribuyeron de forma desigual, asignando tareas con una alta carga de trabajo a ciertos grupos, y otros con una carga de trabajo ínfima. He aquí donde luego se pudo ver un desequilibrio claro en las horas y tareas.
+
+- **Mala gestión del backlog y las issues.**
+  - La planificación de tarea la llevó a cabo de forma solitaria el Product Manager, sin tener en consideración una planificación conjunta con los otros 2 jefes de subgrupos, y una tercera persona con una alta capacidad de gestión y reparto de tareas. No existía una plantilla de issues con una información clara con la que poder trabajar sabiendo exactamente qué hacer y qué no.
+
 ## 3. Metodología de desarrollo de software seguida y roles de todos los miembros del equipo
 
 El equipo de Borroo está compuesto por 17 miembros, organizados en subgrupos multidisciplinares según áreas funcionales para facilitar el desarrollo y la eficiencia.
 
 La organización del equipo es la siguiente:
 
-- Product Manager: Jefe del proyecto.
-- Jefes de subgrupo (3): Supervisión de los miembros de su grupo, coordinación con los otros 2 subgrupos y organización y gestión de tareas asignadas.
-- Equipo de desarrollo: Encargado de la implementación del sistema, tanto en frontend como en backend.
-- Equipo de documentación: Responsable de la redacción, actualización y control de los entregables documentales.
-- Equipo de pruebas y calidad: Dedicado a la verificación funcional del sistema y reporte de incidencias.
-- Equipo de despliegue: Enfocado en la preparación, ejecución y mantenimiento del entorno productivo.
+- **Product Manager**: Jefe del proyecto.
+- **Jefes de subgrupo (3)**: Supervisión de los miembros de su grupo, coordinación con los otros 2 subgrupos y organización y gestión de tareas asignadas.
+- **Equipo de desarrollo**: Encargado de la implementación del sistema, tanto en frontend como en backend.
+- **Equipo de documentación**: Responsable de la redacción, actualización y control de los entregables documentales.
+- **Equipo de pruebas y calidad**: Dedicado a la verificación funcional del sistema y reporte de incidencias.
+- **Equipo de despliegue**: Enfocado en la preparación, ejecución y mantenimiento del entorno productivo.
 
 Aunque no se sigue una metodología ágil de forma estricta, se incorporan algunas prácticas inspiradas en enfoques ágiles, como entregas iterativas, reuniones de seguimiento y revisiones periódicas de avances.
 
@@ -223,15 +240,6 @@ Detalladamente, cada miembro tenía un rol:
   - Miguel González Ortiz: Miembro del equipo de pruebas y calidad, miembro del equipo de desarrollo en la parte de backend, y miembro del equipo de despliegue.
   - Miguel Palomo García: Miembro del equipo de desarrollo en la parte de backend y frontend, fullstack, y responsable de la realización de la presentación. 
   - Luis Javier Periáñez Franco: Miembro del equipo de desarrollo en la parte de frontend.
-
-
-Sin embargo, durante la iteración correspondiente al Sprint 1, se detectaron múltiples problemas:
-
-- **Escasa coordinación entre subgrupos.**
-- **Falta de liderazgo técnico claro.**
-- **Ausencia de revisiones cruzadas entre áreas.**
-- **Distribución de tareas desigual.**
-- **Mala gestión del backlog y las issues.**
 
 
 ## 4. Análisis detallado de cada issue
@@ -262,30 +270,18 @@ Sin embargo, durante la iteración correspondiente al Sprint 1, se detectaron m�
 
 ### 4.4. Ausencia de gráficos en timeEffortReport
 
-- **Origen técnico:** Malinterpretación de requisitos.
-- **Origen en el proceso:** No se revisó antes de entregar.
-- **Responsables técnicos:** Subgrupo de documentación.
-- **Mitigación técnica:** Generadores automáticos de gráficas.
-- **Mitigación en proceso:** Revisión cruzada obligatoria.
-- **Estado:** *Resuelto*
-
 | Origen técnico | Origen en el proceso | Persona que generó la failure condition | Rol/Roles  | Responsables del problema | Rol/Roles | Mitigación a nivel técnico | Mitigación a nivel de proceso | Estado |
 |----------------|----------------------|-----------------------------------------|-----|------------------------|---------------------------|---------------------|------------------------|--------|
-|                |                      |                                         |     |                        |                           |                     |                        |        |
+| Interpretación incompleta de los requisitos para este documento | No se realizó una revisión previa a la entrega final, contemplando la existencia de las gráficas solicitadas | El timeEffortReport fue desarrollado por cada miembro del grupo, en el que cada uno iba añadiendo sus tablas con las entradas de las horas de trabajo correspondiente, por tanto, el error fue grupal. | Intencionadamente en blanco | Javier García Rodríguez | Project Manager | Desarrollo continuo del mismo documento para el posterior sprint, con las anotaciones consecuentes para no olvidar la integración de las gráficas solicitadas | Revisión cruzada obligatoria antes de la entrega final | Resuelto |
+
 
 ### 4.5. Formulario sin validación
 
-- **Origen técnico:** Lógica de validación incompleta en frontend.
-- **Origen en el proceso:** Fallo en pruebas funcionales previas a entrega.
-- **Responsables técnicos:** Equipo frontend.
-- **Responsables funcionales:** Equipo de QA y líderes técnicos.
-- **Mitigación técnica:** Pruebas unitarias y funcionales obligatorias.
-- **Mitigación en proceso:** QA como fase obligatoria.
-- **Estado:** *Resuelto*
-
-| Origen técnico | Origen en el proceso | Persona que generó la failure condition | Rol | Responsables técnicos | Responsables funcionales | Mitigación técnica | Mitigación en proceso | Estado |
+| Origen técnico | Origen en el proceso | Persona que generó la failure condition | Rol/Roles  | Responsables del problema | Rol/Roles | Mitigación a nivel técnico | Mitigación a nivel de proceso | Estado |
 |----------------|----------------------|-----------------------------------------|-----|------------------------|---------------------------|---------------------|------------------------|--------|
-|                |                      |                                         |     |                        |                           |                     |                        |        |
+| Lógica de validación incompleta en frontend. Se generaron algunas validaciones básicas, pero con un funcionamente erróneo que no se ajustaba a lo solicitado | Omisión de casos de prueba en pruebas funcionales previas a entrega. Las pruebas se fueron desarrollando desde este sprint, no obstante, no se desarrollaron todas a tiempo y se tuvieron que replanificar para el siguiente sprint.  | Miguel González Ortiz | Miembro del equipo de desarrollo y QA    | Alejandro Sevillano Barea y Santiago Rosado Raya | Miembros del equipo de calidad (QAs) | Realización de tests informales para cada nuevo formulario o lógica de entrada, validando todos los campos de los formularios correspondientes | Inclusión obligatoria de QA como fase de validación previa a producción | Resuelto |
+
+
 
 
 ## 5. Conclusiones y Lecciones Aprendidas
