@@ -108,7 +108,7 @@ def test_login_and_create_rent(driver):
                 )
             )
 
-        # Esperar que los dropdowns estén presentes
+        # Esperar que los dropdowns estén disponibles
         WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located((By.TAG_NAME, "select"))
         )
