@@ -2,9 +2,9 @@
 
 # BORROO
 
-![](../imagenes/borrooLogo.png)  <!-- Meter un . mas en la ruta si el documento está dentro de otra carpeta para que detecte el logo-->
+![](../imagenes/borrooLogo.png) 
 
-## Informe de Lecciones Aprendidas - Entrega #S1
+## Informe de Lecciones Aprendidas - Sprint 1
 
 ### PPL – G4
 **Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)  
@@ -42,7 +42,7 @@ Fecha: 21/04/2025
 | 21-04-2025 | v1.0    | Alexander Picón Garrote | Creación del documento y primera versión     |
 | 21-04-2025 | v1.1    | Javier García Rodríguez | Ampliación de información     |
 | 22-04-2025 | v1.2    | Javier García Rodríguez | Desarrollo del punto 3 y ampliación del punto 4     |
-| 23-04-2025 | v1.3    | Javier García Rodríguez | Corrección de errores y ampliación de información en el punto 1 y 2 |
+| 23-04-2025 | v1.3    | Javier García Rodríguez | Corrección de errores y ampliación de información en el punto 1 y 2, y finalización del documento|
 
 ---
 
@@ -111,39 +111,41 @@ T-9: Realizar una entrega incorrecta. Una entrega correcta debe:
 - Ficheros de evaluación del rendimiento de los usuarios piloto que evalúan y puntúan a los estudiantes del ISPP que actúan como usuarios piloto del grupo (pilotUsersPerformanceEvaluation.md). ✅
 
 - La guía o manual de usuario para que el proyecto pueda ser corregido (revision.md). Debe incluir:
-  - Un mapeo explícito de los casos de uso (UC) a interacciones en el software que deje claro cómo ejecutar los casos de uso core. 
+  - Un mapeo explícito de los casos de uso (UC) a interacciones en el software que deje claro cómo ejecutar los casos de uso core. ✅
   - Datos necesarios para poder corregir la entrega, como: usuarios, contraseñas o ejemplos de entradas de datos, si éstos son muy complejos. En particular:
-    - La URL de la landing page.
-    - Credenciales de al menos dos usuarios clientes y un administrador. 
-    - La URL del despliegue. 
-    - La URL del repositorio de GitHub.
-    - La URL y las credenciales de acceso a la herramienta de registro de tiempo.
-  - Requisitos potenciales para usar el sistema (como tener que activar el acceso a la ubicación, por ejemplo). 
-  - Un enlace a la demo enseñada en clase, en formato mp4 e incluida en el repositorio de GitHub. 
+    - La URL de la landing page. ✅
+    - Credenciales de al menos dos usuarios clientes y un administrador. ✅
+    - La URL del despliegue. ✅
+    - La URL del repositorio de GitHub. ✅
+    - La URL y las credenciales de acceso a la herramienta de registro de tiempo. ✅
+  - Requisitos potenciales para usar el sistema (como tener que activar el acceso a la ubicación, por ejemplo). ✅
+  - Un enlace a la demo enseñada en clase, en formato mp4 e incluida en el repositorio de GitHub. ✅
 
-- Cualquier otro documento o vídeo que consideremos relevante debe estar en formato md, pdf, ppt, pptx o mp4.
+- Cualquier otro documento o vídeo que consideremos relevante debe estar en formato md, pdf, ppt, pptx o mp4. ✅ (Se adjuntó la demo mostrada en la presentación)
 
 - Enseñar datos realistas en la demo del software. 
 
-- Incluir una etiqueta apropiada para la versión entregada del código y de la documentación. 
+- Incluir una etiqueta apropiada para la versión entregada del código y de la documentación. ✅
 
-- Hacer una release de GitHub enlazando la etiqueta apropiada. La release debe incluir un archivo zip con todo el contenido del repositorio.
+- Hacer una release de GitHub enlazando la etiqueta apropiada. La release debe incluir un archivo zip con todo el contenido del repositorio. ✅
 
 T-10: En todos los entregables que incluyan software, no se debe incurrir en ninguna de las siguientes condiciones de fallo:
 
-- Una interacción legal con su sistema resulta en un error HTTP percibido por el usuario.
+- Una interacción legal con su sistema resulta en un error HTTP percibido por el usuario. ❌
 
-- Una interacción legal con tu sistema resulta en un pánico (crash/...) percibido por el usuario.
+- Una interacción legal con tu sistema resulta en un pánico (crash/...) percibido por el usuario. ❌
 
-- Una interacción legal con su sistema no tiene el comportamiento esperado.
+- Una interacción legal con su sistema no tiene el comportamiento esperado. ❌
 
-- No se detecta el envío de un formulario con datos obligatorios erróneos o ausentes (validación de formulario).
+  - El problema principal por el suspenso fue que software siempre daba un error 500 (servidor). Esto resultaba en un pánico en primer lugar en toda la aplicación. Seguidamente, cualquier interacción legal que resultase en un error HTTP, como el registro, iba a resultar en un error, ya que tenía que conectarse a la base de datos (más abajo en este mismo apartado, y en el punto 4.1 se encuentra explicado de forma más extensa). Además, esto implica en un comportamiento no esperado en el sistema (en el caso del formulario de registro, no se contemplaban además las validaciones correspondientes, y el comportamiento no era el correcto).
 
-- Un actor puede listar, editar o borrar datos que pertenecen a otro actor y que sólo el administrador debe gestionar.
+- No se detecta el envío de un formulario con datos obligatorios erróneos o ausentes (validación de formulario). ✅
 
-- El sistema no está desplegado en la nube o no está disponible en ningún momento del curso (hasta julio).
+- Un actor puede listar, editar o borrar datos que pertenecen a otro actor y que sólo el administrador debe gestionar. ✅
 
-- El despliegue del sistema se modifica/actualiza después de la fecha límite de entrega.
+- El sistema no está desplegado en la nube o no está disponible en ningún momento del curso (hasta julio). ✅
+
+- El despliegue del sistema se modifica/actualiza después de la fecha límite de entrega. ✅
 
 
 Ahora, de forma detallada, se explican los problemas:
@@ -184,7 +186,7 @@ La información proporcionada era escasa y resultaba pobre en contenido y análi
 | Formulario sin validación       |  ❌  |  ✅  |  ✅   |
 
 
-Sin embargo, además de los problemas detectados que están relacionados con las condiciones de fallo, se detectaron más problemas que perjudicaron al desarrollo correcto y productivo del grupo:
+Además de los problemas detectados que están relacionados con las condiciones de fallo, se detectaron más problemas que perjudicaron al desarrollo correcto y productivo del grupo:
 
 - **Escasa coordinación entre subgrupos.**
   - Ciertas tareas asignadas a  miembros de distintos subgrupos implicaban el desarrollo de código en los mismos archivos. A priori esto no sería un error, no obstante, no se declaró esa dependencia entre tareas y el orden de prioridad entre ellas. Se generaron conflictos, los cuales a la hora de resolver, resultaba en ciertas ocasiones la eliminación de funcionalidades (de forma parcial) desarrolladas por algún miembro.
@@ -219,27 +221,27 @@ Aunque no se sigue una metodología ágil de forma estricta, se incorporan algun
 Detalladamente, cada miembro tenía un rol:
 
 - **Subgrupo 1**   
-  - Alexander Picón Garrote: Jefe del subgrupo 1. 
-  - Álvaro Martín Muñoz: Miembro del equipo de desarrollo en la parte de frontend.
-  - Alejandro Sevillano Barea: Miembro del equipo de pruebas y calidad
-  - Ignacio Naredo Bernardos: Miembro del equipo de desarrollo en la parte de backend, y miembro del equipo de documentación.
-  - Pablo Espinosa Naranjo: Miembro del equipo de desarrollo en la parte de frontend. 
-  - Marco Padilla Gómez: Miembro del equipo de desarrollo en la parte de backend, y miembro del equipo de documentación.
+  - **Alexander Picón Garrote**: Jefe del subgrupo 1. 
+  - **Álvaro Martín Muñoz**: Miembro del equipo de desarrollo en la parte de frontend.
+  - **Alejandro Sevillano Barea**: Miembro del equipo de pruebas y calidad
+  - **Ignacio Naredo Bernardos**: Miembro del equipo de desarrollo en la parte de backend, y miembro del equipo de documentación.
+  - **Pablo Espinosa Naranjo**: Miembro del equipo de desarrollo en la parte de frontend. 
+  - **Marco Padilla Gómez**: Miembro del equipo de desarrollo en la parte de backend, y miembro del equipo de documentación.
 
 - **Subgrupo 2**
-  - Francisco Fernández Mota: Jefe del subgrupo 2.
-  - Santiago Rosado Raya: Miembro del equipo de pruebas y calidad, miembro del equipo de documentación y encargado de la comunicación con los usuarios pilotos.
-  - Julia Sánchez Márquez: Miembro del equipo de desarrollo en la parte de backend.
-  - Pablo Díaz Ordóñez: Miembro del equipo de desarrollo en la parte de backend, y miembro del equipo de documentación.   
-  - Javier Nieto Vicioso: Miembro del equipo de desarrollo en la parte de backend y frontend, fullstack.
-  - David Blanco Mora: Miembro del equipo de desarrollo en la parte de backend. 
+  - **Francisco Fernández Mota**: Jefe del subgrupo 2.
+  - **Santiago Rosado Raya**: Miembro del equipo de pruebas y calidad, miembro del equipo de documentación y encargado de la comunicación con los usuarios pilotos.
+  - **Julia Sánchez Márquez**: Miembro del equipo de desarrollo en la parte de backend.
+  - **Pablo Díaz Ordóñez**: Miembro del equipo de desarrollo en la parte de backend, y miembro del equipo de documentación.   
+  - **Javier Nieto Vicioso**: Miembro del equipo de desarrollo en la parte de backend y frontend, fullstack.
+  - **David Blanco Mora**: Miembro del equipo de desarrollo en la parte de backend. 
 
 - **Subgrupo 3**
-  - Javier García Rodríguez: Product manager, y del subgrupo 3.  
-  - Jesús Fernández Rodríguez: Miembro del equipo de desarrollo en la parte de backend y frontend, fullstack, y miembro del equipo de despliegue.
-  - Miguel González Ortiz: Miembro del equipo de pruebas y calidad, miembro del equipo de desarrollo en la parte de backend, y miembro del equipo de despliegue.
-  - Miguel Palomo García: Miembro del equipo de desarrollo en la parte de backend y frontend, fullstack, y responsable de la realización de la presentación. 
-  - Luis Javier Periáñez Franco: Miembro del equipo de desarrollo en la parte de frontend.
+  - **Javier García Rodríguez**: Product manager, y jefe del subgrupo 3.  
+  - **Jesús Fernández Rodríguez**: Miembro del equipo de desarrollo en la parte de backend y frontend, fullstack, y miembro del equipo de despliegue.
+  - **Miguel González Ortiz**: Miembro del equipo de pruebas y calidad, miembro del equipo de desarrollo en la parte de backend, y miembro del equipo de despliegue.
+  - **Miguel Palomo García**: Miembro del equipo de desarrollo en la parte de backend y frontend, fullstack, y responsable de la realización de la presentación. 
+  - **Luis Javier Periáñez Franco**: Miembro del equipo de desarrollo en la parte de frontend.
 
 
 ## 4. Análisis detallado de cada issue
@@ -283,35 +285,43 @@ Detalladamente, cada miembro tenía un rol:
 
 
 
+## 5. Conclusiones y lecciones aprendidas
 
-## 5. Conclusiones y Lecciones Aprendidas
+Los errores mencionados en los apartados anteriores evidencian carencias tanto técnicas como organizativas, que resultan en el suspenso del Sprint 1. 
 
-Los errores evidencian carencias tanto técnicas como organizativas:
+De forma resumida, estos serían los problemas encontrados:
 
--  **Falta de planificación y seguimiento de issues**: Muchas issues fueron desarrolladas tarde y otras no se cerraron cuando fue debido.
--  **Carga de trabajo mal distribuida**: Algunos miembros asumieron un peso excesivo, mientras que otros participaron poco.
--  **Falta de revisiones de Pull Requests**: Se hicieron merges sin revisión o sin pruebas funcionales.
--  **Descoordinación entre subgrupos**: El backend y frontend avanzaban en paralelo sin sincronización, afectando la integración.
--  **Poca comunicación interna**: Cambios importantes no se comunicaban correctamente y se enteraban tarde otros equipos.
--  **Ausencia de testing sistemático**: No se planificaron ni ejecutaron pruebas completas antes de la entrega.
--  **Gestión reactiva y no preventiva**: Muchos problemas se detectaron solo tras la revisión, no antes.
--  **Documentación entregada sin control de calidad**: Varios documentos no fueron revisados antes de enviarlos.
--  **Checklist inexistente o ignorada**: No hubo confirmación de requisitos antes del momento de entrega.
--  **Poca participación en retrospectivas**: No se interiorizó la mejora continua como parte del ciclo ágil.
+-  **Falta de planificación y seguimiento de issues**: Muchas issues fueron iniciadas con retraso debido a la dependencia con otras (ya sea por compartir mismas entidades, o funcionalidades), y otras no fueron cerradas foramlmente, dificultando el avance del proyecto en el Sprint 1.
+  
+-  **Carga de trabajo mal distribuida**:  Se evidenció una asignación ineficiente entre todas las tareas del proyecto, asignando a algunas personas una carga excesiva de trabajo, y otros, una carga ridícula. El resultado de esto fue un impacto claro en la moralidad de los miembros y su productividad correspondiente. Se implementó un calendario NikoNiko para poder medir de una forma más clara la moral de todo el grupo.
+  
+-  **Falta de revisiones de pull requests**: En ciertas ocasiones, se hicieron merges sin revisión por partes de los QAs, o sin haberse realizado las pruebas correspondientes. 
 
 
-## 6. Acciones Inmediatas
+-  **Descoordinación entre subgrupos**: El backend y frontend avanzaban en paralelo sin sincronización, afectando la integración de diferentes funcionaliades. Esto se alinea directamente con el primer problema mencionado (la falta de planificación y seguimiento de issues). Al trabajar sin una alineación adecuada, se generan conflictos en ciertos archivos comunes que son vitales para el correcto funcionamiento del proyecto. Existía una comunicación sin organización alguna en la que se preguntaba qué persona había "tocado" alguna parte del código que involucraba la funcionalidad de otra persona.
 
-Para las siguientes iteraciones, se implementarán los siguientes cambios estructurales:
+-  **Poca comunicación interna**: A pesar de los canales de comunicación creados, cada uno con una funcionalidad específico, no se usaron de la forma correcta, lo que resultaba en un retraso en toda la cadena de desarrollo del proyecto.
+
+-  **Ausencia de testing sistemático**: No se planificaron ni ejecutaron pruebas completas antes de la entrega. El testing existía, sí, pero la desalineación entre funcionalidades, el retraso en la finalización de tareas, y más, resultó en la replanificación de estas tareas, que se dejaron para los siguientes Sprints.
+
+-  **Gestión reactiva y no preventiva**: Muchos problemas se detectaron solo tras la revisión, no antes. La labor de los QA fue correcta, pero no la suficiente. Se trató de mejorar su labor comunicándose con ellos para evitar los mismos problemas en los siguientes entregables.
+
+-  **Documentación entregada sin control de calidad**: Varios documentos no fueron revisados antes de enviarlos. Enlazándolo con una de las condiciones de fallo, como el documento **KBReport** o **timeEffortReport**, no se revisaron de la forma adecuada, asegurándose que contuviese todo lo solicitado para el entregable.
+
+-  **Checklist inexistente o ignorada**: No hubo confirmación de requisitos, ni de la información correspondiente a todos los documentos antes del momento de entrega, lo que dio lugar a omitir información importante en ciertos documentos.
+
+
+## 6. Acciones inmediatas
+
+Para los siguientes entregables, se implementaron los siguientes cambios estructurales:
 
 -  **Checklists obligatorias para cada entrega** (con responsables designados).
 -  **Revisión cruzada de documentación y código antes de entregar.**
 -  **Backups y validación automática en el despliegue.**
--  **QA como fase integrada del flujo de desarrollo.**
--  **Automatización de gráficas e informes.**
+-  **Análisis y revisión de la calidad como fase integrada del flujo de desarrollo.**
 -  **Asignación equitativa de tareas y seguimiento de carga real.**
--  **Canal de comunicación centralizado entre subgrupos.**
--  **Reuniones breves de coordinación inter-áreas.**
--  **Política estricta de revisiones en los PR.**
--  **Seguimiento riguroso de issues en GitHub.**
+-  **Canal de comunicación centralizado entre subgrupos, pero manteniendo los canales dedicados a ciertas partes del proyecto (como comunicación independientes de subgrupos, QAs, y más).**
+-  **Reuniones breves de coordinación entre las distintas áreas y jefes de subgrupos.**
+-  **Política estricta de revisiones en los PR por parte de los QAs.**
+-  **Seguimiento riguroso de issues en GitHub, con etiquetas y plantillas.**
 
