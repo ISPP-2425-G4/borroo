@@ -10,7 +10,7 @@ def reset_migrations():
     base_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Lista de aplicaciones con migraciones
-    apps = ['usuarios', 'objetos', 'rentas', 'pagos', 'chats']
+    apps = ['usuarios', 'objetos', 'rentas', 'pagos', 'chats', 'tickets']
 
     print("🔄 Iniciando reseteo de migraciones...")
 
