@@ -26,6 +26,7 @@ import PrivacyPolicy from "./documents/PrivacyPolicy";
 import Licenses from "./documents/Licenses";
 import VerificarEmail from "./VerifyEmail";
 import AdminReportsDashboard from "./AdminReportsDashboard";
+import AdminTicketsDashboard from "./AdminTicketsDashboard";
 import Deposit from "./documents/Deposit";
 import NewTicketForm from "./NewTicketForm";
 import ListTickets from "./ListTickets";
@@ -65,6 +66,7 @@ function App() {
           <Route path="/licenses" element={<Licenses/>}/>
           <Route path="/verifyEmail" element={<VerificarEmail />} />
           <Route path="/reports-dashboard" element={<AdminReportsDashboard />} />
+          <Route path="/tickets-dashboard" element={<AdminTicketsDashboard />} />
           <Route path="/incidencias/nueva/:rentId" element={<NewTicketForm />} />
           <Route path="/mis-incidencias" element={<ListTickets />} />
           <Route path="*" element={<div>Página no encontrada</div>} />

@@ -274,9 +274,9 @@ const Navbar = () => {
                       <MenuItem onClick={() => { navigate('/reports-dashboard'); }}>
                         Gestionar reportes
                       </MenuItem>
-                      {/*<MenuItem onClick={() => { navigate('/tickets-dashboard'); }}>
+                      {<MenuItem onClick={() => { navigate('/tickets-dashboard'); }}>
                         Gestionar incidencias
-                      </MenuItem>*/}
+                      </MenuItem>}
                     </>
                   )}
                   <MenuItem onClick={handleLogout}>
