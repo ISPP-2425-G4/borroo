@@ -19,15 +19,16 @@ class TicketViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if not self.request.user.is_authenticated:
-            return Response(
-                {"detail": "Authentication credentials were not provided."},
-                status=status.HTTP_401_UNAUTHORIZED
-            )
-        # Se muestran los tickets en los que el usuario es:
-        # - Quien reporta la incidencia (reporter)
-        # - Quien la gestiona (manager)
-        # - O el propietario del objeto (a través de la renta)
+
+        # Si el usuario no está autenticado, devuelve un queryset vacío
+        if not user.is_authenticated:
+            return Ticket.objects.none()
+
+        # Si el usuario es administrador, devuelve todos los tickets
+        if user.is_admin:
+            return Ticket.objects.all()
+
+        # Si el usuario no es administrador, aplica los filtros
         return Ticket.objects.filter(
             Q(reporter=user) |  # OR
             Q(manager=user) |
