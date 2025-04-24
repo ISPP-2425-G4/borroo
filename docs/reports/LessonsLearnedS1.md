@@ -43,7 +43,7 @@ Fecha: 21/04/2025
 | 21-04-2025 | v1.1    | Javier García Rodríguez | Ampliación de información     |
 | 22-04-2025 | v1.2    | Javier García Rodríguez | Desarrollo del punto 3 y ampliación del punto 4     |
 | 23-04-2025 | v1.3    | Javier García Rodríguez | Corrección de errores y ampliación de información en el punto 1 y 2, y finalización del documento|
-
+| 24-04-2025 | v1.4    | Javier García Rodríguez | Corrección de errores |
 ---
 
 
@@ -90,7 +90,7 @@ T-9: Realizar una entrega incorrecta. Una entrega correcta debe:
   - Informe de contribuciones a la Base del Conocimiento o KB (KBreport.md), incluyendo, al menos:
     - El enlace a la Base del Conocimiento compartida. ✅
       - El contenido específico que el equipo ha añadido al KB, incluyendo, al menos, el feedback que ha recibido y las anotaciones sobre el feedback general. ❌
-        - El documento especifcaba contenidos que se habían añadido, pero de forma genérica. En ningun momento se menciona el feedback recibido, y anotaciones concretas sobre feedback general. 
+        - El documento especificaba contenidos que se habían añadido, pero de forma genérica. En ningun momento se menciona el feedback recibido, y anotaciones concretas sobre feedback general. 
       - Las acciones de consolidación llevadas a cabo. Si no se ha llevado a cabo ninguna, especificarlo explícitamente. ❌
         - No se especificó en ninguna parte que no se habían llevado a cabo acciones de consolidación.
 
@@ -123,7 +123,7 @@ T-9: Realizar una entrega incorrecta. Una entrega correcta debe:
 
 - Cualquier otro documento o vídeo que consideremos relevante debe estar en formato md, pdf, ppt, pptx o mp4. ✅ (Se adjuntó la demo mostrada en la presentación)
 
-- Enseñar datos realistas en la demo del software. 
+- Enseñar datos realistas en la demo del software. ✅
 
 - Incluir una etiqueta apropiada para la versión entregada del código y de la documentación. ✅
 
@@ -291,7 +291,7 @@ Los errores mencionados en los apartados anteriores evidencian carencias tanto t
 
 De forma resumida, estos serían los problemas encontrados:
 
--  **Falta de planificación y seguimiento de issues**: Muchas issues fueron iniciadas con retraso debido a la dependencia con otras (ya sea por compartir mismas entidades, o funcionalidades), y otras no fueron cerradas foramlmente, dificultando el avance del proyecto en el Sprint 1.
+-  **Falta de planificación y seguimiento de issues**: Muchas issues fueron iniciadas con retraso debido a la dependencia con otras (ya sea por compartir mismas entidades, o funcionalidades), y otras no fueron cerradas formalmente, dificultando el avance del proyecto en el Sprint 1.
   
 -  **Carga de trabajo mal distribuida**:  Se evidenció una asignación ineficiente entre todas las tareas del proyecto, asignando a algunas personas una carga excesiva de trabajo, y otros, una carga ridícula. El resultado de esto fue un impacto claro en la moralidad de los miembros y su productividad correspondiente. Se implementó un calendario NikoNiko para poder medir de una forma más clara la moral de todo el grupo.
   
@@ -322,6 +322,6 @@ Para los siguientes entregables, se implementaron los siguientes cambios estruct
 -  **Asignación equitativa de tareas y seguimiento de carga real.**
 -  **Canal de comunicación centralizado entre subgrupos, pero manteniendo los canales dedicados a ciertas partes del proyecto (como comunicación independientes de subgrupos, QAs, y más).**
 -  **Reuniones breves de coordinación entre las distintas áreas y jefes de subgrupos.**
--  **Política estricta de revisiones en los PR por parte de los QAs.**
+-  **Política estricta de revisiones en las PR por parte de los QAs.**
 -  **Seguimiento riguroso de issues en GitHub, con etiquetas y plantillas.**
 
