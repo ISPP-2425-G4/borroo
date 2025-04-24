@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Ticket, TicketImage
 from rentas.models import Rent
+from pagos.models import PaidPendingConfirmation
 from utils.utils import upload_image_to_imgbb
 
 
@@ -59,7 +60,11 @@ class TicketSerializer(serializers.ModelSerializer):
         for image_file in images:
             image_url = upload_image_to_imgbb(image_file)
             TicketImage.objects.create(ticket=ticket, image=image_url)
-
+        # Especificar que el owner no ha confirmado que ha ido bien
+        ppc = PaidPendingConfirmation.objects.filter(
+            rent=ticket.rent).first()
+        ppc.is_confirmed_by_owner = False
+        ppc.save()
         return ticket
 
     def update(self, instance, validated_data):
