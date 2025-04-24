@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { FiFileText, FiEdit, FiLayers, FiXCircle, FiDollarSign, FiImage, FiUpload } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
 import { Box, Stack, Typography, Alert, CircularProgress, Container, Button } from "@mui/material";
@@ -276,13 +275,6 @@ const CreateItemScreen = () => {
     document.getElementById('image-upload')?.click(); // Usar optional chaining por si acaso
   };
 
-  // Conversión a CET (como la tenías)
-  const convertToCET = (date) => {
-    const cetOffset = 2; // Considera DST si aplica en tu backend/lógica
-    const localDate = new Date(date);
-    localDate.setHours(localDate.getHours() + cetOffset);
-    return localDate.toISOString();
-  };
 
   const handleAddPeriod = () => {
     const {startDate, endDate} = datesRange[0];
