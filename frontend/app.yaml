@@ -1,5 +1,5 @@
 runtime: python312
-service: frontend-s3
+service: frontend-ppl
 
 handlers:
   # Handler para los documentos en public/docs_frontend
