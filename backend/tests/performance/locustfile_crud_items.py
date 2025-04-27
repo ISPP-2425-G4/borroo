@@ -1,4 +1,4 @@
-from locust import HttpUser, task, between
+from locust import HttpUser, task, between, SequentialTaskSet
 from PIL import Image
 from django.core.files.uploadedfile import SimpleUploadedFile
 import io
@@ -6,28 +6,16 @@ import io
 APPEND_SLASH = False
 
 
-class ItemCRUDUser(HttpUser):
-    wait_time = between(1, 5)
-
+class ItemCRUDTasks(SequentialTaskSet):
     def on_start(self):
         """Setup inicial - login y configuración"""
         # Login para obtener token
-        with self.client.post("/usuarios/login/", json={
+        response = self.client.post("/usuarios/login/", json={
             "usernameOrEmail": "User1",
             "password": "Borroo_25"
-        }, headers={
-            "Content-Type": "application/json"
-        }, catch_response=True) as response:
-            if response.status_code == 200:
-                self.token = response.json().get("access")
-                self.headers = {
-                    "Authorization": f"Bearer {self.token}",
-                    "Content-Type": "application/json"
-                }
-                response.success()
-            else:
-                response.failure(f"Login failed: {response.text}")
-
+        })
+        self.token = response.json().get("access")
+        self.headers = {"Authorization": f"Bearer {self.token}"}
         # Crear imagen en memoria
         self.image = self.generate_test_image()
 
@@ -71,8 +59,8 @@ class ItemCRUDUser(HttpUser):
         with self.client.post(
             "/objetos/full/",
             data=data,
+            headers=self.headers,
             files=files,
-            headers={"Authorization": self.headers["Authorization"]},  # No incluir Content-Type
             catch_response=True
         ) as response:
             if response.status_code == 201:
@@ -107,12 +95,20 @@ class ItemCRUDUser(HttpUser):
                 "price_category": "day",
                 "price": "30.00",
                 "deposit": "15.00",
-                "draft_mode": "false"
+                "draft_mode": "false",
+                "images": []
             }
+
+            # Archivos para enviar
+            files = {
+                "image_files": ("test.jpg", self.image.read(), "image/jpeg")
+            }
+
             with self.client.put(
                 f"/objetos/full/{self.created_item_id}/",
                 data=data,
                 headers=self.headers,
+                files=files,
                 catch_response=True
             ) as response:
                 if response.status_code == 200:
@@ -133,3 +129,8 @@ class ItemCRUDUser(HttpUser):
                     response.success()
                 else:
                     response.failure(f"Failed to delete item: {response.text}")
+
+
+class ItemCRUDUser(HttpUser):
+    wait_time = between(1, 5)
+    tasks = [ItemCRUDTasks]
