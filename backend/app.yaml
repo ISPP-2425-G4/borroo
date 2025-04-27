@@ -1,6 +1,6 @@
 runtime: python312
 
-service: backend-s3
+service: backend-ppl
 
 entrypoint: gunicorn -b :$PORT borroo.wsgi
 
@@ -9,11 +9,11 @@ instance_class: F2
 env_variables:
   DJANGO_SETTINGS_MODULE: "borroo.settings"
   DB_ENGINE: "django.db.backends.mysql"
-  DB_NAME: "borroos3_commonsoil"
-  DB_USER: "borroos3_commonsoil"
-  DB_PASSWORD: "b7ae2730d3316a2a98426ad61acf65d08a2321d2"
-  DB_HOST: "6itmm.h.filess.io"
-  DB_PORT: "61000"
+  DB_NAME: "borroo-ppl-db"
+  DB_USER: "borroo_user"
+  DB_PASSWORD: "Borroo_25"
+  CLOUD_SQL_CONNECTION_NAME: "issp-g4-db:europe-west1:issp-db-1"
+  PRIVATE_IP: "true"  # Si estás usando una conexión privada
 
 handlers:
   - url: /static
@@ -23,5 +23,5 @@ handlers:
   - url: /.*
     script: auto
 
-network:
-  instance_tag: allow-mariadb
+beta_settings:
+  cloud_sql_instances: "issp-g4-db:europe-west1:issp-db-1"
