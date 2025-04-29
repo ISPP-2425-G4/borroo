@@ -19,6 +19,7 @@ import CreateItemRequest from "./CreateItemRequest";
 import '../public/styles/App.css';
 import FAQ from './components/Faq';
 import AdminDashboard from "./AdminDashboard";
+import TicketDetail from "./TicketDetail";
 import Messages from "./Messages";
 import TermsAndConditions from "./documents/TermsAndConditions";
 import Sla from "./documents/Sla"
@@ -67,6 +68,7 @@ function App() {
           <Route path="/verifyEmail" element={<VerificarEmail />} />
           <Route path="/reports-dashboard" element={<AdminReportsDashboard />} />
           <Route path="/tickets-dashboard" element={<AdminTicketsDashboard />} />
+          <Route path="/admin/tickets/:id" element={<TicketDetail />} />
           <Route path="/incidencias/nueva/:rentId" element={<NewTicketForm />} />
           <Route path="/mis-incidencias" element={<ListTickets />} />
           <Route path="*" element={<div>Página no encontrada</div>} />

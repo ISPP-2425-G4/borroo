@@ -2,14 +2,10 @@ import { Container, Box, Typography, Paper, Divider, Chip, CircularProgress, Ale
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
-import { 
-  Dialog, DialogTitle, DialogContent, DialogActions, FormControl, 
-  InputLabel, Select, MenuItem, TextField, Stack, IconButton, Tooltip
-} from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import FilterListIcon from '@mui/icons-material/FilterList';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import CloseIcon from '@mui/icons-material/Close';
 
 const AdminTicketsDashboard = () => {
   const [tickets, setTickets] = useState([]);
@@ -17,15 +13,11 @@ const AdminTicketsDashboard = () => {
   const [ticketData, setTicketData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [newStatus, setNewStatus] = useState('');
-  const [showDialog, setShowDialog] = useState(false);
-  const [showFilterDialog, setShowFilterDialog] = useState(false);
-  const [editingTicketId, setEditingTicketId] = useState(null);
-  
   const [statusFilter, setStatusFilter] = useState('all');
   const [startDateFilter, setStartDateFilter] = useState('');
   const [endDateFilter, setEndDateFilter] = useState('');
   const token = localStorage.getItem("access_token");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchTickets();
@@ -43,11 +35,10 @@ const AdminTicketsDashboard = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Incluye el token JWT
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-      console.log(response.data.results);
 
       if (response.status !== 200) {
         throw new Error("Error al obtener los tickets.");
@@ -70,10 +61,9 @@ const AdminTicketsDashboard = () => {
               `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${userId}`,
               { headers: { "Content-Type": "application/json" } }
             );
-              if (userResponse.data) {
-                userData[userId] = userResponse.data;
-              }
-            
+            if (userResponse.data) {
+              userData[userId] = userResponse.data;
+            }
           } catch (err) {
             console.error(`Error al obtener el usuario ${userId}:`, err);
           }
@@ -123,48 +113,6 @@ const AdminTicketsDashboard = () => {
     setEndDateFilter('');
   };
 
-  const handleStatusChange = async () => {
-    if (!editingTicketId || !newStatus) return;
-    const ticketId = editingTicketId;
-    const ticket = tickets.find((ticket) => ticket.id === ticketId);
-    try {
-      const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/tickets/full/${ticketId}/`, {
-        status: newStatus,
-        userId: localStorage.getItem("user")?.id,
-        ticketId: ticketId,
-        description: ticket.description,
-        user: ticket.reporter,
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-        }
-      });
-      
-      if (response.status === 200) {
-        const updatedTickets = tickets.map((ticket) =>
-          ticket.id === ticketId ? { ...ticket, status: newStatus } : ticket
-        );
-        setTickets(updatedTickets);
-        setShowDialog(false);
-      }
-    } catch (error) {
-      console.error("Error al actualizar el estado del ticket:", error);
-      setError("Error al actualizar el estado del ticket.");
-    }
-  };
-
-  const handleCloseDialog = () => {
-    setShowDialog(false);
-  };
-
-  const handleOpenFilterDialog = () => {
-    setShowFilterDialog(true);
-  };
-
-  const handleCloseFilterDialog = () => {
-    setShowFilterDialog(false);
-  };
-
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {
       case 'pendiente':
@@ -189,9 +137,9 @@ const AdminTicketsDashboard = () => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  const formatFilterDate = (dateString) => {
-    if (!dateString) return '';
-    return new Date(dateString).toLocaleDateString();
+
+  const goToTicketDetail = (ticketId) => {
+    navigate(`/admin/tickets/${ticketId}`);
   };
 
   return (
@@ -204,16 +152,19 @@ const AdminTicketsDashboard = () => {
               Gestión de las Incidencias
             </Typography>
             <Box>
-              <Tooltip title="Filtros">
-                <IconButton color="primary" onClick={handleOpenFilterDialog} sx={{ mr: 1 }}>
-                  <FilterListIcon />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Actualizar tickets">
-                <IconButton color="primary" onClick={fetchTickets}>
-                  <RefreshIcon />
-                </IconButton>
-              </Tooltip>
+              <Button
+                startIcon={<FilterListIcon />}
+                onClick={resetFilters}
+                sx={{ mr: 2 }}
+              >
+                Resetear Filtros
+              </Button>
+              <Button
+                startIcon={<RefreshIcon />}
+                onClick={fetchTickets}
+              >
+                Actualizar
+              </Button>
             </Box>
           </Box>
           
@@ -221,44 +172,6 @@ const AdminTicketsDashboard = () => {
             Revisión y gestión de incidencias de usuarios
           </Typography>
 
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
-            {statusFilter !== 'all' && (
-              <Chip 
-                label={`Estado: ${statusFilter}`} 
-                color="primary" 
-                variant="outlined"
-                onDelete={() => setStatusFilter('all')}
-                size="small"
-              />
-            )}
-            {startDateFilter && (
-              <Chip 
-                label={`Desde: ${formatFilterDate(startDateFilter)}`} 
-                color="primary" 
-                variant="outlined"
-                onDelete={() => setStartDateFilter('')}
-                size="small"
-              />
-            )}
-            {endDateFilter && (
-              <Chip 
-                label={`Hasta: ${formatFilterDate(endDateFilter)}`} 
-                color="primary" 
-                variant="outlined"
-                onDelete={() => setEndDateFilter('')}
-                size="small"
-              />
-            )}
-            {(statusFilter !== 'all' || startDateFilter || endDateFilter) && (
-              <Chip 
-                label="Resetear Filtros" 
-                color="secondary" 
-                onClick={resetFilters}
-                size="small"
-              />
-            )}
-          </Box>
-          
           <Divider sx={{ mb: 4 }} />
 
           {loading ? (
@@ -275,7 +188,6 @@ const AdminTicketsDashboard = () => {
             </Alert>
           ) : (
             filteredTickets.map((ticket) => {
-              console.log(ticket.reporter, ticketData);
               const user = ticketData[ticket.reporter];
               
               return (
@@ -288,11 +200,13 @@ const AdminTicketsDashboard = () => {
                     borderRadius: 2,
                     borderLeft: `4px solid ${getStatusColor(ticket.status.toLowerCase())}`,
                     transition: 'transform 0.2s, box-shadow 0.2s',
+                    cursor: 'pointer',
                     '&:hover': {
                       transform: 'translateY(-2px)',
                       boxShadow: 4
                     }
                   }}
+                  onClick={() => goToTicketDetail(ticket.id)}
                 >
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                     <Typography variant="h6" component="h3" fontWeight="500">
@@ -311,8 +225,8 @@ const AdminTicketsDashboard = () => {
                   <Box sx={{ mb: 2 }}>
                     <Typography variant="subtitle2" color="text.secondary">Usuario</Typography>
                     <Typography variant="body1" fontWeight="500">
-                    {user ? `${user.name} ${user.surname}` : 'Unknown User'}
-                  </Typography>
+                      {user ? `${user.name} ${user.surname}` : 'Usuario desconocido'}
+                    </Typography>
                   </Box>
 
                   <Box sx={{ mb: 2 }}>
@@ -327,34 +241,16 @@ const AdminTicketsDashboard = () => {
                     </Typography>
                   </Box>
 
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Typography variant="caption" display="block" color="text.secondary">
-                      <CalendarTodayIcon sx={{ fontSize: 14, mr: 0.5, verticalAlign: 'text-bottom' }} />
-                      Enviado: {formatDate(ticket.created_at)}
-                    </Typography>
-                    
-                    <Button 
-                      variant="contained" 
-                      color="primary" 
-                      size="small"
-                      onClick={() => {
-                        setShowDialog(true);
-                        setEditingTicketId(ticket.id);
-                        setNewStatus(ticket.status);
-                      }}
-                      sx={{ fontWeight: 500, textTransform: 'none' }}
-                    >
-                      Actualizar estado
-                    </Button>
-                  </Box>
+                  <Typography variant="caption" display="block" color="text.secondary">
+                    <CalendarTodayIcon sx={{ fontSize: 14, mr: 0.5, verticalAlign: 'text-bottom' }} />
+                    Enviado: {formatDate(ticket.created_at)}
+                  </Typography>
                 </Paper>
               );
             })
           )}
         </Paper>
       </Container>
-
-      {/* Dialogs for updating status and filters remain unchanged */}
     </Box>
   );
 };
