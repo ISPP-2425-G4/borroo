@@ -5,6 +5,7 @@ import axios from "axios";
 import { Box, Typography, List, ListItem, ListItemText, Paper, TextField, Button, Divider, Avatar, Badge, Tooltip } from "@mui/material";
 import { es } from "date-fns/locale";
 import { format } from "date-fns";
+import { ArrowBack } from "@mui/icons-material";
 
 const Messages = () => {
     const [conversations, setConversations] = useState([]);
@@ -182,13 +183,14 @@ const Messages = () => {
 
                 {/* Lista de conversaciones */}
                 <Paper sx={{ 
-                    width: 320, 
+                    width: { xs: '100%', sm: 320 },
                     padding: 2, 
                     marginRight: 2,
                     maxHeight: "82vh", 
                     overflowY: "auto", 
                     borderRadius: 3, 
-                    boxShadow: 3
+                    boxShadow: 3,
+                    display: { xs: selectedConversation ? "none" : "block", md: "block" } // Ocultar en móviles
                 }}>
                     <Typography variant="h6" sx={{ mb: 2, textAlign: "center", fontWeight: "bold" }}>
                         Conversaciones
@@ -242,19 +244,57 @@ const Messages = () => {
                 </Paper>
 
                 {/* Chat */}
-                <Paper sx={{ flexGrow: 1, display: "flex", flexDirection: "column", padding: 3, borderRadius: 3, boxShadow: 3, maxHeight: "80vh", }}>
+                <Paper
+                    sx={{
+                        flexGrow: 1,
+                        display: { xs: selectedConversation ? "flex" : "none", md: "flex" }, // En móviles, solo muestra el chat si hay una conversación seleccionada
+                        flexDirection: "column",
+                        padding: 3,
+                        borderRadius: 3,
+                        boxShadow: 3,
+                        maxHeight: "80vh",
+                    }}
+                >
                     {selectedConversation ? (
                         <>
                             {/* Encabezado del chat con el otro usuario */}
                             {otherUser && (
                                 <Box 
-                                    sx={{ display: "flex", alignItems: "center", mb: 2, padding: 2, bgcolor: "white", borderRadius: 2, boxShadow: 2,  cursor: "pointer" }}
+                                    sx={{ 
+                                        display: "flex", 
+                                        alignItems: "center", 
+                                        mb: 2, 
+                                        padding: 2, 
+                                        bgcolor: "white", 
+                                        borderRadius: 2, 
+                                        boxShadow: 2,
+                                        cursor: "pointer",
+                                        position: "relative"
+                                    }}
                                     onClick={() => navigate(`/perfil/${otherUser.username}`)}
                                 >
-                                    <Avatar src={otherUser.image} sx={{ width: 40, height: 40, mr: 2 }} />
+                                    {/* Flecha de retroceso SOLO en pantallas pequeñas */}
+                                    <ArrowBack
+                                        onClick={(e) => {
+                                            e.stopPropagation(); // Evita que se dispare el onClick del contenedor
+                                            setSelectedConversation(null);
+                                        }}
+                                        sx={{
+                                            display: { xs: "block", md: "none" },
+                                            position: "absolute",
+                                            left: 8,
+                                            top: "50%",
+                                            transform: "translateY(-50%)",
+                                            cursor: "pointer",
+                                            color: "gray"
+                                        }}
+                                    />
+                                    <Box sx={{ display: "flex", alignItems: "center", pl: { xs: 4, md: 0 } }}>
+                                        <Avatar src={otherUser.image} sx={{ width: 40, height: 40, mr: 2 }} />
                                         <Typography variant="h6">
-                                                {otherUser.username}
+                                            {otherUser.username}
                                         </Typography>
+                                    </Box>
                                 </Box>
                             )}
 
