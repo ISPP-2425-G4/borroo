@@ -66,7 +66,7 @@ Este documento detalla la estrategia de monetización propuesta para la aplicaci
 
 La propuesta de valor de Borro se centra en ofrecer una solución centralizada, segura y conveniente para el alquiler temporal de objetos y la solicitud de los mismos. Aunque un usuario podría intentar buscar objetos en otras plataformas o pedir prestado a conocidos, Borro ofrece ventajas significativas que justifican su uso y el modelo de comisiones:
 
-1.  **Conveniencia y Ahorro:** Acceder a objetos específicos (herramientas, equipo deportivo, cámaras, disfraces, etc.) solo cuando se necesitan, sin incurrir en el costo total de compra ni en el problema de almacenamiento. Esto es especialmente valioso para usos puntuales o esporádicos, como reflejan los perfiles de usuario (Álvaro, Carmen, Diego, Lucía).
+1.  **Conveniencia y Ahorro:** Acceder a objetos específicos (herramientas, equipo deportivo, cámaras, disfraces, etc.) solo cuando se necesitan, sin incurrir en el costo total de compra ni en el problema de almacenamiento. Esto es especialmente valioso para usos puntuales o esporádicos, como reflejan los perfiles de usuario.
 2.  **Generación de Ingresos:** Permite a los propietarios monetizar activos que de otro modo estarían parados, generando ingresos extra con poco esfuerzo.
 3.  **Amplia Selección y Descubrimiento:** Facilita encontrar una variedad de objetos disponibles en la comunidad local, superando las limitaciones de la red personal de contactos.
 4.  **Funcionalidad de Solicitud:** Una característica distintiva es la posibilidad de publicar una necesidad ("Necesito alquilar X objeto para tal fecha"). Esto invierte el flujo, permitiendo a los propietarios responder a demandas existentes.
@@ -154,7 +154,6 @@ Con estas estimaciones conservadoras, los ingresos de los dos primeros años (�
 
 ## 6. Bibliografía
 
-*Para esta versión inicial, no se han consultado fuentes externas específicas más allá del material proporcionado (ejemplo Eventbride y personas). Se recomienda consultar estudios sobre:*
 * [1] Estudios de mercado sobre la economía colaborativa (Sharing Economy) en España.
 * [2] Análisis de modelos de comisiones en plataformas P2P similares (Wallapop, Vinted, Airbnb, Getaround).
 * [3] Datos sobre el mercado potencial de alquiler de objetos específicos (herramientas, equipos deportivos, etc.) en el área de Sevilla.
