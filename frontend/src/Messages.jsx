@@ -183,7 +183,7 @@ const Messages = () => {
 
                 {/* Lista de conversaciones */}
                 <Paper sx={{ 
-                    width: { xs: '100%', sm: 320 },
+                    width: { xs: '100%', sm: '100%', md: '20%' },
                     padding: 2, 
                     marginRight: 2,
                     maxHeight: "82vh", 
