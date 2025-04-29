@@ -128,7 +128,12 @@ class TicketViewSet(viewsets.ModelViewSet):
         # Validar que el nuevo estado sea válido
         if new_status not in TicketStatus.values:
             return Response(
-                {"error": f"Estado inválido. Los valores permitidos son: {TicketStatus.values}"},
+                {
+                    "error": (
+                        f"Estado inválido. Los valores permitidos son: "
+                        f"{TicketStatus.values}"
+                    )
+                },
                 status=status.HTTP_400_BAD_REQUEST
             )
 
