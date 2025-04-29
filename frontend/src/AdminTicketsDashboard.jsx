@@ -59,7 +59,12 @@ const AdminTicketsDashboard = () => {
           try {
             const userResponse = await axios.get(
               `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${userId}`,
-              { headers: { "Content-Type": "application/json" } }
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              }
             );
             if (userResponse.data) {
               userData[userId] = userResponse.data;
