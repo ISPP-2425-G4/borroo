@@ -1,11 +1,20 @@
 from .models import Ticket, TicketStatus
 from .serializers import TicketSerializer
+from rest_framework.generics import RetrieveAPIView
 from rest_framework import status, filters, viewsets
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.models import Q
 from django.utils.timezone import now
 from rest_framework.views import APIView
 from .models import TicketImage
+
+
+class TicketDetailView(RetrieveAPIView):
+    queryset = Ticket.objects.all()
+    serializer_class = TicketSerializer
+    lookup_field = 'id'  # Busca por el campo 'id'
 
 
 # Create your views here.
@@ -110,6 +119,29 @@ class TicketViewSet(viewsets.ModelViewSet):
             {"detail": "Incidencia eliminada exitosamente."},
             status=status.HTTP_204_NO_CONTENT
         )
+
+    @action(detail=True, methods=['put'], permission_classes=[IsAuthenticated])
+    def update_status(self, request, pk=None):
+        ticket = self.get_object()
+        new_status = request.data.get('status')
+
+        # Validar que el nuevo estado sea válido
+        if new_status not in TicketStatus.values:
+            return Response(
+                {"error": f"Estado inválido. Los valores permitidos son: {TicketStatus.values}"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Actualizar el estado y el manager si es necesario
+        ticket.status = new_status
+        if new_status == TicketStatus.IN_PROGRESS:
+            ticket.manager = request.user
+        if new_status == TicketStatus.RESOLVED:
+            ticket.closed_at = now()
+
+        ticket.save()
+        serializer = self.get_serializer(ticket)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class TicketImageView(APIView):
