@@ -53,7 +53,7 @@ const AdminTicketsDashboard = () => {
         userIds.add(ticket.reporter);
       });
 
-      const userData = {};
+      const userData = new Map();
       await Promise.all(
         [...userIds].map(async (userId) => {
           try {
@@ -67,7 +67,7 @@ const AdminTicketsDashboard = () => {
               }
             );
             if (userResponse.data) {
-              userData[userId] = userResponse.data;
+              userData.set(userId, userResponse.data);
             }
           } catch (err) {
             console.error(`Error al obtener el usuario ${userId}:`, err);
@@ -193,7 +193,7 @@ const AdminTicketsDashboard = () => {
             </Alert>
           ) : (
             filteredTickets.map((ticket) => {
-              const user = ticketData[ticket.reporter];
+              const user = ticketData.get(ticket.reporter);
               
               return (
                 <Paper 
