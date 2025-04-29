@@ -37,9 +37,15 @@ urlpatterns = [
          process_pending_confirmations,
          name='process_pending_confirmations',
      ),
-     path('pay_with_saldo/<int:user_id>/',
-          pay_subscrition_with_balance),
-     path('withdraw_saldo/<int:user_id>/',
-          withdraw_saldo),
+     path(
+        'pay_with_saldo/<int:user_id>/',
+        pay_subscrition_with_balance,
+        name='pay_with_saldo'
+     ),
+     path(
+        'withdraw_saldo/<int:user_id>/',
+        withdraw_saldo,
+        name='withdraw_saldo'
+     ),
 
 ]
