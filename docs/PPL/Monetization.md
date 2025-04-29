@@ -1,4 +1,4 @@
-# Monetización de la aplicación Borro
+# Monetización de la aplicación Borroo
 ## Ingeniería del Software y Práctica Profesional (ISPP)
 
 ![](../imagenes/borrooLogo.png) 
@@ -34,7 +34,7 @@
 
 | Fecha      | Versión | Descripción                                                       | Entrega | Contribuyente(s)        |
 | :--------- | :------ | :---------------------------------------------------------------- | :------ | :---------------------- |
-| 29/04/2025 | 1.0     | Creación inicial del documento de monetización para Borro         | PPL     | Basado en prompt de usuario |
+| 29/04/2025 | 1.0     | Creación inicial del documento de monetización para Borro         | PPL     | Alexander Picón |
 |            |         |                                                                   |         |                         |
 
 ## Contenido
