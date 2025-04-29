@@ -63,7 +63,7 @@ class TestAdminOperations:
             category="technology",
             subcategory="computers",
             cancel_type="flexible",
-            price_category="month",  # Cambiado a month
+            price_category="month",
             price=Decimal("10.00"),
             deposit=Decimal("5.00"),
             user=admin_user
@@ -75,8 +75,8 @@ class TestAdminOperations:
         return Rent.objects.create(
             item=item,
             renter=admin_user,
-            start_date=datetime(2025, 4, 1),  # Primer día del mes
-            end_date=datetime(2025, 4, 30),   # Último día del mes (30 días)
+            start_date=datetime(2025, 4, 1),
+            end_date=datetime(2025, 4, 30),
             rent_status="requested",
             payment_status="pending",
             total_price=300.00,
