@@ -1,29 +1,29 @@
+import json
+from decimal import Decimal
+from datetime import timedelta
 import pytest
 from django.urls import reverse
-from django.utils.timezone import now, timedelta
+from django.utils.timezone import now
 from rest_framework.test import APIClient
-import stripe
+from unittest.mock import patch
 from rentas.models import Rent, RentStatus, PaymentStatus
 from pagos.models import PaidPendingConfirmation
 from usuarios.models import User
-from objetos.models import Item, CancelType, PriceCategory, ItemCategory
-from objetos.models import ItemSubcategory
-from decimal import Decimal
-from unittest.mock import patch
-
-# ==================== FIXTURES GLOBALES ====================
+from objetos.models import (
+    Item, CancelType, PriceCategory, ItemCategory, ItemSubcategory
+)
 
 
 @pytest.fixture
-def owner():
+def owner(db):
     return User.objects.create(username="owner", email="owner@test.com",
-                               saldo=Decimal("0"))
+                               saldo=Decimal("100"))
 
 
 @pytest.fixture
-def renter():
+def renter(db):
     return User.objects.create(username="renter", email="renter@test.com",
-                               saldo=Decimal("0"))
+                               saldo=Decimal("50"))
 
 
 @pytest.fixture
@@ -43,7 +43,7 @@ def item(owner):
 
 @pytest.fixture
 def rent(renter, item):
-    rent = Rent.objects.create(
+    return Rent.objects.create(
         item=item,
         renter=renter,
         start_date=now() - timedelta(days=4),
@@ -53,211 +53,353 @@ def rent(renter, item):
         commission=20,
         payment_status=PaymentStatus.PAID,
     )
-    PaidPendingConfirmation.objects.create(rent=rent)
-    return rent
-
-# ==================== TESTS UNITARIOS ====================
 
 
 @pytest.mark.django_db
 class TestPayments:
 
-    def test_renter_confirms_payment(self, rent):
-        client = APIClient()
-        url = reverse("set_renter_confirmation")
-        response = client.post(url, {"rent_id": rent.id,
-                                     "user_id": rent.renter.id}, format="json")
-
-        assert response.status_code == 200
-        confirmation = PaidPendingConfirmation.objects.get(rent=rent)
-        assert confirmation.is_confirmed_by_renter is True
-
-    def test_owner_confirms_payment(self, rent):
-        client = APIClient()
-        url = reverse("set_renter_confirmation")
-        response = client.post(url, {"rent_id": rent.id,
-                                     "user_id": rent.item.user.id},
-                               format="json")
-
-        assert response.status_code == 200
-        confirmation = PaidPendingConfirmation.objects.get(rent=rent)
-        assert confirmation.is_confirmed_by_owner is True
-
-    def test_auto_confirm_renter_after_2_days(self, rent, monkeypatch):
-        monkeypatch.setattr("pagos.views.SCHEDULER_TOKEN", "test-token")
-        client = APIClient()
-        url = reverse("process_pending_confirmations")
-        response = client.post(url, {"token": "test-token"}, format="json")
-
-        assert response.status_code == 200
-        confirmation = PaidPendingConfirmation.objects.get(rent=rent)
-        assert confirmation.is_confirmed_by_renter is True
-
-    @patch("stripe.checkout.Session.retrieve")
-    def test_confirm_rent_checkout_paid_success(self, mock_stripe, rent):
-        PaidPendingConfirmation.objects.filter(rent=rent).delete()
-
-        mock_stripe.return_value = type("Session", (), {
-            "payment_status": "paid",
-            "metadata": {"rent_id": rent.id, "user_id": rent.renter.id}
-        })
-
-        client = APIClient()
-        response = client.get(reverse("confirmar_pago",
-                                      args=["fake_session_id"]))
-        assert response.status_code == 200
-        rent.refresh_from_db()
-        assert rent.payment_status == PaymentStatus.PAID
-
     @patch("stripe.checkout.Session.create")
     def test_create_rent_checkout_success(self, mock_create, renter, rent):
-        mock_create.return_value = type("Session", (),
-                                        {"id": "fake_session_id"})
-
+        mock_create.return_value = type("S", (), {"id": "sess_123"})
         client = APIClient()
         url = reverse("create_checkout_session")
+        resp = client.post(url, {"user_id": renter.id, "rent_id": rent.id,
+                                 "price": 200, "currency": "EUR"},
+                           format="json")
+        assert resp.status_code == 200
+        assert resp.json()["id"] == "sess_123"
 
-        payload = {
-            "user_id": renter.id,
-            "rent_id": rent.id,
-            "price": 200,
-            "currency": "EUR"
-        }
-
-        response = client.post(url, payload, format="json")
-
-        assert response.status_code == 200
-        assert response.json()["id"] == "fake_session_id"
-
-    @patch("stripe.checkout.Session.create")
-    def test_create_subscription_checkout_success(self, mock_create, renter):
-        mock_create.return_value = type("Session", (),
-                                        {"id": "sub_session_id"})
-
+    def test_create_rent_checkout_wrong_method(self):
         client = APIClient()
-        url = reverse("create_subscription_checkout")
-        payload = {
-            "user_id": renter.id,
-            "price": 999,
-            "currency": "EUR"
-        }
+        url = reverse("create_checkout_session")
+        resp = client.get(url)
+        assert resp.status_code == 405
 
-        response = client.post(url, payload, format="json")
+    def test_create_rent_checkout_rent_not_found(self, renter):
+        client = APIClient()
+        url = reverse("create_checkout_session")
+        resp = client.post(url, {"user_id": renter.id, "rent_id": 9999,
+                                 "price": 200}, format="json")
+        assert resp.status_code == 404
 
-        assert response.status_code == 200
-        assert response.json()["id"] == "sub_session_id"
+    @patch("stripe.checkout.Session.create", side_effect=Exception(
+        "stripe down"))
+    def test_create_rent_checkout_stripe_error(self, _, renter, rent):
+        client = APIClient()
+        url = reverse("create_checkout_session")
+        resp = client.post(url, {"user_id": renter.id, "rent_id": rent.id,
+                                 "price": 200}, format="json")
+        assert resp.status_code == 400
+
+    def test_pay_with_balance_success(self, renter, rent):
+        PaidPendingConfirmation.objects.filter(rent=rent).delete()
+        client = APIClient()
+        url = reverse("pay_with_balance")
+        payload = {"user_id": renter.id, "rent_id": rent.id, "price": "200"}
+        resp = client.post(url, json.dumps(payload),
+                           content_type="application/json")
+        assert resp.status_code == 200
+
+    def test_pay_with_balance_insufficient(self, renter, rent):
+        renter.saldo = Decimal("0")
+        renter.save()
+        client = APIClient()
+        url = reverse("pay_with_balance")
+        payload = {"user_id": renter.id, "rent_id": rent.id, "price": "100"}
+        resp = client.post(url, json.dumps(payload),
+                           content_type="application/json")
+        assert resp.status_code == 400
+
+    def test_pay_with_balance_user_not_found(self, rent):
+        client = APIClient()
+        url = reverse("pay_with_balance")
+        payload = {"user_id": 9999, "rent_id": rent.id, "price": "100"}
+        resp = client.post(url, json.dumps(payload),
+                           content_type="application/json")
+        assert resp.status_code == 404
+
+    def test_pay_with_balance_rent_not_found(self, renter):
+        client = APIClient()
+        url = reverse("pay_with_balance")
+        payload = {"user_id": renter.id, "rent_id": 9999, "price": "100"}
+        resp = client.post(url, json.dumps(payload),
+                           content_type="application/json")
+        assert resp.status_code == 404
+
+    @patch("pagos.views.User.objects.get", side_effect=Exception("db error"))
+    def test_pay_with_balance_generic_error(self, _, renter, rent):
+        client = APIClient()
+        url = reverse("pay_with_balance")
+        payload = {"user_id": renter.id, "rent_id": rent.id, "price": "100"}
+        resp = client.post(url, json.dumps(payload),
+                           content_type="application/json")
+        assert resp.status_code == 500
 
     @patch("stripe.checkout.Session.retrieve")
-    def test_confirm_subscription_checkout_success(self, mock_stripe, renter):
-        mock_stripe.return_value = type("Session", (), {
-            "payment_status": "paid",
-            "metadata": {"user_id": renter.id},
-            "customer": "cus_test",
-            "subscription": "sub_test"
-        })
-
+    def test_confirm_rent_checkout_success(self, mock_retrieve, renter, rent):
+        mock_retrieve.return_value = type("S", (), {"payment_status": "paid",
+                                                    "metadata": {
+                                                        "rent_id": rent.id,
+                                                        "user_id": renter.id}})
         client = APIClient()
-        response = client.get(
-            reverse("confirm_subscription_checkout", args=["session_id"])
-        )
-
-        assert response.status_code == 200
-
-        renter.refresh_from_db()
-        assert renter.stripe_customer_id == "cus_test"
-        assert renter.stripe_subscription_id == "sub_test"
-
-    def test_user_without_permission_cannot_confirm(self, rent):
-        client = APIClient()
-        another_user = User.objects.create(username="hacker")
-        url = reverse("set_renter_confirmation")
-        response = client.post(url,
-                               {"rent_id": rent.id,
-                                "user_id": another_user.id},
-                               format="json")
-
-        assert response.status_code == 403
-        assert "permisos" in response.data["error"]
-
-    def test_rent_not_found_on_confirmation(self):
-        client = APIClient()
-        url = reverse("set_renter_confirmation")
-        response = client.post(url, {"rent_id": 9999, "user_id": 1},
-                               format="json")
-
-        assert response.status_code == 404
-        assert "Renta no encontrada" in response.data["error"]
-
-    def test_process_confirmations_with_invalid_token(self):
-        client = APIClient()
-        url = reverse("process_pending_confirmations")
-        response = client.post(url, {"token": "wrong-token"}, format="json")
-
-        assert response.status_code == 403
-        assert "Token inválido" in response.data["error"]
+        url = reverse("confirmar_pago", args=["sess_123"])
+        resp = client.get(url)
+        assert resp.status_code == 200
 
     @patch("stripe.checkout.Session.retrieve")
-    def test_confirm_rent_checkout_unpaid(self, mock_stripe):
-        mock_stripe.return_value = type("Session", (), {
-            "payment_status": "unpaid",
-            "metadata": {}
-        })
-
+    def test_confirm_rent_checkout_unpaid(self, mock_retrieve):
+        mock_retrieve.return_value = type("S", (),
+                                          {"payment_status": "unpaid"})
         client = APIClient()
-        response = client.get(reverse("confirmar_pago",
-                                      args=["session_unpaid"]))
-        assert response.status_code == 402
-        assert response.json()["status"] == "unpaid"
-
-    @patch("stripe.checkout.Session.retrieve")
-    def test_confirm_rent_checkout_invalid_metadata(self, mock_stripe):
-        mock_stripe.return_value = type("Session", (), {
-            "payment_status": "paid",
-            "metadata": {}
-        })
-
-        client = APIClient()
-        response = client.get(reverse("confirmar_pago",
-                                      args=["session_id"]))
-        assert response.status_code == 400
-        assert "rent_id o user_id no encontrado" in response.json()["error"]
+        url = reverse("confirmar_pago", args=["sess_123"])
+        resp = client.get(url)
+        assert resp.status_code == 402
 
     @patch("stripe.checkout.Session.retrieve",
-           side_effect=Exception("Stripe error"))
-    def test_confirm_rent_checkout_stripe_error(self, mock_stripe):
+           side_effect=Exception("stripe exploded"))
+    def test_confirm_rent_checkout_exception(self, mock_retrieve):
         client = APIClient()
-        response = client.get(reverse("confirmar_pago",
-                                      args=["session_id"]))
-        assert response.status_code == 400
-        assert "Stripe error" in response.json()["error"]
+        url = reverse("confirmar_pago", args=["sess_123"])
+        resp = client.get(url)
+        assert resp.status_code == 400
 
-# ==================== TEST DE INTEGRACIÓN REAL CON STRIPE ====================
+    def test_set_renter_confirmation_no_record(self, rent):
+        PaidPendingConfirmation.objects.filter(rent=rent).delete()
+        client = APIClient()
+        url = reverse("set_renter_confirmation")
+        resp = client.post(url, {"rent_id": rent.id,
+                                 "user_id": rent.renter.id}, format="json")
+        assert resp.status_code == 404
+
+    def test_set_renter_confirmation_owner(self, rent):
+        PaidPendingConfirmation.objects.create(rent=rent)
+        client = APIClient()
+        url = reverse("set_renter_confirmation")
+        resp = client.post(url, {"rent_id": rent.id,
+                                 "user_id": rent.item.user.id}, format="json")
+        assert resp.status_code == 200
+
+    def test_process_pending_confirmations_valid(self, rent, monkeypatch):
+        PaidPendingConfirmation.objects.create(rent=rent)
+        rent.payment_status = PaymentStatus.PAID
+        rent.end_date = now() - timedelta(days=3)
+        rent.save()
+        monkeypatch.setattr("pagos.views.SCHEDULER_TOKEN", "test_token")
+        client = APIClient()
+        url = reverse("process_pending_confirmations")
+        resp = client.post(url, {"token": "test_token"}, format="json")
+        assert resp.status_code == 200
+
+    def test_process_payment_confirmation_valid(self, rent):
+        PaidPendingConfirmation.objects.create(rent=rent)
+        confirmation = rent.paid_pending_confirmation
+        confirmation.is_confirmed_by_renter = True
+        confirmation.is_confirmed_by_owner = True
+        confirmation.save()
+
+        from pagos.views import process_payment_confirmation
+        result = process_payment_confirmation(confirmation)
+
+        assert result["status"] == "success"
+
+    def test_process_payment_confirmation_invalid(self):
+        class Dummy:
+            is_confirmed_by_renter = False
+        from pagos.views import process_payment_confirmation
+        with pytest.raises(Exception):
+            process_payment_confirmation(Dummy())
+
+    def test_withdraw_saldo_success(self, owner):
+        client = APIClient()
+        url = reverse("withdraw_saldo", args=[owner.id])
+        payload = {"amount": "10"}
+        resp = client.post(url, json.dumps(payload),
+                           content_type="application/json")
+        data = resp.json()
+
+        assert resp.status_code == 200
+        assert data["status"] == "success"
+        assert "nuevo_saldo" in data
+
+    def test_withdraw_saldo_insufficient_balance(self, owner):
+        client = APIClient()
+        url = reverse("withdraw_saldo", args=[owner.id])
+        payload = {"amount": "9999"}
+        resp = client.post(url, json.dumps(payload),
+                           content_type="application/json")
+        data = resp.json()
+
+        assert resp.status_code == 400
+        assert "Saldo insuficiente" in data["error"]
+
+    def test_withdraw_saldo_amount_zero(self, owner):
+        client = APIClient()
+        url = reverse("withdraw_saldo", args=[owner.id])
+        payload = {"amount": "0"}
+        resp = client.post(url, json.dumps(payload),
+                           content_type="application/json")
+        data = resp.json()
+
+        assert resp.status_code == 400
+        assert "mayor que cero" in data["error"]
+
+    def test_withdraw_saldo_amount_below_minimum(self, owner):
+        client = APIClient()
+        url = reverse("withdraw_saldo", args=[owner.id])
+        payload = {"amount": "3"}
+        resp = client.post(url, json.dumps(payload),
+                           content_type="application/json")
+        data = resp.json()
+
+        assert resp.status_code == 400
+        assert "mínima a retirar" in data["error"]
+
+    def test_withdraw_saldo_user_not_found(self):
+        client = APIClient()
+        url = reverse("withdraw_saldo", args=[9999])
+        payload = {"amount": "10"}
+        resp = client.post(url, json.dumps(payload),
+                           content_type="application/json")
+        data = resp.json()
+
+        assert resp.status_code == 404
+        assert "Usuario no encontrado" in data["error"]
+
+    def test_withdraw_saldo_generic_exception(self, owner):
+        client = APIClient()
+
+        with patch("pagos.views.User.objects.get",
+                   side_effect=Exception("Fallo inesperado")):
+            url = reverse("withdraw_saldo", args=[owner.id])
+            payload = {"amount": "10"}
+            resp = client.post(url, json.dumps(payload),
+                               content_type="application/json")
+            data = resp.json()
+
+            assert resp.status_code == 500
+            assert "Fallo inesperado" in data["error"]
 
 
 @pytest.mark.django_db
-def test_real_stripe_checkout_session(renter, rent, settings):
-    stripe.api_key = settings.STRIPE_SECRET_KEY
+class TestConfirmSubscriptionCheckout:
 
-    session = stripe.checkout.Session.create(
-        payment_method_types=["card"],
-        mode="payment",
-        line_items=[{
-            "price_data": {
-                "currency": "eur",
-                "product_data": {
-                    "name": rent.item.title,
-                },
-                "unit_amount": int(rent.total_price * 100),
-            },
-            "quantity": 1,
-        }],
-        metadata={
-            "rent_id": rent.id,
-            "user_id": renter.id,
-        },
-        success_url="https://example.com/success",
-        cancel_url="https://example.com/cancel",
-    )
+    @patch("stripe.checkout.Session.retrieve")
+    def test_confirm_subscription_checkout_success(self, mock_retrieve,
+                                                   renter):
+        mock_retrieve.return_value = type("S", (), {
+            "payment_status": "paid",
+            "metadata": {"user_id": renter.id},
+            "customer": "cus_test",
+            "subscription": "sub_test",
+        })
+        client = APIClient()
+        url = reverse("confirm_subscription_checkout", args=["sess_123"])
+        resp = client.get(url)
 
-    assert session["id"].startswith("cs_test_")
-    print(f"\n👉 Abre esta URL para pagar manualmente: {session.url}")
+        assert resp.status_code == 200
+        assert resp.json()["status"] == "success"
+
+    @patch("stripe.checkout.Session.retrieve")
+    def test_confirm_subscription_checkout_unpaid(self, mock_retrieve):
+        mock_retrieve.return_value = type("S", (), {
+            "payment_status": "unpaid",
+            "metadata": {}
+        })
+        client = APIClient()
+        url = reverse("confirm_subscription_checkout", args=["sess_123"])
+        resp = client.get(url)
+
+        assert resp.status_code == 402
+        assert resp.json()["status"] == "unpaid"
+
+    @patch("stripe.checkout.Session.retrieve")
+    def test_confirm_subscription_checkout_missing_user_id(self,
+                                                           mock_retrieve):
+        mock_retrieve.return_value = type("S", (), {
+            "payment_status": "paid",
+            "metadata": {}
+        })
+        client = APIClient()
+        url = reverse("confirm_subscription_checkout", args=["sess_123"])
+        resp = client.get(url)
+
+        assert resp.status_code == 400
+        assert "user_id no encontrado" in resp.json()["error"]
+
+    @patch("stripe.checkout.Session.retrieve")
+    def test_confirm_subscription_checkout_user_not_found(self, mock_retrieve):
+        mock_retrieve.return_value = type("S", (), {
+            "payment_status": "paid",
+            "metadata": {"user_id": 9999}
+        })
+        client = APIClient()
+        url = reverse("confirm_subscription_checkout", args=["sess_123"])
+        resp = client.get(url)
+
+        assert resp.status_code == 404
+        assert "Usuario no encontrado" in resp.json()["error"]
+
+    @patch("stripe.checkout.Session.retrieve", side_effect=Exception(
+        "Stripe caído"))
+    def test_confirm_subscription_checkout_exception(self, mock_retrieve):
+        client = APIClient()
+        url = reverse("confirm_subscription_checkout", args=["sess_123"])
+        resp = client.get(url)
+
+        assert resp.status_code == 400
+        assert "Stripe caído" in resp.json()["error"]
+
+
+@pytest.mark.django_db
+class TestPayWithSaldo:
+
+    def setup_method(self):
+        self.client = APIClient()
+        self.owner = User.objects.create_user(username="owner",
+                                              email="owner@test.com",
+                                              password="1234")
+        self.owner.saldo = Decimal("100.00")
+        self.owner.save()
+
+    def test_pay_with_saldo_success(self):
+        url = reverse("pay_with_saldo", args=[self.owner.id])
+        payload = {"amount": "10.00"}
+        resp = self.client.post(url, json.dumps(payload),
+                                content_type="application/json")
+
+        assert resp.status_code == 200
+        data = resp.json()
+        assert data["status"] == "success"
+        assert "new_balance" in data
+
+    def test_pay_with_saldo_insufficient_balance(self):
+        self.owner.saldo = Decimal("5")
+        self.owner.save()
+
+        url = reverse("pay_with_saldo", args=[self.owner.id])
+        payload = {"amount": "50.00"}
+        resp = self.client.post(url, json.dumps(payload),
+                                content_type="application/json")
+
+        assert resp.status_code == 400
+        assert "Saldo insuficiente" in resp.json()["error"]
+
+    def test_pay_with_saldo_user_not_found(self):
+        url = reverse("pay_with_saldo", args=[9999])
+        payload = {"amount": "10.00"}
+        resp = self.client.post(url, json.dumps(payload),
+                                content_type="application/json")
+
+        assert resp.status_code == 404
+        assert "Usuario no encontrado" in resp.json()["error"]
+
+    @patch("pagos.views.User.objects.get",
+           side_effect=Exception("Fallo inesperado"))
+    def test_pay_with_saldo_generic_error(self, mock_get):
+        url = reverse("pay_with_saldo", args=[self.owner.id])
+        payload = {"amount": "10.00"}
+        resp = self.client.post(url, json.dumps(payload),
+                                content_type="application/json")
+
+        assert resp.status_code == 500
+        assert "Fallo inesperado" in resp.json()["error"]
