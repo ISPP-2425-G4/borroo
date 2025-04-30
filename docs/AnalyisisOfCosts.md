@@ -1,8 +1,47 @@
-Análisis de Costes del Proyecto Borroo
+<div align=center>
 
-**Fecha:** 30 de Abril de 2025
+# BORROO
 
-**Proyecto:** Borroo (Aplicación web de alquiler P2P de objetos)
+![](../imagenes/borrooLogo.png)
+
+## Análisis de Costes
+
+### PPL – G4
+
+**Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
+
+**Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
+
+Fecha: 30/04/2025
+
+</div>
+
+**Miembros:**
+
+- David Blanco Mora
+- Pablo Díaz Ordóñez
+- Pablo Espinosa Naranjo
+- Jesús Fernández Rodríguez
+- Francisco Fernández Mota
+- Javier García Rodríguez
+- Miguel González Ortiz
+- Álvaro Martín Muñoz
+- Ignacio Naredo Bernardos
+- Javier Nieto Vicioso
+- Marco Padilla Gómez
+- Miguel Palomo García
+- Luis Javier Periáñez Franco
+- Alexander Picón Garrote
+- Santiago Rosado Raya
+- Julia Sánchez Márquez
+- Alejandro Sevillano Barea
+
+## **Histórico de modificaciones**
+
+| Fecha      | Versión | Realizada por           | Descripción de los cambios |
+| ---------- | ------- | ----------------------- | -------------------------- |
+| 30-04-2025 | v1.0    | Alexander Picón         | Creación del documento     |
+
 
 ### 1. Resumen de Costes
 
