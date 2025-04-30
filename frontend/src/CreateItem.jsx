@@ -616,7 +616,7 @@ const CreateItemScreen = () => {
                     {options.cancel_types.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
                   </StyledSelect>
                 </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'flex-end', sm: 'initial'}, pt: { xs: 1, sm: 0 }, }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'flex-start', sm: 'initial'}, pt: { xs: 1, sm: 0 },  }}>
                   <CancelPolicyTooltip />
                 </Box>
               </Stack>
@@ -645,7 +645,7 @@ const CreateItemScreen = () => {
                   <InputIcon><FiDollarSign /></InputIcon>
                   <StyledInput type="number" inputMode="decimal" step="0.01" min="0" name="deposit" placeholder="Fianza (0 si no aplica)" value={formData.deposit} onChange={handleChange} error={!!fieldErrors.deposit} required />
                 </Box>
-                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'flex-end', sm: 'initial'}, pt: { xs: 1, sm: 0 } }}>
+                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'flex-start', sm: 'initial'}, pt: { xs: 1, sm: 0 } }}>
                   <DepositToolTip />
                 </Box>
               </Stack>
