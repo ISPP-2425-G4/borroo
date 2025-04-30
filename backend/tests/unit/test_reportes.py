@@ -12,7 +12,7 @@ from tickets.models import Ticket, TicketStatus, TicketImage
 from tickets.serializers import TicketSerializer
 from objetos.models import Item, ItemCategory, CancelType, PriceCategory
 from rentas.models import Rent
-from pagos.models import PaidPendingConfirmation  # Import necesario
+from pagos.models import PaidPendingConfirmation
 
 
 @pytest.fixture
@@ -88,9 +88,11 @@ def test_create_ticket_success(client, customer, rent_with_confirmation):
     assert TicketImage.objects.filter(ticket=ticket).exists()
 
 
-def test_admin_resolves_ticket_success(client, admin, customer, rent_with_confirmation):
+def test_admin_resolves_ticket_success(client, admin, customer,
+                                       rent_with_confirmation):
     client.force_authenticate(user=customer)
-    create_url = reverse("new_ticket", kwargs={"rentId": rent_with_confirmation.pk})
+    create_url = reverse("new_ticket",
+                         kwargs={"rentId": rent_with_confirmation.pk})
     client.post(create_url,
                 data={"description": "Pantalla rota",
                       "image_files": [make_img()]},
@@ -113,7 +115,8 @@ def test_admin_resolves_ticket_success(client, admin, customer, rent_with_confir
 
 
 # Casos NEGATIVOS
-def test_create_ticket_without_images_error(client, customer, rent_with_confirmation):
+def test_create_ticket_without_images_error(client, customer,
+                                            rent_with_confirmation):
     client.force_authenticate(user=customer)
     url = reverse("new_ticket", kwargs={"rentId": rent_with_confirmation.pk})
     resp = client.post(url, data={"description": "Sin fotos"},
@@ -162,9 +165,11 @@ def test_duplicate_ticket_error(client, customer, rent_with_confirmation):
     assert "ticket" in resp.data
 
 
-def test_non_admin_cannot_change_status_error(client, customer, rent_with_confirmation):
+def test_non_admin_cannot_change_status_error(client, customer,
+                                              rent_with_confirmation):
     client.force_authenticate(user=customer)
-    create_url = reverse("new_ticket", kwargs={"rentId": rent_with_confirmation.pk})
+    create_url = reverse("new_ticket",
+                         kwargs={"rentId": rent_with_confirmation.pk})
     res_create = client.post(create_url,
                              data={"description": "Algo",
                                    "image_files": [make_img()]},
@@ -194,9 +199,11 @@ def test_unauthenticated_cannot_create_ticket(client, rent_with_confirmation):
     assert resp.status_code == status.HTTP_401_UNAUTHORIZED
 
 
-def test_non_admin_delete_forbidden(client, customer, admin, rent_with_confirmation):
+def test_non_admin_delete_forbidden(client, customer, admin,
+                                    rent_with_confirmation):
     client.force_authenticate(user=customer)
-    create_url = reverse("new_ticket", kwargs={"rentId": rent_with_confirmation.pk})
+    create_url = reverse("new_ticket",
+                         kwargs={"rentId": rent_with_confirmation.pk})
     client.post(
         create_url,
         data={"description": "Del", "image_files": [make_img()]},
@@ -210,9 +217,11 @@ def test_non_admin_delete_forbidden(client, customer, admin, rent_with_confirmat
 
 
 # Casos DESTRUCTIVOS
-def test_admin_delete_ticket_destructive(client, admin, customer, rent_with_confirmation):
+def test_admin_delete_ticket_destructive(client, admin, customer,
+                                         rent_with_confirmation):
     client.force_authenticate(user=customer)
-    create_url = reverse("new_ticket", kwargs={"rentId": rent_with_confirmation.pk})
+    create_url = reverse("new_ticket",
+                         kwargs={"rentId": rent_with_confirmation.pk})
     client.post(
         create_url,
         data={"description": "Eliminarme", "image_files": [make_img()]},
@@ -230,7 +239,8 @@ def test_admin_delete_ticket_destructive(client, admin, customer, rent_with_conf
     assert not Ticket.objects.filter(pk=ticket.pk).exists()
 
 
-def test_ticket_image_view_success_and_not_found(client, customer, rent_with_confirmation):
+def test_ticket_image_view_success_and_not_found(client, customer,
+                                                 rent_with_confirmation):
     client.force_authenticate(user=customer)
     url = reverse("new_ticket", kwargs={"rentId": rent_with_confirmation.pk})
     res = client.post(
