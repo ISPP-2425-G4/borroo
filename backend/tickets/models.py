@@ -7,6 +7,7 @@ class TicketStatus(models.TextChoices):
     PENDING = "pending", "Pending"
     IN_PROGRESS = "in_progress", "In Progress"
     RESOLVED = "resolved", "Resolved"
+    CANCELLED = "cancelled", "Cancelled"
 
 
 class Ticket(models.Model):
