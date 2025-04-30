@@ -728,8 +728,8 @@ const ShowItemScreen = () => {
             <Box sx={{ flex: '1 1 auto', minWidth: 0 }}>
               <Card elevation={2} sx={{ mb: 3 }}>
                 <CardContent sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <Avatar sx={{ width: 100, height: 100}}
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexDirection: { xs: "column", md: "row" } }}>
+                <Avatar sx={{ width: 100, height: 100}}
                     src = {userImage ? userImage : ""}
                   >
                   </Avatar>
