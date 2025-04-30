@@ -101,6 +101,9 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 | 016  | Generación de código para bug de desplegable de años (I)   | Pablo Díaz Ordóñez    | 22/04/2025 | [Ver chat](https://chatgpt.com/share/6811dee5-f074-8013-9cab-e696bf0b02fe) |
 | 017  |  Generación de código para bug de desplegable de años (II)  | Pablo Díaz Ordóñez    | 22/04/2025 | [Ver chat](https://chatgpt.com/share/6811df5b-8338-8013-ae0b-1041d69334e1) |
 | 018  |  Generación de código para bug de desplegable de años (III)  | Pablo Díaz Ordóñez    | 22/04/2025 | (No deja compartir chat por uso de imágenes del usuario) |
+| 019  |  Posicionar Tooltip en xs  | Álvaro Martín Muñoz   | 30/04/2025 | [Ver chat](https://chatgpt.com/share/68122eab-d970-800e-8cef-a5bae7735061) |
+| 020  | Centrar para pantallas pequeñas FiXCircle Icon | Álvaro Martín Muñoz | 30/04/2025 |  [Ver chat](https://claude.ai/share/2ca181d2-3d2f-4724-9b9b-ef109f7fea1c) |
+
 
 
 ------------------------------------------------------------------
@@ -120,6 +123,8 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 | 011  | Generación de documentación   | Sí   | 60 min  |
 | 015  | Información marketing YouTube   | Sí   | 30 min  |
 | 016-017-018  | Resolución de bug   | Sí   | 30 min  |
+| 019  | Frontend responsivo | Sí | 15min |
+| 020 | Ajustar icono en pantallas xs | Sí | 15min |
 
 
 
