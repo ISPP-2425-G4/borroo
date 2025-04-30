@@ -97,7 +97,10 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 
 | ID   | Uso (Descripción)       | Nombre del Miembro | Fecha       | Enlace al Chat |
 |------|-------------------------|--------------------|------------|---------------|
-
+| 015  | Información sobre aplicaciones para hacer marketing para YouTube   | Pablo Díaz Ordóñez    | 24/04/2025 | [Ver chat](https://chatgpt.com/share/6811de17-d3d8-8013-b50f-cf67c0521d7f) |
+| 016  | Generación de código para bug de desplegable de años (I)   | Pablo Díaz Ordóñez    | 22/04/2025 | [Ver chat](https://chatgpt.com/share/6811dee5-f074-8013-9cab-e696bf0b02fe) |
+| 017  |  Generación de código para bug de desplegable de años (II)  | Pablo Díaz Ordóñez    | 22/04/2025 | [Ver chat](https://chatgpt.com/share/6811df5b-8338-8013-ae0b-1041d69334e1) |
+| 018  |  Generación de código para bug de desplegable de años (III)  | Pablo Díaz Ordóñez    | 22/04/2025 | (No deja compartir chat por uso de imágenes del usuario) |
 
 
 ------------------------------------------------------------------
@@ -115,6 +118,9 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 | 009  | Generación de código | Sí   | 60 min  |
 | 010  | Resolución de errores     | Sí   | 10 min  |
 | 011  | Generación de documentación   | Sí   | 60 min  |
+| 015  | Información marketing YouTube   | Sí   | 30 min  |
+| 016-017-018  | Resolución de bug   | Sí   | 30 min  |
+
 
 
 
