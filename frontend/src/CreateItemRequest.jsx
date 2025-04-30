@@ -8,8 +8,7 @@ import CancelPolicyTooltip from "./components/CancelPolicyTooltip";
 import PublishConfirmationDialog from "./components/PublishConfirmationDialog";
 import { Box, Stack, Typography, Alert, CircularProgress, Paper, Container } from "@mui/material";
 import { styled } from "@mui/system";
-import { useTheme } from '@mui/material/styles';
- import useMediaQuery from '@mui/material/useMediaQuery';
+
 
 const FormContainer = styled(Paper)(() => ({
   padding: "2rem",
@@ -164,8 +163,8 @@ const CreateItemRequestView = () => {
   const [filteredSubcategories, setFilteredSubcategories] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  // const theme = useTheme();
+  // const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     const fetchEnums = async () => {
