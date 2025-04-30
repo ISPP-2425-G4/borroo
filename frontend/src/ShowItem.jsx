@@ -728,8 +728,8 @@ const ShowItemScreen = () => {
             <Box sx={{ flex: '1 1 auto', minWidth: 0 }}>
               <Card elevation={2} sx={{ mb: 3 }}>
                 <CardContent sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <Avatar sx={{ width: 100, height: 100}}
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexDirection: { xs: "column", md: "row" } }}>
+                <Avatar sx={{ width: 100, height: 100}}
                     src = {userImage ? userImage : ""}
                   >
                   </Avatar>
@@ -922,99 +922,131 @@ const ShowItemScreen = () => {
             }
           }}>
 
-        {priceCategory === "hour" && (
-          <div> 
-            {/* Selector de día */}
-            <Typography>Selecciona un día:</Typography>
-            <Calendar
-              date={selectedDay}
-              onChange={(date) => setSelectedDay(date)}
-              minDate={new Date()} 
-              disabledDates={[...unavailabilityPeriods.flatMap(period => {
-                const start = new Date(period.start_date);
-                const end = new Date(period.end_date);
-                const range = getDatesInRange(start, end);
-  
-                return range;
-              })]}
-            />
+{priceCategory === "hour" && (
+  <Box sx={{ width: '100%', overflowX: 'auto' }}>
+    {/* Selector de día */}
+    <Typography variant="subtitle1" gutterBottom>Selecciona un día:</Typography>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        '& .rdrCalendarWrapper': {
+          maxWidth: '100%',
+          minWidth: 'min-content',
+          fontSize: '16px',
+          border: '1px solid #e0e0e0',
+          borderRadius: 1,
+          overflow: 'hidden',
+        }
+      }}
+    >
+      <Calendar
+        date={selectedDay}
+        onChange={(date) => setSelectedDay(date)}
+        minDate={new Date()} 
+        disabledDates={[...unavailabilityPeriods.flatMap(period => {
+          const start = new Date(period.start_date);
+          const end = new Date(period.end_date);
+          const range = getDatesInRange(start, end);
+          return range;
+        })]}
+      />
+    </Box>
 
-            {/* Selector de hora de inicio */}
-            <Typography>Selecciona la hora de inicio:</Typography>
-            <select
-              value={selectedStartHour || ""}
-              onChange={(e) => {
-                const startHour = parseInt(e.target.value);
-                setSelectedStartHour(startHour);
-                setSelectedEndHour(startHour + 1); // Automáticamente una hora después
-              }}>
-              <option value="" disabled>Selecciona una hora</option>
-              {Array.from({ length: 24 }, (_, i) => (
-                <option key={i} value={i}>
-                  {i}:00
-                </option>
-              ))}
-            </select>
+    {/* Selector de hora de inicio */}
+    <Typography variant="subtitle1" gutterBottom mt={2}>Selecciona la hora de inicio:</Typography>
+    <Select
+      fullWidth
+      value={selectedStartHour !== null ? selectedStartHour : ""}
+      onChange={(e) => {
+        const startHour = parseInt(e.target.value);
+        setSelectedStartHour(startHour);
+        setSelectedEndHour(startHour + 1); // Automatiza 1h después
+      }}
+      displayEmpty
+    >
+      <MenuItem disabled value="">
+        Selecciona una hora
+      </MenuItem>
+      {Array.from({ length: 24 }, (_, i) => (
+        <MenuItem key={i} value={i}>
+          {i}:00
+        </MenuItem>
+      ))}
+    </Select>
 
-            {/* Selector de hora de fin */}
-            <Typography>Selecciona la hora de fin:</Typography>
-            <select
-              value={selectedEndHour || ""}
-              onChange={(e) => setSelectedEndHour(parseInt(e.target.value))}
-              disabled={selectedStartHour === null} // Deshabilita si no hay hora inicio
-            >
-              <option value="" disabled>Selecciona una hora</option>
-              {Array.from({ length: 24 }, (_, i) => (
-                <option key={i} value={i} disabled={i <= selectedStartHour}>
-                  {i}:00
-                </option>
-              ))}
-            </select>
-            {selectedDay && selectedStartHour !== null && selectedEndHour !== null && (
-            <Box 
-              sx={{ 
-                marginTop: 2, 
-                padding: 2, 
-                border: "1px solid #ccc", 
-                borderRadius: 4, 
-                backgroundColor: "#f9f9f9" 
-              }}
-            >
-              <Typography variant="h6">Resumen de selección:</Typography>
-              <Typography><strong>Día:</strong> {selectedDay.toLocaleDateString()}</Typography>
-              <Typography><strong>Horas:</strong> {`${selectedStartHour}:00 - ${selectedEndHour}:00`}</Typography>
-            </Box>
-            )}
-          </div>
-        )}
+    {/* Selector de hora de fin */}
+    <Typography variant="subtitle1" gutterBottom mt={2}>Selecciona la hora de fin:</Typography>
+    <Select
+      fullWidth
+      value={selectedEndHour !== null ? selectedEndHour : ""}
+      onChange={(e) => setSelectedEndHour(parseInt(e.target.value))}
+      disabled={selectedStartHour === null}
+      displayEmpty
+    >
+      <MenuItem disabled value="">
+        Selecciona una hora
+      </MenuItem>
+      {Array.from({ length: 24 }, (_, i) => (
+        <MenuItem key={i} value={i} disabled={i <= selectedStartHour}>
+          {i}:00
+        </MenuItem>
+      ))}
+    </Select>
+
+    {/* Resumen de selección */}
+    {selectedDay && selectedStartHour !== null && selectedEndHour !== null && (
+      <Box 
+        sx={{ 
+          marginTop: 3, 
+          padding: 2, 
+          border: "1px solid #ccc", 
+          borderRadius: 2, 
+          backgroundColor: "#f9f9f9" 
+        }}
+      >
+        <Typography variant="h6">Resumen de selección:</Typography>
+        <Typography><strong>Día:</strong> {selectedDay.toLocaleDateString()}</Typography>
+        <Typography><strong>Horas:</strong> {`${selectedStartHour}:00 - ${selectedEndHour}:00`}</Typography>
+      </Box>
+    )}
+  </Box>
+)}
+
 
         {priceCategory === "day" && (
-          <DateRange
-            ranges={ isOwner || !isAuthenticated ? [] : dateRange}
-            onChange={(ranges) => {
-              if (!isOwner || isAuthenticated) { setDateRange([ranges.selection]); }
-              const start = ranges.selection.startDate;
-              const end = ranges.selection.endDate;
-              if (isDateUnavailable(start) || isDateUnavailable(end)) {
-                alert("Las fechas seleccionadas no están disponibles.");
-                return;
-              }
-              // Si el usuario selecciona el mismo día como inicio y fin, establecerlo correctamente
-              if (start.toDateString() === end.toDateString()) {
-                setDateRange([{ startDate: start, endDate: start, key: "selection" }]);
-              } else {
-                setDateRange([ranges.selection]);
-              }
-            }}
-            minDate={new Date()}
-            disabledDates={[ ...bookedDates, ...unavailabilityPeriods.flatMap(period => {
-              const start = new Date(period.start_date);
-              const end = new Date(period.end_date);
-              const range = getDatesInRange(start, end);
+          <Box
+  sx={{
+    width: '100%',
+    overflowX: 'auto',
+    display: 'flex',
+    justifyContent: 'center',
+    '& .rdrCalendarWrapper': {
+      width: '100%',
+      maxWidth: '100%', // muy importante
+      minWidth: 'min-content',
+    }
+  }}
+>
+  <DateRange
+    ranges={isOwner || !isAuthenticated ? [] : dateRange}
+    onChange={(ranges) => {
+      if (!isOwner || isAuthenticated) {
+        setDateRange([ranges.selection]);
+      }
+    }}
+    minDate={new Date()}
+    disabledDates={[...bookedDates, ...unavailabilityPeriods.flatMap(period => {
+      const start = new Date(period.start_date);
+      const end = new Date(period.end_date);
+      const range = getDatesInRange(start, end);
+      return range;
+    })]}
+    showDateDisplay={false} // mejora visual en móvil
+    moveRangeOnFirstSelection={false}
+  />
+</Box>
 
-              return range;
-            })]}
-          />
         )}
 
         {priceCategory === "month" && (

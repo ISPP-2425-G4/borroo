@@ -197,11 +197,25 @@ const RentRequestBoard = () => {
                 Solicitudes de Alquiler
             </Typography>
 
-            <Tabs value={selectedTab} onChange={handleTabChange} aria-label="Solicitudes Tab" sx={{ mb: 3 }}>
-                <Tab label="Solicitudes Recibidas" />
-                <Tab label="Solicitudes Enviadas" />
-                <Tab label="Solicitudes Cerradas" />
-            </Tabs>
+            <Tabs
+    value={selectedTab}
+    onChange={handleTabChange}
+    aria-label="Solicitudes Tab"
+    variant="scrollable"          // 👈 Esto activa scroll horizontal
+    scrollButtons="auto"          // 👈 Botones aparecen cuando hace falta
+    allowScrollButtonsMobile      // 👈 Asegura scroll táctil en móvil
+    sx={{
+        mb: 3,
+        width: "100%",
+        maxWidth: 750,
+        overflowX: "auto",        // 👈 Extra seguro
+    }}
+>
+    <Tab label="Solicitudes Recibidas" />
+    <Tab label="Solicitudes Enviadas" />
+    <Tab label="Solicitudes Cerradas" />
+</Tabs>
+
 
             {loading ? (
                 <Box

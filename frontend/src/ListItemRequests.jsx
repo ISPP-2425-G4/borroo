@@ -179,16 +179,18 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
             justifyContent: 'space-between',
             alignItems: 'center',
             mb: 3,
+            flexDirection: { xs: 'column', md: 'row' },
           }}>
             <Typography variant="h4" sx={{ 
               fontWeight: 700, 
               color: 'text.primary',
-              fontSize: { xs: '1.5rem', sm: '2rem' }
+              fontSize: { xs: '1.5rem', sm: '2rem' },
+              mt:{ xs: 2, md: 0 },
             }}>
               Tablón de Anuncios
             </Typography>
 
-            <Button component={Link} to="/create_item_request" variant="contained" color="primary">
+            <Button component={Link} to="/create_item_request" variant="contained" color="primary" sx={{mt: { xs: 2, md: 0 }}}>
               Crear un anuncio
             </Button>
             
@@ -199,7 +201,8 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
               color="red"
               sx={{ 
                 display: { xs: 'flex', md: 'none' },
-                borderRadius: 2
+                borderRadius: 2,
+                mt: { xs: 2, md: 0 },
               }}
             >
               {mostrarFiltros ? "Ocultar Filtros" : "Filtros"}

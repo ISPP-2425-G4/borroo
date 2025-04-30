@@ -9,6 +9,7 @@ import PublishConfirmationDialog from "./components/PublishConfirmationDialog";
 import { Box, Stack, Typography, Alert, CircularProgress, Paper, Container } from "@mui/material";
 import { styled } from "@mui/system";
 
+
 const FormContainer = styled(Paper)(() => ({
   padding: "2rem",
   borderRadius: "10px",
@@ -16,6 +17,8 @@ const FormContainer = styled(Paper)(() => ({
   width: "100%",
   maxWidth: "800px",
   margin: "2rem auto",
+
+  
 }));
 
 const FormTitle = styled(Typography)(() => ({
@@ -31,6 +34,7 @@ const InputGroup = styled(Box)(() => ({
   alignItems: "center",
   marginBottom: "1.5rem",
   width: "100%",
+
 }));
 
 const InputIcon = styled(Box)(() => ({
@@ -40,6 +44,8 @@ const InputIcon = styled(Box)(() => ({
   fontSize: "1.2rem",
   display: "flex",
   alignItems: "center",
+  top: "50%",
+  transform: "translateY(-50%)",
 }));
 
 const StyledInput = styled("input")(({  error }) => ({
@@ -156,6 +162,9 @@ const CreateItemRequestView = () => {
   const [fetchingOptions, setFetchingOptions] = useState(true);
   const [filteredSubcategories, setFilteredSubcategories] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  // const theme = useTheme();
+  // const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     const fetchEnums = async () => {
@@ -475,8 +484,8 @@ const CreateItemRequestView = () => {
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: "#f5f7fa" }}>
       <Navbar />
-      <Container maxWidth="lg" sx={{ py: 4, mt: 8 }}>
-        <FormContainer elevation={3}>
+      <Container maxWidth="lg" sx={{ py: { xs: 2, md: 4 }, mt: { xs: 9, md: 10 }, pl:{xs:2, sm:3}, pr:{xs:5, sm:4} }}>
+        <FormContainer elevation={3} sx={{ p: { xs: 2, sm: 3 } }}>
           <FormTitle variant="h5">Crear Nuevo Anuncio</FormTitle>
           
           {errorMessage && (
@@ -565,9 +574,9 @@ const CreateItemRequestView = () => {
               </InputGroup>
               {fieldErrors.subcategory && <ErrorMessage>{fieldErrors.subcategory}</ErrorMessage>}
 
-              <Stack direction="row" spacing={2} sx={{ mb: 2 }}>
-                <Box sx={{ flex: 1, position: "relative" }}>
-                  <InputIcon sx={{mt: 1.5}}>
+              <Stack direction={{xs:"column", sm:"row"}} spacing={2} sx={{ mb: 2, alignItems:"center" }}>
+                <Box sx={{ flex: 1, position: "relative", width: "100%" }}>
+                  <InputIcon >
                     <FiXCircle />
                   </InputIcon>
                   <StyledSelect
@@ -583,7 +592,8 @@ const CreateItemRequestView = () => {
                   </StyledSelect>
                   <SelectArrow>▼</SelectArrow>
                 </Box>
-                <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Box sx={{ mt: { xs: 1, sm: 0 }, ml: { xs: 0, sm: 2 }, alignSelf:{xs:"flex-start", sm:"center"}}}>
+                  
                   <CancelPolicyTooltip />
                 </Box>
               </Stack>
