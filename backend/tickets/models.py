@@ -5,9 +5,7 @@ from rentas.models import Rent, User
 
 class TicketStatus(models.TextChoices):
     PENDING = "pending", "Pending"
-    ASSIGNED = "assigned", "Assigned"
     IN_PROGRESS = "in_progress", "In Progress"
-    CANCELLED = "cancelled", "Cancelled"
     RESOLVED = "resolved", "Resolved"
 
 
