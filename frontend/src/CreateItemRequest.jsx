@@ -575,8 +575,8 @@ const CreateItemRequestView = () => {
               </InputGroup>
               {fieldErrors.subcategory && <ErrorMessage>{fieldErrors.subcategory}</ErrorMessage>}
 
-              <Stack direction="row" spacing={2} sx={{ mb: 2, alignItems:"center" }}>
-                <Box sx={{ flex: 1, position: "relative" }}>
+              <Stack direction={{xs:"column", sm:"row"}} spacing={2} sx={{ mb: 2, alignItems:"center" }}>
+                <Box sx={{ flex: 1, position: "relative", width: "100%" }}>
                   <InputIcon >
                     <FiXCircle />
                   </InputIcon>
@@ -593,7 +593,7 @@ const CreateItemRequestView = () => {
                   </StyledSelect>
                   <SelectArrow>▼</SelectArrow>
                 </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'flex-end', sm: 'initial'}, pt: { xs: 1, sm: 0 }, }}>
+                <Box sx={{ mt: { xs: 1, sm: 0 }, ml: { xs: 0, sm: 2 }, alignSelf:{xs:"flex-start", sm:"center"}}}>
                   
                   <CancelPolicyTooltip />
                 </Box>
