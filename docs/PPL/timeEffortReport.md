@@ -5732,6 +5732,59 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Espinosa Naranjo, Pablo**
 
+<table border="1">
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="6">Trabajo</td>
+      <td>Revision fallo favoritos</td>
+      <td>41 minutos</td>
+    </tr>
+    <tr>
+      <td>Bug despliegue años</td>
+      <td>1 hora 39 minutos</td>
+    </tr>
+    <tr>
+      <td>Apoyo marketing instagram</td>
+      <td>46 minutos</td>
+    </tr>
+    <tr>
+      <td>Formacion marketing youtube</td>
+      <td>3 horas 33 minutos</td>
+    </tr>
+    <tr>
+      <td>Montaje video youtube</td>
+      <td>3 horas 21 minutos</td>
+    </tr>
+    <tr>
+      <td>Documento revision</td>
+      <td>45 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clase</td>
+      <td>Clase 11/4/25</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 25/4/25</td>
+      <td>4 hora y 20 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras teóricas</td>
+      <td>Pildoras</td>
+      <td>52 minutos</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
 ### **Fernández Rodríguez, Jesús**
 
 ### **Fernández Mota, Francisco**
