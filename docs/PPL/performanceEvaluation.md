@@ -859,6 +859,18 @@ Finalmente, se completaron las tareas administrativas requeridas como el <b>Time
 
 ### **Naredo Bernardos, Ignacio**
 
+Durante la jornada de trabajo, se han llevado a cabo diversas actividades relevantes para el proyecto, distribuidas en varias categorías clave.
+
+ En primer lugar, se dedicaron 2 horas y 50 minutos a la revisión de contenido multimedia en TikTok, orientado al análisis de tendencias y formatos de comunicación actuales en plataformas digitales, lo cual resulta esencial para comprender el impacto de los medios sociales en la percepción y difusión de contenidos.
+
+Por otro lado, se destinaron 40 minutos a la revisión del documento correspondiente al Sprint 1 (S1), con el objetivo de garantizar la calidad y coherencia del material entregado.
+
+Asimismo, se invirtió un total de 3 horas y 50 minutos en una sesión de clase.
+
+Adicionalmente, se emplearon 20 minutos en el relleno del informe de Time Effort y la evaluación de desempeño.
+
+Finalmente, se dedicaron 35 minutos a la gestión de documentos en Knowledge Base (kb), para la correcta organización y disponibilidad de información técnica relevante para todo el equipo.
+
 ### **Nieto Vicioso, Javier**
 Durante las dos semanas de este sprint he continuado aportando al proyecto, aunque con una carga algo menor al haber dedicado una parte importante de tiempo en sprints anteriores.
 
