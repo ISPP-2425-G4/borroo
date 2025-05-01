@@ -792,6 +792,14 @@ Finalmente, revisé las píldoras teóricas 8 y 9, lo cual me permitió consolid
 
 ### **Díaz Ordóñez, Pablo** 
 
+Durante la primera semana de trabajo, actualicé todas las entradas de Clockify con las etiquetas que se añadieron. Además, corregí en bug sobre el texto de la página de los anuncios y trabajé en encontrar solución al bug del deplegable de años en los distintos formularios que lo tienen. Esta tarea, encontraba una solución algo más compleja ya que el sistema que utilizábamos no soportaba el resultado final que queríamos obtener como soluión, y Pablo Espinosa ayudó en poder encontrar una nueva solución, siendo él quien la completó finalmente. También en esta semana, instalé todo el material necesario para poder llevar a cabo tareas de marketing sobre YouTube, además de realizar unas primeras versiones de las intros y outros de los vídeos de YouTube. También ayudé en la revisión del documento de lecciones aprendidas del Sprint 1. Además, personalicé el canal de YouTube (información e imágenes) y asistí a la clase del 25/04/25, junto a la actividad extra que se realizó al final de la misma.
+
+Tras esta clase, realicé todas las miniaturas de los tipos de vídeos que subiremos al canal de YouTube, dejando finalizadas la de los primeros anuncios de clientes e inversores, presentación del proyecto y primeros episodios de tutoriales sobre el funcionamiento de la aplicación.
+
+Ya dentro de la segunda semana, adapté algunos detalles de las miniaturas y realicé las intro y outro finales que finalmente utilizaremos como imagen corporativa en los vídeos de YouTube. En un documento interno del grupo, listé los vídeos que se tenían pensado de subir, algunos pendientes de sufrir alguna modificación final en su contenido como el caso de los tutoriales. Actualicé el banner del canal y preparé y subí a Youtube el vídeo del anuncio de clientes. También subí publicaciones en la comunidad dando la bienvenida y sobre los dos vídeos de anuncios, ya que el vídeo de anuncio de inversores también llevé a cabo la última edición del mismo (añadir intro y outro) y lo subí a YouTube. También hice los tres shorts subidos a YouTube (uno sobre el anuncio de clientes y dos sobre el de inversores).
+
+Sobre documentación, comentar que añadí mis entradas del calendario NikoNiko, del report de la IA, del timeEffortReport y del presente documento (performanceEvaluation).
+
 ### **Espinosa Naranjo, Pablo**
 
 ### **Fernández Rodríguez, Jesús**
