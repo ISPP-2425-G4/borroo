@@ -113,11 +113,11 @@ Se llevará a cabo un enfoque multicanal centrado geográficamente en el mercado
     * *Acciones Locales/PR/Material Promocional (Enfoque en outreach, impresión mínima):* €400
     * *Contingencia específica de Marketing:* €400
       
-* **Presupuesto Anual de Mantenimiento (€5,000 / ~€417 mensual):** Para sostener la visibilidad y crecimiento:
-    * *Publicidad Digital continua (Retargeting, Awareness):* Asignación mensual.
-    * *Renovación Herramientas Marketing/SEO:* Costes de suscripción.
-    * *Marketing de Contenidos y SEO continuo:* Mantenimiento del blog, optimizaciones.
-    * *Gestión de Redes Sociales y Comunidad:* Tiempo o herramientas.
+* **Presupuesto Anual de Mantenimiento (€2,000 / ~€167 mensual):** Para sostener la visibilidad y crecimiento:
+    * *Publicidad Digital continua (Retargeting, Awareness):* Asignación mensual. €1000
+    * *Renovación Herramientas Marketing/SEO:* Costes de suscripción. €500
+    * *Marketing de Contenidos y SEO continuo:* Mantenimiento del blog, optimizaciones. €300
+    * *Gestión de Redes Sociales y Comunidad:* Tiempo o herramientas. €200
 
 #### 5.4 Partners Estratégicos
 
