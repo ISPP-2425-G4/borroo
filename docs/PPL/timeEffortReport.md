@@ -5897,7 +5897,7 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
     </tr>
       <td>Documentos en kb</td>
       <td>base de conocimiento</td>
-      <td>35 minutos</td>
+      <td>1 hora 42 minutos</td>
   </tbody>
 </table>
 

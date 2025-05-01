@@ -875,7 +875,7 @@ Asimismo, se invirtió un total de 3 horas y 50 minutos en una sesión de clase.
 
 Adicionalmente, se emplearon 20 minutos en el relleno del informe de Time Effort y la evaluación de desempeño.
 
-Finalmente, se dedicaron 35 minutos a la gestión de documentos en Knowledge Base (kb), para la correcta organización y disponibilidad de información técnica relevante para todo el equipo.
+Finalmente, me dediqué a la gestión completa de documentos en Knowledge Base (kb), para la correcta organización y disponibilidad de información técnica relevante para todo el equipo.
 
 ### **Nieto Vicioso, Javier**
 Durante las dos semanas de este sprint he continuado aportando al proyecto, aunque con una carga algo menor al haber dedicado una parte importante de tiempo en sprints anteriores.
