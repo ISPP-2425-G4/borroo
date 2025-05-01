@@ -871,6 +871,9 @@ En la segunda semana, mi trabajo se centró en la mejora de la responsividad de 
 
 ### **Padilla Gómez, Marco**
 
+La primera semana añadi las tag para mejorar el time effort a las entradas de clockify, y tambien cree un tiktok desde 0 usando la IA(el de top 3 objetos).
+La segunda semana, vi la pildora teorica, añadi el feedback de las semanas 10 y 11 a las bases de conocimiento. Y con la idea de Julia cree el guion del tiktok del juego de levantar dedos y lo grabé y por ultimo actualice el KB report.
+
 ### **Picón Garrote, Alexander** 
 
 Durante la primera semana, mis actividades se centraron en la planificación inicial, el feedback externo dado y la creación de las primeras tareas del proyecto PPL. Asistí a la clase del 11/04. Participé activamente en reuniones clave para la planificación del PPL y para discutir problemas específicos del proyecto.Ademas, trabajé en la resolución de incidencias de marketing y finalicé el importante documento de lecciones aprendidas de la fase s1.

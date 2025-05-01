@@ -5922,6 +5922,59 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Padilla Gómez, Marco**
 
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="3">Marketing</td>
+    <td>Tiktok Top 3 objetos para rentar</td>
+    <td>3 horas y 37 minutos</td>
+  </tr>
+  <tr>
+    <td>Guion tiktok levanta un dedo</td>
+    <td>26 minutos</td>
+  </tr>
+  <tr>
+    <td>Grabar tiktok levanta un dedo</td>
+    <td>1 hora y 18 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="4">Documentación</td>
+    <td>Añadir tags a clockify</td>
+    <td>8 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadir feedback a las bases de conocimiento</td>
+    <td>1 hora y 1 minuto</td>
+  </tr>
+  <tr>
+    <td>Realizacion del KBreport PPL</td>
+    <td>11 minutos</td>
+  </tr>
+  <tr>
+    <td>Rellenar el timeEffort y el performance evaluation</td>
+    <td>24 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldoras teóricas</td>
+    <td>Píldora 10</td>
+    <td>52 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 11/04</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 25/04</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
+
 ### **Picón Garrote, Alexander** 
 
 <table border="1" cellspacing="0" cellpadding="5">
@@ -6062,7 +6115,7 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
       <td>1 hora 30 minutos</td>
     </tr>
     <tr>
-      <td>Creación, adaptación linktree y ediciñon del perfil Tiktok(26/04/2025)</td>
+      <td>Creación, adaptación linktree y edicion del perfil Tiktok(26/04/2025)</td>
       <td>18 minutoss</td>
     </tr>
     <tr>
