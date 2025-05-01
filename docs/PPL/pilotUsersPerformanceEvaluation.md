@@ -43,6 +43,7 @@
 | 13-03-2025 | v1.0    | Santiago Rosado Raya | Creación del documento |
 | 27-03-2025 | v2.0    | Santiago Rosado Raya | Adición del histórico de versiones y calificación de usuarios pilotos del Sprint 2 |
 | 10-04-2025 | v3.0    | Santiago Rosado Raya | Calificación de usuarios pilotos del Sprint 3 |
+| 01-05-2025 | v4.0    | Santiago Rosado Raya | Calificación de usuarios pilotos final |
 
 
 ## **Version: PPL**
@@ -67,14 +68,20 @@ Los usuarios serán evaluados según los siguientes niveles de implicación:
 
 ## **Agreed Individual Performance Evaluation**
 
-| Student                         | #S1  | #S2  | #S3  | #PPL | #WPL | **Total** |
-|---------------------------------|------|------|------|------|------|------------------|
-| Flores de Francisco, Daniel    | 8    |   8.5   | 6.5 |   8.5   |      |                 |
-| García Escudero, Ángel         | 9    |   9  |  9  |  9   |      |                 |
-| Olivencia Moreno, Pablo        | 9    |   6.5   | 5.5 |  5.5    |      |                 |
-| Rodríguez López, Josué         | 8.5  |   7.5   |  8  |   9   |      |               |
-| Youssafi Benichikh, Karim      | 10   |   10   |  10  |  10    |      |                |
-| **Total**                      | **44.5** | **41.5**  | **39** | **42** |  |  |
+| Student                        | #S1    | #S2      | #S3    | #PPL  |**Total** |**Calificación Final** |
+|--------------------------------|--------|----------|--------|-------|----------|-----------------------|
+| Flores de Francisco, Daniel    | 8      |   8.5    | 6.5    |   8.5 |  31.5    |       **7.88**        |
+| García Escudero, Ángel         | 9      |   9      |  9     |  9    |   36     |        **9**          |
+| Olivencia Moreno, Pablo        | 9      |   6.5    | 5.5    |  5.5  |  26.5    |       **6.63**        |
+| Rodríguez López, Josué         | 8.5    |   7.5    |  8     |   9   |   33     |       **8.25**        |
+| Youssafi Benichikh, Karim      | 10     |   10     |  10    |  10   |   40     |        **10**         |
+| **Media**                      |**8.9** | **8.3**  |**7.8** |**8.4**|          |                       |
+| **Total**                      |**44.5**| **41.5** | **39** | **42**|          |                       |
+
+Para el cálculo de las calificaciones finales de los usuarios piloto se ha seguido la guía establecida en el documento *Syllabus 2024-2025*, concretamente en la diapositiva 52. Conforme a dicha guía, la nota final se obtiene aplicando una media aritmética simple de todas las calificaciones obtenidas bajo nuestro sistema de evaluación, según la siguiente fórmula:
+
+**Calificación Final** = (S1 + S2 + S3 + PPL) / 4
+
 
 ---
 
@@ -157,13 +164,3 @@ Ha reportado los fallos de forma clara y precisa. Su feedback demuestra una alta
 - **Youssafi Benichikh, Karim**:  Este usuario dedica mucho tiempo a la prueba del sistema, siendo habitualmente el que más se implica en esta tarea. Organiza sus aportaciones de forma ejemplar y acompaña su feedback con capturas de pantalla, lo que facilita enormemente su comprensión por parte del equipo.
 Su feedback es de muy alta calidad, con ideas nuevas, comparaciones con otros sistemas y un análisis profundo. Cumple con todo lo requerido e incluso aporta más de lo solicitado, siempre dentro del plazo establecido.
 Demuestra una implicación sobresaliente con el desarrollo, proponiendo mejoras valiosas y aportando una perspectiva crítica y constructiva que enriquece el proyecto.
-
----
-
-### **World Project Launch (#WPL)**
-
-- **Flores de Francisco, Daniel**:  
-- **García Escudero, Ángel**:  
-- **Olivencia Moreno, Pablo**:  
-- **Rodríguez López, Josué**:  
-- **Youssafi Benichikh, Karim**:  
