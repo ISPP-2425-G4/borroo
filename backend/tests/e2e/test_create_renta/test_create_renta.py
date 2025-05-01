@@ -59,7 +59,10 @@ def _detect_price_type(driver):
         return "day"
     else:
         raise ValueError(
-            f"No se pudo determinar el tipo de precio. Texto encontrado: {price_text}"
+            (
+                f"No se pudo determinar el tipo de precio. "
+                f"Texto encontrado: {price_text}"
+            )
         )
 
 
