@@ -1,0 +1,174 @@
+/* Asegúrate de que html y body ocupen toda la pantalla */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden; /* Previene scroll horizontal */
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start; /* Alinea desde arriba para poder usar margin-top */
+    min-height: 100vh; /* Usa altura completa de la ventana */
+    background-color: #f3f4f6;
+    padding: 0 20px; /* Añade padding horizontal pero no vertical */
+    width: 100%; /* Usa 100% en lugar de 100vw para evitar scroll horizontal */
+    box-sizing: border-box; /* Asegura que el padding esté incluido en el width */
+}
+
+.login-spacer {
+    width: 100%;
+    margin-top: 100%; /* Espaciado del 30% de la altura de la ventana */
+    background-color: transparent;
+}
+
+
+/* Ajuste específico para la caja de signup que es más grande */
+.signup-box {
+    width: 400px; /* Un poco más ancho para el formulario de registro */
+    margin-top: 20vh; /* Un poco más arriba que el login para compensar su mayor altura */
+}
+
+h2 {
+    color: #2563eb;
+    margin-bottom: 1.5rem;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    background: #e5e7eb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.input-icon {
+    color: #6b7280;
+    margin-right: 10px;
+}
+
+input, select {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+}
+
+.login-btn {
+    background: #2563eb;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+    background: #1e40af;
+}
+
+.login-btn:disabled {
+    background: #93c5fd;
+    cursor: not-allowed;
+}
+
+.register-link {
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.register-link a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para mensajes de error */
+.error-message {
+    color: #ef4444;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.field-error {
+    color: #ef4444;
+    font-size: 0.8rem;
+    text-align: left;
+    margin-top: -0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px; /* 🔹 Tamaño más pequeño */
+    color: #007bff; /* 🔹 Color azul */
+    padding: 5px; /* 🔹 Para reducir el tamaño del botón */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .toggle-password:hover {
+    color: #0056b3; /* 🔹 Azul más oscuro al pasar por encima */
+    transform: scale(1.1); /* 🔹 Efecto de aumento sutil */
+  }
+  
+  .toggle-password svg {
+    width: 18px; /* 🔹 Ajuste del tamaño del icono */
+    height: 18px;
+  }
+  .recover-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente los elementos */
+    justify-content: center; /* Centra verticalmente los elementos */
+    min-height: 100vh; /* Asegura que ocupe al menos la altura completa de la ventana */
+    padding: 20px; /* Añade un poco de espacio alrededor del contenido */
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
+    text-align: center; /* Centra el texto dentro de los párrafos y títulos */
+    background-color: #f3f4f6; /* O el color de fondo que prefieras */
+    }
+
+    .recover-container h1 {
+        color: #2563eb; /* Color del título */
+        margin-bottom: 20px; /* Espacio debajo del título */
+    }
+
+    .recover-container p {
+        max-width: 600px; /* Limita el ancho del texto para mejor legibilidad */
+        margin-bottom: 15px; /* Espacio debajo de los párrafos */
+        line-height: 1.6; /* Mejora la legibilidad del texto */
+}
+  
+
+/* Media query para pantallas pequeñas donde el formulario podría ser demasiado grande */
+@media (max-height: 800px) {
+    .login-box {
+        margin-top: 120px; /* Valor fijo para pantallas pequeñas */
+    }
+    
+    .signup-box {
+        margin-top: 100px; /* Valor fijo para pantallas pequeñas */
+    }
+}
+
+/* Para pantallas muy pequeñas, reduce más el tamaño del contenedor */
+@media (max-width: 400px) {
+    .login-box, .signup-box {
+        padding: 1.5rem;
+    }
+}
+

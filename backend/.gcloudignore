@@ -1,0 +1,17 @@
+# Ignorar archivos y carpetas innecesarias
+.gcloudignore
+.git
+.gitignore
+__pycache__/
+*.pyc
+*.pyo
+*.log
+*.sqlite3
+*.DS_Store
+node_modules/
+venv/
+env/
+staticfiles/
+media/
+migrations/
+tests/
