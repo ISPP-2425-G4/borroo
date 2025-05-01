@@ -5607,6 +5607,7 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 </table>
 
 
+
 ### **Díaz Ordóñez, Pablo** 
 
 <table border="1" cellspacing="0" cellpadding="5">
