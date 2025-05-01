@@ -815,6 +815,12 @@ Sobre documentación, comentar que añadí mis entradas del calendario NikoNiko,
 
 ### **García Rodríguez, Javier**
 
+Antes de la primera semana lectiva correspondiente al PPL, estuve realizando varias tareas. En primer lugar, volví a crear los documentos base comunes (performanceEvaluation, timeEffortReport, NikoNiko). Además, desarrollé el plan de marketing. También escribí el backlog del PPL con las tareas correspondientes. Tuve una reunión para poder planificiar ciertas tareas con Alexander Picón Garrote, con la que gestionamos las issues correspondientes para planificar todo el PPL de forma correcta. Estuve desarrollando contenido para una de las redes sociales del proyecto, Instagram.
+
+Ahora en la primera semana, desarrollé el documento asociada a los tipos de personas que usarían Borroo, y estuve desarrollando el documento de Lecciones Aprendidas asociadas al Sprint 1. Una vez, más, estuve generando contenido para Instagram. Como cada semana, me volví a preparar la presentación , y asistí a la clase del día 25.
+
+Durante la segunda semana tuve una reunión con Alexander Picón Garrote para poder tomar cartas en el asunto sobre problemas en el inicio de tareas del PPL con varios miembros del grupo. Repasé la píldora teórica subida en la Enseñanza Virtual, y seguí generando contenido para redes sociales. También me preparé las 2 presentaciones correspondientes al PPL.
+
 ### **González Ortiz, Miguel**
 
 <div align="justify">
