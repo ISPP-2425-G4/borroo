@@ -5697,7 +5697,7 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
   </thead>
   <tbody>
     <tr>
-      <td rowspan="7">Código</td>
+      <td rowspan="11">Tareas</td>
       <td>Reunión Grupo Tik Tok para establecer toda la organización(26/04/2025)</td>
       <td>1 hora 30 minutos</td>
     </tr>
