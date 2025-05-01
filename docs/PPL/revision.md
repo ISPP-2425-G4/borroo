@@ -330,11 +330,13 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 1. El usuario debe loggearse (Usuario sin plan premium actual, tiene una estrella al lado del nombre si es premium)
 2. El usuario navega a la pestaña "Plan de suscripción"
 3. El usuario selecciona "Mejora a premium"
-4. El usuario rellena el formulario para el pago
-5. El usuario presiona el botón "pagar"
-6. Se muestra un mensaje de confirmación y se actualiza el plan del usuario (Se desactualiza solo al finalizar la mensualidad del plan)
+4. El usuario selecciona si quiere pagar con saldo (si posee suficiente) o con tarjeta
+5. Si el usuario selecciona pagar con tarjeta, rellena el formulario para el pago
+6. El usuario presiona el botón "pagar"
+7. Se muestra un mensaje de confirmación y se actualiza el plan del usuario (Se desactualiza solo al finalizar la mensualidad del plan)
 
 ![](capturasRevision/premium1.png)
+![](capturasRevision/premium4.png)
 ![](capturasRevision/premium2.png)
 ![](capturasRevision/premium3.png)
 
