@@ -853,6 +853,14 @@ Finalmente, se completaron las tareas administrativas requeridas como el <b>Time
 ### **Naredo Bernardos, Ignacio**
 
 ### **Nieto Vicioso, Javier**
+Durante las dos semanas de este sprint he continuado aportando al proyecto, aunque con una carga algo menor al haber dedicado una parte importante de tiempo en sprints anteriores.
+
+#### Semana 1
+En la primera semana, me enfoqué principalmente en la actualización de todas las etiquetas de Clockify para garantizar que el Time Effort Report reflejara correctamente las horas dedicadas en cada tarea. También tuvimos una reunión de equipo de TikTok donde organizamos la estrategia de contenidos para las semanas de publicación de vídeos, además de crear la cuenta de TikTok y subir el primer vídeo de lanzamiento.
+
+#### Semana 2
+En la segunda semana, mi trabajo se centró en la mejora de la responsividad de la aplicación, prestando especial atención al componente del chat, que supuso un reto debido a su complejidad. Logré resolverlo dividiendo la interfaz en dos secciones: una para la lista de conversaciones y otra para los mensajes, permitiendo así una visualización adecuada en pantallas más pequeñas. Paralelamente, vi las píldoras teóricas correspondientes al PPL.
+
 
 ### **Padilla Gómez, Marco**
 
