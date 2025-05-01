@@ -148,20 +148,20 @@ Para calcular el porcentaje de alucinaciones de las inteligencias artificiales u
 | 1  |  21   | 14%  |
 | 2  |   22  | 12%  |
 | 3  | 20 | 12%  |
-| 4  |     | %  |
-| 5  |     | %  |
-| 6  |     | %  |
-| 7  |     | %  |
-| 8  |     | %  |
-| 9  |     | %  |
-| 10 |     | %  |
-| 11 |     | %  |
-| 12 |     | %  |
-| 13 |     | %  |
-| 14 |     | %  |
-| 15 |     | %  |
-| 16 |     | %  |
-| 17 |     | %  |
+| 4  |   15  | 20%  |
+| 5  |   10  | 15%  |
+| 6  |   11  | 25%  |
+| 7  |   14  | 20%  |
+| 8  |   20  | 12%  |
+| 9  |   17  | 15%  |
+| 10 |   18  | 17,5%  |
+| 11 |   10  | 18%  |
+| 12 |   0  | 20%  |
+| 13 |   8  | 10%  |
+| 14 |   1  | 16%  |
+| 15 |   14  | 10%  |
+| 16 |   11  | 15%  |
+| 17 |   9  | 12%  |
 
 
 ### Cálculo de las alucinaciones por IA
@@ -177,20 +177,10 @@ Donde:
 - Xi representa cada uno de los valores de porcentaje de alucinaciones.
 - N es el número total de desarrolladores.
 
-Aplicando la fórmula, el porcentaje medio de alucinaciones es:
-
-
+Aplicando la fórmula, el porcentaje medio de alucinaciones es: 15.5%
 
 ### Conclusión
 
-El análisis muestra que el porcentaje medio de alucinaciones de la IA en este conjunto de datos es aproximadamente **%**. 
+El análisis muestra que el porcentaje medio de alucinaciones de la IA en este conjunto de datos es aproximadamente **15.5%%**. 
 
-### Medidas para reducir las alucinaciones
-
-Para disminuir este porcentaje un poco más, se implementarán las siguientes estrategias:
-
-1. **Aplicación de la guía de ingeniería de prompts:** Se adoptarán las mejores prácticas de redacción de instrucciones para IA basadas en la guía [Prompting Guide](https://www.promptingguide.ai/es), optimizando la claridad y precisión de los prompts.
-2. **Revisión y refinamiento iterativo de prompts:** Se evaluarán las respuestas generadas y se ajustarán los prompts cuando sea necesario para obtener información más fiable.
-3. **Feedback y documentación de errores:** Se establecerá un sistema para registrar y analizar casos de alucinaciones recurrentes, con el fin de ajustar las estrategias de prompting.
-
-Estas medidas permitirán optimizar el uso de las IAs y reducir significativamente la aparición de alucinaciones en futuras interacciones.
+Como se puede ver, el porcentaje ha bajado de forma notable dadas las medidas implementadas en el anterior entregable para bajar este porcentaje. Destacar la guía de prompting que se sugirió con la que se ha podido bajar este porcentaje y obtener resultados más precisos a lo solicitado.
