@@ -65,3 +65,15 @@ Durante este Sprint, hemos recopilado feedback en dos momentos distintos: a mita
 
 
 # 🧾 Resumen de Feedback de Usuarios Piloto Final de Sprint
+
+Como se reflejó en el resumen del feedback recibido a mitad del Sprint, la mayoría de los problemas señalados por los usuarios piloto estaban relacionados con el bajo rendimiento del despliegue. Por ello, durante esta fase nos hemos centrado en mejorar ese aspecto, realizando un cambio de despliegue orientado a optimizar la velocidad y estabilidad del sistema.
+
+En la segunda recogida de feedback, solicitamos a los usuarios que comprobaran si los errores anteriores persistían tras el nuevo despliegue. Todos coincidieron en que los problemas detectados en la primera entrega habían sido resueltos gracias a las mejoras implementadas.
+
+# 🧾 Conclusiones del Feedback y del Sprint
+
+El despliegue utilizado en el Sprint 3 fue el que se facilitó a los usuarios piloto para que pudieran probar aquellas funcionalidades que aún no habían testado, ya que el feedback del Sprint 3 se solicitó antes de que todas estuvieran completamente implementadas (tal y como se recogía en la planificación de la gestión de usuarios piloto).
+
+Una vez finalizadas dichas funcionalidades, se les volvió a pedir feedback sobre ese mismo despliegue. Como resultado, los usuarios reportaron numerosos errores, en su mayoría relacionados con el rendimiento del sistema.
+
+Por ello, durante este Sprint decidimos cambiar el entorno de despliegue, lo que nos ha permitido solucionar muchos de los problemas detectados y mejorar significativamente la experiencia de los usuarios piloto.

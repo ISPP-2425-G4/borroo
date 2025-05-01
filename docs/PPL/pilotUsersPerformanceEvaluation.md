@@ -69,12 +69,12 @@ Los usuarios serán evaluados según los siguientes niveles de implicación:
 
 | Student                         | #S1  | #S2  | #S3  | #PPL | #WPL | **Total** |
 |---------------------------------|------|------|------|------|------|------------------|
-| Flores de Francisco, Daniel    | 8    |   8.5   | 6.5 |      |      |                 |
-| García Escudero, Ángel         | 9    |   9  |  9  |      |      |                 |
-| Olivencia Moreno, Pablo        | 9    |   6.5   | 5.5 |      |      |                 |
-| Rodríguez López, Josué         | 8.5  |   7.5   |  8  |      |      |               |
-| Youssafi Benichikh, Karim      | 10   |   10   |  10  |      |      |                |
-| **Total**                      | **44.5** | **41.5**  | **39** |  |  |  |
+| Flores de Francisco, Daniel    | 8    |   8.5   | 6.5 |   8.5   |      |                 |
+| García Escudero, Ángel         | 9    |   9  |  9  |  9   |      |                 |
+| Olivencia Moreno, Pablo        | 9    |   6.5   | 5.5 |  5.5    |      |                 |
+| Rodríguez López, Josué         | 8.5  |   7.5   |  8  |   9   |      |               |
+| Youssafi Benichikh, Karim      | 10   |   10   |  10  |  10    |      |                |
+| **Total**                      | **44.5** | **41.5**  | **39** | **42** |  |  |
 
 ---
 
@@ -138,11 +138,25 @@ Se evidencia que ha probado el sistema en profundidad, detectando múltiples bug
 
 ### **Preparing Project Launch (#PPL)**
 
-- **Flores de Francisco, Daniel**:  
-- **García Escudero, Ángel**:  
-- **Olivencia Moreno, Pablo**:  
-- **Rodríguez López, Josué**:  
-- **Youssafi Benichikh, Karim**:  
+- **Flores de Francisco, Daniel**:  Este usuario ha dedicado más tiempo a la recopilación de feedback para nuestro proyecto, y se nota. Ha entregado un feedback bien organizado y estructurado, incluyendo capturas de pantalla de los fallos detectados.
+Como es habitual, ha sido uno de los primeros en entregar y, en esta ocasión, no ha sido una excepción. Ha completado toda la información requerida, aportando numerosas ideas y observaciones útiles. Cumple siempre con los plazos de entrega de feedback y demuestra una implicación constante con el proyecto.
+
+
+- **García Escudero, Ángel**:  El usuario ha dedicado mucho tiempo al proyecto y a la recopilación de feedback. Como en ocasiones anteriores, su aportación ha sido estructurada, ordenada y acompañada de capturas de pantalla, lo que facilita al equipo la identificación de los errores detectados.
+Además de responder a lo solicitado, suele proponer ideas interesantes por iniciativa propia. Explora el sistema en profundidad, muestra una implicación notable con el desarrollo y cumple siempre con los plazos establecidos.
+
+
+- **Olivencia Moreno, Pablo**:  El usuario no ha dedicado mucho tiempo al uso del sistema ni a la redacción del feedback. Aunque responde a todo lo solicitado y cumple con los plazos de entrega, sus aportaciones suelen ser simples y, en ocasiones, algo vagas.
+En este Sprint ha proporcionado alguna idea útil, pero en general el feedback no ha aportado conclusiones profundas ni novedades relevantes para el equipo de desarrollo.
+
+
+- **Rodríguez López, Josué**:  Este usuario ha dedicado mucho tiempo al sistema durante este Sprint, respondiendo a todo lo requerido y aportando numerosas capturas de pantalla que documentan detalladamente los errores encontrados, especialmente aquellos relacionados con el mal rendimiento del despliegue.
+Ha reportado los fallos de forma clara y precisa. Su feedback demuestra una alta implicación con el desarrollo, ya que prueba el sistema en profundidad, completa toda la información solicitada y cumple con los plazos establecidos.
+
+
+- **Youssafi Benichikh, Karim**:  Este usuario dedica mucho tiempo a la prueba del sistema, siendo habitualmente el que más se implica en esta tarea. Organiza sus aportaciones de forma ejemplar y acompaña su feedback con capturas de pantalla, lo que facilita enormemente su comprensión por parte del equipo.
+Su feedback es de muy alta calidad, con ideas nuevas, comparaciones con otros sistemas y un análisis profundo. Cumple con todo lo requerido e incluso aporta más de lo solicitado, siempre dentro del plazo establecido.
+Demuestra una implicación sobresaliente con el desarrollo, proponiendo mejoras valiosas y aportando una perspectiva crítica y constructiva que enriquece el proyecto.
 
 ---
 
