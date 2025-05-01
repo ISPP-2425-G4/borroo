@@ -103,6 +103,9 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 | 018  |  Generación de código para bug de desplegable de años (III)  | Pablo Díaz Ordóñez    | 22/04/2025 | (No deja compartir chat por uso de imágenes del usuario) |
 | 019  |  Posicionar Tooltip en xs  | Álvaro Martín Muñoz   | 30/04/2025 | [Ver chat](https://chatgpt.com/share/68122eab-d970-800e-8cef-a5bae7735061) |
 | 020  | Centrar para pantallas pequeñas FiXCircle Icon | Álvaro Martín Muñoz | 30/04/2025 |  [Ver chat](https://claude.ai/share/2ca181d2-3d2f-4724-9b9b-ef109f7fea1c) |
+| 021  | Responsividad de las distintas pantallas | Luis Javier Periáñez Franco | 30/04/2025 |  (No deja compartir chat por uso de imágenes del usuario) |
+| 022  | Creación de Facebook y Linkedin de Borroo | Luis Javier Periáñez Franco | 30/04/2025 |  (No deja compartir chat por uso de imágenes del usuario) |
+
 
 
 
@@ -125,6 +128,8 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 | 016-017-018  | Resolución de bug   | Sí   | 30 min  |
 | 019  | Frontend responsivo | Sí | 15min |
 | 020 | Ajustar icono en pantallas xs | Sí | 15min |
+| 021 | Responsividad | Sí | 40min |
+| 022 | Redes Sociales | Sí | 20min |
 
 
 
@@ -137,7 +142,7 @@ Para calcular el porcentaje de alucinaciones de las inteligencias artificiales u
 | Desarrollador | Usos | % Alucinaciones |
 |----|------|------------|
 | 1  |  21   | 14%  |
-| 2  |     | %  |
+| 2  |   22  | %12  |
 | 3  |     | %  |
 | 4  |     | %  |
 | 5  |     | %  |
