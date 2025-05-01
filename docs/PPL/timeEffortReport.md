@@ -5687,5 +5687,73 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 ### **Rosado Raya, Santiago**
  
 ### **Sánchez Márquez, Julia**
-
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="7">Código</td>
+      <td>Reunión Grupo Tik Tok para establecer toda la organización(26/04/2025)</td>
+      <td>1 hora 30 minutos</td>
+    </tr>
+    <tr>
+      <td>Creación, adaptación linktree y ediciñon del perfil Tiktok(26/04/2025)</td>
+      <td>18 minutoss</td>
+    </tr>
+    <tr>
+      <td>Grabación tik tok feria(29/04/2025)</td>
+      <td>47 minutos</td>
+    </tr>
+    <tr>
+      <td>Edición tik tok feria (29/04/2025)</td>
+      <td>45 minutos</td>
+    </tr>
+    <tr>
+      <td>Subida tik tok feria (29/04/2025)</td>
+      <td>8 minutos</td>
+    </tr>
+    <tr>
+      <td>Edición y subida de historia a tik tok (29/04/2025)</td>
+      <td>10 minutos</td>
+    </tr>
+    <tr>
+      <td>Guión + Edición + Subida historia "apagón" a Tik Tok (30/04/2025)</td>
+      <td>28 minutos</td>
+    </tr>
+    <tr>
+      <td>Guión + Edición Tik Tok "Juega conmigo" (30/04/2025)</td>
+      <td>51 minutos</td>
+    </tr>
+    <tr>
+      <td>Edición + Subida Tik Tok "Juega conmigo" (30/04/2025)</td>
+      <td>1 hora y 22 minutos</td>
+    </tr>
+    <tr>
+      <td>Guión + Edición Tik Tok "Preguntas y Respuestas" (1/05/2025)</td>
+      <td>1 hora y 52 minutos</td>
+    </tr>
+    <tr>
+      <td>Subida Tik Tok "Preguntas y Respuestas" (1/05/2025)</td>
+      <td>8 minutos</td>
+    </tr>
+        <tr>
+      <td rowspan="3">Clases</td>
+      <td>Clase 11/04</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 25/04</td>
+      <td>4 horas y 20 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras Teóricas</td>
+      <td>52 minutos</td>
+    </tr>
+     </tbody>
+</table>
 ### **Sevillano Barea, Alejandro**
