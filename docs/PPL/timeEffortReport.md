@@ -6133,7 +6133,101 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
     </tr>
      </tbody>
 </table>
+
 ### **Rosado Raya, Santiago**
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="15">Trabajo</td>
+    <td>Documentacion Pilotos PPL</td>
+    <td>7 minutos</td>
+  </tr>
+  <tr>
+    <td>Clasidicar Feedback de UP y calificación de estos</td>
+    <td>11 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión PR #544</td>
+    <td>14 minutos</td>
+  </tr>
+  <tr>
+    <td>lasificacion Feedback Mitad PPL</td>
+    <td>14 minutos</td>
+  </tr>
+  <tr>
+    <td>Análisis feedback PPL</td>
+    <td>16 minutos</td>
+  </tr>
+  <tr>
+    <td>Preparación documento UP PPL feedback 2</td>
+    <td>30 minutos</td>
+  </tr>
+  <tr>
+    <td>Tests de carga suscripciones  issue #474</td>
+    <td>35 minutos</td>
+  </tr>
+  <tr>
+    <td>Análisis feedback PPL</td>
+    <td>37 minutos</td>
+  </tr>
+  <tr>
+    <td>Testing E2E</td>
+    <td>39 minutos</td>
+  </tr>
+  <tr>
+    <td>Pildoreas teoricas</td>
+    <td>50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clasificar Feedback de UP y calificación de estos</td>
+    <td>53 minutos</td>
+  </tr>
+  <tr>
+    <td>Documento Feedback UP PPL</td>
+    <td>59 minutos</td>
+  </tr>
+  <tr>
+    <td>Tests E2E Subgrupo 2</td>
+    <td>1 hora 26 minutos</td>
+  </tr>
+  <tr>
+    <td>Tests unitarios y de integración de objetos</td>
+    <td>1 hora 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Testing E2E</td>
+    <td>2 horas 14 minutos</td>
+  </tr>
+    <td rowspan="1">Clase</td>
+    <td>Clase 04/04/2025</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Feedback Externo</td>
+    <td>Feedback para G8, Infantem PPL</td>
+    <td>9 minutos</td>
+  </tr>
+  <td>Feedback para G8, Infantem PPL</td>
+    <td>18 minutos</td>
+  </tr>
+
+  <tr>
+    <td>Feedback para G8, Infantem PPL</td>
+    <td>24 minutos</td>
+  </tr>
+  <tr>
+    <td>Total</td>
+    <td colspan="2">16 horas 21 minutos</td>
+  </tr>
+  <tr>
+    <td>Enlace Clockify</td>
+    <td colspan="2"><a href="https://app.clockify.me/shared/6813a9d3f6832429953b149f" target="_blank">Clockify</a></td>
+  </tr>
+</table>
  
 ### **Sánchez Márquez, Julia**
 <table>

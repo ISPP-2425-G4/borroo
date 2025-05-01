@@ -923,6 +923,15 @@ En paralelo, se revisaron dos pull requests de compañeros, colaborando en el pr
 Por otro lado, asistí a sesiones formativas que sumaron un total de más de siete horas de clases, además de consumir contenidos teóricos complementarios que fortalecieron los conocimientos técnicos necesarios para las tareas ejecutadas.
 
 ### **Rosado Raya, Santiago**
+<b>Primera semana </b>
+Durante esta primera semana me encargué de elaborar la documentación necesaria para que los usuarios piloto pudieran evaluar el sistema. Estuve en contacto continuo con todos ellos, gestionando tanto el envío como la recepción del feedback.
+Además, como responsable de QA de mi subgrupo, realicé algunos tests automatizados con Selenium, entre ellos el de solicitar una renta.
+
+<b>Segunda semana</b>
+Durante esta segunda semana me encargué de recibir, analizar y clasificar el feedback proporcionado por los usuarios piloto. Además, elaboré un nuevo documento de recopilación que, una vez enviado, dio lugar a un segundo proceso de recogida y análisis de feedback.
+Por otro lado, realicé la revisión de una pull request y desarrollé varios tests de integración y unitarios sobre nuestra entidad Objeto, así como algunos tests de carga relacionados con las suscripciones. También completé el test automatizado en Selenium para solicitar y aceptar una renta.
+Al final del Sprint, visualicé las píldoras teóricas correspondientes y califiqué a los usuarios piloto de acuerdo con los criterios establecidos en nuestra gestión de usuarios piloto.
+
  
 ### **Sánchez Márquez, Julia**
 <b>Primera semana </b>
