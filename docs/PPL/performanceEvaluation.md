@@ -846,5 +846,21 @@ Por otro lado, asistí a sesiones formativas que sumaron un total de más de sie
 ### **Rosado Raya, Santiago**
  
 ### **Sánchez Márquez, Julia**
+<b>Primera semana </b>
+
+Durante la primera semana, debido a la dificultad para coincidir y a la carga de otras asignaturas, no pudimos generar demasiado contenido para la plataforma de TikTok, de la que formaba parte. No fue hasta el sábado cuando logramos reunirnos para establecer roles concretos, un calendario de trabajo y algunas ideas para los próximos vídeos. Además, sufrimos una baja en el equipo, por lo que tuvimos que redoblar esfuerzos. Tras esa reunión, comenzamos con la edición del perfil para hacerlo más atractivo y adaptado a nuestro público objetivo. Creé un perfil en una plataforma muy usada en Tik Tok que permite reunir en un solo enlace el acceso a nuestras distintas redes sociales, lo cual aporta confianza a posibles seguidores. Configuré los enlaces y los fui actualizando conforme se produjeron cambios. También lo añadí a la descripción del perfil, una tarea que, aunque parecía sencilla, nos llevó bastante tiempo, ya que la plataforma no permitía añadir links directamente. No obstante, tras varios intentos, logré integrarlo correctamente.
+
+Para completar la semana, se asistió a la <b>clase correspondiente al 11/04/2025</b> (3 horas, 50 minutos).
+
+
+<b>Segunda semana</b>
+
+Durante la segunda semana empezamos a trabajar de forma más constante con los vídeos, intentando subir contenido relacionado con temas actuales y virales como el apagón del 28 de abril, la Feria de Sevilla y vídeos de preguntas y respuestas para facilitar el acercamiento con nuestros potenciales clientes. Como editora del equipo, me encargué de redactar los guiones y enviárselos a mis compañeros; una vez grababan los clips, me los pasaban para que yo los editara y preparara para su publicación, siempre con la validación previa del grupo. Además, grabé y edité un TikTok sobre la Feria, con la idea de atraer a un público local, lo cual nos pareció una buena forma de empezar a generar comunidad en torno a nuestra app. Finalmente, definimos las próximas ideas para los días restantes, como grabar un vlog sobre un alquiler real, seguir subiendo vídeos con tono humorístico como los que ya hemos publicado y continuar adaptándonos a las tendencias emergentes de la plataforma.
+
+En el ámbito formativo, se revisó la <b>Píldora Teórica ISPP 2024</b> sobre Segmentación, Tracción y Community Management (53 minutos, 33 segundos).
+
+Finalmente, se completaron las tareas administrativas requeridas como el <b>TimeEffortReport</b> (25 minutos) y la <b>Performance Evaluation</b> (10 minutos), y se asistió a la <b>clase del 25/04/2025</b> (4 horas, 20 minutos).
+
+Puede consultar el [tiempo invertido aquí](https://app.clockify.me/shared/6813664312b8445b6f721603).
 
 ### **Sevillano Barea, Alejandro**
