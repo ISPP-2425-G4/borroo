@@ -106,6 +106,7 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 | 021  | Responsividad de las distintas pantallas | Luis Javier Periáñez Franco | 30/04/2025 |  (No deja compartir chat por uso de imágenes del usuario) |
 | 022  | Creación de Facebook y Linkedin de Borroo | Luis Javier Periáñez Franco | 30/04/2025 |  (No deja compartir chat por uso de imágenes del usuario) |
 | 023  | Migrar base de datos a Google Cloud | Miguel González Ortiz | 26/04/2025 |  [Ver chat](https://chatgpt.com/share/68138255-a598-800a-92cc-dfd6a4f4fb00) |
+| 024  | Ayuda para hacer pruebas E2E con selenium | Santiago Rosado Raya | 30/04/2025 |  (No deja compartir chat por ser un proyecto ChatGpt) |
 
 
 
@@ -132,7 +133,7 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 | 021 | Responsividad | Sí | 40min |
 | 022 | Redes Sociales | Sí | 20min |
 | 023 | Solicitud de información | Sí | 15min |
-
+| 024 | Arreglos para pruebas Selenium | Sí | 30min |
 
 
 
