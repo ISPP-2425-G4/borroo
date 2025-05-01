@@ -5623,6 +5623,59 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 ### **Naredo Bernardos, Ignacio**
 
 ### **Nieto Vicioso, Javier**
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="3">Código</td>
+      <td>#506 Responsividad en la aplicación: Buscando más errores de responsividad (30/04/2025)</td>
+      <td>16 minutos</td>
+    </tr>
+    <tr>
+      <td>#506 Responsividad en la aplicación: Buscando corregir el ancho del componente de conversaciones para mejorar la responsividad (30/04/2025)</td>
+      <td>33 minutos</td>
+    </tr>
+    <tr>
+      <td>#506 Responsividad en la aplicación: Probando a hacer el chat de la app responsive (29/04/2025)</td>
+      <td>1 hora 20 minutos</td>
+    </tr>
+    <tr>
+      <td>Reuniones</td>
+      <td>Reunión tiktok (25/04/2025)</td>
+      <td>1 hora 30 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 25/04 (25/04/2025)</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 11/04 (11/04/2025)</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Documentación</td>
+      <td>Revisando el documento de lecciones aprendidas del S1 (24/04/2025)</td>
+      <td>33 minutos</td>
+    </tr>
+    <tr>
+      <td>Poniendo etiquetas en el clockify de los sprints anteriores para el time effort (24/04/2025)</td>
+      <td>15 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras teóricas</td>
+      <td>Píldora teórica PPL (01/05/2025)</td>
+      <td>1 hora 4 minutos</td>
+    </tr>
+  </tbody>
+</table>
+
 
 ### **Padilla Gómez, Marco**
 
