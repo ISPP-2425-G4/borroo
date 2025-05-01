@@ -809,6 +809,18 @@ Sobre documentación, comentar que añadí mis entradas del calendario NikoNiko,
 
 ### **Espinosa Naranjo, Pablo**
 
+Durante la primera semana, se me asignó como miembro del equipo de marketing de Youtube. Mantuvimos contacto los miembros del equipo sobre cuales serían las pautas a seguir, la temática de los videos y el modelo de trabajo. 
+
+Más allá de eso, se me solicitó ayudar a encontrar la solución de un aparente "bug", el cual trataba de alterar el orden en el cual los años salían por defecto en un formulario. Esta tarea inicialmente fue asignada en solitario a mi compañero Pablo Diaz, el cual me comentó que la dificultad principal era que este apartado era implementado por una librería externa, y el orden era ineditable. Tras investigarlo yo, observé que tenía razón, y su "corrección" implicaba un gran esfuerzo para su resultado. Como su fin era el de que fuese más intuitivo y sencillo para el usuario, le comente al jefe de proyecto la posibilidad de, como alternativa a la solución propuesta, reducir el numero de años en los que sería disponible el alquilar, no afectando a la funcionalidad, y aumentando la calidad visual y de interfaz. Este me dio el visto bueno, y procedí con la implementación.
+
+También se me notificó que los usuarios piloto habían comentado ciertos errores a la hora de usar "favoritos" en la aplicación, ya que según estos, no se actualizaba por pantalla si no recargabas la página. Tras comprobarlo, pude observar que inicialmente parecía ser así, aunque se había contemplado y comprobado anteriormente que se actualizara automaticamente. Tras observarlo más detenidamente, pude ver que el problema estaba en el propio rendimiento de la página, y que tras dejarlo cargar este se actualizaba automáticamente. Una vez observé esto, comente que no se trataba de ningún error de la funcionalidad concreta a mi compañero encargado de la gestión de usuarios piloto y al jefe de proyecto.
+
+En la segunda semana, comencé más a fondo mis tareas como parte del equipo de marketing de youtube. Propuse, entre otros tipo de video a desarrollar, subir a youtube una especie de tutoriales que sirvan como guía para los usuarios, con un enfoque profesional pero cercano. Además, estos videos podrían desglosarse para subirse como "Shorts" más adelante. Todo esto implicó formarme en como realizar grabaciones de video con distintos programas, generar voces con IA que no sonaran artificiales, y como montar todo en secuencia. Una vez pude comprender el funcionamiento e instalar en mi equipo lo necesario, procedí al montaje del video, que ya tenía guionizado, siendo este en concreto sobre los apartados sociales de la aplicación. Para ello, use escenas de la aplicación grabadas por mí con datos preparados con anterioridad, audios que sirven para narrar las secuencias del video, música que sirve de acompañamiento, y unas escenas de "intro" y "outtro" desarrolladas por mi compañero Pablo Diaz.
+
+Tras esto, desarrolle el documento "Revision.md".
+
+Por último, visualice los videos de "Pildoras teoricas" correspondientes a este Sprint (Segmentación, Tracción y Comm Mngmnt)
+
 ### **Fernández Rodríguez, Jesús**
 
 ### **Fernández Mota, Francisco**
