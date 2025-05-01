@@ -822,6 +822,9 @@ Tras esto, desarrolle el documento "Revision.md".
 Por último, visualice los videos de "Pildoras teoricas" correspondientes a este Sprint (Segmentación, Tracción y Comm Mngmnt)
 
 ### **Fernández Rodríguez, Jesús**
+Durante la primera semana del sprint del PPL me enfoqué principalmente en la implementación del panel de administración para la gestión de incidencias de los alquileres. Trabajé en el desarrollo de la interfaz y lógica para visualizar adecuadamente estas incidencias, asegurando que los administradores pudieran acceder a la información relevante de forma clara. Además, resolví problemas relacionados con las migraciones de la base de datos y documenté las lecciones aprendidas del S1.
+
+En la segunda semana, centré mis esfuerzos en tareas relacionadas con el despliegue final del proyecto. Migré la base de datos a Google Cloud, debido a que teniamos problemas de rendimiento debido a la plataforma (filess.io) donde teniamos alojada la base de datos y corregí errores relacionados con la API de imágenes. También preparé pruebas de carga para validar operaciones críticas y grabé material promocional para el anuncio del proyecto en youtube. Finalmente, ejecuté el despliegue definitivo y realicé arreglos finales en el proyecto. Además vi el video de pildoras teóricas subido en el ppl.
 
 ### **Fernández Mota, Francisco**
 
