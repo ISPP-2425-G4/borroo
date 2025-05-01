@@ -828,6 +828,10 @@ En la segunda semana, centré mis esfuerzos en tareas relacionadas con el despli
 
 ### **Fernández Mota, Francisco**
 
+Durante el PPL mi trabajo comenzó con una planificación acerca del vídeo de presentación para Youtube, seguido de realizar algunos posts en twitter.
+
+Durante la segunda semana estuve buscando información de diversas feuntes para tener una base respaldada por datos reales para el anuncio dedicado a los inversores, esta información la dejé reflejada en uno de los documentos del entregable. Además de esto realice algunas correcciones en la aplicación, como mostrar la ubicación del usuario que publica un anuncio o arreglar la vista relacionada con los formularios de solicitar alquileres o algunos enlaces del footer. También vi la píldora teórica publicada.
+
 ### **García Rodríguez, Javier**
 
 Antes de la primera semana lectiva correspondiente al PPL, estuve realizando varias tareas. En primer lugar, volví a crear los documentos base comunes (performanceEvaluation, timeEffortReport, NikoNiko). Además, desarrollé el plan de marketing. También escribí el backlog del PPL con las tareas correspondientes. Tuve una reunión para poder planificiar ciertas tareas con Alexander Picón Garrote, con la que gestionamos las issues correspondientes para planificar todo el PPL de forma correcta. Estuve desarrollando contenido para una de las redes sociales del proyecto, Instagram.
