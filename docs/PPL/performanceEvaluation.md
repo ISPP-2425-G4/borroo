@@ -839,6 +839,12 @@ Finalmente, se completaron las tareas administrativas requeridas como el <b>Time
 
 ### **Picón Garrote, Alexander** 
 
+Primera semana
+Durante la primera semana, mis actividades se centraron en la planificación inicial, el feedback externo dado y la creación de las primeras tareas del proyecto PPL. Asistí a la clase del 11/04. Participé activamente en reuniones clave para la planificación del PPL y para discutir problemas específicos del proyecto.Ademas, trabajé en la resolución de incidencias de marketing y finalicé el importante documento de lecciones aprendidas de la fase s1.
+
+Segunda semana
+En la segunda semana, mi enfoque principal fue continuar intensivamente con la documentación y análisis del PPL, además de dedicar tiempo a formación específica y asistir a clase. Elaboré documentos fundamentales como el de análisis de costes, el documento sobre monetización y rentabilidad, y otro documento detallado sobre monetización. Además, realizé cambios relativos al coste de lanzamiento y la modificación del documento de costes de marketing en varias ocasiones. En el aspecto formativo, revisé la Píldora Teórica ISPP 2024 sobre Segmentación, Tracción y Community Management. Para concluir el periodo, asistí a la clase del 25/04.
+
 ### **Palomo García, Miguel**
 
 ### **Periañez Franco, Luis Javier**
