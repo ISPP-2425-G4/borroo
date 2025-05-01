@@ -6155,7 +6155,7 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
       <td>4 horas</td>
     </tr>
         <tr>
-      <td rowspan="2">Clases</td>
+      <td rowspan="3">Clases</td>
       <td>Clase 24/04</td>
       <td>3 horas 50 minutos</td>
     </tr>
