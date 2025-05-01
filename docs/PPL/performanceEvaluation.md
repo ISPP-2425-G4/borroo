@@ -809,11 +809,29 @@ Sobre documentación, comentar que añadí mis entradas del calendario NikoNiko,
 
 ### **Espinosa Naranjo, Pablo**
 
+Durante la primera semana, se me asignó como miembro del equipo de marketing de Youtube. Mantuvimos contacto los miembros del equipo sobre cuales serían las pautas a seguir, la temática de los videos y el modelo de trabajo. 
+
+Más allá de eso, se me solicitó ayudar a encontrar la solución de un aparente "bug", el cual trataba de alterar el orden en el cual los años salían por defecto en un formulario. Esta tarea inicialmente fue asignada en solitario a mi compañero Pablo Diaz, el cual me comentó que la dificultad principal era que este apartado era implementado por una librería externa, y el orden era ineditable. Tras investigarlo yo, observé que tenía razón, y su "corrección" implicaba un gran esfuerzo para su resultado. Como su fin era el de que fuese más intuitivo y sencillo para el usuario, le comente al jefe de proyecto la posibilidad de, como alternativa a la solución propuesta, reducir el numero de años en los que sería disponible el alquilar, no afectando a la funcionalidad, y aumentando la calidad visual y de interfaz. Este me dio el visto bueno, y procedí con la implementación.
+
+También se me notificó que los usuarios piloto habían comentado ciertos errores a la hora de usar "favoritos" en la aplicación, ya que según estos, no se actualizaba por pantalla si no recargabas la página. Tras comprobarlo, pude observar que inicialmente parecía ser así, aunque se había contemplado y comprobado anteriormente que se actualizara automaticamente. Tras observarlo más detenidamente, pude ver que el problema estaba en el propio rendimiento de la página, y que tras dejarlo cargar este se actualizaba automáticamente. Una vez observé esto, comente que no se trataba de ningún error de la funcionalidad concreta a mi compañero encargado de la gestión de usuarios piloto y al jefe de proyecto.
+
+En la segunda semana, comencé más a fondo mis tareas como parte del equipo de marketing de youtube. Propuse, entre otros tipo de video a desarrollar, subir a youtube una especie de tutoriales que sirvan como guía para los usuarios, con un enfoque profesional pero cercano. Además, estos videos podrían desglosarse para subirse como "Shorts" más adelante. Todo esto implicó formarme en como realizar grabaciones de video con distintos programas, generar voces con IA que no sonaran artificiales, y como montar todo en secuencia. Una vez pude comprender el funcionamiento e instalar en mi equipo lo necesario, procedí al montaje del video, que ya tenía guionizado, siendo este en concreto sobre los apartados sociales de la aplicación. Para ello, use escenas de la aplicación grabadas por mí con datos preparados con anterioridad, audios que sirven para narrar las secuencias del video, música que sirve de acompañamiento, y unas escenas de "intro" y "outtro" desarrolladas por mi compañero Pablo Diaz.
+
+Tras esto, desarrolle el documento "Revision.md".
+
+Por último, visualice los videos de "Pildoras teoricas" correspondientes a este Sprint (Segmentación, Tracción y Comm Mngmnt)
+
 ### **Fernández Rodríguez, Jesús**
 
 ### **Fernández Mota, Francisco**
 
 ### **García Rodríguez, Javier**
+
+Antes de la primera semana lectiva correspondiente al PPL, estuve realizando varias tareas. En primer lugar, volví a crear los documentos base comunes (performanceEvaluation, timeEffortReport, NikoNiko). Además, desarrollé el plan de marketing. También escribí el backlog del PPL con las tareas correspondientes. Tuve una reunión para poder planificiar ciertas tareas con Alexander Picón Garrote, con la que gestionamos las issues correspondientes para planificar todo el PPL de forma correcta. Estuve desarrollando contenido para una de las redes sociales del proyecto, Instagram.
+
+Ahora en la primera semana, desarrollé el documento asociada a los tipos de personas que usarían Borroo, y estuve desarrollando el documento de Lecciones Aprendidas asociadas al Sprint 1. Una vez, más, estuve generando contenido para Instagram. Como cada semana, me volví a preparar la presentación , y asistí a la clase del día 25.
+
+Durante la segunda semana tuve una reunión con Alexander Picón Garrote para poder tomar cartas en el asunto sobre problemas en el inicio de tareas del PPL con varios miembros del grupo. Repasé la píldora teórica subida en la Enseñanza Virtual, y seguí generando contenido para redes sociales. También me preparé las 2 presentaciones correspondientes al PPL.
 
 ### **González Ortiz, Miguel**
 
@@ -858,6 +876,18 @@ Finalmente, se completaron las tareas administrativas requeridas como el <b>Time
 </div>
 
 ### **Naredo Bernardos, Ignacio**
+
+Durante la jornada de trabajo, se han llevado a cabo diversas actividades relevantes para el proyecto, distribuidas en varias categorías clave.
+
+ En primer lugar, se dedicaron 2 horas y 50 minutos a la revisión de contenido multimedia en TikTok, orientado al análisis de tendencias y formatos de comunicación actuales en plataformas digitales, lo cual resulta esencial para comprender el impacto de los medios sociales en la percepción y difusión de contenidos.
+
+Por otro lado, se destinaron 40 minutos a la revisión del documento correspondiente al Sprint 1 (S1), con el objetivo de garantizar la calidad y coherencia del material entregado.
+
+Asimismo, se invirtió un total de 3 horas y 50 minutos en una sesión de clase.
+
+Adicionalmente, se emplearon 20 minutos en el relleno del informe de Time Effort y la evaluación de desempeño.
+
+Finalmente, se dedicaron 35 minutos a la gestión de documentos en Knowledge Base (kb), para la correcta organización y disponibilidad de información técnica relevante para todo el equipo.
 
 ### **Nieto Vicioso, Javier**
 Durante las dos semanas de este sprint he continuado aportando al proyecto, aunque con una carga algo menor al haber dedicado una parte importante de tiempo en sprints anteriores.

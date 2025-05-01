@@ -5865,6 +5865,42 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Naredo Bernardos, Ignacio**
 
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Redes Sociales</td>
+      <td>Contenido media TikTok</td>
+      <td>2 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Documentación</td>
+      <td>Revisión documento S1</td>
+      <td>40 minutos</td>
+    </tr>
+    <tr>
+      <td>Clases</td>
+      <td>Clase</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Relleno timeEffort y Perfomance Evaluation</td>
+      <td>Documentos necesarios</td>
+      <td>20 minutos</td>
+    </tr>
+    </tr>
+      <td>Documentos en kb</td>
+      <td>base de conocimiento</td>
+      <td>35 minutos</td>
+  </tbody>
+</table>
+
 ### **Nieto Vicioso, Javier**
 <table>
   <thead>
