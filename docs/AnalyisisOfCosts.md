@@ -55,8 +55,8 @@ Corresponden a la inversión única requerida para poner en marcha el proyecto:
 * **Licencias y Herramientas (Adquisición inicial):** €3,000
 * **Infraestructura Tecnológica (Setup inicial Hosting/Servidores):** €2,000
 * **Registro de Dominio y Publicación:** €50
-* **Marketing de Lanzamiento:** €10,000 (Detallado en la sección 5).
-* **Subtotal Coste Inicial Base:** €79,440.20
+* **Marketing de Lanzamiento:** €2,000 (Detallado en la sección 5).
+* **Subtotal Coste Inicial Base:** €71,440.20
 
 Se incluye una **Reserva de Contingencia (10%)** sobre el coste base para imprevistos:
 
@@ -105,12 +105,12 @@ Se llevará a cabo un enfoque multicanal centrado geográficamente en el mercado
 
 #### 5.3 Desglose Estimado de Costes de Marketing
 
-* **Presupuesto de Lanzamiento (€10,000):** Asignación ilustrativa:
-    * *Publicidad Digital (PPC - Google, Meta):* €3,000 - €5,000 (Segmentación geográfica y demográfica intensiva).
-    * *Herramientas Marketing/SEO (Suscripciones iniciales):* €500 - €1,000 (Plataformas SEO, social media management, diseño).
-    * *Creación de Contenidos/Creatividades (Ads, Blog, Social):* €1,000 - €2,000 (Si se externaliza o requiere recursos específicos).
-    * *Acciones Locales/PR/Material Promocional:* €500 - €1,500 (Impresión, posibles colaboraciones iniciales).
-    * *Contingencia específica de Marketing:* Restante.
+* **Presupuesto de Lanzamiento (€2,000):**
+    * *Publicidad Digital (PPC - Principalmente Meta Ads muy segmentado):* €500 - €800
+    * *Herramientas Marketing/SEO (Pruebas gratuitas, planes básicos, herramientas free):* €100 - €200
+    * *Creación de Contenidos/Creatividades (Basado en esfuerzo interno, recursos básicos):* €200 - €400
+    * *Acciones Locales/PR/Material Promocional (Enfoque en outreach, impresión mínima):* €300 - €500
+    * *Contingencia específica de Marketing:* €100 - €500
       
 * **Presupuesto Anual de Mantenimiento (€5,000 / ~€417 mensual):** Para sostener la visibilidad y crecimiento:
     * *Publicidad Digital continua (Retargeting, Awareness):* Asignación mensual.
