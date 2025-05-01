@@ -391,7 +391,7 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 5. En caso de crear o actualizar, el usuario rellena los campos del formulario
 6. El usuario presiona el botón "Guardar"
 
-![](capturasRevision/botonDashboard.png.png)
+![](capturasRevision/botonDashboard.png)
 ![](capturasRevision/vistaGeneralAdmin.png)
 ![](capturasRevision/vistaUsuariosAdmin.png)
 ![](capturasRevision/vistaItemsAdmin.png)
@@ -482,3 +482,7 @@ Enlaces a redes sociales:
 	- Twitter/X: https://x.com/BorrooApp?t=Z6ud1Zm4esaLuC9mH1Rb7g&s=09
 
 	- Tiktok: https://www.tiktok.com/@borroo_app?_t=ZN-8w00oS7iwbe&_r=1
+
+ 	- Facebook: https://www.facebook.com/profile.php?id=61575853589604
+
+  	- LinkedIn: https://www.linkedin.com/in/borroapp/
