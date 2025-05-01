@@ -804,6 +804,25 @@ Finalmente, revisé las píldoras teóricas 8 y 9, lo cual me permitió consolid
 
 ### **Martín Muñoz, Álvaro**
 
+<div align="justify">
+<h2>Informe de Actividades</h2>
+
+<b>Primera semana </b>
+
+Durante la primera semana, las actividades se centraron en funcionalidades clave de pago y en la interfaz de usuario. Se implementó la opción para que los usuarios puedan <b>pagar suscripciones utilizando su saldo</b> (2 horas, 30 minutos, 28 segundos). Se dedicó tiempo a verificar el proceso de <b>retirada de saldo mediante simulaciones</b>, realizadas en dos bloques de trabajo (17 minutos, 57 segundos y 1 hora, 23 minutos, 18 segundos). Además, se realizó un esfuerzo inicial en mejorar la <b>responsividad general de la aplicación</b> (1 hora, 28 minutos) para asegurar una correcta visualización en diferentes dispositivos. Para completar la semana, se asistió a la <b>clase correspondiente al 11/04/2025</b> (3 horas, 50 minutos).
+
+<b>Segunda semana</b>
+
+En la segunda semana, el enfoque principal fue la optimización detallada de la <b>responsividad</b> y la incorporación de otras tareas del proyecto. Se trabajó específicamente en la adaptación de la interfaz al <b>crear un anuncio y se corrigieron problemas con símbolos de interrogación</b> (1 hora, 28 minutos), se realizó una <b>comprobación general de la responsividad</b> en el resto de la plataforma (19 minutos, 5 segundos) y se solucionó un <b>error detectado en el botón de reportar</b> (26 minutos, 20 segundos).
+
+Se implementó el seguimiento del estado del equipo mediante <b>Niko Niko, explorando su uso con IA</b> (21 minutos, 29 segundos) y realizando una pequeña <b>actualización</b> posterior (2 minutos, 30 segundos). Se llevó a cabo una sesión de <b>feedback externo como Usuario Piloto de Go4Surprise</b> (46 minutos, 20 segundos).
+
+En el ámbito formativo, se revisó la <b>Píldora Teórica ISPP 2024</b> sobre Segmentación, Tracción y Community Management (53 minutos, 33 segundos).
+
+Finalmente, se completaron las tareas administrativas requeridas como el <b>TimeEffortReport</b> (25 minutos) y la <b>Performance Evaluation</b> (10 minutos), y se asistió a la <b>clase del 25/04/2025</b> (3 horas, 50 minutos).
+
+</div>
+
 ### **Naredo Bernardos, Ignacio**
 
 ### **Nieto Vicioso, Javier**
