@@ -5560,7 +5560,59 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 ### **Palomo García, Miguel**
 
 ### **Periañez Franco, Luis Javier**
-
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="7">Código</td>
+      <td>#506 Responsividad a la aplicación: Revisión de todas las vistas(29/04/2025)</td>
+      <td>1 hora 30 minutos</td>
+    </tr>
+    <tr>
+      <td>#506 Facebook y Linkedin de Borroo (30/04/2025)</td>
+      <td>1 hora 26 minutos</td>
+    </tr>
+    <tr>
+      <td>#506 Responsive: Vista Objeto (30/04/2025)</td>
+      <td>1 hora</td>
+    </tr>
+    <tr>
+      <td>#506 Responsive: Vista Mis solicitudes (30/04/2025)</td>
+      <td>1 hora 40 minutos</td>
+    </tr>
+    <tr>
+      <td>#506 Responsive: Form Ticket y vista perfil (30/04/2025)</td>
+      <td>30 minutos</td>
+    </tr>
+    <tr>
+      <td> Creación de publicacion Instagram (30/04/2025)</td>
+      <td>36 minutos</td>
+    </tr>
+    <tr>
+      <td>Revisión de 2 Pr (30/04/2025)</td>
+      <td>15 minutos</td>
+    </tr>
+        <tr>
+      <td rowspan="3">Clases</td>
+      <td>Clase 25/04</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 2/05</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras Teóricas</td>
+      <td>52 minutos</td>
+    </tr>
+     </tbody>
+</table>
 ### **Rosado Raya, Santiago**
  
 ### **Sánchez Márquez, Julia**
