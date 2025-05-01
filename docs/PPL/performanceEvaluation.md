@@ -81,7 +81,7 @@
 | Rosado Raya, Santiago        |  10  | 10  | 10  | 10  |    10  |      |       |         |
 | Sánchez Márquez, Julia       |  10  | 10  | 10  | 10  |     10 |      |       |         |
 | Sevillano Barea, Alejandro   |  10  | 10  | 10  | 10  |  10    |      |       |         |
-| Total                        | 170  |169,9| 170 | 170 |   10   |      |       |         |
+| Total                        | 170  |169,9| 170 | 170 |   170   |      |       |         |
 
 
 # Individual Contribution Summary  
