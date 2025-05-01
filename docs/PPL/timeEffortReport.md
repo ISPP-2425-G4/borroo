@@ -5891,10 +5891,12 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
     </tr>
     <tr>
       <td>Relleno timeEffort y Perfomance Evaluation</td>
+      <td>Documentos necesarios</td>
       <td>20 minutos</td>
     </tr>
     </tr>
       <td>Documentos en kb</td>
+      <td>base de conocimientp</td>
       <td>35 minutos</td>
   </tbody>
 </table>
