@@ -5547,6 +5547,56 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **González Ortiz, Miguel**
 
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="6">Código</td>
+      <td>Realizando test de carga para crud items</td>
+      <td>46 minutos</td>
+    </tr>
+    <tr>
+      <td>Realizando test de carga para crud items</td>
+      <td>1 hora 52 minutos</td>
+    </tr>
+    <tr>
+      <td>Migrar DB google cloud y nuevo despliegue</td>
+      <td>5 horas y 20 minutos</td>
+    </tr>
+    <tr>
+      <td>Realizando test de carga para recuperación de contraseñas</td>
+      <td>1 hora 30 minutos</td>
+    </tr>
+    <tr>
+      <td>Realizando test unitarios de funcionalidad de admin de usuarios</td>
+      <td>1 hora y 49 minutos</td>
+    </tr>
+    <tr>
+      <td> Realizando test de selenium para registro</td>
+      <td>52 minutos</td>
+    </tr>
+        <tr>
+      <td rowspan="3">Clases</td>
+      <td>Clase 25/04</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 2/05</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras Teóricas</td>
+      <td>52 minutos</td>
+    </tr>
+     </tbody>
+</table>
+
 ### **Martín Muñoz, Álvaro**
 
 <table border="1" cellspacing="0" cellpadding="5">
