@@ -41,6 +41,7 @@ Fecha: 30/04/2025
 | Fecha      | Versión | Realizada por           | Descripción de los cambios |
 | ---------- | ------- | ----------------------- | -------------------------- |
 | 30-04-2025 | v1.0    | Alexander Picón         | Creación del documento     |
+| 01-05-2025 | v1.1    | Alexander Picón         | Modificación de costes     |
 
 
 ### 1. Resumen de Costes
@@ -55,8 +56,7 @@ Corresponden a la inversión única requerida para poner en marcha el proyecto:
 * **Licencias y Herramientas (Adquisición inicial):** €3,000
 * **Infraestructura Tecnológica (Setup inicial Hosting/Servidores):** €2,000
 * **Registro de Dominio y Publicación:** €50
-* **Marketing de Lanzamiento:** €2,000 (Detallado en la sección 5).
-* **Subtotal Coste Inicial Base:** €71,440.20
+* **Subtotal Coste Inicial Base:** €69,440.20
 
 Se incluye una **Reserva de Contingencia (10%)** sobre el coste base para imprevistos:
 
@@ -73,6 +73,7 @@ Gastos recurrentes anuales y mensuales estimados para el funcionamiento continuo
 **Desglose Anual Estimado:**
 * **Licencias y Herramientas (Renovación anual):** €2,000
 * **Hosting y Servidores (Mantenimiento anual):** €8,000
+* * **Marketing de Lanzamiento:** €2,000 (Detallado en la sección 5).
 * **Dominio (Renovación anual):** €30
 * **Marketing (Mantenimiento anual):** €5,000 (Detallado en la sección 5).
 * **Mantenimiento y Actualizaciones de la Plataforma:** €20,000
@@ -106,11 +107,11 @@ Se llevará a cabo un enfoque multicanal centrado geográficamente en el mercado
 #### 5.3 Desglose Estimado de Costes de Marketing
 
 * **Presupuesto de Lanzamiento (€2,000):**
-    * *Publicidad Digital (PPC - Principalmente Meta Ads muy segmentado):* €500 - €800
-    * *Herramientas Marketing/SEO (Pruebas gratuitas, planes básicos, herramientas free):* €100 - €200
-    * *Creación de Contenidos/Creatividades (Basado en esfuerzo interno, recursos básicos):* €200 - €400
-    * *Acciones Locales/PR/Material Promocional (Enfoque en outreach, impresión mínima):* €300 - €500
-    * *Contingencia específica de Marketing:* €100 - €500
+    * *Publicidad Digital (PPC - Principalmente Meta Ads muy segmentado):* €700
+    * *Herramientas Marketing/SEO (Pruebas gratuitas, planes básicos, herramientas free):* €200
+    * *Creación de Contenidos/Creatividades (Basado en esfuerzo interno, recursos básicos):* €300
+    * *Acciones Locales/PR/Material Promocional (Enfoque en outreach, impresión mínima):* €400
+    * *Contingencia específica de Marketing:* €400
       
 * **Presupuesto Anual de Mantenimiento (€5,000 / ~€417 mensual):** Para sostener la visibilidad y crecimiento:
     * *Publicidad Digital continua (Retargeting, Awareness):* Asignación mensual.
@@ -118,20 +119,7 @@ Se llevará a cabo un enfoque multicanal centrado geográficamente en el mercado
     * *Marketing de Contenidos y SEO continuo:* Mantenimiento del blog, optimizaciones.
     * *Gestión de Redes Sociales y Comunidad:* Tiempo o herramientas.
 
-#### 5.4 Herramientas SEO y de Marketing
-
-Se contempla el uso de herramientas estándar de la industria para optimizar las campañas y medir resultados:
-* **Para SEO:**
-    * *Plataformas Integrales (Investigación de palabras clave, análisis de competencia, auditoría técnica):* **SEMrush**, **Ahrefs**. Permiten analizar el mercado y optimizar el contenido y la estructura web.
-    * *Herramientas Google (Esenciales y Gratuitas):* **Google Analytics** (para medir tráfico y comportamiento del usuario), **Google Search Console** (para monitorizar el rendimiento en búsqueda y la salud del sitio), **Google Keyword Planner** (para investigación de palabras clave inicial).
-
-* **Para Marketing de Contenidos y Redes Sociales:**
-    * *Diseño Gráfico:* **Canva** para crear creatividades para anuncios y publicaciones sociales.
-    * *Gestión de Redes Sociales:* **Buffer**, **Hootsuite** para programar publicaciones y monitorizar la actividad social.
-* **Para Email Marketing:**
-    * Plataformas como Mailchimp, Sendinblue, Brevo para gestionar listas de suscriptores y campañas de email.
-
-#### 5.5 Partners Estratégicos
+#### 5.4 Partners Estratégicos
 
 La estrategia de outreach incluye la identificación y contacto con potenciales partners locales en Sevilla que puedan actuar como early adopters, prescriptores o colaboradores. Tipos de partners potenciales:
 * Universidades y asociaciones estudiantiles.
