@@ -5787,6 +5787,73 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Fernández Rodríguez, Jesús**
 
+<table border="1">
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="12">Trabajo PPL</td>
+      <td>Migrar DB Google Cloud y nuevo despliegue</td>
+      <td>6 horas 28 minutos</td>
+    </tr>
+    <tr>
+      <td>Panel de administrador (incidencias alquileres)</td>
+      <td>3 horas</td>
+    </tr>
+    <tr>
+      <td>Fixes finales en despliegue</td>
+      <td>1 hora 1 minuto</td>
+    </tr>
+    <tr>
+      <td>Arreglos S3</td>
+      <td>56 minutos</td>
+    </tr>
+    <tr>
+      <td>Despliegue final PPL</td>
+      <td>49 minutos</td>
+    </tr>
+    <tr>
+      <td>Implementar mensaje de error de la API de imágenes</td>
+      <td>32 minutos</td>
+    </tr>
+    <tr>
+      <td>Preparar datos y hacer clip para anuncio</td>
+      <td>20 minutos</td>
+    </tr>
+    <tr>
+      <td>Generación de pruebas de carga</td>
+      <td>14 minutos</td>
+    </tr>
+    <tr>
+      <td>Fix reset migrations</td>
+      <td>12 minutos</td>
+    </tr>
+    <tr>
+      <td>Crear usuarios y verificación</td>
+      <td>2 minutos</td>
+    </tr>
+    <tr>
+      <td>Documento lecciones aprendidas</td>
+      <td>4 minutos</td>
+    </tr>
+    <tr>
+      <td>Extras de panel administrador (pequeños ajustes)</td>
+      <td>7 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras teóricas</td>
+      <td>Píldoras 01/05/25</td>
+      <td>50 minutos</td>
+    </tr>
+  </tbody>
+</table>
+
+
 ### **Fernández Mota, Francisco**
 
 ### **García Rodríguez, Javier**
