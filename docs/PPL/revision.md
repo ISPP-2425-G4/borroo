@@ -439,6 +439,14 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
 ![](capturasRevision/incidenciasAdmin4.png)
 ![](capturasRevision/incidenciasAdmin5.png)
 
+### Caso 27: Retirada de saldo
+1. El usuario debe loggearse y tener saldo previamente (obtenido por alquileres)
+2. El usuario accede a su perfil
+3. El usuario presiona "retirar saldo"
+4. El usuario selecciona el saldo a retirar y presiona "Confirmar retirada"
+
+![](capturasRevision/saldo1.png)
+![](capturasRevision/saldo2.png)
 
 ## 3. Datos necesarios para la revisión
 
