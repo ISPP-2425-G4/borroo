@@ -790,6 +790,13 @@ Finalmente, revisé las píldoras teóricas 8 y 9, lo cual me permitió consolid
 
 ### **Blanco Mora, David** 
 
+Para esta etapa del proyecto, se me asignó al equipo de marketing especializado en promocionar la aplicación a través de Instagram. 
+Durante la primera semana de trabajo, estuve creando borradores para publicaciones futuras en instagram, tratando de mantener una consistencia en todas ellas, generando una temática en torno a Don Ramón, la mascota de Borroo. 
+
+Durante la segunda semana de trabajo, trabajé en el diseño definitivo de varias publicaciones que iremos subiendo a lo largo de estas semanas. Entre ellas podemos destacar varios carruseles. Como son: ¿Qué es Borroo? - una breve explicación sobre el objetivo que tratamos perseguir lanzando Borroo al mercado. ¿Por qué alquilar en Borroo? - para tratar de hacer saber al público la cantidad de ventajas que puede suponer adquirir artículos de todo tipo por tiempo limitado. Y finalmente, ¿Cuándo usar Borroo? - Tratando de explicar ciertas situaciones de nuestro día a día en las cuales podremos hacer uso de la plataforma.
+Mantuvimos dos reuniones, tratando de establecer una paleta de colores y un diseño único para que así todas las publicaciones sigan un mismo patrón y pudiese ser más llamativo de cara al consumidor. 
+Y finalmente visualicé la píldora teórica publicada en enseñanza virtual.
+
 ### **Díaz Ordóñez, Pablo** 
 
 Durante la primera semana de trabajo, actualicé todas las entradas de Clockify con las etiquetas que se añadieron. Además, corregí en bug sobre el texto de la página de los anuncios y trabajé en encontrar solución al bug del deplegable de años en los distintos formularios que lo tienen. Esta tarea, encontraba una solución algo más compleja ya que el sistema que utilizábamos no soportaba el resultado final que queríamos obtener como soluión, y Pablo Espinosa ayudó en poder encontrar una nueva solución, siendo él quien la completó finalmente. También en esta semana, instalé todo el material necesario para poder llevar a cabo tareas de marketing sobre YouTube, además de realizar unas primeras versiones de las intros y outros de los vídeos de YouTube. También ayudé en la revisión del documento de lecciones aprendidas del Sprint 1. Además, personalicé el canal de YouTube (información e imágenes) y asistí a la clase del 25/04/25, junto a la actividad extra que se realizó al final de la misma.
