@@ -809,6 +809,18 @@ Sobre documentación, comentar que añadí mis entradas del calendario NikoNiko,
 
 ### **Espinosa Naranjo, Pablo**
 
+Durante la primera semana, se me asignó como miembro del equipo de marketing de Youtube. Mantuvimos contacto los miembros del equipo sobre cuales serían las pautas a seguir, la temática de los videos y el modelo de trabajo. 
+
+Más allá de eso, se me solicitó ayudar a encontrar la solución de un aparente "bug", el cual trataba de alterar el orden en el cual los años salían por defecto en un formulario. Esta tarea inicialmente fue asignada en solitario a mi compañero Pablo Diaz, el cual me comentó que la dificultad principal era que este apartado era implementado por una librería externa, y el orden era ineditable. Tras investigarlo yo, observé que tenía razón, y su "corrección" implicaba un gran esfuerzo para su resultado. Como su fin era el de que fuese más intuitivo y sencillo para el usuario, le comente al jefe de proyecto la posibilidad de, como alternativa a la solución propuesta, reducir el numero de años en los que sería disponible el alquilar, no afectando a la funcionalidad, y aumentando la calidad visual y de interfaz. Este me dio el visto bueno, y procedí con la implementación.
+
+También se me notificó que los usuarios piloto habían comentado ciertos errores a la hora de usar "favoritos" en la aplicación, ya que según estos, no se actualizaba por pantalla si no recargabas la página. Tras comprobarlo, pude observar que inicialmente parecía ser así, aunque se había contemplado y comprobado anteriormente que se actualizara automaticamente. Tras observarlo más detenidamente, pude ver que el problema estaba en el propio rendimiento de la página, y que tras dejarlo cargar este se actualizaba automáticamente. Una vez observé esto, comente que no se trataba de ningún error de la funcionalidad concreta a mi compañero encargado de la gestión de usuarios piloto y al jefe de proyecto.
+
+En la segunda semana, comencé más a fondo mis tareas como parte del equipo de marketing de youtube. Propuse, entre otros tipo de video a desarrollar, subir a youtube una especie de tutoriales que sirvan como guía para los usuarios, con un enfoque profesional pero cercano. Además, estos videos podrían desglosarse para subirse como "Shorts" más adelante. Todo esto implicó formarme en como realizar grabaciones de video con distintos programas, generar voces con IA que no sonaran artificiales, y como montar todo en secuencia. Una vez pude comprender el funcionamiento e instalar en mi equipo lo necesario, procedí al montaje del video, que ya tenía guionizado, siendo este en concreto sobre los apartados sociales de la aplicación. Para ello, use escenas de la aplicación grabadas por mí con datos preparados con anterioridad, audios que sirven para narrar las secuencias del video, música que sirve de acompañamiento, y unas escenas de "intro" y "outtro" desarrolladas por mi compañero Pablo Diaz.
+
+Tras esto, desarrolle el documento "Revision.md".
+
+Por último, visualice los videos de "Pildoras teoricas" correspondientes a este Sprint (Segmentación, Tracción y Comm Mngmnt)
+
 ### **Fernández Rodríguez, Jesús**
 
 ### **Fernández Mota, Francisco**
@@ -889,6 +901,9 @@ En la segunda semana, mi trabajo se centró en la mejora de la responsividad de 
 
 ### **Padilla Gómez, Marco**
 
+La primera semana añadi las tag para mejorar el time effort a las entradas de clockify, y tambien cree un tiktok desde 0 usando la IA(el de top 3 objetos).
+La segunda semana, vi la pildora teorica, añadi el feedback de las semanas 10 y 11 a las bases de conocimiento. Y con la idea de Julia cree el guion del tiktok del juego de levantar dedos y lo grabé y por ultimo actualice el KB report.
+
 ### **Picón Garrote, Alexander** 
 
 Durante la primera semana, mis actividades se centraron en la planificación inicial, el feedback externo dado y la creación de las primeras tareas del proyecto PPL. Asistí a la clase del 11/04. Participé activamente en reuniones clave para la planificación del PPL y para discutir problemas específicos del proyecto.Ademas, trabajé en la resolución de incidencias de marketing y finalicé el importante documento de lecciones aprendidas de la fase s1.
@@ -896,6 +911,8 @@ Durante la primera semana, mis actividades se centraron en la planificación ini
 En la segunda semana, mi enfoque principal fue continuar intensivamente con la documentación y análisis del PPL, además de dedicar tiempo a formación específica y asistir a clase. Elaboré documentos fundamentales como el de análisis de costes, el documento sobre monetización y rentabilidad, y otro documento detallado sobre monetización. Además, realizé cambios relativos al coste de lanzamiento y la modificación del documento de costes de marketing en varias ocasiones. En el aspecto formativo, revisé la Píldora Teórica ISPP 2024 sobre Segmentación, Tracción y Community Management. Para concluir el periodo, asistí a la clase del 25/04.
 
 ### **Palomo García, Miguel**
+Durante estas dos semanas he llevado a cabo mi rol de responsable de la presentación, no solo mostrandolo en el powerpoint sino tambien realizando todas las tareas que conlleva, realizar anuncio inversores, realizar y editar la demo, hacer los videos de las killer opening, analizar las inversiones posibles, calcular el volumen de transacciones que va a tener la aplicación. Por otro lado asistí a todas las clases lectivas y consumí todos los contenidos teóricos subidos a la plataforma.
+
 
 ### **Periañez Franco, Luis Javier**
 
@@ -908,6 +925,15 @@ En paralelo, se revisaron dos pull requests de compañeros, colaborando en el pr
 Por otro lado, asistí a sesiones formativas que sumaron un total de más de siete horas de clases, además de consumir contenidos teóricos complementarios que fortalecieron los conocimientos técnicos necesarios para las tareas ejecutadas.
 
 ### **Rosado Raya, Santiago**
+<b>Primera semana </b>
+Durante esta primera semana me encargué de elaborar la documentación necesaria para que los usuarios piloto pudieran evaluar el sistema. Estuve en contacto continuo con todos ellos, gestionando tanto el envío como la recepción del feedback.
+Además, como responsable de QA de mi subgrupo, realicé algunos tests automatizados con Selenium, entre ellos el de solicitar una renta.
+
+<b>Segunda semana</b>
+Durante esta segunda semana me encargué de recibir, analizar y clasificar el feedback proporcionado por los usuarios piloto. Además, elaboré un nuevo documento de recopilación que, una vez enviado, dio lugar a un segundo proceso de recogida y análisis de feedback.
+Por otro lado, realicé la revisión de una pull request y desarrollé varios tests de integración y unitarios sobre nuestra entidad Objeto, así como algunos tests de carga relacionados con las suscripciones. También completé el test automatizado en Selenium para solicitar y aceptar una renta.
+Al final del Sprint, visualicé las píldoras teóricas correspondientes y califiqué a los usuarios piloto de acuerdo con los criterios establecidos en nuestra gestión de usuarios piloto.
+
  
 ### **Sánchez Márquez, Julia**
 <b>Primera semana </b>
@@ -928,3 +954,13 @@ Finalmente, se completaron las tareas administrativas requeridas como el <b>Time
 Puede consultar el [tiempo invertido aquí](https://app.clockify.me/shared/6813664312b8445b6f721603).
 
 ### **Sevillano Barea, Alejandro**
+
+<b>Primera semana </b>
+
+Durante la primera semana no pude avanzar significativamente en las tareas asignadas, ya que coincidió con un periodo de alta carga académica debido a exámenes y entregas de otras asignaturas. Este contexto me limitó en cuanto al tiempo disponible para dedicar al proyecto.
+
+<b>Segunda semana </b>
+
+En la segunda semana retomé el ritmo y pude trabajar con normalidad. Me centré sobre todo en la parte de testing, empezando por los test de funcionalidad de los reportes y la configuración del archivo .coveragerc para gestionar la cobertura de pruebas. También mejoré las pruebas unitarias relacionadas con pagos y rentas, y creé un test de carga con Locust para simular la petición de un alquiler. Desarrollé más pruebas automatizadas con Selenium, empecé por el flujo de login, que logré automatizar completamente, y luego pasé a trabajar en los test de creación y edición de ítems. En este último caso, conseguí que se creara el producto, se editara su precio y se verificara el cambio correctamente, pero no llegué a completar la parte del test de eliminación, ya que el botón correspondiente no siempre aparecía como esperábamos y no logré que se ejecutara la acción de borrado correctamente. También revisé las pildoras teóricas.
+
+

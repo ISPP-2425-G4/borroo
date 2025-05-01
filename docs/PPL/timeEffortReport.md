@@ -5732,11 +5732,131 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Espinosa Naranjo, Pablo**
 
+<table border="1">
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="6">Trabajo</td>
+      <td>Revision fallo favoritos</td>
+      <td>41 minutos</td>
+    </tr>
+    <tr>
+      <td>Bug despliegue años</td>
+      <td>1 hora 39 minutos</td>
+    </tr>
+    <tr>
+      <td>Apoyo marketing instagram</td>
+      <td>46 minutos</td>
+    </tr>
+    <tr>
+      <td>Formacion marketing youtube</td>
+      <td>3 horas 33 minutos</td>
+    </tr>
+    <tr>
+      <td>Montaje video youtube</td>
+      <td>3 horas 21 minutos</td>
+    </tr>
+    <tr>
+      <td>Documento revision</td>
+      <td>45 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clase</td>
+      <td>Clase 11/4/25</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 25/4/25</td>
+      <td>4 hora y 20 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras teóricas</td>
+      <td>Pildoras</td>
+      <td>52 minutos</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
 ### **Fernández Rodríguez, Jesús**
 
 ### **Fernández Mota, Francisco**
 
 ### **García Rodríguez, Javier**
+
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="10">Trabajo</td>
+      <td>Creación de documentos base comunes (performanceEvaluation, timeEffortReport, NikoNiko) y desarrollo del plan de marketing</td>
+      <td>1 hora y 3 minutos</td>
+    </tr>
+    <tr>
+      <td>Creación del backlog del PPL</td>
+      <td>1 hora 18 minutos</td>
+    </tr>
+    <tr>
+      <td>Planificación PPL</td>
+      <td>1 hora 10 minutos</td>
+    </tr>
+    <tr>
+      <td>Publicación instagram</td>
+      <td>19 minutos</td>
+    </tr>
+    <tr>
+      <td>Creación de "personas" para el marketing</td>
+      <td>45 minutos</td>
+    </tr>
+    <tr>
+      <td>Documento Lecciones Aprendidas S1</td>
+      <td>5 horas y 12 minutos</td>
+    </tr>
+    <tr>
+      <td>Preparación presentación</td>
+      <td>4 horas y 19 minutos</td>
+    </tr>
+    <tr>
+      <td>Storie Instagram</td>
+      <td>21 minutos</td>
+    </tr>
+    <tr>
+      <td>Publicación Instagram</td>
+      <td>36 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldora teórica</td>
+      <td>1 hora y 4 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Reunión</td>
+      <td>Reunión problemas PPL</td>
+      <td>35 minutos</td>
+    </tr>
+    <tr>
+      <td>Reunión planificación PPL</td>
+      <td>1 hora y 12 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase</td>
+      <td>Clase 25/4/25</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+  </tbody>
+</table>
 
 ### **González Ortiz, Miguel**
 
@@ -5958,6 +6078,59 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Padilla Gómez, Marco**
 
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="3">Marketing</td>
+    <td>Tiktok Top 3 objetos para rentar</td>
+    <td>3 horas y 37 minutos</td>
+  </tr>
+  <tr>
+    <td>Guion tiktok levanta un dedo</td>
+    <td>26 minutos</td>
+  </tr>
+  <tr>
+    <td>Grabar tiktok levanta un dedo</td>
+    <td>1 hora y 18 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="4">Documentación</td>
+    <td>Añadir tags a clockify</td>
+    <td>8 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadir feedback a las bases de conocimiento</td>
+    <td>1 hora y 1 minuto</td>
+  </tr>
+  <tr>
+    <td>Realizacion del KBreport PPL</td>
+    <td>11 minutos</td>
+  </tr>
+  <tr>
+    <td>Rellenar el timeEffort y el performance evaluation</td>
+    <td>24 minutos</td>
+  </tr>
+  <tr>
+    <td>Píldoras teóricas</td>
+    <td>Píldora 10</td>
+    <td>52 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Clases</td>
+    <td>Clase 11/04</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 25/04</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
+
 ### **Picón Garrote, Alexander** 
 
 <table border="1" cellspacing="0" cellpadding="5">
@@ -6025,6 +6198,39 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 </table>
 
 ### **Palomo García, Miguel**
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="3">Tareas</td>
+      <td>Presentación y anuncios (25/04/2025)</td>
+      <td>6 horas</td>
+    </tr>
+    <tr>
+      <td>Demo (30/04/2025)</td>
+      <td>2 horas</td>
+    </tr>
+    <tr>
+      <td>Presentación y anuncios inversores (02/05/2025)</td>
+      <td>4 horas</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 24/04</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras Teóricas</td>
+      <td>1 hora</td>
+    </tr>
+  </tbody>
+</table>
 
 ### **Periañez Franco, Luis Javier**
 <table>
@@ -6080,7 +6286,101 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
     </tr>
      </tbody>
 </table>
+
 ### **Rosado Raya, Santiago**
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="15">Trabajo</td>
+    <td>Documentacion Pilotos PPL</td>
+    <td>7 minutos</td>
+  </tr>
+  <tr>
+    <td>Clasidicar Feedback de UP y calificación de estos</td>
+    <td>11 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión PR #544</td>
+    <td>14 minutos</td>
+  </tr>
+  <tr>
+    <td>lasificacion Feedback Mitad PPL</td>
+    <td>14 minutos</td>
+  </tr>
+  <tr>
+    <td>Análisis feedback PPL</td>
+    <td>16 minutos</td>
+  </tr>
+  <tr>
+    <td>Preparación documento UP PPL feedback 2</td>
+    <td>30 minutos</td>
+  </tr>
+  <tr>
+    <td>Tests de carga suscripciones  issue #474</td>
+    <td>35 minutos</td>
+  </tr>
+  <tr>
+    <td>Análisis feedback PPL</td>
+    <td>37 minutos</td>
+  </tr>
+  <tr>
+    <td>Testing E2E</td>
+    <td>39 minutos</td>
+  </tr>
+  <tr>
+    <td>Pildoreas teoricas</td>
+    <td>50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clasificar Feedback de UP y calificación de estos</td>
+    <td>53 minutos</td>
+  </tr>
+  <tr>
+    <td>Documento Feedback UP PPL</td>
+    <td>59 minutos</td>
+  </tr>
+  <tr>
+    <td>Tests E2E Subgrupo 2</td>
+    <td>1 hora 26 minutos</td>
+  </tr>
+  <tr>
+    <td>Tests unitarios y de integración de objetos</td>
+    <td>1 hora 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Testing E2E</td>
+    <td>2 horas 14 minutos</td>
+  </tr>
+    <td rowspan="1">Clase</td>
+    <td>Clase 04/04/2025</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Feedback Externo</td>
+    <td>Feedback para G8, Infantem PPL</td>
+    <td>9 minutos</td>
+  </tr>
+  <td>Feedback para G8, Infantem PPL</td>
+    <td>18 minutos</td>
+  </tr>
+
+  <tr>
+    <td>Feedback para G8, Infantem PPL</td>
+    <td>24 minutos</td>
+  </tr>
+  <tr>
+    <td>Total</td>
+    <td colspan="2">16 horas 21 minutos</td>
+  </tr>
+  <tr>
+    <td>Enlace Clockify</td>
+    <td colspan="2"><a href="https://app.clockify.me/shared/6813a9d3f6832429953b149f" target="_blank">Clockify</a></td>
+  </tr>
+</table>
  
 ### **Sánchez Márquez, Julia**
 <table>
@@ -6098,7 +6398,7 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
       <td>1 hora 30 minutos</td>
     </tr>
     <tr>
-      <td>Creación, adaptación linktree y ediciñon del perfil Tiktok(26/04/2025)</td>
+      <td>Creación, adaptación linktree y edicion del perfil Tiktok(26/04/2025)</td>
       <td>18 minutoss</td>
     </tr>
     <tr>
@@ -6152,4 +6452,51 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
     </tr>
      </tbody>
 </table>
+
 ### **Sevillano Barea, Alejandro**
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="5">Tareas</td>
+      <td>Test de funcionalidad de reportes y creacion de coveragerc</td>
+      <td>3 horas 28 minutos</td>
+    </tr>
+    <tr>
+      <td>Mejora en pruebas unitarias de pagos y rentas</td>
+      <td>3 horas 6 minutos</td>
+    </tr>
+    <tr>
+      <td>Test de locust para pedir un alquiler</td>
+      <td>1 hora 59 minutos</td>
+    </tr>
+    <tr>
+      <td>Test de selenium de login</td>
+      <td>1 hora 24 minutos</td>
+    </tr>
+    <tr>
+      <td>Test de selenium de crear y actualizar items</td>
+      <td>3 horas 6 minutos</td>
+    </tr>
+        <tr>
+      <td rowspan="3">Clases</td>
+      <td>Clase 11/04</td>
+      <td>3 horas 40 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 25/04</td>
+      <td>4 horas y 10 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras Teóricas</td>
+      <td>52 minutos</td>
+    </tr>
+     </tbody>
+</table>
+
