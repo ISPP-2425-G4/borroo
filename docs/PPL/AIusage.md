@@ -105,6 +105,7 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 | 020  | Centrar para pantallas pequeñas FiXCircle Icon | Álvaro Martín Muñoz | 30/04/2025 |  [Ver chat](https://claude.ai/share/2ca181d2-3d2f-4724-9b9b-ef109f7fea1c) |
 | 021  | Responsividad de las distintas pantallas | Luis Javier Periáñez Franco | 30/04/2025 |  (No deja compartir chat por uso de imágenes del usuario) |
 | 022  | Creación de Facebook y Linkedin de Borroo | Luis Javier Periáñez Franco | 30/04/2025 |  (No deja compartir chat por uso de imágenes del usuario) |
+| 023  | Migrar base de datos a Google Cloud | Miguel González Ortiz | 26/04/2025 |  [Ver chat](https://chatgpt.com/share/68138255-a598-800a-92cc-dfd6a4f4fb00) |
 
 
 
@@ -130,6 +131,7 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 | 020 | Ajustar icono en pantallas xs | Sí | 15min |
 | 021 | Responsividad | Sí | 40min |
 | 022 | Redes Sociales | Sí | 20min |
+| 023 | Solicitud de información | Sí | 15min |
 
 
 
@@ -142,8 +144,8 @@ Para calcular el porcentaje de alucinaciones de las inteligencias artificiales u
 | Desarrollador | Usos | % Alucinaciones |
 |----|------|------------|
 | 1  |  21   | 14%  |
-| 2  |   22  | %12  |
-| 3  |     | %  |
+| 2  |   22  | 12%  |
+| 3  | 20 | 12%  |
 | 4  |     | %  |
 | 5  |     | %  |
 | 6  |     | %  |
