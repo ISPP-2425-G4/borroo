@@ -954,3 +954,13 @@ Finalmente, se completaron las tareas administrativas requeridas como el <b>Time
 Puede consultar el [tiempo invertido aquí](https://app.clockify.me/shared/6813664312b8445b6f721603).
 
 ### **Sevillano Barea, Alejandro**
+
+<b>Primera semana </b>
+
+Durante la primera semana no pude avanzar significativamente en las tareas asignadas, ya que coincidió con un periodo de alta carga académica debido a exámenes y entregas de otras asignaturas. Este contexto me limitó en cuanto al tiempo disponible para dedicar al proyecto.
+
+<b>Segunda semana </b>
+
+En la segunda semana retomé el ritmo y pude trabajar con normalidad. Me centré sobre todo en la parte de testing, empezando por los test de funcionalidad de los reportes y la configuración del archivo .coveragerc para gestionar la cobertura de pruebas. También mejoré las pruebas unitarias relacionadas con pagos y rentas, y creé un test de carga con Locust para simular la petición de un alquiler. Desarrollé más pruebas automatizadas con Selenium, empecé por el flujo de login, que logré automatizar completamente, y luego pasé a trabajar en los test de creación y edición de ítems. En este último caso, conseguí que se creara el producto, se editara su precio y se verificara el cambio correctamente, pero no llegué a completar la parte del test de eliminación, ya que el botón correspondiente no siempre aparecía como esperábamos y no logré que se ejecutara la acción de borrado correctamente. También revisé las pildoras teóricas.
+
+

@@ -6452,4 +6452,51 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
     </tr>
      </tbody>
 </table>
+
 ### **Sevillano Barea, Alejandro**
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="5">Tareas</td>
+      <td>Test de funcionalidad de reportes y creacion de coveragerc</td>
+      <td>3 horas 28 minutos</td>
+    </tr>
+    <tr>
+      <td>Mejora en pruebas unitarias de pagos y rentas</td>
+      <td>3 horas 6 minutos</td>
+    </tr>
+    <tr>
+      <td>Test de locust para pedir un alquiler</td>
+      <td>1 hora 59 minutos</td>
+    </tr>
+    <tr>
+      <td>Test de selenium de login</td>
+      <td>1 hora 24 minutos</td>
+    </tr>
+    <tr>
+      <td>Test de selenium de crear y actualizar items</td>
+      <td>3 horas 6 minutos</td>
+    </tr>
+        <tr>
+      <td rowspan="3">Clases</td>
+      <td>Clase 11/04</td>
+      <td>3 horas 40 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 25/04</td>
+      <td>4 horas y 10 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras Teóricas</td>
+      <td>52 minutos</td>
+    </tr>
+     </tbody>
+</table>
+
