@@ -89,7 +89,8 @@ const ShowItemScreen = () => {
   const [reportDescription, setReportDescription] = useState("");
   const [userImage, setUserImage] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
-
+  const[startDateUTC,setStartDateUTC]= useState(null);
+  const[endDateUTC,setEndDateUTC]= useState(null);
   const currentUser = JSON.parse(localStorage.getItem("user"));
   console.log("currentUser", currentUser);
   const accessToken = localStorage.getItem("access_token");
@@ -957,7 +958,7 @@ const ShowItemScreen = () => {
     >
       <Calendar
         date={selectedDay}
-        onChange={(date) => setSelectedDay(date)}
+        onChange={(date) => setSelectedDay(date) & setStartDateUTC(date) & setEndDateUTC(date)}
         minDate={new Date()}
         maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 3))}
         disabledDates={[...unavailabilityPeriods.flatMap(period => {
@@ -1049,6 +1050,8 @@ const ShowItemScreen = () => {
     onChange={(ranges) => {
       if (!isOwner || isAuthenticated) {
         setDateRange([ranges.selection]);
+        setStartDateUTC(ranges.selection.startDate)
+        setEndDateUTC(ranges.selection.endDate)
       }
     }}
     minDate={new Date()}
@@ -1072,7 +1075,7 @@ const ShowItemScreen = () => {
             <Typography>Selecciona un día:</Typography>
             <Calendar
               date={selectedDay}
-              onChange={(date) => setSelectedDay(date)}
+              onChange={(date) => setSelectedDay(date) & setStartDateUTC(date)}
               minDate={new Date()} 
               maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 3))}
               disabledDates={[...unavailabilityPeriods.flatMap(period => {
@@ -1138,10 +1141,18 @@ const ShowItemScreen = () => {
           )}
           </Paper>
 
-          {showRentalModal && (
+          {showRentalModal && priceCategory ==="month" && (
           <ConfirmModal
           title="Confirmar Solicitud"
-          message={`¿Quieres solicitar el objeto "${item.title}" del ${dateRange[0].startDate.toLocaleDateString()} al ${dateRange[0].endDate.toLocaleDateString()}?`}
+          message={`¿Quieres solicitar el objeto "${item.title}" del ${startDateUTC.toLocaleDateString()} por ${selectedMonths} meses?`}
+          onCancel={() => setShowRentalModal(false)}
+          onConfirm={handleRentalRequest}
+          />
+          )}
+           {showRentalModal && priceCategory !== "month" && (
+          <ConfirmModal
+          title="Confirmar Solicitud"
+          message={`¿Quieres solicitar el objeto "${item.title}" del ${startDateUTC.toLocaleDateString()} al ${endDateUTC.toLocaleDateString()}?`}
           onCancel={() => setShowRentalModal(false)}
           onConfirm={handleRentalRequest}
           />
