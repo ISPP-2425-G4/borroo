@@ -1087,15 +1087,23 @@ const ShowItemScreen = () => {
               })]}
             />
 
-            <label>Selecciona la cantidad de meses:</label>
-            <select onChange={(e) => setSelectedMonths(e.target.value)}>
-              {Array.from({ length: 12 }, (_, i) => (
-                <option key={i + 1} value={i + 1}>
-                  {i + 1} mes(es)
-                </option>
-              ))}
-            </select>
-          </div>
+            <Typography variant="subtitle1" gutterBottom mt={2}>Selecciona la cantidad de meses:</Typography>
+              <Select
+                fullWidth
+                value={selectedMonths !== null ? selectedMonths : ""}
+                onChange={(e) => setSelectedMonths(e.target.value)}
+                displayEmpty
+              >
+                <MenuItem disabled value="">
+                  Selecciona la cantidad de meses
+                </MenuItem>
+                {Array.from({ length: 12 }, (_, i) => (
+                        <MenuItem key={i + 1} value={i + 1}>
+                          {i + 1} mes(es)
+                        </MenuItem>
+                ))}
+              </Select>
+            </div>
         )}
 
         <Typography variant="body2">Total a pagar: <strong>{totalPrice} €</strong></Typography>
