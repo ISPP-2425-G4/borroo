@@ -94,6 +94,17 @@ const ShowItemScreen = () => {
   console.log("currentUser", currentUser);
   const accessToken = localStorage.getItem("access_token");
 
+  const today = new Date();
+  const futureDate = new Date(today);
+  futureDate.setFullYear(today.getFullYear() + 3);
+
+  const formDate = (date) => date.toLocaleDateString("es-ES", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+
   useEffect(() => {
     const fetchItemData = async () => {
       try {
@@ -908,6 +919,10 @@ const ShowItemScreen = () => {
             {!isOwner ? "Selecciona fechas para alquilar" : "Calendario de disponibilidad"}
           </Typography>
           
+          <Typography variant="body2" color="textSecondary" sx={{ mt:1, mb: 2 }}>
+            El limite para la seleccion del periodo de alquiler es de 3 años. Por tanto, la fecha va desde el <strong>{formDate(today)}</strong> hasta el <strong>{formDate(futureDate)}</strong>.
+          </Typography>
+
           <Box sx={{ 
             display: 'flex', 
             flexDirection: 'column', 
@@ -943,7 +958,8 @@ const ShowItemScreen = () => {
       <Calendar
         date={selectedDay}
         onChange={(date) => setSelectedDay(date)}
-        minDate={new Date()} 
+        minDate={new Date()}
+        maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 3))}
         disabledDates={[...unavailabilityPeriods.flatMap(period => {
           const start = new Date(period.start_date);
           const end = new Date(period.end_date);
@@ -1036,6 +1052,7 @@ const ShowItemScreen = () => {
       }
     }}
     minDate={new Date()}
+    maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 3))}
     disabledDates={[...bookedDates, ...unavailabilityPeriods.flatMap(period => {
       const start = new Date(period.start_date);
       const end = new Date(period.end_date);
@@ -1057,6 +1074,7 @@ const ShowItemScreen = () => {
               date={selectedDay}
               onChange={(date) => setSelectedDay(date)}
               minDate={new Date()} 
+              maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 3))}
               disabledDates={[...unavailabilityPeriods.flatMap(period => {
                 const start = new Date(period.start_date);
                 const end = new Date(period.end_date);
