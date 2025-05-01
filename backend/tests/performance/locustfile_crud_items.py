@@ -162,11 +162,11 @@ class ItemCRUDTasks(SequentialTaskSet):
                     print(f"Ítem {i} creado exitosamente.")
                 elif response.status_code == 400:
                     print(f"Error al crear ítem {i}: {response.json()}")
-                    if ("No puedes tener más de 10 ítems publicados" 
+                    if ("No puedes tener más de 10 ítems publicados"
                             in response.text):
                         print("Límite de ítems publicados alcanzado.")
                         break
-                    elif ("No puedes tener más de 15 ítems en total" 
+                    elif ("No puedes tener más de 15 ítems en total"
                             in response.text):
                         print("Límite total de ítems alcanzado.")
                         break
