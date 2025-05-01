@@ -3,7 +3,7 @@
 Revisión
 ![](../imagenes/borrooLogo.png)
 
-Sprint 3 – G4
+PPL – G4
 
 Repositorio: [https://github.com/ISPP-2425-G4/borroo](https://github.com/ISPP-2425-G4/borroo)
 
