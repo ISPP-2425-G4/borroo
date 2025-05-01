@@ -17,7 +17,12 @@ import {
   CircularProgress,
   Snackbar,
   Alert,
-  Stack
+  Stack,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  DialogContentText,
 } from "@mui/material";
 import {
   CheckCircle as CheckCircleIcon,
@@ -54,9 +59,77 @@ const SubscriptionScreen = () => {
   const [currentPlan, setCurrentPlan] = useState("");
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState({ open: false, message: "", severity: "success" });
-  
+  // const [user, setUser] = useState(null);
+  const [saldo, setSaldo] = useState(null);
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("access_token");
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  useEffect(() => {
+      const storedUser = localStorage.getItem('user');
+      const accessToken = localStorage.getItem('access_token');
+      if (storedUser) {
+        
+        if (accessToken) {
+          obtenerSaldoUsuario(user.id, accessToken);
+       
+        
+        }
+      }
+    }, []);
+
+    const handlePayWithSaldo = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_BASE_URL}/pagos/pay_with_saldo/${user.id}/`,
+          { amount: 5 },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (response.status === 200) {
+          setNotification({
+            open: true,
+            message: "¡Pago realizado con saldo correctamente!",
+            severity: "success",
+          });
+        }
+          
+      } catch (err) {
+        console.error("Error al pagar con saldo:", err);
+        setNotification({
+          open: true,
+          message: "Hubo un error al pagar con saldo.",
+          severity: "error",
+        });
+      } finally {
+        setLoading(false);
+        setDialogOpen(false); 
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      }
+    };
+
+    const obtenerSaldoUsuario = async (userId, accessToken) => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${userId}/get_saldo/`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        setSaldo(response.data.saldo);
+      } catch (error) {
+        console.error("Error al obtener el saldo del usuario:", error);
+      }
+    };
 
 
   useEffect(() => {
@@ -147,7 +220,16 @@ const SubscriptionScreen = () => {
       if (!user || currentPlan === targetPlan) return;
       if (targetPlan !== 'premium') return; // ❌ Solo permitimos upgrade a Premium
     
+      if (saldo >= 5) {
+        setDialogOpen(true); 
+        return;
+      }
+      processStripePayment();
+    };
+
+    const processStripePayment = async () => {
       setLoading(true);
+      setDialogOpen(false); 
       try {
         const response = await axios.post(
           `${import.meta.env.VITE_API_BASE_URL}/pagos/create-subscription-checkout/`,
@@ -381,7 +463,84 @@ const SubscriptionScreen = () => {
           {notification.message}
         </Alert>
       </Snackbar>
+      <Dialog 
+  open={dialogOpen} 
+  onClose={() => setDialogOpen(false)}
+  PaperProps={{
+    sx: {
+      borderRadius: '12px',
+      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+      padding: '8px',
+      maxWidth: '450px',
+      width: '100%'
+    }
+  }}
+>
+  <DialogTitle sx={{ 
+    fontSize: '1.5rem', 
+    fontWeight: 600, 
+    color: '#2C3E50',
+    borderBottom: '1px solid #f0f0f0',
+    padding: '16px 24px'
+  }}>
+    Confirmar Pago
+  </DialogTitle>
+  <DialogContent sx={{ padding: '20px 24px' }}>
+    <DialogContentText sx={{ 
+      color: '#5D6D7E',
+      fontSize: '1rem',
+      marginBottom: '8px',
+      mt:2
+    }}>
+      Tienes suficiente saldo para pagar este plan. ¿Cómo quieres proceder?
+    </DialogContentText>
+  </DialogContent>
+  <DialogActions sx={{ 
+    padding: '16px 24px', 
+    justifyContent: 'flex-end',
+    gap: '12px'
+  }}>
+    <Button 
+      onClick={processStripePayment} 
+      variant="outlined"
+      sx={{
+        color: '#5D6D7E',
+        borderColor: '#CBD5E0',
+        '&:hover': {
+          backgroundColor: '#F7FAFC',
+          borderColor: '#A0AEC0'
+        },
+        padding: '8px 16px',
+        textTransform: 'none',
+        fontWeight: 500
+      }}
+      disabled={loading}
+    >
+      {loading ? <CircularProgress size={20} sx={{ color: '#5D6D7E' }} /> : "Pagar con Tarjeta"}
+    </Button>
+    <Button 
+      onClick={handlePayWithSaldo} 
+      variant="contained"
+      sx={{
+        backgroundColor: '#3182CE',
+        color: 'white',
+        '&:hover': {
+          backgroundColor: '#2B6CB0'
+        },
+        padding: '8px 16px',
+        textTransform: 'none',
+        fontWeight: 500,
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+      }}
+      disabled={loading}
+    >
+      {loading ? <CircularProgress size={20} sx={{ color: 'white' }} /> : "Pagar con Saldo"}
+    </Button>
+  </DialogActions>
+</Dialog>
+
     </>
+    
   );
 };
 

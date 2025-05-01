@@ -179,16 +179,18 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
             justifyContent: 'space-between',
             alignItems: 'center',
             mb: 3,
+            flexDirection: { xs: 'column', md: 'row' },
           }}>
             <Typography variant="h4" sx={{ 
               fontWeight: 700, 
               color: 'text.primary',
-              fontSize: { xs: '1.5rem', sm: '2rem' }
+              fontSize: { xs: '1.5rem', sm: '2rem' },
+              mt:{ xs: 2, md: 0 },
             }}>
-              Productos Solicitados
+              Tablón de Anuncios
             </Typography>
 
-            <Button component={Link} to="/create_item_request" variant="contained" color="primary">
+            <Button component={Link} to="/create_item_request" variant="contained" color="primary" sx={{mt: { xs: 2, md: 0 }}}>
               Crear un anuncio
             </Button>
             
@@ -199,7 +201,8 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
               color="red"
               sx={{ 
                 display: { xs: 'flex', md: 'none' },
-                borderRadius: 2
+                borderRadius: 2,
+                mt: { xs: 2, md: 0 },
               }}
             >
               {mostrarFiltros ? "Ocultar Filtros" : "Filtros"}
@@ -705,7 +708,7 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                               sx={{
                                 display: "flex",
                                 justifyContent: "space-between",
-                                alignItems: "center",
+                                alignItems: "flex-start",
                                 mb: 1,
                               }}
                             >
@@ -720,20 +723,38 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                                 {producto.title}
                               </Typography>
                               <Box
-                                component={Link}
-                                to={`/perfil/${producto.user_username}`}
                                 sx={{
                                   display: "flex",
-                                  alignItems: "center",
-                                  gap: "6px",
-                                  textDecoration: "none",
-                                  color: "inherit",
-                                  "&:hover": { textDecoration: "underline" },
+                                  flexDirection: "column",
+                                  alignItems: "flex-end",
                                 }}
                               >
-                                <PersonIcon sx={{ fontSize: "1.2rem", color: "#2563eb" }} />
-                                <Typography variant="body2" sx={{ fontWeight: "normal" }}>
-                                  {producto.user_name} {producto.user_surname}
+                                <Box
+                                  component={Link}
+                                  to={`/perfil/${producto.user_username}`}
+                                  sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "6px",
+                                    textDecoration: "none",
+                                    color: "inherit",
+                                    "&:hover": { textDecoration: "underline" },
+                                  }}
+                                >
+                                  <PersonIcon sx={{ fontSize: "1.2rem", color: "#2563eb" }} />
+                                  <Typography variant="body2" sx={{ fontWeight: "normal" }}>
+                                    {producto.user_name} {producto.user_surname}
+                                  </Typography>
+                                </Box>
+                                <Typography
+                                  variant="body2"
+                                  sx={{
+                                    color: "text.secondary",
+                                    fontSize: "0.8rem",
+                                    mt: 0.5,
+                                  }}
+                                >
+                                  {producto.user_location || "Ubicación no disponible"}
                                 </Typography>
                               </Box>
                             </Box>

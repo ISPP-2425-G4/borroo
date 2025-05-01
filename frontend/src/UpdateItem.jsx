@@ -59,6 +59,16 @@ const UpdateItemScreen = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
 
+  const today = new Date();
+  const futureDate = new Date(today);
+  futureDate.setFullYear(today.getFullYear() + 3);
+
+  const formDate = (date) => date.toLocaleDateString("es-ES", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -802,11 +812,15 @@ const UpdateItemScreen = () => {
             </Button>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
   <Typography variant="h6">Seleccionar período de indisponibilidad:</Typography>
+  <Typography variant="body2" color="textSecondary" sx={{ mt:1, mb: 2 }}>
+    El limite para la seleccion del periodo de alquiler es de 3 años. Por tanto, la fecha va desde el <strong>{formDate(today)}</strong> hasta el <strong>{formDate(futureDate)}</strong>.
+  </Typography>
 
   <DateRange
     ranges={datesRange}
     onChange={(ranges) => setDatesRange([ranges.selection])}
     minDate={new Date()}
+    maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 3))}
   />
 
   <Button 

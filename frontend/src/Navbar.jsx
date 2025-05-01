@@ -21,7 +21,7 @@ import {
   Chip,
   useMediaQuery,
   useTheme,
-  Tooltip
+  Tooltip,
 } from "@mui/material";
 import axios from 'axios';
 
@@ -43,6 +43,7 @@ const Navbar = () => {
     setLoginAnchorEl(null);
   };
 
+  
   
 
   const handleLogout = async () => {
@@ -214,7 +215,8 @@ const Navbar = () => {
                   <Avatar>{user.name.charAt(0)}</Avatar>
                 }
                 label={
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+                >
                     {user.name}
                     {user.pricing_plan === 'premium' && (
                       <Box
@@ -272,9 +274,9 @@ const Navbar = () => {
                       <MenuItem onClick={() => { navigate('/reports-dashboard'); }}>
                         Gestionar reportes
                       </MenuItem>
-                      {/*<MenuItem onClick={() => { navigate('/tickets-dashboard'); }}>
+                      {<MenuItem onClick={() => { navigate('/tickets-dashboard'); }}>
                         Gestionar incidencias
-                      </MenuItem>*/}
+                      </MenuItem>}
                     </>
                   )}
                   <MenuItem onClick={handleLogout}>
@@ -405,7 +407,9 @@ const Navbar = () => {
             </Box>
           </Drawer>
         </Toolbar>
+        
       </Container>
+      
     </AppBar>
   );
 };

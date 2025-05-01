@@ -150,17 +150,20 @@ const Signup = () => {
       }
     });
 
+    if (!/(?=.*[a-z])/.test(formData.password)) {
+      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
+    }
     if (!/(?=.*[A-Z])/.test(formData.password)) {
-      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, un número y un carácter especial.";
+      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
     }
     if (!/(?=.*[!@#$%^&*()_+\-=[\]{};:"\\|,.<>/?])/.test(formData.password)) {
-      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, un número y un carácter especial.";
+      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
     }
     if (!/(?=.*\d)/.test(formData.password)) {
-      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, un número y un carácter especial.";
+      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
     }
     if (formData.password.length < 8) {
-      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, un número y un carácter especial.";
+      errors.password = "La contraseña debe contener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.";
     }
   
     const requiredFields = ["username", "name", "surname", "email", "password", "password2"];

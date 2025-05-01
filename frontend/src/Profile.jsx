@@ -26,8 +26,9 @@ import {
   FormControl, 
   InputLabel,
   Select,
-  DialogContentText
-
+  DialogContentText,
+  InputAdornment,
+  AlertTitle
 } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
@@ -95,6 +96,16 @@ const Profile = () => {
   });
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false);
+  const [withdrawAmount, setWithdrawAmount] = useState(0);
+  const [saldo, setSaldo] = useState(0); 
+  const [accountNumber, setAccountNumber] = useState("");
+
+
+  const handleWithdrawClose = () => {
+    setWithdrawDialogOpen(false);
+    setWithdrawAmount(0);
+  };
 
 
   useEffect(() => {
@@ -125,6 +136,22 @@ const Profile = () => {
         setLoading(false);
       }
     };
+
+    const obtenerSaldoUsuario = async (userId, accessToken) => {
+        try {
+          const response = await axios.get(
+            `${import.meta.env.VITE_API_BASE_URL}/usuarios/full/${userId}/get_saldo/`,
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+          setSaldo(response.data.saldo);
+        } catch (error) {
+          console.error("Error al obtener el saldo del usuario:", error);
+        }
+      };
 
     const fetchDraftItems = async (userId) => {
       try {
@@ -162,7 +189,60 @@ const Profile = () => {
 
     fetchProfile();
     fetchReviews();
+    if (currentUser) {
+      obtenerSaldoUsuario(currentUser.id, localStorage.getItem("access_token"));
+    }
   }, [username, currentUser]);
+
+  const validateIBAN = (iban) => {
+    const ibanPattern = /^ES\d{2}\s\d{4}\s\d{4}\s\d{4}\s\d{4}\s\d{4}$/; // Formato específico para IBAN español
+    return ibanPattern.test(iban);
+  };
+  
+
+  const handleWithdrawSubmit = async () => {
+    if (withdrawAmount <= 0) {
+      alert("Por favor, ingresa una cantidad válida.");
+      return;
+    }
+
+    if (withdrawAmount > saldo) {
+      alert("No puedes retirar más de tu saldo disponible.");
+      return;
+    }
+
+    if(withdrawAmount < 5){
+      alert("La cantidad mínima para retirar es 5€.");
+      return;
+    }
+
+    if (!validateIBAN(accountNumber)) {
+      alert("El número de cuenta bancaria debe seguir el formato: ES00 0000 0000 0000 0000 0000.");
+      return;
+    }
+
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/pagos/withdraw_saldo/${user.id}/`,
+        { amount: withdrawAmount },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        alert("Saldo retirado exitosamente.");
+        handleWithdrawClose();
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error al retirar saldo:", error);
+      alert("Hubo un error al retirar el saldo.");
+    }
+  };
+
 
   const handleReportUser = async () => {
       try {
@@ -646,6 +726,15 @@ const Profile = () => {
                   sx={{ mt: 1, textTransform: "none" }}
                 >
                   Ver mis incidencias en alquileres
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="info"
+                  size="small"
+                  onClick={() => setWithdrawDialogOpen(true)}
+                  sx={{ mt: 1, textTransform: "none" }}
+                >
+                 Retirar saldo
                 </Button>
 
                 {editMode && (
@@ -1278,6 +1367,75 @@ const Profile = () => {
                   </Button>
                 </DialogActions>
               </Dialog>
+              <Dialog 
+  open={withdrawDialogOpen} 
+  onClose={handleWithdrawClose}
+  maxWidth="sm"
+  fullWidth
+  aria-labelledby="withdraw-dialog-title"
+>
+  <DialogTitle id="withdraw-dialog-title" sx={{ borderBottom: '1px solid rgba(0, 0, 0, 0.12)', pb: 2 }}>
+    Solicitud de Retirada de Fondos
+  </DialogTitle>
+  <DialogContent sx={{ pt: 3 }}>
+    <Typography variant="subtitle1" sx={{ mb: 3, fontWeight: 500, mt:1 }}>
+      Complete los detalles para procesar su solicitud
+    </Typography>
+    
+    <TextField
+      autoFocus
+      margin="dense"
+      label="Importe a retirar (€)"
+      type="number"
+      fullWidth
+      value={withdrawAmount}
+      onChange={(e) => setWithdrawAmount(e.target.value)}
+      InputProps={{
+        startAdornment: <InputAdornment position="start">€</InputAdornment>,
+      }}
+      variant="outlined"
+      sx={{ mb: 3 }}
+    />
+    
+    <TextField
+      margin="dense"
+      label="Número de cuenta bancaria (IBAN)"
+      type="text"
+      fullWidth
+      value={accountNumber}
+      onChange={(e) => setAccountNumber(e.target.value)}
+      variant="outlined"
+      sx={{ mb: 3 }}
+      placeholder="ES00 0000 0000 0000 0000 0000"
+    />
+    
+    <Alert severity="info" sx={{ mb: 2 }}>
+      <AlertTitle>Información importante</AlertTitle>
+      <Typography variant="body2">
+        • El importe mínimo de retirada es de 5 €<br />
+        • Las transferencias se procesan en 1-3 días hábiles<br />
+        • Saldo disponible: <strong>{saldo} €</strong>
+      </Typography>
+    </Alert>
+  </DialogContent>
+  <DialogActions sx={{ px: 3, py: 2, borderTop: '1px solid rgba(0, 0, 0, 0.12)' }}>
+    <Button 
+      onClick={handleWithdrawClose} 
+      variant="outlined"
+      color="inherit"
+    >
+      Cancelar
+    </Button>
+    <Button 
+      onClick={handleWithdrawSubmit} 
+      disabled={!withdrawAmount || !accountNumber || withdrawAmount < 5 || withdrawAmount > saldo}
+      variant="contained"
+      color="primary"
+    >
+      Confirmar Retirada
+    </Button>
+  </DialogActions>
+</Dialog>
       </Container >
       <Snackbar
         open={notification.open}

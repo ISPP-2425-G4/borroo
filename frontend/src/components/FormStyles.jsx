@@ -43,19 +43,27 @@ export const RemoveButton = styled("button")(() => ({
   },
 }));
 
-export const FileInputContainer = styled(Box)(() => ({
+export const FileInputContainer = styled(Box)(({ theme }) => ({
   width: "100%",
-  padding: "12px",
-  borderRadius: "8px",
+  padding: theme.spacing(3),
+  borderRadius: theme.shape.borderRadius,
   border: "1px dashed #ddd",
   backgroundColor: "#f9f9f9",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
+  textAlign: "center",
   cursor: "pointer",
-  transition: "all 0.2s",
-  marginBottom: "1.5rem",
+  transition: "all 0.2s ease-in-out",
+  marginBottom: theme.spacing(3),
+  boxSizing: "border-box",
+
+  // Responsive tweaks
+  [theme.breakpoints.down("sm")]: {
+    padding: theme.spacing(2),
+  },
+
   "&:hover": {
     borderColor: "#4a90e2",
     backgroundColor: "#f0f7ff",

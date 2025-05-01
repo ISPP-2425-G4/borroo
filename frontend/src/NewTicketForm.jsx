@@ -101,8 +101,14 @@ const NewTicketForm = () => {
   return (
     <Box sx={{ minHeight: "100vh", bgcolor: "#f5f7fa" }}>
       <Navbar />
-      <Container maxWidth="lg" sx={{ py: 4, mt: 8 }}>
-        <FormContainer elevation={3}>
+      <Container maxWidth="sm" sx={{ py: 4, mt: 10, px: { xs: 2, sm: 3 } }}>
+  <FormContainer elevation={3} sx={{
+    p: { xs: 2, sm: 4 },
+    borderRadius: 2,
+    width: "100%",
+    boxSizing: "border-box",
+  }}>
+
           <FormTitle variant="h5">Crear Incidencia</FormTitle>
           {errorMessage && (
             <Alert severity="error" sx={{ mb: 3 }}>
@@ -110,7 +116,7 @@ const NewTicketForm = () => {
             </Alert>
           )}
 
-          <Typography variant="h6" sx={{ mb: 2 }}>
+<Typography variant="h6" sx={{ mb: 1, fontSize: { xs: "1rem", sm: "1.25rem" } }}>
             Descripción <span style={{ color: "red" }}>*</span>
           </Typography>
           <Box component="form" onSubmit={handleSubmit}>
@@ -126,7 +132,7 @@ const NewTicketForm = () => {
               onChange={(e) => setDescription(e.target.value)}
             />
 
-          <Typography variant="h6" sx={{ mb: 2 }}>
+<Typography variant="h6" sx={{ mb: 1, fontSize: { xs: "1rem", sm: "1.25rem" } }}>
             Subir Imágenes <span style={{ color: "red" }}>*</span>
           </Typography>
 

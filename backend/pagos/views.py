@@ -11,7 +11,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from rentas.models import Rent, PaymentStatus
-from usuarios.models import User
+from usuarios.models import User, PricingPlan
 import json
 import os
 from pagos.models import PaidPendingConfirmation
@@ -407,3 +407,78 @@ def process_payment_confirmation(confirmation):
         ),
         "new_balance": owner.saldo,
     }
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def pay_subscrition_with_balance(request, user_id):
+    try:
+        data = json.loads(request.body)
+        amount = Decimal(data.get("amount", 5))
+
+        user = User.objects.get(pk=user_id)
+
+        if user.saldo < amount:
+            return JsonResponse({
+                "status": "error",
+                "error": "Saldo insuficiente para realizar el pago."
+            }, status=400)
+
+        # Deducir el saldo del usuario
+        user.saldo -= amount
+        user.pricing_plan = PricingPlan.PREMIUM
+        user.subscription_start_date = now()
+        user.subscription_end_date = now() + timedelta(days=30)
+        user.save()
+        return JsonResponse({
+                "status": "success",
+                "message": "Suscripción pagada con saldo exitosamente.",
+                "new_balance": user.saldo,
+                "pricing_plan": user.pricing_plan,
+                "subscription_start_date": user.subscription_start_date,
+                "subscription_end_date": user.subscription_end_date,
+            })
+
+    except User.DoesNotExist:
+        return JsonResponse({"error": "Usuario no encontrado."}, status=404)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def withdraw_saldo(request, user_id):
+    try:
+        data = json.loads(request.body)
+        user = User.objects.get(pk=user_id)
+        amount = Decimal(data.get("amount"))
+
+        if amount > user.saldo:
+            return JsonResponse({
+                "status": "error",
+                "error": "Saldo insuficiente para realizar el retiro."
+            }, status=400)
+
+        if amount <= 0:
+            return JsonResponse({
+                "status": "error",
+                "error": "La cantidad a retirar debe ser mayor que cero."
+            }, status=400)
+
+        if amount < 5:
+            return JsonResponse({
+                "status": "error",
+                "error": "La cantidad mínima a retirar es 5€."
+            }, status=400)
+
+        user.saldo -= amount
+        user.save()
+        return JsonResponse({
+            "status": "success",
+            "message": "Retiro realizado con éxito.",
+            "nuevo_saldo": float(user.saldo)
+        })
+    except User.DoesNotExist:
+        return JsonResponse({"error": "Usuario no encontrado."}, status=404)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)

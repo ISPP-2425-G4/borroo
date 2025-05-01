@@ -1,14 +1,34 @@
-import { Box, Button, Card, CardContent, CardMedia, Typography, Tooltip, CardActions, Chip } from "@mui/material";
-import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
-import { Snackbar, Alert } from "@mui/material";
-import PropTypes from "prop-types";
-import { useState } from "react";
-import axios from "axios";
-import { loadStripe } from "@stripe/stripe-js";
-import { useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
-import ConfirmModal from "./ConfirmModal";
-import SendMessageButton from "./SendMessageButton";
+import {
+    Box,
+    Button,
+    Card,
+    CardContent,
+    CardMedia,
+    Typography,
+    Tooltip,
+    CardActions,
+    Chip,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Snackbar,
+    Alert,
+    IconButton,
+  } from "@mui/material";
+  
+  import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+  import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+  
+  import { useState, useEffect } from "react";
+  import { useNavigate } from "react-router-dom";
+  import PropTypes from "prop-types";
+  import axios from "axios";
+  import { loadStripe } from "@stripe/stripe-js";
+  
+  import ConfirmModal from "./ConfirmModal";
+  import SendMessageButton from "./SendMessageButton";
+  
 
 
 const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) => {
@@ -225,35 +245,35 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
       };
     
     return (
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-                p: 2,
-                width: "100%",
-                maxWidth: "800px",
-                maxHeight: "75vh",
-                overflowY: "auto",
-                overflowX: "hidden",
-            }}
-        >
+<Box
+    sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        p: 2,
+        width: "100%",
+        maxWidth: "100%",
+        boxSizing: "border-box",
+        overflowX: "hidden", // 💡 evita scroll lateral ocultando el borde
+    }}
+>
+
         {requests.map((request) => (   
             <Card
-                key={request.id}
-                sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    boxShadow: 3,
-                    p: 2,
-                    width: "100%",
-                    maxWidth: "750px",
-                    minHeight: "150px",
-                    borderRadius: 2,
-                    overflow: "hidden",
-                }}
-            >
+    key={request.id}
+    sx={{
+        display: "flex",
+        flexDirection: { xs: "column", sm: "row" },
+        alignItems: "flex-start",
+        boxShadow: 3,
+        p: 2,
+        width: "100%",
+        maxWidth: "100%", // 💡 Asegura que no exceda
+        borderRadius: 2,
+        overflow: "hidden", // 👈 O visible si hay tooltip, pero nunca default
+        boxSizing: "border-box", // 👌 Importante para evitar desbordes
+    }}
+>
                 <CardMedia
                     component="img"
                     sx={{
@@ -267,7 +287,15 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                     image={request.imageUrl}
                     alt={request.title}
                 />
-                <CardContent sx={{ flex: 1 }}>
+                <CardContent
+                    sx={{
+                        flex: 1,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 1,
+                    }}
+                >
+
                     <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }} >
                         <a
                             href={`show-item/${request.item.id}`}
@@ -363,28 +391,35 @@ const RequestCardsContainer = ({ requests, openConfirmModal, isOwner= true }) =>
                     ((user.id === request.renter.id && !request.paid_pending_confirmation?.is_confirmed_by_renter && !request.renter_reported)  || 
                     (user.id === request.item.user && !request.paid_pending_confirmation?.is_confirmed_by_owner && !request.owner_reported)) && (
                         <Box sx={{ mt: 2 }}>
-                            <Typography variant="body2" sx={{ mb: 1 }}>
-                                ¿El alquiler ha ido bien?
-                            </Typography>
-                            <Box sx={{ display: "flex", gap: 2 }}>
-                                <Button
-                                    variant="contained"
-                                    color="success"
-                                    size="small"
-                                    onClick={() => handleConfirmRental(request.id)} // Llama a la función con el ID de la renta
-                                >
-                                    ✅
-                                </Button>
-                                <Button
-                                    variant="contained"
-                                    color="error"
-                                    size="small"
-                                    onClick={() => handleOpenIncidentForm(request.id)}
-                                >
-                                    ❌
-                                </Button>
-                            </Box>
-                        </Box>
+  <Typography variant="body2" sx={{ mb: 1 }}>
+    ¿El alquiler ha ido bien?
+  </Typography>
+  <Box sx={{ display: "flex", gap: 2 }}>
+    <IconButton
+      color="success"
+      onClick={() => handleConfirmRental(request.id)}
+      sx={{
+        backgroundColor: "#e8f5e9",
+        borderRadius: "8px",
+        '&:hover': { backgroundColor: "#c8e6c9" },
+      }}
+    >
+      <ThumbUpIcon />
+    </IconButton>
+    <IconButton
+      color="error"
+      onClick={() => handleOpenIncidentForm(request.id)}
+      sx={{
+        backgroundColor: "#ffebee",
+        borderRadius: "8px",
+        '&:hover': { backgroundColor: "#ffcdd2" },
+      }}
+    >
+      <ThumbDownIcon />
+    </IconButton>
+  </Box>
+</Box>
+
                     )}
                     <Box sx={{ display: "flex", justifyContent: "flex-start", gap: 2 }}>
                         {/* Si el estatus es 'aceptado' y el pago está pendiente, mostramos el botón de pago */}
