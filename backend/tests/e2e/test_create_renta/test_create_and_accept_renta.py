@@ -246,7 +246,7 @@ def test_request_and_accept_rent(driver):
     _login(driver, wait, username="user1")
 
     # Paso 2: Buscar objeto que no sea suyo
-    item_id = 1 # ID De algun objeto
+    item_id = 1
     for _ in range(5):
         _go_to_item_detail(driver, wait, item_id)
         if not _es_dueno_del_objeto(driver):
