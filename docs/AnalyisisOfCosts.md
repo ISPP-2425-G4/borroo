@@ -106,18 +106,10 @@ Se llevará a cabo un enfoque multicanal centrado geográficamente en el mercado
 
 #### 5.3 Desglose Estimado de Costes de Marketing
 
-* **Presupuesto de Lanzamiento (€2,000):**
-    * *Publicidad Digital (PPC - Principalmente Meta Ads muy segmentado):* €700
-    * *Herramientas Marketing/SEO (Pruebas gratuitas, planes básicos, herramientas free):* €200
-    * *Creación de Contenidos/Creatividades (Basado en esfuerzo interno, recursos básicos):* €300
-    * *Acciones Locales/PR/Material Promocional (Enfoque en outreach, impresión mínima):* €400
-    * *Contingencia específica de Marketing:* €400
-      
-* **Presupuesto Anual de Mantenimiento (€2,000 / ~€167 mensual):** Para sostener la visibilidad y crecimiento:
-    * *Publicidad Digital continua (Retargeting, Awareness):* Asignación mensual. €1000
-    * *Renovación Herramientas Marketing/SEO:* Costes de suscripción. €500
-    * *Marketing de Contenidos y SEO continuo:* Mantenimiento del blog, optimizaciones. €300
-    * *Gestión de Redes Sociales y Comunidad:* Tiempo o herramientas. €200
+* *Publicidad Digital continua (Retargeting, Awareness):* Asignación mensual. €1000
+* *Renovación Herramientas Marketing/SEO:* Costes de suscripción. €500
+* *Marketing de Contenidos y SEO continuo:* Mantenimiento del blog, optimizaciones. €300
+* *Gestión de Redes Sociales y Comunidad:* Tiempo o herramientas. €200
 
 #### 5.4 Partners Estratégicos
 
