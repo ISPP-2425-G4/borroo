@@ -138,6 +138,17 @@ const CreateItemScreen = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Detecta si es pantalla pequeña (menor que 'sm')
 
+  const today = new Date();
+  const futureDate = new Date(today);
+  futureDate.setFullYear(today.getFullYear() + 3);
+
+  const formDate = (date) => date.toLocaleDateString("es-ES", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+
   // --- Effects ---
   useEffect(() => {
     const fetchEnums = async () => {
@@ -672,11 +683,15 @@ const CreateItemScreen = () => {
               {/* Selector de Fechas Indisponibles */}
               <Box sx={{ display: "flex", flexDirection: "column", gap: 1, mb: 3, border: '1px solid #ddd', borderRadius: '8px', p: {xs: 1, sm: 2} }}>
                   <Typography sx={{ fontWeight: 'medium', fontSize: { xs: '0.95rem', sm: '1rem'} }}>Añadir períodos de indisponibilidad (opcional):</Typography>
+                  <Typography variant="body2" color="textSecondary" sx={{ mt:1, mb: 2 }}>
+                    El limite para la seleccion del periodo de alquiler es de 3 años. Por tanto, la fecha va desde el <strong>{formDate(today)}</strong> hasta el <strong>{formDate(futureDate)}</strong>.
+                  </Typography>
                   <Box sx={{ display: 'flex', justifyContent: 'center', overflowX: 'auto', mx: {xs: -1, sm: 0} /* Evitar overflow horizontal */ }}>
                     <DateRange
                         ranges={datesRange}
                         onChange={(ranges) => setDatesRange([ranges.selection])}
                         minDate={new Date()}
+                        maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 3))}
                         months={isMobile ? 1 : 2} 
                         direction={isMobile ? "vertical" : "horizontal"} // Vertical puede ser mejor en móvil
                         showDateDisplay={!isMobile} // Ocultar display superior si molesta en móvil
