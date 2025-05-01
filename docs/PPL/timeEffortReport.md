@@ -5549,6 +5549,77 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Martín Muñoz, Álvaro**
 
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+</tr>
+<tr>
+    <td rowspan="2">Clase</td>
+    <td>11/04/2025</td>
+    <td>3 horas, 50 minutos</td>
+</tr>
+<tr>
+    <td>25/04/2025</td>
+    <td>3 horas, 50 minutos</td>
+</tr>
+<tr>
+    <td rowspan="12">Trabajo PPL</td>
+    <td>Pagar subscripcion mediante saldo</td>
+    <td>2 horas, 30 minutos, 28 segundos</td>
+</tr>
+<tr>
+    <td>Simulación de una retirada de saldo</td>
+    <td>17 minutos, 57 segundos</td>
+</tr>
+<tr>
+    <td>Simulación de una retirada de saldo</td>
+    <td>1 hora, 23 minutos, 18 segundos</td>
+</tr>
+<tr>
+    <td>Responsividad en la aplicación</td>
+    <td>1 hora, 28 minutos</td>
+</tr>
+<tr>
+    <td>Píldora Teórica ISPP 2024 (Segmentación, Tracción y Comm Mngmt)</td>
+    <td>53 minutos, 33 segundos</td>
+</tr>
+<tr>
+    <td>Responsividad en crear un anuncio y  Símbolos de Interrogaciones</td>
+    <td>1 hora, 28 minutos</td>
+</tr>
+<tr>
+    <td>Comprobar responsividad en el resto de la aplicación</td>
+    <td>19 minutos, 5 segundos</td>
+</tr>
+<tr>
+    <td>Arreglar error en la responsividad del botón reportar</td>
+    <td>26 minutos, 20 segundos</td>
+</tr>
+<tr>
+    <td>Niko Niko y suo de la IA</td>
+    <td>21 minutos, 29 segundos</td>
+</tr>
+<tr>
+    <td>Actualización Niko Niko</td>
+    <td>2 minutos, 30 segundos</td>
+</tr>
+<tr>
+    <td>TimeEffortReport</td>
+    <td>25 minutos</td>
+</tr>
+<tr>
+    <td>Performance Evaluation</td>
+    <td>10 minutos</td>
+</tr>
+<tr>
+    <td>Feedback Externo</td>
+    <td>Usuario Piloto de Go4Surprise</td>
+    <td>46 minutos, 20 segundos</td>
+</tr>
+</table>
+
 ### **Naredo Bernardos, Ignacio**
 
 ### **Nieto Vicioso, Javier**
