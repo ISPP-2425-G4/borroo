@@ -93,6 +93,7 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 | 013  | Generación de código para funcionalidad de filtrados | Luis Javier Periáñez Franco  | 06/04/2025 | (no deja compartir chat) |
 | 014  | Generación de código para error visualización perfil | Luis Javier Periáñez Franco  | 03/04/2025 | (no deja compartir chat) |
 
+
 ### PPL
 
 | ID   | Uso (Descripción)       | Nombre del Miembro | Fecha       | Enlace al Chat |
@@ -106,7 +107,7 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 | 021  | Responsividad de las distintas pantallas | Luis Javier Periáñez Franco | 30/04/2025 |  (No deja compartir chat por uso de imágenes del usuario) |
 | 022  | Creación de Facebook y Linkedin de Borroo | Luis Javier Periáñez Franco | 30/04/2025 |  (No deja compartir chat por uso de imágenes del usuario) |
 | 023  | Migrar base de datos a Google Cloud | Miguel González Ortiz | 26/04/2025 |  [Ver chat](https://chatgpt.com/share/68138255-a598-800a-92cc-dfd6a4f4fb00) |
-
+| 024  | Generación de imágenes para post en Instagram | David Blanco Mora | 30/04/2025 | [Ver chat](https://chatgpt.com/c/68111fe3-e8e0-8000-b05b-ad4a7db1dddb) |
 
 
 
@@ -132,6 +133,7 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 | 021 | Responsividad | Sí | 40min |
 | 022 | Redes Sociales | Sí | 20min |
 | 023 | Solicitud de información | Sí | 15min |
+| 024 | Generación de imágenes | Sí | 60min
 
 
 
