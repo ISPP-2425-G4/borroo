@@ -816,6 +816,14 @@ Finalmente, revisé las píldoras teóricas 8 y 9, lo cual me permitió consolid
 
 ### **Periañez Franco, Luis Javier**
 
+Durante esta semana, el foco principal de trabajo estuvo en mejorar la experiencia de usuario a través de la adaptación responsiva de la aplicación. Se realizó una revisión completa de todas las vistas para asegurar su correcta visualización en distintos dispositivos, incluyendo la vista de objetos, el formulario de tickets, la vista de perfil y la sección de solicitudes del usuario. Este proceso implicó ajustes tanto en el diseño como en la lógica de presentación para garantizar consistencia visual y funcionalidad en todos los tamaños de pantalla.
+
+Asimismo, se llevaron a cabo tareas de integración con redes sociales, específicamente con Facebook y LinkedIn, lo que supuso trabajar con autenticación y presentación de datos relacionados. También se gestionó la creación de contenido visual para redes sociales, concretamente una publicación para Instagram, apoyando así la parte de difusión del proyecto.
+
+En paralelo, se revisaron dos pull requests de compañeros, colaborando en el proceso de validación del código y aportando mejoras para mantener la calidad del repositorio. Estas tareas contribuyeron al desarrollo colaborativo y a la estabilidad del código en producción.
+
+Por otro lado, asistí a sesiones formativas que sumaron un total de más de siete horas de clases, además de consumir contenidos teóricos complementarios que fortalecieron los conocimientos técnicos necesarios para las tareas ejecutadas.
+
 ### **Rosado Raya, Santiago**
  
 ### **Sánchez Márquez, Julia**
