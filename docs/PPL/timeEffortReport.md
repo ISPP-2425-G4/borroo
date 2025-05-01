@@ -5628,6 +5628,70 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Picón Garrote, Alexander** 
 
+<table border="1" cellspacing="0" cellpadding="5">
+ <tr>
+  <th>Tarea</th>
+  <th>Detalles de la actividad</th>
+  <th>Tiempo</th>
+ </tr>
+<tr>
+    <td rowspan="2">Clase</td>
+    <td>11/04/2025</td>
+    <td>3 horas, 50 minutos</td>
+</tr>
+<tr>
+    <td>25/04/2025</td>
+    <td>3 horas, 50 minutos</td>
+</tr>
+<tr>
+  <td rowspan="8">TRABAJO PPL</td>
+  <td>cambios de coste de lanzamiento</td>
+  <td>13 minutos, 54 segundos</td>
+ </tr>
+ <tr>
+  <td>modificación de documento de costes de marketing</td>
+  <td>24 minutos, 57 segundos</td>
+ </tr>
+ <tr>
+  <td>Píldora Teórica ISPP 2024 (Segmentación, Tracción y Comm Mngmt)	</td>
+  <td>53 minutos, 54 segundos</td>
+ </tr>
+ <tr>
+  <td>documento de análisis de costes</td>
+  <td>1 hora, 1 minuto, 7 segundos</td>
+ </tr>
+ <tr>
+  <td>documento de monetización y rentabilidad</td>
+  <td>45 minutos, 35 segundos</td>
+ </tr>
+ <tr>
+  <td>documento monetización</td>
+  <td>53 minutos, 52 segundos</td>
+ </tr>
+ <tr>
+  <td>issues marketing</td>
+  <td>34 minutos, 57 segundos</td>
+ </tr>
+ <tr>
+  <td>documento de lecciones aprendidas s1</td>
+  <td>2 horas, 9 minutos, 40 segundos</td>
+ </tr>
+ <tr>
+  <td>FEEDBACK EXTERNO</td>
+  <td>feedback externo 08/04</td>
+  <td>42 minutos, 59 segundos</td>
+ </tr>
+ <tr>
+  <td rowspan="2">REUNIONES</td>
+  <td>reunión problemas ppl</td>
+  <td>49 minutos, 17 segundos</td>
+ </tr>
+ <tr>
+  <td>planificacion ppl</td>
+  <td>1 hora, 10 minutos, 35 segundos</td>
+ </tr>
+</table>
+
 ### **Palomo García, Miguel**
 
 ### **Periañez Franco, Luis Javier**
