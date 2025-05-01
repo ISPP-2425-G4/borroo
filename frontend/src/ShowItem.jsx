@@ -1039,7 +1039,7 @@ const ShowItemScreen = () => {
     display: 'flex',
     justifyContent: 'center',
     '& .rdrCalendarWrapper': {
-      width: '100%',
+      width: 'auto',
       maxWidth: '100%', // muy importante
       minWidth: 'min-content',
     }
