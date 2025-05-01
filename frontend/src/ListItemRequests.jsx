@@ -708,7 +708,7 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                               sx={{
                                 display: "flex",
                                 justifyContent: "space-between",
-                                alignItems: "center",
+                                alignItems: "flex-start",
                                 mb: 1,
                               }}
                             >
@@ -723,20 +723,38 @@ const totalPages = Math.ceil(productosFiltrados.length / itemsPerPage)
                                 {producto.title}
                               </Typography>
                               <Box
-                                component={Link}
-                                to={`/perfil/${producto.user_username}`}
                                 sx={{
                                   display: "flex",
-                                  alignItems: "center",
-                                  gap: "6px",
-                                  textDecoration: "none",
-                                  color: "inherit",
-                                  "&:hover": { textDecoration: "underline" },
+                                  flexDirection: "column",
+                                  alignItems: "flex-end",
                                 }}
                               >
-                                <PersonIcon sx={{ fontSize: "1.2rem", color: "#2563eb" }} />
-                                <Typography variant="body2" sx={{ fontWeight: "normal" }}>
-                                  {producto.user_name} {producto.user_surname}
+                                <Box
+                                  component={Link}
+                                  to={`/perfil/${producto.user_username}`}
+                                  sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "6px",
+                                    textDecoration: "none",
+                                    color: "inherit",
+                                    "&:hover": { textDecoration: "underline" },
+                                  }}
+                                >
+                                  <PersonIcon sx={{ fontSize: "1.2rem", color: "#2563eb" }} />
+                                  <Typography variant="body2" sx={{ fontWeight: "normal" }}>
+                                    {producto.user_name} {producto.user_surname}
+                                  </Typography>
+                                </Box>
+                                <Typography
+                                  variant="body2"
+                                  sx={{
+                                    color: "text.secondary",
+                                    fontSize: "0.8rem",
+                                    mt: 0.5,
+                                  }}
+                                >
+                                  {producto.user_location || "Ubicación no disponible"}
                                 </Typography>
                               </Box>
                             </Box>
