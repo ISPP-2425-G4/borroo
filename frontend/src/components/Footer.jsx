@@ -41,7 +41,7 @@ const Footer = () => {
           <a href="https://x.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaXTwitter /></a>
           <a href="https://instagram.com/BorrooApp" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
           <a href="https://www.linkedin.com/in/borroapp/" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
-          <a href="https://youtube.com/c/BorrooApp" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
+          <a href="https://www.youtube.com/@Borroo_App" target="_blank" rel="noopener noreferrer"><FaYoutube /></a>
         </div>
 
       {/* Footer Inferior */}
