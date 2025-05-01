@@ -5791,6 +5791,73 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **García Rodríguez, Javier**
 
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="10">Trabajo</td>
+      <td>Creación de documentos base comunes (performanceEvaluation, timeEffortReport, NikoNiko) y desarrollo del plan de marketing</td>
+      <td>1 hora y 3 minutos</td>
+    </tr>
+    <tr>
+      <td>Creación del backlog del PPL</td>
+      <td>1 hora 18 minutos</td>
+    </tr>
+    <tr>
+      <td>Planificación PPL</td>
+      <td>1 hora 10 minutos</td>
+    </tr>
+    <tr>
+      <td>Publicación instagram</td>
+      <td>19 minutos</td>
+    </tr>
+    <tr>
+      <td>Creación de "personas" para el marketing</td>
+      <td>45 minutos</td>
+    </tr>
+    <tr>
+      <td>Documento Lecciones Aprendidas S1</td>
+      <td>5 horas y 12 minutos</td>
+    </tr>
+    <tr>
+      <td>Preparación presentación</td>
+      <td>4 horas y 19 minutos</td>
+    </tr>
+    <tr>
+      <td>Storie Instagram</td>
+      <td>21 minutos</td>
+    </tr>
+    <tr>
+      <td>Publicación Instagram</td>
+      <td>36 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldora teórica</td>
+      <td>1 hora y 4 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Reunión</td>
+      <td>Reunión problemas PPL</td>
+      <td>35 minutos</td>
+    </tr>
+    <tr>
+      <td>Reunión planificación PPL</td>
+      <td>1 hora y 12 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase</td>
+      <td>Clase 25/4/25</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+  </tbody>
+</table>
+
 ### **González Ortiz, Miguel**
 
 <table>
