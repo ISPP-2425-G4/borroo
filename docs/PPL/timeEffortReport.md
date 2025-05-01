@@ -5529,9 +5529,50 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 A continuación, se muestra la participación de cada miembro del grupo mediante gráficas obtenidas con informes de Clockify durante el PPL.
 
+
+### Resumen completo
+
+A continuación, se muestra la participación de cada miembro del grupo mediante gráficas obtenidas con informes de Clockify durante el Sprint 3.
+
+![1](../imagenes/timeEffortReport/ppl/miembros/1.jpg)
+![2](../imagenes/timeEffortReport/ppl/miembros/2.jpg)
+![3](../imagenes/timeEffortReport/ppl/miembros/3.jpg)
+![4](../imagenes/timeEffortReport/ppl/miembros/4.jpg)
+![5](../imagenes/timeEffortReport/ppl/miembros/5.jpg)
+![6](../imagenes/timeEffortReport/ppl/miembros/6.jpg)
+![7](../imagenes/timeEffortReport/ppl/miembros/7.jpg)
+![8](../imagenes/timeEffortReport/ppl/miembros/8.jpg)
+![9](../imagenes/timeEffortReport/ppl/miembros/9.jpg)
+![10](../imagenes/timeEffortReport/ppl/miembros/10.jpg)
+![11](../imagenes/timeEffortReport/ppl/miembros/11.jpg)
+![12](../imagenes/timeEffortReport/ppl/miembros/12.jpg)
+![13](../imagenes/timeEffortReport/ppl/miembros/13.jpg)
+![14](../imagenes/timeEffortReport/ppl/miembros/14.jpg)
+![15](../imagenes/timeEffortReport/ppl/miembros/15.jpg)
+![16](../imagenes/timeEffortReport/ppl/miembros/16.jpg)
+![17](../imagenes/timeEffortReport/ppl/miembros/17.jpg)
+![18](../imagenes/timeEffortReport/ppl/miembros/18.jpg)
+![19](../imagenes/timeEffortReport/ppl/miembros/19.jpg)
+![20](../imagenes/timeEffortReport/ppl/miembros/20.jpg)
+![21](../imagenes/timeEffortReport/ppl/miembros/21.jpg)
+![22](../imagenes/timeEffortReport/ppl/miembros/22.jpg)
+
+
+
 ### Resumen por subgrupos
 
 Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos de trabajo definidos.
+
+![23](../imagenes/timeEffortReport/ppl/subgrupos/1.jpg)
+
+### Resumen por etiquetas
+
+Finalmente, se muestra el informe generado por Clockify, agrupando las horas por las etiquetas del tipo de trabajo correspondiente.
+
+![24](../imagenes/timeEffortReport/ppl/tags/1.jpg)
+![25](../imagenes/timeEffortReport/ppl/tags/2.jpg)
+![26](../imagenes/timeEffortReport/ppl/tags/3.jpg)
+
 
 ### **Blanco Mora, David** 
 
