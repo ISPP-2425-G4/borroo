@@ -5535,6 +5535,78 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Blanco Mora, David** 
 
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="11">Trabajo</td>
+      <td>Diseño de post para Instagram</td>
+      <td>2 horas 29 minutos</td>
+    </tr>
+    <tr>
+      <td>¿Por qué alquilar con borroo? - Instagram</td>
+      <td>2 horas 53 minutos</td>
+    </tr>
+    <tr>
+      <td>Corregir error tipográfico en imagen del carrusel</td>
+      <td>34 minutos</td>
+    </tr>
+    <tr>
+      <td>Generación de imágenes para post de Instagram</td>
+      <td>29 minutos</td>
+    </tr>
+    <tr>
+      <td>Generación de imágenes para post de Instagram</td>
+      <td>48 minutos</td>
+    </tr>
+    <tr>
+      <td>¿Qué es borroo? - Diseño publicación</td>
+      <td>1 hora 46 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldora teórica</td>
+      <td>54 minutos</td>
+    </tr>
+    <tr>
+      <td>Rellenar time-effort y performance evaluation</td>
+      <td>35 minutos</td>
+    </tr>
+    <tr>
+      <td>Niko Niko PPL</td>
+      <td>10 minutos</td>
+    </tr>
+    <tr>
+      <td>¿Cuándo usar borroo? - Diseño publicación</td>
+      <td>1 hora 47 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Reuniones</td>
+      <td>Reunión marketing 29/04</td>
+      <td>35 minutos</td>
+    </tr>
+    <tr>
+      <td>Reunión marketing 01/05</td>
+      <td>33 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 11/04</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 25/04</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+  </tbody>
+</table>
+
+
 ### **Díaz Ordóñez, Pablo** 
 
 <table border="1" cellspacing="0" cellpadding="5">
