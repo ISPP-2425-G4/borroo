@@ -810,6 +810,25 @@ Sobre documentación, comentar que añadí mis entradas del calendario NikoNiko,
 
 ### **González Ortiz, Miguel**
 
+<div align="justify">
+Primera semana:
+
+Debido a la celebración de la Semana Santa, durante la primera semana del sprint no se realizaron tareas asignadas al proyecto. Esta pausa fue contemplada previamente en la planificación del equipo, por lo que no afectó al progreso general del sprint.
+
+Segunda semana:
+
+Durante la segunda semana, me enfoqué, sobre todo, en el testing y despliegue. En particular, trabajé en la creación de pruebas de carga (Locust) para las operaciones CRUD de ítems, lo cual permitió evaluar el rendimiento del sistema bajo diferentes niveles de uso. Además, realicé pruebas similares enfocadas en el proceso de recuperación de contraseñas.
+
+También llevé a cabo la migración de la base de datos a Google Cloud, lo cual implicó el rediseño del entorno de despliegue y ajustes de configuración para asegurar su correcto funcionamiento en producción. Esta tarea fue especialmente crítica para garantizar la escalabilidad y disponibilidad del sistema.
+
+Tercera semana:
+
+En la tercera semana del sprint, continué aumentando la cobertura de pruebas del sistema. Implementé tests unitarios para validar la funcionalidad del panel de administración de usuarios, asegurando que los permisos y operaciones administrativas funcionen correctamente.
+
+Por otro lado, desarrollé un test automatizado con Selenium enfocado en el proceso de registro, con el objetivo de simular flujos reales de interacción del usuario y detectar posibles errores de forma automática.
+
+</div>
+
 ### **Martín Muñoz, Álvaro**
 
 <div align="justify">
