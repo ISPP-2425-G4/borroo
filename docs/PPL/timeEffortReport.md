@@ -6131,6 +6131,40 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 </table>
 
 ### **Palomo García, Miguel**
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="8">Tareas</td>
+    <tr>
+      <td>Presentacion y anuncios (25/04/2025)</td>
+      <td>6 horas</td>
+    </tr>
+    <tr>
+      <td>Demo (30/04/2025)</td>
+      <td>2 horas</td>
+    </tr>
+    <tr>
+      <td>Presentacion y anuncios inversores (02/05/2025)</td>
+      <td>4 horas</td>
+    </tr>
+        <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 24/04</td>
+      <td>3 horas 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Píldoras Teóricas</td>
+      <td>1 hora</td>
+    </tr>
+     </tbody>
+</table>
 
 ### **Periañez Franco, Luis Javier**
 <table>

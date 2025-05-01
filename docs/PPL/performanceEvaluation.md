@@ -911,6 +911,8 @@ Durante la primera semana, mis actividades se centraron en la planificación ini
 En la segunda semana, mi enfoque principal fue continuar intensivamente con la documentación y análisis del PPL, además de dedicar tiempo a formación específica y asistir a clase. Elaboré documentos fundamentales como el de análisis de costes, el documento sobre monetización y rentabilidad, y otro documento detallado sobre monetización. Además, realizé cambios relativos al coste de lanzamiento y la modificación del documento de costes de marketing en varias ocasiones. En el aspecto formativo, revisé la Píldora Teórica ISPP 2024 sobre Segmentación, Tracción y Community Management. Para concluir el periodo, asistí a la clase del 25/04.
 
 ### **Palomo García, Miguel**
+Durante estas dos semanas he llevado a cabo mi rol de responsable de la presentación, no solo mostrandolo en el powerpoint sino tambien realizando todas las tareas que conlleva, realizar anuncio inversores, realizar y editar la demo, hacer los videos de las killer opening, analizar las inversiones posibles, calcular el volumen de transacciones que va a tener la aplicación. Por otro lado asistí a todas las clases lectivas y consumí todos los contenidos teóricos subidos a la plataforma.
+
 
 ### **Periañez Franco, Luis Javier**
 
