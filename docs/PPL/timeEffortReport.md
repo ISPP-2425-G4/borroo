@@ -5527,7 +5527,7 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### Resumen completo
 
-A continuación, se muestra la participación de cada miembro del grupo mediante gráficas obtenidas con informes de Clockify durante el Sprint 3.
+A continuación, se muestra la participación de cada miembro del grupo mediante gráficas obtenidas con informes de Clockify durante el PPL.
 
 ### Resumen por subgrupos
 
@@ -5536,6 +5536,126 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 ### **Blanco Mora, David** 
 
 ### **Díaz Ordóñez, Pablo** 
+
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="24"><b>Trabajo</b></td>
+    <td>Añadir tags a entradas de clockify (21/04/2025)</td>
+    <td>8 minutos</td>
+  </tr>
+  <tr>
+    <td>BUG: Cambiar texto en anuncios (21/04/2025)</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>BUG: Desplegable de los años (22/04/2025)</td>
+    <td>2 horas Y 26 minutos</td>
+  </tr>
+  <tr>
+    <td>Probando programa para introducciones y finales de videos de youtube (24/04/2025)</td>
+    <td>55 minutos</td>
+  </tr>
+  <tr>
+    <td>Hacer introducciones y finales de videos de youtube, varios tipos (INICIALES) (24/04/2025)</td>
+    <td>43 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisar doc de lecciones aprendidas del sprint 1 (24/04/2025)</td>
+    <td>25 minutos</td>
+  </tr>
+  <tr>
+    <td>Personalizar canal de YouTube salvo banner (24/04/2025)</td>
+    <td>16 minutos</td>
+  </tr>
+  <tr>
+    <td>Hacer plantillas para miniaturas de youtube (26/04/2025)</td>
+    <td>56 minutos</td>
+  </tr>
+  <tr>
+    <td>Adaptar plantillas para episodios de tutoriales y anuncios y nuevo tipo de intro de youtube (29/04/2025)</td>
+    <td>43 minutos</td>
+  </tr>
+  <tr>
+    <td>Modificar outro youtube (29/04/2025)</td>
+    <td>28 minutos</td>
+  </tr>
+  <tr>
+    <td>Preparar video anuncio de clientes para YouTube (29/04/2025)</td>
+    <td>14 minutos</td>
+  </tr>
+  <tr>
+    <td>Documento sobre videos de YouTube (29/04/2025)</td>
+    <td>21 minutos</td>
+  </tr>
+  <tr>
+    <td>Subir publicación de bienvenidos a la comunidad Borroo en YouTube(29/04/2025)</td>
+    <td>6 minutos</td>
+  </tr>
+  <tr>
+    <td>Hacer banner de youtube (29/04/2025)</td>
+    <td>31 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadir nikoniko (30/04/2025)</td>
+    <td>4 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadir información Report IA (30/04/2025)</td>
+    <td>20 minutos</td>
+  </tr>
+  <tr>
+    <td>Subir anuncio de clientes en YouTube (30/04/2025)</td>
+    <td>13 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadir publicación de comunidad de YouTube sobre video de anuncio de clientes (30/04/2025)</td>
+    <td>10 minutos</td>
+  </tr>
+  <tr>
+    <td>Hacer y editar short de anuncio de clientes para Youtube (30/04/2025)</td>
+    <td>1 hora y 9 minutos</td>
+  </tr>
+  <tr>
+    <td>Preparar video de anuncio de inversores y subirlo a YouTube (1/05/2025)</td>
+    <td>17 minutos</td>
+  </tr>
+  <tr>
+    <td>Preparar shorts de anuncio de inversores a YouTube (por qué invertir y beneficios) (1/05/2025)</td>
+    <td>1 hora y 6 minutos</td>
+  </tr>
+  <tr>
+    <td>Programar subida a Youtube de shorts de anuncios de inversores (1/05/2025)</td>
+    <td>8 minutos</td>
+  </tr>
+  <tr>
+    <td>Hacer publicación de la comunidad de YouTube sobre anuncio de inversores (1/05/2025)</td>
+    <td>5 minutos</td>
+  </tr>
+  <tr>
+    <td>Hacer performanceEvaluation y timeEffort (1/05/2025)</td>
+    <td>40 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="2"><b>Clases</b></td>
+    <td>Clase (25/04/2025) + Actividad extra</td>
+    <td>3 horas 50 minutos + 30 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase (11/04/2025)</td>
+    <td>3 horas 50 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="1"><b>Píldoras teóricas</b></td>
+    <td>Píldora teórica ISPP 2024 (Segmentación, Tracción y Comm Mngmt) (30/04/2025)</td>
+    <td>53 minutos</td>
+  </tr>
+</table>
+
 
 ### **Espinosa Naranjo, Pablo**
 
