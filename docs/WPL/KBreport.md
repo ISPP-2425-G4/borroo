@@ -6,7 +6,7 @@
 
 ## KB report
 
-### Preparing Project Launch – G4
+### World Project Launch – G4
 **Repositorio:** [Borroo](https://github.com/ISPP-2425-G4/borroo)
 
 **Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
@@ -92,6 +92,11 @@
     - [Feedback relacionado con la presentación](#feedback-relacionado-con-la-presentación-6)  
     - [Feedback relacionado con el desarrollo del proyecto](#feedback-relacionado-con-el-desarrollo-del-proyecto-6)  
     - [Tareas que realizar durante esta semana](#tareas-que-realizar-durante-esta-semana-6)
+  - [Feedback Semana 12](#feedback-semana-12)  
+    - [Feedback de otros grupos](#feedback-de-otros-grupos-7)  
+    - [Feedback relacionado con la presentación](#feedback-relacionado-con-la-presentación-7)  
+    - [Feedback relacionado con el desarrollo del proyecto](#feedback-relacionado-con-el-desarrollo-del-proyecto-7)  
+    - [Tareas que realizar durante esta semana](#tareas-que-realizar-durante-esta-semana-7)
 
 2. [Contenido añadido a la base de conocimiento común general](#contenido-añadido-a-la-base-de-conocimiento-común-general)
 
@@ -517,6 +522,51 @@
     - Publicaciones en redes social
     - Comunity management
     - Anuncios, videos, banners
+
+
+#### Feedback Semana 12
+
+##### Feedback de otros grupos
+
+- Evitar poner mucha información en la diapositiva del modelo de ingreso
+- En los costes especificar que los números son meses
+- No usar capex ni opex, son muy técnicos para el WPL
+- Muletillas de pequeño
+- La demo no se ve del todo bien
+- Evitar la redundancia en la demo y en la presentacion
+- Unificar las cifras de la presentacion y el anuncio
+- Hablar en presente
+- Hablar del apagon os perjudica
+- Transmitir que la app esta en uso
+
+##### Feedback relacionado con la presentación
+
+- Mejor inicio efectivo que el anterior
+- Mejora en el uso de muletillas
+- Presentacion muy fluida
+- Demo no cumplen con lo que piden, hay que hacer un caso de uso, hacer una historia
+- No se ve el chat en la diapositiva 6
+- Meter algún rol en las presentaciones de los grupos
+- Alguno de los competidores tiene que alquilar, parece que no son competidores
+- Anuncio de inversores un poco largo
+- De la segunda presentación evitar presentaciones teóricas(SEO)
+- Publico objetivo, poner que el principal publico objetivo, pero se puede expandir
+
+##### Feedback relacionado con el desarrollo del proyecto
+
+- Intencionalmente en blanco
+
+##### Tareas que realizar durante esta semana:
+
+- Sesión de retrospectiva 
+- Una presentacion de esfuerzo y rendimiento individual
+- PRESENTACION FINAL
+- Enviar una diapositiva a modo de publicidad antes del 13 de mayo
+- De 12:30 a 17:30 
+- Entrega de premios
+- El dia anterior 22 de mayo de 13:30 a 16:30 prueba en el salon de actos
+- Invitar a los jipis
+- La primera presentacion metiendo algo de marketing 10 minutos
 
 
 ## Contenido añadido a la base de conocimiento común general
