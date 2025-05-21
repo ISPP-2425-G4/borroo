@@ -44,6 +44,7 @@
 | 26-03-2025 | v2.0    | Marco Padilla Gómez | Cambio de estructura del report |
 | 10-04-2025 | v3.0    | Marco Padilla Gómez | Actualizacion S3 |
 | 01-05-2025 | v4.0    | Marco Padilla Gómez | Actualizacion PPL |
+| 21-05-2025 | v5.0    | Marco Padilla Gómez | Actualizacion Semana 12 |
 
 ## Tabla de contenidos
 
