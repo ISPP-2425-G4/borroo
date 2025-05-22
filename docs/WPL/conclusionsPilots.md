@@ -11,7 +11,7 @@
 
 **Base de conocimientos:** [BorrooKB](https://borrookb.netlify.app/)
 
-**Fecha:** 28/03/2025
+**Fecha:** 22/05/2025
 
 
 </div>
@@ -41,7 +41,7 @@
 ## **Histórico de modificaciones**
 | Fecha      | Versión | Realizada por   | Descripción de los cambios |
 | ---------- | ------- | --------------- | -------------------------- |
-| 25-05-2025 | v1.0    | Santiago Rosado Raya | Creación del documento |
+| 22-05-2025 | v1.0    | Santiago Rosado Raya | Creación del documento |
 
 ---
 **Version: _#WPL_**
