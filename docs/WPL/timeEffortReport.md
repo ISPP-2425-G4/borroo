@@ -7009,7 +7009,36 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
       <td>5 horas</td>
     </tr>
 </table>
+
 ### **Nieto Vicioso, Javier**
+
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+</tr>
+<tr>
+    <td rowspan="4">Clases</td>
+    <td>Clase 02/05</td>
+    <td>3 horas 50 minutos</td>
+</tr>
+<tr>
+    <td>Clase 16/05</td>
+    <td>30 minutos</td>
+</tr>
+<tr>
+    <td>Presentación final WPL</td>
+    <td>5 horas</td>
+</tr>
+<tr>
+</tr>
+<tr>
+    <td rowspan="1">Trabajo WPL</td>
+    <td>TimeEffortReport y Performance Evaluation</td>
+    <td>1 hora</td>
+</tr>
+</table>
 
 ### **Padilla Gómez, Marco**
 
