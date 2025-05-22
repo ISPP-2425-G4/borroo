@@ -1056,8 +1056,11 @@ Mi trabajo en estas dos semanas ha sido el siguiente:
 
 
 ### **Rosado Raya, Santiago**
+Durante estas dos semanas de trabajo he dedicado mi tiempo al desarrollo de publicaciones para Instagram, participando tanto en el diseño del guion y el contenido como en la generación de imágenes mediante el uso de inteligencia artificial.
 
+Además, he asistido junto a varios miembros del equipo al ensayo previo en el salón de actos, para asegurar que todo funcionara correctamente y recoger posibles incidencias relacionadas con la presentación.
 
+También he dedicado tiempo a los usuarios piloto externos a la asignatura, contactando con ellos y solicitándoles conclusiones finales sobre el desarrollo del proyecto. Posteriormente, elaboré un documento recopilando todo el feedback recibido.
  
 ### **Sánchez Márquez, Julia**
 
