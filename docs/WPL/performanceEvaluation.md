@@ -1017,6 +1017,9 @@ Además, preparé las presentaciones correspondientes al Individual Work Report,
 
 ### **González Ortiz, Miguel**
 
+A lo largo de este último entregable del proyecto, he hecho un último análisis completo a la aplicación buscando posibles errores para hacer un cierre de proyecto lo mejor posible, también he migrado la base de datos para el despliegue del WPL, además de eso he ayudado a generar la tag y release del WPL.
+
+De forma paralela he colaborado en la realización de pruebas de la presentación en el salón de actos para asegurar que todo sale tal y como se espera.
 
 ### **Martín Muñoz, Álvaro**
 
