@@ -6908,6 +6908,47 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Fernández Rodríguez, Jesús**
 
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="5"><b>Trabajo</b></td>
+    <td>Probar presentación en salón de actos</td>
+    <td>52 minutos</td>
+  </tr>
+  <tr>
+    <td>Testing informal</td>
+    <td>2 horas y 5 minutos</td>
+  </tr>
+  <tr>
+    <td>Despliegue y migrar base de datos</td>
+    <td>57 minutos</td>
+  </tr>
+  <tr>
+    <td>Time effort report - Performance evaluation</td>
+    <td>1 hora y 9 minutos</td>
+  </tr>
+  <tr>
+  </tr>
+  <tr>
+    <td rowspan="3"><b>Clases</b></td>
+    <td>Clase (02/05/2025)</td>
+    <td>4 horas</td>
+  </tr>
+  <tr>
+    <td>Clase (16/05/2025)</td>
+    <td>1 hora</td>
+  </tr>
+  <tr>
+    <td>Clase WPL</td>
+    <td>2 horas</td>
+  </tr>
+</table>
+
+
 ### **Fernández Mota, Francisco**
 
 ### **García Rodríguez, Javier**
