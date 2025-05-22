@@ -1037,6 +1037,11 @@ Mi trabajo para estas dos semanas ha sido mas reducido que en entregas anteriore
 
 
 ### **Nieto Vicioso, Javier**
+Durante este último sprint, mi participación ha sido menor en comparación con los anteriores, ya que la carga de trabajo del grupo en esta fase fue más reducida y en los sprints anteriores ya había trabajado intensamente, cumpliendo todas las horas requeridas por la asignatura.
+
+A pesar de ello, he asistido a todas las sesiones necesarias y he estado presente en la presentación final del proyecto el día 23 de mayo de 2025.
+
+Mi implicación, aunque menor en cuanto a tareas, ha sido constante en términos de asistencia y seguimiento del desarrollo final del proyecto, apoyando al equipo y asegurándome de estar disponible en los momentos clave de esta fase de cierre.
 
 
 
