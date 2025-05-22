@@ -1025,7 +1025,9 @@ Finalmente, se asistió a la <b>clase de Presentación del Trabajo WPL</b>, en u
 
 
 ### **Naredo Bernardos, Ignacio**
-
+Mi trabajo para estas dos semanas ha sido mas reducido que en entregas anteriores debido a la gran carga de trabajo que llevaba hasta este momento. Mi trabajo para estas dos semanas ha sido:
+ - La generación de un video para tiktok y la colaboración en la preparación de otro.
+ - La generación junto a mi compañero Pablo Espinosa Naranjo del documento revision.md para lo que además realizamos testing informal de toda la aplicación.
 
 
 ### **Nieto Vicioso, Javier**

@@ -6859,6 +6859,42 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Naredo Bernardos, Ignacio**
 
+<table border="1" cellspacing="0" cellpadding="8">
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+    <tr>
+      <td rowspan="6">Marketing</td>
+      <td>Generación video tiktok </td>
+      <td>1 hora y 18 minutos</td>
+    </tr>
+    <tr>
+      <td>Video Tiktok dudas</td>
+      <td>39 minutos</td>
+    </tr>
+    <tr>
+      <td>Revision.md</td>
+      <td>2 horas y 14 minutos</td>
+    </tr>
+      <td>Rellenar TimeEffort y PerformanceEvaluation</td>
+      <td>50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 02/05</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 16/05</td>
+      <td>1 hora y 10 minutos</td>
+    </tr>
+    <tr>
+      <td>Presentacion WPL</td>
+      <td>Dia final </td>
+      <td>5 horas</td>
+    </tr>
+</table>
 ### **Nieto Vicioso, Javier**
 
 ### **Padilla Gómez, Marco**
