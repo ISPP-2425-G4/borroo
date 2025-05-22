@@ -987,11 +987,17 @@ Pasando a la segunda semana, hice un short sobre la demo del PPL y subí una pri
 Además, asistí a las clases correspondientes.
 
 ### **Espinosa Naranjo, Pablo**
+Para estas dos semanas de WPL, se me encomendó principalmenté continuar con la generación de videos planeada, en concreto los enfocados a tutoriales del uso de la aplicación. Se comenzó con el desarrollo de un tutorial enfocado a aspectos concretos que finalmente se descartó para producir uno enfocado a las funciones principales, dejandose listo a falta de ser publicado. 
 
+Por otro lado, se me encomendó redactar de nuevo el revision.md, esta vez junto a mi compañero Ignacio Naredo. Para ello, revisamos todas las funcionalidades descritas anteriormente, en busqueda de encontrar si alguna habia sufrido algún cambio, y revisar si en el WPL se había añadido alguna funcionalidad nueva, consultandolo con los compañeros encargados del reparto de tareas y revisando las issues asignadas. También se revisaron exhaustivamente el correcto funcionamiento de los enlaces y credenciales proporcionadas.
 
+Además, se asistió a todas las clases correspondientes.
 
 ### **Fernández Rodríguez, Jesús**
 
+Durante este último sprint, mi participación se centró en tareas específicas de apoyo al cierre del proyecto, especialmente en la preparación y prueba de la presentación final. La carga de trabajo fue menor en comparación con sprints anteriores, ya que en fases previas asumí una mayor cantidad de tareas y dediqué más tiempo al desarrollo del proyecto.
+
+Realicé la prueba de la presentación en el salón de actos, el despliegue del world project launch y migración de la base de datos, pruebas informales del sistema, la elaboración del informe de time effort y la evaluación de desempeño. También asistí a las clases programadas y participé en la presentación final del proyecto.
 
 ### **Fernández Mota, Francisco**
 
@@ -1034,6 +1040,11 @@ Mi trabajo para estas dos semanas ha sido mas reducido que en entregas anteriore
 
 
 ### **Nieto Vicioso, Javier**
+Durante este último sprint, mi participación ha sido menor en comparación con los anteriores, ya que la carga de trabajo del grupo en esta fase fue más reducida y en los sprints anteriores ya había trabajado intensamente, cumpliendo todas las horas requeridas por la asignatura.
+
+A pesar de ello, he asistido a todas las sesiones necesarias y he estado presente en la presentación final del proyecto el día 23 de mayo de 2025.
+
+Mi implicación, aunque menor en cuanto a tareas, ha sido constante en términos de asistencia y seguimiento del desarrollo final del proyecto, apoyando al equipo y asegurándome de estar disponible en los momentos clave de esta fase de cierre.
 
 
 
@@ -1045,14 +1056,22 @@ Mi trabajo en estas dos semanas ha sido el siguiente:
 
 ### **Picón Garrote, Alexander** 
 
+Durante las clases del 2, 16 y 23 de mayo, asistí y participé activamente en las sesiones, acumulando un total de 9 horas en actividades formativas.
 
+En cuanto al trabajo de desarrollo y marketing del proyecto WPL, comencé con la creación de encuestas diseñadas para ser publicadas en stories, contribuyendo al análisis de feedback por parte de los usuarios. Posteriormente, desarrollé imágenes para publicaciones, incluyendo el diseño del post de presentación del WPL.
+
+También me encargué de la planificación inicial de un vídeo del WPL, definiendo su estructura y objetivos. A esto le siguió la redacción del guion para el vídeo de Don Ramón. Además, participé en una sesión de brainstorming centrada en ideas de marketing y en el enfoque del vídeo de Don Ramón, sumando así una visión más estratégica y creativa al proyecto.
+
+Estas tareas, junto con la documentación de tiempos y planificación, reflejan un enfoque equilibrado entre producción de contenido, asistencia a clase y preparación del material necesario para la comunicación efectiva del producto.
 
 ### **Palomo García, Miguel**
 
 
 
 ### **Periañez Franco, Luis Javier**
+Durante mi participación en el proyecto, me he centrado principalmente en el área de marketing, especialmente en la creación de publicaciones para redes sociales y otros canales de comunicación. He llevado a cabo tareas de búsqueda y análisis de ideas creativas, adaptándolas a los objetivos del equipo y al tono del proyecto. Para la parte visual, he utilizado la versión premium de ChatGPT para generar imágenes que han sido empleadas en numerosas publicaciones, contribuyendo así a mantener una estética coherente y atractiva.
 
+Además, colaboré activamente en la preparación de una presentación individual destinada a evaluar el rendimiento del equipo. En esta tarea, apoyé tanto en la organización del contenido como en su diseño, con el fin de reflejar de manera clara y estructurada el trabajo desarrollado por cada miembro.
 
 
 ### **Rosado Raya, Santiago**
@@ -1063,7 +1082,22 @@ Además, he asistido junto a varios miembros del equipo al ensayo previo en el s
 También he dedicado tiempo a los usuarios piloto externos a la asignatura, contactando con ellos y solicitándoles conclusiones finales sobre el desarrollo del proyecto. Posteriormente, elaboré un documento recopilando todo el feedback recibido.
  
 ### **Sánchez Márquez, Julia**
+Durante esta recta final, mis tareas han mantenido una línea de continuidad con respecto al sprint anterior. He seguido centrada en el área de marketing, especialmente en la gestión del contenido para TikTok. Mi objetivo ha sido crear vídeos que resulten atractivos, dinámicos y alineados con los intereses de nuestro público objetivo como por ejemplo el apodado "Alquilapalabra" pensado junto con mi compañero Marco o el "storytime" de Borroo.
 
+Además, he continuado desempeñando mi rol como editora de vídeos, encargándome tanto de la edición como de la publicación de cada uno de ellos.
+
+En cuanto a la parte académica, he asistido a las sesiones correspondientes, incluida la presentación individual destinada a evaluar el rendimiento del equipo, así como la clase anterior enfocada en la preparación para el WPL.
 
 ### **Sevillano Barea, Alejandro**
+
+A lo largo de estas dos semanas mi contribución al sprint ha sido menor que en entregas previas, ya que, debido al cómputo de horas realizadas, se reestructuró la asignación de tareas para que quienes contaban con menos horas asumieran una mayor carga de trabajo en este último entregable. Por esta razón, mi participación en las tareas del sprint ha sido prácticamente nula.
+
+No obstante, durante este periodo he mantenido mi compromiso académico asistiendo puntualmente a las siguientes sesiones:
+
+El 2 de mayo, participé en la clase correspondiente y completé el test final con el objetivo de mejorar mi calificación.
+El 16 de mayo, estuve presente en la sesión de feedback impartida por los profesores para nuestro grupo, aportando observaciones y aclarando dudas.
+Finalmente, asistí a la presentación final del World Project Launch.
+
+
+
 

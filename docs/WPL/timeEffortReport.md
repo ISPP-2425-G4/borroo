@@ -63,6 +63,8 @@
 
 5. [Preparing Project Lauch](#preparing-project-launch-ppl)
 
+6. [World Project Launch](#world-project-launch-wpl) 
+
 
 ## Devising a Project (#DP)
 
@@ -6689,6 +6691,77 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Blanco Mora, David** 
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="14">Trabajo</td>
+    <td>“Mitos del alquiler” - Instagram</td>
+    <td>3h7min</td>
+  </tr>
+  <tr>
+    <td>“¿Por qué comprar si puedes alquilar?” - Post para Instagram</td>
+    <td>3h37min</td>
+  </tr>
+  <tr>
+    <td>Edición de imágenes para posts de Instagram</td>
+    <td>1h20min</td>
+  </tr>
+  <tr>
+    <td>Subir post a Instagram</td>
+    <td>30min</td>
+  </tr>
+  <tr>
+    <td>“Borroo cuida el planeta” - Post para Instagram</td>
+    <td>2h36min</td>
+  </tr>
+  <tr>
+    <td>Búsqueda de ideas para contenido en Instagram</td>
+    <td>1h34min</td>
+  </tr>
+  <tr>
+    <td>Subir post a Instagram</td>
+    <td>30min</td>
+  </tr>
+  <tr>
+    <td>Rellenar time-effort y performance evaluation</td>
+    <td>35min</td>
+  </tr>
+  <tr>
+    <td>Generación de imágenes para Instagram</td>
+    <td>2h11min</td>
+  </tr>
+  <tr>
+    <td>Búsqueda de ideas para contenido en Instagram</td>
+    <td>1h</td>
+  </tr>
+  <tr>
+    <td>“¿Tú también tienes cosas acumuladas?” - Post para Instagram</td>
+    <td>3h</td>
+  </tr>
+  <tr>
+    <td>Subir post a Instagram</td>
+    <td>30min</td>
+  </tr>
+  <tr>
+    <td>“¿Es seguro alquilar en Borroo?” - Post para Instagram</td>
+    <td>1h</td>
+  </tr>
+  <tr>
+    <td>Clase 16/05</td>
+    <td>1h</td>
+  </tr>
+  <tr>
+    <td rowspan="1">Clases</td>
+    <td>WPL</td>
+    <td>5h</td>
+  </tr>
+</table>
+
+
 ### **Díaz Ordóñez, Pablo** 
 
 <table border="1" cellspacing="0" cellpadding="5">
@@ -6792,7 +6865,89 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Espinosa Naranjo, Pablo**
 
+<table border="1">
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="3">Trabajo</td>
+      <td>Montaje video YouTube</td>
+      <td>2 horas 11 minutos</td>
+    </tr>
+    <tr>
+      <td>Montaje video descartado</td>
+      <td>1 hora 19 minutos</td>
+    </tr>
+    <tr>
+      <td>Documento revision</td>
+      <td>2 horas 14 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="3">Clase</td>
+      <td>Clase 02/05/25</td>
+      <td>4 horas y 20 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 16/05/25</td>
+      <td>1 hora</td>
+    </tr>
+    <tr>
+      <td>WPL 23/05/25</td>
+      <td>5 horas</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
 ### **Fernández Rodríguez, Jesús**
+
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="5"><b>Trabajo</b></td>
+    <td>Probar presentación en salón de actos</td>
+    <td>52 minutos</td>
+  </tr>
+  <tr>
+    <td>Testing informal</td>
+    <td>2 horas y 5 minutos</td>
+  </tr>
+  <tr>
+    <td>Despliegue y migrar base de datos</td>
+    <td>57 minutos</td>
+  </tr>
+  <tr>
+    <td>Time effort report - Performance evaluation</td>
+    <td>1 hora y 9 minutos</td>
+  </tr>
+  <tr>
+  </tr>
+  <tr>
+    <td rowspan="3"><b>Clases</b></td>
+    <td>Clase (02/05/2025)</td>
+    <td>4 horas</td>
+  </tr>
+  <tr>
+    <td>Clase (16/05/2025)</td>
+    <td>1 hora</td>
+  </tr>
+  <tr>
+    <td>Clase WPL</td>
+    <td>2 horas</td>
+  </tr>
+</table>
+
 
 ### **Fernández Mota, Francisco**
 
@@ -6895,7 +7050,36 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
       <td>5 horas</td>
     </tr>
 </table>
+
 ### **Nieto Vicioso, Javier**
+
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+</tr>
+<tr>
+    <td rowspan="4">Clases</td>
+    <td>Clase 02/05</td>
+    <td>3 horas 50 minutos</td>
+</tr>
+<tr>
+    <td>Clase 16/05</td>
+    <td>30 minutos</td>
+</tr>
+<tr>
+    <td>Presentación final WPL</td>
+    <td>5 horas</td>
+</tr>
+<tr>
+</tr>
+<tr>
+    <td rowspan="1">Trabajo WPL</td>
+    <td>TimeEffortReport y Performance Evaluation</td>
+    <td>1 hora</td>
+</tr>
+</table>
 
 ### **Padilla Gómez, Marco**
 
@@ -6973,9 +7157,106 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Picón Garrote, Alexander** 
 
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+</tr>
+<tr>
+    <td rowspan="4">Clase</td>
+    <td>Presentación WPL</td>
+    <td>5 horas</td>
+</tr>
+<tr>
+    <td>02/05/2025</td>
+    <td>4 horas, 20 minutos</td>
+</tr>
+<tr>
+    <td>clase 16/05</td>
+    <td>1 hora</td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td rowspan="6">Trabajo WPL</td>
+    <td>creación de encuestas para stories</td>
+    <td>1 hora, 6 minutos</td>
+</tr>
+<tr>
+    <td>creación de imagenes para posts y post de presentación wpl</td>
+    <td>2 horas, 3 minutos</td>
+</tr>
+<tr>
+    <td>planificación de vídeo wpl</td>
+    <td>1 hora, 27 minutos</td>
+</tr>
+<tr>
+    <td>guion vídeo de don ramon</td>
+    <td>1 hora, 5 minutos</td>
+</tr>
+<tr>
+    <td>brainstorming ideas de marketing y video de don ramon</td>
+    <td>1 hora, 5 minutos</td>
+</tr>
+<tr>
+      <td>Rellenar TimeEffort y PerformanceEvaluation</td>
+      <td>1 hora, 19 minutos</td>
+    </tr>
+<tr>
+    <td></td>
+    <td></td>
+</tr>
+</table>
+
 ### **Palomo García, Miguel**
 
 ### **Periañez Franco, Luis Javier**
+
+<table border="1" cellspacing="0" cellpadding="8">
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+    <tr>
+      <td rowspan="4">Marketing</td>
+      <td>Recopilacion Ideas instragram</td>
+      <td>2 horas</td>
+    </tr>
+    <tr>
+      <td>Creacion imagens Instagram Que Don ramon eres</td>
+      <td>2 horas</td>
+    </tr>
+    <tr>
+      <td>Creación Post de Instagram</td>
+      <td>1 hora y media</td>
+    </tr>
+    <tr>
+      <td>Creacion imagenes Don ramon</td>
+      <td>2 horas</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Documentación</td>
+      <td>Rellenando TimeEffort Performance Evaluation</td>
+      <td>1 hora</td>
+    </tr>
+    <tr>
+      <td>Presentacion</td>
+      <td>1 hora 30 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 02/05</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Presentacion WPL</td>
+      <td>5 horas</td>
+    </tr>
+</table>
 
 ### **Rosado Raya, Santiago**
 
@@ -7048,5 +7329,86 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 
 ### **Sánchez Márquez, Julia**
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="6">Tareas</td>
+      <td>Búsqueda ideas siguiente tik tok para Borroo(14/05/2025)</td>
+      <td>1 hora 57 minutos</td>
+    </tr>
+    <tr>
+      <td>Edición tik tok "Alquilapalabra"(18/05/2025)</td>
+      <td>5 horas y 18 minutos</td>
+    </tr>
+    <tr>
+      <td>Subida tik tok "Alquilapalabra"(18/05/2025)</td>
+      <td>10 minutos</td>
+    </tr>
+    <tr>
+      <td>Edición tik tok "Alquilapalabra Parte 2"(21/05/2025)</td>
+      <td>3 horas y 56 minutos</td>
+    </tr>
+    <tr>
+      <td>Subida tik tok "Alquilapalabra Parte 2"(21/05/2025)</td>
+      <td>10 minutos</td>
+    </tr>
+    <tr>
+      <td>Edición tik tok "Storytime"(22/05/2025)</td>
+      <td>3 horas y 11 minutos</td>
+    </tr>
+    <tr>
+      <td>Subida tik tok "Storytime"(22/05/2025)</td>
+      <td>21 minutos</td>
+    </tr>
+        <tr>
+      <td rowspan="3">Clases</td>
+      <td>Clase 2/05</td>
+      <td>4 horas 20 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 16/05</td>
+      <td>1 hora</td>
+    </tr>
+    <tr>
+      <td>Clase 23/05</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+     </tbody>
+</table>
 
 ### **Sevillano Barea, Alejandro**
+
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+</tr>
+<tr>
+    <td rowspan="4">Clases</td>
+    <td>Clase 02/05</td>
+    <td>4 horas 20 minutos</td>
+</tr>
+<tr>
+    <td>Clase 16/05</td>
+    <td>1 hora</td>
+</tr>
+<tr>
+    <td>Presentación final WPL</td>
+    <td>5 horas</td>
+</tr>
+<tr>
+</tr>
+<tr>
+    <td rowspan="1">Trabajo WPL</td>
+    <td>TimeEffortReport y Performance Evaluation</td>
+    <td>1 hora</td>
+</tr>
+</table>
