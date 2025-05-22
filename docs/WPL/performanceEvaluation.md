@@ -977,7 +977,9 @@ En la segunda semana retomé el ritmo y pude trabajar con normalidad. Me centré
 
 ### **Díaz Ordóñez, Pablo** 
 
+Tras la clase del día 02/05/25, diseñé las miniaturas de la demo del PPL y de las killer operners que queríamos subir a YouTube. Para generar los ducumentales y otros tipos de vídeos que queríamos hacer, estuve probando varias aplicaciones que desarrollaban vídeos a partir de texto mediante IA, e hice una prueba para el documental buscando previamente información sobre el tema del consumismo vs alquiler. Subía a Yotube la killer intro del PPl e hice una nueva version del documental, ya definitva, añadiendo su intro y outro. También hice lo mismo con el vídeo de Beneficios de alquilar con Borroo, además de su miniatura. Seguí con la grabación de un short que cuenta nuestra historia, y programé todas estas subidas a YouTube. 
 
+Pasando a la segunda semana, hice un short sobre la demo del PPL y subí una primera killer intro a YouTube. Hice una publicación en la comunidad de YouTube sobre el documental de consumismo y otra sobre la demo. Subí el tutorial preparado por Pablo Espinosa y estudié posibles ideas de nuevos vídeos a subir. Realicé un short de consejos a la hora de poner en alquiler y otro sobre la experiencia de una de las personas de marketing que ha usado Borroo. Hice una publicación en la comunidad sobre el tutorial subido e hice la miniatura del nuevo anuncio, además de programar su subida a YouTube.
 
 ### **Espinosa Naranjo, Pablo**
 
