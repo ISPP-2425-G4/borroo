@@ -1056,7 +1056,13 @@ Mi trabajo en estas dos semanas ha sido el siguiente:
 
 ### **Picón Garrote, Alexander** 
 
+Durante las clases del 2, 16 y 23 de mayo, asistí y participé activamente en las sesiones, acumulando un total de 9 horas en actividades formativas.
 
+En cuanto al trabajo de desarrollo y marketing del proyecto WPL, comencé con la creación de encuestas diseñadas para ser publicadas en stories, contribuyendo al análisis de feedback por parte de los usuarios. Posteriormente, desarrollé imágenes para publicaciones, incluyendo el diseño del post de presentación del WPL.
+
+También me encargué de la planificación inicial de un vídeo del WPL, definiendo su estructura y objetivos. A esto le siguió la redacción del guion para el vídeo de Don Ramón. Además, participé en una sesión de brainstorming centrada en ideas de marketing y en el enfoque del vídeo de Don Ramón, sumando así una visión más estratégica y creativa al proyecto.
+
+Estas tareas, junto con la documentación de tiempos y planificación, reflejan un enfoque equilibrado entre producción de contenido, asistencia a clase y preparación del material necesario para la comunicación efectiva del producto.
 
 ### **Palomo García, Miguel**
 
