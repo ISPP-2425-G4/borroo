@@ -479,6 +479,14 @@ URL y credenciales del “time tracking tool”: Desde clockify (en organizació
     - Credenciales: borrooclockify@gmail.com / Borroo2025
      (Para doble verificación solicitada por clockify, usar mismo correo y contraseña en gmail)
 
+Numero de tarjeta:
+
+    4242 4242 4242 4242
+
+Cuenta bancaria retirada saldo:
+
+    ES42 4242 4242 4242 4242 4242
+
 Potential Requirements: Uso de internet para aplicacion desplegada, descrito en readme de git para aplicacion local 
 
 Enlace video demo: https://www.youtube.com/watch?v=C5NcgEAohGg&ab_channel=BorrooApp
@@ -489,7 +497,7 @@ Enlaces a redes sociales:
 
     - Instagram: https://www.instagram.com/borrooapp?igsh=MWdzZ3FtNGtvN2Yzcg==
 
-    - Twitter/X: https://x.com/BorrooApp?t=Z6ud1Zm4esaLuC9mH1Rb7g&s=09
+    - Twitter/X: https://x.com/BorrooApp?t=b_10Yl5XpRp-etTCl4PpzA&s=09
 
     - Tiktok: https://www.tiktok.com/@borroo_app?_t=ZN-8w00oS7iwbe&_r=1
 
