@@ -34,7 +34,7 @@ Miembros:
 
 | Fecha      | Versión | Realizada por   | Descripción de los cambios |
 | ---------- | ------- | --------------- | -------------------------- |
-| 22-05-2025 | v1.0    | Pablo Espinosa Naranjo // Pablo Espinosa Naranjo | Creación del documento |
+| 22-05-2025 | v1.0    | Pablo Espinosa Naranjo // Ignacio Naredo Bernardos | Creación del documento |
 
 ----------------
 
