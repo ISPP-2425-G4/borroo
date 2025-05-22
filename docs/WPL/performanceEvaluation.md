@@ -973,6 +973,9 @@ En la segunda semana retomé el ritmo y pude trabajar con normalidad. Me centré
 
 ### **Blanco Mora, David** 
 
+Durante la primera semana de preparación para el WPL, me encargué del diseño y de la publicación de varios posts para promocionar nuestra aplicación a través de Instagram. Entre ellos: "Mitos del Alquiler", "Por qué comprar si puedes alquilar", "Borroo cuida el planeta". También acudí a la sesión de feedback de la asignatura del día 16/05.
+
+Durante la segunda semana, seguí con la creación de más contenido. Para ello, hice una búsqueda exhaustiva en la web, intentando coger ideas de otras empresas para poder reflejar en un tono más informal, las numerosas ventajas que ofrece nuestra plataforma. Ésta semana cree publicaciones en formato carrusel como: "¿Tú también tienes cosas acumuladas?" o "¿Es seguro alquilar en Borroo?". Finalmente acudí a la presentación del WPL el día 23/05.
 
 
 ### **Díaz Ordóñez, Pablo** 
