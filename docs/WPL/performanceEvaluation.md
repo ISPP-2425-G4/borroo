@@ -1052,7 +1052,9 @@ Mi trabajo en estas dos semanas ha sido el siguiente:
 
 
 ### **Periañez Franco, Luis Javier**
+Durante mi participación en el proyecto, me he centrado principalmente en el área de marketing, especialmente en la creación de publicaciones para redes sociales y otros canales de comunicación. He llevado a cabo tareas de búsqueda y análisis de ideas creativas, adaptándolas a los objetivos del equipo y al tono del proyecto. Para la parte visual, he utilizado la versión premium de ChatGPT para generar imágenes que han sido empleadas en numerosas publicaciones, contribuyendo así a mantener una estética coherente y atractiva.
 
+Además, colaboré activamente en la preparación de una presentación individual destinada a evaluar el rendimiento del equipo. En esta tarea, apoyé tanto en la organización del contenido como en su diseño, con el fin de reflejar de manera clara y estructurada el trabajo desarrollado por cada miembro.
 
 
 ### **Rosado Raya, Santiago**
