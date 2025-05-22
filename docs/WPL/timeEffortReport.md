@@ -7015,6 +7015,37 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **García Rodríguez, Javier**
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="4">Trabajo</td>
+    <td>Preparación presentación</td>
+    <td>2 horas y 31 minutos</td>
+  </tr>
+  <tr>
+    <td>Presentación WPL</td>
+    <td>6 horas y 31 minutos</td>
+  </tr>
+  <tr>
+    <td>Publicación Instagram</td>
+    <td>5 minutos</td>
+  </tr>
+  <tr>
+    <td>WPL Promotion Slides</td>
+    <td>1 hora y 13 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase</td>
+    <td>Clase 2/5/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+</table>
+
+
 ### **González Ortiz, Miguel**
 
 ### **Martín Muñoz, Álvaro**
