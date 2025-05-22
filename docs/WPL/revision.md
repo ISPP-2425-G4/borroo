@@ -287,7 +287,7 @@ Este documento  servirá  como  referencia tanto para los  desarrolladores  como
     -   Precio del alquiler
     -	Fianza
 5.  El usuario presiona el botón "Publicar".
-![](capturasRevision/pantalla_pedir_alquiler.png)
+![](capturasRevision/pedir_alquiler.png)
 
 ### Caso 17: Uso del chat
 1. El usuario debe loggearse
