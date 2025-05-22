@@ -7157,6 +7157,60 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Picón Garrote, Alexander** 
 
+<table border="1" cellspacing="0" cellpadding="5">
+<tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+</tr>
+<tr>
+    <td rowspan="4">Clase</td>
+    <td>Presentación WPL</td>
+    <td>5 horas</td>
+</tr>
+<tr>
+    <td>02/05/2025</td>
+    <td>4 horas, 20 minutos</td>
+</tr>
+<tr>
+    <td>clase 16/05</td>
+    <td>1 hora</td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td rowspan="6">Trabajo WPL</td>
+    <td>creación de encuestas para stories</td>
+    <td>1 hora, 6 minutos</td>
+</tr>
+<tr>
+    <td>creación de imagenes para posts y post de presentación wpl</td>
+    <td>2 horas, 3 minutos</td>
+</tr>
+<tr>
+    <td>planificación de vídeo wpl</td>
+    <td>1 hora, 27 minutos</td>
+</tr>
+<tr>
+    <td>guion vídeo de don ramon</td>
+    <td>1 hora, 5 minutos</td>
+</tr>
+<tr>
+    <td>brainstorming ideas de marketing y video de don ramon</td>
+    <td>1 hora, 5 minutos</td>
+</tr>
+<tr>
+      <td>Rellenar TimeEffort y PerformanceEvaluation</td>
+      <td>1 hora, 19 minutos</td>
+    </tr>
+<tr>
+    <td></td>
+    <td></td>
+</tr>
+</table>
+
 ### **Palomo García, Miguel**
 
 ### **Periañez Franco, Luis Javier**
