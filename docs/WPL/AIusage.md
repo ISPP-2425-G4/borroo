@@ -124,6 +124,10 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 | 027  | Lebron James usando Borroo   | Marco Padilla Gómez    | 21/05/2025 | [Ver chat](https://chatgpt.com/share/682ee9ff-cbb0-8012-98da-f0296b17439f) |
 | 028  | Ayuda con la Landing Page   | Álvaro Martin Muñoz    | 21/05/2025 | [Ver chat](https://g.co/gemini/share/cca5b8c81f9a) |
 | 029  | Ayuda para ideas de videos de youtube   | Pablo Díaz Ordoñez    | 19/05/2025 | [Ver chat](https://chatgpt.com/share/682ef10b-84e8-8013-badd-3217c6a22056) |
+| 030  | Generación de Imagenes para Instagram | Luis Javier Periáñez Franco  | 15/04/2025 | (no deja compartir chat) |
+| 031  | Generación de Imagenes para Instagram | Luis Javier Periáñez Franco  | 22/05/2025 | (no deja compartir chat) |
+
+
 
 ------------------------------------------------------------------
 
@@ -153,6 +157,10 @@ Se han desarrollado 2 tablas, una para poder documentar de una forma eficiente e
 | 027 | Foto de Lebron usando la aplicacion | Sí | 60min |
 | 028 | Ayuda con la landing page | Sí | 20min |
 | 029 | Ayuda para ideas de videos de youtube | Sí | 30min |
+| 030  | Generación de Imagenes para Instagram | Sí | 60min |
+| 031  | Generación de Imagenes para Instagram | Sí | 60min |
+
+
 
 
 
