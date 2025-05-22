@@ -1073,7 +1073,11 @@ Además, colaboré activamente en la preparación de una presentación individua
 
  
 ### **Sánchez Márquez, Julia**
+Durante esta recta final, mis tareas han mantenido una línea de continuidad con respecto al sprint anterior. He seguido centrada en el área de marketing, especialmente en la gestión del contenido para TikTok. Mi objetivo ha sido crear vídeos que resulten atractivos, dinámicos y alineados con los intereses de nuestro público objetivo como por ejemplo el apodado "Alquilapalabra" pensado junto con mi compañero Marco o el "storytime" de Borroo.
 
+Además, he continuado desempeñando mi rol como editora de vídeos, encargándome tanto de la edición como de la publicación de cada uno de ellos.
+
+En cuanto a la parte académica, he asistido a las sesiones correspondientes, incluida la presentación individual destinada a evaluar el rendimiento del equipo, así como la clase anterior enfocada en la preparación para el WPL.
 
 ### **Sevillano Barea, Alejandro**
 
