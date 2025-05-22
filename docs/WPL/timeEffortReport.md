@@ -6863,6 +6863,47 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Espinosa Naranjo, Pablo**
 
+<table border="1">
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="3">Trabajo</td>
+      <td>Montaje video YouTube</td>
+      <td>2 horas 11 minutos</td>
+    </tr>
+    <tr>
+      <td>Montaje video descartado</td>
+      <td>1 hora 19 minutos</td>
+    </tr>
+    <tr>
+      <td>Documento revision</td>
+      <td>2 horas 14 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="3">Clase</td>
+      <td>Clase 02/05/25</td>
+      <td>4 horas y 20 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 16/05/25</td>
+      <td>1 hora</td>
+    </tr>
+    <tr>
+      <td>WPL 23/05/25</td>
+      <td>5 horas</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
 ### **Fernández Rodríguez, Jesús**
 
 ### **Fernández Mota, Francisco**
