@@ -981,6 +981,8 @@ Tras la clase del día 02/05/25, diseñé las miniaturas de la demo del PPL y de
 
 Pasando a la segunda semana, hice un short sobre la demo del PPL y subí una primera killer intro a YouTube. Hice una publicación en la comunidad de YouTube sobre el documental de consumismo y otra sobre la demo. Subí el tutorial preparado por Pablo Espinosa y estudié posibles ideas de nuevos vídeos a subir. Realicé un short de consejos a la hora de poner en alquiler y otro sobre la experiencia de una de las personas de marketing que ha usado Borroo. Hice una publicación en la comunidad sobre el tutorial subido e hice la miniatura del nuevo anuncio, además de programar su subida a YouTube.
 
+Además, asistí a las clases correspondientes.
+
 ### **Espinosa Naranjo, Pablo**
 
 

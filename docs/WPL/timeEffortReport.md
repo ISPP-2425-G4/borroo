@@ -6681,7 +6681,7 @@ Finalmente, se muestra el informe generado por Clockify, agrupando las horas por
 
 ### Resumen completo
 
-A continuación, se muestra la participación de cada miembro del grupo mediante gráficas obtenidas con informes de Clockify durante el Sprint 3.
+A continuación, se muestra la participación de cada miembro del grupo mediante gráficas obtenidas con informes de Clockify durante el WPL.
 
 ### Resumen por subgrupos
 
@@ -6690,6 +6690,105 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 ### **Blanco Mora, David** 
 
 ### **Díaz Ordóñez, Pablo** 
+
+<table border="1" cellspacing="0" cellpadding="5">
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="19"><b>Trabajo</b></td>
+    <td>Miniaturas de YouTube de killer opener (primera y del ppl) y demo (02/05/2025)</td>
+    <td>1 hora y 12 minutos</td>
+  </tr>
+  <tr>
+    <td>Probar aplicaciones de generación de documentales IA (03/05/2025)</td>
+    <td>1 hora y 14 minutos</td>
+  </tr>
+  <tr>
+    <td>Recoger información para documental de YouTube y hacer primera prueba (04/05/2025)</td>
+    <td>2 horas Y 14 minutos</td>
+  </tr>
+  <tr>
+    <td>Preparar y subir killer intro PPL a YouTube (04/05/2025)</td>
+    <td>25 minutos</td>
+  </tr>
+  <tr>
+    <td>Hacer nueva versión del documental "Consumismo y alquiler: Un cambio Necesario". Editar con intro y outro, hacer miniatura (06/05/2025)</td>
+    <td>1 hora y 48 minutos</td>
+  </tr>
+  <tr>
+    <td>Hacer documental "Beneficios de alquilar con Borroo". Editarlo, añadir intro y outro y hacer su miniatura (06/05/2025)</td>
+    <td>1 hora y 41 minutos</td>
+  </tr>
+  <tr>
+    <td>Hacer short "Nuestra historia...". Editar varias versiones y preparar video definitivo. Añadir intro y final (07/05/2025)</td>
+    <td>1 hora y 51 minutos</td>
+  </tr>
+  <tr>
+    <td>Programar subida de los tres videos anteriores a YouTube (13/05/2025)</td>
+    <td>11 minutos</td>
+  </tr>
+  <tr>
+    <td>Editar y subir a Youtube la demo del PPL, hacer un short sobre esa demo, preparar y subir primera killer intro de Don Ramón (15/05/2025)</td>
+    <td>1 hora y 43 minutos</td>
+  </tr>
+  <tr>
+    <td>Hacer publicación en la comunidad de YouTube sobre el documental de consumismo vs alquiler (15/05/2025)</td>
+    <td>17 minutos</td>
+  </tr>
+  <tr>
+    <td>Hacer publicación en la comunidad de YouTube sobre la demo del PPL (15/05/2025)</td>
+    <td>16 minutos</td>
+  </tr>
+  <tr>
+    <td>Terminar de preparar tutorial 1 Youtube (modificar outro para que se escuche la música) y programar subida (15/05/2025)</td>
+    <td>18 minutos</td>
+  </tr>
+  <tr>
+    <td>Plantear ideas para nuevos videos de YouTube(15/05/2025)</td>
+    <td>57 minutos</td>
+  </tr>
+  <tr>
+    <td>Hacer short de consejos a la hora de poner en alquiler (realizada varias propuestas y elección de la definitiva) (15/05/2025)</td>
+    <td>1 hora y 18 minutos</td>
+  </tr>
+  <tr>
+    <td>Generar varias ideas del short de" Experincia de Diego con Borroo", y elegir la definitiva (16/05/2025)</td>
+    <td>1 hora y 21 minutos</td>
+  </tr>
+  <tr>
+    <td>Hacer publiación de la comunidad de YouTube del tutorial EP. 1 (17/05/2025)</td>
+    <td>10 minutos</td>
+  </tr>
+  <tr>
+    <td>Hacer miniatura del nuevo anuncio y programar subida (22/05/2025)</td>
+    <td>21 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadir performance evaluation (22/05/2025)</td>
+    <td>15 minutos</td>
+  </tr>
+  <tr>
+    <td>Añadir time effort (22/05/2025)</td>
+    <td>20 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="3"><b>Clases</b></td>
+    <td>Clase (02/05/2025)</td>
+    <td>3 horas 50 minutos </td>
+  </tr>
+  <tr>
+    <td>Clase (16/05/2025)</td>
+    <td> 30 minutos</td>
+  </tr>
+  <tr>
+    <td>Presentación WPL (23/05/2025)</td>
+    <td> 4 horas</td>
+  </tr>
+</table>
+
 
 ### **Espinosa Naranjo, Pablo**
 
