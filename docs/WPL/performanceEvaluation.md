@@ -1001,7 +1001,9 @@ Realicé la prueba de la presentación en el salón de actos, el despliegue del 
 
 ### **Fernández Mota, Francisco**
 
+A lo largo de este último entregable del proyecto, he hecho un último análisis completo a la aplicación buscando posibles errores para hacer un cierre de proyecto lo mejor posible, además de eso he generado la tag y release del WPL.
 
+De forma paralela he colaborado a realizar la última presentación, así como realizar pruebas en el salón de actos para asegurar que todo sale tal y como se espera.
 
 ### **García Rodríguez, Javier**
 
