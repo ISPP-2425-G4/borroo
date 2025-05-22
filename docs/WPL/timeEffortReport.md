@@ -6689,6 +6689,77 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Blanco Mora, David** 
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="14">Trabajo</td>
+    <td>“Mitos del alquiler” - Instagram</td>
+    <td>3h7min</td>
+  </tr>
+  <tr>
+    <td>“¿Por qué comprar si puedes alquilar?” - Post para Instagram</td>
+    <td>3h37min</td>
+  </tr>
+  <tr>
+    <td>Edición de imágenes para posts de Instagram</td>
+    <td>1h20min</td>
+  </tr>
+  <tr>
+    <td>Subir post a Instagram</td>
+    <td>30min</td>
+  </tr>
+  <tr>
+    <td>“Borroo cuida el planeta” - Post para Instagram</td>
+    <td>2h36min</td>
+  </tr>
+  <tr>
+    <td>Búsqueda de ideas para contenido en Instagram</td>
+    <td>1h34min</td>
+  </tr>
+  <tr>
+    <td>Subir post a Instagram</td>
+    <td>30min</td>
+  </tr>
+  <tr>
+    <td>Rellenar time-effort y performance evaluation</td>
+    <td>35min</td>
+  </tr>
+  <tr>
+    <td>Generación de imágenes para Instagram</td>
+    <td>2h11min</td>
+  </tr>
+  <tr>
+    <td>Búsqueda de ideas para contenido en Instagram</td>
+    <td>1h</td>
+  </tr>
+  <tr>
+    <td>“¿Tú también tienes cosas acumuladas?” - Post para Instagram</td>
+    <td>3h</td>
+  </tr>
+  <tr>
+    <td>Subir post a Instagram</td>
+    <td>30min</td>
+  </tr>
+  <tr>
+    <td>“¿Es seguro alquilar en Borroo?” - Post para Instagram</td>
+    <td>1h</td>
+  </tr>
+  <tr>
+    <td>Clase 16/05</td>
+    <td>1h</td>
+  </tr>
+  <tr>
+    <td rowspan="1">Clases</td>
+    <td>WPL</td>
+    <td>5h</td>
+  </tr>
+</table>
+
+
 ### **Díaz Ordóñez, Pablo** 
 
 <table border="1" cellspacing="0" cellpadding="5">
