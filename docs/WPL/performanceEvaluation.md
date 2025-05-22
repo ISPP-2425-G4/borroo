@@ -1069,3 +1069,14 @@ Además, colaboré activamente en la preparación de una presentación individua
 
 ### **Sevillano Barea, Alejandro**
 
+A lo largo de estas dos semanas mi contribución al sprint ha sido menor que en entregas previas, ya que, debido al cómputo de horas realizadas, se reestructuró la asignación de tareas para que quienes contaban con menos horas asumieran una mayor carga de trabajo en este último entregable. Por esta razón, mi participación en las tareas del sprint ha sido prácticamente nula.
+
+No obstante, durante este periodo he mantenido mi compromiso académico asistiendo puntualmente a las siguientes sesiones:
+
+El 2 de mayo, participé en la clase correspondiente y completé el test final con el objetivo de mejorar mi calificación.
+El 16 de mayo, estuve presente en la sesión de feedback impartida por los profesores para nuestro grupo, aportando observaciones y aclarando dudas.
+Finalmente, asistí a la presentación final del World Project Launch.
+
+
+
+
