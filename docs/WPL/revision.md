@@ -476,7 +476,7 @@ URL Github Repository: https://github.com/ISPP-2425-G4/borroo
 
 URL y credenciales del “time tracking tool”: Desde clockify (en organización "ISPP"):
 
-    - Credenciales: borrooclockify@gmail.com / Borroo2025
+    - Credenciales: borroorrss@gmail.com / B0rr0o2025ISPP
      (Para doble verificación solicitada por clockify, usar mismo correo y contraseña en gmail)
 
 Numero de tarjeta:
