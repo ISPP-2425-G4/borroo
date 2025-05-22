@@ -6951,6 +6951,48 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Fernández Mota, Francisco**
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="5">Trabajo</td>
+    <td>Presentación final WPL</td>
+    <td>7 hora y 20 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión aplicación</td>
+    <td>3 horas y 5 minutos</td>
+  </tr>
+  <tr>
+    <td>Generar tag y release 5.0</td>
+    <td>1 hora</td>
+  </tr>
+  <tr>
+    <td>Prueba WPL salón de actos</td>
+    <td>45 minutos</td>
+  </tr>
+  <tr>
+    <td>Prueba final previa al WPL</td>
+    <td>1 hora y 30 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Clase</td>
+    <td>Clase 2/5/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 16/5/25</td>
+    <td>1 horas y 15 minutos</td>
+  </tr>
+  <tr>
+    <td>WPL</td>
+    <td>5 horas</td>
+  </tr>
+</table>
+
 ### **García Rodríguez, Javier**
 
 ### **González Ortiz, Miguel**
