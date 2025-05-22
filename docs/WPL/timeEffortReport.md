@@ -7207,6 +7207,59 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 ### **Rosado Raya, Santiago**
  
 ### **Sánchez Márquez, Julia**
+<table>
+  <thead>
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="6">Tareas</td>
+      <td>Búsqueda ideas siguiente tik tok para Borroo(14/05/2025)</td>
+      <td>1 hora 57 minutos</td>
+    </tr>
+    <tr>
+      <td>Edición tik tok "Alquilapalabra"(18/05/2025)</td>
+      <td>5 horas y 18 minutos</td>
+    </tr>
+    <tr>
+      <td>Subida tik tok "Alquilapalabra"(18/05/2025)</td>
+      <td>10 minutos</td>
+    </tr>
+    <tr>
+      <td>Edición tik tok "Alquilapalabra Parte 2"(21/05/2025)</td>
+      <td>3 horas y 56 minutos</td>
+    </tr>
+    <tr>
+      <td>Subida tik tok "Alquilapalabra Parte 2"(21/05/2025)</td>
+      <td>10 minutos</td>
+    </tr>
+    <tr>
+      <td>Edición tik tok "Storytime"(22/05/2025)</td>
+      <td>3 horas y 11 minutos</td>
+    </tr>
+    <tr>
+      <td>Subida tik tok "Storytime"(22/05/2025)</td>
+      <td>21 minutos</td>
+    </tr>
+        <tr>
+      <td rowspan="3">Clases</td>
+      <td>Clase 2/05</td>
+      <td>4 horas 20 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 16/05</td>
+      <td>1 hora</td>
+    </tr>
+    <tr>
+      <td>Clase 23/05</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+     </tbody>
+</table>
 
 ### **Sevillano Barea, Alejandro**
 
