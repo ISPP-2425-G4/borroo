@@ -987,8 +987,11 @@ Pasando a la segunda semana, hice un short sobre la demo del PPL y subí una pri
 Además, asistí a las clases correspondientes.
 
 ### **Espinosa Naranjo, Pablo**
+Para estas dos semanas de WPL, se me encomendó principalmenté continuar con la generación de videos planeada, en concreto los enfocados a tutoriales del uso de la aplicación. Se comenzó con el desarrollo de un tutorial enfocado a aspectos concretos que finalmente se descartó para producit uno enfocado a las funciones principales, dejandose listo a falta de ser publicado. 
 
+Por otro lado, se me encomendó redactar de nuevo el revision.md, esta vez junto a mi compañero Ignacio Naredo. Para ello, revisamos todas las funcionalidades descritas anteriormente, en busqueda de encontrar si alguna habia sufrido algún cambio, y revisar si en el WPL se había añadido alguna funcionalidad nueva, consultandolo con los compañeros encargados del reparto de tareas y revisando las issues asignadas. También se revisaron exhaustivamente el correcto funcionamiento de los enlaces y credenciales proporcionadas.
 
+Además, se asistió a todas las clases correspondientes.
 
 ### **Fernández Rodríguez, Jesús**
 
