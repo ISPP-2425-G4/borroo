@@ -481,11 +481,11 @@ URL y credenciales del “time tracking tool”: Desde clockify (en organizació
 
 Potential Requirements: Uso de internet para aplicacion desplegada, descrito en readme de git para aplicacion local 
 
-Enlace video demo: RELLENAR
+Enlace video demo: https://www.youtube.com/watch?v=C5NcgEAohGg&ab_channel=BorrooApp
 
 Enlaces a redes sociales:
 
-    - Youtube: https://www.youtube.com/@Borroo_App
+    - Youtube: https://www.youtube.com/@BorrooApp
 
     - Instagram: https://www.instagram.com/borrooapp?igsh=MWdzZ3FtNGtvN2Yzcg==
 
