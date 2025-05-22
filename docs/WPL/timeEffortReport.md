@@ -6685,9 +6685,29 @@ Finalmente, se muestra el informe generado por Clockify, agrupando las horas por
 
 A continuación, se muestra la participación de cada miembro del grupo mediante gráficas obtenidas con informes de Clockify durante el WPL.
 
+![1](imagenes-wpl/1.jpg)
+![2](imagenes-wpl/2.jpg)
+![3](imagenes-wpl/3.jpg)
+![4](imagenes-wpl/4.jpg)
+![5](imagenes-wpl/5.jpg)
+![6](imagenes-wpl/6.jpg)
+![7](imagenes-wpl/7.jpg)
+![8](imagenes-wpl/8.jpg)
+![9](imagenes-wpl/9.jpg)
+![10](imagenes-wpl/10.jpg)
+![11](imagenes-wpl/11.jpg)
+![12](imagenes-wpl/12.jpg)
+![13](imagenes-wpl/13.jpg)
+![14](imagenes-wpl/14.jpg)
+![15](imagenes-wpl/15.jpg)
+
+
 ### Resumen por subgrupos
 
 Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos de trabajo definidos.
+
+![16](imagenes-wpl/16.jpg)
+
 
 ### **Blanco Mora, David** 
 
