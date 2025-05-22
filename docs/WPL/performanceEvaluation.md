@@ -995,6 +995,9 @@ Además, se asistió a todas las clases correspondientes.
 
 ### **Fernández Rodríguez, Jesús**
 
+Durante este último sprint, mi participación se centró en tareas específicas de apoyo al cierre del proyecto, especialmente en la preparación y prueba de la presentación final. La carga de trabajo fue menor en comparación con sprints anteriores, ya que en fases previas asumí una mayor cantidad de tareas y dediqué más tiempo al desarrollo del proyecto.
+
+Realicé la prueba de la presentación en el salón de actos, el despliegue del world project launch y migración de la base de datos, pruebas informales del sistema, la elaboración del informe de time effort y la evaluación de desempeño. También asistí a las clases programadas y participé en la presentación final del proyecto.
 
 ### **Fernández Mota, Francisco**
 
