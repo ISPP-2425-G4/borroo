@@ -469,7 +469,7 @@ Credenciales usuario:
 
  
 
-URL deployment platform: RELLENAR
+URL deployment platform: https://frontend-wpl-dot-ispp2425-g4.ew.r.appspot.com/
 
 URL Github Repository: https://github.com/ISPP-2425-G4/borroo 
 
