@@ -7048,6 +7048,48 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **González Ortiz, Miguel**
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="5">Trabajo</td>
+    <td>Despliegue WPL</td>
+    <td>3 hora y 2 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión aplicación</td>
+    <td>3 horas y 5 minutos</td>
+  </tr>
+  <tr>
+    <td>Generar tag y release 5.0</td>
+    <td>1 hora</td>
+  </tr>
+  <tr>
+    <td>Prueba WPL salón de actos</td>
+    <td>45 minutos</td>
+  </tr>
+  <tr>
+    <td>Time effort y performance evaluation</td>
+    <td>1 hora y 07 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Clase</td>
+    <td>Clase 2/5/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 16/5/25</td>
+    <td>1 horas</td>
+  </tr>
+  <tr>
+    <td>WPL</td>
+    <td>5 horas</td>
+  </tr>
+</table>
+
 ### **Martín Muñoz, Álvaro**
 
 <table border="1" cellspacing="0" cellpadding="5">
