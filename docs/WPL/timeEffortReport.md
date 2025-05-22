@@ -6971,6 +6971,48 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Fernández Mota, Francisco**
 
+<table>
+  <tr>
+    <th>Tarea</th>
+    <th>Detalles de la actividad</th>
+    <th>Tiempo</th>
+  </tr>
+  <tr>
+    <td rowspan="5">Trabajo</td>
+    <td>Presentación final WPL</td>
+    <td>7 hora y 20 minutos</td>
+  </tr>
+  <tr>
+    <td>Revisión aplicación</td>
+    <td>3 horas y 5 minutos</td>
+  </tr>
+  <tr>
+    <td>Generar tag y release 5.0</td>
+    <td>1 hora</td>
+  </tr>
+  <tr>
+    <td>Prueba WPL salón de actos</td>
+    <td>45 minutos</td>
+  </tr>
+  <tr>
+    <td>Prueba final previa al WPL</td>
+    <td>1 hora y 30 minutos</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Clase</td>
+    <td>Clase 2/5/25</td>
+    <td>3 horas y 50 minutos</td>
+  </tr>
+  <tr>
+    <td>Clase 16/5/25</td>
+    <td>1 horas y 15 minutos</td>
+  </tr>
+  <tr>
+    <td>WPL</td>
+    <td>5 horas</td>
+  </tr>
+</table>
+
 ### **García Rodríguez, Javier**
 
 ### **González Ortiz, Miguel**
@@ -7279,7 +7321,75 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 </table>
 
 ### **Rosado Raya, Santiago**
- 
+
+
+<table border="1" cellspacing="0" cellpadding="8">
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+    <tr>
+      <td rowspan="3">Marketing</td>
+      <td>Preparación Publicación Seguridad Instagram</td>
+      <td>1 hora 10 minutos</td>
+    </tr>
+    <tr>
+      <td>Planear nuevo contenido para instagram</td>
+      <td>1 hora 42 minutos</td>
+    </tr>
+    <tr>
+      <td>Generación de imagenes con IA para instagram</td>
+      <td>1 hora</td>
+    </tr>
+    <tr>
+      <td rowspan="5">Documentación</td>
+      <td>Adición de documentos de usuarios piloto y cambiar el entregable en las portadas</td>
+      <td>11 minutos</td>
+    </tr>
+    <tr>
+      <td>Paso a limpio y reunión con PM de anotaciones sobre en ensayo de la presentación</td>
+      <td>15 minutos</td>
+    </tr>
+    <tr>
+      <td>Contacto conclusiones usuarios piloto</td>
+      <td>43 minutos</td>
+    </tr>
+    <tr>
+      <td>Time effort report e indivial performance</td>
+      <td>44 minutos</td>
+    </tr>
+    <tr>
+      <td>Documentación conclusiones usuarios pilotos externos</td>
+      <td>1 hora 10 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="1">Presentación</td>
+      <td>Reunión, ensayo y anotación de mejoras en la presentación</td>
+      <td>30 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="3">Clases</td>
+      <td>Clase 02/05</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 16/05</td>
+      <td>1 hora</td>
+    </tr>
+    <tr>
+      <td>Presentacion WPL</td>
+      <td>5 horas</td>
+    </tr>
+        <tr>
+      <td>Enlace Clockify</td>
+      <td colspan="2"><a href="https://app.clockify.me/shared/682f63b1022dfb6284e0bbeb" target="_blank">Clockify</a></td>
+    </tr>
+  </tbody>
+</table>
+</table>
+
+
 ### **Sánchez Márquez, Julia**
 <table>
   <thead>

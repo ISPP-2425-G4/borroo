@@ -1001,7 +1001,9 @@ Realicé la prueba de la presentación en el salón de actos, el despliegue del 
 
 ### **Fernández Mota, Francisco**
 
+A lo largo de este último entregable del proyecto, he hecho un último análisis completo a la aplicación buscando posibles errores para hacer un cierre de proyecto lo mejor posible, además de eso he generado la tag y release del WPL.
 
+De forma paralela he colaborado a realizar la última presentación, así como realizar pruebas en el salón de actos para asegurar que todo sale tal y como se espera.
 
 ### **García Rodríguez, Javier**
 
@@ -1075,8 +1077,11 @@ Además, colaboré activamente en la preparación de una presentación individua
 
 
 ### **Rosado Raya, Santiago**
+Durante estas dos semanas de trabajo he dedicado mi tiempo al desarrollo de publicaciones para Instagram, participando tanto en el diseño del guion y el contenido como en la generación de imágenes mediante el uso de inteligencia artificial.
 
+Además, he asistido junto a varios miembros del equipo al ensayo previo en el salón de actos, para asegurar que todo funcionara correctamente y recoger posibles incidencias relacionadas con la presentación.
 
+También he dedicado tiempo a los usuarios piloto externos a la asignatura, contactando con ellos y solicitándoles conclusiones finales sobre el desarrollo del proyecto. Posteriormente, elaboré un documento recopilando todo el feedback recibido.
  
 ### **Sánchez Márquez, Julia**
 Durante esta recta final, mis tareas han mantenido una línea de continuidad con respecto al sprint anterior. He seguido centrada en el área de marketing, especialmente en la gestión del contenido para TikTok. Mi objetivo ha sido crear vídeos que resulten atractivos, dinámicos y alineados con los intereses de nuestro público objetivo como por ejemplo el apodado "Alquilapalabra" pensado junto con mi compañero Marco o el "storytime" de Borroo.
