@@ -7048,6 +7048,49 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Periañez Franco, Luis Javier**
 
+<table border="1" cellspacing="0" cellpadding="8">
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+    <tr>
+      <td rowspan="4">Marketing</td>
+      <td>Recopilacion Ideas instragram</td>
+      <td>2 horas</td>
+    </tr>
+    <tr>
+      <td>Creacion imagens Instagram Que Don ramon eres</td>
+      <td>2 horas</td>
+    </tr>
+    <tr>
+      <td>Creación Post de Instagram</td>
+      <td>1 hora y media</td>
+    </tr>
+    <tr>
+      <td>Creacion imagenes Don ramon</td>
+      <td>2 horas</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Documentación</td>
+      <td>Rellenando TimeEffort Performance Evaluation</td>
+      <td>1 hora</td>
+    </tr>
+    <tr>
+      <td>Presentacion</td>
+      <td>1 hora 30 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Clases</td>
+      <td>Clase 02/05</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Presentacion WPL</td>
+      <td>5 horas</td>
+    </tr>
+</table>
+
 ### **Rosado Raya, Santiago**
  
 ### **Sánchez Márquez, Julia**
