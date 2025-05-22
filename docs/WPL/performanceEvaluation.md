@@ -1076,7 +1076,7 @@ También me encargué de la planificación inicial de un vídeo del WPL, definie
 Estas tareas, junto con la documentación de tiempos y planificación, reflejan un enfoque equilibrado entre producción de contenido, asistencia a clase y preparación del material necesario para la comunicación efectiva del producto.
 
 ### **Palomo García, Miguel**
-
+Durate mi participacion en el proyecto me he centrado en el área de marketing y presentacion, he creado un anuncio con la herramienta de Unreal Engine 5, además de las demos, killer openings y anuncios de cada presentación preparada para el wpl. He redefinido el analisis de las inversiones y he realizado post de marketing en la red social X. 
 
 
 ### **Periañez Franco, Luis Javier**
