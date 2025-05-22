@@ -1003,6 +1003,25 @@ Además, asistí a las clases correspondientes.
 
 ### **Martín Muñoz, Álvaro**
 
+<div align="justify"> <h2>Informe de Actividades</h2>
+<b>Primera semana</b>
+
+Durante esta semana inicial, se realizaron actividades orientadas a la formación y planificación del trabajo. Se asistió a la <b>clase del 02/05/2025</b>, con una duración de 4 horas y 20 minutos.
+
+En paralelo, se dedicó tiempo a la fase de <b>planificación de ideas para el Trabajo WPL</b> (1 hora, 26 minutos), lo cual permitió establecer una base estructurada para las siguientes tareas. También se comenzó con el desarrollo del <b>guión para un TikTok presentado por Marco Padilla</b>, con una inversión de 1 hora y 36 minutos.
+
+<b>Segunda semana</b>
+
+La segunda semana estuvo marcada por actividades prácticas y de ejecución. Se trabajó en la <b>creación de contenido para redes sociales</b>, específicamente un <b>Post para Instagram</b> (1 hora, 42 minutos).
+
+Posteriormente, se centraron esfuerzos en la <b>edición de la Landing Page del proyecto</b>, una tarea realizada en dos bloques que sumaron 2 horas y 50 minutos (1h27min + 1h23min), con el objetivo de mejorar tanto el diseño como la funcionalidad de la página principal.
+
+También se completó el <b>TimeEffortReport y la Performance Evaluation</b> (1 hora, 16 minutos), permitiendo documentar adecuadamente el trabajo individual y realizar una autoevaluación crítica del rendimiento.
+
+Finalmente, se asistió a la <b>clase de Presentación del Trabajo WPL</b>, en una jornada intensiva de 5 horas.
+
+</div>
+
 
 
 ### **Naredo Bernardos, Ignacio**
