@@ -7158,13 +7158,10 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
     <td>5 horas</td>
 </tr>
 <tr>
-
 </tr>
 <tr>
     <td rowspan="1">Trabajo WPL</td>
     <td>TimeEffortReport y Performance Evaluation</td>
     <td>1 hora</td>
-</tr>
-<tr>
 </tr>
 </table>
