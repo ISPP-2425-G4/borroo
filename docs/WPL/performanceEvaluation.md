@@ -63,39 +63,43 @@
 
 **Date: 28/03/2025**  
 
-| Student                      | #DP1 | #S1 | #S2 | #S3 | #PPL | #WPL | Total | Weight  |
-|------------------------------|------|-----|-----|-----|------|------|-------|---------|
-| Blanco Mora, David           |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| Díaz Ordóñez, Pablo          |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| Espinosa Naranjo, Pablo      |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| Fernandez Rodriguez, Jesus   |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| Fernández Mota, Francisco    |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| García Rodríguez, Javier     |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| Gonzalez Ortiz, Miguel       |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| Martin Muñoz, Álvaro         |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| Naredo Bernardos, Ignacio    |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| Nieto Vicioso, Javier        |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| Padilla Gómez, Marco         |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| Palomo García, Miguel        |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| Periañez Franco, Luis Javier |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| Picón Garrote, Alexander     |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| Rosado Raya, Santiago        |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| Sánchez Márquez, Julia       |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| Sevillano Barea, Alejandro   |  10  | 10  | 10  | 10  |  10  |  10  |  60   |         |
-| Total                        | 170  | 170 | 170 | 170 |  170 | 170  | 1020  |         |
+| Student                      | #DP1 | #S1 | #S2 | #S3 | #PPL | #WPL | Total | Weight   |
+|------------------------------|------|-----|-----|-----|------|------|-------|----------|
+| Blanco Mora, David           |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| Díaz Ordóñez, Pablo          |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| Espinosa Naranjo, Pablo      |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| Fernandez Rodriguez, Jesus   |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| Fernández Mota, Francisco    |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| García Rodríguez, Javier     |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| Gonzalez Ortiz, Miguel       |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| Martin Muñoz, Álvaro         |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| Naredo Bernardos, Ignacio    |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| Nieto Vicioso, Javier        |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| Padilla Gómez, Marco         |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| Palomo García, Miguel        |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| Periañez Franco, Luis Javier |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| Picón Garrote, Alexander     |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| Rosado Raya, Santiago        |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| Sánchez Márquez, Julia       |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| Sevillano Barea, Alejandro   |  10  | 10  | 10  | 10  |  10  |  10  |  60   | 100.000% |
+| Total                        | 170  | 170 | 170 | 170 |  170 | 170  | 1020  | 100.000% |
 
 
 # Individual Contribution Summary  
 
 ## Tabla de contenidos
 
-1. [Devising a Project (#DP)](#devising-a-project-dp)
+1. [Devising a Project](#devising-a-project-dp)
 
 2. [Sprint 1](#sprint-1-s1)
 
 3. [Sprint 2](#sprint-2-s2)
 
 4. [Sprint 3](#sprint-3-s3)
+
+5. [Preparing Project Launch](#preparing-project-launch-ppl)
+
+6. [World Project Launch](#world-project-launch-wpl)
 
 ## Devising a Project (#DP)
 
@@ -1007,7 +1011,9 @@ De forma paralela he colaborado a realizar la última presentación, así como r
 
 ### **García Rodríguez, Javier**
 
+A lo largo del WPL, me he encargado de seguir coordinando los grupos referentes al marketing en las redes sociales correspondientes. Además, realicé las promotion slides para el WPL, contenido para la red social de Instagram y TikTok.
 
+Además, preparé las presentaciones correspondientes al Individual Work Report, y la del WPL del día 23 de mayo.
 
 ### **González Ortiz, Miguel**
 
