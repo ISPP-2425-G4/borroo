@@ -1015,7 +1015,9 @@ Además, asistí a las clases correspondientes.
 
 ### **Padilla Gómez, Marco**
 
-
+Mi trabajo en estas dos semanas ha sido el siguiente:
+- La primera semana escribi y grabe el tiktok de pasapalabra la primera parte y asisti a la sesion de evaluación individual.
+- La segunda semana estuve buscando ideas para hacer tiktoks y estuve haciendo los guiones necesarios. Grabe la segunda parte del tiktok de pasapalabra y otro de alquilar una bicicleta, añadi el feedback de la semana 12, redacte el kbreport, hice el iausage, cree las plantillas para el timeEffort y el PerformanceEvaluation, añadí todos los documentos a la KB y asisti a la presentacion del WPL.
 
 ### **Picón Garrote, Alexander** 
 

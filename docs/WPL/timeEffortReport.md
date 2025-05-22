@@ -6808,6 +6808,78 @@ Ahora, se muestra el informe generado por Clockify, agrupado por los 3 subgrupos
 
 ### **Padilla Gómez, Marco**
 
+<table border="1" cellspacing="0" cellpadding="8">
+    <tr>
+      <th>Tarea</th>
+      <th>Detalles de la actividad</th>
+      <th>Tiempo</th>
+    </tr>
+    <tr>
+      <td rowspan="6">Marketing</td>
+      <td>Guion Tiktok Pasapalabra</td>
+      <td>2 horas y 16 minutos</td>
+    </tr>
+    <tr>
+      <td>Grabar Tiktok Pasapalabra</td>
+      <td>2 horas y 14 minutos</td>
+    </tr>
+    <tr>
+      <td>Busqueda de ideas para tiktok</td>
+      <td>2 horas y 13 minutos</td>
+    </tr>
+    <tr>
+      <td>Realizar Guion de tiktoks</td>
+      <td>4 horas y 15 minutos</td>
+    </tr>
+    <tr>
+      <td>Grabacion TikTok pasapalabra parte 2</td>
+      <td>2 horas y 39 minutos</td>
+    </tr>
+    <tr>
+      <td>Grabar Tiktok Alquilar bici</td>
+      <td>2 horas y 27 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="6">Documentación</td>
+      <td>Añadir Feedback semana 12</td>
+      <td>1 hora y 10 minutos</td>
+    </tr>
+    <tr>
+      <td>Redactar Kbreport</td>
+      <td>51 minutos</td>
+    </tr>
+    <tr>
+      <td>Redactar laUsage</td>
+      <td>1 hora y 45 minutos</td>
+    </tr>
+    <tr>
+      <td>Crear plantillas timeEffort y PerformanceEvaluation</td>
+      <td>40 minutos</td>
+    </tr>
+    <tr>
+      <td>Rellenar TimeEffort y PerformanceEvaluation</td>
+      <td>50 minutos</td>
+    </tr>
+    <tr>
+      <td>Añadir los docs a la KB</td>
+      <td>1 hora y 30 minutos</td>
+    </tr>
+    <tr>
+      <td rowspan="3">Clases</td>
+      <td>Clase 02/05</td>
+      <td>3 horas y 50 minutos</td>
+    </tr>
+    <tr>
+      <td>Clase 16/05</td>
+      <td>1 hora y 10 minutos</td>
+    </tr>
+    <tr>
+      <td>Presentacion WPL</td>
+      <td>5 horas</td>
+    </tr>
+</table>
+
+
 ### **Picón Garrote, Alexander** 
 
 ### **Palomo García, Miguel**
